@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/medico_top_pane"
+    />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/upperLabel"/>
+
+
+     <ImageView
+         android:layout_width="100dp"
+         android:layout_height="40dp"
+         android:src="@drawable/medico"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="100dp"
+         android:id="@+id/medico_name"
+    />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/centerLogo"
+        android:layout_toLeftOf="@+id/medico_name"
+        android:src="@drawable/medico_logo"
+        android:layout_marginTop="90dp"
+        />
+   <!-- <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/centerLogo"
+        android:id="@+id/upperTxtLabel"
+        android:layout_centerHorizontal="true"
+        android:text="Personal Medical Portfolio"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textSize="18dp"
+        />-->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/lower_content"
+        android:layout_below="@+id/upperLabel"
+        android:orientation="horizontal"
+    />
+</RelativeLayout>

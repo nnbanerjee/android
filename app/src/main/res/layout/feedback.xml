@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/last_appointment_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Last Appointment"
+        style="@style/sub_heading" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:id="@+id/date_layout"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/last_appointment_text">
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/last_appointment_text"
+            android:text="Date: "
+            style="@style/body2"
+            android:id="@+id/date_text_show"
+        />
+        <TextView
+            android:id="@+id/feedback_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/last_appointment_text"
+            android:layout_centerHorizontal="true"
+            android:text="24-oct-2015 10:00 AM"
+            style="@style/body2"
+            android:layout_toRightOf="@+id/date_text_show"
+            />
+    </RelativeLayout>
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Visited"
+        android:layout_below="@+id/date_layout"
+        android:id="@+id/visited_radio"
+        style="@style/sub_heading"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="2dp"
+        />
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_below="@+id/visited_radio"
+        android:layout_height="150dp"
+        android:id="@+id/visited_layout"
+        android:layout_centerHorizontal="true"
+      >
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            style="@style/body2"
+            android:layout_below="@+id/visited_radio"
+            android:text="Rating"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rating_text"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/rating_text"
+            android:layout_below="@+id/visited_radio"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:id="@+id/star_layout"
+            android:weightSum="5"
+        >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/first_star"
+                android:background="@drawable/unselected_star"
+                android:layout_weight="1"
+            />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/second_star"
+                android:background="@drawable/unselected_star"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+            />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/third_star"
+                android:background="@drawable/unselected_star"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+            />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/fourth_star"
+                android:background="@drawable/unselected_star"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+            />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/fifth_star"
+                android:background="@drawable/unselected_star"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+             />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/star_layout"
+            style="@style/body2"
+            android:text="Reviews:"
+            android:fontFamily="sans-serif-medium"
+            android:id="@+id/reviews_text"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_toRightOf="@+id/reviews_text"
+            android:layout_below="@+id/star_layout"
+            android:layout_marginTop="20dp"
+            android:id="@+id/reviews"
+            android:paddingLeft="3dp"
+            android:background="@drawable/rounded_black_color"
+            android:imeOptions="actionDone"
+            style="@style/body1"
+        />
+
+    </RelativeLayout>
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/visited_layout"
+        android:layout_alignStart="@+id/visited_layout"
+        style="@style/body2"
+        android:text="Not Visited"
+        android:id="@+id/not_visited_radio"
+    />
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:id="@+id/save_feedback"
+        android:text="Save"
+        android:layout_below="@+id/not_visited_radio"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:layout_marginTop= "20dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rounded_orange_color"/>
+
+</RelativeLayout>
+</ScrollView>

@@ -1,0 +1,351 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:layout_margin="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/layout"
+            android:background="#ffffff">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout3"
+                android:weightSum="5"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layout"
+                android:background="#ffffff">
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/clinicsBtn"
+                    android:text="Summary"
+                    android:layout_weight="1"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="2dp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/square_blue_color"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="Documents"
+                    android:layout_weight="1"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="2dp"
+                    android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/square_grey_color"
+                    android:id="@+id/documentationBtn"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="Doctor Note"
+                    android:layout_weight="1"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="2dp"
+                    android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/square_grey_color"
+                    android:id="@+id/doctorNoteBtn"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="Treatment"
+                    android:layout_weight="1"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="2dp"
+                    android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/square_grey_color"
+                    android:id="@+id/treatmentBtn"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="Invoices"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/square_grey_color"
+                    android:id="@+id/invoicesBtn"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout1"
+            android:id="@+id/layout5">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Visit Date"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:id="@+id/emailIdText"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:id="@+id/visitedDate"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/emailIdText"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout6"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout5">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Visit Type"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:id="@+id/mobileText"
+                />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:spinnerMode="dialog"
+                android:id="@+id/visit"
+                android:prompt="@string/select_visit_type"
+                android:background="@drawable/square_grey_color"
+                android:entries="@array/visit_type_list"
+                android:layout_toRightOf="@+id/mobileText"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout7"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout6">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Referred by"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:id="@+id/genderText"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:id="@+id/referedBy"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/genderText"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout8"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout7">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Symptoms"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:id="@+id/symptomsText"
+                />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/symptomsValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/symptomsText"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout9"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout8">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Diagnosis"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:id="@+id/diagnosisText"
+                />
+            <!--<EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:id="@+id/specialityId"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/specializationText"/>-->
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/diagnosisValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/diagnosisText"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout10"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout9">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Medicine Prescribed"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:id="@+id/medicinePrescribedText"
+                />
+           <!-- <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:id="@+id/medicine"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/medicinePrescribedText"/>-->
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/medicineValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/reminderBtn"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/medicinePrescribedText"
+                />
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/reminderBtn"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/medicine_reminder"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout11"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout10">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Tests Prescribed"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:id="@+id/testPrescribedText"
+                />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/testPrescribedValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:textSize="18sp"
+                android:textColor="#1E90FF"
+                android:background="@drawable/square_grey_color"
+                android:layout_toRightOf="@+id/testPrescribedText"
+                />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:id="@+id/saveSummary"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/layout11"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_blue_color"/>
+    </RelativeLayout>
+</ScrollView>

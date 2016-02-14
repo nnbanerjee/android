@@ -1,0 +1,166 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/category"
+        style="@style/body2"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:text="Category"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/category"
+        android:singleLine="true"
+        style="@style/body1"
+        android:id="@+id/categoryValue"
+        android:imeOptions="actionDone"
+        android:background="#ffffff"
+        />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/categoryValue"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:id="@+id/medical_report"
+        android:imeOptions="actionDone"
+        android:background="#ffffff"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        style="@style/body2"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/medical_report"
+        android:layout_marginLeft="5dp"
+        android:text="Name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/name"
+        android:singleLine="true"
+        android:id="@+id/nameValue"
+        android:hint="Name"
+        style="@style/body1"
+        android:paddingLeft="15dp"
+        android:imeOptions="actionDone"
+        android:background="#ffffff"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clinic_text"
+        style="@style/body2"
+        android:layout_below="@+id/nameValue"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:text="Clinic"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/clinic_text"
+        android:singleLine="true"
+        style="@style/body1"
+        android:id="@+id/clinic"
+        android:imeOptions="actionDone"
+        android:background="#ffffff"
+        />
+
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:text="Capture"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:id="@+id/capture_image"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_orange_color"
+        android:layout_below="@+id/clinic"/>
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:text="Browse Picture"
+        android:id="@+id/browse_image"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_orange_color"
+        android:layout_below="@+id/clinic"
+        ></Button>
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:text="Browse Document"
+        android:id="@+id/browse_document"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:layout_marginRight="30dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_orange_color"
+        android:layout_below="@+id/clinic"
+        ></Button>
+
+
+    <ImageView
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:id="@+id/preview_image"
+       android:layout_below="@+id/browse_image"
+       android:layout_centerInParent="true"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Upload"
+        android:textSize="13dp"
+        android:background="@drawable/rounded_blue_color"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_below="@id/preview_image"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/upload"
+    />
+
+</RelativeLayout>

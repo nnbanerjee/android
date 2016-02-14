@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/body2"
+        android:id="@+id/show_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dental Procedure"
+        android:id="@id/procedure_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/body2"
+        android:layout_toRightOf="@+id/show_name"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Field List"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/body2"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/show_field_list"
+        android:layout_below="@+id/show_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+    />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#BFBFBF"
+        android:paddingTop="10dp"
+        android:weightSum="4"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/show_field_list"
+        android:id="@+id/layout1">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:padding="8dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:gravity="center"
+                android:text="Display Name"/>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="System Name"/>
+            <TextView
+                android:padding="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:layout_height="wrap_content"
+                android:text="Type"/>
+            <TextView
+                android:padding="8dp"
+                android:layout_weight="1"
+                android:layout_width="100dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:text="Default Value"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/field_list">
+    </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Add"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:id="@+id/add"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_orange_color"
+        android:layout_alignParentLeft="true">
+
+     </Button>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Save"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:id="@+id/save"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_orange_color">
+        </Button>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Delete"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:id="@+id/delete"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_orange_color"
+        android:layout_alignParentRight="true">
+
+    </Button>
+
+<!--
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Field Name"
+        android:id="@+id/show_field_name"
+        android:textSize="14dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/show_field_list"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:id="@+id/separaation_list"
+        android:layout_marginLeft="30dp"
+        android:textSize="14dp"
+        android:layout_toRightOf="@id/show_field_name"
+        android:layout_below="@+id/show_field_list"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/separaation_list"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/show_field_list"
+        android:id="@+id/show_type_text"
+        android:text="Type"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff"
+    />
+    <ListView
+        android:layout_width="200dp"
+        android:layout_height="350dp"
+        android:layout_below="@+id/show_type_text"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_black_color"
+        android:id="@+id/field_list">
+    </ListView>
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_blue_color"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        android:text="New Field"
+        android:id="@+id/add_new_field"
+        android:layout_toRightOf="@+id/field_list"
+        android:layout_below="@+id/show_type_text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+    />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_blue_color"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        android:id="@+id/edit_field"
+        android:layout_below="@+id/add_new_field"
+        android:layout_toRightOf="@+id/field_list"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Edit Field"/>
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_blue_color"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        android:layout_below="@+id/edit_field"
+        android:layout_toRightOf="@+id/field_list"
+        android:layout_marginLeft="20dp"
+        android:text="Remove"
+        android:id="@+id/remove_field"
+        android:layout_marginTop="20dp"/>
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_blue_color"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        android:layout_below="@+id/remove_field"
+        android:layout_toRightOf="@+id/field_list"
+        android:layout_marginLeft="20dp"
+        android:text="Save"
+        android:layout_marginTop="50dp"
+
+        android:id="@+id/save_field"
+
+       />
+-->
+
+</RelativeLayout>

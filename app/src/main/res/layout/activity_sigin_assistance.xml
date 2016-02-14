@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".SigninActivityAssistance">
+
+    <ImageView
+        android:id="@+id/upperLabel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/medico_registration_top_pane" />
+
+    <TextView
+        android:id="@+id/upperTxtLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Registration As Assistant"
+        android:textColor="@color/text_view_color"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <fragment
+        android:id="@+id/signin_content"
+        android:name="com.mindnerves.meidcaldiary.wizard.Registration_Formwizard_Assistant"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/upperLabel"
+        android:orientation="horizontal" />
+</RelativeLayout>

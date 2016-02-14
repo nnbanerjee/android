@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/doctorImg"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/doctor" />
+
+    <ImageView
+        android:id="@+id/downImg"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/doctorImg"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/down_arrow"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/doctorImg"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doctor Name"
+            style="@style/sub_heading" />
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/right_arrow_black"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/totalCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/nextBtn"
+            android:text="0"
+            android:textColor="#1E90FF"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nextBtn"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:text="0"
+            android:id="@+id/total_appointment"
+            android:textColor="#1E90FF"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+        />
+
+        <TextView
+            android:id="@+id/doctorSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorName"
+            android:text="Speciality"
+            style="@style/body2" />
+
+        <TextView
+            android:id="@+id/lastAppointmentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorSpeciality"
+            android:text=""
+
+            style="@style/body1"
+             />
+
+        <TextView
+            android:id="@+id/lastVisitedValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorSpeciality"
+            android:layout_toRightOf="@+id/lastAppointmentDate"
+            android:text="12-04-2015"
+            style="@style/body1"
+            android:textColor="#1E90FF" />
+
+
+        <TextView
+            android:id="@+id/lastAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastAppointmentDate"
+            android:text="Last Appoint. : "
+            style="@style/body1"/>
+        <TextView
+            android:id="@+id/lastAppointmentValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastAppointmentDate"
+            android:layout_toRightOf="@+id/lastAppointment"
+            android:text="12-04-2015"
+            android:textColor="#1E90FF"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/body1" />
+
+        <TextView
+            android:id="@+id/upcomingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastAppointment"
+            android:text="Upcoming Visit:  "
+            android:textColor="#000000"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastAppointmentDate"
+            android:layout_toRightOf="@+id/upcomingText"
+            android:text="12-04-2015"
+            android:textColor="#1E90FF"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/appointmentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upcomingText"
+            android:text="Next Appoint. : "
+
+            style="@style/body1"/>
+
+        <TextView
+            android:id="@+id/appointmentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastAppointment"
+            android:layout_toRightOf="@+id/appointmentText"
+            android:text=""
+            android:textColor="#1E90FF"
+            style="@style/body1" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

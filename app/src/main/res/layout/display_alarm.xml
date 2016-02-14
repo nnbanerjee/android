@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/normalalarm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="right"
+    android:gravity="right"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical" >
+    
+    <ScrollView
+    android:id="@+id/my_scrollview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     android:background="@android:color/darker_gray"
+    android:layout_above="@+id/LinearLayout01"
+    android:scrollbars="vertical" >
+
+      <LinearLayout
+      
+         android:id="@+id/normalalarm1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"      
+       
+        android:orientation="vertical" >
+    
+ <LinearLayout
+       
+         android:id="@+id/normalalarm2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:background="@android:color/darker_gray"      
+        android:orientation="vertical" >
+
+
+
+        <ImageView
+             android:id="@+id/analogClock1"
+             android:layout_width="wrap_content"
+             android:layout_height="237dp"
+             android:layout_gravity="center_horizontal"
+             android:layout_marginTop="5dp"
+             android:background="@drawable/clock123"
+             android:paddingBottom="5dp" />
+
+
+
+         <DigitalClock
+             android:id="@+id/digitalClock1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             android:paddingTop="5dp"
+             android:text="DigitalClock"
+             android:textColor="@android:color/white"
+             android:textSize="30sp"
+             android:textStyle="bold" />
+         
+
+
+ <TextView
+     android:id="@+id/tonetype"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_gravity="center_horizontal"
+     android:gravity="top|left"
+     android:paddingBottom="5dp"
+     android:paddingLeft="5dp"
+     android:paddingRight="5dp"
+     android:paddingTop="5dp"
+     android:text="Alarm"
+     android:textColor="@android:color/white"
+     android:textSize="25sp"
+     android:textStyle="normal" >
+
+               </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+           
+            android:layout_width="fill_parent"
+             android:id="@+id/normalalarm3"
+            android:layout_height="wrap_content"
+         android:background="@android:color/darker_gray"
+            android:orientation="horizontal"
+            android:paddingTop="5dp" >
+
+
+
+
+        <Button
+            android:id="@+id/dismiss"
+            android:layout_width="wrap_content"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/dismiss"
+            android:gravity="center"
+            android:paddingTop="5dp" />
+
+         <LinearLayout
+            
+             android:layout_width="fill_parent"
+              android:id="@+id/normalalarm4"
+             android:layout_height="wrap_content"
+             android:background="@android:color/darker_gray"
+             android:gravity="right"
+             android:orientation="horizontal" >
+
+
+ <TextView
+     android:id="@+id/time"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:paddingBottom="5dp"
+     android:paddingLeft="5dp"
+     android:paddingTop="5dp"
+     android:text="Alarm Repeat"
+     android:textColor="@android:color/white"
+     android:textSize="22sp"
+     android:textStyle="bold"
+     android:visibility="invisible" >
+
+        </TextView>
+
+
+
+
+        <Button
+            android:id="@+id/snooze"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/snooze"
+            android:gravity="center"
+            android:paddingTop="5dp" />
+
+        </LinearLayout>
+
+        </LinearLayout> 
+        </LinearLayout>
+    
+
+</ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clinic Name "
+            style="@style/sub_heading"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:id="@+id/clinicName"
+            android:textColor="#1E90FF"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/locationLayout"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/clinicName">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/location"
+                android:id="@+id/locationIcon"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="Clinic Location "
+                style="@style/body1"
+                android:layout_toRightOf="@+id/locationIcon"
+                android:id="@+id/clinicLocation"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact : "
+                style="@style/body1"
+                android:layout_below="@+id/clinicLocation"
+                android:layout_toRightOf="@+id/locationIcon"
+                android:id="@+id/clinicContactText"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clinic Contact"
+                style="@style/body1"
+                android:layout_below="@+id/clinicLocation"
+                android:layout_toRightOf="@+id/clinicContactText"
+                android:id="@+id/clinicContact"
+                android:textColor="#000000"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/shift1Layout"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/locationLayout">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/icon_clock"
+                android:id="@+id/clockIcon"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shift 1 : "
+                style="@style/body2"
+                android:layout_toRightOf="@+id/clockIcon"
+                android:id="@+id/shift1DayText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon - Sun"
+                style="@style/body2"
+                android:layout_toRightOf="@+id/shift1DayText"
+                android:id="@+id/shift1Days"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9:00 AM – 2:45 PM"
+                style="@style/body2"
+                android:layout_toRightOf="@+id/clockIcon"
+                android:layout_below="@+id/shift1DayText"
+                android:id="@+id/shift1Time"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/bookOnline1"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_alignTop="@+id/shift1Time"
+                android:layout_toRightOf="@+id/shift1Time"
+                android:layout_alignParentRight="true"
+                android:text="Book Online"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Appointment : "
+                style="@style/body1"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/clockIcon"
+                android:layout_below="@+id/shift1Time"
+                android:id="@+id/nextAppointment1"
+                android:textColor="#1E90FF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12-may-2015  8:15PM"
+                style="@style/body1"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="40dp"
+                android:layout_below="@+id/nextAppointment1"
+                android:id="@+id/nextAppointment1Value"
+                android:textColor="#1E90FF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/visited1"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_above="@+id/nextChange1"
+                android:layout_marginBottom="5dp"
+                android:layout_toLeftOf="@+id/notVisited1"
+                android:text="Visited"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/notVisited1"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/bookOnline1"
+                android:layout_alignParentRight="true"
+                android:text="Not Visited"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/nextChange1"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/notVisited1"
+                android:layout_toRightOf="@+id/nextAppointment1Value"
+                android:layout_alignParentRight="true"
+                android:text="Change"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/shift2Layout"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/shift1Layout">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/icon_clock"
+                android:id="@+id/clockIcon2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shift 2 : "
+                style="@style/body2"
+                android:layout_toRightOf="@+id/clockIcon2"
+                android:id="@+id/shift2DayText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon - Sun"
+                style="@style/body2"
+                android:layout_toRightOf="@+id/shift2DayText"
+                android:id="@+id/shift2Days"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9:00 AM – 2:45 PM"
+                style="@style/body2"
+                android:layout_toRightOf="@+id/clockIcon2"
+                android:layout_below="@+id/shift2DayText"
+                android:id="@+id/shift2Time"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:id="@+id/bookOnline2"
+                android:layout_alignTop="@+id/shift2Time"
+                android:layout_toRightOf="@+id/shift2Time"
+                android:layout_alignParentRight="true"
+                android:text="Book Online"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Appointment : "
+                style="@style/body1"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/clockIcon"
+                android:layout_below="@+id/shift2Time"
+                android:id="@+id/nextAppointment2"
+                android:textColor="#1E90FF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12-may-2015  8:15PM"
+                style="@style/body1"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/nextAppointment2"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/nextAppointment2Value"
+                android:textColor="#1E90FF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/visited2"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/bookOnline2"
+                android:layout_marginBottom="5dp"
+                android:layout_toLeftOf="@+id/notVisited2"
+                android:text="Visited"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/notVisited2"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/bookOnline2"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentRight="true"
+                android:text="Not Visited"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/nextChange2"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/notVisited2"
+                android:layout_toRightOf="@+id/nextAppointment2Value"
+                android:layout_alignParentRight="true"
+                android:text="Change"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/shift3Layout"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/shift2Layout">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/icon_clock"
+                android:id="@+id/clockIcon3"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shift 3 : "
+                android:textSize="@dimen/body2"
+                android:fontFamily="sans-serif-medium"
+                android:layout_toRightOf="@+id/clockIcon3"
+                android:id="@+id/shift3DayText"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon - Sun"
+                style="@style/body2"
+                android:layout_toRightOf="@+id/shift3DayText"
+                android:id="@+id/shift3Days"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9:00 AM – 2:45 PM"
+                style="@style/body2"
+                android:layout_toRightOf="@+id/clockIcon3"
+                android:layout_below="@+id/shift3DayText"
+                android:id="@+id/shift3Time"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:id="@+id/bookOnline3"
+                android:layout_alignTop="@+id/shift3Time"
+                android:layout_toRightOf="@+id/shift3Time"
+                android:layout_alignParentRight="true"
+                android:text="Book Online"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Appointment : "
+                style="@style/body1"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/clockIcon"
+                android:layout_below="@+id/shift3Time"
+                android:id="@+id/nextAppointment3"
+                android:textColor="#1E90FF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12-may-2015  8:15PM"
+                style="@style/body1"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="40dp"
+                android:layout_below="@+id/nextAppointment3"
+                android:id="@+id/nextAppointment3Value"
+                android:textColor="#1E90FF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/visited3"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/bookOnline3"
+                android:layout_marginBottom="5dp"
+                android:layout_toLeftOf="@+id/notVisited3"
+                android:text="Visited"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/notVisited3"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/bookOnline3"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentRight="true"
+                android:text="Not Visited"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/nextChange3"
+                android:layout_marginRight="10dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                android:layout_below="@+id/notVisited3"
+                android:layout_toRightOf="@+id/nextAppointment3Value"
+                android:layout_alignParentRight="true"
+                android:text="Change"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:id="@+id/hasNextAppo"
+            android:layout_marginRight="10dp"
+            android:textColor="#1E90FF"
+            android:textSize="15sp"
+            android:visibility="gone"
+            android:layout_below="@+id/bookOnline3"
+            android:layout_toRightOf="@+id/nextAppointment3"
+            android:layout_alignParentRight="true"
+            android:text="Change"
+            />
+    </RelativeLayout>
+</RelativeLayout>

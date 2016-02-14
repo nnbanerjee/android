@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:id="@+id/doctor_image"
+        android:background="@drawable/doctor_image"
+    />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_margin="2dp"
+        android:id="@+id/doctor_down_image"
+        android:layout_below="@+id/doctor_image"
+        android:background="@drawable/down_arrow"
+    />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_toRightOf="@+id/doctor_image"
+        android:id="@+id/layout_doctor_basic_info">
+        <TextView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ABC"
+            style="@style/sub_heading"
+            android:id="@+id/first_name"
+        />
+        <TextView
+            android:id="@+id/speciality"
+            android:padding="2dp"
+            android:layout_below="@id/first_name"
+            android:layout_width="wrap_content"
+            style="@style/body2"
+            android:layout_height="wrap_content"
+            android:text="speciality"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="2dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/doctor_location"
+            android:layout_height="wrap_content"
+            style="@style/body1"
+            android:text="Pune"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/add"
+            android:id="@+id/add_doctor_button"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:paddingRight="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/book_online_appointment"
+            android:text="Book Online"
+            android:layout_alignParentBottom="true"
+            android:textColor="#1E90FF"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            style="@style/body"
+            android:padding="5dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_doctor_speciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/doctor_image"
+        android:layout_below="@+id/layout_doctor_basic_info">
+
+
+
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

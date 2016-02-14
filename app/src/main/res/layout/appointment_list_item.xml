@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <ImageView
+        android:id="@+id/doctorImg"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/doctor_image" />
+    <ImageView
+        android:id="@+id/downImg"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/doctorImg"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:visibility="gone"
+        android:background="@drawable/down_arrow"
+        android:scaleType="fitXY" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/doctorImg"
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doctor Name"
+            style="@style/sub_heading"/>
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/right_arrow"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/summary_text"
+            android:layout_toLeftOf="@+id/nextBtn"
+            style="@style/body1"
+            android:text="Feedback"
+            android:textColor="#1E90FF"
+        />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/nextBtn"
+            android:id="@+id/alarm_switch"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/toggle_off"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            />
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toLeftOf="@+id/alarm_switch"
+            android:layout_below="@+id/nextBtn"
+            android:id="@+id/clock_show"
+            android:src="@drawable/timing" />
+        <TextView
+            android:id="@+id/doctorSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorName"
+            android:text="Speciality"
+            style="@style/body2"
+         />
+        <TextView
+            android:id="@+id/appointment_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorSpeciality"
+            android:text="Appoint. Type : "
+            style="@style/body1"
+            android:layout_marginTop="5dp"
+         />
+        <TextView
+            android:id="@+id/appointment_type_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorSpeciality"
+            android:layout_toRightOf="@+id/appointment_type"
+            android:text="New Profile"
+            android:layout_marginTop="5dp"
+            style="@style/body1"/>
+        <TextView
+            android:id="@+id/appointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appointment_type"
+            android:text="Appoint. : "
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
+            style="@style/body1" />
+        <TextView
+            android:id="@+id/appointmentValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appointment_type"
+            android:layout_toRightOf="@+id/appointment"
+            android:text="12-04-2015"
+            android:textColor="#1E90FF"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="5dp"
+            style="@style/body1" />
+    </RelativeLayout>
+
+</RelativeLayout>

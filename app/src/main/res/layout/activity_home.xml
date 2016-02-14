@@ -1,0 +1,231 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context=".HomeActivity">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <RelativeLayout
+                android:id="@+id/home_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#9CDBE5">
+
+                <ImageView
+                    android:id="@+id/global_medico_logo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/medico_logo" />
+
+                <ImageView
+                    android:id="@+id/home_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/global_medico_logo"
+                    android:background="@drawable/medico" />
+
+                <Button
+                    android:id="@+id/drawar_button"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/home" />
+
+                <Button
+                    android:id="@+id/refresh"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_toLeftOf="@+id/drawar_button"
+                    android:background="@drawable/refresh" />
+
+                <Button
+                    android:id="@+id/back_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/home_icon"
+                    android:background="@drawable/back"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/show_global_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="Patient"
+                    android:textColor="#ffffff"
+                    style="@style/title"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/logout"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/home_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_below="@+id/home_layout1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/doctor"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_picture"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Raviraj Dongare"
+                    android:textColor="#6578F2"
+                    style="@style/sub_heading"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/status_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Verified"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/heading"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/status_text_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/status_text"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="Status:"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/heading"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/notification_layout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@+id/home_layout2"
+                android:background="#9CDBE5"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/notification_ping"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight=".15"
+                    android:background="@drawable/notification" />
+
+                <Button
+                    android:id="@+id/messages_ping"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight=".15"
+                    android:background="@drawable/msg" />
+
+                <Button
+                    android:id="@+id/patient_ping"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight=".15"
+                    android:background="@drawable/searchpatient" />
+
+                <Button
+                    android:id="@+id/msg_notification"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight=".15"
+                    android:background="@drawable/msg"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/doctor_search"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight=".15"
+                    android:background="@drawable/searchdoctor" />
+
+                <Button
+                    android:id="@+id/clinic_notification"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight=".15"
+                    android:background="@drawable/searchclinic" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:id="@+id/separation_bar"
+                android:layout_below="@id/notification_layout"
+                android:background="#ffffff"
+                />
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/separation_bar"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="start"
+            android:background="#F9FDFD"
+            android:choiceMode="singleChoice" />
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>

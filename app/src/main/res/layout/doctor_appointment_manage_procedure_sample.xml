@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#69933E">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select procedure"
+            android:layout_alignParentTop="true"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:id="@+id/searchProcedureText"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            />
+        
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="Search:"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            android:layout_below="@+id/searchProcedureText"
+            android:id="@+id/show_search"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            />
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/search"
+            android:id="@+id/searchButton"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/searchProcedureText"
+            android:layout_toLeftOf="@+id/addNewProcedure"
+           />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#ffffff"
+            android:layout_below="@+id/searchProcedureText"
+            android:id="@+id/search_template"
+            android:layout_toRightOf="@+id/show_search"
+            android:layout_toLeftOf="@+id/searchButton"
+            android:layout_marginTop="5dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_marginLeft="10dp"/>
+
+        </RelativeLayout>
+
+</RelativeLayout>

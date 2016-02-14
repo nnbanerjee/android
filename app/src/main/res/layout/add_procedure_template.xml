@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:background="#ffffff"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/show_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif"
+            android:text="Procedure Name : "
+            android:textSize="@dimen/sub_heading" />
+
+        <TextView
+            android:id="@id/procedure_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/show_name"
+            android:fontFamily="sans-serif"
+            android:text="Dental Procedure"
+            android:textSize="@dimen/sub_heading" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="#72BFC5"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:text="Name"
+            android:textColor="#ffffff"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2" />
+
+        <TextView
+            android:id="@id/procedure_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/nameText"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:text="Dental Procedure"
+            android:textColor="#ffffff"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/body1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_list_view"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_below="@+id/procedure_name"
+            android:weightSum="2"
+            android:orientation="horizontal"
+        >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Name"
+                android:background="#2D2D8A"
+                android:textColor="#ffffff"
+                android:paddingTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:paddingLeft="5dp"
+                android:paddingBottom="10dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Value"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:background="#2D2D8A"
+                android:textColor="#ffffff"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/field_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_list_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/rounded_white_color"></ListView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/layout2"
+            android:background="@drawable/rounded_blue_color"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+
+            />
+
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/layout2"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/cancelBtn"
+            android:background="@drawable/rounded_orange_color"
+            android:text="Add"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+    <!--   <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Field Name"
+           android:id="@+id/show_field_name"
+           android:textSize="14dp"
+           android:layout_below="@+id/show_name"
+           android:textColor="#ffffff"
+           android:layout_marginLeft="20dp"
+           android:layout_marginTop="20dp"
+           />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="|"
+           android:id="@+id/separaation_list"
+           android:layout_marginLeft="30dp"
+           android:textSize="14dp"
+           android:layout_below="@+id/show_name"
+           android:layout_toRightOf="@id/show_field_name"
+           android:layout_marginTop="20dp"
+           android:textColor="#ffffff"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@+id/separaation_list"
+           android:layout_marginLeft="30dp"
+           android:id="@+id/show_type_text"
+           android:text="Type"
+           android:layout_below="@+id/show_name"
+           android:layout_marginTop="20dp"
+           android:textColor="#ffffff"
+           />
+       <ListView
+           android:layout_width="200dp"
+           android:layout_height="350dp"
+           android:layout_below="@+id/show_type_text"
+           android:layout_marginLeft="5dp"
+           android:layout_marginTop="10dp"
+           android:background="@drawable/rounded_white_color"
+           android:id="@+id/field_list">
+       </ListView>-->
+
+</RelativeLayout>

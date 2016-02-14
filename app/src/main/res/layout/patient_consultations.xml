@@ -1,0 +1,369 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#E4FDFC"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout1"
+        android:background="@drawable/rounded_white_thick_color"
+        android:layout_marginTop="20dp">
+
+    <ImageButton
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:id="@+id/doctorImg"
+        android:background="@drawable/patientgirl"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/doctorImg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Patients Profiles"
+            style="@style/body2"
+            android:id="@+id/doctorBtn"
+            />
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/right_arrow_home"
+            android:id="@+id/right_arrow_patient_profile"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_patients"
+            android:textSize="@dimen/body2"
+            android:fontFamily="sans-serif"
+            android:layout_toLeftOf="@+id/right_arrow_patient_profile"
+            android:text="0"
+        />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/doctorBtn"
+            android:background="#a0a0a0"
+            android:visibility="gone"
+            android:id="@+id/view1"
+            ></View>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Visited"
+            android:id="@+id/lastAppointmentDate"
+            android:textSize="@dimen/small_heading"
+            android:visibility="gone"
+            android:textColor="#1E90FF"
+            android:layout_below="@+id/view1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consultation History"
+            android:layout_marginLeft="10dp"
+            android:textColor="#1E90FF"
+            android:textSize="@dimen/small_heading"
+            android:visibility="gone"
+            android:layout_toRightOf="@+id/lastAppointmentDate"
+            android:layout_below="@+id/view1"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout1"
+        android:id="@+id/layout2"
+        android:visibility="gone"
+        android:background="@drawable/rounded_white_thick_color"
+        android:layout_margin="10dp">
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:id="@+id/diagnosticImg"
+            android:background="@drawable/patient_queue"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:layout_toRightOf="@+id/diagnosticImg">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Manage Patient Queue"
+                android:textSize="@dimen/heading"
+                android:id="@+id/diagnosticText"
+                android:textColor="#000000"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/diagnosticText"
+                android:background="#a0a0a0"
+                android:id="@+id/view2"
+                ></View>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Visited"
+                android:visibility="invisible"
+                android:textColor="#1E90FF"
+                android:layout_below="@+id/view2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultation History"
+                android:layout_marginLeft="10dp"
+                android:textColor="#1E90FF"
+                android:visibility="invisible"
+                android:layout_toRightOf="@+id/lastAppointmentDate"
+                android:layout_below="@+id/view2"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:id="@+id/layout4"
+        android:background="@drawable/rounded_white_thick_color"
+        android:layout_marginTop="20dp">
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:id="@+id/medicineAlertsImg"
+            android:background="@drawable/appointments"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/medicineAlertsImg">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Manage Appointments"
+                style="@style/body2"
+                android:id="@+id/medicineAlertsText"
+                />
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/right_arrow_home"
+                android:id="@+id/right_arrow_manage_appointments"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_appointments"
+                android:textSize="@dimen/body2"
+                android:fontFamily="sans-serif"
+                android:layout_toLeftOf="@+id/right_arrow_manage_appointments"
+                android:text="0"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/medicineAlertsText"
+                android:background="#a0a0a0"
+                android:visibility="gone"
+                android:id="@+id/view4"
+                ></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Visited"
+                android:visibility="gone"
+                android:textColor="#1E90FF"
+                android:layout_below="@+id/view4"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultation History"
+                android:layout_marginLeft="10dp"
+                android:textColor="#1E90FF"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/lastAppointmentDate"
+                android:layout_below="@+id/view4"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout4"
+        android:id="@+id/manage_finance"
+        android:background="@drawable/rounded_white_thick_color"
+        android:layout_marginTop="20dp">
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:id="@+id/firstAidKitsImg"
+            android:background="@drawable/finance"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/firstAidKitsImg">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Manage Finance"
+                style="@style/body2"
+                android:id="@+id/firstAidKitsText"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/firstAidKitsText"
+                android:background="#a0a0a0"
+                android:visibility="gone"
+                android:id="@+id/view3"
+                ></View>
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/right_arrow_home"
+                android:id="@+id/right_arrow_manage_finance"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_finance"
+                android:textSize="@dimen/body2"
+                android:fontFamily="sans-serif"
+                android:layout_toLeftOf="@+id/right_arrow_manage_finance"
+                android:text="0"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Visited"
+                android:visibility="gone"
+                android:textColor="#1E90FF"
+                android:layout_below="@+id/view3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultation History"
+                android:layout_marginLeft="10dp"
+                android:textColor="#1E90FF"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/lastAppointmentDate"
+                android:layout_below="@+id/view3"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manage_finance"
+        android:id="@+id/feedback_layout"
+        android:background="@drawable/rounded_white_thick_color"
+        android:layout_marginTop="20dp">
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:id="@+id/feedback_icon"
+            android:background="@drawable/selected_star"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/manage_feedback"
+            android:layout_toRightOf="@+id/feedback_icon">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Feedback"
+                style="@style/body2"
+                android:id="@+id/feedback_text"
+                />
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/right_arrow_home"
+                android:id="@+id/right_arrow_feedback"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_feedback"
+                android:textSize="@dimen/body2"
+                android:fontFamily="sans-serif"
+                android:layout_toLeftOf="@+id/right_arrow_feedback"
+                android:text="0"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/feedback_text"
+                android:background="#a0a0a0"
+                android:visibility="gone"
+                android:id="@+id/view5"
+                ></View>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Visited"
+                android:visibility="gone"
+                android:textColor="#1E90FF"
+                android:layout_below="@+id/view5"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultation History"
+                android:layout_marginLeft="10dp"
+                android:textColor="#1E90FF"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/lastAppointmentDate"
+                android:layout_below="@+id/view5"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+</ScrollView>

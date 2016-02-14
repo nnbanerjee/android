@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Slot Name:- "
+        android:padding="5dp"
+        android:id="@+id/slot_name_text"
+        style="@style/body2"
+    />
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/slot_name_text"
+        android:padding="5dp"
+        android:id="@+id/slot_name"
+        android:text="Shift1"
+        style="@style/body1"/>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot_name_text"
+        android:text="Day of Week:-"
+        android:padding="5dp"
+        style="@style/body2"
+        android:id="@+id/days_week_text"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot_name_text"
+        android:layout_toRightOf="@+id/days_week_text"
+        android:id="@+id/days_of_week"
+        android:text="Mon-Tue-Wed"
+        android:padding="5dp"
+        style="@style/body1"
+    />
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/slot_time_text"
+        android:text="Slot Time:-"
+        style="@style/body2"
+        android:layout_below="@+id/days_week_text"
+        android:padding="5dp"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/body1"
+        android:text="9:00 AM To 12:00 PM"
+        android:layout_below="@+id/days_week_text"
+        android:padding="5dp"
+        android:id="@+id/slot_time"
+        android:layout_toRightOf="@+id/slot_time_text"
+    />
+
+</RelativeLayout>

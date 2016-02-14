@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ABC"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:id="@+id/astnt_first_name"
+        />
+
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:id="@+id/checkbox_astnt"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_below="@+id/astnt_first_name"
+            android:id="@+id/astnt_location"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:paddingBottom="10dp"
+            android:text="Pune"/>
+
+        <View
+
+            android:layout_below="@+id/astnt_location"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="@drawable/startbar"/>
+</RelativeLayout>

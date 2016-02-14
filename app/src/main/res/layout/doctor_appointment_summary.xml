@@ -1,0 +1,326 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:layout_margin="5dp">
+
+        <RelativeLayout
+            android:id="@+id/layout_clinic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/clinic_text"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="Clinic Name"
+                style="@style/body2"
+                />
+
+            <TextView
+                android:id="@+id/clinicName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/clinic_text"
+                android:background="@drawable/square_grey_color"
+                android:paddingLeft="5dp"
+                style="@style/body1"
+                android:textColor="#1E90FF"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_clinic"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/emailIdText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="Visit Date"
+                style="@style/body2" />
+
+            <TextView
+                android:id="@+id/visitedDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/emailIdText"
+                android:background="@drawable/square_grey_color"
+                android:paddingLeft="5dp"
+                android:textColor="#1E90FF"
+                style="@style/body1"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout5"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/mobileText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="Visit Type"
+                style="@style/body2" />
+
+            <Spinner
+                android:id="@+id/visit"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_toRightOf="@+id/mobileText"
+                android:background="@drawable/square_grey_color"
+                android:entries="@array/visit_type_list"
+                android:paddingLeft="5dp"
+                android:prompt="@string/select_visit_type"
+                android:spinnerMode="dialog"
+                android:textColor="#1E90FF"
+                style="@style/body1" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout6"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/genderText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="Referred by"
+                style="@style/body2"/>
+
+            <EditText
+                android:id="@+id/referedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/genderText"
+                android:background="@drawable/square_grey_color"
+                android:paddingLeft="5dp"
+                android:textColor="#1E90FF"
+                style="@style/body1" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout7"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/symptomsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Symptoms"
+                style="@style/body2" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/symptomsValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/symptomsText"
+                android:background="@drawable/square_grey_color"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/symptomsHistryBtn"
+                android:textColor="#1E90FF"
+                android:scrollbars="vertical"
+                style="@style/body1" />
+
+            <Button
+                android:id="@+id/symptomsHistryBtn"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/medicinePrescribedText"
+                android:background="@drawable/histry_icon" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout8"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/diagnosisText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diagnosis"
+                style="@style/body2"/>
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/diagnosisValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/diagnosisText"
+                android:background="@drawable/square_grey_color"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/diagnosisHistryBtn"
+                android:textColor="#1E90FF"
+                style="@style/body1"
+                />
+            <Button
+                android:id="@+id/diagnosisHistryBtn"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/medicinePrescribedText"
+                android:background="@drawable/histry_icon" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout9"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/medicinePrescribedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Medicine Prescribed"
+                style="@style/body2"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/prescribHistryBtn"
+                android:layout_below="@+id/medicinePrescribedText"
+                android:background="@drawable/square_grey_color">
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/medicineValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/medicinePrescribedText"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:layout_toLeftOf="@+id/reminderBtn"
+                    android:completionThreshold="1"
+                    android:paddingLeft="5dp"
+                    android:textColor="#1E90FF"
+                    android:textSize="@dimen/edit_text" />
+
+                <Button
+                    android:id="@+id/reminderBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/medicinePrescribedText"
+                    android:background="@drawable/medicine_reminder" />
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/alarm_list">
+                </ListView>
+            </RelativeLayout>
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/add_alarm"
+                android:background="@drawable/add"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/medicinePrescribedText"
+                android:layout_marginRight="5dp"
+            />
+            <Button
+                android:id="@+id/prescribHistryBtn"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/add_alarm"
+                android:background="@drawable/histry_icon" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout10"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/testPrescribedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tests Prescribed"
+                style="@style/body2" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/testPrescribedValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/testPrescribedText"
+                android:background="@drawable/square_grey_color"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/testHistryBtn"
+                android:textColor="#1E90FF"
+                style="@style/body1"/>
+
+            <Button
+                android:id="@+id/testHistryBtn"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/medicinePrescribedText"
+                android:background="@drawable/histry_icon" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/saveSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/layout11"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_blue_color"
+            android:gravity="center"
+            android:text="Save"
+            android:layout_marginTop="20dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

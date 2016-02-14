@@ -1,0 +1,263 @@
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/clinicListView"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#ffffff">
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/backBtn"
+            android:visibility="gone"
+            android:background="@drawable/back"
+            android:layout_alignParentLeft="true"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clinic Name"
+            android:textColor="#1E90FF"
+            style="@style/sub_heading"
+            android:paddingRight="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/backBtn"
+            android:id="@+id/clinicName"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appointments"
+            android:textColor="#1E90FF"
+            style="@style/body2"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/clinicName"
+            android:id="@+id/appointmentText"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date :"
+            android:textColor="#1E90FF"
+            style="@style/body2"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/appointmentText"
+            android:id="@+id/dateText"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            android:id="@+id/dateLayout"
+            android:background="@drawable/square_grey_color"
+            android:layout_toRightOf="@+id/dateText"
+            android:layout_below="@+id/appointmentText">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="25-05-2015"
+                style="@style/body1"
+                android:layout_marginTop="3dp"
+                android:id="@+id/dateValue"
+                />
+
+            <Button
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/timeBtn"
+                android:layout_toRightOf="@+id/dateValue"
+                android:background="@drawable/calendar2"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visit Type : "
+            android:textColor="#1E90FF"
+            style="@style/body2"
+            android:layout_below="@+id/dateLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/visitTypeText"
+            />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Follow up"
+            android:textColor="#1E90FF"
+            style="@style/body1"
+            android:spinnerMode="dialog"
+            android:background="@drawable/square_grey_color"
+            android:prompt="@string/select_visit_type"
+            android:entries="@array/visit_type_list"
+            android:layout_toRightOf="@+id/visitTypeText"
+            android:layout_below="@+id/dateLayout"
+            android:id="@+id/visitType"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shift 1 : "
+            android:textColor="#1E90FF"
+            style="@style/body2"
+            android:layout_below="@+id/visitTypeText"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/shiftName"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09:00 AM to 06:00 PM"
+            android:textColor="#1E90FF"
+            style="@style/body1"
+            android:layout_toRightOf="@+id/shiftName"
+            android:layout_below="@+id/visitType"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/shiftValue"
+            />
+
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:numColumns="5"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/shiftValue"
+            android:id="@+id/timeTeableList">
+        </GridView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:id="@+id/cancelBtn"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginRight="5sp"
+            android:background="@drawable/rounded_orange_color"
+            android:layout_toLeftOf="@+id/bookNowBtn"
+            android:layout_below="@+id/timeTeableList"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Now"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:id="@+id/bookNowBtn"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_blue_color"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/timeTeableList"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/bookNowBtn">
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#33CC00"
+                android:id="@+id/greenColor"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available"
+                style="@style/body2"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/availableText"
+                android:layout_toRightOf="@+id/greenColor"
+                android:layout_below="@+id/bookNowBtn"/>
+
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#FF9900"
+                android:id="@+id/orangeColor"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/availableText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="On Request"
+                style="@style/body2"
+                android:id="@+id/orangeText"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/orangeColor"/>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#FF0000"
+                android:id="@+id/redColor"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/orangeText"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Occupied"
+                style="@style/body2"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/redColor"/>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#C0C0C0"
+                android:id="@+id/greyColor"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/greenColor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Not Available"
+                style="@style/body2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/availableText"
+                android:layout_toRightOf="@+id/greyColor"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

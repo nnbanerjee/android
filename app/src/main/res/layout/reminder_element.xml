@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ABC"
+            style="@style/body2"
+            android:id="@+id/reminder_text"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:textColor="@color/white"
+            android:id="@+id/checkbox_reminder"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:00 AM"
+            style="@style/body1"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:id="@+id/reminder_time"
+            android:layout_toLeftOf="@id/checkbox_reminder"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_toLeftOf="@id/reminder_time"
+            android:text="Time:"
+            android:id="@+id/show_time"
+            style="@style/body1"
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            style="@style/body1"
+            android:id="@+id/show_date"
+            android:layout_below="@+id/reminder_text"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+        />
+        <TextView
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/show_date"
+            android:layout_below="@id/reminder_text"
+            android:text="13-3-2015"
+            style="@style/body1"
+            android:id="@+id/reminder_date"
+            android:layout_marginLeft="10dp"
+        />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/reminder_date"
+            android:background="@drawable/startbar"
+            android:layout_marginTop="10dp"/>
+
+
+</RelativeLayout>

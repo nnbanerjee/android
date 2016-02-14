@@ -1,0 +1,363 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="5dp"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <com.mindnerves.meidcaldiary.HorizontalListView
+            android:id="@+id/fieldList"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="5dp"
+            android:visibility="gone" />
+
+        <com.mindnerves.meidcaldiary.HorizontalListView
+            android:id="@+id/fieldList1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/fieldList"
+            android:layout_margin="5dp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout7"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="20dp">
+
+            <CheckBox
+                android:id="@+id/share_with_patient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Share with the patient"
+                android:textColor="#1E90FF"
+                android:textSize="@dimen/body1" />
+
+            <Button
+                android:id="@+id/addNewInvoices"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/add"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/invoicesList"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/black_border_listview"
+            android:padding="5dp"
+            android:layout_below="@+id/layout1"
+            android:fadeScrollbars="false">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/noDataFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/invoicesList"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="No Data Found !!!"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/invoicesList"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/layout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Total : "
+                    android:textSize="@dimen/body2" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:text="Total : "
+                    android:textSize="14dp"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/invoiceTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="@dimen/body1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout3"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="(-)Discount(%):"
+                    android:textSize="@dimen/body2" />
+
+                <EditText
+                    android:id="@+id/percentageDiscount"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="@dimen/body1" />
+
+                <EditText
+                    android:id="@+id/discountValue"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text=" 0.00 "
+                    android:textSize="@dimen/body1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout4"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="(+) Tax(%)  : "
+                    android:textSize="@dimen/body2" />
+
+                <EditText
+                    android:id="@+id/percentageTax"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="@dimen/body1" />
+
+                <EditText
+                    android:id="@+id/taxValue"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0.00 "
+                    android:textSize="@dimen/body1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout5"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Grand Total : "
+                    android:textSize="@dimen/body2" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:text="Grand Total : "
+                    android:textSize="14dp"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:id="@+id/grandTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0.0"
+                    android:textSize="@dimen/body1" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/layout6"
+                android:background="#808080"></View>
+
+
+            <LinearLayout
+                android:id="@+id/layout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text=" (-) Advance : "
+                    android:textSize="@dimen/body2" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:text="Grand Total : "
+                    android:textSize="14dp"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:id="@+id/advanceValue"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0.00"
+                    android:textSize="@dimen/body1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout7"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text=" Total Due : "
+                    android:textSize="@dimen/body2" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:text="Grand Total : "
+                    android:textSize="14dp"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:id="@+id/totalDueValue"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:editable="false"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0.0"
+                    android:textSize="@dimen/body1" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/saveGrandTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/layout8"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_blue_color"
+                android:gravity="center"
+                android:hint="advance amount"
+                android:text="Save"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

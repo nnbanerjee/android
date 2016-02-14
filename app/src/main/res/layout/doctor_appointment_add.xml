@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="28-April – 2015"
+            style="@style/sub_heading" />
+
+        <RadioButton
+            android:id="@+id/create_appointment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Create Appointment"
+            style="@style/body2" />
+
+        <Button
+            android:id="@+id/right_arrow_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/date_text"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/right_arrow" />
+
+        <RelativeLayout
+            android:id="@+id/create_appointment_layout"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/create_appointment_text"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/slot_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                style="@style/body2"
+                android:layout_marginTop="15dp"
+                android:text="Slot:" />
+
+            <Spinner
+                android:id="@+id/slot_spinner"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                style="@style/body1"
+                android:layout_toRightOf="@+id/slot_text"></Spinner>
+
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/slot_text"
+                android:layout_below="@+id/slot_text"
+                android:layout_marginTop="30dp"
+                style="@style/body2"
+                android:text="Time:" />
+
+            <Spinner
+                android:id="@+id/time_spinner"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_alignStart="@id/slot_spinner"
+                android:layout_below="@+id/slot_spinner"
+                android:layout_marginTop="10dp"
+                style="@style/body1"
+                android:layout_toRightOf="@+id/time_text"></Spinner>
+
+            <TextView
+                android:id="@+id/patient_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/time_text"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="35dp"
+                style="@style/body2"
+                android:text="Patient:" />
+
+            <Spinner
+                android:id="@+id/patient_spinner"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_alignStart="@+id/slot_spinner"
+                android:layout_below="@+id/time_spinner"
+                android:layout_marginTop="10dp"
+                style="@style/body1"
+                android:layout_toRightOf="@+id/patient_text">
+
+            </Spinner>
+
+            <TextView
+                android:id="@+id/not_found_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patient_spinner"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
+                android:text="Not Found? Capture"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/patient_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patient_spinner"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/not_found_text"
+                android:text="Patient Details"
+                android:textColor="#00ecff"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <RadioButton
+            android:id="@+id/Mark_as"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/create_appointment_layout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Mark as"
+            style="@style/body2"/>
+
+        <Spinner
+            android:id="@+id/mark_as_spinner"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_alignStart="@id/slot_spinner"
+            android:layout_below="@+id/create_appointment_layout"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            style="@style/body1"
+            android:layout_toRightOf="@+id/Mark_as"></Spinner>
+
+        <RelativeLayout
+            android:id="@+id/layout_mark_as"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/Mark_as"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+
+            >
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/all_slots_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Slots"
+                    style="@style/body2" />
+
+
+                <RadioButton
+                    android:id="@+id/selected_slot_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selected Slot"
+                    style="@style/body2"/>
+
+                <Spinner
+                    android:id="@+id/slot_select_spinner"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    style="@style/body1"
+                    android:layout_marginTop="3dp"></Spinner>
+
+
+                <RadioButton
+                    android:id="@+id/select_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Select Time"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="@dimen/body2" />
+
+                <Spinner
+                    android:id="@+id/selected_time_spineer"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    style="@style/body1"
+                    android:layout_marginTop="3dp"></Spinner>
+
+
+                <RadioButton
+                    android:id="@+id/whole_week_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Whole week"
+                    style="@style/body2" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/done"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/radio_group"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/rounded_blue_color"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

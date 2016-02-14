@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff">
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/add_clinic_appointment"
+        android:background="@drawable/add"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+    />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/doctorListView"
+        android:layout_below="@+id/add_clinic_appointment"
+        android:layout_margin="5dp">
+
+    </ListView>
+
+
+</RelativeLayout>

@@ -1,0 +1,126 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:layout_margin="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout7">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Symptoms / Observations"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:textColor="#000000"
+                android:id="@+id/symptomsText"
+                />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/symptomsValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/body1"
+                android:textColor="#1E90FF"
+                android:background="@drawable/square_grey_color"
+                android:layout_below="@+id/symptomsText"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout2"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diagnosis / Inference"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:textColor="#000000"
+                android:id="@+id/diagnosisText"
+                />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/diagnosisValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/body1"
+                android:textColor="#1E90FF"
+                android:background="@drawable/square_grey_color"
+                android:layout_below="@+id/diagnosisText"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout3"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Doctor's Note"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="@dimen/body2"
+                android:textColor="#000000"
+                android:id="@+id/doctorNotesText"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/body1"
+                android:textColor="#1E90FF"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:id="@+id/doctorNotes"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:background="@drawable/square_grey_color"
+                android:layout_below="@+id/doctorNotesText"/>
+
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:id="@+id/saveDoctorNotes"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/layout3"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_blue_color"/>
+    </RelativeLayout>
+</ScrollView>

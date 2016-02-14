@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+    android:background="#ffffff"
+   android:layout_height="match_parent"
+   android:layout_marginLeft="5dp"
+   android:layout_marginRight="5dp"
+   android:layout_marginBottom="5dp"
+   android:layout_marginTop="5dp" >
+
+
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+        android:background="@drawable/black_border"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="20dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:id="@+id/searchET"
+        android:layout_marginTop="5dp"
+        android:background="#ffffff"
+        android:layout_toLeftOf="@+id/button_search"
+        android:layout_marginLeft="10dp"
+        android:imeOptions="actionDone"
+
+    />
+
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/search"
+        android:id="@+id/button_search"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+    />
+
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/list_manage_assistant"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/layout1"
+        android:paddingRight="10dp"
+        android:listSelector="#00FFE6"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="5dp"
+
+    />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Add New"
+        android:textSize="13dp"
+
+        android:background="@drawable/rounded_blue_color"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/add_new_doctor"
+    />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:id="@+id/done"
+        android:text="Done"
+        android:textSize="13dp"
+        android:background="@drawable/rounded_blue_color"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:id="@+id/back"
+        android:text="Back"
+        android:textSize="13dp"
+        android:background="@drawable/rounded_blue_color"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+
+</RelativeLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9CDBE5">
+
+    <RelativeLayout
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout2"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/add"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:id="@+id/left_arrow"
+            android:textSize="14sp"
+            android:background="@drawable/left_navigation"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="Today 29-june-2015"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/date_text"
+            android:layout_toRightOf="@+id/left_arrow"
+            />
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:id="@+id/right_arrow"
+            android:textSize="14sp"
+            android:layout_toRightOf="@+id/date_text"
+            android:background="@drawable/right_arrow"
+            />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#ffffff"
+        android:id="@+id/calendar_view"
+        android:layout_below="@+id/layout2"
+        >
+    </FrameLayout>
+
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+        android:id="@+id/list_month"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/calendar_view"
+        android:layout_margin="5dp"
+        android:background="#ffffff"
+        android:layout_height="match_parent"
+        layout_width="match_parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/calendar_view"
+        android:background="#ffffff"
+        android:layout_margin="5dp"
+        android:id="@+id/no_list_element_month"
+        android:visibility="gone"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Appointment Found"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

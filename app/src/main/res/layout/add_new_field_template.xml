@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    >
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="250dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:id="@+id/name_text"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/name"
+            android:background="@drawable/black_border"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/body1"
+            android:layout_toRightOf="@+id/name_text"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="2dp"
+            android:layout_marginLeft="50dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:text="Type:"
+            android:id="@+id/type_show"
+            android:layout_below="@+id/name_text"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/type"
+            android:background="@drawable/black_border"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/body1"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/type_show"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="55dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/type_show"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:text="Default Name:"
+            android:id="@+id/df_name_text"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="5dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/df_name"
+            android:background="@drawable/black_border"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/body1"
+            android:paddingLeft="2dp"
+            android:layout_below="@+id/type"
+            android:layout_toRightOf="@+id/df_text"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="22dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/df_name_text"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="@dimen/body2"
+            android:text="Default Value:"
+            android:id="@+id/df_text"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="5dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/df_value"
+            android:background="@drawable/black_border"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/body1"
+            android:paddingLeft="2dp"
+            android:layout_below="@+id/df_name"
+            android:layout_toRightOf="@+id/df_text"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="22dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true" />
+
+
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:id="@+id/add_field"
+            android:text="Add New"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_orange_color"
+            android:layout_marginTop= "50dp"
+            android:layout_below="@+id/df_value"
+            android:layout_marginLeft="20dp"/>
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:id="@+id/cancel"
+            android:text="Back"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_orange_color"
+            android:layout_marginTop= "50dp"
+            android:layout_toRightOf="@id/add_field"
+            android:layout_below="@+id/df_value"
+            android:layout_marginLeft="80dp"
+            />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

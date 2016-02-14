@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/doc_category"
+        android:layout_marginLeft="15dp"
+        android:text="Category Name"
+        style="@style/body2"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clinic Name:-"
+        android:id="@+id/clinic_text"
+        style="@style/body2"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/doc_category"
+        android:layout_marginTop="5dp"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/clinic_text"
+        android:id="@+id/clinic_name"
+        android:text="qqqq"
+        style="@style/body2"
+        android:layout_below="@+id/doc_category"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="File Name"
+        android:id="@+id/file_name"
+        android:layout_below="@+id/clinic_name"
+        android:layout_marginLeft="15dp"
+        style="@style/body2"
+        android:layout_marginTop="5dp"
+    />
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/reject"
+        android:id="@+id/close_document"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        />
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/document_image"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="5dp"
+    />
+
+
+</RelativeLayout>

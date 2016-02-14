@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/Edited_by_text"
+        android:text="Edited By:"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:textSize="@dimen/heading"
+        android:textStyle="bold"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edited_by_name"
+        android:layout_toRightOf="@+id/Edited_by_text"
+        android:paddingTop="5dp"
+        android:textSize="@dimen/heading"
+        android:text="Kaustubh Bharambe"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edited_by_open_bracket"
+        android:layout_toRightOf="@+id/edited_by_name"
+        android:text="("
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:textSize="@dimen/heading"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user"
+        android:layout_toRightOf="@+id/edited_by_open_bracket"
+        android:paddingTop="5dp"
+        android:text="Patient"
+        android:paddingLeft="5dp"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edited_by_close_bracket"
+        android:layout_toRightOf="@+id/user"
+        android:text=")"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:textSize="@dimen/heading"
+    />
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_show"
+        android:text="Date &amp; Time:"
+        android:textStyle="bold"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:textSize="@dimen/heading"
+        android:layout_below="@+id/Edited_by_text"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date"
+        android:text="20-09-2015"
+        android:paddingTop="5dp"
+        android:layout_toRightOf="@+id/date_show"
+        android:layout_below="@+id/Edited_by_text"
+     />
+    <TextView
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Previous Text :"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:layout_below="@+id/date_show"
+        android:id="@+id/previous_text"
+        android:textStyle="bold"
+        android:textSize="@dimen/heading"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_toRightOf="@+id/previous_text"
+        android:layout_below="@+id/date_show"
+        android:id="@+id/previousText"
+        android:textSize="@dimen/heading"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+    />
+    <TextView
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Updated Text :"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/previousText"
+        android:paddingLeft="5dp"
+        android:id="@+id/current_text"
+        android:textStyle="bold"
+        android:textSize="@dimen/heading"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Text"
+        android:layout_below="@+id/previousText"
+        android:id="@+id/headingText"
+        android:layout_toRightOf="@+id/current_text"
+        android:textSize="@dimen/heading"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+    />
+
+
+
+
+
+</RelativeLayout>
