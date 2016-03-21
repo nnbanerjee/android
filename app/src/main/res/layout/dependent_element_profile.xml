@@ -8,7 +8,7 @@
         android:textSize="15dp"
         android:text="ABC XYZ"
         android:padding="10dp"
-        android:textColor="#ffffff"
+        android:textColor="@color/color_blue_default"
         android:id="@+id/dependent_candidate"
     />
 

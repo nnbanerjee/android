@@ -57,7 +57,7 @@ public class ProfileSwitchDialogPatient extends DialogFragment {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("sessionID",null);
-        typeId = session.getString("type",null);
+        typeId = session.getString("loginType",null);
         typeId = "P";
         dependentList = (ListView)view.findViewById(R.id.profile_dependent_list);
         delegationList = (ListView)view.findViewById(R.id.profile_delegation_list);
@@ -78,7 +78,7 @@ public class ProfileSwitchDialogPatient extends DialogFragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
         api.getAllPatientDependents(patientId, new Callback<ArrayList<Patient>>() {
@@ -113,14 +113,14 @@ public class ProfileSwitchDialogPatient extends DialogFragment {
                         arrayNew.add(docSr);
                     }
                 }
-                dependentAdapter = new ProfileDependencyAdapter(getActivity(), arrayNew);
-                dependentList.setAdapter(dependentAdapter);
+               /* dependentAdapter = new ProfileDependencyAdapter(getActivity(), arrayNew);
+                dependentList.setAdapter(dependentAdapter);*/
             }
 
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
             }
         });
         dependentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -188,7 +188,7 @@ public class ProfileSwitchDialogPatient extends DialogFragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
         delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

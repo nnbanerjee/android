@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
+
+import Model.Dependent;
 import Model.Patient;
 
 /**
@@ -18,10 +20,10 @@ import Model.Patient;
  */
 public class ProfileDependencyAdapter extends BaseAdapter {
     Activity activity;
-    List<Patient> depdendents;
+    List<Dependent> depdendents;
     private LayoutInflater inflater;
 
-    public ProfileDependencyAdapter(Activity activity,List<Patient> dependents)
+    public ProfileDependencyAdapter(Activity activity,List<Dependent> dependents)
     {
         this.activity = activity;
         this.depdendents = dependents;
@@ -49,7 +51,7 @@ public class ProfileDependencyAdapter extends BaseAdapter {
         }
         final View convertView = inflater.inflate(R.layout.dependent_element_profile, null);
         TextView profileName = (TextView)convertView.findViewById(R.id.dependent_candidate);
-        profileName.setText(depdendents.get(position).getName());
+        profileName.setText(depdendents.get(position).getName()+" - "+depdendents.get(position).getRelation());
         return convertView;
     }
 }

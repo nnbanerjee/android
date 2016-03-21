@@ -19,7 +19,7 @@
         android:background="@drawable/clinic_image"
         />
     <ImageView
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -89,7 +89,15 @@
             android:id="@+id/today_appointment"
             android:layout_below="@+id/general_clinic_text"
         />
-        <TextView
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_linear"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/today_appointment"/>
+       <!-- <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Slot 1 :  "
@@ -218,7 +226,7 @@
             android:layout_toRightOf="@+id/slot3"
             android:layout_below="@+id/slot2"
 
-            />
+            />-->
 
     </RelativeLayout>
 
@@ -250,15 +258,16 @@
                 android:text="APPOINTMENTS"
                 style="@style/body"
                 android:layout_toRightOf="@+id/profileBtn"
-                android:textColor="#ffffff"
-                android:background="@drawable/square_blue_color"
+
+                android:background="@drawable/square_grey_color"
             />
             <Button
                 android:layout_width="150dp"
                 android:layout_height="25dp"
                 android:text="PROFILE"
                 style="@style/body"
-                android:background="@drawable/square_grey_color"
+                android:textColor="#ffffff"
+                android:background="@drawable/square_blue_color"
                 android:id="@+id/profileBtn"
                 />
 

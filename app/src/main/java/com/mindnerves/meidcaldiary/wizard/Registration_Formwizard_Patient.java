@@ -60,6 +60,7 @@ import retrofit.mime.TypedFile;
  * A sample to demonstrate a form in multiple steps.
  */
 public class Registration_Formwizard_Patient extends BasicWizardLayout {
+
     @ContextVariable
     private String name;
     @ContextVariable
@@ -87,8 +88,9 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
     @ContextVariable
     private String longitude;
     @ContextVariable
-    private String cityContext;
     private TextView tvDob;
+    @ContextVariable
+    private String cityContext;
     MyApi api;
     String path;
     public String bloodgroup,usrid="",pasword1="",alergi;
@@ -358,7 +360,7 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
                                                             @Override
                                                             public void failure(RetrofitError error) {
                                                                 error.printStackTrace();
-                                                                Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                             }
                                                         });
 
@@ -391,7 +393,7 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
                                     System.out.print("in error of retrofit................");
                                     error.printStackTrace();
                                     progress.dismiss();
-                                    Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 }
                             });
                         } else if (s.getStatus().equalsIgnoreCase("1")) {
@@ -412,7 +414,7 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
                         System.out.print("in error of retrofit................");
                         error.printStackTrace();
                         progress.dismiss();
-                        Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -464,14 +466,14 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
                                                             @Override
                                                             public void failure(RetrofitError error) {
                                                                 error.printStackTrace();
-                                                                Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                             }
                                                         });
                                                     }
                                                     @Override
                                                     public void failure(RetrofitError error) {
                                                         error.printStackTrace();
-                                                        Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                     }
                                                 });
                                             }
@@ -491,7 +493,7 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
                                 public void failure(RetrofitError error) {
                                     error.printStackTrace();
                                     progress.dismiss();
-                                    Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -507,7 +509,7 @@ public class Registration_Formwizard_Patient extends BasicWizardLayout {
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
                         progress.dismiss();
-                        Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                     }
                 });*/
             } else {

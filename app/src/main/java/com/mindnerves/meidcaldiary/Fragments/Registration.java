@@ -67,45 +67,45 @@ public class Registration extends WizardStep {
     Uri selectedImageUri = null;
     private Button mapButton;
     private ImageView personimage;
-    private EditText etNormalText, etEmailAddrss, etPhoneNumber, etpassword, etlocation, postalCodeTv,allergic,city;
+    private EditText etNormalText, etEmailAddrss, etPhoneNumber, etpassword, etlocation, postalCodeTv, allergic, city;
     RadioGroup genderBtn;
     private RadioButton radioSexButton;
     private CheckBox agreeCondition;
     Global go;
     String buttonText = "";
-    List<String> countryList,regionList;
+    List<String> countryList, regionList;
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    Spinner spinnerBloodGroup,countrySpinner,regionSpinner;
-    ArrayAdapter<String> countryAdapter,regionAdapter;
+    Spinner spinnerBloodGroup, countrySpinner, regionSpinner;
+    ArrayAdapter<String> countryAdapter, regionAdapter;
     MyApi api;
-    String[] countries,regions;
-    @ContextVariable
+    String[] countries, regions;
+
     private String name;
-    @ContextVariable
+
     private String email;
-    @ContextVariable
+
     private String password;
-    @ContextVariable
+
     private String mobile;
-    @ContextVariable
+
     private String gender;
-    @ContextVariable
+
     private String dob;
-    @ContextVariable
+
     private String location;
-    @ContextVariable
+
     private Uri uri;
-    @ContextVariable
+
     private String postalCode;
-    @ContextVariable
+
     private String country;
-    @ContextVariable
+
     private String region;
-    @ContextVariable
+
     private String latitude;
-    @ContextVariable
+
     private String longitude;
-    @ContextVariable
+
     private String cityContext;
 
     /**
@@ -145,13 +145,13 @@ public class Registration extends WizardStep {
         } else {
             int position = 0;
             etlocation.setText(locationString);
-            if(go.countryName != null && countryAdapter!=null){
+            if (go.countryName != null && countryAdapter != null) {
                 System.out.println("");
                 position = countryAdapter.getPosition(go.countryName);
                 countrySpinner.setSelection(position);
             }
-            System.out.println("user Latitude= "+go.userLatitude);
-            System.out.println("user Longitude= "+go.userLongitude);
+            System.out.println("user Latitude= " + go.userLatitude);
+            System.out.println("user Longitude= " + go.userLongitude);
 
         }
 
@@ -168,10 +168,10 @@ public class Registration extends WizardStep {
         location = etlocation.getText().toString();
         uri = go.getUri();
         country = countrySpinner.getSelectedItem().toString();
-       // region = regionSpinner.getSelectedItem().toString();
+        // region = regionSpinner.getSelectedItem().toString();
         cityContext = city.getText().toString();
-        latitude = ""+go.userLatitude;
-        longitude = ""+go.userLongitude;
+        latitude = "" + go.userLatitude;
+        longitude = "" + go.userLongitude;
 
     }
 
@@ -207,11 +207,11 @@ public class Registration extends WizardStep {
         etpassword = (EditText) view.findViewById(R.id.password);
         etlocation = (EditText) view.findViewById(R.id.location);
         postalCodeTv = (EditText) view.findViewById(R.id.mobile_post_code);
-        allergic = (EditText)view.findViewById(R.id.allergic);
-        countrySpinner = (Spinner)view.findViewById(R.id.country_spinner);
-       // regionSpinner = (Spinner)view.findViewById(R.id.region_spinner);
+        allergic = (EditText) view.findViewById(R.id.allergic);
+        countrySpinner = (Spinner) view.findViewById(R.id.country_spinner);
+        // regionSpinner = (Spinner)view.findViewById(R.id.region_spinner);
         personimage.setImageURI(uri);
-        city = (EditText)view.findViewById(R.id.city);
+        city = (EditText) view.findViewById(R.id.city);
         genderBtn = (RadioGroup) view.findViewById(R.id.gender);
         int radioId = genderBtn.getCheckedRadioButtonId();
         radioSexButton = (RadioButton) view.findViewById(radioId);
@@ -221,23 +221,23 @@ public class Registration extends WizardStep {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getAllCountry("temp",new Callback<List<String>>() {
+        api.getAllCountry("temp", new Callback<List<String>>() {
             @Override
             public void success(List<String> strings, Response response) {
                 countryList = new ArrayList<String>();
-                for(String country : strings){
-                    if(country != null){
+                for (String country : strings) {
+                    if (country != null) {
                         countryList.add(country);
                     }
                 }
                 countries = new String[countryList.size()];
-                int i =0;
-                for(String country : countryList){
+                int i = 0;
+                for (String country : countryList) {
                     countries[i] = country;
-                    i = i+1;
+                    i = i + 1;
                 }
                 countryAdapter = new ArrayAdapter<String>(getActivity(),
-                                     android.R.layout.simple_spinner_item, countries);
+                        android.R.layout.simple_spinner_item, countries);
                 countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 countrySpinner.setAdapter(countryAdapter);
             }
@@ -245,7 +245,7 @@ public class Registration extends WizardStep {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
         mapButton.setOnClickListener(new OnClickListener() {
@@ -284,7 +284,7 @@ public class Registration extends WizardStep {
         bloodGroupAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerBloodGroup.setAdapter(bloodGroupAdapter);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        view.findViewById(R.id.upload)
+        personimage
                 .setOnClickListener(new OnClickListener() {
                     public void onClick(View arg0) {
                         buttonText = "upload";
@@ -298,40 +298,40 @@ public class Registration extends WizardStep {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String country = countrySpinner.getSelectedItem().toString();
-                api.getRegions(country,new Callback<List<String>>() {
+                api.getRegions(country, new Callback<List<String>>() {
                     @Override
                     public void success(List<String> strings, Response response) {
                         regionList = new ArrayList<String>();
-                        for(String region : strings){
-                            if(region != null){
+                        for (String region : strings) {
+                            if (region != null) {
                                 regionList.add(region);
                             }
                         }
                         regions = new String[regionList.size()];
-                        int i =0;
-                        for(String region : regionList){
+                        int i = 0;
+                        for (String region : regionList) {
                             regions[i] = region;
-                            i = i+1;
+                            i = i + 1;
                         }
                         regionAdapter = new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_spinner_item, regions);
                         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         regionSpinner.setAdapter(regionAdapter);
-                        if(go.regionName != null){
+                        if (go.regionName != null) {
                             int pos = 0;
                             pos = regionAdapter.getPosition(go.regionName);
                             regionSpinner.setSelection(pos);
                         }
-                        if(go.city != null){
-                            System.out.println("Registration City= "+go.city);
-                            city.setText(""+go.city);
+                        if (go.city != null) {
+                            System.out.println("Registration City= " + go.city);
+                            city.setText("" + go.city);
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
-                        Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -378,6 +378,7 @@ public class Registration extends WizardStep {
             public void afterTextChanged(Editable s) {
                 showNextButtonForTextField();
             }
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -425,7 +426,7 @@ public class Registration extends WizardStep {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == SELECT_PICTURE && data!=null) {
+        if (requestCode == SELECT_PICTURE && data != null) {
             selectedImageUri = data.getData();
             selectedImagePath = getPath(selectedImageUri);
             System.out.println("Image Path : " + selectedImagePath);
@@ -436,6 +437,7 @@ public class Registration extends WizardStep {
         }
 
     }
+
     public String getPath(Uri uri) {
 
         String[] projection = {MediaStore.Images.Media.DATA};
@@ -444,10 +446,12 @@ public class Registration extends WizardStep {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
     public void updatedate() {
-        lable.setText(calendar.get(Calendar.YEAR)+"-"+showMonth(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+":"+calendar.get(Calendar.SECOND));
+        lable.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
 
     }
+
     public void setDate() {
 
         new DatePickerDialog(getActivity(), d, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -546,10 +550,10 @@ public class Registration extends WizardStep {
         if (etlocation.getText().toString().equals("")) {
             validData = 1;
         }
-        if(spinnerBloodGroup.getSelectedItem().toString().equals("Select blood group")){
+        if (spinnerBloodGroup.getSelectedItem().toString().equals("Select blood group")) {
             validData = 1;
         }
-        if(allergic.getText().equals("")){
+        if (allergic.getText().equals("")) {
             validData = 1;
         }
         return validData;

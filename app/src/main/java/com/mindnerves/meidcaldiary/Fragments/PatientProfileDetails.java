@@ -13,10 +13,9 @@ import android.widget.TextView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.List;
-
 import Application.MyApi;
 import Model.AllPatients;
+import Utils.UtilSingleInstance;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -47,13 +46,14 @@ public class PatientProfileDetails extends Fragment {
         patientId = session.getString("patientId", null);
 
         Global global = (Global) getActivity().getApplicationContext();
-        List<AllPatients> allPatients = global.getAllPatients();
+        AllPatients allPatients = global.getSelectedPatientsProfile();
         String strGender="";
-        for(int i = 0; i < allPatients.size(); i++){
-            if(patientId.equals(allPatients.get(i).getId())){
-                AllPatients patients = allPatients.get(i);
+       // for(int i = 0; i < allPatients.size(); i++){
+          //  if(patientId.equals(allPatients.get(i).getpatientId())){
+                AllPatients patients = allPatients;
+        if(patients!=null){
                 emailId.setText(patients.getEmail());
-                if (patients.getGender().equalsIgnoreCase("0"))
+                if (patients.getGender()!=null&&patients.getGender().equalsIgnoreCase("0"))
                     strGender = "Male";
                 else
                     strGender = "Female";
@@ -61,17 +61,17 @@ public class PatientProfileDetails extends Fragment {
                 genderId.setText(strGender);
                 System.out.println("Date od birth = "+patients.getDateOfBirth());
                 if(patients.getDateOfBirth() != null){
-                    dateOfBirthId.setText(""+patients.getDateOfBirth());
+                    dateOfBirthId.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(""+patients.getDateOfBirth()));
                 }
                // dateOfBirthId.setText(doctorSearchResponse.getDateOfBirth());
-                mobileId.setText(patients.getMobileNumber());
-                locationId.setText(patients.getLocation());
+                mobileId.setText(patients.getMobile());
+                locationId.setText(patients.getAddress());
                 bloodGroup.setText(patients.getBloodGroup());
                 allergic_to.setText(patients.getAllergicTo());
                 //specialityId.setText(doctorSearchResponse.getSpecialization());
 
-            }
-        }
+           // }
+      }
 
         return view;
     }

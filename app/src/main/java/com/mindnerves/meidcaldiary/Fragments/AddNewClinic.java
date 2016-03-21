@@ -346,7 +346,7 @@ public class AddNewClinic extends Fragment {
                     cl.setClinicName(clinicName);
                     cl.setEmail(email);
                     cl.setLandLineNumber(phone);
-                    cl.setMobileNumber(cellnumber);
+                    cl.setMobile(cellnumber);
                     cl.setSpecialization(specialitesString);
                     cl.setDoctorId(doctorId);
                     cl.setLocation(city);

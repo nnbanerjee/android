@@ -17,4 +17,14 @@ public class ResponseCodeVerfication {
     }
 
     private String status;
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    private String appointmentId;
 }

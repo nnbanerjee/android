@@ -11,21 +11,22 @@
     android:id="@+id/layout"
     android:background="#ffffff">
 
-    <ImageView
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:id="@+id/doctorImg"
         android:layout_margin="5dp"
-        android:background="@drawable/doctor_image"
-        />
+        android:background="@drawable/doctor_image"/>
+
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_width="25dp"
+        android:layout_height="13dp"
+        android:layout_marginLeft="23dp"
+
         android:layout_below="@+id/doctorImg"
         android:id="@+id/downImg"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
+
         android:background="@drawable/up_arrow"
         />
     <RelativeLayout
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:textColor="#1E90FF"
             android:id="@+id/totalAppointment"
+            android:paddingTop="3dp"
             android:layout_toLeftOf="@+id/viewAll"
             android:layout_marginTop="10dp"
             style="@style/body2"
@@ -91,7 +93,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/last_appointment_text"
             android:layout_below="@+id/lastAppointmentDate"
-            android:text="Last Appointment : "
+            android:text="Last Visited : "
             style="@style/body1"
         />
         <TextView
@@ -106,7 +108,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next Appointment : "
+            android:text="Upcoming Appt :"
             style="@style/body1"
             android:id="@+id/appointmentText"
             android:layout_below="@+id/last_appointment_text"
@@ -136,8 +138,8 @@
         android:layout_below="@+id/layout"
         android:background="#ffffff">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/layout3"
             android:layout_centerHorizontal="true"
@@ -146,27 +148,28 @@
 
 
             <Button
-                android:layout_width="150dp"
-                android:layout_height="25dp"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
                 android:id="@+id/clinicsBtn"
                 android:text="APPOINTMENT"
                 style="@style/body"
 
-
+                android:layout_weight="5"
                 android:background="@drawable/square_grey_color"
 
             />
             <Button
-                android:layout_width="150dp"
-                android:layout_height="25dp"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
                 android:text="PROFILE"
                 style="@style/body"
                 android:layout_toRightOf="@+id/clinicsBtn"
                 android:textColor="#ffffff"
+                android:layout_weight="5"
                 android:background="@drawable/square_blue_color"
                 android:id="@+id/profileBtn"
                 />
-            </RelativeLayout>
+            </LinearLayout>
 
     </RelativeLayout>
 

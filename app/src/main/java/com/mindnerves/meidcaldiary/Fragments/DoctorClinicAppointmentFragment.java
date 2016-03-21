@@ -79,9 +79,9 @@ public class DoctorClinicAppointmentFragment extends Fragment {
         rightArrow3 = (Button)view.findViewById(R.id.shift3_right_arrow);
         clinicId = session.getString("patient_clinicId",null);
         List<Clinic> clinicsList = global.getAllClinicsList();
-        System.out.println("ClinicList="+ clinicsList.size());
+       // System.out.println("clinicList="+ clinicsList.size());
 
-        for(Clinic clinic  : clinicsList) {
+       /* for(Clinic clinic  : clinicsList) {
             if (clinic.getIdClinic().equals(clinicId))
             {
 
@@ -148,7 +148,7 @@ public class DoctorClinicAppointmentFragment extends Fragment {
                 }
                 break;
             }
-        }
+        }*/
 
         //Get Doctor Id from application class
 

@@ -97,7 +97,7 @@ public class DoctorAppointmentDocument extends Fragment{
             }
         });
         doctorId = session.getString("sessionID",null);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         patientId = session.getString("doctor_patientEmail", null);
         appointmentDate = global.getAppointmentDate();
         appointmentTime = global.getAppointmentTime();

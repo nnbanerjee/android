@@ -12,10 +12,12 @@ import Model.AlarmReminderVM;
 import Model.AllPatients;
 import Model.AllTreatmentPlanVm;
 import Model.Appointment;
+import Model.AppointmentSlotsByDoctor;
 import Model.Assistant;
 import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
+import Model.ClinicPatientAppointments;
 import Model.Delegation;
 import Model.DoctorSearchResponse;
 import Model.Field;
@@ -81,6 +83,40 @@ public class Global extends Application {
    public String countryName;
    public String regionName;
    public String city;
+
+    public ClinicPatientAppointments clinicPatientAppointmentsObj;
+
+    public List<AppointmentSlotsByDoctor> getAppointmentSlotsByDoctorObj() {
+        return appointmentSlotsByDoctorObj;
+    }
+
+    public void setAppointmentSlotsByDoctorObj(List<AppointmentSlotsByDoctor> appointmentSlotsByDoctorObj) {
+        this.appointmentSlotsByDoctorObj = appointmentSlotsByDoctorObj;
+    }
+
+    public ClinicPatientAppointments getClinicPatientAppointmentsObj() {
+        return clinicPatientAppointmentsObj;
+    }
+
+    public void setClinicPatientAppointmentsObj(ClinicPatientAppointments clinicPatientAppointmentsObj) {
+        this.clinicPatientAppointmentsObj = clinicPatientAppointmentsObj;
+    }
+
+    public List<AppointmentSlotsByDoctor> appointmentSlotsByDoctorObj;
+
+
+
+
+
+    public AllPatients getSelectedPatientsProfile() {
+        return selectedPatientsProfile;
+    }
+
+    public void setSelectedPatientsProfile(AllPatients selectedPatientsProfile) {
+        this.selectedPatientsProfile = selectedPatientsProfile;
+    }
+
+    public AllPatients selectedPatientsProfile;
 
     public List<String> getAllCountriesList() {
         return allCountriesList;

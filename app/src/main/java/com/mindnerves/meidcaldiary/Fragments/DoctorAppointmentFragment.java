@@ -223,7 +223,7 @@ public class DoctorAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getClinicAppointment(clinicDoctor.getDoctorId(),clinicDoctor.getClinicId(), "shift1",clinicDoctor.getAppointmentTime(),clinicDoctor.getAppointmentDate());
-                //getClinicAppointment(clinicDoctor.getClinicId(), "shift1", clinicDoctor.getAppointmentTime(), clinicDoctor.getAppointmentDate());
+                //getClinicAppointment(clinicDoctor.getIdClinic(), "shift1", clinicDoctor.getAppointmentTime(), clinicDoctor.getAppointmentDate());
             }
         });
 
@@ -231,7 +231,7 @@ public class DoctorAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getClinicAppointment(clinicDoctor.getDoctorId(),clinicDoctor.getClinicId(), "shift2",clinicDoctor.getAppointmentTime(),clinicDoctor.getAppointmentDate());
-               // getClinicAppointment(clinicDoctor.getClinicId(), "shift2", clinicDoctor.getAppointmentTime(),clinicDoctor.getAppointmentDate());
+               // getClinicAppointment(clinicDoctor.getIdClinic(), "shift2", clinicDoctor.getAppointmentTime(),clinicDoctor.getAppointmentDate());
             }
         });
 
@@ -239,7 +239,7 @@ public class DoctorAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getClinicAppointment(clinicDoctor.getDoctorId(),clinicDoctor.getClinicId(), "shift3",clinicDoctor.getAppointmentTime(),clinicDoctor.getAppointmentDate());
-                //getClinicAppointment(clinicDetailVm.get(position).getClinicId(), "shift3", clinicDetailVm.get(position).getAppointmentTime(),clinicDetailVm.get(position).getAppointmentDate());
+                //getClinicAppointment(clinicDetailVm.get(position).getIdClinic(), "shift3", clinicDetailVm.get(position).getAppointmentTime(),clinicDetailVm.get(position).getAppointmentDate());
             }
         });
 

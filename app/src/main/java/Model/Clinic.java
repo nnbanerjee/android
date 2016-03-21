@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,10 +9,10 @@ import java.util.List;
  */
 public class Clinic implements Serializable {
 
-    private  String clinicName;
+    private String clinicName;
     private boolean selected;
     private String landLineNumber;
-    private String mobileNumber;
+    private String mobile;
     private String location;
     private String email;
     private String idClinic;
@@ -40,7 +41,194 @@ public class Clinic implements Serializable {
     public String description;
     public String service;
     public String lastVisitedTime;
-	public String timing;
+    public String timing;
+
+    public String address;
+    public String imageURL;
+    public String searchNavigation;
+    public String country;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String imageUrl;
+
+    public String getDoctorClinicId() {
+        return doctorClinicId;
+    }
+
+    public void setDoctorClinicId(String doctorClinicId) {
+        this.doctorClinicId = doctorClinicId;
+    }
+
+    private String doctorClinicId;
+
+    /**
+     * @return The appointments
+     */
+    public List<appointments> getAppointments() {
+        return appointmentsObj;
+    }
+
+    /**
+     * @param appointmentsObj The appointmentsObj
+     */
+    public void setAppointments(List<appointments> appointmentsObj) {
+        this.appointmentsObj = appointmentsObj;
+    }
+
+    private List<appointments> appointmentsObj = new ArrayList<appointments>();
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getTotalAppointmentCount() {
+        return totalAppointmentCount;
+    }
+
+    public void setTotalAppointmentCount(String totalAppointmentCount) {
+        this.totalAppointmentCount = totalAppointmentCount;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+
+    public String getAppointmentType() {
+        return appointmentType;
+    }
+
+    public void setAppointmentType(String appointmentType) {
+        this.appointmentType = appointmentType;
+    }
+
+    public String getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(String appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public String getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public void setAppointmentTime(String appointmentTime) {
+        this.appointmentTime = appointmentTime;
+    }
+
+    public Boolean getUpcomingFlag() {
+        return upcomingFlag;
+    }
+
+    public void setUpcomingFlag(Boolean upcomingFlag) {
+        this.upcomingFlag = upcomingFlag;
+    }
+
+    public String getStar() {
+        return star;
+    }
+
+    public void setStar(String star) {
+        this.star = star;
+    }
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getLastVisitedTime() {
+        return lastVisitedTime;
+    }
+
+    public void setLastVisitedTime(String lastVisitedTime) {
+        this.lastVisitedTime = lastVisitedTime;
+    }
+
+    public String getTiming() {
+        return timing;
+    }
+
+    public void setTiming(String timing) {
+        this.timing = timing;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getSearchNavigation() {
+        return searchNavigation;
+    }
+
+    public void setSearchNavigation(String searchNavigation) {
+        this.searchNavigation = searchNavigation;
+    }
+
+
     public String getParameter() {
         return parameter;
     }
@@ -81,12 +269,12 @@ public class Clinic implements Serializable {
         this.landLineNumber = landLineNumber;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getLocation() {

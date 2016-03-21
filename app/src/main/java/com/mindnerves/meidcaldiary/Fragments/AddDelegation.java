@@ -98,7 +98,7 @@ public class AddDelegation extends Fragment {
         searchTv = (EditText)view.findViewById(R.id.searchET);
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("sessionID", null);
-        typeId = session.getString("type",null);
+        typeId = session.getString("loginType",null);
         if(typeId.equals("Doctor"))
         {
             typeId = "D";

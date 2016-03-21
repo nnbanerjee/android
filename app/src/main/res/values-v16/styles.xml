@@ -3,12 +3,13 @@
 
     <style name="body2">
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="body1">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
+        <item name = "android:textColor">@color/off_white</item>
     </style>
 
     <style name="body">
@@ -24,7 +25,78 @@
     <style name="sub_heading">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">16sp</item>
+        <item name = "android:textStyle">bold</item>
+        <item name = "android:textColor">@color/color_blue_default</item>
     </style>
 
+    <style name="editTextthemeForNewDesign" parent="@android:style/Widget.EditText" >
+        <item name="android:textColor">@color/color_blue_default</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/color_blue_default</item>
+        <item name="android:textSize">18sp</item>
+        <item name ="android:background">@drawable/apptheme_edit_text_holo_light</item>
+    </style>
+    <style name="editsmallTextthemeForNewDesign" parent="@android:style/Widget.EditText" >
+        <item name="android:textColor">@color/color_blue_default</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/color_blue_default</item>
+        <item name="android:textSize">14sp</item>
+        <item name ="android:background">@drawable/apptheme_edit_text_holo_light</item>
+    </style>
+
+    <style name="buttonThemeForNewDesign" parent="@android:style/Widget.Button" >
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">18sp</item>
+
+        <item name ="android:background">@drawable/apptheme_btn_default_holo_light</item>
+        <item name="android:textColor">@drawable/button_selector_text_and_color</item>
+    </style>
+
+    <style name="textViewThemeForNewDesign" parent="@android:style/Widget.TextView" >
+
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:singleLine">true</item>
+
+        <item name="android:textColor">@color/dim_grey</item>
+        <item name="android:textSize">15sp</item>
+
+    </style>
+
+    <style name="textViewThemeForNewDesignWithBlueFont" parent="@android:style/Widget.TextView" >
+
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:singleLine">true</item>
+
+        <item name="android:textColor">@color/color_blue_default</item>
+        <item name="android:textSize">15sp</item>
+
+    </style>
+    <style name="textViewThemeForNewDesignWithoutMargin" parent="@android:style/Widget.TextView" >
+
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/grey_background</item>
+        <item name="android:textSize">15sp</item>
+
+    </style>
+    <style name="textViewThemeForTimeReninder" parent="@android:style/Widget.TextView" >
+
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/grey_background</item>
+        <item name="android:textSize">13sp</item>
+
+
+    </style>
 
 </resources>

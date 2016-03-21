@@ -98,7 +98,7 @@ public class ReportUpload extends DialogFragment {
         name.setText(global.getTestPrescribed());
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         id = session.getString("sessionID", null);
-        type = session.getString("type", null);
+        type = session.getString("loginType", null);
         System.out.println("In Report Log:::::::::::::::::::::::::");
         System.out.println("DoctorEmail::::::::"+session.getString("doctor_patientEmail", null));
         nameText = (TextView) view.findViewById(R.id.name);

@@ -114,7 +114,7 @@ public class AppointmentMonthShift1 extends Fragment {
             @Override
             public void success(List<AllClinicAppointment> ClinicList, Response response) {
                 List<ShiftAppointment> shift1 = null;
-                System.out.println("ClinicList = "+ClinicList.size());
+                System.out.println("clinicList = "+ClinicList.size());
                 if(ClinicList.size() != 0) {
                     AllClinicAppointment allClinicAppointment = ClinicList.get(0);
                     if(allClinicAppointment.shift1.size() != 0){

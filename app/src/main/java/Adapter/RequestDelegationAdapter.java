@@ -73,7 +73,7 @@ public class RequestDelegationAdapter extends BaseAdapter {
 
         SharedPreferences session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         final String patientId = session.getString("sessionID",null);
-        final String typeId = session.getString("type",null);
+        final String typeId = session.getString("loginType",null);
 
 
         if(inflater == null)

@@ -61,7 +61,7 @@ public class ManageDelegationPatient extends Fragment {
         buttonAdd = (Button) view.findViewById(R.id.add_dependent);
         removeDoc = (Button)view.findViewById(R.id.remove_dependent);
         patientId = session.getString("sessionID",null);
-        typeId = session.getString("type",null);
+        typeId = session.getString("loginType",null);
         if(typeId.equals("Patient"))
         {
             typeId = "P";

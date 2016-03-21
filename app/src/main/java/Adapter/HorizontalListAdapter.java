@@ -67,12 +67,49 @@ public class HorizontalListAdapter extends BaseAdapter{
         final TextView time5 = (TextView) convertView.findViewById(R.id.time5);
         final TextView time6 = (TextView) convertView.findViewById(R.id.time6);
         day.setText(medicinReminderTables.get(position).getAlarmDate());
-        time1.setText(medicinReminderTables.get(position).getTime1());
-        time2.setText(medicinReminderTables.get(position).getTime2());
-        time3.setText(medicinReminderTables.get(position).getTime3());
-        time4.setText(medicinReminderTables.get(position).getTime4());
-        time5.setText(medicinReminderTables.get(position).getTime5());
-        time6.setText(medicinReminderTables.get(position).getTime6());
+       // if(medicinReminderTables.get(position).getTime1()!=null) {
+           // time1.setVisibility(View.VISIBLE);
+            time1.setText(medicinReminderTables.get(position).getTime1());
+       // } else{
+      //      time1.setVisibility(View.INVISIBLE);
+      //  }
+      //  if(medicinReminderTables.get(position).getTime2()!=null) {
+      //      time2.setVisibility(View.VISIBLE);
+            time2.setText(medicinReminderTables.get(position).getTime2());
+     //   } else{
+      //      time2.setVisibility(View.INVISIBLE);
+      //  }
+
+     //   if(medicinReminderTables.get(position).getTime3()!=null) {
+     //       time3.setVisibility(View.VISIBLE);
+            time3.setText(medicinReminderTables.get(position).getTime3());
+       // } else{
+      //      time3.setVisibility(View.INVISIBLE);
+       // }
+      //  if(medicinReminderTables.get(position).getTime4()!=null) {
+      //      time4.setVisibility(View.VISIBLE);
+            time4.setText(medicinReminderTables.get(position).getTime4());
+      ///  } else{
+      //      time4.setVisibility(View.INVISIBLE);
+    //    }
+     //   if(medicinReminderTables.get(position).getTime5()!=null) {
+     //       time5.setVisibility(View.VISIBLE);
+            time5.setText(medicinReminderTables.get(position).getTime5());
+      //  } else{
+    //        time5.setVisibility(View.INVISIBLE);
+     //   }
+    //    if(medicinReminderTables.get(position).getTime6()!=null) {
+     //       time6.setVisibility(View.VISIBLE);
+            time6.setText(medicinReminderTables.get(position).getTime6());
+     //   } else{
+      //      time6.setVisibility(View.INVISIBLE);
+      //  }
+
+
+
+
+
+
         global.setAlarmTime(medicinReminderTables);
         time1.setOnClickListener(new View.OnClickListener() {
             @Override

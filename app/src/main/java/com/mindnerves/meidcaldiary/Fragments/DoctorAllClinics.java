@@ -29,8 +29,11 @@ import java.util.List;
 
 import Adapter.ClinicDoctorListAdapter;
 import Adapter.ClinicListAdapter;
+import Adapter.ClinicPatientAdapter;
 import Application.MyApi;
+import Model.AppointmentSlotsByDoctor;
 import Model.Clinic;
+import Model.DoctorId;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -51,7 +54,7 @@ public class DoctorAllClinics extends Fragment {
     TextView globalTv,accountName;
     ImageView addClinic;
     Button back,drawar,logout;
-    ImageView profilePicture,medicoLogo,medicoText;
+    ImageView profilePicture;//,medicoLogo,medicoText;
     RelativeLayout profileLayout;
     String type;
     @Nullable
@@ -68,8 +71,8 @@ public class DoctorAllClinics extends Fragment {
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         logout = (Button)getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+       // medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +84,7 @@ public class DoctorAllClinics extends Fragment {
                 startActivity(i);
             }
         });
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +118,8 @@ public class DoctorAllClinics extends Fragment {
     {
         globalTv.setText("Manage Appointments");
         drawar.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+      //  medicoText.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
         logout.setBackgroundResource(R.drawable.home_jump);
         profileLayout.setVisibility(View.GONE);
@@ -128,7 +131,35 @@ public class DoctorAllClinics extends Fragment {
 
         String doctorId = session.getString("sessionID", null);
         Date date = new Date();
-        api.getAllDoctorClinics(doctorId,date,new Callback<List<Clinic>>() {
+
+
+        api.getClinicsByDoctor(new DoctorId(doctorId), new Callback<List<AppointmentSlotsByDoctor>>() {
+            @Override
+            public void success(List<AppointmentSlotsByDoctor> appointmentSlotsByDoctor, Response response) {
+
+                //[{"clinicId":2,"clinicName":"demo2","slots":[{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5}],"upcomingAppointment":null,"lastAppointmentl":null}]
+                Global global = (Global) getActivity().getApplicationContext();
+                // global.setClinicDetailVm(clinicDetailVm);
+                global.setAppointmentSlotsByDoctorObj(appointmentSlotsByDoctor);
+                //ClinicPatientAdapter clinicListItemAdapter = new ClinicPatientAdapter(getActivity(), clinicPatientAppointmentsObj.getClinicList(), appointmentSlotsByDoctor);
+                //clinicListView.setAdapter(clinicListItemAdapter);
+             //   progress.dismiss();
+
+
+                // global.setAllClinicsList(clinicList);
+                ClinicDoctorListAdapter adapter = new ClinicDoctorListAdapter(getActivity(), appointmentSlotsByDoctor);
+                doctorListView.setAdapter(adapter);
+                progress.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                progress.dismiss();
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        });
+      /*  api.getAllDoctorClinics(doctorId,date,new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinicList, Response response) {
 
@@ -144,7 +175,7 @@ public class DoctorAllClinics extends Fragment {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
-        });
+        });*/
     }
 
     @Override
@@ -179,8 +210,8 @@ public class DoctorAllClinics extends Fragment {
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
         back.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+      //  medicoLogo.setVisibility(View.VISIBLE);
+       // medicoText.setVisibility(View.VISIBLE);
     }
 
 

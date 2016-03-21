@@ -1,0 +1,347 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:layout_margin="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/layout"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Test Type : "
+                style="@style/body2"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/medecineText"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#1E90FF"
+                android:textSize="@dimen/heading"
+                android:layout_toRightOf="@+id/medecineText"
+                android:textStyle="bold"
+                android:text="Crocin"
+                android:visibility="gone"
+                android:id="@+id/medicineValue"
+                />
+            <MultiAutoCompleteTextView
+                android:id="@+id/medicineValueEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/medecineText"
+                android:completionThreshold="1"
+
+                android:textColor="#1E90FF"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutnew"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/layout1"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Test Name : "
+                style="@style/body2"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/testName"
+                />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/testnameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/testName"
+                android:completionThreshold="1"
+
+                android:textColor="#1E90FF"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layoutnew"
+            android:id="@+id/layout5">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Lab:"
+                style="@style/body2"
+                android:layout_marginTop="10dp"
+                android:id="@+id/emailIdText"
+                />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:textColor="#1E90FF"
+                android:id="@+id/scheduleDate"
+                android:entries="@array/scheduleDateList"
+
+                android:layout_toRightOf="@+id/emailIdText"
+                android:layout_toEndOf="@+id/emailIdText" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout6"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout5">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Number of \n Doses"
+                style="@style/body2"
+                android:layout_marginTop="5dp"
+                android:id="@+id/mobileText"
+                />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:id="@+id/numberDoses"
+                android:inputType="phone"
+                android:numeric="decimal"
+                android:textColor="#1E90FF"
+                android:layout_toLeftOf="@+id/schedule_text"
+                android:paddingLeft="5dp"
+
+
+                android:layout_toRightOf="@+id/mobileText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/schedule_text"
+                android:text="Doses"
+                style="@style/body2"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout7"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout6">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Total Duration \n of Medication"
+                style="@style/body2"
+                android:id="@+id/genderText"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:id="@+id/duration_days"
+                android:inputType="phone"
+                android:numeric="decimal"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/duration_text"
+                android:layout_toRightOf="@+id/genderText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/duration_text"
+                android:text="Days"
+                style="@style/body2"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout8"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout7">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Start Date"
+                style="@style/body2"
+                android:layout_marginTop="5dp"
+                android:id="@+id/startText"
+                />
+
+            <TextView
+                android:id="@+id/dateValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:textColor="#1E90FF"
+                android:layout_toLeftOf="@+id/calenderImg"
+
+                android:layout_toRightOf="@+id/startText"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/calenderImg"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/cal"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout9"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout8">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="End Date"
+                android:layout_marginTop="5dp"
+                style="@style/body2"
+                android:id="@+id/endText"
+                />
+
+            <TextView
+                android:id="@+id/endDateValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:textColor="#1E90FF"
+                android:layout_toLeftOf="@+id/endDateImg"
+                android:layout_toRightOf="@+id/endText"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/endDateImg"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/cal"/>
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="Schedule Time for Medicine :"
+            style="@style/body2"
+            android:layout_below="@+id/layout9"
+            android:layout_marginBottom="5dp"
+            />
+
+        <com.mindnerves.meidcaldiary.HorizontalListView
+            android:id="@+id/horizontalList"
+            android:layout_below="@+id/preview"
+            android:layout_width="match_parent"
+            android:background="@drawable/rounded_black_color"
+            android:layout_height="150dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/previewBtn"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/horizontalList">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auto Schedule"
+                style="@style/body2"
+                android:id="@+id/autoSchedule"
+                />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reminder"
+                android:layout_below="@+id/autoSchedule"
+                style="@style/body2"
+                android:id="@+id/medicineReminderBtn"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doctor’s Instruction / Method of Medication "
+            style="@style/body2"
+            android:layout_below="@id/previewBtn"
+            android:id="@+id/doctorInstructionText"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/textViewThemeForNewDesignWithoutMargin"
+            android:layout_marginTop="5dp"
+            android:id="@+id/doctorInstructionValue"
+            android:textColor="#1E90FF"
+            android:layout_below="@+id/doctorInstructionText"
+            android:paddingLeft="5dp"
+
+            />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:id="@+id/saveTimeTable"
+            android:layout_below="@+id/doctorInstructionValue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_blue_color"/>
+    </RelativeLayout>
+</ScrollView>

@@ -20,6 +20,7 @@ import Application.MyApi;
 import Model.ResponseCodeVerfication;
 import Model.ResponseVm;
 import Model.VerificationCode;
+import Model.forgotPassword;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -71,7 +72,7 @@ public class ForgetPasswordVerification extends Fragment {
                         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
 
-                        api.getVerificationCode(new VerificationCode(verifyCode.getText().toString(),emailTxt), new Callback<ResponseCodeVerfication>() {
+                        api.verifyCode(new VerificationCode(verifyCode.getText().toString(),emailTxt), new Callback<ResponseCodeVerfication>() {
                             @Override
                             public void success(ResponseCodeVerfication s,  Response response) {
                                 System.out.println(response);
@@ -101,7 +102,7 @@ public class ForgetPasswordVerification extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 error.printStackTrace();
-                                Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 progress.dismiss();
                             }
                         });
@@ -125,7 +126,14 @@ public class ForgetPasswordVerification extends Fragment {
                         api = restAdapter.create(MyApi.class);
                         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
-                        api.forgotPassword(emailTxt, new Callback<ResponseVm>() {
+                        forgotPassword fObj=null;
+                        if(emailTxt!=null && emailTxt.toString().length()>0)
+                        {
+                            fObj= new forgotPassword("email",emailTxt);
+                        }else if(mobileNoTxt!=null && mobileNoTxt.toString().length()>0){
+                            fObj= new forgotPassword("sms",mobileNoTxt);
+                        }
+                        api.forgotPassword(fObj, new Callback<ResponseVm>() {
                             @Override
                             public void success(ResponseVm responseVm, Response response) {
                                 System.out.println(response);
@@ -153,7 +161,7 @@ public class ForgetPasswordVerification extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 error.printStackTrace();
-                                Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 progress.dismiss();
                             }
                         });

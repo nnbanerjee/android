@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HomeActivity;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.MapActivity;
 import com.mindnerves.meidcaldiary.R;
 
@@ -84,7 +85,7 @@ public class ManageProfilePatient extends Fragment {
     ImageView profilePicture;
     RelativeLayout profileLayout;
     LinearLayout layout;
-    ImageView medicoLogo,medicoText;
+   // ImageView medicoLogo,medicoText;
     String type;
     Button refresh;
     @Nullable
@@ -115,7 +116,7 @@ public class ManageProfilePatient extends Fragment {
         sexButton = (RadioButton) view.findViewById(radioId);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("sessionID", null);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         adapterBloodGroup = ArrayAdapter.createFromResource(getActivity(), R.array.bloodgroup_list, android.R.layout.simple_spinner_item);
         adapterBloodGroup.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerBloodGroup.setAdapter(adapterBloodGroup);
@@ -125,8 +126,8 @@ public class ManageProfilePatient extends Fragment {
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+      //  medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +254,7 @@ public class ManageProfilePatient extends Fragment {
                                     @Override
                                     public void failure(RetrofitError error) {
                                         error.printStackTrace();
-                                        Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                         progress.dismiss();
                                     }
                                 });
@@ -262,7 +263,7 @@ public class ManageProfilePatient extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 error.printStackTrace();
-                                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 progress.dismiss();
                             }
                         });
@@ -291,7 +292,7 @@ public class ManageProfilePatient extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 error.printStackTrace();
-                                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 progress.dismiss();
                             }
                         });
@@ -316,8 +317,8 @@ public class ManageProfilePatient extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+      //  medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }
@@ -353,44 +354,10 @@ public class ManageProfilePatient extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                 progress.dismiss();
             }
         });
-
-    }
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
-
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
 
     }
 
@@ -430,8 +397,8 @@ public class ManageProfilePatient extends Fragment {
         logout.setVisibility(View.GONE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+       // medicoLogo.setVisibility(View.VISIBLE);
+      //  medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
         api.getProfilePatient(patientId,new Callback<Person>() {
@@ -443,7 +410,7 @@ public class ManageProfilePatient extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
     }

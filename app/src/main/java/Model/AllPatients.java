@@ -12,12 +12,12 @@ public class AllPatients {
     public String lastVisitedClinicId;
     public String patientName;
     boolean selected = false;
-    private String id;
+    private String patientId;
     private String doctorId;
     private String name;
     private String speciality;
     private String email;
-    private String mobileNumber;
+    private String mobile;
     private String location;
     private String dateOfBirth;
     private String gender;
@@ -31,10 +31,54 @@ public class AllPatients {
     private String lastAppointmentDate;
     private String appointmentDate;
     private String appointmentTime;
-    private String lastVisitedTime;
+    private String lastVisit;
     private String star;
     private String totalAppointment;
     private String reviews;
+    private String imageUrl;
+
+
+
+
+    public String getNumberOfVisits() {
+        return numberOfVisits;
+    }
+
+    public void setNumberOfVisits(String numberOfVisits) {
+        this.numberOfVisits = numberOfVisits;
+    }
+
+    private String numberOfVisits;
+
+    public String getUpcomingVisit() {
+        return upcomingVisit;
+    }
+
+    public void setUpcomingVisit(String upcomingVisit) {
+        this.upcomingVisit = upcomingVisit;
+    }
+
+    private String upcomingVisit;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    private String profession;
 
     public String getAddress() {
         return address;
@@ -44,13 +88,7 @@ public class AllPatients {
         this.address = address;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getLoyaltyPoints() {
         return loyaltyPoints;
@@ -149,7 +187,7 @@ public class AllPatients {
     }
 
     private String address;
-    private String imageUrl;
+
     private String loyaltyPoints;
     private String password;
     private String role;
@@ -163,15 +201,15 @@ public class AllPatients {
     private String referredBy;
     private String prime;
 
-    public AllPatients(String id, String name, String speciality,
-                       String email, String mobileNumber, String location, String dateOfBirth,
+    public AllPatients(String patientId, String name, String speciality,
+                       String email, String mobile, String location, String dateOfBirth,
                        String gender, String bloodGroup, String allergicTo, Integer type, String bookDate, String bookTime, String shift, Integer clinicId, String lastAppointmentDate) {
         this.doctorId = doctorId;
-        this.id = id;
+        this.patientId = patientId;
         this.name = name;
         this.speciality = speciality;
         this.email = email;
-        this.mobileNumber = mobileNumber;
+        this.mobile = mobile;
         this.location = location;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
@@ -245,12 +283,12 @@ public class AllPatients {
         this.appointmentType = appointmentType;
     }
 
-    public String getId() {
-        return id;
+    public String getpatientId() {
+        return patientId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setpatientId(String patientId) {
+        this.patientId = patientId;
     }
 
     public String getName() {
@@ -365,12 +403,12 @@ public class AllPatients {
         this.lastAppointmentDate = lastAppointmentDate;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getDoctorId() {
@@ -397,12 +435,12 @@ public class AllPatients {
         this.appointmentTime = appointmentTime;
     }
 
-    public String getLastVisitedTime() {
-        return lastVisitedTime;
+    public String getLastVisit() {
+        return lastVisit;
     }
 
-    public void setLastVisitedTime(String lastVisitedTime) {
-        this.lastVisitedTime = lastVisitedTime;
+    public void setLastVisit(String lastVisit) {
+        this.lastVisit = lastVisit;
     }
 
     public String getStar() {

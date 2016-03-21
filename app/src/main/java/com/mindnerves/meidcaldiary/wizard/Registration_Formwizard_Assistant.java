@@ -59,47 +59,28 @@ import retrofit.mime.TypedFile;
  */
 
 public class Registration_Formwizard_Assistant extends BasicWizardLayout {
-    @ContextVariable
     private String name;
-    @ContextVariable
     private String email;
-    @ContextVariable
     private String password;
-    @ContextVariable
     private String mobile;
-    @ContextVariable
     private String gender;
-    @ContextVariable
     private String dob;
-    @ContextVariable
     private String location;
-    @ContextVariable
     private String bloodGroup;
-    @ContextVariable
     public String docid;
-    @ContextVariable
     private String postalCode;
-    @ContextVariable
     private Uri uri;
-    @ContextVariable
     private String country;
-    /*  @ContextVariable
-      private String region;*/
-    @ContextVariable
     private String latitude;
-    @ContextVariable
     private String longitude;
-    @ContextVariable
     private String cityContext;
-    @ContextVariable
     private String speciality;
-    @ContextVariable
     private String profession;
     MyApi api;
-    TextView tvDob;
-    String path;
-    ProgressDialog progress;
-    String verifyCode;
+    private TextView tvDob;
+    private String path;
+    private ProgressDialog progress;
+    private String verifyCode;
     Global go;
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -281,7 +262,7 @@ public class Registration_Formwizard_Assistant extends BasicWizardLayout {
                                                             @Override
                                                             public void failure(RetrofitError error) {
                                                                 error.printStackTrace();
-                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.failed, Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                             }
                                                         });
 
@@ -289,7 +270,8 @@ public class Registration_Formwizard_Assistant extends BasicWizardLayout {
 
                                                     @Override
                                                     public void failure(RetrofitError error) {
-
+                                                        Toast.makeText(getActivity(), R.string.verifyCode_invalid, Toast.LENGTH_SHORT).show();
+                                                        progress.dismiss();
                                                     }
                                                 });
 
@@ -311,7 +293,7 @@ public class Registration_Formwizard_Assistant extends BasicWizardLayout {
                                     System.out.print("in error of retrofit................");
                                     error.printStackTrace();
                                     progress.dismiss();
-                                    Toast.makeText(getActivity().getApplicationContext(),R.string.failed, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 }
                             });
                         } else if (s.getStatus().equalsIgnoreCase("1")) {
@@ -332,7 +314,7 @@ public class Registration_Formwizard_Assistant extends BasicWizardLayout {
                         System.out.print("in error of retrofit................");
                         error.printStackTrace();
                         progress.dismiss();
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.failed, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                     }
                 });
 

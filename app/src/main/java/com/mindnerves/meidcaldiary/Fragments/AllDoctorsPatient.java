@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -56,13 +60,15 @@ public class AllDoctorsPatient extends Fragment {
     Button drawar,logout,back;
     ImageView profilePicture;
     RelativeLayout profileLayout;
-    ImageView medicoLogo,medicoText;
+    public  String  doctorId="";
+    //ImageView medicoLogo,medicoText;
     String type;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
+        setHasOptionsMenu(true);
         doctorListView = (ListView) view.findViewById(R.id.doctorListView);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -70,11 +76,14 @@ public class AllDoctorsPatient extends Fragment {
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         logout = (Button)getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+        logout.setVisibility(View.GONE);
+       // medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+       // medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
+        doctorId = session.getString("id",null);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,23 +122,37 @@ public class AllDoctorsPatient extends Fragment {
 
     //This will show all patients list for logged in doctor
     public void showDoctorList(){
-        String  doctorId = session.getString("sessionID",null);
 
-        DoctorId doc= new DoctorId("1");
+
+        DoctorId doc= new DoctorId(doctorId);
         api.getPatientProfileList(doc, new Callback<List<AllPatients>>() {
             @Override
-            public void success(List<AllPatients> allPatientsProfiles, Response response) {
-
+            public void success(final List<AllPatients> allPatientsProfiles, Response response) {
                 Global global = (Global) getActivity().getApplicationContext();
                 global.setAllPatients(allPatientsProfiles);
-
                 DoctorPatientListAdapter adapter = new DoctorPatientListAdapter(getActivity(), allPatientsProfiles);
                 doctorListView.setAdapter(adapter);
+                doctorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        SharedPreferences.Editor editor = session.edit();
+                        editor.putString("doctorId", doctorId);
+                        editor.putString("patientId", allPatientsProfiles.get(i).getpatientId());
+                        editor.commit();
+                        Bundle bun = new Bundle();
+                        bun.putString("fragment", "doctorPatientListAdapter");
+                        Fragment fragment = new AllDoctorPatientAppointment();
+                        fragment.setArguments(bun);
+                        FragmentManager fragmentManger = getActivity().getFragmentManager();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    }
+                });
                 progress.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
+                progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
@@ -154,11 +177,19 @@ public class AllDoctorsPatient extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     public void manageScreenIcons()
     {
         drawar.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+       // medicoLogo.setVisibility(View.GONE);
+       // medicoText.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
         logout.setBackgroundResource(R.drawable.home_jump);
         profileLayout.setVisibility(View.GONE);
@@ -179,7 +210,7 @@ public class AllDoctorsPatient extends Fragment {
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
         back.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+       // medicoLogo.setVisibility(View.VISIBLE);
+       // medicoText.setVisibility(View.VISIBLE);
     }
 }

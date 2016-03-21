@@ -73,7 +73,7 @@ public class AppointmentDayShift2 extends Fragment {
         dateTv = (TextView)view.findViewById(R.id.date_text);
         clinicId = session.getString("patient_clinicId","");
         doctorId = session.getString("sessionID","");
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
@@ -355,7 +355,7 @@ public class AppointmentDayShift2 extends Fragment {
             @Override
             public void success(List<AllClinicAppointment> ClinicList, Response response) {
                 List<ShiftAppointment> shift2 = null;
-                System.out.println("ClinicList = "+ClinicList.size());
+                System.out.println("clinicList = "+ClinicList.size());
                 List<Clinic> clinics = global.getAllClinicsList();
                 for(Clinic c : clinics)
                 {

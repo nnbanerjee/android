@@ -61,7 +61,7 @@ public class ManageProcedure extends Fragment {
     TextView globalTv, accountName;
     ImageView profilePicture;
     RelativeLayout profileLayout;
-    ImageView medicoLogo,medicoText;
+   // ImageView medicoLogo,medicoText;
     Button refresh;
     String type;
     @Override
@@ -97,8 +97,8 @@ public class ManageProcedure extends Fragment {
         back.setVisibility(View.INVISIBLE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+      //  medicoLogo.setVisibility(View.VISIBLE);
+     //   medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }
@@ -109,7 +109,7 @@ public class ManageProcedure extends Fragment {
 
         View view = inflater.inflate(R.layout.manage_procedure, container, false);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         listProcedure = (ListView) view.findViewById(R.id.list_procedure);
         noResult = (TextView) view.findViewById(R.id.noResult);
         addNewProcedure = (Button) view.findViewById(R.id.addNewProcedure);
@@ -126,8 +126,8 @@ public class ManageProcedure extends Fragment {
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         profileLayout = (RelativeLayout) getActivity().findViewById(R.id.home_layout2);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+      //  medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+       // medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -267,8 +267,8 @@ public class ManageProcedure extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         BackStress.staticflag = 1;
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+     //   medicoLogo.setVisibility(View.GONE);
+      //  medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }

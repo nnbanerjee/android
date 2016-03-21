@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HomeActivity;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.MainActivity;
 import com.mindnerves.meidcaldiary.MapActivity;
 import com.mindnerves.meidcaldiary.R;
@@ -95,7 +96,7 @@ public class ManageDoctorProfile extends Fragment {
     RelativeLayout profileLayout;
     String name,location,password,gender,dobString,bloddGroup,speciality,address,id;
     LinearLayout layout;
-    ImageView medicoLogo,medicoText;
+    //ImageView medicoLogo,medicoText;
     String type;
     Button refresh,uploadDocument;
     EditText city,registration;
@@ -134,8 +135,8 @@ public class ManageDoctorProfile extends Fragment {
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+      //  medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         countrySpinner = (Spinner)view.findViewById(R.id.country_spinner);
         regionSpinner = (Spinner)view.findViewById(R.id.region_spinner);
         practiceName = (Spinner)view.findViewById(R.id.practice_name);
@@ -180,7 +181,7 @@ public class ManageDoctorProfile extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intObj = new Intent(getActivity(),MapActivity.class);
+                Intent intObj = new Intent(getActivity(), MapActivity.class);
                 startActivity(intObj);
             }
         });
@@ -188,40 +189,40 @@ public class ManageDoctorProfile extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String country = countrySpinner.getSelectedItem().toString();
-                api.getRegions(country,new Callback<List<String>>() {
+                api.getRegions(country, new Callback<List<String>>() {
                     @Override
                     public void success(List<String> strings, Response response) {
                         regionList = new ArrayList<String>();
-                        for(String region : strings){
-                            if(region != null){
+                        for (String region : strings) {
+                            if (region != null) {
                                 regionList.add(region);
                             }
                         }
                         regions = new String[regionList.size()];
-                        int i =0;
-                        for(String region : regionList){
+                        int i = 0;
+                        for (String region : regionList) {
                             regions[i] = region;
-                            i = i+1;
+                            i = i + 1;
                         }
                         regionAdapter = new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_spinner_item, regions);
                         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         regionSpinner.setAdapter(regionAdapter);
-                        if(go.regionName != null) {
+                        if (go.regionName != null) {
                             int pos = 0;
                             pos = regionAdapter.getPosition(go.regionName);
                             regionSpinner.setSelection(pos);
                         }
-                        if(go.city != null){
-                            System.out.println("Registration City= "+go.city);
-                            city.setText(""+go.city);
+                        if (go.city != null) {
+                            System.out.println("Registration City= " + go.city);
+                            city.setText("" + go.city);
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
-                        Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -253,47 +254,40 @@ public class ManageDoctorProfile extends Fragment {
                 cityString = city.getText().toString();
                 practiceNameString = practiceName.getSelectedItem().toString();
                 registrationNumber = registration.getText().toString();
-                latitude = ""+go.userLatitude;
-                longitude = ""+go.userLongitude;
+                latitude = "" + go.userLatitude;
+                longitude = "" + go.userLongitude;
                 int flagValidation = 0;
                 String validationText = "";
-                if(name.equals(""))
-                {
+                if (name.equals("")) {
                     flagValidation = 1;
                     validationText = "Please Enter Name";
                 }
-                if(location.equals(""))
-                {
+                if (location.equals("")) {
                     flagValidation = 1;
-                    validationText = validationText+"\nPlease Enter Location";
+                    validationText = validationText + "\nPlease Enter Location";
                 }
-                if(password.equals(""))
-                {
+                if (password.equals("")) {
                     flagValidation = 1;
-                    validationText = validationText+"\nPlease Enter Password";
+                    validationText = validationText + "\nPlease Enter Password";
                 }
-                if(bloddGroup.equalsIgnoreCase("Select blood group"))
-                {
+                if (bloddGroup.equalsIgnoreCase("Select blood group")) {
                     flagValidation = 1;
-                    validationText = validationText+"\nPlease Select Blood Group";
+                    validationText = validationText + "\nPlease Select Blood Group";
                 }
-                if(registrationNumber.equals("")){
+                if (registrationNumber.equals("")) {
                     flagValidation = 1;
-                    validationText = validationText+"\nPlease Enter Registration Number";
+                    validationText = validationText + "\nPlease Enter Registration Number";
                 }
-                if(cityString.equals("")){
+                if (cityString.equals("")) {
                     flagValidation = 1;
-                    validationText = validationText+"\nPlease Enter City";
+                    validationText = validationText + "\nPlease Enter City";
                 }
-                if(flagValidation == 1)
-                {
-                    Toast.makeText(getActivity(),validationText,Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                if (flagValidation == 1) {
+                    Toast.makeText(getActivity(), validationText, Toast.LENGTH_SHORT).show();
+                } else {
 
-                    System.out.println("Date of Birth::::"+dobString);
-                    System.out.println("Gender::::::::"+gender);
+                    System.out.println("Date of Birth::::" + dobString);
+                    System.out.println("Gender::::::::" + gender);
                     progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
                     if (!(path == null)) {
                         File file = new File(path);
@@ -318,26 +312,25 @@ public class ManageDoctorProfile extends Fragment {
                                 person.region = regionString;
                                 person.practiceName = practiceNameString;
                                 person.registrationNumber = registrationNumber;
-                                if(go.userLatitude != null){
-                                    person.latitude = ""+go.userLatitude;
+                                if (go.userLatitude != null) {
+                                    person.latitude = "" + go.userLatitude;
                                 }
-                                if(go.userLongitude != null){
-                                    person.longitude = ""+go.userLongitude;
+                                if (go.userLongitude != null) {
+                                    person.longitude = "" + go.userLongitude;
                                 }
-                                api.updateDoctorProfile(person,new Callback<String>() {
+                                api.updateDoctorProfile(person, new Callback<String>() {
                                     @Override
                                     public void success(String status, Response response) {
 
-                                        if(status.equalsIgnoreCase("success"))
-                                        {
-                                            Toast.makeText(getActivity(),"Profile Saved Successfully",Toast.LENGTH_SHORT).show();
-                                            if(documentPath != null){
+                                        if (status.equalsIgnoreCase("success")) {
+                                            Toast.makeText(getActivity(), "Profile Saved Successfully", Toast.LENGTH_SHORT).show();
+                                            if (documentPath != null) {
                                                 File documentFile = new File(documentPath);
                                                 TypedFile document = new TypedFile("application/octet-stream", documentFile);
-                                                api.updateDocumentDoctor(doctorId,document,new Callback<String>() {
+                                                api.updateDocumentDoctor(doctorId, document, new Callback<String>() {
                                                     @Override
                                                     public void success(String s, Response response) {
-                                                        if(s.equalsIgnoreCase("Success")) {
+                                                        if (s.equalsIgnoreCase("Success")) {
                                                             Toast.makeText(getActivity(), "Document Updated Successfully", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
@@ -345,16 +338,17 @@ public class ManageDoctorProfile extends Fragment {
                                                     @Override
                                                     public void failure(RetrofitError error) {
                                                         error.printStackTrace();
-                                                        Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                     }
                                                 });
                                             }
                                         }
                                     }
+
                                     @Override
                                     public void failure(RetrofitError error) {
                                         error.printStackTrace();
-                                        Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                         progress.dismiss();
                                     }
                                 });
@@ -363,13 +357,11 @@ public class ManageDoctorProfile extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 error.printStackTrace();
-                                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 progress.dismiss();
                             }
                         });
-                    }
-                    else
-                    {
+                    } else {
                         Person person = new Person();
                         person.id = id;
                         person.name = name;
@@ -386,26 +378,25 @@ public class ManageDoctorProfile extends Fragment {
                         person.region = regionString;
                         person.practiceName = practiceNameString;
                         person.registrationNumber = registrationNumber;
-                        if(go.userLatitude != null){
-                            person.latitude = ""+go.userLatitude;
+                        if (go.userLatitude != null) {
+                            person.latitude = "" + go.userLatitude;
                         }
-                        if(go.userLongitude != null){
-                            person.longitude = ""+go.userLongitude;
+                        if (go.userLongitude != null) {
+                            person.longitude = "" + go.userLongitude;
                         }
-                        api.updateDoctorProfile(person,new Callback<String>() {
+                        api.updateDoctorProfile(person, new Callback<String>() {
                             @Override
                             public void success(String status, Response response) {
                                 progress.dismiss();
-                                if(status.equalsIgnoreCase("success"))
-                                {
-                                    Toast.makeText(getActivity(),"Profile Saved Successfully",Toast.LENGTH_SHORT).show();
-                                    if(documentPath != null){
+                                if (status.equalsIgnoreCase("success")) {
+                                    Toast.makeText(getActivity(), "Profile Saved Successfully", Toast.LENGTH_SHORT).show();
+                                    if (documentPath != null) {
                                         File documentFile = new File(documentPath);
                                         TypedFile document = new TypedFile("application/octet-stream", documentFile);
-                                        api.updateDocumentDoctor(doctorId,document,new Callback<String>() {
+                                        api.updateDocumentDoctor(doctorId, document, new Callback<String>() {
                                             @Override
                                             public void success(String s, Response response) {
-                                                if(s.equalsIgnoreCase("Success")) {
+                                                if (s.equalsIgnoreCase("Success")) {
                                                     Toast.makeText(getActivity(), "Document Updated Successfully", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
@@ -413,7 +404,7 @@ public class ManageDoctorProfile extends Fragment {
                                             @Override
                                             public void failure(RetrofitError error) {
                                                 error.printStackTrace();
-                                                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                             }
                                         });
                                     }
@@ -423,7 +414,7 @@ public class ManageDoctorProfile extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 error.printStackTrace();
-                                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 progress.dismiss();
                             }
                         });
@@ -440,13 +431,14 @@ public class ManageDoctorProfile extends Fragment {
             }
         });
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        doctorId = session.getString("id",null);
-        type = session.getString("type",null);
+        doctorId = session.getString("id", null);
+        type = session.getString("loginType", null);
         adapterBloodGroup = ArrayAdapter.createFromResource(getActivity(),R.array.bloodgroup_list, android.R.layout.simple_spinner_item);
         adapterBloodGroup.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerBloodGroup.setAdapter(adapterBloodGroup);
         adapterSpeciality = ArrayAdapter.createFromResource(getActivity(),R.array.speciality_list, android.R.layout.simple_spinner_item);
         adapterSpeciality.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        if(adapterSpeciality!=null)
         spinnerSpeciality.setAdapter(adapterSpeciality);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -479,8 +471,8 @@ public class ManageDoctorProfile extends Fragment {
         back.setVisibility(View.INVISIBLE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+      //  medicoLogo.setVisibility(View.VISIBLE);
+      //  medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
         api.getProfileDoctor(doctorId,new Callback<Person>() {
@@ -492,7 +484,7 @@ public class ManageDoctorProfile extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -604,7 +596,7 @@ public class ManageDoctorProfile extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                 progress.dismiss();
             }
         });
@@ -639,40 +631,7 @@ public class ManageDoctorProfile extends Fragment {
             }
         });
     }
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
-
-    }
 
 
     public void setDate(){
@@ -730,8 +689,8 @@ public class ManageDoctorProfile extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         BackStress.staticflag = 1;
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+       // medicoLogo.setVisibility(View.GONE);
+      //  medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }

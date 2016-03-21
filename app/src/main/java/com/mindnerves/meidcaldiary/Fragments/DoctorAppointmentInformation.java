@@ -5,35 +5,20 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-
 import Application.MyApi;
-import Model.ReminderVM;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -45,6 +30,7 @@ public class DoctorAppointmentInformation extends Fragment {
     Global global;
     RelativeLayout replacementFragment;
     Button summaryBtn,documentationBtn,doctorNoteBtn,treatmentBtn,invoicesBtn,feedbackBtn;
+
 
     @Nullable
     @Override
@@ -61,6 +47,7 @@ public class DoctorAppointmentInformation extends Fragment {
         treatmentBtn = (Button) view.findViewById(R.id.treatmentBtn);
         invoicesBtn = (Button) view.findViewById(R.id.invoicesBtn);
         feedbackBtn = (Button)view.findViewById(R.id.feedback_btn);
+
         getSummaryInformation();
 
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
@@ -253,6 +240,7 @@ public class DoctorAppointmentInformation extends Fragment {
             }
         });
     }
+
 
     public void  goToBack(){
         //Fragment fragment = new PatientAllAppointment();

@@ -430,6 +430,7 @@ public class ClinicListItemAdapter extends ArrayAdapter<ClinicDetailVm> {
             public void failure(RetrofitError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+                progress.dismiss();
             }
         });
     }

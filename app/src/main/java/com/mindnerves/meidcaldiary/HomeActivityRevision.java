@@ -98,7 +98,7 @@ public class HomeActivityRevision extends FragmentActivity{
                         BackStress.staticflag = 0;
                         SharedPreferences.Editor editor = session.edit();
                         editor.putString("sessionID",userEmail);
-                        editor.putString("type", userType);
+                        editor.putString("loginType", userType);
                         editor.commit();
                 finish();
 
@@ -132,9 +132,9 @@ public class HomeActivityRevision extends FragmentActivity{
         loggingId = session.getString("sessionID_Revision", null);
         logString = session.getString("type_Revision", null);
         userEmail = session.getString("sessionID",null);
-        userType =  session.getString("type",null);
+        userType =  session.getString("loginType",null);
         session.edit().putString("sessionID", loggingId).apply();
-        session.edit().putString("type",logString).apply();
+        session.edit().putString("loginType",logString).apply();
         System.out.println("Original Id:::::"+userEmail);
         System.out.println("Original type:::::"+userType);
         System.out.println("TYpe :::"+logString);
@@ -188,7 +188,7 @@ public class HomeActivityRevision extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivityRevision.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivityRevision.this,R.string.Failed,Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -209,7 +209,7 @@ public class HomeActivityRevision extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivityRevision.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivityRevision.this,R.string.Failed,Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -269,7 +269,7 @@ public class HomeActivityRevision extends FragmentActivity{
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = session.edit();
                         editor.putString("sessionID",userEmail);
-                        editor.putString("type", userType);
+                        editor.putString("loginType", userType);
                         editor.commit();
                         finish();
 
@@ -458,40 +458,7 @@ public class HomeActivityRevision extends FragmentActivity{
 
 
     }
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
-
-    }
     public void showMenus()
     {
         if(logString.equals("Patient"))

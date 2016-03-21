@@ -268,7 +268,7 @@ public class ManageDendencyDoctor extends Fragment {
        /* requestPatients = new ArrayList<Patient>();
         Patient p = new Patient();
         p.setName("No Patient Found");
-        p.setMobileNumber("");
+        p.setMobile("");
         p.setEmail("");
         p.setLocation("");
 

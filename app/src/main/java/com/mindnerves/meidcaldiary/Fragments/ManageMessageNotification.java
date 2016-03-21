@@ -81,7 +81,7 @@ public class ManageMessageNotification extends Fragment {
         layout.setVisibility(View.GONE);
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("sessionID",null);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
         final ImageView profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         final TextView accountName = (TextView) getActivity().findViewById(R.id.account_name);

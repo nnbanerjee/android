@@ -165,7 +165,7 @@ public class ClinicFragment extends Fragment {
         globalTv.setText("Clinics and Labs");
 
         Fragment fragment;
-        String logString = session.getString("type",null);
+        String logString = session.getString("loginType",null);
         if(logString.equals("Doctor"))
         {
             fragment = new DoctorAllClinics();

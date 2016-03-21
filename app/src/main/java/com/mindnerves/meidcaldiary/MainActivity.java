@@ -1,7 +1,9 @@
 package com.mindnerves.meidcaldiary;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
@@ -13,6 +15,7 @@ import android.graphics.Region;
 import android.os.BatteryManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,15 +35,19 @@ public class MainActivity extends FragmentActivity {
         // initialize variables
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        Log.i("MainActivity","mainActviity->onbackpressed");
 
-// check to see if stack is empty
+        Fragment f =  getFragmentManager().findFragmentById(R.id.lower_content);
+
+            // check to see if stack is empty
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             ft.commit();
-        }
-        else {
+        } else   if (f instanceof Login){
+            finish();
+        }else{
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setMessage("Are You Sure To Exit?");
+            alertDialogBuilder.setMessage(R.string.confirm_logout);
             alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                 @Override
@@ -67,10 +74,10 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       login = new Login();
-       FragmentTransaction ft = getFragmentManager().beginTransaction();
-       ft.add(R.id.lower_content, new Login());
-       ft.commit();
+        login = new Login();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.lower_content, new Login());
+        ft.commit();
     }
 
 

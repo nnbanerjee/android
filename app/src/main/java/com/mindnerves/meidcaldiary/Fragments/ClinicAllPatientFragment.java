@@ -26,7 +26,10 @@ import Application.MyApi;
 import Model.AllClinicsByDoctorPatientId;
 import Model.AllClinicsForDoctorIdAndPatientId;
 import Model.AllPatients;
-import Model.ClinicDetailVm;
+import Model.AppointmentSlotsByDoctor;
+import Model.ClinicPatientAppointments;
+import Model.DoctorId;
+import Model.DoctorIdPatientId;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -42,29 +45,30 @@ public class ClinicAllPatientFragment extends Fragment {
 
     MyApi api;
     ListView clinicListView;
-    String doctorId,patientId;
+    String doctorId, patientId;
     ProgressDialog progress;
     public String bookDate = null;
     public String bookTime = null;
     public String shift = null;
     public Integer clinicId = null;
     Button back;
+    ClinicPatientAppointments clinicPatientAppointmentsObj;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.clinic_profile_fragment, container,false);
+        View view = inflater.inflate(R.layout.clinic_profile_fragment, container, false);
 
         Global global = (Global) getActivity().getApplicationContext();
         List<AllPatients> allPatients = global.getAllPatients();
-        back = (Button)getActivity().findViewById(R.id.back_button);
+        back = (Button) getActivity().findViewById(R.id.back_button);
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("id", null);
         patientId = session.getString("patientId", null);
 
-        for(int i = 0; i < allPatients.size(); i++){
-            if(patientId.equals(allPatients.get(i).getId())){
+        for (int i = 0; i < allPatients.size(); i++) {
+            if (patientId.equals(allPatients.get(i).getpatientId())) {
                 AllPatients patients = allPatients.get(i);
                 bookDate = patients.getBookDate();
                 bookTime = patients.getBookTime();
@@ -98,32 +102,38 @@ public class ClinicAllPatientFragment extends Fragment {
         return view;
     }
 
-    public void getAllClinicsDetails(){
-        api.getPatientAppointmentsByDoctor(new AllClinicsForDoctorIdAndPatientId(doctorId, "1") , new Callback<AllClinicsByDoctorPatientId>() {
+    public void getAllClinicsDetails() {
+        api.getPatientAppointmentsByDoctor(new DoctorIdPatientId(doctorId, patientId), new Callback<ClinicPatientAppointments>() {
             @Override
-            public void success(AllClinicsByDoctorPatientId clinicDetailVm, Response response) {
-
-
-              /*  Global global = (Global) getActivity().getApplicationContext();
-                global.setClinicDetailVm(clinicDetailVm);
-                if (clinicId != null) {
-                    for (ClinicDetailVm detailVm : clinicDetailVm) {
-                        if (clinicId == Integer.parseInt(detailVm.getClinicId())) {
-                            detailVm.setHasNextAppointment(true);
-                            detailVm.setAppointmentDate(bookDate);
-                            detailVm.setAppointmentTime(bookTime);
-                            detailVm.setAppointmentShift(shift);
-                        }
+            public void success(ClinicPatientAppointments clinicDetailVm, Response response) {
+                Global global = (Global) getActivity().getApplicationContext();
+                // global.setClinicDetailVm(clinicDetailVm);
+                global.setClinicPatientAppointmentsObj(clinicDetailVm);
+                clinicPatientAppointmentsObj = clinicDetailVm;
+                api.getClinicsByDoctor(new DoctorId(doctorId), new Callback<List<AppointmentSlotsByDoctor>>() {
+                    @Override
+                    public void success(List<AppointmentSlotsByDoctor> appointmentSlotsByDoctor, Response response) {
+                        //[{"clinicId":2,"clinicName":"demo2","slots":[{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5}],"upcomingAppointment":null,"lastAppointmentl":null}]
+                        Global global = (Global) getActivity().getApplicationContext();
+                        // global.setClinicDetailVm(clinicDetailVm);
+                        global.setAppointmentSlotsByDoctorObj(appointmentSlotsByDoctor);
+                        ClinicPatientAdapter clinicListItemAdapter = new ClinicPatientAdapter(getActivity(), clinicPatientAppointmentsObj.getClinicList(), appointmentSlotsByDoctor);
+                        clinicListView.setAdapter(clinicListItemAdapter);
+                        progress.dismiss();
                     }
-                }
 
-                ClinicPatientAdapter clinicListItemAdapter = new ClinicPatientAdapter(getActivity(), clinicDetailVm);
-                clinicListView.setAdapter(clinicListItemAdapter);
-                progress.dismiss();*/
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progress.dismiss();
+                        Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                        error.printStackTrace();
+                    }
+                });
             }
 
             @Override
             public void failure(RetrofitError error) {
+                progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
@@ -138,7 +148,7 @@ public class ClinicAllPatientFragment extends Fragment {
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     goBack();
                     return true;
                 }
@@ -147,13 +157,13 @@ public class ClinicAllPatientFragment extends Fragment {
         });
     }
 
-    public void goBack(){
-        TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+    public void goBack() {
+        TextView globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
         globalTv.setText("Patients");
         Fragment fragment = new AllDoctorsPatient();
         FragmentManager fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
-        final Button back = (Button)getActivity().findViewById(R.id.back_button);
+        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+        final Button back = (Button) getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.INVISIBLE);
     }
 

@@ -88,7 +88,7 @@ public class CalendarFragmentShift1 extends Fragment {
         RelativeLayout open = (RelativeLayout) view.findViewById(R.id.open);
         plus = (ImageView) view.findViewById(R.id.plus);
         minus = (ImageView) view.findViewById(R.id.minus);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         gridview = (GridView) view.findViewById(R.id.gridview);
         gridview.setAdapter(adapter);
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -306,7 +306,7 @@ public class CalendarFragmentShift1 extends Fragment {
                 List<ShiftAppointment> shift1 = null;
                 List<ShiftAppointment> shift2 = null;
                 List<ShiftAppointment> shift3 = null;
-                System.out.println("ClinicList = "+ClinicList.size());
+                System.out.println("clinicList = "+ClinicList.size());
                 //Global global = (Global) getActivity().getApplicationContext();
                 //global.setClinicDetailVm(clinicDetailVm);
                 List<Clinic> clinics = global.getAllClinicsList();

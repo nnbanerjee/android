@@ -2,6 +2,7 @@ package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,14 +23,22 @@ import com.google.gson.JsonObject;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
+import Adapter.DoctorAllPatientAppointmentAdapter;
 import Application.MyApi;
+import Model.Appointment;
+import Model.AppointmentId;
+import Model.DoctorNotesResponse;
 import Model.DoctorNotesVM;
 import Model.ReminderVM;
+import Model.ResponseCodeVerfication;
+import Utils.MedicoCustomErrorHandler;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -44,6 +53,9 @@ public class DoctorAppointmentDoctorNote extends Fragment {
     Button saveDoctorNotes;
     String[] symptoms_item = null;
     String patientId,doctorId,appointmentTime,appointmentDate;
+    String appointMentId;
+    ProgressDialog progress;
+    boolean createOrUpdateFlag=false;
 
     @Nullable
     @Override
@@ -52,18 +64,20 @@ public class DoctorAppointmentDoctorNote extends Fragment {
         View view = inflater.inflate(R.layout.doctor_appointment_doctor_note, container,false);
         global = (Global) getActivity().getApplicationContext();
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
         patientId = session.getString("patientId","");
         doctorId = session.getString("doctorId","");
         appointmentDate = session.getString("doctor_patient_appointmentDate","");
         appointmentTime = session.getString("doctor_patient_appointmentTime","");
-
+        appointMentId= session.getString("appointmentId", "");
         symptoms_item = getResources().getStringArray(R.array.symptoms);
         //Retrofit Initialization
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setErrorHandler(new MedicoCustomErrorHandler(getActivity()))
                 .build();
         api = restAdapter.create(MyApi.class);
 
@@ -72,10 +86,10 @@ public class DoctorAppointmentDoctorNote extends Fragment {
         doctorNotes = (EditText) view.findViewById(R.id.doctorNotes);
         saveDoctorNotes = (Button) view.findViewById(R.id.saveDoctorNotes);
 
-        symptomsValue.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, symptoms_item));
+        symptomsValue.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptoms_item));
         symptomsValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-        diagnosisValue.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, symptoms_item));
+        diagnosisValue.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptoms_item));
         diagnosisValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
@@ -91,27 +105,29 @@ public class DoctorAppointmentDoctorNote extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(symptomsValue.getText().toString().length() == 0){
+                if (symptomsValue.getText().toString().length() == 0) {
                     symptomsValue.setError("Please Enter Symptoms");
-                }else if(diagnosisValue.getText().toString().length() == 0){
+                } else if (diagnosisValue.getText().toString().length() == 0) {
                     diagnosisValue.setError("Please Enter diagnosis");
-                }else {
-                    DoctorNotesVM doctorNotesVM = new DoctorNotesVM();
-                    doctorNotesVM.setSymptoms(symptomsValue.getText().toString());
+                } else {
+                    DoctorNotesResponse doctorNotesVM = new DoctorNotesResponse(appointMentId,diagnosisValue.getText().toString(),
+                            symptomsValue.getText().toString(),
+                            doctorNotes.getText().toString());
+                    /*doctorNotesVM.setSymptoms(symptomsValue.getText().toString());
                     doctorNotesVM.setDiagnosis(diagnosisValue.getText().toString());
                     doctorNotesVM.setDoctorNotes(doctorNotes.getText().toString());
                     doctorNotesVM.setDoctorId(doctorId);
                     doctorNotesVM.setPatientId(patientId);
                     doctorNotesVM.setAppointmentDate(appointmentDate);
-                    doctorNotesVM.setAppointmentTime(appointmentTime);
+                    doctorNotesVM.setAppointmentTime(appointmentTime);*/
 
                     saveDoctorNotesData(doctorNotesVM);
                 }
             }
         });
 
-        getDoctorNotes(doctorId,patientId,appointmentDate,appointmentTime);
-
+       // getDoctorNotes(doctorId,patientId,appointmentDate,appointmentTime);
+        getDoctorNotes(new AppointmentId(appointMentId));
         return view;
     }
 
@@ -141,16 +157,31 @@ public class DoctorAppointmentDoctorNote extends Fragment {
         fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
     }
 
-    public void getDoctorNotes(String doctorId, String patientId, String appointmentDate, String appointmentTime){
-        api.getDoctorNotesData(doctorId, patientId, appointmentDate,appointmentTime, new Callback<DoctorNotesVM>() {
+   // public void getDoctorNotes(String doctorId, String patientId, String appointmentDate, String appointmentTime) {
+   public void getDoctorNotes(AppointmentId appointment) {
+        api.getPatientVisitDoctorNotes(appointment, new Callback<DoctorNotesResponse>() {
             @Override
-            public void success(DoctorNotesVM doctorNotesVM, Response response) {
+            public void success(DoctorNotesResponse doctorNotesResponse, Response response) {
                 //Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                if(doctorNotesVM.getDoctorId() != null){
-                    symptomsValue.setText(doctorNotesVM.getSymptoms());
-                    diagnosisValue.setText(doctorNotesVM.getDiagnosis());
-                    doctorNotes.setText(doctorNotesVM.getDoctorNotes());
+
+                String json = new String(((TypedByteArray) response.getBody()).getBytes());
+                if (UtilSingleInstance.checkForServerErrorsInResponse(json).equalsIgnoreCase("")) {
+                    if (doctorNotesResponse.getAppointmentId() != null) {
+                        symptomsValue.setText(doctorNotesResponse.getSymptoms());
+                        diagnosisValue.setText(doctorNotesResponse.getDiagnosis());
+                        doctorNotes.setText(doctorNotesResponse.getDoctorNotes());
+                        createOrUpdateFlag=false;
+                    }
+
+                    progress.dismiss();
+                } else {
+                    Toast.makeText(getActivity(), UtilSingleInstance.checkForServerErrorsInResponse(json), Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+                    createOrUpdateFlag=true;
+
                 }
+
+
             }
 
             @Override
@@ -161,19 +192,41 @@ public class DoctorAppointmentDoctorNote extends Fragment {
         });
     }
 
-    public void saveDoctorNotesData(DoctorNotesVM doctorNotesVM){
-        api.saveDoctorNotes(doctorNotesVM, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jsonObject, Response response) {
-                Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-            }
+    public void saveDoctorNotesData(DoctorNotesResponse doctorNotesVM){
 
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        });
+        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        if(createOrUpdateFlag){
+            api.addPatientVisitDoctorNotes(doctorNotesVM, new Callback<ResponseCodeVerfication>() {
+                @Override
+                public void success(ResponseCodeVerfication jsonObject, Response response) {
+                    Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                    progress.dismiss();
+                }
+            });
+        }else{
+            api.updatePatientVisitDoctorNotes(doctorNotesVM, new Callback<ResponseCodeVerfication>() {
+                @Override
+                public void success(ResponseCodeVerfication jsonObject, Response response) {
+                    Toast.makeText(getActivity(), "Update successfully !!!", Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                    progress.dismiss();
+                }
+            });
+        }
+
     }
 
 

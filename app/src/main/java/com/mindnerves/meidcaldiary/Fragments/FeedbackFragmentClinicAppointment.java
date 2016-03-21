@@ -20,8 +20,10 @@ import android.widget.Toast;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
+import Model.AppointmentStatus;
 import Model.ClinicAppointment;
 import Model.FeedbackVM;
+import Model.ResponseCodeVerfication;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -47,6 +49,9 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
     Button save,back;
     int starCount = 0;
     EditText review;
+    String type;
+    int visitedValue;
+    String appointmnetId;
 
     @Nullable
     @Override
@@ -70,6 +75,7 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
+
         flagStar1 = 0;
         flagStar2 = 0;
         flagStar3 = 0;
@@ -77,6 +83,16 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
         flagStar5 = 0;
         visited.setChecked(true);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        type = session.getString("loginType", null);
+       /* if (type.equalsIgnoreCase("Patient")) {
+            userId = session.getString("sessionID", "");
+        } else if (type.equalsIgnoreCase("Doctor")) {
+            userId = session.getString("Doctor_patientEmail", "");
+        }
+        */
+        Bundle bun= getArguments();
+
+        appointmnetId=bun.getString("selectedAppointmentId");
         patientId = session.getString("sessionID", null);
         doctorId = session.getString("patient_doctorId", null);
         clinicId = session.getString("patient_clinicId", null);
@@ -169,6 +185,36 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
             @Override
             public void onClick(View v) {
                 Boolean radioButtonValue = visited.isChecked();
+                Boolean radioButtonNotVisitedValue = notVisited.isChecked();
+                if(radioButtonValue)
+                    visitedValue=1;
+                else if (radioButtonNotVisitedValue)
+                    visitedValue=0;
+                else
+                    visitedValue=2;
+
+                if (type.equalsIgnoreCase("Patient")) {
+                    //userId = session.getString("sessionID", "");w
+                } else if (type.equalsIgnoreCase("Doctor")) {
+                   // userId = session.getString("Doctor_patientEmail", "");
+                    //0=not visited 1=visited 2=unknown
+                    AppointmentStatus status=new AppointmentStatus(appointmnetId,""+visitedValue);
+                    api.setAppointmentStatus(status, new Callback<ResponseCodeVerfication>() {
+                        @Override
+                        public void success(ResponseCodeVerfication clinicAppointment, Response response) {
+                            Toast.makeText(getActivity(), "Feedback Saved!!!!!!!", Toast.LENGTH_SHORT).show();
+                           // goBack();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                            Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+               /* Boolean radioButtonValue = visited.isChecked();
                 if (radioButtonValue) {
                     FeedbackVM vm = new FeedbackVM();
                     vm.doctorId = doctorId;
@@ -200,7 +246,7 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
@@ -220,10 +266,10 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
+                }*/
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -284,8 +330,12 @@ public class FeedbackFragmentClinicAppointment extends Fragment {
         star5.setBackgroundResource(R.drawable.selected_star);
     }
     public void goBack(){
-        Fragment fragment = new PatientAppointmentStatus();
+
+        Fragment fragment = new ClinicAllPatientFragment();
         FragmentManager fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
+       /* Fragment fragment = new PatientAppointmentStatus();
+        FragmentManager fragmentManger = getFragmentManager();
+        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();*/
     }
 }

@@ -1,8 +1,28 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
-        <!-- Customize your theme here. -->
+    <style name="editTextthemeForNewDesign" parent="@android:style/Widget.EditText" >
+
+
+    <item name="android:textColor">@color/color_blue_default</item>
+    <item name="android:layout_marginLeft">10dp</item>
+    <item name="android:layout_marginRight">10dp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColorHint">@color/color_blue_default</item>
+    <item name="android:textSize">18sp</item>
+    <item name ="android:background">@drawable/apptheme_edit_text_holo_light</item>
+</style>
+
+    <style name="buttonThemeForNewDesign" parent="@android:style/Widget.Button" >
+        <item name="android:layout_centerHorizontal">true</item>
+
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/color_blue_default</item>
+        <item name="android:textSize">18sp</item>
+
+        <item name ="android:background">@drawable/apptheme_btn_default_holo_light</item>
+        <item name="android:textColor">@drawable/button_selector_text_and_color</item>
     </style>
     <style name = "body2">
         <item name = "android:fontFamily">sans-serif-medium</item>
@@ -11,6 +31,7 @@
     <style name = "body1">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">14sp</item>
+        <item name = "android:textColor">@color/off_white</item>
     </style>
     <style name = "body">
         <item name = "android:fontFamily">sans-serif-medium</item>
@@ -23,9 +44,19 @@
     <style name = "sub_heading">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">16sp</item>
+        <item name = "android:textStyle">bold</item>
+        <item name = "android:textColor">@color/color_blue_default</item>
     </style>
     <style name = "summary">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">11sp</item>
     </style>
+    <style name="ButtonAppTheme" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/apptheme_btn_default_holo_light</item>
+    </style>
+
+    <style name="ImageButtonAppTheme" parent="android:Widget.Holo.Light.ImageButton">
+        <item name="android:background">@drawable/apptheme_btn_default_holo_light</item>
+    </style>
+
 </resources>

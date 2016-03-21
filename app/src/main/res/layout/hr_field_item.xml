@@ -17,6 +17,6 @@
         android:layout_below="@+id/procedureName"
         android:layout_width="match_parent"
         android:layout_margin="5dp"
-        android:layout_height="60dp" />
+        android:layout_height="160dp" />
 
 </RelativeLayout>

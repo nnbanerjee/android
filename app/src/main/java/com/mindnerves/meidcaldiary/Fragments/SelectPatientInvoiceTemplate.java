@@ -106,14 +106,14 @@ public class SelectPatientInvoiceTemplate extends Fragment {
             @Override
             public void onClick(View v) {
 
-                TreatmentPlan treatmentPlan = new TreatmentPlan();
+               /* TreatmentPlan treatmentPlan = new TreatmentPlan();
                 treatmentPlan.setDoctorId(doctorId);
                 treatmentPlan.setProcedureId(procedureId);
                 treatmentPlan.setTemplateId(templateId);
                 treatmentPlan.setPatientId(patientEmail);
                 treatmentPlan.setPatientAppointmentDate(appointmentDate);
                 treatmentPlan.setPatientAppointmentTime(appointmentTime);
-                saveTreatmentPlan(treatmentPlan);
+                saveTreatmentPlan(treatmentPlan);*/
             }
         });
 

@@ -140,7 +140,7 @@ public class ClinicDoctorAppointmentFragment extends Fragment {
 
 
                 /*cancelClinicsAppointmentData(global.clinicDetailsData.getDoctorId(), global.clinicDetailsData.getId(),
-                        global.clinicDetailsData.getClinicId(), global.clinicDetailsData.getShift());*/
+                        global.clinicDetailsData.getIdClinic(), global.clinicDetailsData.getShift());*/
             }
         });
 
@@ -360,6 +360,7 @@ public class ClinicDoctorAppointmentFragment extends Fragment {
             }
 
             @Override
+
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();

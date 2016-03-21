@@ -56,7 +56,7 @@ public class PatientAppointmentStatus extends Fragment {
     ClinicAppointmentListAdapter upcomingAdapter,pastAdapter;
     ArrayList<Clinic> upcomingClinicList,pastClinicList;
     DatabaseHandler databaseHandler;
-    ImageView addAppointment,profilePicture,medicalLogo,medicalText;
+    ImageView addAppointment,profilePicture;//,medicalLogo,medicalText;
     RelativeLayout profileLayout;
     String type;
     @Nullable
@@ -76,9 +76,9 @@ public class PatientAppointmentStatus extends Fragment {
         drawar = (Button) getActivity().findViewById(R.id.drawar_button);
         logout = (Button) getActivity().findViewById(R.id.logout);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
-        medicalLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicalText = (ImageView)getActivity().findViewById(R.id.home_icon);
-        type = session.getString("type",null);
+    //    medicalLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+     //   medicalText = (ImageView)getActivity().findViewById(R.id.home_icon);
+        type = session.getString("loginType",null);
         BackStress.staticflag =1;
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,8 +166,8 @@ public class PatientAppointmentStatus extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
-        medicalLogo.setVisibility(View.GONE);
-        medicalText.setVisibility(View.GONE);
+    //    medicalLogo.setVisibility(View.GONE);
+     //   medicalText.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }
     public void showClinicsList(){
@@ -270,8 +270,8 @@ public class PatientAppointmentStatus extends Fragment {
         accountName.setVisibility(View.VISIBLE);
         back.setVisibility(View.INVISIBLE);
         profileLayout.setVisibility(View.VISIBLE);
-        medicalLogo.setVisibility(View.VISIBLE);
-        medicalText.setVisibility(View.VISIBLE);
+     //   medicalLogo.setVisibility(View.VISIBLE);
+     //   medicalText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }

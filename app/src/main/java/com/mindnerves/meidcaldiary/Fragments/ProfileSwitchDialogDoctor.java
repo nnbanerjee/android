@@ -56,7 +56,7 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("sessionID",null);
-        typeId = session.getString("type",null);
+        typeId = session.getString("loginType",null);
         typeId = "D";
 
         dependentList = (ListView)view.findViewById(R.id.profile_dependent_list);
@@ -78,7 +78,7 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -102,14 +102,14 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
 
                     }
                 }
-                dependentAdapter = new ProfileDependencyAdapter(getActivity(),patients);
-                dependentList.setAdapter(dependentAdapter);
+                /*dependentAdapter = new ProfileDependencyAdapter(getActivity(),patients);
+                dependentList.setAdapter(dependentAdapter);*/
             }
 
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
         dependentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -163,7 +163,7 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
 

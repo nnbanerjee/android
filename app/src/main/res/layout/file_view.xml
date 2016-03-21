@@ -11,7 +11,7 @@
   		android:layout_width="fill_parent"
   		>  
   		<ImageView
-			android:id="@+id/img1" 
+			android:id="@+id/img1"
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content" 
 			android:singleLine="true"
@@ -24,8 +24,8 @@
   			android:layout_width="fill_parent"
   			>	
 			<TextView 
-				android:text="@+id/TextView01" 
-				android:id="@+id/TextView01" 
+				android:text="@+id/TextView01"
+				android:id="@+id/TextView01"
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content" 
 				android:singleLine="true" 
@@ -34,8 +34,8 @@
 				android:layout_marginLeft="5dip">
 			</TextView>
 			<TextView 
-				android:text="@+id/TextView02" 
-				android:id="@+id/TextView02" 
+				android:text="@+id/TextView02"
+				android:id="@+id/TextView02"
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content" 
 				android:layout_marginLeft="5dip">

@@ -78,7 +78,7 @@ public class DoctorDetailsFragment extends Fragment {
         closeMenu = (ImageView) view.findViewById(R.id.downImg);
 
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
 
         back = (Button) getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);

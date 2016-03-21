@@ -32,7 +32,7 @@
         android:layout_below="@+id/underline1"
         android:text="ABC XYZ"
         android:id="@+id/profile_name"
-        android:textColor="#ffffff"
+        android:textColor="@color/color_blue_default"
         android:padding="5dp"
         />
     <TextView

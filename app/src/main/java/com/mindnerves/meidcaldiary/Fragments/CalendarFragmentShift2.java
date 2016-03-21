@@ -291,7 +291,7 @@ public class CalendarFragmentShift2 extends Fragment {
             public void success(List<AllClinicAppointment> ClinicList, Response response) {
 
                 List<ShiftAppointment> shift2 = null;
-                System.out.println("ClinicList = "+ClinicList.size());
+                System.out.println("clinicList = "+ClinicList.size());
                 //Global global = (Global) getActivity().getApplicationContext();
                 //global.setClinicDetailVm(clinicDetailVm);
                 List<Clinic> clinics = global.getAllClinicsList();

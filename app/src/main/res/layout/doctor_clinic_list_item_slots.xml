@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+
+
+    <TextView
+        android:id="@+id/slot1"
+        style="@style/body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Slot 1 :  " />
+
+    <TextView
+        android:id="@+id/slot_time1"
+        style="@style/body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upcomingText"
+        android:layout_toRightOf="@+id/slot1"
+        android:text="8:00 AM-11:00 AM"
+
+        />
+
+    <Button
+        android:id="@+id/slot_button1"
+        android:layout_width="15dp"
+        android:layout_height="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lastAppointmentDate"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/right_arrow_black"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:textStyle="bold"
+          />
+
+    <TextView
+        android:id="@+id/slot_time_text1"
+        style="@style/body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lastAppointmentDate"
+        android:layout_toLeftOf="@+id/slot_button1"
+        android:text="10" />
+
+
+</RelativeLayout>

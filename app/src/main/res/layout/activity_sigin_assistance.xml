@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/medico_registration_top_pane" />
+        android:background="@color/color_blue_default" />
 
     <TextView
         android:id="@+id/upperTxtLabel"
@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Registration As Assistant"
-        android:textColor="@color/text_view_color"
+        android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold" />
 

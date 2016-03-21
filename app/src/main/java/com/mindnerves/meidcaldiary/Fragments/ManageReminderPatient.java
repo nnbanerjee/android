@@ -58,7 +58,7 @@ public class ManageReminderPatient extends Fragment {
     Button back,drawar,logout;
     ImageView profilePicture;
     RelativeLayout profileLayout;
-    ImageView medicoLogo,medicoText;
+   // ImageView medicoLogo,medicoText;
     String type;
     Button refresh;
     @Nullable
@@ -73,15 +73,15 @@ public class ManageReminderPatient extends Fragment {
         getActivity().getActionBar().hide();
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("sessionID",null);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         back = (Button)getActivity().findViewById(R.id.back_button);
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
         logout = (Button)getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+      //  medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +165,7 @@ public class ManageReminderPatient extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
                         }
                     });
                     showReminderList();
@@ -187,8 +187,8 @@ public class ManageReminderPatient extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         layout.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+     //   medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
 
@@ -225,7 +225,7 @@ public class ManageReminderPatient extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -244,8 +244,8 @@ public class ManageReminderPatient extends Fragment {
         back.setVisibility(View.INVISIBLE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+     //   medicoLogo.setVisibility(View.VISIBLE);
+      //  medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }

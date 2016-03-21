@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Global;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import java.io.InputStream;
@@ -96,7 +97,7 @@ public class PatientAppointmentSummary extends Fragment {
         doctorId = Integer.parseInt(session.getString("doctorId", "0"));
         clinicId = session.getString("patient_clinicId", null);
         patientId = session.getString("sessionID", null);
-        type =  session.getString("type",null);
+        type =  session.getString("loginType",null);
         System.out.println("Type::::::"+type);
         //Retrofit Initialization
         addAlarm = (Button)view.findViewById(R.id.add_alarm);
@@ -299,22 +300,22 @@ public class PatientAppointmentSummary extends Fragment {
                 }
                 if (histryString.equalsIgnoreCase("systoms")) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = historyVMList;
+                    //show.summaryHistoryVMs = historyVMList;
                     show.heading = "Symptoms Histry";
                     show.show(getFragmentManager(), "Dialog");
                 } else if (histryString.equalsIgnoreCase("diagnosis")) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = historyVMList;
+                    //show.summaryHistoryVMs = historyVMList;
                     show.heading = "Diagnosis Histry";
                     show.show(getFragmentManager(), "Dialog");
                 } else if (histryString.equalsIgnoreCase("prescribHistry")) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = historyVMList;
+                   // show.summaryHistoryVMs = historyVMList;
                     show.heading = "Prescribed Histry";
                     show.show(getFragmentManager(), "Dialog");
                 } else if (histryString.equalsIgnoreCase("testHistry")) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = historyVMList;
+                   // show.summaryHistoryVMs = historyVMList;
                     show.heading = "Test Histry";
                     show.show(getFragmentManager(), "Dialog");
                 }
@@ -384,7 +385,7 @@ public class PatientAppointmentSummary extends Fragment {
                     @Override
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
-                        Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                     }
                 });
             }else if(bunDoctor != null){
@@ -515,40 +516,6 @@ public class PatientAppointmentSummary extends Fragment {
         }
     }
 
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
-
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
-
-    }
 
     public void getAllPatientSummary() {
         System.out.println("In Patient Login ");
@@ -596,7 +563,7 @@ public class PatientAppointmentSummary extends Fragment {
                         vm.alarms = null;
                         medicineVMs.add(vm);
                     }
-                    adapter = new MedicineAdapter(getActivity(),medicineVMs,reminderVM);
+                   // adapter = new MedicineAdapter(getActivity(),medicineVMs,reminderVM);
                     alarmListView.setAdapter(adapter);
                 } else {
                     global.setReminderVM(null);
@@ -605,7 +572,7 @@ public class PatientAppointmentSummary extends Fragment {
                     vm.medicineName = "No Medicine";
                     vm.alarms = null;
                     medicineVMs.add(vm);
-                    adapter = new MedicineAdapter(getActivity(),medicineVMs,reminderVM);
+                   // adapter = new MedicineAdapter(getActivity(),medicineVMs,reminderVM);
                     alarmListView.setAdapter(adapter);
                 }
             }

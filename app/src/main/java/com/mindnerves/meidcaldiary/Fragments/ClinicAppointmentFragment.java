@@ -18,10 +18,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -40,9 +42,18 @@ import Adapter.ClinicListItemAdapter;
 import Adapter.ClinicTimeTableAdapter;
 import Application.AppController;
 import Application.MyApi;
+import Model.AllPatients;
+import Model.AppointmentSlotsByDoctor;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
+import Model.ClinicList;
+import Model.DoctorAppointmentsResponse;
+import Model.DoctorClinicAppointments;
+import Model.DoctorCreatesAppoinementResponse;
+import Model.DoctorCreatesAppointment;
+import Model.Slot;
 import Model.TimeInterval;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -57,7 +68,7 @@ import retrofit.client.Response;
 public class ClinicAppointmentFragment extends Fragment {
 
     MyApi api;
-    String clinicId,clinicShift;
+    String clinicId, clinicShift;
     ProgressDialog progress;
     Calendar calendar = Calendar.getInstance();
     List<ClinicDetailVm> clinicDetailVmList;
@@ -65,23 +76,41 @@ public class ClinicAppointmentFragment extends Fragment {
     TextView dateValue;
     GridView timeTeableList;
     Spinner visitType;
-    TextView shiftValue,shiftName,doctor_email;
-    Button bookNowBtn,timeBtn,cancelBtn,back;
+    TextView shiftValue, shiftName, doctor_email;
+    Button bookNowBtn, timeBtn, cancelBtn, back;
     Global global;
-    String userId,appointmentTime,appointmentDate;
+    String userId, appointmentTime, appointmentDate;
     public SharedPreferences session;
     Date currentDate = new Date();
     TextView globalTv;
     String type;
     Date date;
+    private String doctorId;
+    private String doctorClinicId;
+    private String dateLong, strClinicName;
+    int selectedSlotNo;
+    Slot SelectedSlotDetailsWithClinic;
+    Calendar startTimeFromSelection, endTimeFromSelection;
+    String patientId;
+    ClinicList selectedClinic;
+    ClinicTimeTableAdapter clinicTimeTableAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.clinic_appointment_fragment, container,false);
+        View view = inflater.inflate(R.layout.clinic_appointment_fragment, container, false);
+
+        //Hide top layout from screen.. no needed now
+        RelativeLayout layout = (RelativeLayout) getActivity().findViewById(R.id.layout);
+        if (layout != null)
+            layout.setVisibility(View.GONE);
+        RelativeLayout layout2 = (RelativeLayout) getActivity().findViewById(R.id.layout2);
+        if (layout2 != null)
+            layout2.setVisibility(View.GONE);
+
         TextView clinicName = (TextView) view.findViewById(R.id.clinicName);
-        globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+        globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
         globalTv.setText("Clinic Appointment");
         shiftName = (TextView) view.findViewById(R.id.shiftName);
         shiftValue = (TextView) view.findViewById(R.id.shiftValue);
@@ -95,26 +124,54 @@ public class ClinicAppointmentFragment extends Fragment {
         global = (Global) getActivity().getApplicationContext();
         Bundle args = getArguments();
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type", null);
+        type = session.getString("loginType", null);
+
+
         clinicId = args.getString("clinicId");
         clinicShift = args.getString("clinicShift");
         appointmentTime = args.getString("appointmentTime");
         appointmentDate = args.getString("appointmentDate");
-        global.clinicDetailsData.setClinicId(Integer.parseInt(clinicId));
-        global.clinicDetailsData.setShift(clinicShift);
-        global.clinicDetailsData.setPatientId(userId);
-        if(type.equalsIgnoreCase("Patient")){
-            userId =  session.getString("sessionID", "");
-        }else if(type.equalsIgnoreCase("Doctor")){
+        // doctorClinicId= args.getString("doctorClinicId");
+
+
+        patientId = session.getString("patientId", null);
+        System.out.println("patientId from session sharedPreferance-->" + patientId);
+
+        strClinicName = args.getString("clinicName");
+       /* startTimeFromSelection= Long.parseLong(args.getString("startTime")) ;
+        endTimeFromSelection=args.getString("endTime");*/
+        startTimeFromSelection = Calendar.getInstance();
+        startTimeFromSelection.setTimeInMillis(Long.parseLong(args.getString("startTime")));
+        endTimeFromSelection = Calendar.getInstance();
+        endTimeFromSelection.setTimeInMillis(Long.parseLong(args.getString("endTime")));
+
+        //New Data`
+        Gson gson = new Gson();
+        String json = session.getString("SelectedSlotDetailsWithClinic", "");
+        SelectedSlotDetailsWithClinic = gson.fromJson(json, Slot.class);
+        selectedSlotNo = session.getInt("selectedSlotNo", 0);
+        String jsonSelectedClinic = session.getString("selectedClinic", "");
+        selectedClinic = gson.fromJson(jsonSelectedClinic, ClinicList.class);
+
+        doctorId = session.getString("id", null);
+        doctorClinicId = SelectedSlotDetailsWithClinic.getDoctorClinicId();
+        dateLong = "" + Calendar.getInstance().getTimeInMillis();
+
+        // global.clinicDetailsData.setClinicId(Integer.parseInt(clinicId));
+        // global.clinicDetailsData.setShift(clinicShift);
+        // global.clinicDetailsData.setPatientId(userId);
+        if (type != null && type.equalsIgnoreCase("Patient")) {
+            userId = session.getString("sessionID", "");
+        } else if (type != null && type.equalsIgnoreCase("Doctor")) {
             userId = session.getString("Doctor_patientEmail", "");
         }
-        System.out.println("Appointment Date= "+appointmentDate);
+        System.out.println("Appointment Date= " + appointmentDate);
         clinicDetailVmList = global.getClinicDetailVm();
         updatedate();
 
-        if(appointmentTime != null){
+        if (appointmentTime != null) {
             cancelBtn.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             cancelBtn.setVisibility(View.GONE);
         }
 
@@ -123,10 +180,10 @@ public class ClinicAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText()
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getDoctorId());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getPatientId());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getClinicId());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getShift());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getDoctorId());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getPatientId());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getClinicId());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getShift());
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Delete Appointment")
@@ -149,7 +206,7 @@ public class ClinicAppointmentFragment extends Fragment {
 
 
                 /*cancelClinicsAppointmentData(global.clinicDetailsData.getDoctorId(), global.clinicDetailsData.getId(),
-                        global.clinicDetailsData.getClinicId(), global.clinicDetailsData.getShift());*/
+                        global.clinicDetailsData.getIdClinic(), global.clinicDetailsData.getShift());*/
             }
         });
 
@@ -166,34 +223,39 @@ public class ClinicAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                System.out.println("patient_email appointment  = "+userId);
+                System.out.println("patient_email appointment  = " + userId);
                 global.clinicDetailsData.setTimeSlot(shiftValue.getText().toString());
                 global.clinicDetailsData.setAppointmentDate(dateValue.getText().toString());
                 //appController.clinicDetailsData
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getDoctorId());
-                System.out.println("appController.clinicDetailsData  = "+userId);
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getTimeSlot());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getShift());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getClinicId());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getBookTime());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getAppointmentDate());
-                System.out.println("appController.clinicDetailsData  = "+global.clinicDetailsData.getStatus());
+              /*  System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getDoctorId());
+                System.out.println("appController.clinicDetailsData  = " + userId);
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getTimeSlot());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getShift());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getClinicId());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getBookTime());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getAppointmentDate());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getStatus());*/
 
-                ClinicAppointment clinicAppointment = new ClinicAppointment(global.clinicDetailsData.getDoctorId(), userId,
-                           global.clinicDetailsData.getTimeSlot(), global.clinicDetailsData.getShift(),global.clinicDetailsData.getClinicId(),
-                        global.clinicDetailsData.getBookTime(),global.clinicDetailsData.getAppointmentDate(),global.clinicDetailsData.getStatus(), visitType.getSelectedItem().toString());
 
-                saveClinicsAppointmentData(clinicAppointment);
+                DoctorCreatesAppointment newAppointment = new DoctorCreatesAppointment("" + (ClinicTimeTableAdapter.selectedTimeSlotSequenceNo + 1), doctorId, patientId,
+                        UtilSingleInstance.getUserType(type), clinicId, "" +UtilSingleInstance.getStringToCalWithTodaysDate(clinicTimeTableAdapter.getSelectedTime()), doctorClinicId, "0", "0", "" + visitType.getSelectedItemPosition(), "", "2", "", "", "");
+
+              /*  ClinicAppointment clinicAppointment = new ClinicAppointment(global.clinicDetailsData.getDoctorId(), userId,"",,
+
+                        global.clinicDetailsData.getTimeSlot(), global.clinicDetailsData.getShift(), global.clinicDetailsData.getClinicId(),
+                        global.clinicDetailsData.getBookTime(), global.clinicDetailsData.getAppointmentDate(), global.clinicDetailsData.getStatus(), visitType.getSelectedItem().toString());
+*/
+                saveClinicsAppointmentData(newAppointment);
             }
         });
 
-        for(ClinicDetailVm clinicDetailVm : clinicDetailVmList){
-            if(clinicDetailVm.getClinicId().equals(clinicId)){
+       /* for (ClinicDetailVm clinicDetailVm : clinicDetailVmList) {
+            if (clinicDetailVm.getClinicId().equals(clinicId)) {
                 clinicVm = clinicDetailVm;
             }
-        }
+        }*/
 
-        getAllClinicsAppointmentData();
+        //getAllClinicsAppointmentData();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,14 +265,15 @@ public class ClinicAppointmentFragment extends Fragment {
             }
         });
 
-        clinicName.setText(clinicVm.getClinicName());
-        global.clinicDetailsData.setDoctorId(Integer.parseInt(clinicVm.getDoctorId()));
-        global.clinicDetailsData.setAppointmentDate(dateValue.getText().toString());
+        clinicName.setText(strClinicName);
+        /*global.clinicDetailsData.setDoctorId(Integer.parseInt(clinicVm.getDoctorId()));
+        global.clinicDetailsData.setAppointmentDate(dateValue.getText().toString());*/
 
         timeTeableList.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
+
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
                         // Disallow ScrollView to intercept touch events.
@@ -236,34 +299,16 @@ public class ClinicAppointmentFragment extends Fragment {
                 .build();
         api = restAdapter.create(MyApi.class);
         updatedate();
-       // getAllClinicsDetails();
+        getAllClinicsAppointmentData();
         return view;
     }
 
-    public Calendar getStringToCal(String str){
 
-        String[] time = str.split(":");
-        String[] timeMin = time[1].split(" ");
-        int hr = Integer.parseInt(time[0]);
-        int min =  Integer.parseInt(timeMin[0]);
-        String am = timeMin[1];
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MINUTE, min);
-        cal.set(Calendar.HOUR, hr);
-        if(am.equals("AM")){
-            cal.set(Calendar.AM_PM,Calendar.AM);
-        }else{
-            cal.set(Calendar.AM_PM,Calendar.PM);
-        }
-      //  cal.setTime(date);
-        return cal;
-    }
+    public void updatedate() {
+        dateValue.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
-    public void updatedate(){
-        dateValue.setText(calendar.get(Calendar.YEAR)+"-"+showMonth(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH));
-
-        if(appointmentDate != null){
+        if (appointmentDate != null) {
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
             try {
@@ -281,98 +326,53 @@ public class ClinicAppointmentFragment extends Fragment {
         }
     }
 
-    public void setDate(){
+    public void setDate() {
         appointmentDate = null;
         appointmentTime = null;
-        new DatePickerDialog(getActivity(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(getActivity(), d, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
-
-
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
 
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendar.set(Calendar.YEAR,year);
-            calendar.set(Calendar.MONTH,monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updatedate();
-            //progress = ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
+            progress = ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
             getAllClinicsAppointmentDataFromCalendarButton();
 
         }
 
     };
 
-    public int showMonth(int month)
-    {
-        int showMonth = month;
-        switch(showMonth)
-        {
-            case 0:
-                showMonth = showMonth + 1;
-                break;
-            case 1:
-                showMonth = showMonth + 1;
-                break;
-            case 2:
-                showMonth = showMonth + 1;
-                break;
-            case 3:
-                showMonth = showMonth + 1;
-                break;
-            case 4:
-                showMonth = showMonth + 1;
-                break;
-            case 5:
-                showMonth = showMonth + 1;
-                break;
-            case 6:
-                showMonth = showMonth + 1;
-                break;
-            case 7:
-                showMonth = showMonth + 1;
-                break;
-            case 8:
-                showMonth = showMonth + 1;
-                break;
-            case 9:
-                showMonth = showMonth + 1;
-                break;
-            case 10:
-                showMonth = showMonth + 1;
-                break;
-            case 11:
-                showMonth = showMonth + 1;
-                break;
-
-        }
-        return showMonth;
-    }
 
 
-    public void getAllClinicsAppointmentData(){
+
+    public void getAllClinicsAppointmentData() {
         MyApi api1;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
-                //.setEndpoint("http://192.168.1.19:9000/")
+                        //.setEndpoint("http://192.168.1.19:9000/")
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api1 = restAdapter.create(MyApi.class);
-
+        // DoctorClinicAppointments param = new DoctorClinicAppointments(doctorId, doctorClinicId, ""+ calendar.getTimeInMillis());
+        DoctorClinicAppointments param = new DoctorClinicAppointments(doctorClinicId, "" + startTimeFromSelection.getTimeInMillis(), "" + endTimeFromSelection.getTimeInMillis());
         //api1.getAllClinicsAppointment(clinicVm.getDoctorId(), clinicId, clinicShift, dateValue.getText().toString(), new Callback<List<ClinicAppointment>>() {
-        api1.getAllClinicsAppointment(clinicVm.getDoctorId(), clinicId, clinicShift, dateValue.getText().toString(), new Callback<List<ClinicAppointment>>() {
+        api1.getClinicSlotAvailabilityByDoctor(param, new Callback<DoctorAppointmentsResponse>() {
             @Override
-            public void success(List<ClinicAppointment> clinicAppointments, Response response) {
-                if(appointmentDate != null){
+            public void success(DoctorAppointmentsResponse clinicAppointments, Response response) {
+                if (appointmentDate != null) {
                     System.out.println("Appointment Date Not Null");
-                    loadAppointmentData(clinicAppointments,date);
-                }else{
+                    loadAppointmentData(clinicAppointments, date);
+                } else {
                     System.out.println("Appointment Date Null");
-                    loadAppointmentData(clinicAppointments,currentDate);
+                    loadAppointmentData(clinicAppointments, currentDate);
                 }
                 progress.dismiss();
             }
@@ -385,7 +385,7 @@ public class ClinicAppointmentFragment extends Fragment {
         });
     }
 
-    public void getAllClinicsAppointmentDataFromCalendarButton(){
+    public void getAllClinicsAppointmentDataFromCalendarButton() {
         MyApi api1;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -395,13 +395,15 @@ public class ClinicAppointmentFragment extends Fragment {
                 .build();
         api1 = restAdapter.create(MyApi.class);
 
+        // DoctorClinicAppointments param = new DoctorClinicAppointments(doctorId, doctorClinicId, dateLong);
+        DoctorClinicAppointments param = new DoctorClinicAppointments(doctorClinicId, "" + startTimeFromSelection.getTimeInMillis(), "" + endTimeFromSelection.getTimeInMillis());
         //api1.getAllClinicsAppointment(clinicVm.getDoctorId(), clinicId, clinicShift, dateValue.getText().toString(), new Callback<List<ClinicAppointment>>() {
-        api1.getAllClinicsAppointment(clinicVm.getDoctorId(), clinicId, clinicShift, dateValue.getText().toString(), new Callback<List<ClinicAppointment>>() {
+        api1.getClinicSlotAvailabilityByDoctor(param, new Callback<DoctorAppointmentsResponse>() {
             @Override
-            public void success(List<ClinicAppointment> clinicAppointments, Response response) {
-                System.out.println("calendar date::::"+calendar.get(Calendar.DAY_OF_MONTH));
+            public void success(DoctorAppointmentsResponse clinicAppointments, Response response) {
+                System.out.println("calendar date::::" + calendar.get(Calendar.DAY_OF_MONTH));
 
-                loadAppointmentData(clinicAppointments,calendar.getTime());
+                loadAppointmentData(clinicAppointments, calendar.getTime());
                 progress.dismiss();
             }
 
@@ -413,31 +415,35 @@ public class ClinicAppointmentFragment extends Fragment {
         });
     }
 
-    public void saveClinicsAppointmentData(ClinicAppointment clinicAppointment){
+    public void saveClinicsAppointmentData(DoctorCreatesAppointment clinicAppointment) {
         MyApi api1;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
-                //.setEndpoint("http://192.168.1.19:9000/")
+                        //.setEndpoint("http://192.168.1.19:9000/")
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api1 = restAdapter.create(MyApi.class);
+        progress = ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
         //api1.getAllClinicsAppointment(clinicVm.getDoctorId(), clinicId, clinicShift, dateValue.getText().toString(), new Callback<List<ClinicAppointment>>() {
-        api1.saveClinicsAppointmentData(clinicAppointment, new Callback<JsonObject>() {
+        // api1.saveClinicsAppointmentData(clinicAppointment, new Callback<JsonObject>() {
+        api1.createAppointment(clinicAppointment, new Callback<DoctorCreatesAppoinementResponse>() {
             @Override
-            public void success(JsonObject jsonObject, Response response) {
-                Toast.makeText(getActivity(), "Request Send Successfully !!!", Toast.LENGTH_SHORT).show();
+            public void success(DoctorCreatesAppoinementResponse jsonObject, Response response) {
+                Toast.makeText(getActivity(), R.string.request_success, Toast.LENGTH_SHORT).show();
+                progress.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+                progress.dismiss();
             }
         });
     }
 
-    public void cancelClinicsAppointmentData(Integer doctorId, String patientId, Integer clinicId, String shift){
+    public void cancelClinicsAppointmentData(Integer doctorId, String patientId, Integer clinicId, String shift) {
         MyApi api1;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -459,8 +465,8 @@ public class ClinicAppointmentFragment extends Fragment {
             }
         });
     }
-    public String convert24To12Hour(String time)
-    {
+
+    public String convert24To12Hour(String time) {
         try {
             String _24HourTime = time;
             SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
@@ -468,327 +474,363 @@ public class ClinicAppointmentFragment extends Fragment {
             Date _24HourDt = _24HourSDF.parse(_24HourTime);
             System.out.println(_12HourSDF.format(_24HourDt));
             return _12HourSDF.format(_24HourDt);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
     }
-    public void loadAppointmentData(List<ClinicAppointment> clinicAppointments,Date curDate){
+
+    public void loadAppointmentData(DoctorAppointmentsResponse clinicAppointments, Date curDate) {
         String curDay = "";
         int flagDay = 0;
-        Calendar startTime = null;
         Calendar endTime = null;
         Calendar curCalendar = Calendar.getInstance();
         Calendar currentCalendar = Calendar.getInstance();
         SimpleDateFormat simpleDateformat = new SimpleDateFormat("E");
-        System.out.println("cur Date::::"+simpleDateformat.format(curDate));
+        System.out.println("cur Date::::" + simpleDateformat.format(curDate));//todays date = WED
         curDay = simpleDateformat.format(curDate);
-        SimpleDateFormat simpleDateformatTime = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat simpleDateformatTime = new SimpleDateFormat("hh:mm");
 
-        if(clinicShift.equals("shift1"))
-        {
-            if(clinicVm.getSlot1().getStartTimes() == null){
-                shiftValue.setText("No Time Scheduled");
-            }else
-            {
-                System.out.println("Condition= "+clinicVm.getSlot1().getDays().contains(curDay));
-                System.out.println("Days= "+clinicVm.getSlot1().getDays());
-                if(clinicVm.getSlot1().getDays().contains(curDay)) {
-                    flagDay = 1;
-                }
-                    String timestr = clinicVm.getSlot1().getStartTimes() + " to " + clinicVm.getSlot1().getEndTimes();
-                    shiftName.setText("Shift 1 : ");
-                    shiftValue.setText(timestr);
-                    startTime = getStringToCal(clinicVm.getSlot1().getStartTimes());
-                    endTime = getStringToCal(clinicVm.getSlot1().getEndTimes());
-
+        if (startTimeFromSelection == null) {
+            shiftValue.setText("No Time Scheduled");
+        } else {
+            System.out.println("Condition= " + SelectedSlotDetailsWithClinic.getDaysOfWeek().contains(curDay));
+            System.out.println("Days= " + SelectedSlotDetailsWithClinic.getDaysOfWeek());
+            if (SelectedSlotDetailsWithClinic.getDaysOfWeek().contains(curDay)) {
+                flagDay = 1;
             }
-        }else if(clinicShift.equals("shift2")){
-            if(clinicVm.getSlot2().getStartTimes() == null){
-                shiftValue.setText("No Time Scheduled");
-            }else{
-                System.out.println("Condition= "+clinicVm.getSlot2().getDays().contains(curDay));
-                System.out.println("Days= "+clinicVm.getSlot2().getDays());
-                if(clinicVm.getSlot2().getDays().contains(curDay)) {
-                    flagDay = 1;
-                }
-                    String timestr = clinicVm.getSlot2().getStartTimes() + " to " + clinicVm.getSlot2().getEndTimes();
-                    shiftName.setText("Shift 2 : ");
-                    shiftValue.setText(timestr);
-                    startTime = getStringToCal(clinicVm.getSlot2().getStartTimes());
-                    endTime = getStringToCal(clinicVm.getSlot2().getEndTimes());
+            String timestr = UtilSingleInstance.getTimeFromLongDate(SelectedSlotDetailsWithClinic.getStartTime()) + " to " + UtilSingleInstance.getTimeFromLongDate(SelectedSlotDetailsWithClinic.getEndTime());
+            shiftName.setText("Slot " + SelectedSlotDetailsWithClinic.getSlotNumber() + " : ");
+            shiftValue.setText(timestr);
 
-            }
+            startTimeFromSelection = Calendar.getInstance();
+            startTimeFromSelection.setTimeInMillis(Long.parseLong(SelectedSlotDetailsWithClinic.getStartTime()));
+            endTimeFromSelection = Calendar.getInstance();
+            endTimeFromSelection.setTimeInMillis(Long.parseLong(SelectedSlotDetailsWithClinic.getEndTime()));
+            //startTimeFromSelection = getStringToCal(SelectedSlotDetailsWithClinic.getStartTime());
+            // endTime = getStringToCal(SelectedSlotDetailsWithClinic.getEndTime());
 
-        }else if(clinicShift.equals("shift3")){
-            if(clinicVm.getSlot3().getStartTimes() == null){
-                shiftValue.setText("No Time Scheduled");
-
-            }else{
-                System.out.println("Condition= "+clinicVm.getSlot3().getDays().contains(curDay));
-                System.out.println("Days= "+clinicVm.getSlot3().getDays());
-                if(clinicVm.getSlot3().getDays().contains(curDay)) {
-                    flagDay = 1;
-                }
-                    String timestr = clinicVm.getSlot3().getStartTimes() + " to " + clinicVm.getSlot3().getEndTimes();
-                    shiftName.setText("Shift 3 : ");
-                    shiftValue.setText(timestr);
-                    startTime = getStringToCal(clinicVm.getSlot3().getStartTimes());
-                    endTime = getStringToCal(clinicVm.getSlot3().getEndTimes());
-
-            }
         }
+
         List<TimeInterval> timeList = new ArrayList<TimeInterval>();
-        if(flagDay == 1)
-        {
+        //if todays date.
+        if (flagDay == 1) {
             curCalendar.setTime(curDate);
             currentCalendar.setTime(currentDate);
-            System.out.println("Condition::::::::::::"+currentCalendar.getTimeInMillis() +" "+curCalendar.getTimeInMillis());
-            if(currentCalendar.getTimeInMillis() < curCalendar.getTimeInMillis())
-            {
+            System.out.println("Condition::::::::::::" + currentCalendar.getTimeInMillis() + " " + curCalendar.getTimeInMillis());
+            if (currentCalendar.getTimeInMillis() < curCalendar.getTimeInMillis()) {
                 System.out.println("Day condition true:::::::::::::");
-                System.out.println("Time::::::"+simpleDateformatTime.format(curDate));
-                System.out.println("Time function::::::::"+convert24To12Hour(simpleDateformatTime.format(curDate)));
-                while (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+                System.out.println("Time::::::" + simpleDateformatTime.format(curDate));
+                System.out.println("Time function::::::::" + convert24To12Hour(simpleDateformatTime.format(curDate)));
+                while (endTime.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
 
-                    if (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+                    if (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
                         String timeHHMM = null;
-                        timeHHMM = startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE);
+                        timeHHMM = startTimeFromSelection.get(Calendar.HOUR) + ":" + startTimeFromSelection.get(Calendar.MINUTE);
                         TimeInterval timeInterval = null;
 
-                        if (startTime.get(Calendar.AM_PM) == 0) {
-                            timeHHMM = timeHHMM + "AM";
+                        if (startTimeFromSelection.get(Calendar.AM_PM) == 0) {
+                            timeHHMM = timeHHMM + " AM";
                             timeInterval = new TimeInterval(timeHHMM, "Available", false);
                         } else {
-                            timeHHMM = timeHHMM + "PM";
+                            timeHHMM = timeHHMM + " PM";
                             timeInterval = new TimeInterval(timeHHMM, "Available", false);
                         }
 
-                        //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTime.get(Calendar.AM_PM), "Available", false);
-                        for (ClinicAppointment clinicAppointment : clinicAppointments) {
-                            //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
-                            if (clinicAppointment.getBookTime().equals(timeHHMM)) {
-                                timeInterval = new TimeInterval(timeHHMM, clinicAppointment.getStatus(), false);
+                        //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
+                        String size = "" + timeList.size();//get the current rendering slot no.
+                        for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+
+                            if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
+                                timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                 break;
-                            }
+                            } else
+                                timeInterval = new TimeInterval(timeHHMM, "Available", false);
                         }
+
                         timeList.add(timeInterval);
-                        startTime.add(Calendar.MINUTE, 15);
+                        startTimeFromSelection.add(Calendar.MINUTE, 15);
                     }
                 }
 
-            }
-            else if(currentCalendar.getTimeInMillis() == curCalendar.getTimeInMillis())
-            {
+            } else if (currentCalendar.getTimeInMillis() == curCalendar.getTimeInMillis()) {//this may be initial cond
                 int flagStartTime = 0;
                 int flagNormal = 0;
                 int flagAbnormal = 0;
                 System.out.println("Equal condition true:::::::::::::");
-                System.out.println("condition normal:::::"+(startTime.getTimeInMillis() >= currentCalendar.getTimeInMillis()));
-                System.out.println("start Time:::::::"+startTime.getTimeInMillis()+"current TIme::::::"+currentCalendar.getTimeInMillis());
+                System.out.println("condition normal:::::" + (startTimeFromSelection.getTimeInMillis() >= currentCalendar.getTimeInMillis()));
+                System.out.println("start Time:::::::" + startTimeFromSelection.getTimeInMillis() + "current TIme::::::" + currentCalendar.getTimeInMillis());
                 String currentTime = convert24To12Hour(simpleDateformatTime.format(currentDate));
-                currentCalendar = getStringToCal(currentTime);
-                if((startTime.getTimeInMillis() <= currentCalendar.getTimeInMillis()) &&(currentCalendar.getTimeInMillis() <= endTime.getTimeInMillis()))
-                {
+                currentCalendar = UtilSingleInstance.getStringToCal(currentTime);
+                if ((startTimeFromSelection.getTimeInMillis() <= currentCalendar.getTimeInMillis()) && (currentCalendar.getTimeInMillis() <= endTimeFromSelection.getTimeInMillis())) {
                     flagStartTime = 1;
-                }
-                else if(startTime.getTimeInMillis() >= currentCalendar.getTimeInMillis())
-                {
+                } else if (startTimeFromSelection.getTimeInMillis() >= currentCalendar.getTimeInMillis()) {
                     flagNormal = 1;
-                }
-                else if(currentCalendar.getTimeInMillis() > endTime.getTimeInMillis())
-                {
+                } else if (currentCalendar.getTimeInMillis() > endTimeFromSelection.getTimeInMillis()) {
                     flagAbnormal = 1;
                 }
 
-                System.out.println("FlagStartTime::::::"+flagStartTime);
-                System.out.println("flagNormal::::::"+flagNormal);
-                System.out.println("flagAbnormal::::::"+flagAbnormal);
-                if(flagStartTime == 1)
-                {
-                    while (endTime.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
+                System.out.println("FlagStartTime::::::" + flagStartTime);
+                System.out.println("flagNormal::::::" + flagNormal);
+                System.out.println("flagAbnormal::::::" + flagAbnormal);
+                if (flagStartTime == 1) {
+                    while (endTimeFromSelection.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
 
-                        if (endTime.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
+                        if (endTimeFromSelection.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
                             String timeHHMM = null;
                             timeHHMM = currentCalendar.get(Calendar.HOUR) + ":" + currentCalendar.get(Calendar.MINUTE);
                             TimeInterval timeInterval = null;
 
                             if (currentCalendar.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
+                                timeHHMM = timeHHMM + " AM";
                                 timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             } else {
-                                timeHHMM = timeHHMM + "PM";
+                                timeHHMM = timeHHMM + " PM";
                                 timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             }
 
-                            //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTime.get(Calendar.AM_PM), "Available", false);
-                            for (ClinicAppointment clinicAppointment : clinicAppointments) {
+                            //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
+                            /* for (ClinicAppointment clinicAppointment : clinicAppointments) {
                                 //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
                                 if (clinicAppointment.getBookTime().equals(timeHHMM)) {
                                     timeInterval = new TimeInterval(timeHHMM, clinicAppointment.getStatus(), false);
                                     break;
                                 }
+                            }*/
+
+                            String size = "" + timeList.size();
+                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+
+                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                    // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
+                                    timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
+                                    break;
+                                } else
+                                    timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             }
+                           /* for (int i = 0; i < 10; i++) {
+                                //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
+
+                                timeInterval = new TimeInterval(timeHHMM, "Available", false);
+                                break;
+
+                            }*/
                             timeList.add(timeInterval);
                             currentCalendar.add(Calendar.MINUTE, 15);
                         }
                     }
                 }
 
-                if(flagNormal == 1)
-                {
-                    while (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+                if (flagNormal == 1) {
+                    while (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
 
-                        if (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+                        if (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
                             String timeHHMM = null;
-                            timeHHMM = startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE);
+                            timeHHMM = startTimeFromSelection.get(Calendar.HOUR) + ":" + startTimeFromSelection.get(Calendar.MINUTE);
                             TimeInterval timeInterval = null;
 
-                            if (startTime.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
+                            if (startTimeFromSelection.get(Calendar.AM_PM) == 0) {
+                                timeHHMM = timeHHMM + " AM";
                                 timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             } else {
-                                timeHHMM = timeHHMM + "PM";
+                                timeHHMM = timeHHMM + " PM";
                                 timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             }
 
-                            //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTime.get(Calendar.AM_PM), "Available", false);
-                            for (ClinicAppointment clinicAppointment : clinicAppointments) {
+                            //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
+                           /* for (ClinicAppointment clinicAppointment : clinicAppointments) {
                                 //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
                                 if (clinicAppointment.getBookTime().equals(timeHHMM)) {
                                     timeInterval = new TimeInterval(timeHHMM, clinicAppointment.getStatus(), false);
                                     break;
                                 }
+                            }*/
+                            /*for (int i = 0; i < 10; i++) {
+                                //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
+
+                                timeInterval = new TimeInterval(timeHHMM, "Available", false);
+                                break;
+
+                            }*/
+                            String size = "" + timeList.size();
+                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+
+                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                    // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
+                                    timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
+                                    break;
+                                } else
+                                    timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             }
                             timeList.add(timeInterval);
-                            startTime.add(Calendar.MINUTE, 15);
+                            startTimeFromSelection.add(Calendar.MINUTE, 15);
                         }
                     }
                 }
 
-                if(flagAbnormal == 1)
-                {
-                    while (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+                if (flagAbnormal == 1) {
+                    while (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
 
-                        if (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+                        if (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
                             String timeHHMM = null;
-                            timeHHMM = startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE);
+                            timeHHMM = startTimeFromSelection.get(Calendar.HOUR) + ":" + startTimeFromSelection.get(Calendar.MINUTE);
                             TimeInterval timeInterval = null;
 
-                            if (startTime.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
+                            if (startTimeFromSelection.get(Calendar.AM_PM) == 0) {
+                                timeHHMM = timeHHMM + " AM";
                                 timeInterval = new TimeInterval(timeHHMM, "Not Available", false);
                             } else {
-                                timeHHMM = timeHHMM + "PM";
+                                timeHHMM = timeHHMM + " PM";
                                 timeInterval = new TimeInterval(timeHHMM, "Not Available", false);
                             }
 
-                            //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTime.get(Calendar.AM_PM), "Available", false);
-                            for (ClinicAppointment clinicAppointment : clinicAppointments) {
+                            //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
+                         /*   for (ClinicAppointment clinicAppointment : clinicAppointments) {
                                 //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
                                 if (clinicAppointment.getBookTime().equals(timeHHMM)) {
                                     timeInterval = new TimeInterval(timeHHMM, clinicAppointment.getStatus(), false);
                                     break;
                                 }
+                            }*/
+                           /* for (int i = 0; i < 10; i++) {
+                                //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
+
+                                timeInterval = new TimeInterval(timeHHMM, "Available", false);
+                                break;
+
+                            }*/
+                            String size = "" + timeList.size() + 1;
+                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+
+                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                    // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
+                                    timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
+                                    break;
+                                } else
+                                    timeInterval = new TimeInterval(timeHHMM, "Available", false);
                             }
                             timeList.add(timeInterval);
-                            startTime.add(Calendar.MINUTE, 15);
+                            startTimeFromSelection.add(Calendar.MINUTE, 15);
                         }
                     }
                 }
-            }
-            else
-            {
-                while (endTime.getTimeInMillis() > startTime.getTimeInMillis())
-                {
-                    if (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
+            } else {
+                while (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
+                    if (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
                         String timeHHMM = null;
-                        timeHHMM = startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE);
+                        timeHHMM = startTimeFromSelection.get(Calendar.HOUR) + ":" + startTimeFromSelection.get(Calendar.MINUTE);
                         TimeInterval timeInterval = null;
 
-                        if (startTime.get(Calendar.AM_PM) == 0) {
-                            timeHHMM = timeHHMM + "AM";
+                        if (startTimeFromSelection.get(Calendar.AM_PM) == 0) {
+                            timeHHMM = timeHHMM + " AM";
                             timeInterval = new TimeInterval(timeHHMM, "Not Available", false);
                         } else {
-                            timeHHMM = timeHHMM + "PM";
+                            timeHHMM = timeHHMM + " PM";
                             timeInterval = new TimeInterval(timeHHMM, "Not Available", false);
                         }
 
-                        //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTime.get(Calendar.AM_PM), "Available", false);
-                        for (ClinicAppointment clinicAppointment : clinicAppointments) {
+                        //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
+                    /*    for (ClinicAppointment clinicAppointment : clinicAppointments) {
                             //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
                             if (clinicAppointment.getBookTime().equals(timeHHMM)) {
                                 timeInterval = new TimeInterval(timeHHMM, clinicAppointment.getStatus(), false);
                                 break;
                             }
+                        }*/
+
+                        String size = "" + timeList.size();
+                        for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+
+                            if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
+                                timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
+                                break;
+                            } else
+                                timeInterval = new TimeInterval(timeHHMM, "Available", false);
                         }
                         timeList.add(timeInterval);
-                        startTime.add(Calendar.MINUTE, 15);
+                        startTimeFromSelection.add(Calendar.MINUTE, 15);
                     }
                 }
             }
-        }
-        else
-        {
-            while (endTime.getTimeInMillis() > startTime.getTimeInMillis())
-            {
-                if (endTime.getTimeInMillis() > startTime.getTimeInMillis()) {
-                    String timeHHMM = null;
-                    timeHHMM = startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE);
-                    TimeInterval timeInterval = null;
+        } else {
+            System.out.println("startTimeFromSelection-------->" + startTimeFromSelection);
+            System.out.println("endTimeFromSelection-------->" + endTimeFromSelection);
+            if (endTimeFromSelection != null && startTimeFromSelection != null) {
+                while (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
+                    if (endTimeFromSelection.getTimeInMillis() > startTimeFromSelection.getTimeInMillis()) {
+                        String timeHHMM = null;
+                        timeHHMM = startTimeFromSelection.get(Calendar.HOUR) + ":" + startTimeFromSelection.get(Calendar.MINUTE);
+                        TimeInterval timeInterval = null;
 
-                    if (startTime.get(Calendar.AM_PM) == 0) {
-                        timeHHMM = timeHHMM + "AM";
-                        timeInterval = new TimeInterval(timeHHMM, "Not Available", false);
-                    } else {
-                        timeHHMM = timeHHMM + "PM";
-                        timeInterval = new TimeInterval(timeHHMM, "Not Available", false);
-                    }
+                        if (startTimeFromSelection.get(Calendar.AM_PM) == 0) {
+                            timeHHMM = timeHHMM + " AM";
+                            timeInterval = new TimeInterval(timeHHMM, "Available", false);
+                        } else {
+                            timeHHMM = timeHHMM + " PM";
+                            timeInterval = new TimeInterval(timeHHMM, "Available", false);
+                        }
 
-                    //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTime.get(Calendar.AM_PM), "Available", false);
-                    for (ClinicAppointment clinicAppointment : clinicAppointments) {
+                        //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
+                   /* for (ClinicAppointment clinicAppointment : clinicAppointments) {
                         //System.out.println(" timeHHMM = "+timeHHMM+"  clinicAppointment = "+clinicAppointment.getBookTime());
                         if (clinicAppointment.getBookTime().equals(timeHHMM)) {
                             timeInterval = new TimeInterval(timeHHMM, clinicAppointment.getStatus(), false);
                             break;
                         }
+                    }*/
+                        if (clinicAppointments != null && clinicAppointments.getBookedSlots() != null) {
+                            String size = "" + timeList.size();
+                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+
+                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                    // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
+                                    timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
+                                    break;
+                                } else
+                                    timeInterval = new TimeInterval(timeHHMM, "Available", false);
+                            }
+                        }
+
+
+                        timeList.add(timeInterval);
+                        startTimeFromSelection.add(Calendar.MINUTE, 15);
                     }
-                    timeList.add(timeInterval);
-                    startTime.add(Calendar.MINUTE, 15);
                 }
             }
         }
         //int count = 0;
 
 
-        System.out.println("timeList = "+timeList.size());
+        System.out.println("timeList = " + timeList.size());
 
-        ClinicTimeTableAdapter clinicTimeTableAdapter = new ClinicTimeTableAdapter(getActivity(), timeList,timeTeableList,appointmentTime);
+        clinicTimeTableAdapter = new ClinicTimeTableAdapter(getActivity(), timeList, timeTeableList, appointmentTime);
         timeTeableList.setAdapter(clinicTimeTableAdapter);
     }
 
-    public void getBackWindows(){
+    public void getBackWindows() {
         Bundle args = getArguments();
         System.out.println("Clinic Appointment Fragment Back:::::::::");
-        args.putString("doctorId", clinicVm.getDoctorId());
+        //  args.putString("doctorId", clinicVm.getDoctorId());
         //Fragment fragment = new ClinicAllPatientFragment();
-        if(args != null){
-            if(args.getString("fragment").equals("ClinicPatientAdapter")){
+        if (args != null) {
+            if (args.getString("fragment").equals("ClinicPatientAdapter")) {
                 Fragment fragment = new ClinicAllPatientFragment();
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_details,fragment,"Doctor Consultations").addToBackStack(null).commit();
-            }else if(args.getString("fragment").equals("DoctorPatientAdapter")){
+                fragmentManger.popBackStack();
+                // fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            } else if (args.getString("fragment").equals("DoctorPatientAdapter")) {
                 Fragment fragment = new AllDoctorsPatient();
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
-        }else{
+        } else {
+
             Fragment fragment = new ClinicAllDoctorFragment();
             fragment.setArguments(args);
             FragmentManager fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
         }
 
     }

@@ -88,7 +88,7 @@ public class FeedbackFragment extends Fragment {
         flagStar5 = 0;
         visited.setChecked(true);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type", null);
+        type = session.getString("loginType", null);
         if (type.equals("Patient")) {
             patientId = session.getString("sessionID", null);
         } else if (type.equals("Doctor")) {
@@ -234,7 +234,7 @@ public class FeedbackFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
@@ -255,7 +255,7 @@ public class FeedbackFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -317,7 +317,7 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -60,7 +60,7 @@ public class AddDependencyDoctorDialog extends DialogFragment {
         patient = global.getPatient();
         System.out.println("Name::::::::::::::"+patient.getName());
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         addDenpdency = (Button)view.findViewById(R.id.add_new_dependent);
         name = (TextView)view.findViewById(R.id.dependent_name);
         name.setText(patient.getName());

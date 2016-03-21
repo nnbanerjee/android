@@ -18,5 +18,30 @@ public class ResponseCreateProfile {
 
     //{"status":"confirmed"}
     private String status;
+    private String profileId;
+
+    public ResponseCreateProfile(String status, String profileId, String role) {
+        this.status = status;
+        this.profileId = profileId;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
+    }
+
+    private String role;
 
 }

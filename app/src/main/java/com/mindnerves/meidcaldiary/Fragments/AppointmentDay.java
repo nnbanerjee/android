@@ -110,7 +110,7 @@ public class AppointmentDay extends Fragment {
         global = (Global) getActivity().getApplicationContext();
         clinicId = session.getString("patient_clinicId","");
         doctorId = session.getString("sessionID","");
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -141,7 +141,7 @@ public class AppointmentDay extends Fragment {
                         List<ShiftAppointment> shift1 = null;
                         List<ShiftAppointment> shift2 = null;
                         List<ShiftAppointment> shift3 = null;
-                        System.out.println("ClinicList = "+ClinicList.size());
+                        System.out.println("clinicList = "+ClinicList.size());
                         //Global global = (Global) getActivity().getApplicationContext();
                         //global.setClinicDetailVm(clinicDetailVm);
 
@@ -363,7 +363,7 @@ public class AppointmentDay extends Fragment {
                         List<ShiftAppointment> shift1 = null;
                         List<ShiftAppointment> shift2 = null;
                         List<ShiftAppointment> shift3 = null;
-                        System.out.println("ClinicList = "+ClinicList.size());
+                        System.out.println("clinicList = "+ClinicList.size());
                         //Global global = (Global) getActivity().getApplicationContext();
                         //global.setClinicDetailVm(clinicDetailVm);
 
@@ -628,7 +628,7 @@ public class AppointmentDay extends Fragment {
                 List<ShiftAppointment> shift1 = null;
                 List<ShiftAppointment> shift2 = null;
                 List<ShiftAppointment> shift3 = null;
-                System.out.println("ClinicList = "+ClinicList.size());
+                System.out.println("clinicList = "+ClinicList.size());
                 //Global global = (Global) getActivity().getApplicationContext();
                 //global.setClinicDetailVm(clinicDetailVm);
 

@@ -1,5 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -15,36 +16,44 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 import Adapter.MedicineAdapter;
+import Adapter.TestsAdapter;
 import Application.MyApi;
+import Model.AddDiagnosisTestRequest;
 import Model.AlarmReminderVM;
-import Model.Clinic;
-import Model.Histry;
+import Model.CreateSummary;
+import Model.MedicineId;
+import Model.MedicinePrescribed;
 import Model.MedicineVM;
 import Model.ReminderVM;
+import Model.ResponseCodeVerfication;
 import Model.SummaryHistoryVM;
+import Model.SummaryRequest;
+import Model.SummaryResponse;
+import Model.TestPrescribed;
+import Model.VisitEditLogRequest;
+import Model.VisitEditLogResponse;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -58,58 +67,73 @@ public class DoctorAppointmentSummary extends Fragment {
 
     MyApi api;
     public SharedPreferences session;
-    String doctor_email,appointmentDate,appointmentTime,patientId,clinicId;
-    Integer doctorId;
+    String doctor_email,appointmentDate,appointmentTime, clinicId;
+    String doctorId;
     TextView visitedDate,referedBy;
     Spinner visit;
     Button logout,drawar,reminderBtn,saveSummary,
             symptomsHistryBtn,diagnosisHistryBtn,
-            prescribHistryBtn,testHistryBtn,addAlarm;
+            prescribHistryBtn,testHistryBtn, addMedicineAndAlarm,addtestsBtn;
     List<AlarmReminderVM> alarms;
     ListView alarmListView;
-    MultiAutoCompleteTextView symptomsValue,diagnosisValue,medicineValue,testPrescribedValue;
+    ListView testsListView;
+    MultiAutoCompleteTextView symptomsValue,diagnosisValue,medicineValue,testPrescribedValue,clinicValue;
     String[] symptoms_item,medicin_list = null;
     String[] typeList;
     Global global;
     ProgressDialog progress;
     TextView clinicName;
     MedicineAdapter adapter;
+    TestsAdapter testAdapter;
     Set<String> medicineSet;
-    List<MedicineVM> medicineVMs;
+    List<MedicinePrescribed> medicineVMs;
+    List<TestPrescribed> testPrescribedList;
+    private String appointMentId,patientId;
+    Calendar calendar = Calendar.getInstance();
+    public SummaryResponse summaryResponse;
+    RestAdapter restAdapter;
+    Button timeBtn;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_appointment_summary, container,false);
         alarmListView = (ListView)view.findViewById(R.id.alarm_list);
+        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        testsListView = (ListView)view.findViewById(R.id.test_prescribed_list);
         global = (Global) getActivity().getApplicationContext();
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctor_email = session.getString("patient_doctor_email", null);
         appointmentDate  = global.getAppointmentDate();
         appointmentTime = global.getAppointmentTime();
-        clinicId = session.getString("clinicId",null);
+        clinicId = session.getString("clinicId", null);
         System.out.println("Clinic Id:::::::"+clinicId);
-        doctorId = Integer.parseInt(session.getString("doctorId","0"));
-        patientId = session.getString("doctor_patientEmail", null);
-        addAlarm = (Button)view.findViewById(R.id.add_alarm);
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        doctorId =  session.getString("id", "0") ;
+
+        appointMentId= session.getString("appointmentId", "");
+        patientId=session.getString( "patientId","");
+        System.out.println("appointmentId Id:::::::"+appointMentId);
+        System.out.println("patientId Id:::::::"+patientId);
+
+        addMedicineAndAlarm = (Button)view.findViewById(R.id.add_alarm);
+        addtestsBtn = (Button)view.findViewById(R.id.addtestsBtn);
+        restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
         clinicName = (TextView)view.findViewById(R.id.clinicName);
-        api.getAllClinics(new Callback<List<Clinic>>() {
+
+        SummaryRequest summary = new SummaryRequest( patientId,appointMentId);
+        api.getPatientVisitSummary(summary, new Callback<SummaryResponse>() {
             @Override
-            public void success(List<Clinic> clinics, Response response) {
-               for(Clinic c:clinics)
-               {
-                   if(c.getIdClinic().equals(clinicId))
-                   {
-                       clinicName.setText(c.getClinicName());
-                       break;
-                   }
-               }
+            public void success(SummaryResponse clinics, Response response) {
+                summaryResponse=clinics;
+                progress.dismiss();
+                getAllPatientSummary();
+               // summaryResponse.getMedicinePrescribed().get(0).getMedicineId()
+
             }
 
             @Override
@@ -139,30 +163,41 @@ public class DoctorAppointmentSummary extends Fragment {
         symptomsValue = (MultiAutoCompleteTextView)view.findViewById(R.id.symptomsValue);
         diagnosisValue = (MultiAutoCompleteTextView)view.findViewById(R.id.diagnosisValue);
         medicineValue = (MultiAutoCompleteTextView)view.findViewById(R.id.medicineValue);
-        testPrescribedValue = (MultiAutoCompleteTextView)view.findViewById(R.id.testPrescribedValue);
-        symptomsValue.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, symptoms_item));
+        clinicValue= (MultiAutoCompleteTextView)view.findViewById(R.id.clinicValue);
+       // testPrescribedValue = (MultiAutoCompleteTextView)view.findViewById(R.id.testPrescribedValue);
+        symptomsValue.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptoms_item));
         symptomsValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         symptomsValue.setThreshold(1);
-        diagnosisValue.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, symptoms_item));
+        diagnosisValue.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptoms_item));
         diagnosisValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        medicineValue.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, medicin_list));
+        medicineValue.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, medicin_list));
         medicineValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        testPrescribedValue.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, symptoms_item));
-        testPrescribedValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        visitedDate.setText(appointmentDate);
+       /* testPrescribedValue.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptoms_item));
+        testPrescribedValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());*/
+        timeBtn = (Button) view.findViewById(R.id.timeBtn);
+
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDate();
+
+            }
+        });
+        if(summaryResponse!=null && summaryResponse.getVisitDate()!=null)
+            visitedDate.setText(summaryResponse.getVisitDate());
         symptomsHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
-                getHistryData("systoms");
+                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                getHistryData(1);
 
             }
         });
         diagnosisHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
-                getHistryData("diagnosis");
+                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                getHistryData(2);
 
             }
         });
@@ -170,16 +205,16 @@ public class DoctorAppointmentSummary extends Fragment {
         prescribHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
-                getHistryData("prescribHistry");
+                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                getHistryData(3);
 
             }
         });
         testHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
-                getHistryData("testHistry");
+                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                getHistryData(4);
 
             }
         });
@@ -187,6 +222,7 @@ public class DoctorAppointmentSummary extends Fragment {
             @Override
             public void onClick(View v) {
                 String medicinName = medicineValue.getText().toString();
+
                 if(medicinName == null || medicinName.equals("")){
                     Toast.makeText(getActivity(), "Please enter medicin name", Toast.LENGTH_SHORT).show();
                 }else{
@@ -197,7 +233,7 @@ public class DoctorAppointmentSummary extends Fragment {
                     args.putString("referedBy", referedBy.getText().toString());
                     args.putString("symptomsValue", symptomsValue.getText().toString());
                     args.putString("diagnosisValue", diagnosisValue.getText().toString());
-                    args.putString("testPrescribedValue", testPrescribedValue.getText().toString());
+                    //args.putString("testPrescribedValue", testPrescribedValue.getText().toString());
                     args.putString("medicinName", medicineValue.getText().toString());
 
                     Fragment fragment = new PatientMedicinReminder();
@@ -207,7 +243,7 @@ public class DoctorAppointmentSummary extends Fragment {
                 }
             }
         });
-        addAlarm.setOnClickListener(new View.OnClickListener() {
+        addtestsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
@@ -216,46 +252,96 @@ public class DoctorAppointmentSummary extends Fragment {
                 args.putString("referedBy", referedBy.getText().toString());
                 args.putString("symptomsValue", symptomsValue.getText().toString());
                 args.putString("diagnosisValue", diagnosisValue.getText().toString());
-                args.putString("testPrescribedValue", testPrescribedValue.getText().toString());
+                //args.putString("testPrescribedValue", testPrescribedValue.getText().toString());
                 args.putString("medicinName", medicineValue.getText().toString());
-                args.putString("argument","NewMedicine");
+                args.putString("clinicId", summaryResponse.getClinicId().toString());
+                args.putString("argument", "NewTest");
+                Fragment fragment = new AddDiagnosticTest();
+                fragment.setArguments(args);
+                FragmentManager fragmentManger = getFragmentManager();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });
+        addMedicineAndAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("visitedDate", visitedDate.getText().toString());
+                args.putString("visit", visit.getSelectedItem().toString());
+                args.putString("referedBy", referedBy.getText().toString());
+                args.putString("symptomsValue", symptomsValue.getText().toString());
+                args.putString("diagnosisValue", diagnosisValue.getText().toString());
+                //args.putString("testPrescribedValue", testPrescribedValue.getText().toString());
+                args.putString("medicinName", medicineValue.getText().toString());
+                args.putString("argument", "NewMedicine");
                 Fragment fragment = new PatientMedicinReminder();
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         saveSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReminderVM reminderVM = new ReminderVM();
-                if(global.getReminderVM() != null){
-                    reminderVM.id = global.getReminderVM().id;
+                //ReminderVM reminderVM = new ReminderVM();
+                CreateSummary createSummary= new CreateSummary();
+               /* if (global.getReminderVM() != null) {
+                    reminderVM.setDoctorId(doctorId);
                     reminderVM.startDate = global.getReminderVM().getStartDate();
                     reminderVM.endDate = global.getReminderVM().getEndDate();
                     reminderVM.duration = global.getReminderVM().getDuration();
                     reminderVM.doctorInstruction = global.getReminderVM().getDoctorInstruction();
                     reminderVM.numberOfDoses = global.getReminderVM().getNumberOfDoses();
                     reminderVM.schedule = global.getReminderVM().getSchedule();
-                }else{
+                } else {
                     reminderVM.id = null;
+                }*/
+
+                if(appointMentId!=null && !appointMentId.equalsIgnoreCase("") ){
+                    createSummary.setAppointmentId(appointMentId);
+                    createSummary.setVisitType("" + visit.getSelectedItemPosition());
+                    createSummary.setReferred_by(referedBy.getText().toString());
+                    createSummary.setDiagnosis(diagnosisValue.getText().toString());
+                    createSummary.setSymptoms(symptomsValue.getText().toString());
+                    createSummary.setUserType("1");//for Doctor
+                    createSummary.setLoggedinUserId(doctorId);
+
+
+                }else{
+                    createSummary.setDoctorId(doctorId);
+                    createSummary.setPatientId(patientId);
+                    createSummary.setClinicId(clinicId);
+                    createSummary.setType("0");
+                    createSummary.setSequenceNumber("");
+                    createSummary.setAppointmentStatus("");
+                    createSummary.setVisitType("" + visit.getSelectedItemPosition());
+                    createSummary.setVisitStatus("1");
+                    createSummary.setRating("1");
+                    createSummary.setDoctorClinicId("");
+                    createSummary.setReferred_by(referedBy.getText().toString());
+                    createSummary.setReviews("Good");
+                    createSummary.setDiagnosis(diagnosisValue.getText().toString());
+                    createSummary.setSymptoms(symptomsValue.getText().toString());
+                    createSummary.setUserType("1");
+                    createSummary.setLoggedinUserId(doctorId);
+                    createSummary.setAppointmentDate(""+calendar.getTimeInMillis());
+
+
                 }
-                reminderVM.doctorId = doctorId;
-                reminderVM.patientId = patientId;
-                reminderVM.ownerType = "Doctor";
-                reminderVM.appointmentDate = appointmentDate;
-                reminderVM.appointmentTime = appointmentTime;
-                reminderVM.medicinName = medicineValue.getText().toString();
-                reminderVM.visitDate = visitedDate.getText().toString();
-                reminderVM.visitType = visit.getSelectedItem().toString();
-                reminderVM.referredBy = referedBy.getText().toString();
-                reminderVM.symptoms = symptomsValue.getText().toString();
-                reminderVM.diagnosis = diagnosisValue.getText().toString();
-                reminderVM.testsPrescribed = testPrescribedValue.getText().toString();
+
+
+
+               // reminderVM.ownerType = "Doctor";
+               // reminderVM.appointmentDate = appointmentDate;
+               // reminderVM.appointmentTime = appointmentTime;
+               // reminderVM.medicinName = medicineValue.getText().toString();
+               // reminderVM.visitDate = visitedDate.getText().toString();
+              //  reminderVM.visitType = ;
+               /* reminderVM.testsPrescribed = testPrescribedValue.getText().toString();
                 global.setTestPrescribed(reminderVM.testsPrescribed);
-                reminderVM.alarmReminderVMList = alarms;
-                savePatientReminderData(reminderVM);
-             }
+                reminderVM.alarmReminderVMList = alarms;*/
+                savePatientReminderData(createSummary);
+            }
         });
         alarmListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -270,6 +356,7 @@ public class DoctorAppointmentSummary extends Fragment {
                     case MotionEvent.ACTION_UP:
                         // Allow ScrollView to intercept touch events.
                         v.getParent().requestDisallowInterceptTouchEvent(false);
+
                         break;
                 }
 
@@ -278,6 +365,30 @@ public class DoctorAppointmentSummary extends Fragment {
                 return true;
             }
         });
+
+        testsListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(new View.OnClickListener() {
@@ -286,9 +397,48 @@ public class DoctorAppointmentSummary extends Fragment {
                 goToBack();
             }
         });
-        getAllPatientSummary();
+        //getAllPatientSummary();
         //getAllMedicine();
         return view;
+    }
+
+    public void setDate(){
+        new DatePickerDialog(getActivity(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
+
+
+
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH,monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            updatedate();
+            //progress = ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
+           // getAllClinicsAppointmentDataFromCalendarButton();
+
+        }
+
+    };
+    public void updatedate(){
+        visitedDate.setText(calendar.get(Calendar.YEAR)+"-"+ UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+        /*if(appointmentDate != null){
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            try {
+                Date date = formatter.parse(appointmentDate);
+                System.out.println(date);
+                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+                System.out.println(formatter2.format(date));
+                dateValue.setText(formatter2.format(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+        }*/
     }
     public void getAllMedicine()
     {
@@ -312,45 +462,40 @@ public class DoctorAppointmentSummary extends Fragment {
       /*  adapter = new MedicineAdapter(getActivity(),medicines);
         alarmListView.setAdapter(adapter);*/
     }
-    public void getHistryData(final String histryString){
-        api.getHistry(doctor_email,patientId,appointmentDate,appointmentTime,new Callback<List<SummaryHistoryVM>>() {
+    public void getHistryData(final int histryString){
+
+        VisitEditLogRequest req= new VisitEditLogRequest(appointMentId,histryString);
+        api.getPatientVisitEditLog(req, new Callback<VisitEditLogResponse>() {
             @Override
-            public void success(List<SummaryHistoryVM> summaryHistoryVMs, Response response) {
-                System.out.println("historyVMList.size()  = "+summaryHistoryVMs.size());
-                for(SummaryHistoryVM summaryHistoryVM : summaryHistoryVMs){
-                    System.out.println("summaryHistoryVM.curDate before = "+summaryHistoryVM.curDate);
-                }
-                //Collections.sort(summaryHistoryVMs, new SortListComparator());
-                for(SummaryHistoryVM summaryHistoryVM : summaryHistoryVMs){
-                    System.out.println("summaryHistoryVM.curDate after = "+summaryHistoryVM.curDate);
-                }
-                if(histryString.equalsIgnoreCase("systoms"))
-                {
+            public void success(VisitEditLogResponse summaryHistoryVMs, Response response) {
+
+                if (histryString == 1) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
                     show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Symptoms Histry";
-                    show.show(getFragmentManager(),"Dialog");
+                    show.heading = "Symptoms History";
+                    show.show(getFragmentManager(), "Dialog");
+                    show.State=histryString;
                 }
-                else if(histryString.equalsIgnoreCase("diagnosis"))
-                {
+                if (histryString == 2) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
                     show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Diagnosis Histry";
-                    show.show(getFragmentManager(),"Dialog");
+                    show.heading = "Diagnosis History";
+                    show.show(getFragmentManager(), "Dialog");
+                    show.State=histryString;
                 }
-                else if(histryString.equalsIgnoreCase("prescribHistry"))
-                {
+                if (histryString == 3) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
                     show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Prescribed Histry";
-                    show.show(getFragmentManager(),"Dialog");
+                    show.heading = "Prescribed History";
+                    show.show(getFragmentManager(), "Dialog");
+                    show.State=histryString;
                 }
-                else if(histryString.equalsIgnoreCase("testHistry"))
-                {
+                if (histryString == 4) {
                     ShowHistryDialog show = ShowHistryDialog.newInstance();
                     show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Test Histry";
-                    show.show(getFragmentManager(),"Dialog");
+                    show.heading = "Test History";
+                    show.show(getFragmentManager(), "Dialog");
+                    show.State=histryString;
                 }
                 progress.dismiss();
             }
@@ -371,7 +516,7 @@ public class DoctorAppointmentSummary extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     goToBack();
                     return true;
                 }
@@ -379,6 +524,8 @@ public class DoctorAppointmentSummary extends Fragment {
             }
         });
     }
+
+
 
     public void  goToBack(){
         String fragmentCall = "";
@@ -389,7 +536,7 @@ public class DoctorAppointmentSummary extends Fragment {
                fragmentCall = bun.getString("fragment");
             }
         }
-        if(fragmentCall.equalsIgnoreCase("DoctorPatientAdapter")){
+        if(fragmentCall.equalsIgnoreCase("DoctorPatientAdapter")||fragmentCall.equalsIgnoreCase("doctorPatientListAdapter") ){
             fragment = new AllDoctorsPatient();
 
         }else{
@@ -402,8 +549,81 @@ public class DoctorAppointmentSummary extends Fragment {
 
     public void getAllPatientSummary(){
         System.out.println("In doctor Login ");
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getPatientReminderData(doctorId, patientId, appointmentDate, appointmentTime , new Callback<ReminderVM>() {
+        referedBy.setText(summaryResponse.getReferredBy());
+
+        symptomsValue.setText(summaryResponse.getSymptoms());
+        diagnosisValue.setText(summaryResponse.getDiagnosis());
+       // medicineValue.setText(summaryResponse.getMedicinePrescribed());
+        //testPrescribedValue.setText(summaryResponse.getTestPrescribed());
+        //clinicName.setText(summaryResponse.getClinicName());
+        clinicValue.setText(summaryResponse.getClinicName());
+        if(summaryResponse!=null && summaryResponse.getMedicinePrescribed()!=null && summaryResponse.getMedicinePrescribed().size() != 0){
+            medicineVMs = new ArrayList<MedicinePrescribed>();
+            medicineVMs=summaryResponse.getMedicinePrescribed();
+
+        }else{
+            medicineVMs = new ArrayList<MedicinePrescribed>();
+            MedicinePrescribed vm = new MedicinePrescribed();
+            vm.setMedicineName(  "No Medicine");
+            medicineVMs.add(vm);
+        }
+        if(summaryResponse!=null && summaryResponse.getTestPrescribed()!=null && summaryResponse.getTestPrescribed().size() != 0){
+            testPrescribedList = new ArrayList<TestPrescribed>();
+            testPrescribedList=summaryResponse.getTestPrescribed();
+
+        }else{
+            testPrescribedList = new ArrayList<TestPrescribed>();
+            TestPrescribed vm = new TestPrescribed();
+            vm.setTestName("No Tests");
+            testPrescribedList.add(vm);
+        }
+
+        testAdapter= new TestsAdapter(getActivity(),testPrescribedList,null);
+        testsListView.setAdapter(testAdapter);
+        testsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AddDiagnosisTestRequest  addPatientMedicineSummary = new AddDiagnosisTestRequest();
+                List<AlarmReminderVM> alarms = new ArrayList<AlarmReminderVM>();
+               int doctorId = Integer.parseInt(session.getString("id", "0"));
+                patientId = session.getString("patientId", "");
+
+
+                if (!testPrescribedList.get(i).getTestName().equalsIgnoreCase("No Test")) {
+                    Bundle args = new Bundle();
+                    args.putString("state", "EDIT");
+                    args.putString("argument", "EDIT");
+
+                    args.putString("referedBy", referedBy.getText().toString());
+                    args.putString("testId", testPrescribedList.get(i).getTestId());
+
+                    args.putString("visitedDate", visitedDate.getText().toString());
+                    args.putString("visit", visit.getSelectedItem().toString());
+                    args.putString("referedBy", referedBy.getText().toString());
+                    args.putString("symptomsValue", symptomsValue.getText().toString());
+                    args.putString("diagnosisValue", diagnosisValue.getText().toString());
+                    args.putString("medicinName", medicineValue.getText().toString());
+                    args.putString("clinicId", summaryResponse.getClinicId().toString());
+
+                    Fragment fragment = new AddDiagnosticTest();
+                    fragment.setArguments(args);
+                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                }
+
+
+
+            }
+        });
+        adapter = new MedicineAdapter(getActivity(),medicineVMs,null);
+        alarmListView.setAdapter(adapter);
+       // global.setReminderVM(reminderVM);
+        //progress.dismiss();
+
+
+      /*
+         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+      api.getPatientReminderData(doctorId, patientId, appointmentDate, appointmentTime , new Callback<ReminderVM>() {
         //api.getPatientReminderData(1, "aa@gmail.com", "22-05-2015", "09:00AM" , new Callback<ReminderVM>() {
             @Override
             public void success(ReminderVM reminderVM, Response response) {
@@ -473,7 +693,7 @@ public class DoctorAppointmentSummary extends Fragment {
                 error.printStackTrace();
                 progress.dismiss();
             }
-        });
+        });*/
 
     }
     static class SortListComparator implements Comparator<SummaryHistoryVM>
@@ -502,39 +722,46 @@ public class DoctorAppointmentSummary extends Fragment {
             }
         }
     }
-    public void savePatientReminderData(ReminderVM reminderVM)
+    public void savePatientReminderData(CreateSummary reminderVM)
     {
-        api.savePatientReminderDetails(reminderVM, new Callback<ReminderVM>() {
-            @Override
-            public void success(ReminderVM reminderVM, Response response) {
-                Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                if(reminderVM.id != null ){
-                    System.out.println("save reminderVM = "+reminderVM.id);
-                    global.setReminderVM(reminderVM);
-                    for(int i = 0; i < typeList.length; i++){
-                        if(reminderVM.visitType.equals(typeList[i])){
-                            visit.setSelection(i);
-                        }
-                    }
-                    System.out.println("reminderVM id = "+reminderVM.id);
-                    referedBy.setText(reminderVM.referredBy);
-                    symptomsValue.setText(reminderVM.symptoms);
-                    diagnosisValue.setText(reminderVM.diagnosis);
-                    medicineValue.setText(reminderVM.medicinName);
-                    testPrescribedValue.setText(reminderVM.testsPrescribed);
 
-                }else{
-                    System.out.println("save reminderVM null ");
-                    global.setReminderVM(null);
+        if(summaryResponse!=null && summaryResponse.getAppointmentId()!=null){
+            progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+            api.updatePatientVisitSummary(reminderVM, new Callback<ResponseCodeVerfication>() {
+                @Override
+                public void success(ResponseCodeVerfication reminderVM, Response response) {
+                    Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                    progress.dismiss();
                 }
 
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                    progress.dismiss();
+                }
+            });
+
+
+        }else{
+            progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+            api.createPatientVisitSummary(reminderVM, new Callback<ResponseCodeVerfication>() {
+                @Override
+                public void success(ResponseCodeVerfication reminderVM, Response response) {
+                    progress.dismiss();
+                    Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    progress.dismiss();
+                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+
+        }
+
     }
 
 }

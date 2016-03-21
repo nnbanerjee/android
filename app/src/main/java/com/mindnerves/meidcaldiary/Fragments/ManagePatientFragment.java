@@ -58,7 +58,7 @@ public class ManagePatientFragment extends Fragment {
     TextView globalTv, accountName;
     ImageView profilePicture;
     RelativeLayout profileLayout;
-    ImageView medicoLogo,medicoText;
+   // ImageView medicoLogo,medicoText;
     Button refresh;
     String type;
     @Override
@@ -87,7 +87,7 @@ public class ManagePatientFragment extends Fragment {
         listViewManageDoctor = (ListView) view.findViewById(R.id.list_manage_patient);
         BackStress.staticflag = 1;
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         doctorId = session.getString("id", null);
         final Global go = (Global) getActivity().getApplicationContext();
         layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
@@ -98,8 +98,8 @@ public class ManagePatientFragment extends Fragment {
         profileLayout = (RelativeLayout) getActivity().findViewById(R.id.home_layout2);
         drawar = (Button) getActivity().findViewById(R.id.drawar_button);
         logout = (Button) getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+      //  medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,8 +284,8 @@ public class ManagePatientFragment extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         BackStress.staticflag = 1;
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+      //  medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.INVISIBLE);
     }
@@ -304,8 +304,8 @@ public class ManagePatientFragment extends Fragment {
         back.setVisibility(View.INVISIBLE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+     //   medicoLogo.setVisibility(View.VISIBLE);
+     //   medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }

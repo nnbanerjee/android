@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mindnerves.meidcaldiary.Fragments.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.Fragments.DoctorProfileEdit;
 import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
@@ -71,6 +73,7 @@ import Adapter.ProfileDelegationAdapter;
 import Adapter.ProfileDependencyAdapter;
 import Application.MyApi;
 import Model.Delegation;
+import Model.Dependent;
 import Model.DoctorId;
 import Model.DoctorProfile;
 import Model.Logindata;
@@ -82,9 +85,9 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 
-public class HomeActivity extends FragmentActivity{
+public class HomeActivity extends FragmentActivity {
     FragmentManager fragmentManger;
-    Button drawerButton,logout,notification,messages;
+    Button drawerButton, logout, notification, messages;
     int flagActionButton = 0;
     private ArrayList<String> arrayMenu;
     private String logString = "";
@@ -92,62 +95,59 @@ public class HomeActivity extends FragmentActivity{
     DrawerLayout dLayout;
     ListView dList;
     MenuAdapter adapter;
-     Fragment fragment;
+    Fragment fragment;
     Model.Menu mainMenu;
     TextView globalTv;
-    Button backButton,doctorSearch,clinicSearch,patients;
+    Button backButton, doctorSearch, clinicSearch, patients;
     public MyApi api;
     ImageView profilePicture;
-    TextView accountName,status;
+    TextView accountName, status;
     ProfileDependencyAdapter dependentAdapter;
 
     SharedPreferences session;
     ProfileDelegationAdapter delegationAdapter;
-    ListView dependentList,delegationList;
+    ListView dependentList, delegationList;
     TextView profileName;
 
     String statusString = "";
     Point p;
-
+    View arrow;
+    public DoctorProfile doc;
 
     @Override
-    public final void onBackPressed()
-    {
-         System.out.println("back button= "+BackStress.staticflag);
-         if(dLayout.isDrawerOpen(dList))
-         {
-                    dLayout.closeDrawer(Gravity.LEFT);
+    public final void onBackPressed() {
+        System.out.println("back button= " + BackStress.staticflag);
+        Log.i("Homeactivity", "Homeactivity->onbackpressed");
+        if (dLayout.isDrawerOpen(dList)) {
+            dLayout.closeDrawer(Gravity.LEFT);
 
-         }
-         else if(BackStress.staticflag == 1)
-         {
+        } else if (BackStress.staticflag == 1) {
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                    alertDialogBuilder.setMessage(R.string.confirm_logout);
-                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage(R.string.confirm_logout);
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            BackStress.staticflag = 0;
-                            finish();
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    BackStress.staticflag = 0;
+                    finish();
 
-                        }
-                    });
+                }
+            });
 
-                    alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            System.out.println("Do Nothing");
-                        }
-                    });
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    System.out.println("Do Nothing");
+                }
+            });
 
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-         }
-         if(logString.equals("Doctor"))
-         {
-            api.getProfileDoctor(loggingId,new Callback<Person>() {
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+        if (logString.equals("Doctor")) {
+            api.getProfileDoctor(loggingId, new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     new ImageLoadTask(getResources().getString(R.string.image_base_url), profilePicture).execute();
@@ -156,13 +156,11 @@ public class HomeActivity extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
-         }
-         else if (logString.equals("Patient"))
-         {
-            api.getProfilePatient(loggingId,new Callback<Person>() {
+        } else if (logString.equals("Patient")) {
+            api.getProfilePatient(loggingId, new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     new ImageLoadTask(getResources().getString(R.string.image_base_url), profilePicture).execute();
@@ -171,11 +169,10 @@ public class HomeActivity extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
-         }
-
+        }
 
 
     }
@@ -184,29 +181,30 @@ public class HomeActivity extends FragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        LinearLayout layout = (LinearLayout)findViewById(R.id.notification_layout);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
         session = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loggingId = session.getString("id", null);
         logString = session.getString("loginType", null);
-        statusString = session.getString("status",null);
-        notification = (Button)findViewById(R.id.notification_ping);
-        messages = (Button)findViewById(R.id.msg_notification);
-        System.out.println("TYpe :::"+logString);
-        doctorSearch = (Button)findViewById(R.id.doctor_search);
-        status = (TextView)findViewById(R.id.status_text);
+        statusString = session.getString("status", null);
+        notification = (Button) findViewById(R.id.notification_ping);
+        messages = (Button) findViewById(R.id.msg_notification);
+        System.out.println("TYpe :::" + logString);
+        doctorSearch = (Button) findViewById(R.id.doctor_search);
+        status = (TextView) findViewById(R.id.status_text);
         status.setText(statusString);
-        patients = (Button)findViewById(R.id.patient_ping);
-        clinicSearch = (Button)findViewById(R.id.clinic_notification);
-        globalTv = (TextView)findViewById(R.id.show_global_tv);
+        patients = (Button) findViewById(R.id.patient_ping);
+        clinicSearch = (Button) findViewById(R.id.clinic_notification);
+        globalTv = (TextView) findViewById(R.id.show_global_tv);
+        arrow = (View) findViewById(R.id.down_arrow);
         doctorSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(logString.equalsIgnoreCase("Patient")) {
+                if (logString.equalsIgnoreCase("Patient")) {
                     fragment = new ShowSpeciality();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }else{
+                } else {
                     fragment = new ShowSpecialityDoctor();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
@@ -221,76 +219,91 @@ public class HomeActivity extends FragmentActivity{
                 .build();
         api = restAdapter.create(MyApi.class);
         BackStress.staticflag = 1;
-        Global go = (Global)HomeActivity.this.getApplicationContext();
+        Global go = (Global) HomeActivity.this.getApplicationContext();
         go.setLocation("");
         getActionBar().hide();
         flagActionButton = 0;
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
-        accountName = (TextView)findViewById(R.id.account_name);
+        accountName = (TextView) findViewById(R.id.account_name);
         mainMenu = new Model.Menu();
         arrayMenu = new ArrayList<String>();
         showMenus();
 
-        for( String str  : arrayMenu){
-            System.out.println("str = "+str);
+        for (String str : arrayMenu) {
+            System.out.println("str = " + str);
         }
 
-        if(logString.equals("Doctor")){
+        if (logString.equals("Doctor")) {
             globalTv.setText("Doctor");
             fragment = new DoctorMenusManage();
             fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Patients Information").addToBackStack(null).commit();
-            DoctorId param = new DoctorId("1");
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
+            DoctorId param = new DoctorId(loggingId);
 
-            api.getDoctorLandingPageDetails(param,new Callback<DoctorProfile>() {
-                    @Override
-                public void success(DoctorProfile doc, Response response) {
-                    new ImageLoadTask(getResources().getString(R.string.base_url)+doc.getPerson().getImageUrl(), profilePicture).execute();
+            api.getDoctorLandingPageDetails(param, new Callback<DoctorProfile>() {
+                @Override
+                public void success(DoctorProfile doc1, Response response) {
+                    doc=doc1;
+                    new ImageLoadTask(getResources().getString(R.string.image_base_url) + doc.getPerson().getImageUrl(), profilePicture).execute();
                     accountName.setText(doc.getPerson().getName());
-                    adapter = new MenuAdapter(HomeActivity.this,arrayMenu,logString,""+doc.getPerson().getId());//(new MenuAdapter(this,arrayMenu))
+                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + doc.getPerson().getId());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values " + adapter.getCount());
                     dList.setAdapter(adapter);
-                        ((DoctorMenusManage) fragment).updateCounts(doc);
-                           
+                    ((DoctorMenusManage) fragment).updateCounts(doc);
 
+                    SharedPreferences.Editor editor = session.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(doc);
+                    editor.putString("DoctorProfileLoggedInCounts", json);
+                    editor.commit();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
+                   // progress.dismiss();
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
 
-        }else if(logString.equals("Patient")){
+        } else if (logString.equals("Patient")) {
             globalTv.setText("Patient");
             patients.setVisibility(View.GONE);
             managePatientIcons();
             fragment = new PatientMenusManage();
             fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Patients Information").addToBackStack(null).commit();
-            api.getProfilePatient(loggingId,new Callback<Person>() {
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
+            api.getProfilePatient(loggingId, new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
-                    new ImageLoadTask(getResources().getString(R.string.image_base_url)+person.getId(), profilePicture).execute();
-                    System.out.println("profile id:::::::"+getResources().getString(R.string.image_base_url)+person.getId());
+                    new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getId(), profilePicture).execute();
+                    System.out.println("profile id:::::::" + getResources().getString(R.string.image_base_url) + person.getId());
                     SharedPreferences session = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = session.edit();
                     editor.putString("patientId", person.patientId);
                     editor.commit();
                     accountName.setText(person.getName());
-                    adapter = new MenuAdapter(HomeActivity.this,arrayMenu,logString,""+person.getId());//(new MenuAdapter(this,arrayMenu))
-                    System.out.println("Adapter Values "+adapter.getCount());
+                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + person.getId());//(new MenuAdapter(this,arrayMenu))
+                    System.out.println("Adapter Values " + adapter.getCount());
                     dList.setAdapter(adapter);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
         }
+
+        arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (p != null)
+                    showPopup(HomeActivity.this, p);
+            }
+        });
         accountName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,7 +315,7 @@ public class HomeActivity extends FragmentActivity{
         patients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(logString.equals("Doctor")){
+                if (logString.equals("Doctor")) {
                     fragment = new ShowPatients();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
@@ -312,14 +325,11 @@ public class HomeActivity extends FragmentActivity{
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(logString.equals("Doctor"))
-                {
+                if (logString.equals("Doctor")) {
                     fragment = new ManageReminder();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }
-                else
-                {
+                } else {
                     fragment = new ManageReminderPatient();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
@@ -330,21 +340,18 @@ public class HomeActivity extends FragmentActivity{
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(logString.equals("Doctor"))
-                {
+                if (logString.equals("Doctor")) {
                     fragment = new ManageMessageNotification();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-                }
-                else if(logString.equals("Patient"))
-                {
+                } else if (logString.equals("Patient")) {
                     fragment = new ManageMessageNotification();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
                 }
             }
         });
-        backButton = (Button)findViewById(R.id.back_button);
+        backButton = (Button) findViewById(R.id.back_button);
         backButton.setVisibility(View.INVISIBLE);
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
@@ -355,19 +362,18 @@ public class HomeActivity extends FragmentActivity{
         clinicSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(logString.equals("Patient"))
-                {
+                if (logString.equals("Patient")) {
                     fragment = new ShowSpecialityClinics();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }else{
+                } else {
                     fragment = new ShowClinicSpecialities();
                     fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
                 }
             }
         });
-        drawerButton = (Button)findViewById(R.id.drawar_button);
+        drawerButton = (Button) findViewById(R.id.drawar_button);
         drawerButton.setVisibility(View.VISIBLE);
         drawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -378,7 +384,7 @@ public class HomeActivity extends FragmentActivity{
                     System.out.println("open");
                     dLayout.openDrawer(dList);
                     flagActionButton = 1;
-                }else{
+                } else {
                     System.out.println("closed");
                     dLayout.closeDrawer(Gravity.LEFT);
                     flagActionButton = 0;
@@ -386,13 +392,13 @@ public class HomeActivity extends FragmentActivity{
                 }
             }
         });
-        logout = (Button)findViewById(R.id.logout);
+        logout = (Button) findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
-                alertDialogBuilder.setMessage("Are You Sure To Logout?");
+                alertDialogBuilder.setMessage("R.string.confirm_logout");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     @Override
@@ -417,30 +423,26 @@ public class HomeActivity extends FragmentActivity{
         });
 
         dList.setSelector(android.R.color.holo_blue_dark);
-        dList.setOnItemClickListener(new OnItemClickListener(){
+        dList.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> selectedItem, View v, int position, long id) {
                 dLayout.closeDrawers();
                 Bundle args = new Bundle();
                 String switchCaseId = (String) adapter.getItem(position);
-                switch(switchCaseId)
-                {
+                switch (switchCaseId) {
                     case "Manage Profile":
-                        if(logString.equalsIgnoreCase("Doctor"))
-                        {
+                        if (logString.equalsIgnoreCase("Doctor")) {
                             System.out.println("I am in profile condition:::::::::::::::::::");
                             fragment = new DoctorProfileEdit();
                             fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Doctor").addToBackStack(null).commit();
+                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
                             dList.setSelection(position);
                             dLayout.closeDrawer(dList);
-                        }
-                        else if(logString.equalsIgnoreCase("Patient"))
-                        {
+                        } else if (logString.equalsIgnoreCase("Patient")) {
                             System.out.println("I am in profile condition:::::::::::::::::::");
                             fragment = new ManageProfilePatient();
                             fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Doctor").addToBackStack(null).commit();
+                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
                             dList.setSelection(position);
                             dLayout.closeDrawer(dList);
                         }
@@ -450,7 +452,7 @@ public class HomeActivity extends FragmentActivity{
 
                         fragment = new ManagePatientFragment();
                         fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Patient").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Patient").addToBackStack(null).commit();
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         break;
@@ -459,7 +461,7 @@ public class HomeActivity extends FragmentActivity{
 
                         fragment = new ManageClinicFragment();
                         fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Clinic").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Clinic").addToBackStack(null).commit();
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         break;
@@ -468,48 +470,43 @@ public class HomeActivity extends FragmentActivity{
 
                         fragment = new ManageastantFragment();
                         fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Assistant").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Assistant").addToBackStack(null).commit();
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         break;
 
                     case "Manage Dependency":
-                        if(logString.equalsIgnoreCase("Doctor"))
-                        {
+                        if (logString.equalsIgnoreCase("Doctor")) {
                             fragment = new ManageDendencyDoctor();
                             fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Dependency").addToBackStack(null).commit();
+                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
                             dList.setSelection(position);
                             dLayout.closeDrawer(dList);
-                        }
-                        else if(logString.equalsIgnoreCase("Patient"))
-                        {
+                        } else if (logString.equalsIgnoreCase("Patient")) {
                             fragment = new ManageDendencyFragment();
                             fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Dependency").addToBackStack(null).commit();
+                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
                             dList.setSelection(position);
                             dLayout.closeDrawer(dList);
                         }
-                      break;
+                        break;
 
                     case "Manage Reminder":
                         fragment = new ManageReminder();
                         fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage_Reminder").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         break;
 
                     case "Manage Delegation":
-                        if(logString.equalsIgnoreCase("Doctor")) {
+                        if (logString.equalsIgnoreCase("Doctor")) {
                             fragment = new ManageDelegationFragment();
                             fragmentManger = getFragmentManager();
                             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
                             dList.setSelection(position);
                             dLayout.closeDrawer(dList);
-                        }
-                        else if(logString.equalsIgnoreCase("Patient"))
-                        {
+                        } else if (logString.equalsIgnoreCase("Patient")) {
                             fragment = new ManageDelegationPatient();
                             fragmentManger = getFragmentManager();
                             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
@@ -522,7 +519,7 @@ public class HomeActivity extends FragmentActivity{
                         //fragment = new ManageTemplate();
                         fragment = new ManageProcedure();
                         fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage Template").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Template").addToBackStack(null).commit();
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         break;
@@ -530,7 +527,7 @@ public class HomeActivity extends FragmentActivity{
                     case "Messages And Notification":
                         fragment = new ManageMessageNotification();
                         fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Manage Msg").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         break;
@@ -539,7 +536,7 @@ public class HomeActivity extends FragmentActivity{
                         dList.setSelection(position);
                         dLayout.closeDrawer(dList);
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
-                        alertDialogBuilder.setMessage("Are You Sure To Logout?");
+                        alertDialogBuilder.setMessage(R.string.confirm_logout);
                         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                             @Override
@@ -577,9 +574,9 @@ public class HomeActivity extends FragmentActivity{
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
 
-        dependentList = (ListView)layout.findViewById(R.id.profile_dependent_list);
-        delegationList = (ListView)layout.findViewById(R.id.profile_delegation_list);
-        profileName = (TextView)layout.findViewById(R.id.profile_name);
+        dependentList = (ListView) layout.findViewById(R.id.profile_dependent_list);
+        delegationList = (ListView) layout.findViewById(R.id.profile_delegation_list);
+        profileName = (TextView) layout.findViewById(R.id.profile_name);
 
         // Creating the PopupWindow
         final PopupWindow popup = new PopupWindow(context);
@@ -598,14 +595,32 @@ public class HomeActivity extends FragmentActivity{
         // Displaying the popup at the specified location, + offsets.
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
 
-        if(logString.equals("Doctor")) {
-            RestAdapter restAdapter = new RestAdapter.Builder()
+        if (logString.equals("Doctor")) {
+
+
+            profileName.setText(doc.getPerson().getName());
+
+
+
+            List<Dependent> patients = new ArrayList<Dependent>();
+            patients=doc.getDependents();
+            if (patients.size() == 0) {
+                Dependent patient = new Dependent();
+                patient.setName("No Dependent Found");
+                patients.add(patient);
+            }
+            dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, patients);
+            dependentList.setAdapter(dependentAdapter);
+
+
+
+           /* RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(this.getResources().getString(R.string.base_url))
                     .setClient(new OkClient())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
             api = restAdapter.create(MyApi.class);
-            api.getProfileDoctor(loggingId,new Callback<Person>() {
+            api.getProfileDoctor(loggingId, new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     profileName.setText(person.getName());
@@ -614,63 +629,62 @@ public class HomeActivity extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    //Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
                 }
-            });
-            api.getAllDoctorDependents(loggingId,new Callback<ArrayList<Patient>>() {
+            });*/
+           /* api.getAllDoctorDependents(loggingId, new Callback<ArrayList<Patient>>() {
                 @Override
                 public void success(ArrayList<Patient> arrays, Response response) {
                     List<Patient> patients = new ArrayList<Patient>();
 
-                    if(arrays.size() ==0){
+                    if (arrays.size() == 0) {
                         Patient patient = new Patient();
                         patient.setSelected(false);
                         patient.setName("No Dependent Found");
                         patient.setLocation(" ");
                         patients.add(patient);
-                    }else{
-                        for(Patient pat : arrays)
-                        {
-                            if((pat.getStatus()).equals("C")) {
+                    } else {
+                        for (Patient pat : arrays) {
+                            if ((pat.getStatus()).equals("C")) {
                                 patients.add(pat);
                             }
 
                         }
                     }
-                    dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this,patients);
+                    dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, patients);
                     dependentList.setAdapter(dependentAdapter);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
 
             delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Delegation del = (Delegation)delegationAdapter.getItem(position);
-                    System.out.println("doctor email::::::"+del.getEmailID());
-                    if(!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
+                    final Delegation del = (Delegation) delegationAdapter.getItem(position);
+                    System.out.println("doctor email::::::" + del.getEmailID());
+                    if (!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
                         String emailId = del.getEmailID();
                         String type = del.getType();
-                        if(type.equalsIgnoreCase("D")){
+                        if (type.equalsIgnoreCase("D")) {
                             type = "Doctor";
-                        }else if(type.equalsIgnoreCase("P")){
+                        } else if (type.equalsIgnoreCase("P")) {
                             type = "Patient";
-                        }else if(type.equalsIgnoreCase("A")){
+                        } else if (type.equalsIgnoreCase("A")) {
                             type = "Assistant";
                         }
-                        saveToSession(emailId,type);
+                        saveToSession(emailId, type);
                         Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
                         startActivity(intObj);
                     }
                 }
             });
 
-            api.getAllDelegatesForParent(loggingId,"D",new Callback<ArrayList<Delegation>>() {
+            api.getAllDelegatesForParent(loggingId, "D", new Callback<ArrayList<Delegation>>() {
                 @Override
                 public void success(ArrayList<Delegation> delegations, Response response) {
                     System.out.println("Kb Array " + delegations.size());
@@ -686,12 +700,9 @@ public class HomeActivity extends FragmentActivity{
                         del.setAccessLevel("");
                         del.setType("");
                         delegatesAdapter.add(del);
-                    } else
-                    {
-                        for(Delegation dele : delegations)
-                        {
-                            if(dele.getStatus().equalsIgnoreCase("C"))
-                            {
+                    } else {
+                        for (Delegation dele : delegations) {
+                            if (dele.getStatus().equalsIgnoreCase("C")) {
                                 delegatesAdapter.add(dele);
                             }
                         }
@@ -705,15 +716,15 @@ public class HomeActivity extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
 
             //ProfileSwitchDialogDoctor profileDialog = ProfileSwitchDialogDoctor.newInstance();
             //profileDialog.show(HomeActivity.this.getFragmentManager(), "Dialog");
-        }else if(logString.equals("Patient")){
+        } else if (logString.equals("Patient")) {
 
-            api.getProfilePatient(loggingId,new Callback<Person>() {
+            api.getProfilePatient(loggingId, new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     profileName.setText(person.getName());
@@ -722,7 +733,7 @@ public class HomeActivity extends FragmentActivity{
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
             api.getAllPatientDependents(loggingId, new Callback<ArrayList<Patient>>() {
@@ -757,31 +768,31 @@ public class HomeActivity extends FragmentActivity{
                             arrayNew.add(docSr);
                         }
                     }
-                    dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, arrayNew);
-                    dependentList.setAdapter(dependentAdapter);
+                    //dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, arrayNew);
+                   // dependentList.setAdapter(dependentAdapter);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
             dependentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Patient pat = (Patient)dependentAdapter.getItem(position);
-                    System.out.println("Patient Name::::::"+pat.getName());
-                    if(!(pat.getName().equalsIgnoreCase("No Dependent Found"))) {
+                    final Patient pat = (Patient) dependentAdapter.getItem(position);
+                    System.out.println("Patient Name::::::" + pat.getName());
+                    if (!(pat.getName().equalsIgnoreCase("No Dependent Found"))) {
                         String emailId = pat.getEmailID();
-                        saveToSession(emailId,"Patient");
+                        saveToSession(emailId, "Patient");
                         Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
                         startActivity(intObj);
                     }
 
                 }
             });
-            api.getAllDelegatesForParent(loggingId,"P",new Callback<ArrayList<Delegation>>() {
+            api.getAllDelegatesForParent(loggingId, "P", new Callback<ArrayList<Delegation>>() {
                 @Override
                 public void success(ArrayList<Delegation> delegations, Response response) {
                     System.out.println("Kb Array " + delegations.size());
@@ -798,20 +809,15 @@ public class HomeActivity extends FragmentActivity{
                         del.setAccessLevel("");
                         del.setType("");
                         delegatesAdapter.add(del);
-                    }
-                    else
-                    {
-                        for(Delegation dele : delegations)
-                        {
-                            if(dele.getStatus().equalsIgnoreCase("C"))
-                            {
+                    } else {
+                        for (Delegation dele : delegations) {
+                            if (dele.getStatus().equalsIgnoreCase("C")) {
                                 flagDelegation = 1;
                                 delegatesAdapter.add(dele);
                             }
                         }
 
-                        if(flagDelegation == 0)
-                        {
+                        if (flagDelegation == 0) {
                             Delegation del = new Delegation();
                             del.setName("No Delegation Found");
                             del.setEmailID("");
@@ -824,38 +830,33 @@ public class HomeActivity extends FragmentActivity{
                         }
                     }
 
-                   // delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegatesAdapter);
-                   // delegationList.setAdapter(delegationAdapter);
-                   // System.out.println("Adapter list Count " + delegationAdapter.getCount());
+                    // delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegatesAdapter);
+                    // delegationList.setAdapter(delegationAdapter);
+                    // System.out.println("Adapter list Count " + delegationAdapter.getCount());
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     error.printStackTrace();
-                    Toast.makeText(HomeActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
             delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Delegation del = (Delegation)delegationAdapter.getItem(position);
-                    System.out.println("doctor email::::::"+del.getEmailID());
-                    if(!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
+                    final Delegation del = (Delegation) delegationAdapter.getItem(position);
+                    System.out.println("doctor email::::::" + del.getEmailID());
+                    if (!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
                         String emailId = del.getEmailID();
                         String type = del.getType();
-                        if(type.equalsIgnoreCase("D"))
-                        {
+                        if (type.equalsIgnoreCase("D")) {
                             type = "Doctor";
-                        }
-                        else if(type.equalsIgnoreCase("P"))
-                        {
+                        } else if (type.equalsIgnoreCase("P")) {
                             type = "Patient";
-                        }
-                        else if(type.equalsIgnoreCase("A"))
-                        {
+                        } else if (type.equalsIgnoreCase("A")) {
                             type = "Assistant";
                         }
-                        saveToSession(emailId,type);
+                        saveToSession(emailId, type);
                         Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
                         startActivity(intObj);
                     }
@@ -876,7 +877,8 @@ public class HomeActivity extends FragmentActivity{
             }
         });*/
     }
-    public void managePatientIcons(){
+
+    public void managePatientIcons() {
         LinearLayout.LayoutParams lpReminder = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lpReminder.setMargins(35, 5, 0, 10);
         lpReminder.width = 55;
@@ -898,6 +900,7 @@ public class HomeActivity extends FragmentActivity{
         lpClinicSearch.setMargins(65, 5, 0, 10);
         clinicSearch.setLayoutParams(lpClinicSearch);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -923,19 +926,19 @@ public class HomeActivity extends FragmentActivity{
         p.y = location[1];
     }
 
-    public void saveToSession(String email,String typeId) {
+    public void saveToSession(String email, String typeId) {
         String userId = email;
         String type = typeId;
         session = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         session.edit().putString("sessionID_Revision", userId).apply();
-        session.edit().putString("type_Revision",type).apply();
+        session.edit().putString("type_Revision", type).apply();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("in onActivityResult HomeActivity /////////////////////////////////");
         FileUploadDialog fileupload = new FileUploadDialog();
-        fileupload.onActivityResult(requestCode,resultCode,data);
+        fileupload.onActivityResult(requestCode, resultCode, data);
 
 
         //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.replacementFragment);
@@ -956,62 +959,27 @@ public class HomeActivity extends FragmentActivity{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch(id)
-        {
+        switch (id) {
             case R.id.drawar_button:
-                     dLayout.openDrawer(dList);
-                     return true;
+                dLayout.openDrawer(dList);
+                return true;
             default:
-                 return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
 
 
     }
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
-
-    }
-    public void showMenus()
-    {
-        if(logString.equals("Patient")){
+    public void showMenus() {
+        if (logString.equals("Patient")) {
             arrayMenu = mainMenu.getPatientMenus();
         }
 
-        if(logString.equals("Doctor")){
+        if (logString.equals("Doctor")) {
             arrayMenu = mainMenu.getDoctorMenus();
         }
 
-        if(logString.equals("Assistant")){
+        if (logString.equals("Assistant")) {
             arrayMenu = mainMenu.getDoctorMenus();
         }
 

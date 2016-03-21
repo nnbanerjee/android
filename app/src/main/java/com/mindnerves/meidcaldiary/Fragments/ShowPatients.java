@@ -60,7 +60,7 @@ public class ShowPatients extends Fragment {
     TextView accountName,globalTv,addText;
     RelativeLayout profileLayout;
     LinearLayout layout;
-    ImageView medicoLogo,medicoText;
+   // ImageView medicoLogo,medicoText;
     Button refresh;
     String type;
     @Nullable
@@ -80,8 +80,8 @@ public class ShowPatients extends Fragment {
         layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
         editTextSearch = (EditText) view.findViewById(R.id.searchET);
         addText = (TextView)view.findViewById(R.id.add_text);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+     //   medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+     //   medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +90,7 @@ public class ShowPatients extends Fragment {
             }
         });
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -164,8 +164,8 @@ public class ShowPatients extends Fragment {
         SpannableString content = new SpannableString(udata);
         content.setSpan(new UnderlineSpan(), 0, udata.length(), 0);
         addText.setText(content);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+    //    medicoLogo.setVisibility(View.GONE);
+     //   medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }
@@ -205,8 +205,8 @@ public class ShowPatients extends Fragment {
         back.setVisibility(View.INVISIBLE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+     //   medicoLogo.setVisibility(View.VISIBLE);
+     //   medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }

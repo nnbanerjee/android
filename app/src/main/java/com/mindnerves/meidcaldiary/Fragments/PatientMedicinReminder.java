@@ -35,10 +35,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.mindnerves.meidcaldiary.AlarmService;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HorizontalListView;
 import com.mindnerves.meidcaldiary.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,11 +51,16 @@ import java.util.concurrent.TimeUnit;
 
 import Adapter.HorizontalListAdapter;
 import Application.MyApi;
+import Model.AddPatientMedicineSummary;
 import Model.AlarmReminderVM;
 
+import Model.MedicineId;
+import Model.MedicineSchedule;
 import Model.ReminderDate;
 import Model.ReminderVM;
+import Model.ResponseCodeVerfication;
 import Model.TimeReminder;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -63,6 +70,7 @@ import retrofit.client.Response;
 /**
  * Created by MNT on 07-Apr-15.
  */
+//add medicine
 public class PatientMedicinReminder extends Fragment {
 
     Integer doctorId;
@@ -75,11 +83,12 @@ public class PatientMedicinReminder extends Fragment {
     private int minute;
     int count = 0;
     boolean checkStartDate = false;
-    TextView dateValue,timeValue,endDateValue,daysText,durationText;
-    EditText duration,doctorInstructionValue;
-    ImageView calenderImg,endDateImg;
+    TextView dateValue, timeValue, endDateValue, daysText, durationText;
+    private long calStartDate, calEndDate;
+    EditText duration, doctorInstructionValue;
+    ImageView calenderImg, endDateImg;
     Calendar calendar = Calendar.getInstance();
-    Spinner numberDoses,scheduleDate;
+    Spinner numberDoses, scheduleDate;
     HorizontalListView horizontalList;
     CheckBox medicineReminderBtn;
     List<AlarmReminderVM> medicinReminderTables;
@@ -91,14 +100,19 @@ public class PatientMedicinReminder extends Fragment {
     String[] medicin_list = null;
     String type = null;
     Button saveTimeTable;
-    String appointmentDate,appointmentTime,patientId;
+    String appointmentDate, appointmentTime, patientId;
     ArrayList<ReminderDate> reminderDate;
-    ArrayList<String> startList,endList;
+    ArrayList<String> startList, endList;
     Bundle saveToBundle = new Bundle();
     ArrayAdapter<String> scheduleAdapter;
     ArrayAdapter<String> dosesAdapter;
-    MultiAutoCompleteTextView medicine;
-    int addNewFlag = 0;
+    public MultiAutoCompleteTextView medicine;
+    AddPatientMedicineSummary addPatientMedicineSummary;
+    private String appointMentId;
+    boolean addNewFlag = false;
+    private String state;
+    private String medicineName, medicineId, medicineStartDate, medicineEndDate, medicineReminder;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
@@ -110,6 +124,7 @@ public class PatientMedicinReminder extends Fragment {
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
+
         scheduleList = getResources().getStringArray(R.array.scheduleDateList);
         dosesList = getResources().getStringArray(R.array.numberDosesList);
         global = (Global) getActivity().getApplicationContext();
@@ -121,7 +136,10 @@ public class PatientMedicinReminder extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        type = session.getString("type",null);
+        // type = session.getString("type", null);
+        type = session.getString("loginType", null);
+        appointMentId = session.getString("appointmentId", "");
+        //Load Ui controls
         calenderImg = (ImageView) view.findViewById(R.id.calenderImg);
         endDateImg = (ImageView) view.findViewById(R.id.endDateImg);
         numberDoses = (Spinner) view.findViewById(R.id.numberDoses);
@@ -130,31 +148,60 @@ public class PatientMedicinReminder extends Fragment {
         endDateValue = (TextView) view.findViewById(R.id.endDateValue);
         horizontalList = (HorizontalListView) view.findViewById(R.id.horizontalList);
         medicineReminderBtn = (CheckBox) view.findViewById(R.id.medicineReminderBtn);
-        medicine = (MultiAutoCompleteTextView)view.findViewById(R.id.medicineValueEdit);
+        medicine = (MultiAutoCompleteTextView) view.findViewById(R.id.medicineValueEdit);
         doctorInstructionValue = (EditText) view.findViewById(R.id.doctorInstructionValue);
         saveTimeTable = (Button) view.findViewById(R.id.saveTimeTable);
-        daysText = (TextView)view.findViewById(R.id.schedule_text);
-        durationText = (TextView)view.findViewById(R.id.duration_text);
-        final Bundle args = getArguments();
-        medicinName = args.getString("medicinName");
+        daysText = (TextView) view.findViewById(R.id.schedule_text);
+        durationText = (TextView) view.findViewById(R.id.duration_text);
         duration = (EditText) view.findViewById(R.id.duration_days);
+
+        //Read Arguments
+        final Bundle args = getArguments();
+        state = args.getString("state");
+        medicinName = args.getString("medicinName");
+        medicineId = args.getString("medicineId");
+        if(state!=null && !state.equalsIgnoreCase("") && state.equalsIgnoreCase("EDIT")){
+
+            getMedicineDetails(medicineId);
+        }
+        //medicineName,medicineId,medicineStartDate,medicineEndDate,medicineReminder;
+        // medicineName=args.getString("medicinName", "");
+        medicineEndDate = args.getString("medicineEndDate");
+
+        medicineStartDate = args.getString("medicineStartDate");
+        medicineReminder = args.getString("medicineReminder");
+        //check if new medicine
+        if (args.getString("argument") != null) {
+            if (args.getString("argument").equals("NewMedicine")) {
+                addNewFlag = true;
+            }
+        }
+
         scheduleAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, scheduleList);
         scheduleDate.setAdapter(scheduleAdapter);
         dosesAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, dosesList);
         numberDoses.setAdapter(dosesAdapter);
+
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
         String timeString = updateTimeString(hour, minute);
-        String dateString = cal.get(Calendar.YEAR) + "-" + showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH);
+        String dateString = cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH);
+
         startList = new ArrayList<String>();
         startList.add(dateString);
         startList.add(timeString);
         dateValue.setText(timeString + "  " + dateString);
+        // dateValue.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(""+cal.getTimeInMillis()));
+        calStartDate = cal.getTimeInMillis();
+
         medicin_list = getResources().getStringArray(R.array.medicin_list);
-        medicine.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line, medicin_list));
+        medicine.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, medicin_list));
         medicine.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         medicine.setText(medicinName);
+
+
+
         medicineReminderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,32 +214,26 @@ public class PatientMedicinReminder extends Fragment {
                 }
             }
         });
-        if(args.getString("argument") != null){
-            if(args.getString("argument").equals("NewMedicine")){
-                addNewFlag = 1;
-            }
-        }
+
+        //not necessary
         calenderImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Fragment fragment = new StartTimePicker();
                 FragmentManager fragmentManger = getFragmentManager();
                 saveToBundle = args;
                 saveToBundle.putString("duration", duration.getText().toString());
-                saveToBundle.putString("startTime",dateValue.getText().toString());
+                saveToBundle.putString("startTime", dateValue.getText().toString());
                 fragment.setArguments(saveToBundle);
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
             }
         });
 
-        if(global.getDateString()!= null)
-        {
+        if (global.getDateString() != null) {
             dateValue.setText(global.getDateString());
             String durationText = args.get("duration").toString();
-            if(durationText!= null)
-            {
+            if (durationText != null) {
                 duration.setText(durationText);
                 String scheduleType = scheduleDate.getSelectedItem().toString();
                 int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
@@ -208,24 +249,22 @@ public class PatientMedicinReminder extends Fragment {
 
         }
 
-        if(global.getEndDateString()!= null)
-        {
+        if (global.getEndDateString() != null) {
             endDateValue.setText(global.getEndDateString());
             String durationText = args.get("duration").toString();
-            if(durationText!=null)
-            {
+            if (durationText != null) {
                 duration.setText(durationText);
 
-                 String scheduleType = scheduleDate.getSelectedItem().toString();
-                 int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
-                 System.out.println("ScheduleTYpe:::::::::" + scheduleType);
-                 if (scheduleType.equals("Daily")) {
-                       showScheduleDay(doses);
-                    } else if (scheduleType.equals("Weekly")) {
-                        showScheduleWeek(doses);
-                    } else if (scheduleType.equals("Monthly")) {
-                        showScheduleMonth(doses);
-                    }
+                String scheduleType = scheduleDate.getSelectedItem().toString();
+                int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
+                System.out.println("ScheduleTYpe:::::::::" + scheduleType);
+                if (scheduleType.equals("Daily")) {
+                    showScheduleDay(doses);
+                } else if (scheduleType.equals("Weekly")) {
+                    showScheduleWeek(doses);
+                } else if (scheduleType.equals("Monthly")) {
+                    showScheduleMonth(doses);
+                }
 
             }
         }
@@ -238,7 +277,7 @@ public class PatientMedicinReminder extends Fragment {
                 FragmentManager fragmentManger = getFragmentManager();
                 saveToBundle = args;
                 saveToBundle.putString("duration", duration.getText().toString());
-                saveToBundle.putString("endTime",endDateValue.getText().toString());
+                saveToBundle.putString("endTime", endDateValue.getText().toString());
                 fragment.setArguments(saveToBundle);
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
@@ -248,7 +287,6 @@ public class PatientMedicinReminder extends Fragment {
         duration.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -257,9 +295,10 @@ public class PatientMedicinReminder extends Fragment {
                 createDateArray();
                 if (!duration.getText().toString().equals("")) {
                     int index = scheduleDate.getSelectedItemPosition() + 1;
+
                     int days = Integer.parseInt(duration.getText().toString().trim());
                     Calendar cal = Calendar.getInstance();
-                    Date startDuration = getStringToDate(startList.get(1));
+                Date startDuration = getStringToDate(startList.get(1));
                     cal.setTime(startDuration);
                     if (index == 1) {
                         cal.add(Calendar.DAY_OF_MONTH, days);
@@ -271,9 +310,10 @@ public class PatientMedicinReminder extends Fragment {
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
                     int minute = cal.get(Calendar.MINUTE);
                     String timeString = updateTimeString(hour, minute);
-                    endList.add(cal.get(Calendar.YEAR) + "-" + showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+                    endList.add(cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
                     endList.add(timeString);
-                    endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+                    endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+                    calEndDate = cal.getTimeInMillis();
                     System.out.println(":::::::OnClick::::::");
                     String scheduleType = scheduleDate.getSelectedItem().toString();
                     int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
@@ -290,7 +330,7 @@ public class PatientMedicinReminder extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                
+
             }
         });
 
@@ -298,10 +338,9 @@ public class PatientMedicinReminder extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int index = position + 1;
-                System.out.println("Index::::::"+index);
+                System.out.println("Index::::::" + index);
                 endList = new ArrayList<String>();
-                if (!duration.getText().toString().equals(""))
-                {
+                if (!duration.getText().toString().equals("")) {
                     int days = Integer.parseInt(duration.getText().toString().trim());
                     Calendar cal = Calendar.getInstance();
                     if (index == 1) {
@@ -312,11 +351,11 @@ public class PatientMedicinReminder extends Fragment {
                         cal.add(Calendar.MONTH, days);
                     }
 
-                    System.out.println("Calculated Date:::::"+cal.get(Calendar.DAY_OF_MONTH)+"/"+cal.get(Calendar.WEEK_OF_MONTH)+"/"+cal.get(Calendar.YEAR));
+                    System.out.println("Calculated Date:::::" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.WEEK_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
                     int minute = cal.get(Calendar.MINUTE);
                     String timeString = updateTimeString(hour, minute);
-                    endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+                    endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
                     String scheduleType = scheduleDate.getSelectedItem().toString();
                     int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
                     System.out.println("ScheduleTYpe:::::::::" + scheduleType);
@@ -333,10 +372,8 @@ public class PatientMedicinReminder extends Fragment {
                         daysText.setText("Monthly");
                         durationText.setText("Months");
                     }
-                }
-                else
-                {
-                    Toast.makeText(getActivity(),"Please Enter Duration",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please Enter Duration", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -389,9 +426,9 @@ public class PatientMedicinReminder extends Fragment {
                         scheduleDate.setSelection(i);
                     }
                 }
-                if(addNewFlag == 1){
+                if (addNewFlag) {
                     dateValue.setText(reminderVM.startDate);
-                }else {
+                } else {
                     dateValue.setText(reminderVM.alarmReminderVMList.get(0).startDate);
                     endDateValue.setText(reminderVM.alarmReminderVMList.get(0).endDate);
                     doctorInstructionValue.setText(reminderVM.alarmReminderVMList.get(0).doctorInstruction);
@@ -409,21 +446,22 @@ public class PatientMedicinReminder extends Fragment {
         saveTimeTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReminderVM saveReminderVM = new ReminderVM();
+                // ReminderVM saveReminderVM = new ReminderVM();
+                addPatientMedicineSummary = new AddPatientMedicineSummary();
                 List<AlarmReminderVM> alarms = new ArrayList<AlarmReminderVM>();
                 alarms = alarmList;
                 System.out.println("MedicineReminders::::::::::" + medicinReminderTables.size());
-                if (alarms == null)
-                {
+                if (alarms == null) {
                     alarms = medicinReminderTables;
                 }
                 System.out.println("AlarmList::::::::::" + alarms.size());
-                doctorId = Integer.parseInt(session.getString("doctorId", "0"));
-                if(type.equalsIgnoreCase("Patient")){
+                doctorId = Integer.parseInt(session.getString("id", "0"));
+                patientId = session.getString("patientId", "");
+               /* if(type.equalsIgnoreCase("Patient")){
                     patientId = session.getString("sessionID", null);
                 }else{
                     patientId = session.getString("doctor_patientEmail", null);
-                }
+                }*/
 
                 appointmentTime = global.getAppointmentTime();
                 appointmentDate = global.getAppointmentDate();
@@ -437,44 +475,65 @@ public class PatientMedicinReminder extends Fragment {
                 String diagnosisValue = args.getString("diagnosisValue");
                 String testPrescribedValue = args.getString("testPrescribedValue");
 
-                if (global.getReminderVM() != null) {
+             /*   if (global.getReminderVM() != null) {
                     saveReminderVM.id = global.getReminderVM().id;
                 } else {
                     saveReminderVM.id = null;
-                }
-                System.out.println("id::::::::::" + saveReminderVM.id);
-                saveReminderVM.doctorId = doctorId;
-                saveReminderVM.patientId = patientId;
-                saveReminderVM.appointmentDate = appointmentDate;
-                saveReminderVM.appointmentTime = appointmentTime;
+                }*/
+                //System.out.println("id::::::::::" + saveReminderVM.id);
+                /*
+                {"autoSchedule":1,"doctorInstruction":"morning-evening","dosesPerSchedule":2,"durationSchedule":4,"endDate":1457548200000,"medicinName":"crocine",
+                "reminder":1,"schedule":0,"startDate":1457164317533,"medicineSchedule":[{"scheduleTime":1457116200000},{"scheduleTime":1457116200000},
+                {"scheduleTime":1457375400000}],"appointmentId":584,"patientId":7,"loggedinUserId":111,"userType":1}
+                 */
+                //addPatientMedicineSummary.doctorId = doctorId;
+                addPatientMedicineSummary.setPatientId(patientId);
+                // addPatientMedicineSummary.setAppointmentId(appointMentID); = appointmentDate;
+                //  addPatientMedicineSummary.appointmentTime = appointmentTime;
 
-                saveReminderVM.medicinName = medicinName;
-                saveReminderVM.startDate = dateValue.getText().toString();
-                saveReminderVM.endDate = endDateValue.getText().toString();
+                addPatientMedicineSummary.setMedicinName(medicine.getText().toString());
+                //addPatientMedicineSummary.setStartDate(dateValue.getText().toString());
+                // addPatientMedicineSummary.setEndDate(endDateValue.getText().toString());
+                addPatientMedicineSummary.setStartDate("" + calStartDate);
+                addPatientMedicineSummary.setEndDate("" + calEndDate);
                 if (!(duration.getText().toString().equals(""))) {
-                    saveReminderVM.duration = Integer.parseInt(duration.getText().toString());
+                    addPatientMedicineSummary.setDurationSchedule(duration.getText().toString());
                 } else {
-                    saveReminderVM.duration = 0;
+                    addPatientMedicineSummary.setDurationSchedule("" + 0);
                 }
-                saveReminderVM.numberOfDoses = Integer.parseInt(numberDoses.getSelectedItem().toString());
-                saveReminderVM.schedule = scheduleDate.getSelectedItem().toString();
-                saveReminderVM.doctorInstruction = doctorInstructionValue.getText().toString();
-                saveReminderVM.visitDate = visitedDate;
-                saveReminderVM.visitType = visitType;
-                saveReminderVM.referredBy = referedBy;
-                saveReminderVM.symptoms = symptomsValue;
-                saveReminderVM.diagnosis = diagnosisValue;
-                saveReminderVM.testsPrescribed = testPrescribedValue;
+                addPatientMedicineSummary.setDosesPerSchedule(numberDoses.getSelectedItem().toString());
+                addPatientMedicineSummary.setSchedule("" + scheduleDate.getSelectedItemPosition());
+                addPatientMedicineSummary.setDoctorInstruction(doctorInstructionValue.getText().toString());
+                addPatientMedicineSummary.setAutoSchedule("1");
+                if (medicineReminderBtn.isChecked())
+                    addPatientMedicineSummary.setReminder("1");
+                else
+                    addPatientMedicineSummary.setReminder("0");
+                addPatientMedicineSummary.setAppointmentId(appointMentId);
+                addPatientMedicineSummary.setLoggedinUserId("" + doctorId);
+                addPatientMedicineSummary.setUserType(UtilSingleInstance.getUserType(type));
+                addPatientMedicineSummary.setPatientId(patientId);
+
+
                 System.out.println("medicinReminderTables = " + alarms.size());
-                for(AlarmReminderVM vm : alarms){
-                    vm.startDate = saveReminderVM.startDate;
-                    vm.endDate = saveReminderVM.endDate;
-                    vm.doses = saveReminderVM.numberOfDoses;
-                    vm.duration = saveReminderVM.duration;
-                    vm.doctorInstruction = saveReminderVM.doctorInstruction;
+                List<MedicineSchedule> scheduleArray = new ArrayList<MedicineSchedule>();
+                for (AlarmReminderVM vm : alarms) {
+                    vm.startDate = addPatientMedicineSummary.getStartDate();
+                    vm.endDate = addPatientMedicineSummary.getEndDate();
+                    vm.doses = Integer.parseInt(addPatientMedicineSummary.getDosesPerSchedule());
+                    vm.duration = Integer.parseInt(addPatientMedicineSummary.getDurationSchedule());
+                    vm.doctorInstruction = addPatientMedicineSummary.getDoctorInstruction();
+
+
                 }
-                saveReminderVM.alarmReminderVMList = alarms;
-                savePatientReminderData(saveReminderVM);
+                if (reminderDate != null)
+                    for (int i = 0; i < reminderDate.size(); i++) {
+                        ReminderDate rm = reminderDate.get(i);
+                        scheduleArray.add(new MedicineSchedule("" + rm.getDate().getTime()));
+                    }
+
+                addPatientMedicineSummary.setMedicineSchedule(scheduleArray);
+                savePatientReminderData(addPatientMedicineSummary);
 
             }
         });
@@ -482,8 +541,8 @@ public class PatientMedicinReminder extends Fragment {
 
         return view;
     }
-    private String updateTimeString(int hours, int mins)
-    {
+
+    private String updateTimeString(int hours, int mins) {
 
         String timeSet = "";
         if (hours > 12) {
@@ -510,17 +569,14 @@ public class PatientMedicinReminder extends Fragment {
     }
 
 
-    public void scheduleMedicineReminder()
-    {
+    public void scheduleMedicineReminder() {
         alarmList = global.getAlarmTime();
-        System.out.println("Alarm List::::::"+alarmList.size());
-        for(AlarmReminderVM vm : alarmList)
-        {
-            System.out.println("Date:::::::"+vm.getAlarmDate());
-            System.out.println("Time1::::::"+vm.getTime1());
+        System.out.println("Alarm List::::::" + alarmList.size());
+        for (AlarmReminderVM vm : alarmList) {
+            System.out.println("Date:::::::" + vm.getAlarmDate());
+            System.out.println("Time1::::::" + vm.getTime1());
             String time = vm.getTime1().toString();
-            if(time!=null)
-            {
+            if (time != null) {
                 Date alarmDate = getStringToDate(vm.getAlarmDate());
                 Calendar calendarDate = Calendar.getInstance();
                 calendarDate.setTime(alarmDate);
@@ -529,8 +585,7 @@ public class PatientMedicinReminder extends Fragment {
                 setAlarm(calendarDate);
             }
             time = vm.getTime2();
-            if(time!=null)
-            {
+            if (time != null) {
                 Date alarmDate = getStringToDate(vm.getAlarmDate());
                 Calendar calendarDate = Calendar.getInstance();
                 calendarDate.setTime(alarmDate);
@@ -539,8 +594,7 @@ public class PatientMedicinReminder extends Fragment {
                 setAlarm(calendarDate);
             }
             time = vm.getTime3();
-            if(time!=null)
-            {
+            if (time != null) {
                 Date alarmDate = getStringToDate(vm.getAlarmDate());
                 Calendar calendarDate = Calendar.getInstance();
                 calendarDate.setTime(alarmDate);
@@ -549,8 +603,7 @@ public class PatientMedicinReminder extends Fragment {
                 setAlarm(calendarDate);
             }
             time = vm.getTime4();
-            if(time!=null)
-            {
+            if (time != null) {
                 Date alarmDate = getStringToDate(vm.getAlarmDate());
                 Calendar calendarDate = Calendar.getInstance();
                 calendarDate.setTime(alarmDate);
@@ -559,8 +612,7 @@ public class PatientMedicinReminder extends Fragment {
                 setAlarm(calendarDate);
             }
             time = vm.getTime5();
-            if(time!=null)
-            {
+            if (time != null) {
                 Date alarmDate = getStringToDate(vm.getAlarmDate());
                 Calendar calendarDate = Calendar.getInstance();
                 calendarDate.setTime(alarmDate);
@@ -569,8 +621,7 @@ public class PatientMedicinReminder extends Fragment {
                 setAlarm(calendarDate);
             }
             time = vm.getTime6();
-            if(time!=null)
-            {
+            if (time != null) {
                 Date alarmDate = getStringToDate(vm.getAlarmDate());
                 Calendar calendarDate = Calendar.getInstance();
                 calendarDate.setTime(alarmDate);
@@ -582,11 +633,11 @@ public class PatientMedicinReminder extends Fragment {
         }
 
     }
-    public void showScheduleMonth(int doses)
-    {
-        if(medicine.getText().equals("")){
-            Toast.makeText(getActivity(),"Please Enter Medicine Name",Toast.LENGTH_SHORT).show();
-        }else{
+
+    public void showScheduleMonth(int doses) {
+        if (medicine.getText().equals("")) {
+            Toast.makeText(getActivity(), "Please Enter Medicine Name", Toast.LENGTH_SHORT).show();
+        } else {
             String medicineName = medicine.getText().toString();
             createDateArray();
             Date startDate = getStringToDate(startList.get(1));
@@ -836,27 +887,27 @@ public class PatientMedicinReminder extends Fragment {
                     switch (rDate.getTimes().size()) {
                         case 1:
                             switchCaseCount = 1;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null, medicineName));
                             break;
                         case 2:
                             switchCaseCount = 2;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null, medicineName));
                             break;
                         case 3:
                             switchCaseCount = 3;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null, medicineName));
                             break;
                         case 4:
                             switchCaseCount = 4;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null, medicineName));
                             break;
                         case 5:
                             switchCaseCount = 5;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null, medicineName));
                             break;
                         case 6:
                             switchCaseCount = 6;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(),medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(), medicineName));
                             break;
                     }
                 }
@@ -866,11 +917,11 @@ public class PatientMedicinReminder extends Fragment {
             }
         }
     }
-    public void showScheduleWeek(int doses)
-    {
-        if(medicine.getText().equals("")){
-            Toast.makeText(getActivity(),"Please Enter Medicine Name",Toast.LENGTH_SHORT).show();
-        }else {
+
+    public void showScheduleWeek(int doses) {
+        if (medicine.getText().equals("")) {
+            Toast.makeText(getActivity(), "Please Enter Medicine Name", Toast.LENGTH_SHORT).show();
+        } else {
             String medicineName = medicine.getText().toString();
             createDateArray();
             Date startDate = getStringToDate(startList.get(1));
@@ -1118,22 +1169,22 @@ public class PatientMedicinReminder extends Fragment {
                     String dateStr = format.format(date);
                     switch (rDate.getTimes().size()) {
                         case 1:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null, medicineName));
                             break;
                         case 2:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null, medicineName));
                             break;
                         case 3:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null, medicineName));
                             break;
                         case 4:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null, medicineName));
                             break;
                         case 5:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null, medicineName));
                             break;
                         case 6:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(),medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(), medicineName));
                             break;
                     }
                 }
@@ -1143,14 +1194,12 @@ public class PatientMedicinReminder extends Fragment {
         }
     }
 
-    public void createDateArray()
-    {
-        System.out.println("Start Date::::::"+dateValue.getText().toString());
-        System.out.println("End Date::::::"+endDateValue.getText().toString());
+    public void createDateArray() {
+        System.out.println("Start Date::::::" + dateValue.getText().toString());
+        System.out.println("End Date::::::" + endDateValue.getText().toString());
         String startString = dateValue.getText().toString();
         String endString = endDateValue.getText().toString();
-        if((startString!=null)&&(endString!= null))
-        {
+        if ((startString != null) && (endString != null)) {
             startList = new ArrayList<String>();
             endList = new ArrayList<String>();
             String[] startArray = dateValue.getText().toString().split("  ");
@@ -1166,22 +1215,18 @@ public class PatientMedicinReminder extends Fragment {
                 endList.add(endArray[i]);
             }
 
-        }
-        else
-        {
+        } else {
             //Toast.makeText(getActivity(), "Please Select Proper Date", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-
-    public void showScheduleDay(int doses)
-    {
-        if(medicine.getText().equals("")){
-            Toast.makeText(getActivity(),"Please Enter Medicine Name",Toast.LENGTH_SHORT).show();
-        }else {
+    public void showScheduleDay(int doses) {
+        if (medicine.getText().equals("")) {
+            Toast.makeText(getActivity(), "Please Enter Medicine Name", Toast.LENGTH_SHORT).show();
+        } else {
             String medicineName = medicine.getText().toString();
-            createDateArray();
+            createDateArray();//can bre removed no need to use arrays.
             Date startDate = getStringToDate(startList.get(1));
             Date endDate = getStringToDate(endList.get(1));
             System.out.println("endDate" + endDate);
@@ -1335,22 +1380,22 @@ public class PatientMedicinReminder extends Fragment {
                     String dateStr = format.format(date);
                     switch (rDate.getTimes().size()) {
                         case 1:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null, medicineName));
                             break;
                         case 2:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null, medicineName));
                             break;
                         case 3:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null, medicineName));
                             break;
                         case 4:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null, medicineName));
                             break;
                         case 5:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null,medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null, medicineName));
                             break;
                         case 6:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(),medicineName));
+                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(), medicineName));
                             break;
                     }
                 }
@@ -1361,41 +1406,41 @@ public class PatientMedicinReminder extends Fragment {
     }
 
 
-    public void setAlarm(Calendar calendar){
+    public void setAlarm(Calendar calendar) {
         AlarmManager am = (AlarmManager) getActivity().getSystemService(getActivity().getApplicationContext().ALARM_SERVICE);
         Intent intent = new Intent(getActivity(), AlarmService.class);
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE,1);
+        cal.add(Calendar.MINUTE, 1);
 
         long trigerTime = calendar.getTimeInMillis();
 
-        System.out.println("trigerTime = "+trigerTime);
-        System.out.println("trigerTime current = "+Calendar.getInstance().getTimeInMillis());
+        System.out.println("trigerTime = " + trigerTime);
+        System.out.println("trigerTime current = " + Calendar.getInstance().getTimeInMillis());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), (int) trigerTime,
                 intent, PendingIntent.FLAG_ONE_SHOT);
         am.set(AlarmManager.RTC_WAKEUP, trigerTime, pendingIntent);
     }
 
-    public Calendar getStringToTime(String time, Calendar calendar){
+    public Calendar getStringToTime(String time, Calendar calendar) {
         String[] timeValue;
         timeValue = time.split(":");
         int hour1 = Integer.parseInt(timeValue[0].trim());
         int min1 = Integer.parseInt(timeValue[1].trim().split("[a-zA-Z ]+")[0]);
-        calendar.set(Calendar.HOUR,hour1);
+        calendar.set(Calendar.HOUR, hour1);
         calendar.set(Calendar.MINUTE, min1);
 
-        String strAM_PM = timeValue[1].replaceAll("[0-9]","");
-        if(strAM_PM.equals("AM")){
+        String strAM_PM = timeValue[1].replaceAll("[0-9]", "");
+        if (strAM_PM.equals("AM")) {
             calendar.set(Calendar.AM_PM, 0);
-        }else{
+        } else {
             calendar.set(Calendar.AM_PM, 1);
         }
         return calendar;
     }
 
-    public Date getStringToDate( String date){
+    public Date getStringToDate(String date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date dateValue = null;
         try {
@@ -1416,7 +1461,7 @@ public class PatientMedicinReminder extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     goToBack();
                     return true;
                 }
@@ -1426,20 +1471,17 @@ public class PatientMedicinReminder extends Fragment {
     }
 
 
-    public void  goToBack(){
-        TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+    public void goToBack() {
+        TextView globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
         globalTv.setText("Medical Diary");
 
-        if(type.equalsIgnoreCase("doctor"))
-        {
+        if (type.equalsIgnoreCase("doctor")) {
             Fragment fragment = new DoctorAppointmentSummary();
             FragmentManager fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             final Button back = (Button) getActivity().findViewById(R.id.back_button);
             back.setVisibility(View.INVISIBLE);
-        }
-        else if(type.equalsIgnoreCase("patient"))
-        {
+        } else if (type.equalsIgnoreCase("patient")) {
             Fragment fragment = new PatientAppointmentInformation();
             FragmentManager fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -1448,13 +1490,13 @@ public class PatientMedicinReminder extends Fragment {
         }
     }
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendar.set(Calendar.YEAR,year);
-            calendar.set(Calendar.MONTH,monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updatedate();
         }
 
@@ -1463,77 +1505,34 @@ public class PatientMedicinReminder extends Fragment {
     //Declaration
 
 
-    public void updatedate(){
-        if(checkStartDate){
-            endDateValue.setText(calendar.get(Calendar.YEAR)+"-"+showMonth(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH));
-        }else{
-            dateValue.setText(calendar.get(Calendar.YEAR)+"-"+showMonth(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+    public void updatedate() {
+        if (checkStartDate) {
+            calStartDate = calendar.getTimeInMillis();
+            endDateValue.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+        } else {
+            calEndDate = calendar.getTimeInMillis();
+            dateValue.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
         }
     }
 
-    public void setDate(){
+    public void setDate() {
 
-        new DatePickerDialog(getActivity(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(getActivity(), d, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    public void setTime(){
-        new TimePickerDialog(getActivity(), timePickerListener, hour, minute,false).show();
+    public void setTime() {
+        new TimePickerDialog(getActivity(), timePickerListener, hour, minute, false).show();
     }
 
-    public int showMonth(int month)
-    {
-        int showMonth = month;
-        switch(showMonth)
-        {
-            case 0:
-                showMonth = showMonth + 1;
-                break;
-            case 1:
-                showMonth = showMonth + 1;
-                break;
-            case 2:
-                showMonth = showMonth + 1;
-                break;
-            case 3:
-                showMonth = showMonth + 1;
-                break;
-            case 4:
-                showMonth = showMonth + 1;
-                break;
-            case 5:
-                showMonth = showMonth + 1;
-                break;
-            case 6:
-                showMonth = showMonth + 1;
-                break;
-            case 7:
-                showMonth = showMonth + 1;
-                break;
-            case 8:
-                showMonth = showMonth + 1;
-                break;
-            case 9:
-                showMonth = showMonth + 1;
-                break;
-            case 10:
-                showMonth = showMonth + 1;
-                break;
-            case 11:
-                showMonth = showMonth + 1;
-                break;
-
-        }
-        return showMonth;
-    }
 
     private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
             // TODO Auto-generated method stub
-            hour   = hourOfDay;
+            hour = hourOfDay;
             minute = minutes;
-            updateTime(hour,minute);
+            updateTime(hour, minute);
         }
     };
 
@@ -1569,32 +1568,33 @@ public class PatientMedicinReminder extends Fragment {
         String aTime = new StringBuilder().append(hours).append(':')
                 .append(minutes).append(" ").append(timeSet).toString();
 
-        if(timeValue == null){
+        if (timeValue == null) {
 
-        }else{
+        } else {
             timeValue.setText(aTime);
         }
     }
 
 
-    public void savePatientReminderData(ReminderVM saveReminderVM){
+    public void savePatientReminderData(AddPatientMedicineSummary saveReminderVM) {
 
-        System.out.println("saveReminderVM = "+saveReminderVM.visitDate);
-        System.out.println("saveReminderVM.doctorId = "+saveReminderVM.doctorId);
-        global.setReminderVM(saveReminderVM);
-        if(addNewFlag == 1) {
-            api.savePatientReminderDetails(saveReminderVM, new Callback<ReminderVM>() {
+        // System.out.println("saveReminderVM = "+saveReminderVM.visitDate);
+        // System.out.println("saveReminderVM.doctorId = "+saveReminderVM.doctorId);
+        // global.setReminderVM(saveReminderVM);
+
+
+        if (addNewFlag) {
+            api.addPatientMedicine(saveReminderVM, new Callback<ResponseCodeVerfication>() {
                 @Override
-                public void success(ReminderVM jsonObject, Response response) {
+                public void success(ResponseCodeVerfication jsonObject, Response response) {
                     System.out.println("Response::::::" + response.getStatus());
                     Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                    if(type.equalsIgnoreCase("Patient")){
+                    if (type.equalsIgnoreCase("Patient")) {
                         getFragmentManager().beginTransaction().remove(PatientMedicinReminder.this).commit();
                         Fragment fragment = new PatientAppointmentInformation();
                         FragmentManager fragmentManger = getFragmentManager();
                         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                    }
-                    else {
+                    } else {
                         getFragmentManager().beginTransaction().remove(PatientMedicinReminder.this).commit();
                         Fragment fragment = new DoctorAppointmentSummary();
                         FragmentManager fragmentManger = getFragmentManager();
@@ -1608,20 +1608,19 @@ public class PatientMedicinReminder extends Fragment {
                     error.printStackTrace();
                 }
             });
-        }else{
+        } else {
             System.out.println("I am Update Conidtion::::::::::::::::::::");
-            api.updatePatientReminder(saveReminderVM,new Callback<ReminderVM>() {
+            api.updatePatientMedicine(saveReminderVM, new Callback<ResponseCodeVerfication>() {
                 @Override
-                public void success(ReminderVM reminderVM, Response response) {
+                public void success(ResponseCodeVerfication reminderVM, Response response) {
                     System.out.println("Response::::::" + response.getStatus());
                     Toast.makeText(getActivity(), "Updated successfully !!!", Toast.LENGTH_LONG).show();
-                    if(type.equalsIgnoreCase("Patient")){
+                    if (type.equalsIgnoreCase("Patient")) {
                         getFragmentManager().beginTransaction().remove(PatientMedicinReminder.this).commit();
                         Fragment fragment = new PatientAppointmentInformation();
                         FragmentManager fragmentManger = getFragmentManager();
                         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                    }
-                    else {
+                    } else {
                         getFragmentManager().beginTransaction().remove(PatientMedicinReminder.this).commit();
                         Fragment fragment = new DoctorAppointmentSummary();
                         FragmentManager fragmentManger = getFragmentManager();
@@ -1636,6 +1635,40 @@ public class PatientMedicinReminder extends Fragment {
                 }
             });
         }
+    }
+
+    public void getMedicineDetails(String medicineId){
+//MedicineId medicineId, Callback<ResponseCodeVerfication> response
+        MedicineId medicinei=new MedicineId(medicineId);
+        api.getMedicineDetails(medicinei, new Callback<AddPatientMedicineSummary>() {
+            @Override
+            public void success(AddPatientMedicineSummary clinics, Response response) {
+
+                //get medicine details and show on screen
+
+                // {"autoSchedule":1,"doctorInstruction":"evening","dosesPerSchedule":1,"durationSchedule":2,"endDate":1457721000000,
+                // "medicinName":"Paracitamal, ","reminder":1,"schedule":0,"startDate":1457616528000,"medicineSchedule":[],
+                // "medicineId":19,"appointmentId":null,"patientId":null,"loggedinUserId":null,"userType":0}
+                medicine.setText(clinics.getMedicinName());
+
+                numberDoses.setSelection(Integer.parseInt(clinics.getDosesPerSchedule()));
+                scheduleDate.setSelection(Integer.parseInt(clinics.getSchedule()));
+                dateValue.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(clinics.getStartDate()));
+                endDateValue.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(clinics.getEndDate()));
+                //horizontalList = (HorizontalListView) view.findViewById(R.id.horizontalList);
+
+                doctorInstructionValue.setText(clinics.getDoctorInstruction());
+                if(clinics!=null && clinics.getDurationSchedule()!=null)
+                duration.setText(""+Integer.parseInt(clinics.getDurationSchedule()));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        });
     }
 
 

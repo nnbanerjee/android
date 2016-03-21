@@ -106,7 +106,7 @@ public class SelectPatientTemplate extends Fragment {
             @Override
             public void onClick(View v) {
 
-                TreatmentPlan treatmentPlan = new TreatmentPlan();
+               /* TreatmentPlan treatmentPlan = new TreatmentPlan();
                 treatmentPlan.setDoctorId(doctorId);
                 treatmentPlan.setProcedureId(procedureId);
                 treatmentPlan.setTemplateId(templateId);
@@ -121,7 +121,7 @@ public class SelectPatientTemplate extends Fragment {
                  }
 
                 treatmentPlan.setFieldArrayList(fieldArrayList);
-                saveTreatmentPlan(treatmentPlan);
+                saveTreatmentPlan(treatmentPlan);*/
             }
         });
 

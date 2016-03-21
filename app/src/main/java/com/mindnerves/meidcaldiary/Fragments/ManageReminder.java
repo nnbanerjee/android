@@ -59,7 +59,7 @@ public class ManageReminder extends Fragment {
     Button drawar, logout, back;
     MyApi api;
     NotificationVM vm;
-    ImageView medicoLogo,medicoText;
+    //ImageView medicoLogo,medicoText;
     Button refresh;
     String type;
     @Override
@@ -92,8 +92,8 @@ public class ManageReminder extends Fragment {
         accountName.setVisibility(View.VISIBLE);
         layout.setVisibility(View.VISIBLE);
         profileLayout.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+      //  medicoLogo.setVisibility(View.VISIBLE);
+      //  medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }
@@ -108,8 +108,8 @@ public class ManageReminder extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         BackStress.staticflag = 1;
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+      //  medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }
@@ -124,7 +124,7 @@ public class ManageReminder extends Fragment {
         layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
         getActivity().getActionBar().hide();
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         doctorId = session.getString("sessionID", null);
         back = (Button) getActivity().findViewById(R.id.back_button);
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
@@ -132,8 +132,8 @@ public class ManageReminder extends Fragment {
         profileLayout = (RelativeLayout) getActivity().findViewById(R.id.home_layout2);
         drawar = (Button) getActivity().findViewById(R.id.drawar_button);
         logout = (Button) getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+     //   medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+     //   medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(this.getResources().getString(R.string.base_url))
@@ -222,7 +222,7 @@ public class ManageReminder extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -265,7 +265,7 @@ public class ManageReminder extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
             }
         });
     }

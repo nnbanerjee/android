@@ -12,24 +12,37 @@ import Model.AddConfirmDenyDelegate;
 import Model.AddDelegate;
 import Model.AddDependent;
 import Model.AddDependentDoctor;
+import Model.AddDiagnosisTestRequest;
+import Model.AddPatientMedicineSummary;
 import Model.AllClinicAppointment;
 import Model.AllClinicsByDoctorPatientId;
 import Model.AllClinicsForDoctorIdAndPatientId;
 import Model.AllPatients;
 import Model.AllProcedureVm;
 import Model.AllTreatmentPlanVm;
+import Model.AppointmentId;
+import Model.AppointmentSlotsByDoctor;
+import Model.AppointmentStatus;
 import Model.Assistant;
 import Model.BucketPatient;
 import Model.Chat;
 import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
+import Model.ClinicPatientAppointments;
 import Model.CreateProfileData;
 import Model.CreateProfileDataForDoctorUpdateDetails;
+import Model.CreateSummary;
 import Model.Delegation;
 import Model.Doctor;
+import Model.DoctorAppointmentsResponse;
+import Model.DoctorClinicAppointments;
 import Model.DoctorClinicSchedule;
+import Model.DoctorCreatesAppoinementResponse;
+import Model.DoctorCreatesAppointment;
 import Model.DoctorId;
+import Model.DoctorIdPatientId;
+import Model.DoctorNotesResponse;
 import Model.DoctorNotesVM;
 import Model.DoctorPersonalVM;
 import Model.DoctorProfile;
@@ -40,11 +53,14 @@ import Model.FileUpload;
 import Model.GetDelegate;
 import Model.HomeCountDoctor;
 import Model.HomePatientCount;
+import Model.MedicineId;
 import Model.MobileEmail;
 import Model.ModeVM;
 import Model.NotificationVM;
 import Model.Patient;
+import Model.PatientTestId;
 import Model.Person;
+import Model.PersonID;
 import Model.RegisterDoctorData;
 import Model.Logindata;
 import Model.RegisterAssistantData;
@@ -52,6 +68,8 @@ import Model.RegisterUserData;
 import Model.ReminderVM;
 import Model.RemoveDelegate;
 import Model.RemoveDoctors;
+import Model.RemoveMedicineRequest;
+import Model.RemovePatientTestRequest;
 import Model.RemovePatients;
 import Model.ResetPassword;
 import Model.ResponseCheckMobileEmailAvailability;
@@ -64,12 +82,20 @@ import Model.ResponsegetVerificationCodeForNewRegistration;
 import Model.ShowProcedure;
 import Model.ShowTemplate;
 import Model.SummaryHistoryVM;
+import Model.SummaryRequest;
+import Model.SummaryResponse;
 import Model.Template;
+import Model.TestDetails;
 import Model.TotalInvoice;
 import Model.TreatmentPlan;
 import Model.UpdateField;
 import Model.VerificationCode;
 import Model.VerifyRegistrationMobileEmailCode;
+import Model.VisitEditLogRequest;
+import Model.VisitEditLogResponse;
+import Model.VisitHistory;
+import Model.forgotPassword;
+import Model.profileId;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -499,7 +525,7 @@ public interface MyApi {
 	@POST("/saveDoctorPersonDetail")
     void saveDoctorPersonDetail(@Body DoctorPersonalVM doctorPersonalVM, Callback<String> cb);
 
-//New apis Integrated
+//New apis Integrated Raviraj
 
     @POST("/login")
     void login(@Body Logindata param, Callback<ResponseVm> cb);
@@ -510,13 +536,13 @@ public interface MyApi {
     @POST("/getPatientList")
     void getPatientList(@Body DoctorId param, Callback<List<AllPatients>> callback);
 
-    @FormUrlEncoded
+
     @POST("/forgotPassword")
-    void forgotPassword(@retrofit.http.Field("email") String email, Callback<ResponseVm> cb);
+    void forgotPassword(@Body forgotPassword forgotObj, Callback<ResponseVm> cb);
 
 
-    @POST("/getVerificationCode")
-    void getVerificationCode(@Body VerificationCode verificationCode, Callback<ResponseCodeVerfication> cb);
+    @POST("/verifyCode")
+    void verifyCode(@Body VerificationCode verificationCode, Callback<ResponseCodeVerfication> cb);
 
 
     @POST("/checkMobileEmailAvailability")
@@ -528,8 +554,8 @@ public interface MyApi {
     @POST("/createProfile")
     void createProfile(@Body CreateProfileData param, Callback<ResponseCreateProfile> cb);
 
-    @POST("/updateDetailedProfile")
-    void updateDetailedProfile(@Body CreateProfileDataForDoctorUpdateDetails param, Callback<ResponseCreateProfileForDoctorUpdateDetails> cb);
+    @POST("/createDetailedProfile")
+    void createDetailedProfile(@Body CreateProfileDataForDoctorUpdateDetails param, Callback<ResponseCreateProfileForDoctorUpdateDetails> cb);
 
     @POST("/getVerificationCodeForNewRegistration")
     void getVerificationCodeForNewRegistration(@Body MobileEmail mobileEmail, Callback<ResponsegetVerificationCodeForNewRegistration> cb);
@@ -540,7 +566,109 @@ public interface MyApi {
     @POST("/getPatientProfileList")
     void getPatientProfileList(@Body DoctorId param, Callback<List<AllPatients>> callback);
 
+
+
+    @POST("/getProfile")
+    void getProfile(@Body profileId param, Callback<AllPatients> callback);
+
+
+    @POST("/getClinicsByDoctor")
+    void getClinicsByDoctor(@Body DoctorId param, Callback<List<AppointmentSlotsByDoctor>> callback);
+
     @POST("/getPatientAppointmentsByDoctor")
-    void getPatientAppointmentsByDoctor(@Body AllClinicsForDoctorIdAndPatientId param, Callback<AllClinicsByDoctorPatientId> callback);
+    void getPatientAppointmentsByDoctor(@Body DoctorIdPatientId param, Callback<ClinicPatientAppointments> callback);
+
+
+
+    @POST("/cancelAppointment")
+    void cancelAppointment(@Body AppointmentId appointmentId, Callback<ResponseCodeVerfication> cb);
+
+    @POST("/getPatientVisitDatesByDoctor")
+    void getPatientVisitDatesByDoctor(@Body DoctorIdPatientId param,Callback<  VisitHistory> response);
+
+
+    @POST("/getClinicSlotAvailabilityByDoctor")
+    void getClinicSlotAvailabilityByDoctor(@Body DoctorClinicAppointments param,Callback< DoctorAppointmentsResponse> response);
+
+
+
+    @POST("/createAppointment")
+    void createAppointment(@Body DoctorCreatesAppointment param,Callback<DoctorCreatesAppoinementResponse> response);
+
+    //
+    @POST("/setAppointmentStatus")
+    void setAppointmentStatus(@Body AppointmentStatus appointmentStatus, Callback<ResponseCodeVerfication> response);
+    //updateAppointment
+
+    //
+    @POST("/getPatientVisitSummary")
+    void getPatientVisitSummary(@Body SummaryRequest param,Callback<SummaryResponse> response);
+
+    @POST("/createPatientVisitSummary")
+    void createPatientVisitSummary(@Body CreateSummary reminderVM, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientVisitSummary")
+    void updatePatientVisitSummary(@Body CreateSummary reminderVM, Callback<ResponseCodeVerfication> response);
+
+    @POST("/addPatientMedicine")
+    void addPatientMedicine(@Body AddPatientMedicineSummary addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientMedicine")
+    void updatePatientMedicine(@Body AddPatientMedicineSummary addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
+
+    @POST("/removePatientMedicine")
+    void removePatientMedicine(@Body RemoveMedicineRequest removeMedicineRequest, Callback<ResponseCodeVerfication> response);
+
+
+    @POST("/getMedicineDetails")
+    void getMedicineDetails(@Body MedicineId medicineId, Callback<AddPatientMedicineSummary> response);
+
+    @POST("/getTestDetails")
+    void getTestDetails(@Body PatientTestId patientTestId, Callback<TestDetails> response);
+
+    @POST("/removePatientDiagnosticTest")
+    void removePatientDiagnosticTest(@Body RemovePatientTestRequest removeMedicineRequest, Callback<ResponseCodeVerfication> response);
+
+
+    @POST("/getPatientVisitDoctorNotes")
+    void getPatientVisitDoctorNotes(@Body AppointmentId appointmentId, Callback<DoctorNotesResponse> response);
+
+    @POST("/addPatientVisitDoctorNotes")
+    void addPatientVisitDoctorNotes(@Body DoctorNotesResponse appointmentId, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientVisitDoctorNotes")
+    void updatePatientVisitDoctorNotes(@Body DoctorNotesResponse appointmentId, Callback<ResponseCodeVerfication> response);
+
+    @POST("/getPatientVisitEditLog")
+    void getPatientVisitEditLog(@Body VisitEditLogRequest visitEditLogRequest, Callback<VisitEditLogResponse> response);
+
+    @POST("/addPatientDiagnosticTest")
+    void addPatientDiagnosticTest(@Body AddDiagnosisTestRequest addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientDiagnosticTest")
+    void updatePatientDiagnosticTest(@Body AddDiagnosisTestRequest addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
+
+    @POST("/getAllClinics")
+    void getAllClinics(@Body PersonID personID, Callback<Clinic> response);
+
+    @POST("/getPatientVisitTreatmentPlan")
+    void getPatientVisitTreatmentPlan(@Body AppointmentId appointmentId, Callback<List<TreatmentPlan>> response);
+
+
+
+
+
+
+    @Multipart
+    @POST("/addPatientVisitDocument")
+    void addPatientVisitDocument(@Part("picture") TypedFile file,@Body PersonID personID, Callback<Clinic> response);
+
+ /*   @Multipart
+    @POST("/uploadFiles")
+    void uploadFile(@Part("picture") TypedFile file, @Part("type") String type, @Part("doctorId") String doctorId, @Part("patientId") String patientId, @Part("assistentId") String assistantId, @Part("documentType") String documentType, @Part("name") String name, @Part("category") String category, @Part("appointmentDate") String appointmentDate, @Part("appointmentTime") String appointmentTime, @Part("clinicId") String clinicId, @Part("clinicName") String clinicName, Callback<FileUpload> cb);
+*/
+
+    //
+//getPatientVisitTreatmentPlan
 
 }

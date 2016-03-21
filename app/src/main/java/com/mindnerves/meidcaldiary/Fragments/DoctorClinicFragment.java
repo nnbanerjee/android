@@ -13,15 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Application.MyApi;
+import Model.AppointmentSlotsByDoctor;
 import Model.Clinic;
+import Model.ClinicList;
+import Model.Slot;
+import Utils.UtilSingleInstance;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -33,11 +39,18 @@ public class DoctorClinicFragment extends Fragment {
     SharedPreferences session;
     int shiftCount1,shiftCount2,shiftCount3;
     ImageView closeMenu;
+    private AppointmentSlotsByDoctor selectedItemFromList;
+    private View layoutView;
+    LinearLayout contentLinear;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_clinic_profile_details, container,false);
+        layoutView = inflater.inflate(R.layout.doctor_clinic_list_item_slots, null, false);
+          contentLinear = (LinearLayout) view.findViewById(R.id.content_linear);
+        contentLinear.removeAllViews();
+
         TextView clinicName = (TextView) view.findViewById(R.id.doctor_name);
         TextView speciality = (TextView) view.findViewById(R.id.general_clinic_text);
         final Button appointmentBtn = (Button) view.findViewById(R.id.appointmentBtn);
@@ -47,7 +60,7 @@ public class DoctorClinicFragment extends Fragment {
         TextView viewAll = (TextView) view.findViewById(R.id.viewAll);
         ImageView doctorImg = (ImageView) view.findViewById(R.id.doctorImg);
         ImageView closeMenu = (ImageView)view.findViewById(R.id.downImg);
-        TextView slot1Text = (TextView)view.findViewById(R.id.slot1);
+       /* TextView slot1Text = (TextView)view.findViewById(R.id.slot1);
         TextView slot2Text = (TextView)view.findViewById(R.id.slot2);
         TextView slot3Text = (TextView)view.findViewById(R.id.slot3);
         TextView slot1Time = (TextView)view.findViewById(R.id.slot_time1);
@@ -58,16 +71,29 @@ public class DoctorClinicFragment extends Fragment {
         TextView slot3Count = (TextView)view.findViewById(R.id.slot_time_text3);
         Button slot1Button = (Button)view.findViewById(R.id.slot_button1);
         Button slot2Button = (Button)view.findViewById(R.id.slot_button2);
-        Button slot3Button = (Button)view.findViewById(R.id.slot_button3);
+        Button slot3Button = (Button)view.findViewById(R.id.slot_button3);*/
         TextView totalCount = (TextView)view.findViewById(R.id.total_shift_count);
         Button totalRightArrow = (Button)view.findViewById(R.id.total_right_arrow);
         shiftCount1 = 0;
         shiftCount2 = 0;
         shiftCount3 = 0;
+
         doctorImg.setBackgroundResource(R.drawable.clinic);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         show_global_tv.setText(session.getString("patient_clinicName", "Medical Diary"));
-        clinicId = session.getString("patient_clinicId",null);
+        clinicId = session.getString("patient_clinicId", null);
+
+
+        Gson gson = new Gson();
+
+        String jsonSelectedClinic = session.getString("selectedClinicFromAllClinic", "");
+         selectedItemFromList =gson.fromJson(jsonSelectedClinic, AppointmentSlotsByDoctor.class);
+
+        clinicName.setText(selectedItemFromList.getClinic().getClinicName());
+        speciality.setText(selectedItemFromList.getClinic().getSpeciality());
+        if(selectedItemFromList.getLastAppointmentl() != null){
+            appointmentDate.setText(selectedItemFromList.getLastAppointmentl());
+        }
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +104,73 @@ public class DoctorClinicFragment extends Fragment {
         });
 
         Global global = (Global) getActivity().getApplicationContext();
-        List<Clinic> clinicsList = global.getAllClinicsList();
+       // List<Clinic> clinicsList = global.getAllClinicsList();
 
-        for(Clinic clinic  : clinicsList){
+        if (selectedItemFromList != null && selectedItemFromList.getSlots() != null && selectedItemFromList.getSlots().size() > 0) {
+
+            List<Slot> slots =selectedItemFromList.getSlots();
+            if (layoutView.getParent() != null) {
+                System.out.println("Layout parent is ---->" + layoutView.getParent());
+                ((LinearLayout) layoutView.getParent()).removeView(layoutView);
+            }
+            for (int i = 0; i < slots.size(); i++) {
+
+                layoutView = inflater.inflate(R.layout.doctor_clinic_list_item_slots, null, false);
+                layoutView.setTag(i);
+                TextView slot1Text = (TextView)layoutView.findViewById(R.id.slot1);
+                TextView slot1Time = (TextView)layoutView.findViewById(R.id.slot_time1);
+                TextView slot1Count = (TextView)layoutView.findViewById(R.id.slot_time_text1);
+                Button slot1Button = (Button)layoutView.findViewById(R.id.slot_button1);
+                Button shiftRightArrow1 = (Button)layoutView.findViewById(R.id.slot_button1);
+
+                slot1Text.setText("SLOT " + slots.get(i).getSlotNumber()+" :");
+                String slot0StartTime = slots.get(i).getStartTime();
+                String slot0EndTime = slots.get(i).getEndTime();
+                if (slot0StartTime != null && slot0EndTime != null)
+                    slot1Time.setText(getTimeTextValue(UtilSingleInstance.getTimeFromLongDate(slot0StartTime), UtilSingleInstance.getTimeFromLongDate(slot0EndTime)));
+                else
+                    slot1Time.setText("NA");
+                slot1Count.setText(selectedItemFromList.getClinic().getTotalAppointmentCount());
+                // shiftCount1 = Integer.parseInt(selectedItemFromList.getShift1().getAppointmentCount());
+                shiftRightArrow1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = session.edit();
+                        editor.putString("patient_clinicId", selectedItemFromList.getClinic().getIdClinic());
+                        editor.putString("patient_clinicName", selectedItemFromList.getClinic().getClinicName());
+                        editor.putString("clinic_doctorId", selectedItemFromList.getClinic().getDoctorId());
+                        editor.commit();
+                        Bundle bun = new Bundle();
+                        bun.putString("fragment","from_summary");
+                        Fragment fragment = new ShowShift1();
+                        fragment.setArguments(bun);
+                        FragmentManager fragmentManger = getActivity().getFragmentManager();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                    }
+                });
+                slot1Count.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = session.edit();
+                        editor.putString("patient_clinicId", selectedItemFromList.getClinic().getIdClinic());
+                        editor.putString("patient_clinicName", selectedItemFromList.getClinic().getClinicName());
+                        editor.putString("clinic_doctorId", selectedItemFromList.getClinic().getDoctorId());
+                        editor.commit();
+                        Bundle bun = new Bundle();
+                        bun.putString("fragment", "from_summary");
+                        Fragment fragment = new ShowShift1();
+                        fragment.setArguments(bun);
+                        FragmentManager fragmentManger = getActivity().getFragmentManager();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    }
+                });
+                contentLinear.addView(layoutView);
+            }
+        }
+
+       /* for(Clinic clinic  : clinicsList){
             if(clinic.getIdClinic().equals(clinicId))
             {
                 clinicName.setText(clinic.getClinicName());
@@ -148,9 +238,9 @@ public class DoctorClinicFragment extends Fragment {
 
 
             }
-        }
-
-        getClinicAppointment();
+        }*/
+        GetClinicProfile();
+        //getClinicAppointment();
         appointmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,7 +323,7 @@ public class DoctorClinicFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     goToBack();
                     return true;
                 }
@@ -248,8 +338,9 @@ public class DoctorClinicFragment extends Fragment {
         globalTv.setText("Clinics and Labs");
 
         Fragment fragment;
-        String logString = session.getString("type",null);
-        if(logString.equals("Doctor"))
+
+        String  logString = session.getString("loginType", null);
+        if(logString!=null && logString.equals("Doctor"))
         {
             fragment = new DoctorAllClinics();
         }
@@ -262,5 +353,13 @@ public class DoctorClinicFragment extends Fragment {
         fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.INVISIBLE);
+    }
+    public String getTimeTextValue(String start, String end) {
+        if (start == null) {
+
+            return "No Shift scheduled !!!";
+        } else {
+            return start + " - " + end;
+        }
     }
 }

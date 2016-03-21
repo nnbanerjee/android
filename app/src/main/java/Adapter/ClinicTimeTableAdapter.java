@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mindnerves.meidcaldiary.Fragments.ClinicAppointmentFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -23,6 +25,8 @@ import java.util.List;
 import Application.AppController;
 import Model.Clinic;
 import Model.ClinicDetailVm;
+import Model.ClinicList;
+import Model.Slot;
 import Model.TimeInterval;
 
 
@@ -33,18 +37,32 @@ public class ClinicTimeTableAdapter extends BaseAdapter {
 
     private Activity activity;
     private List<TimeInterval> timeList;
-    GridView timeTeableList;
-    View oldView = null;
-    int oldPosition = 0;
+    private GridView timeTeableList;
+    private View oldView = null;
+    private int oldPosition = 0;
     Global global;
-    String appointmentTime;
-    List<ClinicDetailVm> clinicDetailVmList;
+    private String appointmentTime;
+    private List<ClinicDetailVm> clinicDetailVmList;
+    public SharedPreferences session;
+    private ClinicList selectedClinic;
+    private Slot SelectedSlotDetailsWithClinic;
+    private int selectedSlotNo;
 
+
+     public static int selectedTimeSlotSequenceNo=0;
     public ClinicTimeTableAdapter(Activity activity, List<TimeInterval> timeList, GridView timeTeableList,String appointmentTime) {
         this.activity = activity;
         this.timeList = timeList;
         this.timeTeableList = timeTeableList;
         this.appointmentTime = appointmentTime;
+        Gson gson = new Gson();
+        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String jsonSelectedClinic = session.getString("selectedClinic", "");
+        selectedClinic=gson.fromJson(jsonSelectedClinic, ClinicList.class);
+
+        String json = session.getString("SelectedSlotDetailsWithClinic", "");
+        SelectedSlotDetailsWithClinic = gson.fromJson(json, Slot.class);
+        selectedSlotNo = session.getInt("selectedSlotNo", 0);
     }
 
     @Override
@@ -87,10 +105,10 @@ public class ClinicTimeTableAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     int getPosition = (Integer) v.getTag();  // Here we get the position that we have set for the checkbox using setTag.
-
+                    selectedTimeSlotSequenceNo=getPosition;
                     TextView availValue = null;
                     View parent = (View)v.getParent();
-                    ClinicDetailVm clinicVm = new ClinicDetailVm();
+                    /*ClinicDetailVm clinicVm = new ClinicDetailVm();
                     clinicDetailVmList = global.getClinicDetailVm();
                     System.out.println("Size:::::::::"+clinicDetailVmList.size());
 
@@ -99,9 +117,11 @@ public class ClinicTimeTableAdapter extends BaseAdapter {
                         if(vm.getClinicId().equals(""+global.clinicDetailsData.getClinicId())){
                             clinicVm = vm;
                         }
-                    }
-                    String onlineAppointment = clinicVm.getOnlineAppointment();
-                    System.out.println("Online Appointment:::::::"+clinicVm.getOnlineAppointment());
+                    }*/
+
+
+                    String onlineAppointment = "";//clinicVm.getOnlineAppointment();
+                   //zSystem.out.println("Online Appointment:::::::"+clinicVm.getOnlineAppointment());
                     if (parent != null) {
                         availValue = (TextView) parent.findViewById(R.id.availableValue);
                     }
@@ -185,20 +205,23 @@ public class ClinicTimeTableAdapter extends BaseAdapter {
 
         boolean myState = timeList.get(position).isSelected();
         boolean occupiedState = timeList.get(position).getIsAvailable().equals("Occupied");
+        boolean confirmedState = timeList.get(position).getIsAvailable().equals("confirmed");
         boolean availableState = timeList.get(position).getIsAvailable().equals("Available");
-        boolean onRequestState = timeList.get(position).getIsAvailable().equals("OnRequest");
+        boolean onRequestState = timeList.get(position).getIsAvailable().equals("tentative");
         boolean notAvailable = timeList.get(position).getIsAvailable().equals("Not Available");
 
         if(occupiedState){
-            viewHolder.timeValue.setBackgroundResource(R.drawable.rounded_red_color);
-        }else if(availableState){
-            viewHolder.timeValue.setBackgroundResource(R.drawable.rounded_green_color);
+            viewHolder.timeValue.setTextColor(activity.getResources().getColor(R.color.red));//.setBackgroundResource(R.drawable.rounded_red_color);
+        } else if (availableState) {
+            viewHolder.timeValue.setTextColor(activity.getResources().getColor(R.color.green));
         }else if(onRequestState){
             viewHolder.timeValue.setBackgroundResource(R.drawable.rounded_orange_color);
+        }else if(confirmedState){
+            viewHolder.timeValue.setBackgroundResource(R.drawable.rounded_green_color);
         }
         else if(notAvailable)
         {
-            viewHolder.timeValue.setBackgroundResource(R.drawable.rounded_grey_color);
+            viewHolder.timeValue.setTextColor(activity.getResources().getColor(R.color.grey_text));
         }
 
         if(myState) {
@@ -215,5 +238,11 @@ public class ClinicTimeTableAdapter extends BaseAdapter {
             }
         }
         return convertView;
+    }
+
+    public String getSelectedTime(){
+
+        return timeList.get(selectedTimeSlotSequenceNo).getTime();
+
     }
 }

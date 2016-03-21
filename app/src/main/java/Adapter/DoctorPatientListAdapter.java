@@ -3,12 +3,14 @@ package Adapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,19 +18,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mindnerves.meidcaldiary.Fragments.AllDoctorPatientAppointment;
-import com.mindnerves.meidcaldiary.Fragments.ClinicAppointmentFragment;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInformation;
-import com.mindnerves.meidcaldiary.Fragments.FeedbackFragment;
 import com.mindnerves.meidcaldiary.Fragments.PatientDetailsFragment;
 import com.mindnerves.meidcaldiary.Global;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Application.MyApi;
 import Model.AllPatients;
-import Model.ClinicDetailVm;
+import Model.profileId;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -41,7 +43,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class DoctorPatientListAdapter extends BaseAdapter {
+public class DoctorPatientListAdapter extends BaseAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
@@ -50,6 +52,7 @@ public class DoctorPatientListAdapter extends BaseAdapter {
     MyApi api;
     String doctorId;
     SharedPreferences session;
+    private ProgressDialog progress;
 
     public DoctorPatientListAdapter(Activity activity, List<AllPatients> allPatients) {
         this.activity = activity;
@@ -84,7 +87,7 @@ public class DoctorPatientListAdapter extends BaseAdapter {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        doctorId = session.getString("sessionID", null);
+        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.doctor_list_item, null);
@@ -93,6 +96,7 @@ public class DoctorPatientListAdapter extends BaseAdapter {
         TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.doctorSpeciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
         ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctorImg);
+        TextView address = (TextView) convertView.findViewById(R.id.lastAppointmentDate);
         TextView appointmentDate = (TextView) convertView.findViewById(R.id.appointmentDate);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
@@ -101,41 +105,54 @@ public class DoctorPatientListAdapter extends BaseAdapter {
         Button rightButton = (Button) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
         totalAppointment.setVisibility(View.GONE);
+        System.out.println("picture Url is---->" + activity.getString(R.string.image_base_url) + allPatients.get(position).getImageUrl());
+        new ImageLoadTask(activity.getString(R.string.image_base_url) + allPatients.get(position).getImageUrl(), viewImage).execute();
 
         viewImage.setBackgroundResource(R.drawable.patient);
-        totalCount.setText("" + allPatients.get(position).getTotalAppointment());
-        if (allPatients.get(position).getAddress() == null || allPatients.get(position).getAddress().equals("")) {
+        totalCount.setText("" + allPatients.get(position).getNumberOfVisits());
+       /* if (allPatients.get(position).getAddress() == null || allPatients.get(position).getAddress().equals("")) {
             lastVisitedValue.setText("None");
 
         } else {
-            lastVisitedValue.setText(allPatients.get(position).getAddress());
+            lastVisitedValue.setText(allPatients.get(position).getLastVisit());
 
-        }
-        if (allPatients.get(position).getBookDate() != null) {
-            if (allPatients.get(position).getBookDate().equals("")) {
-                appointmentDate.setText("None");
+        }*/
+
+        if (allPatients.get(position).getAddress() != null) {
+            if (allPatients.get(position).getAddress().equals("")) {
+                address.setText("None");
 
             } else {
-                appointmentDate.setText(allPatients.get(position).getBookDate() + " " + allPatients.get(position).getBookTime());
+                address.setText(allPatients.get(position).getAddress());
 
             }
         }
-        if (allPatients.get(position).getLastAppointmentDate() == null || allPatients.get(position).getAppointmentDate().equals("")) {
+
+        if (allPatients.get(position).getUpcomingVisit() != null) {
+            if (allPatients.get(position).getUpcomingVisit().equals("")) {
+                appointmentDate.setText("None");
+
+            } else {
+                appointmentDate.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(allPatients.get(position).getUpcomingVisit()));
+
+            }
+        }
+        if (allPatients.get(position).getLastVisit() == null || allPatients.get(position).getLastVisit().equals("")) {
             lastAppointment.setText("None");
 
         } else {
-            lastAppointment.setText(allPatients.get(position).getAppointmentDate() + " " + allPatients.get(position).getAppointmentTime());
+            lastAppointment.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(allPatients.get(position).getLastVisit()));
         }
         doctorName.setText(allPatients.get(position).getName());
-        doctorSpeciality.setText(allPatients.get(position).getSpeciality());
+        doctorSpeciality.setText(allPatients.get(position).getProfession());
 
-        lastVisitedValue.setOnClickListener(new View.OnClickListener() {
+       /* lastVisitedValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String value = lastVisitedValue.getText().toString();
                 if (!value.equals("None")) {
                     global.setAppointmentDate(allPatients.get(position).getLastAppointmentDate());
-                    global.setAppointmentTime(allPatients.get(position).getLastVisitedTime());
+                    global.setAppointmentTime(allPatients.get(position).getLastVisit());
                     SharedPreferences.Editor editor = session.edit();
                     editor.putString("patient_doctor_email", doctorId);
                     editor.putString("clinicId", allPatients.get(position).lastVisitedClinicId);
@@ -174,27 +191,60 @@ public class DoctorPatientListAdapter extends BaseAdapter {
 
                 }
             }
-        });
+        });*/
 
         downImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = session.edit();
-                editor.putString("patientId", allPatients.get(position).getId());
-                System.out.println("doctor_patientEmail = " + allPatients.get(position).getEmail());
-                editor.putString("doctor_patientEmail", allPatients.get(position).getEmail());
-                editor.putString("doctorId", allPatients.get(position).getName());
-                editor.putString("patient_Name", allPatients.get(position).getName());
-                editor.putString("doctor_patientEmail", allPatients.get(position).getEmail());
-                editor.putString("" +
-                        "", allPatients.get(position).getEmail());
-                editor.commit();
-                Fragment fragment = new PatientDetailsFragment();
-                FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+
+                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
+                api.getProfile(new profileId(allPatients.get(position).getpatientId()), new Callback<AllPatients>() {
+                    @Override
+                    public void success(AllPatients patient, Response response) {
+                        //global.setClinicDetailVm(patient);
+
+                        //Store Selected Patient profile
+                        progress.dismiss();
+                        SharedPreferences.Editor editor = session.edit();
+                        global.setSelectedPatientsProfile(patient);
+                        Gson gson = new Gson();
+                        String json = gson.toJson(patient);
+                        editor.putString("SelectedPatient", json);
+                        editor.commit();
+
+                        Bundle args = new Bundle();
+
+
+                        editor.putString("patient_Last_Visited", allPatients.get(position).getLastVisit());
+                        editor.putString("patient_Upcoming_Appt", allPatients.get(position).getUpcomingVisit());
+                        editor.putString("patient_Total_visits", allPatients.get(position).getNumberOfVisits());
+
+
+                        editor.putString("patientId", allPatients.get(position).getpatientId());
+                        System.out.println("doctor_patientEmail = " + allPatients.get(position).getEmail());
+                        editor.putString("doctor_patientEmail", allPatients.get(position).getEmail());
+                        editor.putString("doctorId", allPatients.get(position).getDoctorId());
+                        editor.putString("patient_Name", allPatients.get(position).getName());
+                        editor.putString("doctor_patientEmail", allPatients.get(position).getEmail());
+                        editor.putString("" +
+                                "", allPatients.get(position).getEmail());
+                        editor.commit();
+                        Fragment fragment = new PatientDetailsFragment();
+                        FragmentManager fragmentManger = activity.getFragmentManager();
+                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progress.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
-        appointmentDate.setOnClickListener(new View.OnClickListener() {
+       /* appointmentDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 api.getAllDoctorPatientClinics(doctorId, "1", new Callback<List<ClinicDetailVm>>() {
@@ -225,16 +275,16 @@ public class DoctorPatientListAdapter extends BaseAdapter {
 
             }
         });
+*/
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+               // patientId = session.getString("patientId", null);
                 SharedPreferences.Editor editor = session.edit();
-                editor.putString("patient_doctor_email", doctorId);
                 editor.putString("doctorId", allPatients.get(position).getDoctorId());
-                editor.putString("patientEmail", allPatients.get(position).getEmail());
-                editor.putString("patient_Name", allPatients.get(position).getName());
-                editor.putString("doctor_patientEmail", allPatients.get(position).getEmail());
+                editor.putString("patientId", allPatients.get(position).getpatientId());
                 editor.commit();
                 Bundle bun = new Bundle();
                 bun.putString("fragment", "doctorPatientListAdapter");
@@ -247,4 +297,6 @@ public class DoctorPatientListAdapter extends BaseAdapter {
         return convertView;
 
     }
+
+
 }

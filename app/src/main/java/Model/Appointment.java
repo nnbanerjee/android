@@ -13,6 +13,54 @@ public class Appointment {
     String endTime = "";
     String appointmentStatus = "";
     PersonVM personInfo ;
+    private String appointmentId;
+    private String dateTime;
+
+    public String getVisitType() {
+        return visitType;
+    }
+
+    public void setVisitType(String visitType) {
+        this.visitType = visitType;
+    }
+
+    private String visitType;
+
+    /**
+     *
+     * @return
+     * The appointmentId
+     */
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    /**
+     *
+     * @param appointmentId
+     * The appointmentId
+     */
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    /**
+     *
+     * @return
+     * The dateTime
+     */
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     *
+     * @param dateTime
+     * The dateTime
+     */
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
 
 
     public String getSlot() {

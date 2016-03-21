@@ -1,7 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,14 +18,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.MapActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
@@ -35,8 +32,6 @@ import java.util.regex.Pattern;
 
 import Application.MyApi;
 import Model.Clinic;
-import Model.Schedule;
-import Model.TimeNew;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -324,7 +319,7 @@ public class EditClinic extends Fragment{
                         cl.setEmail(email);
                         cl.setLandLineNumber(phone);
                         cl.setLocation(city);
-                        cl.setMobileNumber(cellnumber);
+                        cl.setMobile(cellnumber);
                         cl.setSpeciality(specialitesString);
                         cl.setDoctorId(doctorId);
                         cl.alarmFlag = null;
@@ -384,7 +379,7 @@ public class EditClinic extends Fragment{
 			eemail.setText(clinic.getClinicName());
 			ephone.setText(clinic.getLandLineNumber());
 			multiCity.setText(clinic.getLocation());
-			ecellnumber.setText(clinic.getMobileNumber());
+			ecellnumber.setText(clinic.getMobile());
 			speciality.setText(clinic.getSpeciality());
 			aboutTv.setText(clinic.about);
 			serviceTv.setText(clinic.service);

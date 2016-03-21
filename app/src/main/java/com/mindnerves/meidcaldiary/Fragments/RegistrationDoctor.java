@@ -38,10 +38,12 @@ import com.mindnerves.meidcaldiary.R;
 import org.codepond.wizardroid.WizardStep;
 import org.codepond.wizardroid.persistence.ContextVariable;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -59,13 +61,12 @@ import retrofit.client.Response;
  */
 public class RegistrationDoctor extends WizardStep {
 
-    DateFormat formate = DateFormat.getDateInstance();
-    Calendar calendar = Calendar.getInstance();
-    ImageButton cal;
-    TextView lable;
-    Button locationButton;
-    String buttonText = "";
-    private static final int SELECT_PICTURE = 1;
+    private DateFormat formate = DateFormat.getDateInstance();
+    private Calendar calendar = Calendar.getInstance();
+    private ImageButton cal;
+    private TextView lable;
+    private Button locationButton;
+    private String buttonText = "";
     private String selectedImagePath;
     Uri selectedImageUri = null;
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -110,6 +111,26 @@ public class RegistrationDoctor extends WizardStep {
     private double longitude;
     @ContextVariable
     private String cityContext;
+
+    @ContextVariable
+    private long dobInMiliSeconds;
+
+    public RadioButton local_save;
+    public RadioButton local_personal;
+    public RadioButton local_encrypted;
+    Button uploadDocument;
+    Uri selectedDocumentUri;
+    String selectedDocumentPath = "";
+    private static final int SELECT_PICTURE = 1;
+    private static final int SELECT_DOCUMENT = 2;
+    TextView documentPath;
+    @ContextVariable
+    private String id;
+    @ContextVariable
+    private String passwordCloud;
+    @ContextVariable
+    private Uri documentUri;
+    private Spinner practiceName;
     /**
      * Called whenever the wizard proceeds to the next step or goes back to the previous step
      */
@@ -165,6 +186,7 @@ public class RegistrationDoctor extends WizardStep {
         cityContext = city.getText().toString();
         latitude = go.userLatitude;
         longitude = go.userLongitude;
+        dobInMiliSeconds=calendar.getTimeInMillis();
 
     }
 
@@ -172,6 +194,7 @@ public class RegistrationDoctor extends WizardStep {
 
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -201,12 +224,71 @@ public class RegistrationDoctor extends WizardStep {
         etPhoneNumber = (EditText) view.findViewById(R.id.mobile);
         etpassword = (EditText) view.findViewById(R.id.password);
         etlocation = (EditText) view.findViewById(R.id.location);
-        postalCodeTv = (EditText) view.findViewById(R.id.postal_code);
+        postalCodeTv = (EditText) view.findViewById(R.id.mobile_post_code);
         genderBtn = (RadioGroup) view.findViewById(R.id.gender);
         int radioId = genderBtn.getCheckedRadioButtonId();
         radioSexButton = (RadioButton) view.findViewById(radioId);
         locationButton = (Button)view.findViewById(R.id.location_button);
         countrySpinner = (Spinner)view.findViewById(R.id.country_spinner);
+
+       // Spinner spinner = (Spinner) view.findViewById(R.id.bloodGroup);
+        uploadDocument = (Button)view.findViewById(R.id.upload_document);
+        local_save = (RadioButton) view.findViewById(R.id.saveLocal);
+        local_personal = (RadioButton) view.findViewById(R.id.personalCloud);
+        local_encrypted = (RadioButton) view.findViewById(R.id.encrypted);
+        documentPath = (TextView)view.findViewById(R.id.document_name);
+        practiceName = (Spinner)view.findViewById(R.id.practice_name);
+        ArrayAdapter<CharSequence> practiceNameAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.practice_name, android.R.layout.simple_spinner_item);
+        practiceNameAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        practiceName.setAdapter(practiceNameAdapter);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.bloodgroup_list, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+       // spinner.setAdapter(adapter);
+        Spinner spinnerspl = (Spinner) view.findViewById(R.id.speciality);
+        ArrayAdapter<CharSequence> adapterspl = ArrayAdapter.createFromResource(getActivity(),
+                R.array.speciality_list, android.R.layout.simple_spinner_item);
+        adapterspl.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerspl.setAdapter(adapterspl);
+        final Spinner spinner1 = (Spinner) view.findViewById(R.id.cloudSelect);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(),
+                R.array.drive_list, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       // spinner1.setAdapter(adapter1);
+        /*local_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner1.setVisibility(View.INVISIBLE);
+                id.setVisibility(View.INVISIBLE);
+                password.setVisibility(View.INVISIBLE);
+            }
+        });
+        local_personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner1.setVisibility(View.VISIBLE);
+                id.setVisibility(View.VISIBLE);
+                password.setVisibility(View.VISIBLE);
+            }
+        });
+        local_encrypted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner1.setVisibility(View.INVISIBLE);
+                id.setVisibility(View.INVISIBLE);
+                password.setVisibility(View.INVISIBLE);
+            }
+        });*/
+        uploadDocument.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_DOCUMENT);
+            }
+        });
        // regionSpinner = (Spinner)view.findViewById(R.id.region_spinner);
         city = (EditText)view.findViewById(R.id.city);
         genderBtn.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -249,7 +331,7 @@ public class RegistrationDoctor extends WizardStep {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
             }
         });
     }else
@@ -259,53 +341,7 @@ public class RegistrationDoctor extends WizardStep {
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countrySpinner.setAdapter(countryAdapter);
     }
-       /* countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String country = countrySpinner.getSelectedItem().toString();
-                api.getRegions(country,new Callback<List<String>>() {
-                    @Override
-                    public void success(List<String> strings, Response response) {
-                        regionList = new ArrayList<String>();
-                        for(String region : strings){
-                            if(region != null){
-                                regionList.add(region);
-                            }
-                        }
-                        regions = new String[regionList.size()];
-                        int i =0;
-                        for(String region : regionList){
-                            regions[i] = region;
-                            i = i+1;
-                        }
-                        regionAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, regions);
-                        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        regionSpinner.setAdapter(regionAdapter);
-                        if(go.regionName != null){
-                            int pos = 0;
-                            pos = regionAdapter.getPosition(go.regionName);
-                            regionSpinner.setSelection(pos);
-                        }
-                        if(go.city != null){
-                            System.out.println("Registration City= "+go.city);
-                            city.setText(""+go.city);
-                        }
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                        Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
         locationButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -399,16 +435,15 @@ public class RegistrationDoctor extends WizardStep {
             }
         });
 
-        view.findViewById(R.id.upload)
-                .setOnClickListener(new OnClickListener() {
-                    public void onClick(View arg0) {
-                        buttonText = "upload";
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-                    }
-                });
+        personimage.setOnClickListener(new OnClickListener() {
+            public void onClick(View arg0) {
+                buttonText = "upload";
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+            }
+        });
 
 
 
@@ -425,9 +460,17 @@ public class RegistrationDoctor extends WizardStep {
             System.out.println("Image Path : " + selectedImagePath);
             personimage.setImageURI(selectedImageUri);
             go.setUri(selectedImageUri);
+        }else   if (requestCode == SELECT_DOCUMENT) {
+            selectedDocumentUri = data.getData();
+            selectedDocumentPath = getPath(selectedDocumentUri);
+            System.out.println("Image Path : " + selectedDocumentPath);
+            File file = new File(selectedDocumentPath);
+            documentPath.setText(file.getName());
+            documentUri = selectedDocumentUri;
         }
 
     }
+
 
     public void showNextButton()
     {
@@ -490,11 +533,16 @@ public class RegistrationDoctor extends WizardStep {
 
     public void updatedate()
     {
-        lable.setText(calendar.get(Calendar.YEAR)+"-"+showMonth(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+":"+calendar.get(Calendar.SECOND));
+        dobInMiliSeconds=calendar.getTimeInMillis();
+        lable.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
+        System.out.println("Miliseconds-------------------------------->"+dobInMiliSeconds);
+
+
     }
     public void setDate(){
 
         new DatePickerDialog(getActivity(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+        dobInMiliSeconds=calendar.getTimeInMillis();
     }
 
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
@@ -635,5 +683,8 @@ public class RegistrationDoctor extends WizardStep {
         }
         return true;
     }
+
+
+
 }
 

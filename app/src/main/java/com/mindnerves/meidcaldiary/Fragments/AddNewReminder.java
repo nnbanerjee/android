@@ -423,7 +423,7 @@ public class AddNewReminder extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
-                            Toast.makeText(getActivity(),"Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

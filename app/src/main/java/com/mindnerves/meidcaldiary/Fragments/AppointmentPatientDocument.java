@@ -56,7 +56,7 @@ public class AppointmentPatientDocument extends Fragment {
         global = (Global) getActivity().getApplicationContext();
         patientId = session.getString("sessionID",null);
         doctorId = session.getString("patient_DoctorId", null);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         appointmentDate = session.getString("doctor_patient_appointmentDate", null);
         appointmentTime = session.getString("doctor_patient_appointmentTime", null);
         RestAdapter restAdapter = new RestAdapter.Builder()

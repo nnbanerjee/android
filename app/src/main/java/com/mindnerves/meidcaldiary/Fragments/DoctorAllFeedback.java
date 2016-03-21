@@ -41,7 +41,7 @@ public class DoctorAllFeedback extends Fragment {
     ListView feedbackList;
     SharedPreferences session;
     Button drawar,logout,back;
-    ImageView profilePicture,medicoLogo,medicoText;
+    ImageView profilePicture;//,medicoLogo,medicoText;
     TextView accountName;
     String type;
     RelativeLayout profileLayout;
@@ -59,11 +59,11 @@ public class DoctorAllFeedback extends Fragment {
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         logout = (Button)getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+      //  medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +118,8 @@ public class DoctorAllFeedback extends Fragment {
     public void manangeScreenIcons(){
         globalTv.setText("Manage Feedback");
         drawar.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+     //   medicoText.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
         logout.setBackgroundResource(R.drawable.home_jump);
         profileLayout.setVisibility(View.GONE);
@@ -139,8 +139,8 @@ public class DoctorAllFeedback extends Fragment {
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
         back.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+      //  medicoLogo.setVisibility(View.VISIBLE);
+      //  medicoText.setVisibility(View.VISIBLE);
     }
 
     @Override

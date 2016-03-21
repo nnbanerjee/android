@@ -59,7 +59,7 @@ public class ShowSpeciality extends Fragment {
     ImageView profilePicture;
     RelativeLayout profileLayout;
     LinearLayout layout;
-    ImageView medicoLogo,medicoText;
+   // ImageView medicoLogo,medicoText;
     String type;
     Button refresh;
     SharedPreferences session;
@@ -98,15 +98,15 @@ public class ShowSpeciality extends Fragment {
         api = restAdapter.create(MyApi.class);
         BackStress.staticflag =1;
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         filter = (Button) view.findViewById(R.id.filter_home);
         drawar = (Button) getActivity().findViewById(R.id.drawar_button);
         logout = (Button) getActivity().findViewById(R.id.logout);
         profileLayout = (RelativeLayout) getActivity().findViewById(R.id.home_layout2);
         layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
         editTextSearch = (EditText) view.findViewById(R.id.searchET);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+     //   medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+     //   medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         refresh = (Button)getActivity().findViewById(R.id.refresh);
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -207,8 +207,8 @@ public class ShowSpeciality extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         logout.setBackgroundResource(R.drawable.home_jump);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+     //   medicoText.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
     }
@@ -240,8 +240,8 @@ public class ShowSpeciality extends Fragment {
         back.setVisibility(View.INVISIBLE);
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+     //   medicoLogo.setVisibility(View.VISIBLE);
+     //   medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
     }

@@ -142,8 +142,8 @@ public class PatientAppointmentAllTreatmentPlan extends Fragment {
                     treatmentPlanList.setVisibility(View.VISIBLE);
                     noDataFound.setVisibility(View.GONE);
 
-                    AllProcedureAdapter allProcedureAdapter = new AllProcedureAdapter(getActivity(),allTreatmentPlanVm.procedure);
-                    treatmentPlanList.setAdapter(allProcedureAdapter);
+                   // AllProcedureAdapter allProcedureAdapter = new AllProcedureAdapter(getActivity(),allTreatmentPlanVm.procedure);
+                  //  treatmentPlanList.setAdapter(allProcedureAdapter);
 
                     List<Field> templates = new ArrayList<Field>();
                     templates.add(new Field("1asddffhhfg","2asdasdsfdghfgh","3asddfhgsghd","4asdfghfgdcxcv","5ffdhgdfgghfg","3fgjmfhhfghnvb"));
@@ -163,9 +163,9 @@ public class PatientAppointmentAllTreatmentPlan extends Fragment {
                     templates.add(new Field("1asddffhhfg","2asdasdsfdghfgh","35asddfhgsghd","4asdfghfgdcxcv","5ffdhgdfgghfg","65fgjmfhhfghnvb"));
                     templates.add(new Field("1asddffhhfg","2asdasdsfdghfgh","36asddfhgsghd","4asdfghfgdcxcv","5ffdhgdfgghfg","66sfgjmfhhfghnvb"));
 
-                    HorizontalTemplateListAdapter hrAdapter = new HorizontalTemplateListAdapter(getActivity(),templates);
-                    fieldList.setAdapter(hrAdapter);
-                    fieldList1.setAdapter(hrAdapter);
+                    //HorizontalTemplateListAdapter hrAdapter = new HorizontalTemplateListAdapter(getActivity(),templates);
+                    //fieldList.setAdapter(hrAdapter);
+                   // fieldList1.setAdapter(hrAdapter);
                     progress.dismiss();
                 }
             }

@@ -101,7 +101,7 @@ public class FileUploadDialog extends DialogFragment
         name.setText(global.getTestPrescribed());
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         id = session.getString("sessionID",null);
-        type = session.getString("type",null);
+        type = session.getString("loginType",null);
         nameText = (TextView)view.findViewById(R.id.name);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))

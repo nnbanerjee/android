@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +15,11 @@ import android.widget.TextView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import Application.MyApi;
 import Model.Clinic;
 import Model.ClinicDetailVm;
-import Model.DoctorSearchResponse;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -79,13 +73,13 @@ public class ClinicProfileDetails extends Fragment {
                 {
 
                     if(clinicsList != null) {
-                        System.out.println("ClinicList true::::::::::");
+                        System.out.println("clinicList true::::::::::");
                         for (Clinic clinic : clinicsList) {
                             System.out.print("clinicId in for = " + clinic.getIdClinic());
                             if (clinic.getIdClinic().equals(clinicId)) {
                                 assistant.setText(clinic.getClinicName());
                                 emailId.setText(clinic.getEmail());
-                                mobileId.setText(clinic.getMobileNumber());
+                                mobileId.setText(clinic.getMobile());
                                 locationId.setText(clinic.getLocation());
                                 landline.setText(clinic.getLandLineNumber());
                                 specialityId.setText(clinic.speciality);
@@ -97,13 +91,13 @@ public class ClinicProfileDetails extends Fragment {
             }
         }else{
             if(clinicsList != null) {
-                System.out.println("ClinicList true::::::::::");
+                System.out.println("clinicList true::::::::::");
                 for (Clinic clinic : clinicsList) {
                     System.out.print("clinicId in for = " + clinic.getIdClinic());
                     if (clinic.getIdClinic().equals(clinicId)) {
                         assistant.setText(clinic.getClinicName());
                         emailId.setText(clinic.getEmail());
-                        mobileId.setText(clinic.getMobileNumber());
+                        mobileId.setText(clinic.getMobile());
                         locationId.setText(clinic.getLocation());
                         landline.setText(clinic.getLandLineNumber());
                         specialityId.setText(clinic.speciality);

@@ -16,16 +16,17 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Model.Field;
+import Model.TreatmentField;
 
 /**
  * Created by User on 14-03-2015.
  */
 public class HorizontalTemplateListAdapter extends BaseAdapter {
     private Activity activity;
-    private  List<Field> templates;
+    private  List<TreatmentField> templates;
     SharedPreferences session;
 
-    public HorizontalTemplateListAdapter(Activity activity, List<Field> templates) {
+    public HorizontalTemplateListAdapter(Activity activity, List<TreatmentField> templates) {
         this.activity = activity;
         this.templates = templates;
     }
@@ -34,7 +35,7 @@ public class HorizontalTemplateListAdapter extends BaseAdapter {
         return templates.size();
     }
     @Override
-    public Field getItem(int position) {
+    public TreatmentField getItem(int position) {
         return templates.get(position);
     }
     @Override
@@ -52,8 +53,8 @@ public class HorizontalTemplateListAdapter extends BaseAdapter {
         TextView templateName = (TextView) gridItem.findViewById(R.id.templateName);
         TextView templateHeader = (TextView) gridItem.findViewById(R.id.templateHeader);
 
-        templateHeader.setText(templates.get(position).getFieldDisplayName());
-        templateName.setText(templates.get(position).getFieldDefaultValue());
+        templateHeader.setText(templates.get(position).getFieldName());
+        templateName.setText(templates.get(position).getValue());
 
         templateName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +64,11 @@ public class HorizontalTemplateListAdapter extends BaseAdapter {
                 SharedPreferences.Editor editor = session.edit();
                 //editor.putString("editableValue",templates.get(position).getFieldDefaultValue());
                 editor.putString("editableFieldId",templates.get(position).getFieldId());
-                editor.putString("editableTemplateId",templates.get(position).getTemplateId());
-                editor.putString("editableFieldDisplayName",templates.get(position).getFieldDisplayName());
+                editor.putString("editableTemplateId",templates.get(position).getTreatmentId());
+                editor.putString("editableFieldDisplayName",templates.get(position).getFieldName());
                 editor.putString("editableFieldName",templates.get(position).getFieldName());
-                editor.putString("editableFieldType",templates.get(position).getFieldType());
-                editor.putString("editableFieldDefaultValue",templates.get(position).getFieldDefaultValue());
+             //   editor.putString("editableFieldType",templates.get(position).getFieldType());
+              //  editor.putString("editableFieldDefaultValue",templates.get(position).getFieldDefaultValue());
 
                 editor.commit();
 

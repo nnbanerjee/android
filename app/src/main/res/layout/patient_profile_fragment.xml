@@ -10,15 +10,59 @@
         android:layout_below="@+id/layout2"
         android:layout_margin="5dp"
         android:id="@+id/layout4" >
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:id="@+id/layout55">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Patient ID"
+                android:textColor="#000000"
+                android:textSize="@dimen/heading"
+                android:paddingTop="10dp"
+                android:id="@+id/rating"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textPatient"
+                android:layout_alignParentBottom="true"
+                android:textSize="@dimen/edit_text"
+                android:text="1009"
+                android:gravity="center|left"
+                android:layout_toRightOf="@+id/rating"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="7dp"
+
+                />
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:layout_alignParentBottom="true"
+                android:visibility="invisible"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_toRightOf="@+id/rating" />
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout55"
+            android:background="@android:color/darker_gray"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout55"
             android:id="@+id/layout5">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Email Id"
                 android:textColor="#000000"
@@ -28,16 +72,23 @@
             />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:textSize="@dimen/edit_text"
                 android:textColor="#1E90FF"
-                android:paddingLeft="5dp"
+                android:layout_marginTop="7dp"
                 android:id="@+id/emailId"
-                android:background="@drawable/square_grey_color"
-                android:layout_toRightOf="@+id/emailIdText"/>
+                android:text="email"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:layout_toRightOf="@+id/emailIdText"
+               />
 
             </RelativeLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout5"
+            android:background="@android:color/darker_gray"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,9 +97,9 @@
             android:layout_below="@+id/layout5">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Mobile"
+                android:text="Contact"
                 android:paddingTop="10dp"
                 android:textSize="@dimen/heading"
                 android:textColor="#000000"
@@ -56,16 +107,21 @@
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:textSize="@dimen/edit_text"
                 android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:id="@+id/mobileId"
-                android:background="@drawable/square_grey_color"
+                android:text="Mobile"
+                android:gravity="center|left"
                 android:layout_toRightOf="@+id/mobileText"/>
 
         </RelativeLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout6"
+            android:background="@android:color/darker_gray"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +130,7 @@
             android:layout_below="@+id/layout6">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Gender"
                 android:textSize="@dimen/heading"
@@ -84,16 +140,21 @@
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:textSize="@dimen/edit_text"
                 android:id="@+id/genderId"
                 android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
-                android:background="@drawable/square_grey_color"
+                android:text="Gender"
+                android:gravity="center|left"
                 android:layout_toRightOf="@+id/genderText"/>
 
         </RelativeLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout7"
+            android:background="@android:color/darker_gray"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -103,9 +164,9 @@
             android:layout_below="@+id/layout7">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Date of Birth"
+                android:text="D.O.B."
                 android:textSize="@dimen/heading"
                 android:paddingTop="10dp"
                 android:textColor="#000000"
@@ -113,15 +174,21 @@
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:layout_height="35dp"
+                android:textSize="13sp"
                 android:textColor="#1E90FF"
-                android:paddingLeft="@dimen/edit_text"
+                android:paddingLeft="5dp"
                 android:id="@+id/dateOfBirthId"
-                android:background="@drawable/square_grey_color"
+                android:text="Gender"
+                android:gravity="center|left"
                 android:layout_toRightOf="@+id/dateOfBirthText"/>
 
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout8"
+            android:background="@android:color/darker_gray"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,7 +199,7 @@
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:text="Location"
+                android:text="City"
                 android:textSize="@dimen/heading"
                 android:paddingTop="5dp"
                 android:textColor="#000000"
@@ -141,22 +208,29 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="25dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/location"
                 android:layout_toRightOf="@+id/locationText"
                 android:id="@+id/locationBtn"
+                android:visibility="invisible"
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:textSize="@dimen/edit_text"
                 android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:id="@+id/locationId"
-                android:background="@drawable/square_grey_color"
+                android:text="location"
+                android:gravity="center|left"
                 android:layout_toRightOf="@+id/locationBtn"/>
 
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout9"
+            android:background="@android:color/darker_gray"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,7 +239,7 @@
             android:layout_below="@+id/layout9">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Blood Group"
                 android:textSize="@dimen/heading"
@@ -175,17 +249,23 @@
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:textSize="@dimen/edit_text"
                 android:textColor="#1E90FF"
                 android:id="@+id/bloodGroup"
                 android:paddingLeft="5dp"
-                android:text="Allopathic"
-                android:background="@drawable/square_grey_color"
+
+                android:text="blood group"
+                android:gravity="center|left"
+
                 android:layout_toRightOf="@+id/practiceNameText"/>
 
         </RelativeLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout10"
+            android:background="@android:color/darker_gray"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -194,26 +274,29 @@
             android:layout_below="@+id/layout10">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Allergic To"
                 android:textSize="@dimen/heading"
-                android:paddingTop="10dp"
                 android:textColor="#000000"
+                android:layout_marginTop="10dp"
                 android:id="@+id/specializationText"
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:textSize="@dimen/edit_text"
+                android:layout_marginTop="10dp"
                 android:textColor="#1E90FF"
                 android:ems="10"
                 android:paddingLeft="5dp"
                 android:id="@+id/allergic_to"
-                android:gravity="left|top"
+                android:gravity="top|left"
                 android:inputType="textMultiLine"
-                android:background="@drawable/square_grey_color"
-                android:layout_toRightOf="@+id/specializationText"/>
+                android:text="Allergic"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/specializationText"
+                android:layout_toEndOf="@+id/specializationText" />
 
         </RelativeLayout>
 

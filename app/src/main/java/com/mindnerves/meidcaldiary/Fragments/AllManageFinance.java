@@ -67,7 +67,7 @@ public class AllManageFinance extends Fragment {
     boolean checkMonth,checkWeek,checkDay;
     List<ManageFinance> manageFinancesList, monthFinanceList,weekFinanceList;
     Button drawar,logout,back,dayBtn,weekBtn,monthBtn;
-    ImageView profilePicture,medicoLogo,medicoText;
+    ImageView profilePicture;//,medicoLogo,medicoText;
     RelativeLayout profileLayout;
     String type;
     @Nullable
@@ -86,8 +86,8 @@ public class AllManageFinance extends Fragment {
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         logout = (Button)getActivity().findViewById(R.id.logout);
-        medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
-        medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
+       // medicoLogo = (ImageView)getActivity().findViewById(R.id.global_medico_logo);
+      //  medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
         type = session.getString("type",null);
@@ -221,8 +221,8 @@ public class AllManageFinance extends Fragment {
     public void manageScreenIcons(){
         globalTv.setText("Manage Finance");
         drawar.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.GONE);
-        medicoText.setVisibility(View.GONE);
+      //  medicoLogo.setVisibility(View.GONE);
+       // medicoText.setVisibility(View.GONE);
         logout.setVisibility(View.VISIBLE);
         logout.setBackgroundResource(R.drawable.home_jump);
         profileLayout.setVisibility(View.GONE);
@@ -428,8 +428,8 @@ public class AllManageFinance extends Fragment {
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
         back.setVisibility(View.GONE);
-        medicoLogo.setVisibility(View.VISIBLE);
-        medicoText.setVisibility(View.VISIBLE);
+       // medicoLogo.setVisibility(View.VISIBLE);
+       // medicoText.setVisibility(View.VISIBLE);
     }
 
 

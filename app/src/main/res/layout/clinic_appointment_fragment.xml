@@ -49,83 +49,15 @@
             android:id="@+id/appointmentText"
             android:gravity="center"
             />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date :"
+            android:text="Slot 1 : "
+            android:ems="6"
             android:textColor="#1E90FF"
             style="@style/body2"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
             android:layout_below="@+id/appointmentText"
-            android:id="@+id/dateText"
-            />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:padding="5dp"
-            android:id="@+id/dateLayout"
-            android:background="@drawable/square_grey_color"
-            android:layout_toRightOf="@+id/dateText"
-            android:layout_below="@+id/appointmentText">
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="25-05-2015"
-                style="@style/body1"
-                android:layout_marginTop="3dp"
-                android:id="@+id/dateValue"
-                />
-
-            <Button
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/timeBtn"
-                android:layout_toRightOf="@+id/dateValue"
-                android:background="@drawable/calendar2"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Visit Type : "
-            android:textColor="#1E90FF"
-            style="@style/body2"
-            android:layout_below="@+id/dateLayout"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/visitTypeText"
-            />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="Follow up"
-            android:textColor="#1E90FF"
-            style="@style/body1"
-            android:spinnerMode="dialog"
-            android:background="@drawable/square_grey_color"
-            android:prompt="@string/select_visit_type"
-            android:entries="@array/visit_type_list"
-            android:layout_toRightOf="@+id/visitTypeText"
-            android:layout_below="@+id/dateLayout"
-            android:id="@+id/visitType"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shift 1 : "
-            android:textColor="#1E90FF"
-            style="@style/body2"
-            android:layout_below="@+id/visitTypeText"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:id="@+id/shiftName"
             />
@@ -137,20 +69,88 @@
             android:textColor="#1E90FF"
             style="@style/body1"
             android:layout_toRightOf="@+id/shiftName"
-            android:layout_below="@+id/visitType"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/appointmentText"
+            android:layout_marginTop="10dp"
             android:id="@+id/shiftValue"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date :"
+            android:textColor="#1E90FF"
+            style="@style/body2"
+            android:ems="6"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/shiftName"
+            android:id="@+id/dateText"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/dateLayout"
+            style="@style/textViewThemeForNewDesignWithoutMargin"
+            android:layout_toRightOf="@+id/dateText"
+            android:layout_below="@+id/shiftValue">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25-05-2015"
+                style="@style/textViewThemeForNewDesign"
+                android:layout_marginTop="3dp"
+                android:id="@+id/dateValue"
+                />
+
+            <Button
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/timeBtn"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/calendar2"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visit Type : "
+            android:textColor="#1E90FF"
+            style="@style/body2"
+            android:ems="6"
+            android:layout_below="@+id/dateLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/visitTypeText"
+            />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Follow up"
+            android:textColor="#1E90FF"
+            android:spinnerMode="dialog"
+            style="@style/textViewThemeForNewDesignWithoutMargin"
+            android:prompt="@string/select_visit_type"
+            android:entries="@array/visit_type_list"
+            android:layout_toRightOf="@+id/visitTypeText"
+            android:layout_below="@+id/dateLayout"
+            android:id="@+id/visitType"
+            />
+
+
 
 
         <GridView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:numColumns="5"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            android:layout_below="@+id/shiftValue"
+            android:layout_below="@+id/visitType"
             android:id="@+id/timeTeableList">
         </GridView>
 
@@ -186,14 +186,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_below="@+id/bookNowBtn">
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:background="#33CC00"
+                android:background="@color/green"
                 android:id="@+id/greenColor"
+                style="@style/body2"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:text="Confirmed"
                 />
 
             <TextView
@@ -202,17 +206,34 @@
                 android:text="Available"
                 style="@style/body2"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/green"
                 android:id="@+id/availableText"
-                android:layout_toRightOf="@+id/greenColor"
-                android:layout_below="@+id/bookNowBtn"/>
+                android:layout_below="@+id/greenColor"/>
+
 
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:background="#FF9900"
+                android:background="@color/orange"
                 android:id="@+id/orangeColor"
-                android:layout_marginLeft="5dp"
+                style="@style/body2"
+                android:layout_marginLeft="25dp"
+                android:text="Tentative"
+                android:padding="3dp"
+
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/availableText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Occupied"
+                style="@style/body2"
+                android:layout_below="@+id/orangeColor"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/red"
                 android:layout_toRightOf="@+id/availableText"/>
 
             <TextView
@@ -221,31 +242,27 @@
                 android:text="On Request"
                 style="@style/body2"
                 android:id="@+id/orangeText"
+                android:visibility="gone"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/orangeColor"/>
 
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="#FF0000"
+                android:background="@color/red"
                 android:id="@+id/redColor"
                 android:layout_marginLeft="5dp"
+                android:visibility="gone"
                 android:layout_toRightOf="@+id/orangeText"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Occupied"
-                style="@style/body2"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/redColor"/>
 
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="#C0C0C0"
+                android:background="@color/grey_text"
                 android:id="@+id/greyColor"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:layout_below="@+id/greenColor"/>
 
             <TextView
@@ -254,9 +271,9 @@
                 android:text="Not Available"
                 style="@style/body2"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/availableText"
-                android:layout_toRightOf="@+id/greyColor"/>
+                android:layout_marginTop="35dp"
+                android:textColor="@color/grey_text"
+                android:layout_toRightOf="@+id/redColor"/>
 
         </RelativeLayout>
     </RelativeLayout>

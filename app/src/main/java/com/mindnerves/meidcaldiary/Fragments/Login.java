@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
 import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.LoggingInterceptor;
 import com.mindnerves.meidcaldiary.MainActivity;
@@ -32,6 +33,7 @@ import java.util.Scanner;
 import Application.MyApi;
 import Model.Logindata;
 import Model.ResponseVm;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -49,6 +51,7 @@ public class Login extends Fragment {
     private EditText email;
     private EditText password;
     ProgressDialog progress;
+    Login login;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +71,18 @@ public class Login extends Fragment {
                     }
                 });
 
+        view.findViewById(R.id.registernow)
+                .setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View arg0) {
+
+                        RegistrationChooser login = new RegistrationChooser();
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.replace(R.id.lower_content, login);
+                        ft.commit();
+
+
+                    }
+                });
         view.findViewById(R.id.signindoc)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
@@ -87,16 +102,17 @@ public class Login extends Fragment {
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
 
-                        //ForgetPassword forgetPassword = new ForgetPassword();
 
+                        Intent intObj = new Intent(getActivity(), ForgotPasswordActivity.class);
+                        startActivity(intObj);
 
-                        Fragment frag = new ForgetPassword();
+                       /* Fragment frag = new ForgetPassword();
                         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
                         ft.replace(R.id.lower_content, frag, "Forget_Password");
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                         ft.addToBackStack(null);
                         ft.commit();
-
+*/
 
                     }
                 });
@@ -122,7 +138,7 @@ public class Login extends Fragment {
                                 System.out.println(response);
                                 progress.dismiss();
                                 //0 is failure and  {1= Doctor,2=Patient,3-Assistant, 0 = Failure}
-                                if (responseVm.getId().equalsIgnoreCase("0")) {
+                                if (responseVm != null && responseVm.getId() != null && responseVm.getId().equalsIgnoreCase("0")) {
                                     Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                                 } else {
                                     saveToSession(responseVm);
@@ -150,7 +166,7 @@ public class Login extends Fragment {
 
     public void saveToSession(ResponseVm result) {
 
-        String userId = result.getEmail();
+        String userId = result.getId();
         String type = result.getType();
         String status = result.getStatus();
         String id = result.getId();
@@ -167,5 +183,6 @@ public class Login extends Fragment {
         //session.edit().putString("loginType", type).apply();
         session.edit().putString("status", status).apply();
         session.edit().putString("id", id).apply();
+
     }
 }

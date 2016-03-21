@@ -14,9 +14,9 @@
         android:textStyle="bold"
         android:padding="1dp"
         android:layout_marginBottom="2dp"
-        android:background="#69933E"
+
         android:id="@+id/timeValue"
-        android:textColor="#ffffff"/>
+        android:textColor="@color/green"/>
 
 
     <TextView

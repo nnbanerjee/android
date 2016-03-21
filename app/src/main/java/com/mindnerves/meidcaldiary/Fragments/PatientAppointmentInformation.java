@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Global;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import java.io.InputStream;
@@ -69,7 +70,7 @@ public class PatientAppointmentInformation extends Fragment {
         appointmentTime = session.getString("doctor_patient_appointmentTime", null);
         appointmentDate = session.getString("doctor_patient_appointmentDate", null);
         patientId = session.getString("sessionID", null);
-        type = session.getString("type", null);
+        type = session.getString("loginType", null);
         System.out.println("Appointment Time:::::::" + appointmentTime);
         System.out.println("Appointment Date:::::::" + appointmentDate);
         System.out.println("doctorId:::::::" + doctorId);
@@ -268,7 +269,7 @@ public class PatientAppointmentInformation extends Fragment {
                     @Override
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
-                        Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                     }
                 });
             }else if (bunDoctor.getString("fragment") != null) {
@@ -299,38 +300,5 @@ public class PatientAppointmentInformation extends Fragment {
         }
     }
 
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
-
-    }
 }

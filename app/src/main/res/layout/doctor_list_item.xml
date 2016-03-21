@@ -4,22 +4,23 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctorImg"
-        android:layout_width="45dp"
-        android:layout_height="50dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_margin="5dp"
-        android:background="@drawable/doctor" />
+        android:background="@drawable/doctor"/>
+
 
     <ImageView
         android:id="@+id/downImg"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="13dp"
         android:layout_below="@+id/doctorImg"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="23dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/down_arrow"
-        android:scaleType="fitXY" />
+        android:scaleType="fitCenter" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,6 +61,7 @@
             android:fontFamily="sans-serif-medium"
             android:textSize="@dimen/body2"
             android:text="0"
+            android:visibility="gone"
             android:id="@+id/total_appointment"
             android:textColor="#1E90FF"
             android:layout_marginRight="40dp"
@@ -80,8 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/doctorSpeciality"
-            android:text=""
-
+            android:text="fdfd"
+            android:visibility="visible"
             style="@style/body1"
              />
 
@@ -92,6 +94,7 @@
             android:layout_below="@+id/doctorSpeciality"
             android:layout_toRightOf="@+id/lastAppointmentDate"
             android:text="12-04-2015"
+            android:visibility="gone"
             style="@style/body1"
             android:textColor="#1E90FF" />
 
@@ -101,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lastAppointmentDate"
-            android:text="Last Appoint. : "
+            android:text="Last Visited. : "
             style="@style/body1"/>
         <TextView
             android:id="@+id/lastAppointmentValue"
@@ -110,9 +113,10 @@
             android:layout_below="@+id/lastAppointmentDate"
             android:layout_toRightOf="@+id/lastAppointment"
             android:text="12-04-2015"
-            android:textColor="#1E90FF"
+            style="@style/body1"
             android:fontFamily="sans-serif"
-            android:textSize="@dimen/body1" />
+            android:textColor="@color/black"
+              />
 
         <TextView
             android:id="@+id/upcomingText"
@@ -127,10 +131,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointmentDate"
+            android:layout_below="@+id/lastAppointmentValue"
             android:layout_toRightOf="@+id/upcomingText"
             android:text="12-04-2015"
             android:textColor="#1E90FF"
+
             android:textSize="10sp"
             android:visibility="gone" />
 
@@ -139,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/upcomingText"
-            android:text="Next Appoint. : "
+            android:text="Upcoming Appt. : "
 
             style="@style/body1"/>
 
@@ -147,10 +152,10 @@
             android:id="@+id/appointmentDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointment"
+            android:layout_below="@+id/lastAppointmentValue"
             android:layout_toRightOf="@+id/appointmentText"
-            android:text=""
-            android:textColor="#1E90FF"
+            android:text="sdfsdf"
+            android:textColor="@color/black"
             style="@style/body1" />
 
 

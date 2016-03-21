@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:layout_margin="5dp"
+    android:padding="10dp"
     android:layout_marginBottom="10dp"
     tools:context=".HomeActivity">
 
@@ -47,10 +48,12 @@
         android:id="@+id/allTemplateList"
         android:layout_below="@+id/delete_template"
         android:padding="5dp"
-        android:layout_margin="5dp"
-        android:layout_toLeftOf="@+id/right_navigation"
         android:background="@drawable/rounded_black_color"
-        android:layout_height="80dp">
+        android:layout_height="180dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignRight="@+id/delete_template"
+        android:layout_alignEnd="@+id/delete_template">
     </ListView>
 
 </RelativeLayout>

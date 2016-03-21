@@ -109,7 +109,7 @@ public class SelectDoctorTemplate extends Fragment {
             @Override
             public void onClick(View v) {
 
-                TreatmentPlan treatmentPlan = new TreatmentPlan();
+              /*  TreatmentPlan treatmentPlan = new TreatmentPlan();
                 treatmentPlan.setDoctorId(doctorId);
                 treatmentPlan.setProcedureId(procedureId);
                 treatmentPlan.setTemplateId(templateId);
@@ -124,7 +124,7 @@ public class SelectDoctorTemplate extends Fragment {
                  }
 
                 treatmentPlan.setFieldArrayList(fieldArrayList);
-                saveTreatmentPlan(treatmentPlan);
+                saveTreatmentPlan(treatmentPlan);*/
             }
         });
 

@@ -34,9 +34,12 @@ import Adapter.AllProcedureAdapter;
 import Adapter.HorizontalTemplateListAdapter;
 import Application.MyApi;
 import Model.AllTreatmentPlanVm;
+import Model.AppointmentId;
 import Model.DoctorNotesVM;
 import Model.Field;
 import Model.TotalInvoice;
+import Model.TreatmentField;
+import Model.TreatmentPlan;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -59,7 +62,7 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
     ListView treatmentPlanList;
     TextView noDataFound;
     HorizontalListView fieldList1,fieldList;
-    String appointmentDate,doctorId,patientEmail;
+    String appointmentDate,doctorId,patientEmail,appointMentId;
     ProgressDialog progress;
     int share = 0;
 
@@ -75,9 +78,12 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
         patientEmail = session.getString("patientEmail", null);
         appointmentDate = session.getString("doctor_patient_appointmentDate", null);
         appointmentTime = session.getString("doctor_patient_appointmentTime", null);
+        appointMentId= session.getString("appointmentId", "");
+        System.out.println("appointmentId Id:::::::"+appointMentId);
+
         shareWithPatient = (CheckBox)view.findViewById(R.id.share_with_patient);
         fieldList1 = (HorizontalListView) view.findViewById(R.id.fieldList1);
-        fieldList = (HorizontalListView) view.findViewById(R.id.fieldList1);
+        fieldList = (HorizontalListView) view.findViewById(R.id.fieldList);
         noDataFound = (TextView) view.findViewById(R.id.noDataFound);
         treatmentPlanList = (ListView) view.findViewById(R.id.treatmentPlanList);
         addNewTreatment = (Button) view.findViewById(R.id.addNewTreatment);
@@ -182,13 +188,13 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
 
     public void getAllTreamentPlan(){
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getAllTreatmentPlan(doctorId, patientEmail, appointmentDate, appointmentTime, new Callback<AllTreatmentPlanVm>() {
+        api.getPatientVisitTreatmentPlan(new AppointmentId(appointMentId), new Callback<List<TreatmentPlan>>() {
             @Override
-            public void success(AllTreatmentPlanVm allTreatmentPlanVm, Response response) {
+            public void success(List<TreatmentPlan> treatmentPlan, Response response) {
                 //System.out.println("allTreatmentPlanVm.procedure = "+allTreatmentPlanVm.procedure.size());
                 //Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
 
-                api.getInvoice(doctorId, patientEmail, appointmentDate, appointmentTime, new Callback<TotalInvoice>() {
+               /* api.getInvoice(doctorId, patientEmail, appointmentDate, appointmentTime, new Callback<TotalInvoice>() {
                     @Override
                     public void success(TotalInvoice totalInvoice, Response response) {
                         if (totalInvoice.getShareWithPatient() != null) {
@@ -205,20 +211,24 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
                         error.printStackTrace();
                     }
                 });
-                if (allTreatmentPlanVm == null) {
+                if (treatmentPlan == null) {
                     treatmentPlanList.setVisibility(View.GONE);
                     noDataFound.setVisibility(View.VISIBLE);
                 } else {
                     treatmentPlanList.setVisibility(View.VISIBLE);
-                    noDataFound.setVisibility(View.GONE);
+                    noDataFound.setVisibility(View.GONE);*/
 
-                    AllProcedureAdapter allProcedureAdapter = new AllProcedureAdapter(getActivity(), allTreatmentPlanVm.procedure);
+                treatmentPlanList.setVisibility(View.VISIBLE);
+                noDataFound.setVisibility(View.GONE);
+
+
+                    AllProcedureAdapter allProcedureAdapter = new AllProcedureAdapter(getActivity(),treatmentPlan);
                     treatmentPlanList.setAdapter(allProcedureAdapter);
                     Utility.setListViewHeightBasedOnChildren(treatmentPlanList);
-                    List<Field> templates = new ArrayList<Field>();
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "3asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "3fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "4asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "4fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "5asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "5fgjmfhhfghnvb"));
+                    List<TreatmentField> templates = new ArrayList<TreatmentField>();
+                 //   templates.add(new TreatmentField("1asddffhhfg", "2asdasdsfdghfgh", "3asddfhgsghd", "4asdfghfgdcxcv"));
+                /*    templates.add(new TreatmentField("1asddffhhfg", "2asdasdsfdghfgh", "4asddfhgsghd", "4asdfghfgdcxcv"));
+                    templates.add(new TreatmentField("1asddffhhfg", "2asdasdsfdghfgh", "5asddfhgsghd", "4asdfghfgdcxcv"));
                     templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "6asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "6fgjmfhhfghnvb"));
                     templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "7asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "7fgjmfhhfghnvb"));
                     templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "8asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "8fgjmfhhfghnvb"));
@@ -231,14 +241,14 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
                     templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "33asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "63fgjmfhhfghnvb"));
                     templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "34asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "64gjmfhhfghnvb"));
                     templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "35asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "65fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "36asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "66sfgjmfhhfghnvb"));
+                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "36asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "66sfgjmfhhfghnvb"));*/
 
                     HorizontalTemplateListAdapter hrAdapter = new HorizontalTemplateListAdapter(getActivity(), templates);
                     fieldList.setAdapter(hrAdapter);
                     fieldList1.setAdapter(hrAdapter);
                     progress.dismiss();
 
-                }
+               // }
             }
 
             @Override

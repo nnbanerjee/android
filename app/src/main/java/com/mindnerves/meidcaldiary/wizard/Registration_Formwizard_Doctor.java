@@ -5,16 +5,22 @@ package com.mindnerves.meidcaldiary.wizard;
  */
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +37,9 @@ import org.codepond.wizardroid.layouts.BasicWizardLayout;
 import org.codepond.wizardroid.persistence.ContextVariable;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import Application.MyApi;
@@ -56,6 +65,7 @@ import retrofit.mime.TypedFile;
  */
 
 public class Registration_Formwizard_Doctor extends BasicWizardLayout {
+
     @ContextVariable
     private String name;
     @ContextVariable
@@ -86,6 +96,8 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
     @ContextVariable
     private double longitude;
     @ContextVariable
+    private long dobInMiliSeconds;
+
     private String cityContext;
     MyApi api;
     public String bloodgroup, usrid = "", pasword1 = "";
@@ -94,6 +106,8 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
     String verifyCode;
     Global go;
     ProgressDialog progress;
+    long milliseconds;
+    private String strdobInMiliSeconds;
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     /**
@@ -124,7 +138,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                 until a certain action is taken to mark this step as completed by calling WizardStep#notifyCompleted()
                 from the step.
                  */
-                .addStep(MedicalRegDoctor.class)
+                //.addStep(MedicalRegDoctor.class)
                 .create();
     }
 
@@ -145,7 +159,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
         RadioGroup rg = (RadioGroup) getView().findViewById(R.id.group);
         EditText userid = (EditText) getView().findViewById(R.id.id);
         EditText paswordCloud = (EditText) getView().findViewById(R.id.password);
-        bloodgroup = bloodgrp.getSelectedItem().toString();
+      //  bloodgroup = bloodgrp.getSelectedItem().toString();
         practiceName = practiceNameSpinner.getSelectedItem().toString();
         speciality = specialityspinner.getSelectedItem().toString();
         registrationNumber = registration.getText().toString();
@@ -169,7 +183,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
             }
         }
 
-        if (name.equals("")) {
+         if (name.equals("")) {
             flagValidation = 1;
             validation = validation + "\nPlease Enter Name";
 
@@ -206,10 +220,10 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
             flagValidation = 1;
             validation = validation + "\nPlease Enter Location";
         }
-        if (bloodgroup.equals("Select blood group")) {
+       /* if (bloodgroup.equals("Select blood group")) {
             flagValidation = 1;
             validation = validation + "\nPlease Select Proper Blood Group";
-        }
+        }*/
         if (registrationNumber.equals("")) {
             flagValidation = 1;
             validation = validation + "\nPlease Enter Registration Number";
@@ -247,12 +261,12 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                             api.getVerificationCodeForNewRegistration(new MobileEmail("", mobile, email), new Callback<ResponsegetVerificationCodeForNewRegistration>() {
                                 @Override
                                 public void success(ResponsegetVerificationCodeForNewRegistration s, Response response) {
-                                    //Positive scenario
-                                    if (s.getEmailSent().equalsIgnoreCase("0") && s.getSmsSent().equalsIgnoreCase("0")) {
+                                    //Positive scenario 1 is code sent zero is not sent
+                                    if (s.getEmailSent().equalsIgnoreCase("1") && s.getSmsSent().equalsIgnoreCase("1")) {
 
                                         //  verifyCode = s.getStatus();
                                         progress.dismiss();
-                                        LinearLayout layout = new LinearLayout(getActivity());
+                                       /* LinearLayout layout = new LinearLayout(getActivity());
                                         layout.setOrientation(LinearLayout.VERTICAL);
                                         TextView mobileTv = new TextView(getActivity());
                                         final EditText mobileEB = new EditText(getActivity());
@@ -265,16 +279,23 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                                         final EditText emailEB = new EditText(getActivity());
                                         emailTv.setText(R.string.enter_email_code);
                                         layout.addView(emailTv);
-                                        layout.addView(emailEB);
+                                        layout.addView(emailEB);*/
+
+
+
                                         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                                         alert.setTitle(R.string.verify_account);
-                                        alert.setView(layout);
+                                        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.verify_code, null);
+                                        alert.setView(view);
+
                                         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                String mobileVerificationCode = mobileEB.getText().toString();
-                                                String emailVerificationCode = emailEB.getText().toString();
 
-
+                                                final EditText mobileet = (EditText) view.findViewById(R.id.name);
+                                                final EditText emailet = (EditText) view.findViewById(R.id.email);
+                                                String mobileVerificationCode = mobileet.getText().toString();
+                                                String emailVerificationCode = emailet.getText().toString();
+                                                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                                                 api.verifyCodeForNewRegistration(new VerifyRegistrationMobileEmailCode(email, emailVerificationCode, mobile, mobileVerificationCode), new Callback<ResponseVerifyRegistrationMobileEmailCode>() {
 
                                                     @Override
@@ -288,7 +309,15 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                                                         go.setUserLatitude(18.52);
                                                         go.setUserLongitude(73.85);
                                                         // if (verificationCode.equalsIgnoreCase(verifyCode)) {
-                                                        CreateProfileData param = new CreateProfileData(name, email, password, gender, mobile, dob, go.getUserLongitude(), go.getUserLatitude(), location, cityContext, region, "1");
+                                                       /* try {
+                                                            Date date = new SimpleDateFormat("YYYY MM DD HH:MM:SS", Locale.ENGLISH).parse(dob);
+                                                             milliseconds = date.getTime();
+                                                        }catch (Exception ex){
+
+                                                        }*/
+                                                        System.out.println("Miliseconds-------------------------------->"+dobInMiliSeconds);
+                                                        CreateProfileData param = new CreateProfileData(name, email, password, gender, mobile,
+                                                                ""+dobInMiliSeconds, go.getUserLongitude(), go.getUserLatitude(), location, cityContext, region, "1");
 
                                              /*CreateProfileData(String name, String email, String password, String gender, String mobile, String dateOfBirth,
                                                     String locationLong,String locationLat, String bloodGroup, String cloudType, String cloudLoginId, String cloudLoginPassword,
@@ -305,6 +334,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                                                         api.createProfile(param, new Callback<ResponseCreateProfile>() {
                                                             @Override
                                                             public void success(ResponseCreateProfile s, Response response) {
+                                                                if(s.getStatus().equalsIgnoreCase("confirmed")){
 
                                                                 //updateprofile Object
                                                                 //{"personId":"1234","registrationNo":"234ewwf","qualification":"BA","specialization":"Dentist","experience":7,"awards":"National",
@@ -313,10 +343,10 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
 
                                                                 //String documentPath = getPath(documentUri);
 
-                                                                CreateProfileDataForDoctorUpdateDetails newprofile = new CreateProfileDataForDoctorUpdateDetails("122", registrationNumber, "MBBS", "Dentist", "10Yrs", "National", "briefDescription", "IIM",
+                                                                CreateProfileDataForDoctorUpdateDetails newprofile = new CreateProfileDataForDoctorUpdateDetails(s.getProfileId(), registrationNumber, "MBBS", "Dentist", "10Yrs", "National", "briefDescription", "IIM",
                                                                         "SearchNavigation", "Ortho_Neuro", "KNTRAA", "uploadPath", practiceName);
 
-                                                                api.updateDetailedProfile(newprofile, new Callback<ResponseCreateProfileForDoctorUpdateDetails>() {
+                                                                api.createDetailedProfile(newprofile, new Callback<ResponseCreateProfileForDoctorUpdateDetails>() {
                                                                     @Override
                                                                     public void success(ResponseCreateProfileForDoctorUpdateDetails responseCreateProfile, Response response) {
 
@@ -367,7 +397,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                                                                             @Override
                                                                             public void failure(RetrofitError error) {
                                                                                 error.printStackTrace();
-                                                                                Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                                             }
                                                                         });*/
                                                                         } else {
@@ -382,12 +412,16 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                                                                         Toast.makeText(getActivity().getApplicationContext(), "Failed in Update Details", Toast.LENGTH_LONG).show();
                                                                     }
                                                                 });
+                                                            }else{
+                                                                //fail Create Profile
+                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                                            }
                                                             }
 
                                                             @Override
                                                             public void failure(RetrofitError error) {
                                                                 error.printStackTrace();
-                                                                Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                                             }
                                                         });
 
@@ -420,7 +454,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                                     System.out.print("in error of retrofit................");
                                     error.printStackTrace();
                                     progress.dismiss();
-                                    Toast.makeText(getActivity().getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                                 }
                             });
                         } else if (s.getStatus().equalsIgnoreCase("1")) {
@@ -441,7 +475,7 @@ public class Registration_Formwizard_Doctor extends BasicWizardLayout {
                         System.out.print("in error of retrofit................");
                         error.printStackTrace();
                         progress.dismiss();
-                        Toast.makeText(getActivity().getApplicationContext(), R.string.failed, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
                     }
                 });
             } else {
