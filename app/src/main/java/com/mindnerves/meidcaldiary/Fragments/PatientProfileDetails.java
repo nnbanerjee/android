@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class PatientProfileDetails extends Fragment {
     MyApi api;
     SharedPreferences session;
     String patientId = "";
+    Toolbar toolbar;
 
     @Nullable
     @Override
@@ -41,9 +43,16 @@ public class PatientProfileDetails extends Fragment {
         TextView bloodGroup = (TextView) view.findViewById(R.id.bloodGroup);
         TextView allergic_to = (TextView) view.findViewById(R.id.allergic_to);
         TextView dateOfBirthId = (TextView) view.findViewById(R.id.dateOfBirthId);
+        TextView patientIdText = (TextView) view.findViewById(R.id.textPatient);
+
 
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("patientId", null);
+        patientIdText.setText(patientId);
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu);
 
         Global global = (Global) getActivity().getApplicationContext();
         AllPatients allPatients = global.getSelectedPatientsProfile();

@@ -83,6 +83,25 @@ public class Global extends Application {
    public String countryName;
    public String regionName;
    public String city;
+    public int selectedPostionOfMedicineScheduleFromHorizontalList;
+
+    public int getSelectedPostionOfMedicineScheduleFromVerticalList() {
+        return selectedPostionOfMedicineScheduleFromVerticalList;
+    }
+
+    public void setSelectedPostionOfMedicineScheduleFromVerticalList(int selectedPostionOfMedicineScheduleFromVerticalList) {
+        this.selectedPostionOfMedicineScheduleFromVerticalList = selectedPostionOfMedicineScheduleFromVerticalList;
+    }
+
+    public int getSelectedPostionOfMedicineScheduleFromHorizontalList() {
+        return selectedPostionOfMedicineScheduleFromHorizontalList;
+    }
+
+    public void setSelectedPostionOfMedicineScheduleFromHorizontalList(int selectedPostionOfMedicineScheduleFromHorizontalList) {
+        this.selectedPostionOfMedicineScheduleFromHorizontalList = selectedPostionOfMedicineScheduleFromHorizontalList;
+    }
+
+    public int selectedPostionOfMedicineScheduleFromVerticalList;
 
     public ClinicPatientAppointments clinicPatientAppointmentsObj;
 

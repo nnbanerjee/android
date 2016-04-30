@@ -68,7 +68,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="40dp"
-            android:background="@drawable/calendar2"
+            android:background="@drawable/cal"
         />
 
         <TextView
@@ -102,7 +102,7 @@
             android:layout_marginTop="14dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="40dp"
-            android:background="@drawable/calendar2"
+            android:background="@drawable/cal"
             />
 
         <TextView

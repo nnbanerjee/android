@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,8 @@ public class DoctorAppointmentDoctorNote extends Fragment {
     String appointMentId;
     ProgressDialog progress;
     boolean createOrUpdateFlag=false;
-
+    private Toolbar toolbar;
+    TextView show_global_tv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,14 +67,19 @@ public class DoctorAppointmentDoctorNote extends Fragment {
         global = (Global) getActivity().getApplicationContext();
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-
+        show_global_tv = (TextView) getActivity().findViewById(R.id.show_global_tv);
+        show_global_tv.setText("<  3 / 5  >");
         patientId = session.getString("patientId","");
         doctorId = session.getString("doctorId","");
-        appointmentDate = session.getString("doctor_patient_appointmentDate","");
-        appointmentTime = session.getString("doctor_patient_appointmentTime","");
+        appointmentDate = session.getString("doctor_patient_appointmentDate", "");
+        appointmentTime = session.getString("doctor_patient_appointmentTime", "");
         appointMentId= session.getString("appointmentId", "");
         symptoms_item = getResources().getStringArray(R.array.symptoms);
         //Retrofit Initialization
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.save);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())

@@ -44,7 +44,7 @@ public class ForgetPassword extends Fragment {
         final View view = inflater.inflate(R.layout.forget_password,
                 container, false);
 
-        getActivity().getActionBar().hide();
+//        getActivity().getActionBar().hide();
         email = (EditText) view.findViewById(R.id.email);
         mobileNo = (EditText) view.findViewById(R.id.mobile_no);
 

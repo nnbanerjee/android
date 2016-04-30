@@ -185,7 +185,7 @@ public class Registration extends WizardStep {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.registration,
                 container, false);
-        getActivity().getActionBar().hide();
+        //getActivity().getActionBar().hide();
         System.out.println("I am in Registration::::::::::::::::");
         cal = (ImageButton) view.findViewById(R.id.imageButton_calendar);
         lable = (TextView) view.findViewById(R.id.textView);

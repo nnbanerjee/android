@@ -8,8 +8,10 @@ import android.content.SharedPreferences;
 import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -27,10 +29,19 @@ import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import Adapter.ProcedureAdapter;
 import Application.MyApi;
+import Model.CustomProcedureTemplate;
+import Model.DoctorId;
+import Model.PersonAndCategoryId;
 import Model.ShowProcedure;
+import Model.TreatmentField;
+import Model.TreatmentPlan;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -43,7 +54,7 @@ import retrofit.client.Response;
 public class DoctorAppointmentManageProcedure extends Fragment {
     private ListView listProcedure;
     private Button searchButton;
-    private ArrayList<ShowProcedure> arrayProcedure,nameList,caetogryList;
+    private List<CustomProcedureTemplate>  arrayProcedure,nameList,caetogryList;
     private ProcedureAdapter adapter;
     private String doctorId;
     SharedPreferences session;
@@ -52,7 +63,10 @@ public class DoctorAppointmentManageProcedure extends Fragment {
     TextView noResult;
     Spinner category;
     public MyApi api;
-
+    private Toolbar toolbar;
+    List<CustomProcedureTemplate> originalList;
+    private Button procedureTabBtn,invoiceTabBtn;
+    String valueFromBundle;
     @Override
     public void onResume() {
         super.onStop();
@@ -63,12 +77,11 @@ public class DoctorAppointmentManageProcedure extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK)
-                {
-                    TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    TextView globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
                     globalTv.setText("Medical Diary");
                     getFragmentManager().beginTransaction().remove(DoctorAppointmentManageProcedure.this).commit();
-                    final Button back = (Button)getActivity().findViewById(R.id.back_button);
+                    final Button back = (Button) getActivity().findViewById(R.id.back_button);
                     back.setVisibility(View.INVISIBLE);
                     return true;
                 }
@@ -83,13 +96,31 @@ public class DoctorAppointmentManageProcedure extends Fragment {
 
         View view = inflater.inflate(R.layout.doctor_appointment_manage_procedure,container,false);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
+        procedureTabBtn = (Button) view.findViewById(R.id.summaryBtn);
+        invoiceTabBtn = (Button) view.findViewById(R.id.documentationBtn);
+        //Check from where it is coming from and enable disable tabs.
+        //bun.putString("fragment_from", "TreatmentPlan");
+        // bun.putString("fragment_from", "TreatmentInvoices");
+        procedureTabBtn.setEnabled(true);
+        invoiceTabBtn.setEnabled(false);
+        Bundle bun = getArguments();
+        if(bun != null) {
+            valueFromBundle = bun.getString("fragment");//("fragment", "treatment");
+            if (valueFromBundle.equalsIgnoreCase("treatment")) {
+                procedureTabBtn.setEnabled(true);
+                invoiceTabBtn.setEnabled(false);
+            } else {
+                procedureTabBtn.setEnabled(false);
+                invoiceTabBtn.setEnabled(true);
+            }
+        }
         listProcedure = (ListView)view.findViewById(R.id.list_procedure);
         noResult = (TextView) view.findViewById(R.id.noResult);
         category = (Spinner)view.findViewById(R.id.category);
 
-        progress =  ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
-        caetogryList = new ArrayList<ShowProcedure>();
+
+        progress =  ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
+        caetogryList = new ArrayList<CustomProcedureTemplate>();
 
         BackStress.staticflag = 1;
         TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
@@ -97,8 +128,22 @@ public class DoctorAppointmentManageProcedure extends Fragment {
 
         final SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("sessionID",null);
-        getActivity().getActionBar().hide();
+       // getActivity().getActionBar().hide();
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.search_procedure);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Fragment f = getActivity().getFragmentManager().findFragmentById(R.id.content_frame);
+                if (f instanceof DoctorAppointmentManageProcedure) {
+                   // saveData();
+                }
 
+                return true;
+            }
+        });
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
@@ -111,10 +156,20 @@ public class DoctorAppointmentManageProcedure extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
-                globalTv.setText("Medical Diary");
-                getFragmentManager().beginTransaction().remove(DoctorAppointmentManageProcedure.this).commit();
-                back.setVisibility(View.INVISIBLE);
+                //TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+               // globalTv.setText(getResources().getString(R.string.app_name));
+              //  getFragmentManager().beginTransaction().remove(DoctorAppointmentManageProcedure.this).commit();
+                //back.setVisibility(View.INVISIBLE);
+                if (valueFromBundle.equalsIgnoreCase("TreatmentPlan")) {
+                    Fragment fragment = new PatientAppointmentAllTreatmentPlan();
+                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.replacementTreament, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                } else {
+                    Fragment fragment = new DoctorAppointmentInvoices();
+                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                }
+
             }
         });
 
@@ -131,16 +186,17 @@ public class DoctorAppointmentManageProcedure extends Fragment {
                 String temporary = categoryAdaptor.getItem(position).toString();
 
                 caetogryList.clear();
-                for( ShowProcedure showProcedure : arrayProcedure){
-                    if(temporary.equals(showProcedure.getCategory().toString())){
+                for( CustomProcedureTemplate showProcedure : arrayProcedure){
+                    if(temporary.equals(showProcedure.getCategoryId().toString())){
                         caetogryList.add(showProcedure);
                     }
                 }
                 if(temporary.equals("All")){
                     caetogryList = arrayProcedure;
                 }
-
-                adapter = new ProcedureAdapter(getActivity(), caetogryList);
+                ArrayList arr= new ArrayList();
+                arr.addAll(caetogryList);
+                adapter = new ProcedureAdapter(getActivity(), arr);
                 listProcedure.setAdapter(adapter);
 
             }
@@ -165,7 +221,9 @@ public class DoctorAppointmentManageProcedure extends Fragment {
                 if(searchText.equals("")){
                     //Toast.makeText(getActivity(),"Please Enter Text",Toast.LENGTH_SHORT).show();
                     searchTv.setError("Please Enter Text ");
-                    adapter = new ProcedureAdapter(getActivity(), arrayProcedure);
+                    ArrayList arr= new ArrayList();
+                    arr.addAll(arrayProcedure);
+                    adapter = new ProcedureAdapter(getActivity(), arr);
                     listProcedure.setAdapter(adapter);
                     //showTemplateList();
                 }
@@ -178,18 +236,41 @@ public class DoctorAppointmentManageProcedure extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+                List<CustomProcedureTemplate> listOfSubTemplates=new ArrayList<CustomProcedureTemplate>();
+
+                for (int i = 0; i < originalList.size(); i++) {//Create List of same names.
+                    String subname = originalList.get(i).getTemplateName();
+
+                    if (subname.equalsIgnoreCase( arrayProcedure.get(position).getTemplateName())){
+                        listOfSubTemplates.add(originalList.get(i));
+                    }
+                }
+                UtilSingleInstance.setListOfProcedureTemplates(listOfSubTemplates);
+
                 TextView procedure = (TextView) view.findViewById(R.id.procedure);
                 TextView procedureId = (TextView) view.findViewById(R.id.procedureId);
 
-                System.out.println("procedureId = "+procedureId);
+                System.out.println("procedureId = " + procedureId);
 
                 SharedPreferences.Editor editor = session.edit();
                 editor.putString("selected_procedure_name", procedure.getText().toString());
                 editor.putString("selected_procedure_id", procedureId.getText().toString());
                 editor.commit();
+
+                String templateName= arrayProcedure.get(position).getTemplateName();
+
+
+                Bundle bun = new Bundle();
+                bun.putString("fragment",valueFromBundle);
+                bun.putString("TemplateName",templateName);
                 Fragment fragment = new DoctorAppointmentManageTemplate();
+                fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.replacementTreament,fragment,"Manage Template").addToBackStack(null).commit();
+                if (valueFromBundle.equalsIgnoreCase("treatment"))
+                 fragmentManger.beginTransaction().replace(R.id.replacementTreament,fragment,"Manage Template").addToBackStack(null).commit();
+                else
+                    fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Manage Template").addToBackStack(null).commit();
             }
 
         });
@@ -200,20 +281,31 @@ public class DoctorAppointmentManageProcedure extends Fragment {
     public void showProcedureList(){
 
         System.out.println("in doctor Id = "+doctorId);
+        PersonAndCategoryId person;
 
-        arrayProcedure = new ArrayList<ShowProcedure>();
-        api.getAllProcedure(doctorId, new Callback<ArrayList<ShowProcedure>>() {
+        arrayProcedure = new ArrayList<CustomProcedureTemplate>();
+        if (valueFromBundle.equalsIgnoreCase("TreatmentPlan")) {
+            person= new PersonAndCategoryId(doctorId,"1");
+        }else{
+            person= new PersonAndCategoryId(doctorId,"2");
+        }
+
+        api.getAllCustomTemplate(person, new Callback<List<CustomProcedureTemplate>>() {
+
             @Override
-            public void success(ArrayList<ShowProcedure> templates, Response response) {
-                arrayProcedure = templates;
+            public void success(List<CustomProcedureTemplate> templates, Response response) {
+                //arrayProcedure = templates;
+                originalList=templates;
 
-                System.out.println("arrayProcedure = "+arrayProcedure.size());
-                if(arrayProcedure.size() == 0){
+                arrayProcedure=newCombineArrayOfCustomProcedureTemplates(templates);
+                System.out.println("arrayProcedure = " + arrayProcedure.size());
+                if (arrayProcedure.size() == 0) {
                     noResult.setVisibility(View.VISIBLE);
                     listProcedure.setVisibility(View.GONE);
                 }
-
-                adapter = new ProcedureAdapter(getActivity(), arrayProcedure);
+                ArrayList arr= new ArrayList();
+                arr.addAll(arrayProcedure);
+                adapter = new ProcedureAdapter(getActivity(), arr);
                 listProcedure.setAdapter(adapter);
                 progress.dismiss();
             }
@@ -226,12 +318,69 @@ public class DoctorAppointmentManageProcedure extends Fragment {
             }
         });
     }
+    public List<CustomProcedureTemplate> newCombineArrayOfCustomProcedureTemplates(List<CustomProcedureTemplate> treatmentPlanList) {
 
+        List<CustomProcedureTemplate> newTreatmentPlanListWithSubNames = new ArrayList<CustomProcedureTemplate>();
+        List<List<TreatmentField>> listOflist = new ArrayList<List<TreatmentField>>();
+        Map<String, CustomProcedureTemplate> map = new HashMap<String, CustomProcedureTemplate>();
+        Map<String, Integer> count = new HashMap<String, Integer>();
+        for (int i = 0; i < treatmentPlanList.size(); i++) {//Create List of same names.
+            String subname = treatmentPlanList.get(i).getTemplateName();
+
+            if (!map.containsKey(subname)) { //if not duplicate needs to be added in map
+                map.put(subname, treatmentPlanList.get(i));
+                count.put(subname, 1);
+            }else{
+                count.put(subname, count.get(subname)+1);
+            } /*else { //if duplicate need to to be treated.
+                TreatmentPlan treat = new TreatmentPlan();
+                treat = map.get(subname);
+                treat.getTreatmentFields().addAll(treatmentPlanList.get(i).getTreatmentFields());
+                if (listOflist.size() == 0) {//means no records in list hence read headers first and add those as a record
+                    List<TreatmentField> listofTreatMentField = new ArrayList<TreatmentField>();
+                    for (int y = 0; y < treatmentPlanList.get(i).getTreatmentFields().size(); y++) {
+                        TreatmentField treatment = new TreatmentField();
+                        treatment.setFieldId(treatmentPlanList.get(i).getTreatmentFields().get(y).getFieldId());
+                        treatment.setTreatmentAttributeId(treatmentPlanList.get(i).getTreatmentFields().get(y).getTreatmentAttributeId());
+                        treatment.setFieldName(treatmentPlanList.get(i).getTreatmentFields().get(y).getFieldName());
+                        treatment.setValue(treatmentPlanList.get(i).getTreatmentFields().get(y).getValue());
+                        treatment.setTreatmentId(treatmentPlanList.get(i).getTreatmentFields().get(y).getTreatmentId());
+                        listofTreatMentField.add(treatment);
+                    }
+                    if (treatmentPlanList.get(i).getTreatmentFields().size() > 0) {
+                        listOflist.add(listofTreatMentField);
+                        treat.setTreatmentValues(listOflist);
+                    }
+                    map.put(subname, treat);
+                }
+                List<TreatmentField> listofTreatMentField = new ArrayList<TreatmentField>();
+                for (int k = 0; k < treatmentPlanList.get(i).getTreatmentFields().size(); k++) {
+                    TreatmentField treatment = new TreatmentField();
+                    treatment.setFieldId(treatmentPlanList.get(i).getTreatmentFields().get(k).getFieldId());
+                    treatment.setTreatmentAttributeId(treatmentPlanList.get(i).getTreatmentFields().get(k).getTreatmentAttributeId());
+                    treatment.setFieldName(treatmentPlanList.get(i).getTreatmentFields().get(k).getFieldName());
+                    treatment.setValue(treatmentPlanList.get(i).getTreatmentFields().get(k).getValue());
+                    treatment.setTreatmentId(treatmentPlanList.get(i).getTreatmentFields().get(k).getTreatmentId());
+                    listofTreatMentField.add(treatment);
+                }
+                if (treatmentPlanList.get(i).getTreatmentFields().size() > 0) {
+                    listOflist.add(listofTreatMentField);
+                    treat.setTreatmentValues(listOflist);
+                }
+                map.put(subname, treat);
+            }*/
+        }
+         for (CustomProcedureTemplate value : map.values()) {
+            System.out.println("Value = " + value.getTemplateName());
+            newTreatmentPlanListWithSubNames.add(value);
+        }
+        return newTreatmentPlanListWithSubNames;
+    }
     public void showListBySearch(String searchText) {
 
-        nameList = new ArrayList<ShowProcedure>();
-        for (ShowProcedure t : arrayProcedure) {
-            if (t.getProcedureName().toLowerCase().contains(searchText.toLowerCase())) {
+        nameList = new ArrayList<CustomProcedureTemplate>();
+        for (CustomProcedureTemplate t : arrayProcedure) {
+            if (t.getTemplateName().toLowerCase().contains(searchText.toLowerCase())) {
                 nameList.add(t);
             }
         }
@@ -239,7 +388,9 @@ public class DoctorAppointmentManageProcedure extends Fragment {
         if(nameList.size() > 0){
             noResult.setVisibility(View.GONE);
             listProcedure.setVisibility(View.VISIBLE);
-            adapter = new ProcedureAdapter(getActivity(), nameList);
+            ArrayList arr= new ArrayList();
+            arr.addAll(nameList);
+            adapter = new ProcedureAdapter(getActivity(), arr);
             listProcedure.setAdapter(adapter);
         }else{
             noResult.setVisibility(View.VISIBLE);

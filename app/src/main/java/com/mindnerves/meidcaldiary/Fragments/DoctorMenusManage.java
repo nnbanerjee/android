@@ -63,26 +63,7 @@ public class DoctorMenusManage extends Fragment {
         totalFinance = (TextView) view.findViewById(R.id.total_finance);
 
         updateCount();
-       /* RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-        doctorId = session.getString("sessionID",null);
-        api.homeCountDoctor(doctorId,new Callback<HomeCountDoctor>() {
-            @Override
-            public void success(HomeCountDoctor homeCountDoctor, Response response) {
-                totalPatientCount.setText(""+homeCountDoctor.patientCount);
-                totalAppointments.setText(""+homeCountDoctor.appointments);
-                totalFinance.setText(""+homeCountDoctor.financeCount);
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
-            }
-        });*/
+
         patientsProfilelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

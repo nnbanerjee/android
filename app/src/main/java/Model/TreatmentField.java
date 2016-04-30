@@ -9,6 +9,28 @@ public class TreatmentField {
     private String fieldName;
     private String value;
 
+    public String isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
+    }
+
+    private String updated;
+
+    public String getTreatmentAttributeId() {
+        return treatmentAttributeId;
+    }
+
+    public void setTreatmentAttributeId(String treatmentAttributeId) {
+        this.treatmentAttributeId = treatmentAttributeId;
+    }
+
+    private String treatmentAttributeId;
+    private String treatmentId;
+    public TreatmentField(){}
+
     public TreatmentField(String fieldId, String fieldName, String value, String treatmentId) {
         this.fieldId = fieldId;
         this.fieldName = fieldName;
@@ -16,7 +38,7 @@ public class TreatmentField {
         this.treatmentId = treatmentId;
     }
 
-    private String treatmentId;
+
 
     /**
      *

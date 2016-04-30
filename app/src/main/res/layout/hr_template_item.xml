@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="100dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:padding="10dp"
+    android:id="@+id/relative_main"
     tools:context=".HomeActivity">
 
     <TextView
@@ -10,12 +11,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/templateHeader"
         android:text="Template Header"
-        style="@style/body2"
-        android:textColor="#000000"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
 
+        style="@style/body2"
+
+        android:textColor="#ffffff"
+
+        />
+<!--  android:background="@color/color_blue_default"-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +28,7 @@
         android:layout_below="@+id/templateHeader"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:visibility="gone"
     />
 
 </RelativeLayout>

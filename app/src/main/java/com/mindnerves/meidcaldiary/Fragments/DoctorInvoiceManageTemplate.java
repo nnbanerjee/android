@@ -166,8 +166,9 @@ public class DoctorInvoiceManageTemplate extends Fragment {
                     temp.setProcedureName("");
                     arrayTemplate.add(temp);
                 }
-                adapter = new TemplateAdapter(getActivity(),arrayTemplate);
-                listViewManageTemplate.setAdapter(adapter);
+                //Commented By Raviraj
+               /* adapter = new TemplateAdapter(getActivity(),arrayTemplate);
+                listViewManageTemplate.setAdapter(adapter);*/
 
                 progress.dismiss();
            }
@@ -188,7 +189,8 @@ public class DoctorInvoiceManageTemplate extends Fragment {
 
     public void showListBySearch(String searchText)
     {
-            int flagSearch = 0;
+        //Commented By Raviraj
+          /*  int flagSearch = 0;
             int flagNotSearch = 0;
             nameList = new ArrayList<ShowTemplate>();
             for(ShowTemplate t:arrayTemplate)
@@ -224,6 +226,6 @@ public class DoctorInvoiceManageTemplate extends Fragment {
                 listViewManageTemplate.setAdapter(adapter);
 
             }
-
+*/
     }
 }

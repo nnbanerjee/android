@@ -52,7 +52,11 @@ public class ForgotPasswordActivity extends FragmentActivity {
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             ft.commit();
-        } /*else {
+        } else{
+
+            Intent intObj = new Intent(this, MainActivity.class);
+            startActivity(intObj);
+        }/*else {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setMessage(R.string.confirm_logout);
             alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

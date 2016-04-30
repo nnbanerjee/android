@@ -6,20 +6,63 @@ package Model;
 public class FileUpload {
 
     private Long id;
-    private String type;
     private String doctorId;
     private String patientId;
     private String assistantId;
     private String appointmentDate;
     private String appointmentTime;
-    private String category;
     private String name;
     private String documentType;
-    private String Url;
-    private String fileName;
     private String personType;
-    private String clinicId;
+
+
+    //Reused
     private String clinicName;
+    private String category;
+    private String fileName;
+    private String type;
+    private String Url;
+    private String clinicId;
+
+    //New Attrributes
+    private String fileId;
+    private String date;
+    private String appointmentId;
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    private String personId;
+
 
     public Long getId() {
         return id;

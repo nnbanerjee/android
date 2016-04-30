@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
         <TextView
@@ -18,21 +18,21 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@+id/slot"
-            android:text="Year"
-            android:textColor="@color/black"
+            android:text=""
+            android:textColor="@color/color_blue_default"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/slot"
-            style="@style/sub_heading"
+            style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:text="2015"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textColor="@color/color_blue_default"
+            />
 
         <View
             android:id="@+id/line"
@@ -40,9 +40,9 @@
             android:layout_height="2dp"
             android:layout_below="@+id/slot"
             android:layout_marginTop="2dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/green"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/dim_grey"
 
             />
     </RelativeLayout>

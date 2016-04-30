@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="Last Appointment"
-        style="@style/sub_heading" />
+        style="@style/sub_heading2" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/last_appointment_text"
             android:text="Date: "
-            style="@style/body2"
+            style="@style/caption_Style"
             android:id="@+id/date_text_show"
         />
         <TextView
@@ -41,7 +41,7 @@
             android:layout_below="@+id/last_appointment_text"
             android:layout_centerHorizontal="true"
             android:text="24-oct-2015 10:00 AM"
-            style="@style/body2"
+            style="@style/caption_Style"
             android:layout_toRightOf="@+id/date_text_show"
             />
     </RelativeLayout>
@@ -51,7 +51,7 @@
         android:text="Visited"
         android:layout_below="@+id/date_layout"
         android:id="@+id/visited_radio"
-        style="@style/sub_heading"
+        style="@style/title"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="2dp"
         />
@@ -159,7 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/visited_layout"
         android:layout_alignStart="@+id/visited_layout"
-        style="@style/sub_heading"
+        style="@style/title"
         android:text="Not Visited"
         android:id="@+id/not_visited_radio"
     />

@@ -27,6 +27,7 @@ import Application.MyApi;
 import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
+import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -49,6 +50,7 @@ public class AddAppointment extends Fragment {
     List<Clinic> clinicList;
     String[] arrayClinics;
     ArrayAdapter<String> clinicAdapter;
+    private String loggedInUser;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +58,8 @@ public class AddAppointment extends Fragment {
         global = (Global) getActivity().getApplicationContext();
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = Integer.parseInt(session.getString("patientId", ""));
-        doctorId = Integer.parseInt(session.getString("doctorId","0"));
+        doctorId = Integer.parseInt(session.getString("doctorId", "0"));
+        loggedInUser = session.getString("id", "0");
         System.out.println("PatientId::::::"+patientId);
         System.out.println("DoctorId::::::"+doctorId);
         datePicker = (DatePicker)view.findViewById(R.id.datePicker1);
@@ -78,7 +81,7 @@ public class AddAppointment extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getAllClinics(new Callback<List<Clinic>>() {
+        api.getAllClinics(new PersonID( loggedInUser),new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinics, Response response) {
                 clinicList = clinics;

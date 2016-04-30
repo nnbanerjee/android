@@ -166,7 +166,8 @@ public class SelectPatientTemplate extends Fragment {
                         fieldArrayList.add(fe);
                     }
                     //System.out.println("Field List size::::"+fieldArrayList.size());
-                    adapter = new TemplateDetailsAdapter(getActivity(),fieldArrayList);
+                    //adapter = new TemplateDetailsAdapter(getActivity(),fieldArrayList);
+                //Commented by raviraj
                     listViewFieldTemplate.setAdapter(adapter);
             }
 

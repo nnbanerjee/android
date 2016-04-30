@@ -78,7 +78,12 @@ public class ShowHistryDialog extends DialogFragment {
 
         if (State == 1) {
             if(summaryHistoryVMs!=null && summaryHistoryVMs.getSymptomLogs()!=null  ){
-                String[] arr=summaryHistoryVMs.getSymptomLogs().split("\\r?\\n");
+                String[] arr=null;
+                try {
+                      arr = summaryHistoryVMs.getSymptomLogs().split("\r?\n");
+                }catch(Exception e){
+
+                }
                 ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.single_item,arr);
                 listView.setAdapter(arrayAdapter);
 
@@ -90,9 +95,17 @@ public class ShowHistryDialog extends DialogFragment {
         }
         if (State == 2) {
             if(summaryHistoryVMs!=null && summaryHistoryVMs.getDiagnosisLogs()!=null ){
-                String[] arr=summaryHistoryVMs.getSymptomLogs().split("\\r?\\n");
-                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.single_item,arr);
-                listView.setAdapter(arrayAdapter);
+                String[] arr=null;
+                try{
+                    arr=summaryHistoryVMs.getSymptomLogs().split("\r?\n");
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.single_item,arr);
+                    listView.setAdapter(arrayAdapter);
+                }catch(Exception e){
+
+                }
+
+
+
 
 
             }else{

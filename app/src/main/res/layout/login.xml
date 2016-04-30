@@ -64,11 +64,8 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/email"
-        android:layout_alignRight="@+id/email"
         android:layout_below="@+id/email"
         android:layout_marginTop="50dp"
-        android:background="@drawable/apptheme_edit_text_holo_light"
         android:hint="Password*"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
@@ -112,6 +109,7 @@
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
         android:textColor="@color/color_blue_default"
+        style="@style/caption_Style"
           />
 
     <TextView

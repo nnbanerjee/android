@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,11 +65,11 @@ public class AllDoctorPatientAppointment extends Fragment {
     VisitHistory appointments;
     ImageView addClinic;
     String fragmentCall;
-
+Toolbar toolbar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.all_patient_appointment, container, false);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         final Bundle bun = getArguments();
@@ -79,12 +80,39 @@ public class AllDoctorPatientAppointment extends Fragment {
         // doctor_email = session.getString("patient_doctor_email", null);
         // doctorId = session.getString("doctorId", "");
         // patientId = session.getString("patientEmail", "");
-        show_global_tv.setText(session.getString("patient_Name", "Medical Diary"));
+        show_global_tv.setText("Visit Dates");
         addClinic = (ImageView) view.findViewById(R.id.add_clinic_appointment);
         final Button back = (Button) getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);
 
-        setHasOptionsMenu(true);
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.new_visit);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Fragment f = getActivity().getFragmentManager().findFragmentById(R.id.content_frame);
+                if (f instanceof AllDoctorPatientAppointment){
+                    SharedPreferences.Editor editor = session.edit();
+
+                    editor.putString("appointmentId", "");
+                    editor.putString("patientId", appointments.getPatientVisits().getPatientId());
+                    editor.putString("Summary", "NewSummary");
+
+                    editor.commit();
+                    //appointments
+                    //Fragment fragment = new DoctorAppointmentSummary();
+                    Fragment fragment = new DoctorAppointmentInformation();
+                    FragmentManager fragmentManger = getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                }
+
+                return true;
+            }
+        });
+
         patientId = session.getString("patientId", "");
         System.out.println("PatientID from preferances-->" + patientId);
         doctorId = session.getString("id", "");
@@ -119,8 +147,9 @@ public class AllDoctorPatientAppointment extends Fragment {
 
                 editor.putString("appointmentId", appointments.getPatientVisits().getVisits().get(position).getAppointmentId());
                 editor.putString("patientId", appointments.getPatientVisits().getPatientId());
-
+                editor.putString("Summary", "OldSummary");
                 editor.commit();
+
 
                 //appointments
                 //Fragment fragment = new DoctorAppointmentSummary();
@@ -129,6 +158,8 @@ public class AllDoctorPatientAppointment extends Fragment {
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
+
+        //this button is hidden and moved to menu
         addClinic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +197,8 @@ public class AllDoctorPatientAppointment extends Fragment {
 
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+
 
     @Override
     public void onResume() {
@@ -213,11 +246,16 @@ public class AllDoctorPatientAppointment extends Fragment {
                 }
             }
         } else {
-            fragment = new PatientDetailsFragment();
+            fragment = new AllDoctorsPatient();
             FragmentManager fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             final Button back = (Button) getActivity().findViewById(R.id.back_button);
             back.setVisibility(View.INVISIBLE);
+            /*fragment = new PatientDetailsFragment();
+            FragmentManager fragmentManger = getFragmentManager();
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            final Button back = (Button) getActivity().findViewById(R.id.back_button);
+            back.setVisibility(View.INVISIBLE);*/
         }
     }
 

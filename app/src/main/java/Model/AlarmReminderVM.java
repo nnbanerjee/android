@@ -1,6 +1,8 @@
 package Model;
 
 
+import java.util.List;
+
 public class AlarmReminderVM {
 	public Long id;
 	public String alarmDate;
@@ -16,7 +18,24 @@ public class AlarmReminderVM {
     public String startDate;
     public String endDate;
     public String doctorInstruction;
-	
+
+    public List<String> getTimes() {
+        return times;
+    }
+
+    public void setTimes(List<String> times) {
+        this.times = times;
+    }
+
+    public List<String> times;
+    public AlarmReminderVM(Long id, String alarmDate,List<String> timelist,String medicieName) {
+
+        this.id = id;
+        this.alarmDate = alarmDate;
+        times=timelist;
+        this.medicineName = medicieName;
+        // TODO Auto-generated constructor stub
+    }
 	public AlarmReminderVM(Long id, String alarmDate, String time1,
 			String time2, String time3, String time4, String time5,
 			String time6,String medicieName) {

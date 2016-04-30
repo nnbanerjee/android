@@ -28,7 +28,10 @@ import java.util.Calendar;
 import Application.MyApi;
 import Model.DoctorNotesVM;
 import Model.Field;
+import Model.ResponseCodeVerfication;
 import Model.ShowProcedure;
+import Model.TreatmentPlan;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -39,7 +42,7 @@ import retrofit.client.Response;
  * Created by MNT on 27-Mar-15.
  */
 public class ChangeFeildValueDialog extends DialogFragment {
-
+    private Listener mListener;
     private EditText procedure_name;
     private Button add_template,cancel_template;
     public MyApi api;
@@ -48,12 +51,18 @@ public class ChangeFeildValueDialog extends DialogFragment {
     SharedPreferences session;
     Button calen;
     private Spinner currencySpinner;
-    String editableValue,doctor_email,patientEmail,fieldType;
+    String editableValue,doctor_email,patientEmail,fieldType,editableFieldValue;
 
     static ChangeFeildValueDialog newInstance() {
         return new ChangeFeildValueDialog();
     }
+    public static interface Listener {
 
+        void returnData(String result);
+    }
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +73,8 @@ public class ChangeFeildValueDialog extends DialogFragment {
         doctor_email = session.getString("patient_doctor_email", null);
         patientEmail = session.getString("doctor_patientEmail", null);
         fieldType = session.getString("editableFieldType",null);
+
+        editableFieldValue = session.getString("editableFieldValue",null);
         add_template = (Button)view.findViewById(R.id.add_template);
         cancel_template = (Button)view.findViewById(R.id.cancel_template);
         currencySpinner = (Spinner)view.findViewById(R.id.category);
@@ -80,7 +91,9 @@ public class ChangeFeildValueDialog extends DialogFragment {
                 .build();
         api = restAdapter.create(MyApi.class);
 
-        if(fieldType.equals("USD"))
+        if(fieldType.equals("String")) {
+            procedure_name.setText(editableValue);
+        }else if(fieldType.equals("USD"))
         {
             calen.setVisibility(View.GONE);
             procedure_name.setVisibility(View.VISIBLE);
@@ -118,7 +131,9 @@ public class ChangeFeildValueDialog extends DialogFragment {
                 /*SharedPreferences.Editor editor = session.edit();
                 editor.putString("editableValue", changeValue.getText().toString());
                 editor.commit();*/
-                Field field = new Field();
+
+
+                /*Field field = new Field();
                 field.setFieldId(session.getString("editableFieldId",""));
                 field.setTemplateId(session.getString("editableTemplateId", ""));
                 field.setFieldDisplayName(session.getString("editableFieldDisplayName", ""));
@@ -132,6 +147,12 @@ public class ChangeFeildValueDialog extends DialogFragment {
                 Fragment fragment = new DoctorAppointmentTreatmentPlan();
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+*/
+                if (mListener != null) {
+                    mListener.returnData(procedure_name.getText().toString());
+                }
+
+                dismiss();
 
                 //Toast.makeText(getActivity(), "Changed ", Toast.LENGTH_SHORT).show();
             }
@@ -167,13 +188,15 @@ public class ChangeFeildValueDialog extends DialogFragment {
     public void updateStartDate()
     {
         // editStartDate.setText(formate.format(calendar1.getTime()));
-        procedure_name.setText(""+calendar1.get(Calendar.DAY_OF_MONTH)+"-"+showMonth(calendar1.get(Calendar.MONTH))+"-"+calendar1.get(Calendar.YEAR));
+        procedure_name.setText("" + calendar1.get(Calendar.DAY_OF_MONTH) + "-" + UtilSingleInstance.showMonth(calendar1.get(Calendar.MONTH))+"-"+calendar1.get(Calendar.YEAR));
     }
 
-    public void updateFieldTemplate(Field field){
-        api.updateFieldTemplateData(field, new Callback<Field>() {
+    public void updateFieldTemplate(TreatmentPlan treatmentPlan){
+
+
+        api.updatePatientVisitTreatmentPlan(treatmentPlan, new Callback<ResponseCodeVerfication>() {
             @Override
-            public void success(Field field, Response response) {
+            public void success(ResponseCodeVerfication responseCodeVerfication, Response response) {
                 Toast.makeText(getActivity(), "Updated successfully !!!", Toast.LENGTH_LONG).show();
                 ChangeFeildValueDialog.this.getDialog().cancel();
             }
@@ -186,50 +209,6 @@ public class ChangeFeildValueDialog extends DialogFragment {
         });
     }
 
-    public int showMonth(int month)
-    {
-        int showMonth = month;
-        switch(showMonth)
-        {
-            case 0:
-                showMonth = showMonth + 1;
-                break;
-            case 1:
-                showMonth = showMonth + 1;
-                break;
-            case 2:
-                showMonth = showMonth + 1;
-                break;
-            case 3:
-                showMonth = showMonth + 1;
-                break;
-            case 4:
-                showMonth = showMonth + 1;
-                break;
-            case 5:
-                showMonth = showMonth + 1;
-                break;
-            case 6:
-                showMonth = showMonth + 1;
-                break;
-            case 7:
-                showMonth = showMonth + 1;
-                break;
-            case 8:
-                showMonth = showMonth + 1;
-                break;
-            case 9:
-                showMonth = showMonth + 1;
-                break;
-            case 10:
-                showMonth = showMonth + 1;
-                break;
-            case 11:
-                showMonth = showMonth + 1;
-                break;
 
-        }
-        return showMonth;
-    }
    
 }

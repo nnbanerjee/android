@@ -96,13 +96,14 @@ public class DoctorPatientListAdapter extends BaseAdapter  {
         TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.doctorSpeciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
         ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctorImg);
+
         TextView address = (TextView) convertView.findViewById(R.id.lastAppointmentDate);
         TextView appointmentDate = (TextView) convertView.findViewById(R.id.appointmentDate);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
-        Button rightButton = (Button) convertView.findViewById(R.id.nextBtn);
+        ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
         totalAppointment.setVisibility(View.GONE);
         System.out.println("picture Url is---->" + activity.getString(R.string.image_base_url) + allPatients.get(position).getImageUrl());
@@ -146,52 +147,7 @@ public class DoctorPatientListAdapter extends BaseAdapter  {
         doctorName.setText(allPatients.get(position).getName());
         doctorSpeciality.setText(allPatients.get(position).getProfession());
 
-       /* lastVisitedValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String value = lastVisitedValue.getText().toString();
-                if (!value.equals("None")) {
-                    global.setAppointmentDate(allPatients.get(position).getLastAppointmentDate());
-                    global.setAppointmentTime(allPatients.get(position).getLastVisit());
-                    SharedPreferences.Editor editor = session.edit();
-                    editor.putString("patient_doctor_email", doctorId);
-                    editor.putString("clinicId", allPatients.get(position).lastVisitedClinicId);
-                    editor.putString("doctorId", "" + allPatients.get(position).getDoctorId());
-                    editor.commit();
-                    Fragment fragment = new DoctorAppointmentInformation();
-                    FragmentManager fragmentManger = activity.getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                }
-            }
-        });
 
-        lastAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String value = lastAppointment.getText().toString();
-                if (!value.equals("None")) {
-                    if (allPatients.get(position).getStar() == null) {
-                        global.setAppointmentDate(allPatients.get(position).getAppointmentDate());
-                        global.setAppointmentTime(allPatients.get(position).getAppointmentTime());
-                        SharedPreferences.Editor editor = session.edit();
-                        editor.putString("patient_appointment_date", allPatients.get(position).getAppointmentDate());
-                        editor.putString("patient_appointment_time", allPatients.get(position).getAppointmentTime());
-                        editor.putString("patient_DoctorEmail", doctorId);
-                        editor.putString("clinicId", allPatients.get(position).appointmentClinicId);
-                        editor.putString("patient_doctorId", allPatients.get(position).getDoctorId());
-                        editor.putString("doctorId", "" + allPatients.get(position).getDoctorId());
-                        editor.putString("patient_clinicId", "" + allPatients.get(position).appointmentClinicId);
-                        editor.putString("doctor_patient_appointmentDate", allPatients.get(position).getAppointmentDate());
-                        editor.putString("doctor_patient_appointmentTime", allPatients.get(position).getAppointmentTime());
-                        editor.commit();
-                        Fragment fragment = new FeedbackFragment();
-                        FragmentManager fragmentManger = activity.getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                    }
-
-                }
-            }
-        });*/
 
         downImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,38 +200,7 @@ public class DoctorPatientListAdapter extends BaseAdapter  {
 
             }
         });
-       /* appointmentDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                api.getAllDoctorPatientClinics(doctorId, "1", new Callback<List<ClinicDetailVm>>() {
-                    @Override
-                    public void success(List<ClinicDetailVm> clinicDetailVms, Response response) {
-                        global.setClinicDetailVm(clinicDetailVms);
-                        SharedPreferences.Editor editor = session.edit();
-                        editor.putString("Doctor_patientEmail", allPatients.get(position).getEmail());
-                        editor.commit();
-                        Bundle args = new Bundle();
-                        args.putString("clinicId", "" + allPatients.get(position).getClinicId());
-                        args.putString("clinicShift", allPatients.get(position).getShift());
-                        args.putString("appointmentTime", allPatients.get(position).getBookTime());
-                        args.putString("appointmentDate", allPatients.get(position).getBookDate());
-                        args.putString("fragment", "DoctorPatientAdapter");
-                        Fragment fragment = new ClinicAppointmentFragment();
-                        fragment.setArguments(args);
-                        FragmentManager fragmentManger = activity.getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-*/
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override

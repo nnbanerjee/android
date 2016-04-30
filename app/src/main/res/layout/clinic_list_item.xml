@@ -5,13 +5,15 @@
     android:layout_height="match_parent">
 
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/main_relative"
-            android:background="@color/grey"
           >
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +21,6 @@
             android:text="Clinic Name "
             style="@style/sub_heading"
             android:layout_margin="10dp"
-            android:textStyle="bold"
             android:id="@+id/clinicName"
             android:textColor="#1E90FF"/>
         <Button
@@ -31,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/right_arrow_black"
             android:textColor="#000000"
-
+            android:visibility="invisible"
             android:layout_marginTop="2dp"
             android:textStyle="bold" />
             </RelativeLayout>
@@ -43,9 +44,9 @@
             android:layout_below="@+id/main_relative">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/location"
@@ -55,31 +56,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Clinic Location "
-                style="@style/body1"
+                style="@style/caption_Style"
+                android:layout_marginLeft="10dp"
                 android:textAlignment="center"
                 android:layout_toRightOf="@+id/locationIcon"
                 android:id="@+id/clinicLocation"
-                android:textColor="#000000"/>
-
+                 />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/calling"
+                android:layout_below="@+id/clinicLocation"
+                android:id="@+id/contacticon"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contact : "
-                style="@style/body1"
+                style="@style/caption_Style"
+
                 android:layout_below="@+id/clinicLocation"
-                android:layout_toRightOf="@+id/locationIcon"
+                android:layout_toRightOf="@+id/contacticon"
                 android:id="@+id/clinicContactText"
+                android:visibility="gone"
                 android:textColor="#000000"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Clinic Contact"
-                style="@style/body1"
+                style="@style/caption_Style"
+                android:layout_margin="5dp"
                 android:layout_below="@+id/clinicLocation"
                 android:layout_toRightOf="@+id/clinicContactText"
                 android:id="@+id/clinicContact"
-                android:textColor="#000000"/>
+                />
 
         </RelativeLayout>
         <LinearLayout
@@ -97,8 +110,8 @@
             android:layout_below="@+id/locationLayout">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_margin="5dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"

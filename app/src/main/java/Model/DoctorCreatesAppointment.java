@@ -26,7 +26,17 @@ public class DoctorCreatesAppointment {
     private String visitStatus;
     private String referred_by;
 
-    public DoctorCreatesAppointment(String sequenceNumber, String doctorId, String patientId, String slotNumber, String userType, String clinicId, String appointmentDate, String type, String doctorClinicId) {
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    private String appointmentId;
+    public DoctorCreatesAppointment(String sequenceNumber, String doctorId, String patientId, String slotNumber, String userType, String clinicId, String appointmentDate,
+                                    String type, String doctorClinicId) {
         this.sequenceNumber = sequenceNumber;
         this.doctorId = doctorId;
         this.patientId = patientId;
@@ -60,6 +70,29 @@ public class DoctorCreatesAppointment {
         this.new_case_id = new_case_id;
         this.doctorClinicId = doctorClinicId;
         this.type = type;
+    }
+    public DoctorCreatesAppointment(String sequenceNumber, String doctorId, String patientId,
+                                    String userType, String clinicId, String appointmentDate,  String doctorClinicId, String type,
+                                    String appointmentStatus, String visitType, String rating, String visitStatus, String referred_by,
+                                    String reviews, String new_case_id, String appointmentId) {
+        this.sequenceNumber = sequenceNumber;
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+        // this.slotNumber = slotNumber;
+        this.userType = userType;
+        this.clinicId = clinicId;
+        this.appointmentDate = appointmentDate;
+        // this.status = status;
+        this.appointmentStatus = appointmentStatus;
+        this.visitType = visitType;
+        this.rating = rating;
+        this.visitStatus = visitStatus;
+        this.referred_by = referred_by;
+        this.reviews = reviews;
+        this.new_case_id = new_case_id;
+        this.doctorClinicId = doctorClinicId;
+        this.type = type;
+        this.appointmentId=appointmentId;
     }
 
     private String reviews;

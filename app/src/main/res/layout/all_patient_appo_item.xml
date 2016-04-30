@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/date"
         android:text="12-Feb-2015"
-        style="@style/body2"
-        android:textColor="#000000"
+        style="@style/sub_heading_normal_black"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         />
@@ -20,9 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/time"
-        android:text=""
-        android:textColor="#000000"
-        style="@style/body2"
+        android:text="12:43"
+        android:layout_marginLeft="30dp"
+        style="@style/sub_heading_normal_grey"
 
         android:layout_toRightOf="@+id/date"
         android:layout_marginTop="5dp"
@@ -33,19 +32,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/visitType"
         android:text="New Visit"
-        style="@style/body2"
-        android:textColor="#000000"
+        style="@style/sub_heading_normal_grey"
         android:layout_toLeftOf="@+id/rightArrow"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         />
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="3dp"
         android:id="@+id/rightArrow"
-        android:background="@drawable/right_arrow"
+        android:background="@drawable/right_arrow_grey"
         android:layout_alignParentRight="true"
         android:layout_marginTop="3dp"/>
 

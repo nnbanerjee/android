@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class PatientDetailsFragment extends Fragment {
     public AllPatients patient;
     private AllPatients selectedFromListPatient;
     Global global;
-
+    Toolbar toolbar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +62,10 @@ public class PatientDetailsFragment extends Fragment {
         TextView totalAppointment = (TextView) view.findViewById(R.id.totalAppointment);
         TextView nextAppointment = (TextView) view.findViewById(R.id.appointmentDate);
 
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+       // toolbar.inflateMenu(R.menu.menu);
 
         patient = global.getSelectedPatientsProfile();
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -164,10 +169,10 @@ public class PatientDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                appointmentsBtn.setBackgroundResource(R.drawable.square_blue_color);
-                appointmentsBtn.setTextColor(Color.parseColor("#ffffff"));
-                profileBtn.setBackgroundResource(R.drawable.square_grey_color);
-                profileBtn.setTextColor(Color.parseColor("#000000"));
+                appointmentsBtn.setBackgroundResource(R.drawable.page_selected);
+               // appointmentsBtn.setTextColor(Color.parseColor("#ffffff"));
+                profileBtn.setBackgroundResource(R.drawable.page_default);
+                //profileBtn.setTextColor(Color.parseColor("#000000"));
                 //ClinicDetailsFragment
                 getClinicsProfile();
 
@@ -177,10 +182,10 @@ public class PatientDetailsFragment extends Fragment {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appointmentsBtn.setBackgroundResource(R.drawable.square_grey_color);
-                appointmentsBtn.setTextColor(Color.parseColor("#000000"));
-                profileBtn.setBackgroundResource(R.drawable.square_blue_color);
-                profileBtn.setTextColor(Color.parseColor("#ffffff"));
+                appointmentsBtn.setBackgroundResource(R.drawable.page_default);
+             //   appointmentsBtn.setTextColor(Color.parseColor("#000000"));
+                 profileBtn.setBackgroundResource(R.drawable.page_selected);
+            //    profileBtn.setTextColor(Color.parseColor("#ffffff"));
                 getPatientProfile();
 
             }

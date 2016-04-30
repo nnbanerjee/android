@@ -2,23 +2,24 @@ package Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Callback;
 import com.mindnerves.meidcaldiary.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import Application.MyApi;
 import Model.FileUpload;
+import Model.RemoveVisitDocument;
+import Model.ResponseCodeVerfication;
+import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
@@ -31,12 +32,16 @@ public class DocumentAdapter extends BaseAdapter {
     Activity activity;
     List<FileUpload> fileList;
     private LayoutInflater inflater;
+    public SharedPreferences session;
     String type;
     public MyApi api;
+    private String loggedInUserId;
     public DocumentAdapter(Activity activity, List<FileUpload> fileList,String type) {
         this.activity = activity;
         this.fileList = fileList;
         this.type = type;
+        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loggedInUserId =  session.getString("id", "0") ;
     }
 
     @Override
@@ -74,9 +79,17 @@ public class DocumentAdapter extends BaseAdapter {
         final TextView doc_category = (TextView) convertView.findViewById(R.id.doc_category);
         final ImageView close = (ImageView)convertView.findViewById(R.id.close_document);
         clinicName.setText(fileList.get(position).getClinicName());
-        fileName.setText(fileList.get(position).getName());
+        fileName.setText(fileList.get(position).getFileName());
         doc_category.setText(fileList.get(position).getCategory());
-        if (fileList.get(position).getDocumentType().equalsIgnoreCase(".pdf")) {
+        if (fileList.get(position).getType().equalsIgnoreCase("0")) {
+            image.setImageResource(R.drawable.pdf);
+            System.out.println("I am in condition pdf :::::::");
+        } else if (fileList.get(position).getType().equalsIgnoreCase("1")   ) {
+            image.setImageResource(R.drawable.doc);
+            System.out.println("I am in condition doc :::::::");
+        }
+
+        /*if (fileList.get(position).getDocumentType().equalsIgnoreCase(".pdf")) {
             image.setImageResource(R.drawable.pdf_icon);
             System.out.println("I am in condition pdf :::::::");
         } else if (fileList.get(position).getDocumentType().equalsIgnoreCase(".doc") || (fileList.get(position).getDocumentType().equalsIgnoreCase(".docx"))) {
@@ -88,8 +101,8 @@ public class DocumentAdapter extends BaseAdapter {
             image.setImageResource(R.drawable.txt32);
         } else {
             image.setImageResource(R.drawable.images_icon);
-        }
-        if(type.equalsIgnoreCase(fileList.get(position).getType())){
+        }*/
+        if(loggedInUserId.equalsIgnoreCase(fileList.get(position).getPersonId())){
             close.setVisibility(View.VISIBLE);
         }else{
             close.setVisibility(View.GONE);
@@ -97,10 +110,10 @@ public class DocumentAdapter extends BaseAdapter {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                api.deleteFile(""+fileList.get(position).getId(),new retrofit.Callback<String>() {
+                api.removePatientVisitDocuments(new RemoveVisitDocument(fileList.get(position).getFileId(),loggedInUserId),  new Callback<ResponseCodeVerfication>() {
                     @Override
-                    public void success(String s, Response response) {
-                        Toast.makeText(activity,"File Deleted Successfully",Toast.LENGTH_SHORT).show();
+                    public void success(ResponseCodeVerfication s, Response response) {
+                        Toast.makeText(activity, "File Deleted Successfully", Toast.LENGTH_SHORT).show();
                         fileList.remove(position);
                         notifyDataSetChanged();
                     }
@@ -108,7 +121,7 @@ public class DocumentAdapter extends BaseAdapter {
                     @Override
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
-                        Toast.makeText(activity,"Fail",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

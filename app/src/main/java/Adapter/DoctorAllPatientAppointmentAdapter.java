@@ -67,14 +67,15 @@ public class DoctorAllPatientAppointmentAdapter extends BaseAdapter implements S
             holder.layout = (RelativeLayout) convertView.findViewById(R.id.layout);
             holder.date = (TextView) convertView.findViewById(R.id.date);
             holder.visitType = (TextView) convertView.findViewById(R.id.visitType);
-           // holder.time = (TextView) convertView.findViewById(R.id.time);
+           holder.time = (TextView) convertView.findViewById(R.id.time);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         final int pos = position;
      
-        holder.date.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()) );
+        holder.date.setText(UtilSingleInstance.getInstance().getOnlyDateFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()) );
+        holder.time.setText(UtilSingleInstance.getInstance().getOnlyTimeFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()) );
         holder.visitType.setText(UtilSingleInstance.getUserVisitType(appointment.get(position).getVisitType()) );
       //  holder.time.setText(appointment.get(position).getBookTime());
 

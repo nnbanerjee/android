@@ -1,31 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:layout_margin="5dp"
-    android:padding="10dp"
     android:layout_marginBottom="10dp"
     tools:context=".HomeActivity">
 
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/procedureName"
         android:text="Procedure Name"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        style="@style/body2"
+        style="@style/title"
     />
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_template"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit"
+        android:layout_toLeftOf="@+id/delete_template"
+        android:layout_marginRight="15dp"
+    />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/delete_template"
         android:layout_marginTop="10dp"
-        android:background="@drawable/ic_close_black_24dp"
+        android:background="@drawable/reject_grey"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-    />
+        android:layout_marginRight="15dp"
+        />
     <!--<com.mindnerves.meidcaldiary.HorizontalListView
         android:id="@+id/horizontalTemplateList"
         android:layout_below="@+id/procedureName"
@@ -42,18 +48,17 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:id="@+id/right_navigation"
+        android:visibility="gone"
     />
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/allTemplateList"
         android:layout_below="@+id/delete_template"
-        android:padding="5dp"
-        android:background="@drawable/rounded_black_color"
         android:layout_height="180dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_alignRight="@+id/delete_template"
-        android:layout_alignEnd="@+id/delete_template">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
     </ListView>
 
 </RelativeLayout>

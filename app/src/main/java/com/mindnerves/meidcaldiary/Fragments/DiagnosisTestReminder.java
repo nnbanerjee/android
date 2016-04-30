@@ -37,6 +37,7 @@ import Model.AppointmentDB;
 import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.DoctorSearchResponse;
+import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -60,6 +61,7 @@ public class DiagnosisTestReminder extends Fragment {
     int clinicPosition = 0;
     int doctorPosition = 0;
     SharedPreferences session;
+    private String loggedInUSer;
 
     @Nullable
     @Override
@@ -75,13 +77,14 @@ public class DiagnosisTestReminder extends Fragment {
         types = getResources().getStringArray(R.array.visit_type_list);
         typeSpineer.setAdapter(new TypeSpinner(getActivity(), R.layout.customize_spinner,types));
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loggedInUSer =  session.getString("id", "0") ;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getAllClinics(new Callback<List<Clinic>>() {
+        api.getAllClinics(new PersonID( loggedInUSer), new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinicList, Response response) {
                 clinicDetailVm = clinicList;

@@ -95,7 +95,7 @@ public class DoctorInvoiceManageProcedure extends Fragment {
 
         final SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("sessionID",null);
-        getActivity().getActionBar().hide();
+      //  getActivity().getActionBar().hide();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -109,10 +109,10 @@ public class DoctorInvoiceManageProcedure extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
-                globalTv.setText("Medical Diary");
+               // TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+                //globalTv.setText("Medical Diary");
                 getFragmentManager().beginTransaction().remove(DoctorInvoiceManageProcedure.this).commit();
-                back.setVisibility(View.INVISIBLE);
+               // back.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -137,8 +137,9 @@ public class DoctorInvoiceManageProcedure extends Fragment {
                 if(temporary.equals("All")){
                     caetogryList = arrayProcedure;
                 }
-
-                adapter = new ProcedureAdapter(getActivity(), caetogryList);
+                ArrayList arr= new ArrayList();
+                arr.addAll(caetogryList);
+                adapter = new ProcedureAdapter(getActivity(), arr);
                 listProcedure.setAdapter(adapter);
 
             }
@@ -163,7 +164,9 @@ public class DoctorInvoiceManageProcedure extends Fragment {
                 if(searchText.equals("")){
                     //Toast.makeText(getActivity(),"Please Enter Text",Toast.LENGTH_SHORT).show();
                     searchTv.setError("Please Enter Text ");
-                    adapter = new ProcedureAdapter(getActivity(), arrayProcedure);
+                    ArrayList arr= new ArrayList();
+                    arr.addAll(arrayProcedure);
+                    adapter = new ProcedureAdapter(getActivity(), arr);
                     listProcedure.setAdapter(adapter);
                     //showTemplateList();
                 }
@@ -210,8 +213,9 @@ public class DoctorInvoiceManageProcedure extends Fragment {
                     noResult.setVisibility(View.VISIBLE);
                     listProcedure.setVisibility(View.GONE);
                 }
-
-                adapter = new ProcedureAdapter(getActivity(), arrayProcedure);
+                ArrayList arr= new ArrayList();
+                arr.addAll(arrayProcedure);
+                adapter = new ProcedureAdapter(getActivity(), arr);
                 listProcedure.setAdapter(adapter);
                 progress.dismiss();
             }
@@ -237,7 +241,9 @@ public class DoctorInvoiceManageProcedure extends Fragment {
         if(nameList.size() > 0){
             noResult.setVisibility(View.GONE);
             listProcedure.setVisibility(View.VISIBLE);
-            adapter = new ProcedureAdapter(getActivity(), nameList);
+            ArrayList arr= new ArrayList();
+            arr.addAll(nameList);
+            adapter = new ProcedureAdapter(getActivity(), arr);
             listProcedure.setAdapter(adapter);
         }else{
             noResult.setVisibility(View.VISIBLE);

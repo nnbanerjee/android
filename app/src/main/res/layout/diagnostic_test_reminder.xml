@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/calendar2"
+            android:background="@drawable/cal"
             android:layout_alignParentRight="true"
             android:id="@+id/date_time_picker"
             android:layout_marginLeft="10dp"

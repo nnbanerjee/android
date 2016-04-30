@@ -1,5 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
+import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
@@ -85,10 +87,10 @@ public class PatientMedicinReminder extends Fragment {
     boolean checkStartDate = false;
     TextView dateValue, timeValue, endDateValue, daysText, durationText;
     private long calStartDate, calEndDate;
-    EditText duration, doctorInstructionValue;
+    EditText duration, doctorInstructionValue,numberDoses;
     ImageView calenderImg, endDateImg;
     Calendar calendar = Calendar.getInstance();
-    Spinner numberDoses, scheduleDate;
+    Spinner  scheduleDate;
     HorizontalListView horizontalList;
     CheckBox medicineReminderBtn;
     List<AlarmReminderVM> medicinReminderTables;
@@ -105,20 +107,34 @@ public class PatientMedicinReminder extends Fragment {
     ArrayList<String> startList, endList;
     Bundle saveToBundle = new Bundle();
     ArrayAdapter<String> scheduleAdapter;
-    ArrayAdapter<String> dosesAdapter;
+   //ArrayAdapter<String> dosesAdapter;
     public MultiAutoCompleteTextView medicine;
     AddPatientMedicineSummary addPatientMedicineSummary;
     private String appointMentId;
     boolean addNewFlag = false;
     private String state;
     private String medicineName, medicineId, medicineStartDate, medicineEndDate, medicineReminder;
+    Button  back;
 
+    TextView show_global_tv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_medicine_reminder, container, false);
+        show_global_tv = (TextView) getActivity().findViewById(R.id.show_global_tv);
+        back = (Button)getActivity().findViewById(R.id.back_button);
 
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToBack();
+
+            }
+        });
+
+        show_global_tv.setText("Add Medicine");
         // Get current date by calender
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
@@ -142,7 +158,7 @@ public class PatientMedicinReminder extends Fragment {
         //Load Ui controls
         calenderImg = (ImageView) view.findViewById(R.id.calenderImg);
         endDateImg = (ImageView) view.findViewById(R.id.endDateImg);
-        numberDoses = (Spinner) view.findViewById(R.id.numberDoses);
+        numberDoses = (EditText) view.findViewById(R.id.no_of_doses_edit_box);
         scheduleDate = (Spinner) view.findViewById(R.id.scheduleDate);
         dateValue = (TextView) view.findViewById(R.id.dateValue);
         endDateValue = (TextView) view.findViewById(R.id.endDateValue);
@@ -179,8 +195,8 @@ public class PatientMedicinReminder extends Fragment {
 
         scheduleAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, scheduleList);
         scheduleDate.setAdapter(scheduleAdapter);
-        dosesAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, dosesList);
-        numberDoses.setAdapter(dosesAdapter);
+        /*dosesAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, dosesList);
+        numberDoses.setAdapter(dosesAdapter);*/
 
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -232,11 +248,13 @@ public class PatientMedicinReminder extends Fragment {
 
         if (global.getDateString() != null) {
             dateValue.setText(global.getDateString());
-            String durationText = args.get("duration").toString();
+            String durationText="";
+            if(args.get("duration")!=null)
+              durationText = args.get("duration").toString();
             if (durationText != null) {
                 duration.setText(durationText);
                 String scheduleType = scheduleDate.getSelectedItem().toString();
-                int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
+                int doses = Integer.parseInt(numberDoses.getText().toString());
                 System.out.println("ScheduleTYpe:::::::::" + scheduleType);
                 if (scheduleType.equals("Daily")) {
                     showScheduleDay(doses);
@@ -256,7 +274,7 @@ public class PatientMedicinReminder extends Fragment {
                 duration.setText(durationText);
 
                 String scheduleType = scheduleDate.getSelectedItem().toString();
-                int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
+                int doses = Integer.parseInt(numberDoses.getText().toString());
                 System.out.println("ScheduleTYpe:::::::::" + scheduleType);
                 if (scheduleType.equals("Daily")) {
                     showScheduleDay(doses);
@@ -298,7 +316,7 @@ public class PatientMedicinReminder extends Fragment {
 
                     int days = Integer.parseInt(duration.getText().toString().trim());
                     Calendar cal = Calendar.getInstance();
-                Date startDuration = getStringToDate(startList.get(1));
+                    Date startDuration = getStringToDate(startList.get(1));
                     cal.setTime(startDuration);
                     if (index == 1) {
                         cal.add(Calendar.DAY_OF_MONTH, days);
@@ -316,7 +334,7 @@ public class PatientMedicinReminder extends Fragment {
                     calEndDate = cal.getTimeInMillis();
                     System.out.println(":::::::OnClick::::::");
                     String scheduleType = scheduleDate.getSelectedItem().toString();
-                    int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
+                    int doses = Integer.parseInt(numberDoses.getText().toString());
                     System.out.println("ScheduleTYpe:::::::::" + scheduleType);
                     if (scheduleType.equals("Daily")) {
                         showScheduleDay(doses);
@@ -357,19 +375,19 @@ public class PatientMedicinReminder extends Fragment {
                     String timeString = updateTimeString(hour, minute);
                     endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
                     String scheduleType = scheduleDate.getSelectedItem().toString();
-                    int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
+                    int doses = Integer.parseInt(numberDoses.getText().toString());
                     System.out.println("ScheduleTYpe:::::::::" + scheduleType);
                     if (scheduleType.equals("Daily")) {
                         showScheduleDay(doses);
-                        daysText.setText("Daily");
+                        daysText.setText("/ Day");
                         durationText.setText("Days");
                     } else if (scheduleType.equals("Weekly")) {
                         showScheduleWeek(doses);
-                        daysText.setText("Weekly");
+                        daysText.setText("/ Week");
                         durationText.setText("Weeks");
                     } else if (scheduleType.equals("Monthly")) {
                         showScheduleMonth(doses);
-                        daysText.setText("Monthly");
+                        daysText.setText("/ Month");
                         durationText.setText("Months");
                     }
                 } else {
@@ -383,7 +401,46 @@ public class PatientMedicinReminder extends Fragment {
             }
         });
 
-        numberDoses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        numberDoses.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                medicineReminderBtn.setChecked(false);
+                if (count > 0) {
+                    String eDate = endDateValue.getText().toString();
+                    if (!eDate.equals("")&& numberDoses.getText()!=null && !numberDoses.getText().toString().equalsIgnoreCase("")) {
+                        int doses = Integer.parseInt(numberDoses.getText().toString());
+                        String scheduleType = scheduleDate.getSelectedItem().toString();
+                        System.out.println("ScheduleTYpe:::::::::" + scheduleType);
+                        if (scheduleType.equals("Daily")) {
+                            showScheduleDay(doses);
+
+                        } else if (scheduleType.equals("Weekly")) {
+                            showScheduleWeek(doses);
+
+                        } else if (scheduleType.equals("Monthly")) {
+                            showScheduleMonth(doses);
+
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Please Enter Duration", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    count = count + 1;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+       /* numberDoses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 medicineReminderBtn.setChecked(false);
@@ -415,7 +472,7 @@ public class PatientMedicinReminder extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         System.out.println("Condition of Reminder::::::::" + (global.getReminderVM() != null));
         if (global.getReminderVM() != null) {
@@ -431,13 +488,14 @@ public class PatientMedicinReminder extends Fragment {
                 } else {
                     dateValue.setText(reminderVM.alarmReminderVMList.get(0).startDate);
                     endDateValue.setText(reminderVM.alarmReminderVMList.get(0).endDate);
-                    doctorInstructionValue.setText(reminderVM.alarmReminderVMList.get(0).doctorInstruction);
+                doctorInstructionValue.setText(reminderVM.alarmReminderVMList.get(0).doctorInstruction);
                     System.out.println("Duration::::::" + reminderVM.duration);
                     duration.setText("" + reminderVM.duration);
                     medicinReminderTables = reminderVM.alarmReminderVMList;
                     System.out.println("Size::::::::" + medicinReminderTables.size());
                     HorizontalListAdapter hrAdapter = new HorizontalListAdapter(getActivity(), medicinReminderTables);
                     horizontalList.setAdapter(hrAdapter);
+                    horizontalList.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,AbsListView.LayoutParams.WRAP_CONTENT));
                 }
             }
         }
@@ -501,7 +559,7 @@ public class PatientMedicinReminder extends Fragment {
                 } else {
                     addPatientMedicineSummary.setDurationSchedule("" + 0);
                 }
-                addPatientMedicineSummary.setDosesPerSchedule(numberDoses.getSelectedItem().toString());
+                addPatientMedicineSummary.setDosesPerSchedule(numberDoses.getText().toString());
                 addPatientMedicineSummary.setSchedule("" + scheduleDate.getSelectedItemPosition());
                 addPatientMedicineSummary.setDoctorInstruction(doctorInstructionValue.getText().toString());
                 addPatientMedicineSummary.setAutoSchedule("1");
@@ -662,44 +720,11 @@ public class PatientMedicinReminder extends Fragment {
                 Calendar startDateMain = startCalenderDate;
                 Calendar currentDate = Calendar.getInstance();
                 reminderDate = new ArrayList<ReminderDate>();
-                if (doses == 1) {
-                    int i = 30;
-                    Calendar startDateLoop = startDateMain;
-                    while (i <= dayDifference) {
-                        ReminderDate rDate1 = new ReminderDate();
-                        ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
 
-                        boolean sameDay = currentDate.get(Calendar.YEAR) == startDateLoop.get(Calendar.YEAR) &&
-                                currentDate.get(Calendar.DAY_OF_YEAR) == startDateLoop.get(Calendar.DAY_OF_YEAR);
-                        System.out.println("Condition:::::" + sameDay);
-                        if (sameDay == true) {
-                            startDateLoop = currentDate;
-                        }
-                        rDate1.setDate(startDateLoop.getTime());
-                        String timeHHMM = null;
-                        timeHHMM = startDateLoop.get(Calendar.HOUR) + ":" + startDateLoop.get(Calendar.MINUTE);
-                        if (startDateLoop.get(Calendar.AM_PM) == 0) {
-                            timeHHMM = timeHHMM + "AM";
-                        } else {
-                            timeHHMM = timeHHMM + "PM";
-                        }
-                        TimeReminder t1 = new TimeReminder();
-                        t1.setTime(timeHHMM);
-                        timeReminder.add(t1);
-                        rDate1.setTimes(timeReminder);
-                        reminderDate.add(rDate1);
-                        startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
-                        startDateLoop.set(Calendar.MINUTE, 0);
-                        startDateLoop.set(Calendar.SECOND, 0);
-                        startDateLoop.add(Calendar.DAY_OF_MONTH, 30);
-                        i = i + 30;
-                    }
-                }
-                if (doses == 2) {
                     int i = 30;
                     while (i <= dayDifference) {
                         Calendar startDateLoop = startDateMain;
-                        for (int j = 1; j <= 2; j++) {
+                        for (int j = 1; j <= doses; j++) {
                             ReminderDate rDate1 = new ReminderDate();
                             ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
 
@@ -725,194 +750,37 @@ public class PatientMedicinReminder extends Fragment {
                             startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
                             startDateLoop.set(Calendar.MINUTE, 0);
                             startDateLoop.set(Calendar.SECOND, 0);
-                            startDateLoop.add(Calendar.DAY_OF_MONTH, 15);
+                            int numDays = calendar.getActualMaximum(Calendar.DATE);
+                            startDateLoop.add(Calendar.DAY_OF_MONTH,Math.round(numDays/doses) );
                         }
                         startDateMain.add(Calendar.DAY_OF_MONTH, 30);
                         i = i + 30;
                     }
-                }
+              //  }
 
-                if (doses == 3) {
-                    int i = 30;
-                    while (i <= dayDifference) {
-                        Calendar startDateLoop = startDateMain;
-                        for (int j = 1; j <= 3; j++) {
-                            ReminderDate rDate1 = new ReminderDate();
-                            ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
 
-                            boolean sameDay = currentDate.get(Calendar.YEAR) == startDateLoop.get(Calendar.YEAR) &&
-                                    currentDate.get(Calendar.DAY_OF_YEAR) == startDateLoop.get(Calendar.DAY_OF_YEAR);
-                            System.out.println("Condition:::::" + sameDay);
-                            if (sameDay == true) {
-                                startDateLoop = currentDate;
-                            }
-                            rDate1.setDate(startDateLoop.getTime());
-                            String timeHHMM = null;
-                            timeHHMM = startDateLoop.get(Calendar.HOUR) + ":" + startDateLoop.get(Calendar.MINUTE);
-                            if (startDateLoop.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
-                            } else {
-                                timeHHMM = timeHHMM + "PM";
-                            }
-                            TimeReminder t1 = new TimeReminder();
-                            t1.setTime(timeHHMM);
-                            timeReminder.add(t1);
-                            rDate1.setTimes(timeReminder);
-                            reminderDate.add(rDate1);
-                            startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
-                            startDateLoop.set(Calendar.MINUTE, 0);
-                            startDateLoop.set(Calendar.SECOND, 0);
-                            startDateLoop.add(Calendar.DAY_OF_WEEK, 10);
-                        }
-                        startDateMain.add(Calendar.DAY_OF_MONTH, 30);
-                        i = i + 30;
-                    }
-                }
-                if (doses == 4) {
-                    int i = 30;
-                    while (i <= dayDifference) {
-                        Calendar startDateLoop = startDateMain;
-                        for (int j = 1; j <= 4; j++) {
-                            ReminderDate rDate1 = new ReminderDate();
-                            ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
-
-                            boolean sameDay = currentDate.get(Calendar.YEAR) == startDateLoop.get(Calendar.YEAR) &&
-                                    currentDate.get(Calendar.DAY_OF_YEAR) == startDateLoop.get(Calendar.DAY_OF_YEAR);
-                            System.out.println("Condition:::::" + sameDay);
-                            if (sameDay == true) {
-                                startDateLoop = currentDate;
-                            }
-                            rDate1.setDate(startDateLoop.getTime());
-                            String timeHHMM = null;
-                            timeHHMM = startDateLoop.get(Calendar.HOUR) + ":" + startDateLoop.get(Calendar.MINUTE);
-                            if (startDateLoop.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
-                            } else {
-                                timeHHMM = timeHHMM + "PM";
-                            }
-                            TimeReminder t1 = new TimeReminder();
-                            t1.setTime(timeHHMM);
-                            timeReminder.add(t1);
-                            rDate1.setTimes(timeReminder);
-                            reminderDate.add(rDate1);
-                            startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
-                            startDateLoop.set(Calendar.MINUTE, 0);
-                            startDateLoop.set(Calendar.SECOND, 0);
-                            startDateLoop.add(Calendar.DAY_OF_WEEK, 7);
-                            startDateLoop.add(Calendar.MINUTE, 30);
-                        }
-                        startDateMain.add(Calendar.DAY_OF_MONTH, 30);
-                        i = i + 30;
-                    }
-                }
-                if (doses == 5) {
-                    int i = 30;
-                    while (i <= dayDifference) {
-                        Calendar startDateLoop = startDateMain;
-                        for (int j = 1; j <= 5; j++) {
-                            ReminderDate rDate1 = new ReminderDate();
-                            ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
-
-                            boolean sameDay = currentDate.get(Calendar.YEAR) == startDateLoop.get(Calendar.YEAR) &&
-                                    currentDate.get(Calendar.DAY_OF_YEAR) == startDateLoop.get(Calendar.DAY_OF_YEAR);
-                            System.out.println("Condition:::::" + sameDay);
-                            if (sameDay == true) {
-                                startDateLoop = currentDate;
-                            }
-                            rDate1.setDate(startDateLoop.getTime());
-                            String timeHHMM = null;
-                            timeHHMM = startDateLoop.get(Calendar.HOUR) + ":" + startDateLoop.get(Calendar.MINUTE);
-                            if (startDateLoop.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
-                            } else {
-                                timeHHMM = timeHHMM + "PM";
-                            }
-                            TimeReminder t1 = new TimeReminder();
-                            t1.setTime(timeHHMM);
-                            timeReminder.add(t1);
-                            rDate1.setTimes(timeReminder);
-                            reminderDate.add(rDate1);
-                            startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
-                            startDateLoop.set(Calendar.MINUTE, 0);
-                            startDateLoop.set(Calendar.SECOND, 0);
-                            startDateLoop.add(Calendar.DAY_OF_WEEK, 6);
-                        }
-                        startDateMain.add(Calendar.DAY_OF_MONTH, 30);
-                        i = i + 30;
-                    }
-                }
-                if (doses == 6) {
-                    int i = 30;
-                    while (i <= dayDifference) {
-                        Calendar startDateLoop = startDateMain;
-                        for (int j = 1; j <= 6; j++) {
-                            ReminderDate rDate1 = new ReminderDate();
-                            ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
-
-                            boolean sameDay = currentDate.get(Calendar.YEAR) == startDateLoop.get(Calendar.YEAR) &&
-                                    currentDate.get(Calendar.DAY_OF_YEAR) == startDateLoop.get(Calendar.DAY_OF_YEAR);
-                            System.out.println("Condition:::::" + sameDay);
-                            if (sameDay == true) {
-                                startDateLoop = currentDate;
-                            }
-                            rDate1.setDate(startDateLoop.getTime());
-                            String timeHHMM = null;
-                            timeHHMM = startDateLoop.get(Calendar.HOUR) + ":" + startDateLoop.get(Calendar.MINUTE);
-                            if (startDateLoop.get(Calendar.AM_PM) == 0) {
-                                timeHHMM = timeHHMM + "AM";
-                            } else {
-                                timeHHMM = timeHHMM + "PM";
-                            }
-                            TimeReminder t1 = new TimeReminder();
-                            t1.setTime(timeHHMM);
-                            timeReminder.add(t1);
-                            rDate1.setTimes(timeReminder);
-                            reminderDate.add(rDate1);
-                            startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
-                            startDateLoop.set(Calendar.MINUTE, 0);
-                            startDateLoop.set(Calendar.SECOND, 0);
-                            startDateLoop.add(Calendar.DAY_OF_WEEK, 5);
-                        }
-                        startDateMain.add(Calendar.DAY_OF_MONTH, 30);
-                        i = i + 30;
-                    }
-                }
                 int switchCaseCount = 0;
                 medicinReminderTables = new ArrayList<AlarmReminderVM>();
                 System.out.println("Reminder Date::::::" + reminderDate.size());
                 for (ReminderDate rDate : reminderDate) {
                     Date date = rDate.getDate();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
                     String dateStr = format.format(date);
-                    switch (rDate.getTimes().size()) {
-                        case 1:
-                            switchCaseCount = 1;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null, medicineName));
-                            break;
-                        case 2:
-                            switchCaseCount = 2;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null, medicineName));
-                            break;
-                        case 3:
-                            switchCaseCount = 3;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null, medicineName));
-                            break;
-                        case 4:
-                            switchCaseCount = 4;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null, medicineName));
-                            break;
-                        case 5:
-                            switchCaseCount = 5;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null, medicineName));
-                            break;
-                        case 6:
-                            switchCaseCount = 6;
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(), medicineName));
-                            break;
+                    List<String> timeList= new ArrayList<String>();
+                    for(int k=0; k< rDate.getTimes().size();k++){
+                        timeList.add( rDate.getTimes().get(k).getTime());
+
                     }
+                    medicinReminderTables.add(new AlarmReminderVM(null, dateStr,timeList, medicineName));
+
                 }
                 HorizontalListAdapter hrAdapter = new HorizontalListAdapter(getActivity(), medicinReminderTables);
                 horizontalList.setAdapter(hrAdapter);
+
+                Integer listSize = 50;
+
+                listSize = medicinReminderTables.size() * 50;
+                horizontalList.setLayoutParams(new RelativeLayout.LayoutParams(GridLayout.LayoutParams.FILL_PARENT, listSize));
 
             }
         }
@@ -945,7 +813,7 @@ public class PatientMedicinReminder extends Fragment {
                 Calendar startDateMain = startCalenderDate;
                 Calendar currentDate = Calendar.getInstance();
                 reminderDate = new ArrayList<ReminderDate>();
-                if (doses == 1) {
+         /*       if (doses == 1) {
                     int i = 7;
                     Calendar startDateLoop = startDateMain;
                     while (i <= dayDifference) {
@@ -977,8 +845,45 @@ public class PatientMedicinReminder extends Fragment {
                         startDateLoop.add(Calendar.DAY_OF_MONTH, 7);
                         i = i + 7;
                     }
-                }
-                if (doses == 2) {
+                }else{*/
+                    int i = 7;
+                    while (i <= dayDifference) {
+                        Calendar startDateLoop = startDateMain;
+                        for (int j = 1; j <= doses; j++) {
+                            ReminderDate rDate1 = new ReminderDate();
+                            ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
+
+                            boolean sameDay = currentDate.get(Calendar.YEAR) == startDateLoop.get(Calendar.YEAR) &&
+                                    currentDate.get(Calendar.DAY_OF_YEAR) == startDateLoop.get(Calendar.DAY_OF_YEAR);
+                            System.out.println("Condition:::::" + sameDay);
+                            if (sameDay == true) {
+                                startDateLoop = currentDate;
+                            }
+                            rDate1.setDate(startDateLoop.getTime());
+                            String timeHHMM = null;
+                            timeHHMM = startDateLoop.get(Calendar.HOUR) + ":" + startDateLoop.get(Calendar.MINUTE);
+                            if (startDateLoop.get(Calendar.AM_PM) == 0) {
+                                timeHHMM = timeHHMM + "AM";
+                            } else {
+                                timeHHMM = timeHHMM + "PM";
+                            }
+                            TimeReminder t1 = new TimeReminder();
+                            t1.setTime(timeHHMM);
+                            timeReminder.add(t1);
+                            rDate1.setTimes(timeReminder);
+                            reminderDate.add(rDate1);
+                            startDateLoop.set(Calendar.HOUR_OF_DAY, 9);
+                            startDateLoop.set(Calendar.MINUTE, 0);
+                            startDateLoop.set(Calendar.SECOND, 0);
+                           // startDateLoop.add(Calendar.DAY_OF_WEEK, 3);
+                            int numDays = calendar.getActualMaximum(Calendar.DAY_OF_WEEK);
+                            startDateLoop.add(Calendar.DAY_OF_WEEK,Math.round(numDays/doses) );
+                        }
+                        startDateMain.add(Calendar.DAY_OF_MONTH, 7);
+                        i = i + 7;
+                    }
+               // }
+              /*  if (doses == 2) {
                     int i = 7;
                     while (i <= dayDifference) {
                         Calendar startDateLoop = startDateMain;
@@ -1160,33 +1065,19 @@ public class PatientMedicinReminder extends Fragment {
                         startDateMain.add(Calendar.DAY_OF_MONTH, 6);
                         i = i + 7;
                     }
-                }
+                }*/
                 medicinReminderTables = new ArrayList<AlarmReminderVM>();
                 System.out.println("Reminder Date::::::" + reminderDate.size());
                 for (ReminderDate rDate : reminderDate) {
                     Date date = rDate.getDate();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
                     String dateStr = format.format(date);
-                    switch (rDate.getTimes().size()) {
-                        case 1:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null, medicineName));
-                            break;
-                        case 2:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null, medicineName));
-                            break;
-                        case 3:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null, medicineName));
-                            break;
-                        case 4:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null, medicineName));
-                            break;
-                        case 5:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null, medicineName));
-                            break;
-                        case 6:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(), medicineName));
-                            break;
+                    List<String> timeList= new ArrayList<String>();
+                    for(int k=0; k < rDate.getTimes().size();k++){
+                        timeList.add( rDate.getTimes().get(k).getTime());
+
                     }
+                    medicinReminderTables.add(new AlarmReminderVM(null, dateStr,timeList, medicineName));
                 }
                 HorizontalListAdapter hrAdapter = new HorizontalListAdapter(getActivity(), medicinReminderTables);
                 horizontalList.setAdapter(hrAdapter);
@@ -1227,6 +1118,7 @@ public class PatientMedicinReminder extends Fragment {
         } else {
             String medicineName = medicine.getText().toString();
             createDateArray();//can bre removed no need to use arrays.
+               if(startList!=null && startList.size()>=2 && endList!=null && endList.size()>=2){
             Date startDate = getStringToDate(startList.get(1));
             Date endDate = getStringToDate(endList.get(1));
             System.out.println("endDate" + endDate);
@@ -1262,7 +1154,7 @@ public class PatientMedicinReminder extends Fragment {
                     rDate1.setDate(startDateLoop.getTime());
                     ArrayList<TimeReminder> timeReminder = new ArrayList<TimeReminder>();
 
-                    if (doses == 1) {
+                 /*   if (doses == 1) {
                         for (int j = 1; j <= 1; j++) {
                             String timeHHMM = null;
                             timeHHMM = updateTimeString(startDateLoop.get(Calendar.HOUR_OF_DAY), startDateLoop.get(Calendar.MINUTE));
@@ -1281,8 +1173,26 @@ public class PatientMedicinReminder extends Fragment {
                             startDateLoop.add(Calendar.HOUR_OF_DAY, 12);
 
                         }
-                    }
-                    if (doses == 2) {
+                    }else{*/
+                        for (int j = 1; j <= doses; j++) {
+                            String timeHHMM = null;
+                            timeHHMM = updateTimeString(startDateLoop.get(Calendar.HOUR_OF_DAY), startDateLoop.get(Calendar.MINUTE));
+                            if (startDateLoop.get(Calendar.HOUR_OF_DAY) <= 21) {
+                                System.out.println("Time::::::" + timeHHMM);
+                                TimeReminder t1 = new TimeReminder();
+                                t1.setTime(timeHHMM);
+                                timeReminder.add(t1);
+                            } else {
+
+                                break;
+                            }
+                           // startDateLoop.add(Calendar.HOUR_OF_DAY, 6);
+                            int numDays = calendar.getActualMaximum(Calendar.HOUR_OF_DAY);
+                            startDateLoop.add(Calendar.HOUR_OF_DAY,Math.round(12/doses) );
+
+                        }
+                   // }
+                   /* if (doses == 2) {
                         for (int j = 1; j <= 2; j++) {
                             String timeHHMM = null;
                             timeHHMM = updateTimeString(startDateLoop.get(Calendar.HOUR_OF_DAY), startDateLoop.get(Calendar.MINUTE));
@@ -1367,7 +1277,7 @@ public class PatientMedicinReminder extends Fragment {
                             timeReminder.add(t1);
 
                         }
-                    }
+                    }*/
                     rDate1.setTimes(timeReminder);
                     reminderDate.add(rDate1);
                     startDateMain.add(Calendar.HOUR_OF_DAY, 12);
@@ -1376,32 +1286,21 @@ public class PatientMedicinReminder extends Fragment {
                 System.out.println("Reminder Date::::::" + reminderDate.size());
                 for (ReminderDate rDate : reminderDate) {
                     Date date = rDate.getDate();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
                     String dateStr = format.format(date);
-                    switch (rDate.getTimes().size()) {
-                        case 1:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), null, null, null, null, null, medicineName));
-                            break;
-                        case 2:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), null, null, null, null, medicineName));
-                            break;
-                        case 3:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), null, null, null, medicineName));
-                            break;
-                        case 4:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), null, null, medicineName));
-                            break;
-                        case 5:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), null, medicineName));
-                            break;
-                        case 6:
-                            medicinReminderTables.add(new AlarmReminderVM(null, dateStr, rDate.getTimes().get(0).getTime(), rDate.getTimes().get(1).getTime(), rDate.getTimes().get(2).getTime(), rDate.getTimes().get(3).getTime(), rDate.getTimes().get(4).getTime(), rDate.getTimes().get(5).getTime(), medicineName));
-                            break;
+                    List<String> timeList= new ArrayList<String>();
+                    for(int i=0; i < rDate.getTimes().size();i++){
+                        timeList.add( rDate.getTimes().get(i).getTime());
+
                     }
+                    medicinReminderTables.add(new AlarmReminderVM(null, dateStr,timeList, medicineName));
                 }
                 HorizontalListAdapter hrAdapter = new HorizontalListAdapter(getActivity(), medicinReminderTables);
                 horizontalList.setAdapter(hrAdapter);
             }
+        }else{
+                   Toast.makeText(getActivity(), "Select duration first !!!", Toast.LENGTH_LONG).show();
+        }
         }
     }
 
@@ -1473,14 +1372,16 @@ public class PatientMedicinReminder extends Fragment {
 
     public void goToBack() {
         TextView globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
-        globalTv.setText("Medical Diary");
+        globalTv.setText(getActivity().getResources().getString(R.string.app_name));
 
         if (type.equalsIgnoreCase("doctor")) {
-            Fragment fragment = new DoctorAppointmentSummary();
+            Fragment fragment = new DoctorAppointmentInformation();
             FragmentManager fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            final Button back = (Button) getActivity().findViewById(R.id.back_button);
-            back.setVisibility(View.INVISIBLE);
+
+
+           /* final Button back = (Button) getActivity().findViewById(R.id.back_button);
+            back.setVisibility(View.INVISIBLE);*/
         } else if (type.equalsIgnoreCase("patient")) {
             Fragment fragment = new PatientAppointmentInformation();
             FragmentManager fragmentManger = getFragmentManager();

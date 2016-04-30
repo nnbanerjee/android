@@ -105,7 +105,7 @@ public class ManageTemplate extends Fragment {
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("sessionID",null);
         procedureName = session.getString("selected_procedure_name",null);
-        getActivity().getActionBar().hide();
+     //   getActivity().getActionBar().hide();
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
@@ -207,8 +207,9 @@ public class ManageTemplate extends Fragment {
                     temp.setProcedureName("");
                     arrayTemplate.add(temp);
                 }
-                adapter = new TemplateAdapter(getActivity(),arrayTemplate);
-                listViewManageTemplate.setAdapter(adapter);
+                //Commented by raviraj
+                /*adapter = new TemplateAdapter(getActivity(),arrayTemplate);
+                listViewManageTemplate.setAdapter(adapter);*/
 
                 progress.dismiss();
            }
@@ -229,7 +230,8 @@ public class ManageTemplate extends Fragment {
 
     public void showListBySearch(String searchText)
     {
-            int flagSearch = 0;
+        //Commented by raviraj
+           /* int flagSearch = 0;
             int flagNotSearch = 0;
             nameList = new ArrayList<ShowTemplate>();
             for(ShowTemplate t:arrayTemplate)
@@ -265,6 +267,6 @@ public class ManageTemplate extends Fragment {
                 listViewManageTemplate.setAdapter(adapter);
 
             }
-
+*/
     }
 }

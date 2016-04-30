@@ -159,7 +159,7 @@ public class HomeActivityRevision extends FragmentActivity{
         BackStress.staticflag = 1;
         Global go = (Global)HomeActivityRevision.this.getApplicationContext();
         go.setLocation("");
-        getActionBar().hide();
+       // getActionBar().hide();
         flagActionButton = 0;
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
         accountName = (TextView)findViewById(R.id.account_name);

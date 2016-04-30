@@ -19,13 +19,13 @@
         android:background="@drawable/doctor_image"/>
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="23dp"
 
         android:layout_below="@+id/doctorImg"
         android:id="@+id/downImg"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
 
         android:background="@drawable/up_arrow"
         />
@@ -39,14 +39,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Doctor Name"
-            style="@style/sub_heading"
+            style="@style/title"
+            android:textColor="@color/color_blue_default"
             android:id="@+id/doctorName"
          />
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/right_arrow_grey"
             android:id="@+id/viewAll"
             android:layout_marginTop="10dp"
             android:layout_alignParentRight="true"/>
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="Speciality"
             android:id="@+id/doctorSpeciality"
-            style="@style/body2"
+            style="@style/sub_heading"
             android:layout_below="@+id/doctorName"
             />
 
@@ -94,7 +95,7 @@
             android:id="@+id/last_appointment_text"
             android:layout_below="@+id/lastAppointmentDate"
             android:text="Last Visited : "
-            style="@style/body1"
+            style="@style/body2"
         />
         <TextView
             android:layout_width="wrap_content"
@@ -109,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Upcoming Appt :"
-            style="@style/body1"
+            style="@style/body2"
             android:id="@+id/appointmentText"
             android:layout_below="@+id/last_appointment_text"
             />
@@ -143,30 +144,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/layout3"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/layout"
             android:background="#ffffff">
 
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:id="@+id/clinicsBtn"
-                android:text="APPOINTMENT"
-                style="@style/body"
+                android:text="Appointment"
+                style="@style/sub_heading"
 
                 android:layout_weight="5"
-                android:background="@drawable/square_grey_color"
+                android:background="@drawable/page_default"
 
             />
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:text="PROFILE"
-                style="@style/body"
+                android:layout_height="40dp"
+                android:text="Profile"
+                style="@style/sub_heading"
                 android:layout_toRightOf="@+id/clinicsBtn"
-                android:textColor="#ffffff"
                 android:layout_weight="5"
-                android:background="@drawable/square_blue_color"
+                android:background="@drawable/page_selected"
                 android:id="@+id/profileBtn"
                 />
             </LinearLayout>

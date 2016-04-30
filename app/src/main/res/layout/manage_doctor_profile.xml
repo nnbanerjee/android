@@ -215,7 +215,7 @@
                 android:layout_alignTop="@+id/textView"
                 android:layout_below="@+id/gender"
                 android:layout_marginTop="-10dp"
-                android:src="@drawable/calendar2" />
+                android:src="@drawable/cal" />
 
             <TextView
                 android:id="@+id/textView"

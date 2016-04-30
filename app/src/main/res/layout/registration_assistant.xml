@@ -461,7 +461,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/imageButton_calendar"
-        android:src="@drawable/calendar2"
+        android:src="@drawable/cal"
         android:layout_alignTop="@+id/textView"
         android:layout_marginTop="-10dp"
         android:layout_marginRight="20dp"

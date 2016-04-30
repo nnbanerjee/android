@@ -3,10 +3,21 @@
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
     android:background="#ffffff">
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/left_arrow_red"
+        android:layout_marginTop="10dp"
+        android:id="@+id/arrow_left"
+        />
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/arrow_left"
+        android:layout_toLeftOf="@+id/arrow_right"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+
         android:id="@+id/summary_scroll">
 
         <RelativeLayout
@@ -14,91 +25,98 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#ffffff">
+            >
 
             <LinearLayout
                 android:id="@+id/layout3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout"
+
                 android:layout_centerHorizontal="true"
                 android:background="#ffffff"
                 android:weightSum="6">
 
                 <Button
                     android:id="@+id/summaryBtn"
-                    style="@style/summary"
+                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/square_blue_color"
+                    android:background="@drawable/tab_selected"
                     android:gravity="center"
                     android:text="Summary"
-                    android:textColor="#ffffff" />
+                      />
 
                 <Button
                     android:id="@+id/documentationBtn"
-                    style="@style/summary"
+                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
                     android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/tab_default"
                     android:layout_weight="1"
-                    android:background="@drawable/square_grey_color"
                     android:text="Documents" />
 
                 <Button
                     android:id="@+id/doctorNoteBtn"
-                    style="@style/summary"
+                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
                     android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/tab_default"
                     android:layout_weight="1"
-                    android:background="@drawable/square_grey_color"
                     android:gravity="center"
                     android:text="Doctor Note" />
 
                 <Button
                     android:id="@+id/treatmentBtn"
-                    style="@style/summary"
+                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
                     android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/tab_default"
                     android:layout_weight="1"
-                    android:background="@drawable/square_grey_color"
                     android:gravity="center"
                     android:text="Treatment" />
 
                 <Button
                     android:id="@+id/invoicesBtn"
-                    style="@style/summary"
+                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/tab_default"
                     android:layout_weight="1"
-                    android:background="@drawable/square_grey_color"
                     android:gravity="center"
                     android:text="Invoices" />
                 <Button
                     android:id="@+id/feedback_btn"
-                    style="@style/summary"
+                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_toRightOf="@+id/clinicsBtn"
+                    android:background="@drawable/tab_default"
                     android:layout_weight="1"
                     android:layout_marginLeft="2dp"
-                    android:background="@drawable/square_grey_color"
                     android:gravity="center"
                     android:text="Feedback" />
             </LinearLayout>
         </RelativeLayout>
     </HorizontalScrollView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/right_arrow_red"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
 
+        android:id="@+id/arrow_right"
+        />
     <RelativeLayout
         android:id="@+id/replacementFragment"
         android:layout_width="match_parent"

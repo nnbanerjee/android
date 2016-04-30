@@ -7,100 +7,14 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import Model.AddConfirmDeny;
-import Model.AddConfirmDenyDelegate;
-import Model.AddDelegate;
-import Model.AddDependent;
-import Model.AddDependentDoctor;
-import Model.AddDiagnosisTestRequest;
-import Model.AddPatientMedicineSummary;
-import Model.AllClinicAppointment;
-import Model.AllClinicsByDoctorPatientId;
-import Model.AllClinicsForDoctorIdAndPatientId;
-import Model.AllPatients;
-import Model.AllProcedureVm;
-import Model.AllTreatmentPlanVm;
-import Model.AppointmentId;
-import Model.AppointmentSlotsByDoctor;
-import Model.AppointmentStatus;
-import Model.Assistant;
-import Model.BucketPatient;
-import Model.Chat;
-import Model.Clinic;
-import Model.ClinicAppointment;
-import Model.ClinicDetailVm;
-import Model.ClinicPatientAppointments;
-import Model.CreateProfileData;
-import Model.CreateProfileDataForDoctorUpdateDetails;
-import Model.CreateSummary;
-import Model.Delegation;
-import Model.Doctor;
-import Model.DoctorAppointmentsResponse;
-import Model.DoctorClinicAppointments;
-import Model.DoctorClinicSchedule;
-import Model.DoctorCreatesAppoinementResponse;
-import Model.DoctorCreatesAppointment;
-import Model.DoctorId;
-import Model.DoctorIdPatientId;
-import Model.DoctorNotesResponse;
-import Model.DoctorNotesVM;
-import Model.DoctorPersonalVM;
-import Model.DoctorProfile;
-import Model.DoctorSearchResponse;
-import Model.FeedbackVM;
-import Model.Field;
-import Model.FileUpload;
-import Model.GetDelegate;
-import Model.HomeCountDoctor;
-import Model.HomePatientCount;
-import Model.MedicineId;
-import Model.MobileEmail;
-import Model.ModeVM;
-import Model.NotificationVM;
-import Model.Patient;
-import Model.PatientTestId;
-import Model.Person;
-import Model.PersonID;
-import Model.RegisterDoctorData;
-import Model.Logindata;
-import Model.RegisterAssistantData;
-import Model.RegisterUserData;
-import Model.ReminderVM;
-import Model.RemoveDelegate;
-import Model.RemoveDoctors;
-import Model.RemoveMedicineRequest;
-import Model.RemovePatientTestRequest;
-import Model.RemovePatients;
-import Model.ResetPassword;
-import Model.ResponseCheckMobileEmailAvailability;
-import Model.ResponseCodeVerfication;
-import Model.ResponseCreateProfile;
-import Model.ResponseCreateProfileForDoctorUpdateDetails;
-import Model.ResponseVerifyRegistrationMobileEmailCode;
-import Model.ResponseVm;
-import Model.ResponsegetVerificationCodeForNewRegistration;
-import Model.ShowProcedure;
-import Model.ShowTemplate;
-import Model.SummaryHistoryVM;
-import Model.SummaryRequest;
-import Model.SummaryResponse;
-import Model.Template;
-import Model.TestDetails;
-import Model.TotalInvoice;
-import Model.TreatmentPlan;
-import Model.UpdateField;
-import Model.VerificationCode;
-import Model.VerifyRegistrationMobileEmailCode;
-import Model.VisitEditLogRequest;
-import Model.VisitEditLogResponse;
-import Model.VisitHistory;
-import Model.forgotPassword;
-import Model.profileId;
+
+import Model.*;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
@@ -337,8 +251,7 @@ public interface MyApi {
     @GET("/getAllClinicsWeekAppointment")
     void getAllClinicWeekAppointment(@Query("doctorId") String doctorId, @Query("clinicId") String clinicId, @Query("appointmentDate") String appointmentDate, Callback<List<AllClinicAppointment>> callback);
 
-    @GET("/getAllClinics")
-    void getAllClinics(Callback<List<Clinic>> cb);
+
 
     @POST("/saveShareWithPatientTotalInvoice")
     void saveShareWithPatientTotalInvoice(@Body TotalInvoice invoice, Callback<Response> cb);
@@ -525,6 +438,14 @@ public interface MyApi {
 	@POST("/saveDoctorPersonDetail")
     void saveDoctorPersonDetail(@Body DoctorPersonalVM doctorPersonalVM, Callback<String> cb);
 
+
+
+
+
+
+
+
+
 //New apis Integrated Raviraj
 
     @POST("/login")
@@ -598,7 +519,11 @@ public interface MyApi {
     //
     @POST("/setAppointmentStatus")
     void setAppointmentStatus(@Body AppointmentStatus appointmentStatus, Callback<ResponseCodeVerfication> response);
-    //updateAppointment
+    //
+
+    @POST("/updateAppointment")
+    void updateAppointment(@Body DoctorCreatesAppointment param,Callback<DoctorCreatesAppoinementResponse> response);
+
 
     //
     @POST("/getPatientVisitSummary")
@@ -649,7 +574,7 @@ public interface MyApi {
     void updatePatientDiagnosticTest(@Body AddDiagnosisTestRequest addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
 
     @POST("/getAllClinics")
-    void getAllClinics(@Body PersonID personID, Callback<Clinic> response);
+    void getAllClinics(@Body PersonID personID, Callback<List<Clinic>> response);
 
     @POST("/getPatientVisitTreatmentPlan")
     void getPatientVisitTreatmentPlan(@Body AppointmentId appointmentId, Callback<List<TreatmentPlan>> response);
@@ -657,18 +582,72 @@ public interface MyApi {
 
 
 
+   /* @GET("/getAllClinics")
+    void getAllClinics(Callback<List<Clinic>> cb);*/
 
+    //Extra headers needs to be added
+   /* httpPost.addHeader("x-patientId", "102");
+    httpPost.addHeader("x-appointmentId", "584");
+    httpPost.addHeader("x-clinicId", "101");
+    httpPost.addHeader("x-type", "1");
+    httpPost.addHeader("x-loggedinUserId", "102");
+    httpPost.addHeader("x-fileName", "ANkLE BoNe X-ray.xlsx");*/
 
     @Multipart
     @POST("/addPatientVisitDocument")
-    void addPatientVisitDocument(@Part("picture") TypedFile file,@Body PersonID personID, Callback<Clinic> response);
+    void addPatientVisitDocument(@Header("x-patientId") String patientId,
+                                 @Header("x-appointmentId") String appointmentId,
+                                 @Header("x-clinicId") String clinicId,
+                                 @Header("x-type") String type,
+                                 @Header("x-loggedinUserId") String loggedInUserId,
+                                 @Header("x-fileName") String fileName,
+                                 @Part("upload") TypedFile file, Callback<ResponseAddDocuments> response);
 
- /*   @Multipart
-    @POST("/uploadFiles")
-    void uploadFile(@Part("picture") TypedFile file, @Part("type") String type, @Part("doctorId") String doctorId, @Part("patientId") String patientId, @Part("assistentId") String assistantId, @Part("documentType") String documentType, @Part("name") String name, @Part("category") String category, @Part("appointmentDate") String appointmentDate, @Part("appointmentTime") String appointmentTime, @Part("clinicId") String clinicId, @Part("clinicName") String clinicName, Callback<FileUpload> cb);
-*/
 
-    //
-//getPatientVisitTreatmentPlan
+    @POST("/getPatientVisitDocuments")
+    void getPatientVisitDocuments(@Body AppointmentPatientIds appointmentPatientIds ,   Callback<List<FileUpload>> cb);
+
+    @POST("/removePatientVisitDocuments") //{"fileId":4, "loggedinUserId":104}
+    void removePatientVisitDocuments(@Body RemoveVisitDocument removeVisitDocument , Callback<ResponseCodeVerfication> cb);
+
+
+    @POST("/getAllCustomTemplate")
+    void getAllCustomTemplate(@Body PersonAndCategoryId doctorId , Callback<List<CustomProcedureTemplate>> cb);
+    // void getAllProcedure(@Query("doctorId") String doctorId, Callback<ArrayList<ShowProcedure>> callback);
+
+
+
+    @POST("/getPatientLandingPageDetails")
+    void getPatientLandingPageDetails(@Body PatientId patientId, Callback<DoctorProfile> cb);
+
+    @POST("/getDoctorProfileList")
+    void getDoctorProfileList(@Body PatientId patientId, Callback<List<AllPatients>> callback);
+
+
+    @POST("/getPatientVisitInvoice")
+    void getPatientVisitInvoice(@Body InvoiceId invoiceId, Callback<InvoiceDetails> response);
+
+
+
+    @POST("/addPatientVisitInvoice")
+    void addPatientVisitInvoice(@Body TreatmentPlan treatmentPlan, Callback<ResponseAddTemplates> response);
+
+    @POST("/addPatientVisitTreatmentPlan")
+    void addPatientVisitTreatmentPlan(@Body TreatmentPlan treatmentPlan, Callback<ResponseAddTemplates> response);
+
+    @POST("/removePatientVisitTreatmentPlan")
+    void removePatientVisitTreatmentPlan(@Body TreatmentId invoiceId, Callback< ResponseCodeVerfication > response);
+    @POST("/removePatientVisitInvoiceDetails")
+    void removePatientVisitInvoiceDetails(@Body TreatmentId invoiceId, Callback< ResponseCodeVerfication  > response);
+
+
+    @POST("/updatePatientVisitTreatmentPlan")
+    void updatePatientVisitTreatmentPlan(@Body TreatmentPlan treatmentPlan, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientVisitInvoiceDetails")
+    void updatePatientVisitInvoiceDetails(@Body InvoiceDetails invoiceId, Callback<ResponseCodeVerfication> response);
+
+
+
 
 }

@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import Model.CustomProcedureTemplate;
 import Model.ShowTemplate;
 import Model.Template;
 
@@ -22,12 +24,12 @@ import Model.Template;
 public class TemplateAdapter extends BaseAdapter {
 
     private Activity activity;
-    private ArrayList<ShowTemplate> templateList;
+    private  List<CustomProcedureTemplate> templateList;
     private LayoutInflater inflater;
     private TextView procedureTv,numberOfTemplate;
     private ImageView image;
 
-    public TemplateAdapter(Activity activity,ArrayList<ShowTemplate> templateList)
+    public TemplateAdapter(Activity activity, List<CustomProcedureTemplate> templateList)
     {
             this.activity = activity;
             this.templateList = templateList;
@@ -56,7 +58,7 @@ public class TemplateAdapter extends BaseAdapter {
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.template_element, null);
-        System.out.println("Template Name:::"+templateList.get(position).getTemplateName());
+        System.out.println("Template Name:::"+templateList.get(position).getTemplateSubName());
 
         procedureTv = (TextView)convertView.findViewById(R.id.procedure);
         image = (ImageView)convertView.findViewById(R.id.show_image);
@@ -69,7 +71,7 @@ public class TemplateAdapter extends BaseAdapter {
             image.setVisibility(View.INVISIBLE);
         }
         else {
-            procedureTv.setText(templateList.get(position).getTemplateName());
+            procedureTv.setText(templateList.get(position).getTemplateSubName());
         }
         return convertView;
     }

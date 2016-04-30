@@ -35,11 +35,13 @@ public class EditDoseFragment extends DialogFragment {
     Global global;
     Button cancel,save;
     HorizontalListView horizontalList;
-    String doseTime;
+    String doseTime,timeText;
     AlarmReminderVM alarmReminder = new AlarmReminderVM();
     AlarmReminderVM alarmTime;
     List<AlarmReminderVM> alarmReminderList;
     List<AlarmReminderVM> alarmReminders;
+    int position;
+    int selected;
     public static EditDoseFragment newInstance() {
         return new EditDoseFragment();
     }
@@ -53,6 +55,7 @@ public class EditDoseFragment extends DialogFragment {
         alarmTime =  global.getAlaramObj();
         doseTime = global.getTimeChange();
         alarmReminderList = global.getAlarmTime();
+        timeText= global.getTimeText();
         calenderImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,12 +64,14 @@ public class EditDoseFragment extends DialogFragment {
         });
         horizontalList = (HorizontalListView) getActivity().findViewById(R.id.horizontalList);
         alarmReminders = new ArrayList<AlarmReminderVM>();
+        position=global.getSelectedPostionOfMedicineScheduleFromHorizontalList();
+        selected=global.getSelectedPostionOfMedicineScheduleFromVerticalList();
 
         if(doseTime.equals("Time1"))
         {
-            time.setText(alarmTime.getTime1());
+            time.setText(timeText);
         }
-        else if(doseTime.equals("Time2"))
+        /*else if(doseTime.equals("Time2"))
         {
             time.setText(alarmTime.getTime2());
         }
@@ -85,7 +90,7 @@ public class EditDoseFragment extends DialogFragment {
         else if(doseTime.equals("Time6"))
         {
             time.setText(alarmTime.getTime6());
-        }
+        }*/
         cancel = (Button)view.findViewById(R.id.cancel_template);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,14 +105,27 @@ public class EditDoseFragment extends DialogFragment {
                 String timeText = "";
                 timeText = time.getText().toString();
                 int len = alarmReminderList.size();
-                for(int i=0;i<len;i++)
-                {
-                    if((alarmReminderList.get(i).getAlarmDate().toString()).equals(alarmTime.getAlarmDate().toString()))
-                    {
-                        AlarmReminderVM newObj = new AlarmReminderVM();
-                        newObj.setId(alarmReminderList.get(i).getId());
-                        newObj.setAlarmDate(alarmReminderList.get(i).getAlarmDate());
-                        if(doseTime.equals("Time1"))
+             //   for(int i=0;i<len;i++)
+              //  {
+//                    if((alarmReminderList.get(i).getAlarmDate().toString()).equals(alarmTime.getAlarmDate().toString()))
+                 //   {
+                       // AlarmReminderVM newObj = new AlarmReminderVM();
+                     //   newObj.setId(alarmReminderList.get(i).getId());
+                    //    newObj.setAlarmDate(alarmReminderList.get(i).getAlarmDate());
+
+
+                        AlarmReminderVM obj=alarmReminderList.get(position);
+
+                        List<String> time= new ArrayList<String>();
+                        for (int j=0; j< obj.getTimes().size();j++ ){
+                            if(j==selected)
+                                time.add(timeText);
+                            else
+                                time.add(obj.getTimes().get(j));
+                        }
+
+
+                    /*    if(doseTime.equals("Time1"))
                         {
                             newObj.setTime1(timeText);
                             newObj.setTime2(alarmReminderList.get(i).getTime2());
@@ -167,19 +185,19 @@ public class EditDoseFragment extends DialogFragment {
                             newObj.setTime5(alarmReminderList.get(i).getTime5());
                             newObj.setTime1(alarmReminderList.get(i).getTime1());
                             alarmReminders.add(newObj);
-                        }
-                    }
-                    else
-                    {
-                        alarmReminders.add(alarmReminderList.get(i));
-                    }
+                        }*/
+                //    }
+             //       else
+                //    {
+             //           alarmReminders.add(alarmReminderList.get(i));
+               //     }
+//
+         //       }
+                System.out.println("Size:::::::"+alarmReminderList.size());
 
-                }
-                System.out.println("Size:::::::"+alarmReminders.size());
-
-                HorizontalListAdapter hrAdapter = new HorizontalListAdapter(getActivity(), alarmReminders);
+                HorizontalListAdapter hrAdapter = new HorizontalListAdapter(getActivity(), alarmReminderList);
                 horizontalList.setAdapter(hrAdapter);
-                global.setAlarmTime(alarmReminders);
+                global.setAlarmTime(alarmReminderList);
                 EditDoseFragment.this.getDialog().cancel();
             }
         });

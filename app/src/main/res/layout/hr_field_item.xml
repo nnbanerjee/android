@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     tools:context=".HomeActivity">
 
     <!--<com.mindnerves.meidcaldiary.HorizontalListView
@@ -17,6 +16,9 @@
         android:layout_below="@+id/procedureName"
         android:layout_width="match_parent"
         android:layout_margin="5dp"
-        android:layout_height="160dp" />
 
+        android:listSelector="@drawable/horizontal_selector"
+        android:layout_height="35dp" />
+    <!--android:background="@drawable/horizontal_selector"-->
+    <!--android:layout_height="160dp"-->
 </RelativeLayout>

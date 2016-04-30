@@ -1,32 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="body2">
-        <item name="android:fontFamily">sans-serif-medium</item>
+    <style name="Button_Style" parent="@android:style/Widget.Button" >
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textSize">12sp</item>
+        <item name ="android:background">@drawable/apptheme_btn_default_holo_light</item>
+        <item name="android:textColor">@drawable/button_selector_text_and_color</item>
     </style>
-
-    <style name="body1">
+    <style name="caption_Style">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">12sp</item>
-        <item name = "android:textColor">@color/off_white</item>
+    </style>
+    <style name="body1">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="body">
+    <style name="body2">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="body3">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="sub_heading">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name = "android:textStyle">normal</item>
+    </style>
+    <style name="sub_heading2">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">16sp</item>
+        <item name = "android:textStyle">normal</item>
+    </style>
+
 
     <style name="title">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">20sp</item>
     </style>
-
-    <style name="sub_heading">
+    <style name="title_light">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+      <style name="Headline_Style">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+
+    <style name="Display1">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+    <style name="Display2">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">45sp</item>
+    </style>
+    <style name="Display3">
+    <item name="android:fontFamily">sans-serif-light</item>
+    <item name="android:textSize">56sp</item>
+</style>
+
+
+    <style name="Display4">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">112sp</item>
+    </style>
+
+    <style name="sub_heading_normal_black" parent="@android:style/Widget.TextView" >
+
+        <item name="android:singleLine">true</item>
+
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
-        <item name = "android:textStyle">bold</item>
-        <item name = "android:textColor">@color/color_blue_default</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+    </style>
+    <style name="sub_heading_normal_grey" parent="@android:style/Widget.TextView" >
+
+        <item name="android:singleLine">true</item>
+
+        <item name="android:textColor">@color/dim_grey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+    </style>
+    <style name="sub_heading_margin_grey" parent="@android:style/Widget.TextView" >
+
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:singleLine">true</item>
+
+        <item name="android:textColor">@color/dim_grey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+
     </style>
 
     <style name="editTextthemeForNewDesign" parent="@android:style/Widget.EditText" >
@@ -35,7 +107,7 @@
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColorHint">@color/color_blue_default</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name ="android:background">@drawable/apptheme_edit_text_holo_light</item>
     </style>
     <style name="editsmallTextthemeForNewDesign" parent="@android:style/Widget.EditText" >
@@ -53,7 +125,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
 
         <item name ="android:background">@drawable/apptheme_btn_default_holo_light</item>
         <item name="android:textColor">@drawable/button_selector_text_and_color</item>
@@ -68,8 +140,10 @@
 
         <item name="android:textColor">@color/dim_grey</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
 
     </style>
+
 
     <style name="textViewThemeForNewDesignWithBlueFont" parent="@android:style/Widget.TextView" >
 
@@ -80,6 +154,7 @@
 
         <item name="android:textColor">@color/color_blue_default</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
 
     </style>
     <style name="textViewThemeForNewDesignWithoutMargin" parent="@android:style/Widget.TextView" >
@@ -88,6 +163,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:background">@drawable/grey_background</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
 
     </style>
     <style name="textViewThemeForTimeReninder" parent="@android:style/Widget.TextView" >
@@ -95,8 +171,13 @@
         <item name="android:singleLine">true</item>
         <item name="android:background">@drawable/grey_background</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-normal</item>
 
 
     </style>
+
+
+
+
 
 </resources>

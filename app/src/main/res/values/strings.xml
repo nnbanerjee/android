@@ -419,6 +419,21 @@
     </string-array>
     <string-array name="medical_report">
 
+    <item>Blood Report</item>
+    <item>Urine Report</item>
+    <item>Cancer Report</item>
+    <item>HIV Report</item>
+    <item>X-Ray Report</item>
+    <item>Skin Report</item>
+    <item>Hair Report</item>
+    <item>Eye Report</item>
+    <item>Nose Report</item>
+    <item>MRI Report</item>
+    <item>Simple Report</item>
+    <item>Ultrasound Report </item>
+</string-array>
+    <string-array name="type_of_docs">
+
         <item>Blood Report</item>
         <item>Urine Report</item>
         <item>Cancer Report</item>

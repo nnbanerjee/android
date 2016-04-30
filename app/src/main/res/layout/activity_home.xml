@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     tools:context=".HomeActivity">
 
-    <android.support.v4.widget.DrawerLayout
+  <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -12,39 +12,110 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent">
 
+            android:layout_height="fill_parent">
+           <android.support.v7.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_blue_default"
+                android:visibility="gone"
+                android:elevation="4dp"
+                 >
+
+
+
+               <Button
+                   android:id="@+id/back_button"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:gravity="left"
+                   android:layout_alignParentLeft="true"
+                   android:background="@drawable/back"
+                   android:visibility="visible" />
+
+             <!--  <Button
+                   android:id="@+id/refresh"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:layout_margin="5dp"
+
+                   android:layout_toLeftOf="@+id/drawar_button"
+                   android:visibility="visible"
+                   android:background="@drawable/refresh" />-->
+
+               <TextView
+                   android:id="@+id/show_global_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerHorizontal="true"
+                   android:layout_marginTop="5dp"
+                   android:text="Patient"
+                   android:textColor="#ffffff"
+                   style="@style/title"
+                   android:textStyle="bold" />
+
+               <Button
+                   android:id="@+id/logout"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+
+                   android:layout_marginTop="10dp"
+                   android:background="@drawable/logout"
+                   android:visibility="invisible" />
+               <!--<Button
+                   android:id="@+id/drawar_button"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:visibility="visible"
+
+                   android:layout_gravity="right"
+                   android:background="@drawable/home"
+                   android:layout_centerVertical="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentEnd="true" />-->
+           </android.support.v7.widget.Toolbar>
             <RelativeLayout
                 android:id="@+id/home_layout1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/my_toolbar"
                 android:background="@color/color_blue_default">
 
-               <!-- <ImageView
+             <!--  <ImageView
                     android:id="@+id/global_medico_logo"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/medico_logo" />
+                    android:background="@drawable/medico_logo" />-->
 
-                <ImageView
+               <!-- <ImageView
                     android:id="@+id/home_icon"
                     android:layout_width="50dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/global_medico_logo"
                     android:background="@drawable/medico" />-->
+                <Button
+                    android:id="@+id/refresh"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
 
+                    android:layout_toLeftOf="@+id/drawar_button"
+                    android:visibility="visible"
+                    android:background="@drawable/refresh" />
                 <Button
                     android:id="@+id/drawar_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
                     android:visibility="visible"
                     android:background="@drawable/home" />
 
-                <Button
+               <!-- <Button
                     android:id="@+id/refresh"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -53,7 +124,7 @@
                     android:visibility="invisible"
                     android:background="@drawable/refresh" />
 
-                <Button
+              <Button
                     android:id="@+id/back_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -81,13 +152,13 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/logout"
-                    android:visibility="gone" />
+                    android:visibility="gone" />-->
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/home_layout2"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:background="@color/color_blue_default"
                 android:layout_below="@+id/home_layout1">
 
@@ -95,10 +166,9 @@
                     android:id="@+id/profile_picture"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/dr_icon"
-                    android:layout_marginLeft="10dp" />
+                      />
 
                 <TextView
                     android:id="@+id/account_name"
@@ -106,11 +176,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_picture"
                     android:layout_centerHorizontal="true"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
                     android:text="Raviraj Dongare"
                     android:textColor="#ffffff"
-                    style="@style/sub_heading"
+                    style="@style/title"
                     android:textStyle="bold" />
                 <View
                     android:id="@+id/down_arrow"
@@ -128,15 +196,15 @@
                     android:id="@+id/status_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Verified"
+                    android:paddingTop="5dp"
+                    android:text="Doctor profile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/account_name"
                     android:textColor="#ffffff"
-                    android:textSize="@dimen/heading"
+                    style="@style/sub_heading_normal_grey"
                     android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/status_text_show"
@@ -158,65 +226,67 @@
             <LinearLayout
                 android:id="@+id/notification_layout"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/home_layout2"
                 android:background="@color/color_blue_default"
                 android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="20dp"
                 android:weightSum="1">
 
                 <Button
                     android:id="@+id/notification_ping"
-                    android:layout_width="45dp"
-                    android:layout_height="50dp"
+                    android:layout_width="50dp"
+                    android:layout_height="62dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".18"
                     android:background="@drawable/notification" />
 
                 <Button
                     android:id="@+id/messages_ping"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="25dp"
+                    android:layout_width="50dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".18"
                     android:background="@drawable/msg" />
 
                 <Button
                     android:id="@+id/patient_ping"
                     android:layout_width="50dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="25dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".18"
                     android:background="@drawable/searchpatient" />
 
                 <Button
                     android:id="@+id/msg_notification"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_width="50dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".18"
                     android:background="@drawable/msg"
                     android:visibility="gone" />
 
                 <Button
                     android:id="@+id/doctor_search"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="25dp"
+                    android:layout_width="50dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".18"
                     android:background="@drawable/searchdoctor" />
 
                 <Button
                     android:id="@+id/clinic_notification"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="25dp"
+                    android:layout_width="50dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".18"
                     android:background="@drawable/searchclinic" />
             </LinearLayout>
             <View
@@ -231,6 +301,8 @@
                 android:layout_width="match_parent"
                 android:layout_below="@+id/separation_bar"
                 android:layout_height="fill_parent" />
+
+
         </RelativeLayout>
 
         <ListView
@@ -240,6 +312,6 @@
             android:layout_gravity="start"
             android:background="#F9FDFD"
             android:choiceMode="singleChoice" />
-    </android.support.v4.widget.DrawerLayout>
+  </android.support.v4.widget.DrawerLayout>
 
 </RelativeLayout>

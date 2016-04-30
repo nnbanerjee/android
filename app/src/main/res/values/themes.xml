@@ -3,12 +3,23 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="AppTheme" parent="@style/_AppTheme"/>
-
-  <style name="_AppTheme" parent="android:Theme.Holo.Light">
-
-    <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
+  <style name="AppTheme" parent="@style/_AppTheme">
 
   </style>
+
+  <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
+    <item name="android:windowNoTitle">true</item>
+   <!-- <item name="windowActionBar">false</item>-->
+  </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+      <item name="android:background">@color/color_blue_default</item>
+      <item name="android:textColor">@color/white</item>
+
+    </style>
+
 
 </resources>

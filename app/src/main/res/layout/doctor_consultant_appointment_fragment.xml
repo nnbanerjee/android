@@ -89,7 +89,7 @@
                 android:layout_height="25dp"
                 android:id="@+id/timeBtn"
                 android:layout_toRightOf="@+id/dateValue"
-                android:background="@drawable/calendar2"/>
+                android:background="@drawable/cal"/>
 
         </RelativeLayout>
 

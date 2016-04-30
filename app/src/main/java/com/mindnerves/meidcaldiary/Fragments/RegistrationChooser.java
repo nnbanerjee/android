@@ -53,7 +53,7 @@ public class RegistrationChooser extends Fragment {
         assistant = (ImageView) view.findViewById(R.id.assistant);
         patient = (ImageView) view.findViewById(R.id.patient);
 
-        getActivity().getActionBar().hide();
+      //  getActivity().getActionBar().hide();
 
         assistant.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {

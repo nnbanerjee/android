@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,6 +44,7 @@ import Adapter.ClinicTimeTableAdapter;
 import Application.AppController;
 import Application.MyApi;
 import Model.AllPatients;
+import Model.AppointmentId;
 import Model.AppointmentSlotsByDoctor;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
@@ -51,6 +53,7 @@ import Model.DoctorAppointmentsResponse;
 import Model.DoctorClinicAppointments;
 import Model.DoctorCreatesAppoinementResponse;
 import Model.DoctorCreatesAppointment;
+import Model.ResponseCodeVerfication;
 import Model.Slot;
 import Model.TimeInterval;
 import Utils.UtilSingleInstance;
@@ -94,6 +97,9 @@ public class ClinicAppointmentFragment extends Fragment {
     String patientId;
     ClinicList selectedClinic;
     ClinicTimeTableAdapter clinicTimeTableAdapter;
+    boolean reschedule = false;
+    Toolbar toolbar;
+    DoctorAppointmentsResponse originalDataOfClinicAppointments;
 
     @Nullable
     @Override
@@ -108,6 +114,7 @@ public class ClinicAppointmentFragment extends Fragment {
         RelativeLayout layout2 = (RelativeLayout) getActivity().findViewById(R.id.layout2);
         if (layout2 != null)
             layout2.setVisibility(View.GONE);
+
 
         TextView clinicName = (TextView) view.findViewById(R.id.clinicName);
         globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
@@ -131,6 +138,18 @@ public class ClinicAppointmentFragment extends Fragment {
         clinicShift = args.getString("clinicShift");
         appointmentTime = args.getString("appointmentTime");
         appointmentDate = args.getString("appointmentDate");
+
+
+        reschedule = args.getBoolean("reschedule");
+
+        toolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        if (reschedule)
+            toolbar.inflateMenu(R.menu.book_now_with_cancel);
+
+        else
+            toolbar.inflateMenu(R.menu.book_now);
         // doctorClinicId= args.getString("doctorClinicId");
 
 
@@ -157,6 +176,7 @@ public class ClinicAppointmentFragment extends Fragment {
         doctorClinicId = SelectedSlotDetailsWithClinic.getDoctorClinicId();
         dateLong = "" + Calendar.getInstance().getTimeInMillis();
 
+
         // global.clinicDetailsData.setClinicId(Integer.parseInt(clinicId));
         // global.clinicDetailsData.setShift(clinicShift);
         // global.clinicDetailsData.setPatientId(userId);
@@ -169,9 +189,11 @@ public class ClinicAppointmentFragment extends Fragment {
         clinicDetailVmList = global.getClinicDetailVm();
         updatedate();
 
-        if (appointmentTime != null) {
+        if (reschedule) {
             cancelBtn.setVisibility(View.VISIBLE);
+            bookNowBtn.setText("Update");
         } else {
+            bookNowBtn.setText("Book Now");
             cancelBtn.setVisibility(View.GONE);
         }
 
@@ -180,10 +202,10 @@ public class ClinicAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText()
-                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getDoctorId());
+                /*System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getDoctorId());
                 System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getPatientId());
                 System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getClinicId());
-                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getShift());
+                System.out.println("appController.clinicDetailsData  = " + global.clinicDetailsData.getShift());*/
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Delete Appointment")
@@ -191,8 +213,8 @@ public class ClinicAppointmentFragment extends Fragment {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                cancelClinicsAppointmentData(global.clinicDetailsData.getDoctorId(), session.getString("patient_email", null),
-                                        global.clinicDetailsData.getClinicId(), global.clinicDetailsData.getShift());
+                                cancelClinicsAppointmentData(selectedClinic.getAppointments().get(0).getAppointmentId());// global.clinicDetailsData.getDoctorId(), session.getString("patient_email", null),
+                                // global.clinicDetailsData.getClinicId(), global.clinicDetailsData.getShift());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -205,7 +227,7 @@ public class ClinicAppointmentFragment extends Fragment {
 
 
 
-                /*cancelClinicsAppointmentData(global.clinicDetailsData.getDoctorId(), global.clinicDetailsData.getId(),
+                /* cancelClinicsAppointmentData(global.clinicDetailsData.getDoctorId(), global.clinicDetailsData.getId(),
                         global.clinicDetailsData.getIdClinic(), global.clinicDetailsData.getShift());*/
             }
         });
@@ -238,7 +260,7 @@ public class ClinicAppointmentFragment extends Fragment {
 
 
                 DoctorCreatesAppointment newAppointment = new DoctorCreatesAppointment("" + (ClinicTimeTableAdapter.selectedTimeSlotSequenceNo + 1), doctorId, patientId,
-                        UtilSingleInstance.getUserType(type), clinicId, "" +UtilSingleInstance.getStringToCalWithTodaysDate(clinicTimeTableAdapter.getSelectedTime()), doctorClinicId, "0", "0", "" + visitType.getSelectedItemPosition(), "", "2", "", "", "");
+                        UtilSingleInstance.getUserType(type), clinicId, "" + UtilSingleInstance.getStringToCalWithTodaysDate(clinicTimeTableAdapter.getSelectedTime()), doctorClinicId, "0", "0", "" + visitType.getSelectedItemPosition(), "", "2", "", "", "");
 
               /*  ClinicAppointment clinicAppointment = new ClinicAppointment(global.clinicDetailsData.getDoctorId(), userId,"",,
 
@@ -304,7 +326,6 @@ public class ClinicAppointmentFragment extends Fragment {
     }
 
 
-
     public void updatedate() {
         dateValue.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -348,8 +369,6 @@ public class ClinicAppointmentFragment extends Fragment {
         }
 
     };
-
-
 
 
     public void getAllClinicsAppointmentData() {
@@ -424,26 +443,71 @@ public class ClinicAppointmentFragment extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api1 = restAdapter.create(MyApi.class);
-        progress = ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
+        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
         //api1.getAllClinicsAppointment(clinicVm.getDoctorId(), clinicId, clinicShift, dateValue.getText().toString(), new Callback<List<ClinicAppointment>>() {
         // api1.saveClinicsAppointmentData(clinicAppointment, new Callback<JsonObject>() {
-        api1.createAppointment(clinicAppointment, new Callback<DoctorCreatesAppoinementResponse>() {
-            @Override
-            public void success(DoctorCreatesAppoinementResponse jsonObject, Response response) {
-                Toast.makeText(getActivity(), R.string.request_success, Toast.LENGTH_SHORT).show();
-                progress.dismiss();
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-                progress.dismiss();
-            }
-        });
+        if (reschedule) {
+            clinicAppointment.setAppointmentId(selectedClinic.getAppointments().get(0).getAppointmentId());
+            api1.updateAppointment(clinicAppointment, new Callback<DoctorCreatesAppoinementResponse>() {
+                @Override
+                public void success(DoctorCreatesAppoinementResponse jsonObject, Response response) {
+                    Toast.makeText(getActivity(), R.string.request_success, Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                   // int lastbooked=1;
+
+                  //  if(originalDataOfClinicAppointments!=null&& originalDataOfClinicAppointments.getsequence_num()!=null)
+                     //lastbooked=Integer.parseInt(originalDataOfClinicAppointments.getsequence_num().get(0)) ;
+                    for(int i=0; i<timeList.size();i++){
+                       if( timeList.get(i).getIsAvailable().equalsIgnoreCase("Occupied"))
+                           timeList.get(i).setIsAvailable("Available");
+                    }
+                    timeList.get(ClinicTimeTableAdapter.selectedTimeSlotSequenceNo).setIsAvailable("Occupied");
+                    //timeList.get(lastbooked).setIsAvailable("Available");
+                    clinicTimeTableAdapter.notifyDataSetChanged();
+                    clinicTimeTableAdapter.notifyDataSetInvalidated();
+                  //  getAllClinicsAppointmentData();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                    progress.dismiss();
+                }
+            });
+        } else {
+
+            api1.createAppointment(clinicAppointment, new Callback<DoctorCreatesAppoinementResponse>() {
+                @Override
+                public void success(DoctorCreatesAppoinementResponse jsonObject, Response response) {
+                    Toast.makeText(getActivity(), R.string.request_success, Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                    timeList.get(ClinicTimeTableAdapter.selectedTimeSlotSequenceNo).setIsAvailable("Occupied");
+
+                    clinicTimeTableAdapter.notifyDataSetChanged();
+                    clinicTimeTableAdapter.notifyDataSetInvalidated();
+                   /* clinicTimeTableAdapter = new ClinicTimeTableAdapter(getActivity(), timeList, timeTeableList, appointmentTime);
+                    timeTeableList.setAdapter(clinicTimeTableAdapter);*/
+
+                    // ClinicTimeTableAdapter.selectedTimeSlotSequenceNo + 1
+                    //update red color
+                    // getAllClinicsAppointmentData();
+                    //update the current selection with red
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                    progress.dismiss();
+                }
+            });
+        }
+
     }
 
-    public void cancelClinicsAppointmentData(Integer doctorId, String patientId, Integer clinicId, String shift) {
+    public void cancelClinicsAppointmentData(String appointmentId) {//Integer doctorId, String patientId, Integer clinicId, String shift) {
         MyApi api1;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -451,10 +515,11 @@ public class ClinicAppointmentFragment extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api1 = restAdapter.create(MyApi.class);
-        api1.cancelClinicsAppointment(doctorId, patientId, clinicId, shift, new Callback<String>() {
+        api1.cancelAppointment(new AppointmentId(appointmentId), new Callback<ResponseCodeVerfication>() {
             @Override
-            public void success(String jsonObject, Response response) {
-                Toast.makeText(getActivity(), "Deleted Successfully !!!", Toast.LENGTH_SHORT).show();
+            public void success(ResponseCodeVerfication jsonObject, Response response) {
+                progress.dismiss();
+                Toast.makeText(getActivity().getApplicationContext(), "Successfully cancelled Appointment!", Toast.LENGTH_LONG).show();
                 getBackWindows();
             }
 
@@ -479,8 +544,10 @@ public class ClinicAppointmentFragment extends Fragment {
             return "";
         }
     }
+    List<TimeInterval> timeList = new ArrayList<TimeInterval>();
 
     public void loadAppointmentData(DoctorAppointmentsResponse clinicAppointments, Date curDate) {
+        originalDataOfClinicAppointments=clinicAppointments;
         String curDay = "";
         int flagDay = 0;
         Calendar endTime = null;
@@ -512,7 +579,7 @@ public class ClinicAppointmentFragment extends Fragment {
 
         }
 
-        List<TimeInterval> timeList = new ArrayList<TimeInterval>();
+
         //if todays date.
         if (flagDay == 1) {
             curCalendar.setTime(curDate);
@@ -538,10 +605,10 @@ public class ClinicAppointmentFragment extends Fragment {
                         }
 
                         //TimeInterval timeInterval = new TimeInterval(timeHHMM + startTimeFromSelection.get(Calendar.AM_PM), "Available", false);
-                        String size = "" + timeList.size();//get the current rendering slot no.
-                        for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+                        String size = "" + (timeList.size() + 1);//get the current rendering slot no.
+                        for (int i = 0; i < clinicAppointments.getsequence_num().size(); i++) {
 
-                            if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                            if (size.equalsIgnoreCase(clinicAppointments.getsequence_num().get(i))) {
                                 // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
                                 timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                 break;
@@ -599,10 +666,10 @@ public class ClinicAppointmentFragment extends Fragment {
                                 }
                             }*/
 
-                            String size = "" + timeList.size();
-                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+                            String size = "" + (timeList.size() + 1);
+                            for (int i = 0; i < clinicAppointments.getsequence_num().size(); i++) {
 
-                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                if (size.equalsIgnoreCase(clinicAppointments.getsequence_num().get(i))) {
                                     // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
                                     timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                     break;
@@ -653,10 +720,10 @@ public class ClinicAppointmentFragment extends Fragment {
                                 break;
 
                             }*/
-                            String size = "" + timeList.size();
-                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+                            String size = "" + (timeList.size() + 1);
+                            for (int i = 0; i < clinicAppointments.getsequence_num().size(); i++) {
 
-                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                if (size.equalsIgnoreCase(clinicAppointments.getsequence_num().get(i))) {
                                     // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
                                     timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                     break;
@@ -700,10 +767,10 @@ public class ClinicAppointmentFragment extends Fragment {
                                 break;
 
                             }*/
-                            String size = "" + timeList.size() + 1;
-                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+                            String size = "" + (timeList.size() + 1);
+                            for (int i = 0; i < clinicAppointments.getsequence_num().size(); i++) {
 
-                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                if (size.equalsIgnoreCase(clinicAppointments.getsequence_num().get(i))) {
                                     // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
                                     timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                     break;
@@ -739,10 +806,10 @@ public class ClinicAppointmentFragment extends Fragment {
                             }
                         }*/
 
-                        String size = "" + timeList.size();
-                        for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+                        String size = "" + (timeList.size() + 1);
+                        for (int i = 0; i < clinicAppointments.getsequence_num().size(); i++) {
 
-                            if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                            if (size.equalsIgnoreCase(clinicAppointments.getsequence_num().get(i))) {
                                 // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
                                 timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                 break;
@@ -780,11 +847,11 @@ public class ClinicAppointmentFragment extends Fragment {
                             break;
                         }
                     }*/
-                        if (clinicAppointments != null && clinicAppointments.getBookedSlots() != null) {
-                            String size = "" + timeList.size();
-                            for (int i = 0; i < clinicAppointments.getBookedSlots().size(); i++) {
+                        if (clinicAppointments != null && clinicAppointments.getsequence_num() != null) {
+                            String size = "" + (timeList.size() + 1);
+                            for (int i = 0; i < clinicAppointments.getsequence_num().size(); i++) {
 
-                                if (size.equalsIgnoreCase(clinicAppointments.getBookedSlots().get(i))) {
+                                if (size.equalsIgnoreCase(clinicAppointments.getsequence_num().get(i))) {
                                     // if(clinicAppointments.getBookedSlots().get(i).equalsIgnoreCase(""+i)){
                                     timeInterval = new TimeInterval(timeHHMM, "Occupied", false);
                                     break;
@@ -807,6 +874,7 @@ public class ClinicAppointmentFragment extends Fragment {
 
         clinicTimeTableAdapter = new ClinicTimeTableAdapter(getActivity(), timeList, timeTeableList, appointmentTime);
         timeTeableList.setAdapter(clinicTimeTableAdapter);
+
     }
 
     public void getBackWindows() {
@@ -816,10 +884,10 @@ public class ClinicAppointmentFragment extends Fragment {
         //Fragment fragment = new ClinicAllPatientFragment();
         if (args != null) {
             if (args.getString("fragment").equals("ClinicPatientAdapter")) {
-                Fragment fragment = new ClinicAllPatientFragment();
+                Fragment fragment = new PatientDetailsFragment();
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.popBackStack();
-                // fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                //fragmentManger.popBackStack();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             } else if (args.getString("fragment").equals("DoctorPatientAdapter")) {
                 Fragment fragment = new AllDoctorsPatient();
                 FragmentManager fragmentManger = getFragmentManager();

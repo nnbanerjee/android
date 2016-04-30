@@ -8,15 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,7 +40,6 @@ import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
-import com.mindnerves.meidcaldiary.Fragments.ManageDoctorProfile;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
 import com.mindnerves.meidcaldiary.Fragments.ManagePatientFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
@@ -52,19 +48,12 @@ import com.mindnerves.meidcaldiary.Fragments.ManageReminder;
 import com.mindnerves.meidcaldiary.Fragments.ManageReminderPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
 import com.mindnerves.meidcaldiary.Fragments.PatientMenusManage;
-import com.mindnerves.meidcaldiary.Fragments.ProfileSwitchDialogDoctor;
-import com.mindnerves.meidcaldiary.Fragments.ProfileSwitchDialogPatient;
 import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
 import com.mindnerves.meidcaldiary.Fragments.ShowPatients;
-import com.mindnerves.meidcaldiary.Fragments.ShowPreviewDialog;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityClinics;
-import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityDialog;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityDoctor;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,16 +65,17 @@ import Model.Delegation;
 import Model.Dependent;
 import Model.DoctorId;
 import Model.DoctorProfile;
-import Model.Logindata;
 import Model.Patient;
+import Model.PatientId;
 import Model.Person;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 
-public class HomeActivity extends FragmentActivity {
+public class HomeActivity extends Activity {
     FragmentManager fragmentManger;
     Button drawerButton, logout, notification, messages;
     int flagActionButton = 0;
@@ -113,6 +103,7 @@ public class HomeActivity extends FragmentActivity {
     Point p;
     View arrow;
     public DoctorProfile doc;
+    Toolbar toolbar;
 
     @Override
     public final void onBackPressed() {
@@ -192,11 +183,13 @@ public class HomeActivity extends FragmentActivity {
         System.out.println("TYpe :::" + logString);
         doctorSearch = (Button) findViewById(R.id.doctor_search);
         status = (TextView) findViewById(R.id.status_text);
-        status.setText(statusString);
+        status.setText(logString+" Profile");
         patients = (Button) findViewById(R.id.patient_ping);
         clinicSearch = (Button) findViewById(R.id.clinic_notification);
         globalTv = (TextView) findViewById(R.id.show_global_tv);
         arrow = (View) findViewById(R.id.down_arrow);
+
+
         doctorSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,7 +214,17 @@ public class HomeActivity extends FragmentActivity {
         BackStress.staticflag = 1;
         Global go = (Global) HomeActivity.this.getApplicationContext();
         go.setLocation("");
-        getActionBar().hide();
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.GONE);
+        //setSupportActionBar(toolbar);
+       /* ActionBar actionBar = getActionBar();
+
+        actionBar.show();
+
+        actionBar.setTitle("Home");
+*/
+
+
         flagActionButton = 0;
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
         accountName = (TextView) findViewById(R.id.account_name);
@@ -243,8 +246,9 @@ public class HomeActivity extends FragmentActivity {
             api.getDoctorLandingPageDetails(param, new Callback<DoctorProfile>() {
                 @Override
                 public void success(DoctorProfile doc1, Response response) {
-                    doc=doc1;
-                    new ImageLoadTask(getResources().getString(R.string.image_base_url) + doc.getPerson().getImageUrl(), profilePicture).execute();
+                    doc = doc1;
+                    if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
+                        new ImageLoadTask(getResources().getString(R.string.image_base_url) + doc.getPerson().getImageUrl(), profilePicture).execute();
                     accountName.setText(doc.getPerson().getName());
                     adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + doc.getPerson().getId());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values " + adapter.getCount());
@@ -260,7 +264,7 @@ public class HomeActivity extends FragmentActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                   // progress.dismiss();
+                    // progress.dismiss();
                     error.printStackTrace();
                     Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
@@ -273,17 +277,17 @@ public class HomeActivity extends FragmentActivity {
             fragment = new PatientMenusManage();
             fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
-            api.getProfilePatient(loggingId, new Callback<Person>() {
+            api.getPatientLandingPageDetails(new PatientId(loggingId), new Callback<DoctorProfile>() {
                 @Override
-                public void success(Person person, Response response) {
-                    new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getId(), profilePicture).execute();
-                    System.out.println("profile id:::::::" + getResources().getString(R.string.image_base_url) + person.getId());
+                public void success(DoctorProfile person, Response response) {
+                    new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getPerson().getImageUrl(), profilePicture).execute();
+                    System.out.println("profile id:::::::" + getResources().getString(R.string.image_base_url) + person.getPerson().getId());
                     SharedPreferences session = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = session.edit();
-                    editor.putString("patientId", person.patientId);
+                    editor.putString("patientId", person.getPerson().getPatientId());
                     editor.commit();
-                    accountName.setText(person.getName());
-                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + person.getId());//(new MenuAdapter(this,arrayMenu))
+                    accountName.setText(person.getPerson().getName());
+                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + person.getPerson().getPatientId());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values " + adapter.getCount());
                     dList.setAdapter(adapter);
                 }
@@ -601,9 +605,8 @@ public class HomeActivity extends FragmentActivity {
             profileName.setText(doc.getPerson().getName());
 
 
-
             List<Dependent> patients = new ArrayList<Dependent>();
-            patients=doc.getDependents();
+            patients = doc.getDependents();
             if (patients.size() == 0) {
                 Dependent patient = new Dependent();
                 patient.setName("No Dependent Found");
@@ -769,7 +772,7 @@ public class HomeActivity extends FragmentActivity {
                         }
                     }
                     //dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, arrayNew);
-                   // dependentList.setAdapter(dependentAdapter);
+                    // dependentList.setAdapter(dependentAdapter);
                 }
 
                 @Override
@@ -881,22 +884,22 @@ public class HomeActivity extends FragmentActivity {
     public void managePatientIcons() {
         LinearLayout.LayoutParams lpReminder = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lpReminder.setMargins(35, 5, 0, 10);
-        lpReminder.width = 55;
-        lpReminder.height = 55;
+        lpReminder.width = 50;
+        lpReminder.height = 60;
         notification.setLayoutParams(lpReminder);
         LinearLayout.LayoutParams lpMessage = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lpMessage.setMargins(65, 5, 0, 10);
-        lpMessage.width = 55;
-        lpMessage.height = 55;
+        lpReminder.width = 50;
+        lpReminder.height = 60;
         messages.setLayoutParams(lpMessage);
         LinearLayout.LayoutParams lpDoctorSearch = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lpDoctorSearch.setMargins(65, 5, 0, 10);
-        lpDoctorSearch.width = 55;
-        lpDoctorSearch.height = 55;
+        lpReminder.width = 50;
+        lpReminder.height = 60;
         doctorSearch.setLayoutParams(lpDoctorSearch);
         LinearLayout.LayoutParams lpClinicSearch = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpClinicSearch.width = 55;
-        lpClinicSearch.height = 55;
+        lpReminder.width = 50;
+        lpReminder.height = 60;
         lpClinicSearch.setMargins(65, 5, 0, 10);
         clinicSearch.setLayoutParams(lpClinicSearch);
     }
@@ -905,6 +908,8 @@ public class HomeActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         System.out.println("Resume of Main Called::::::::::::::::");
+
+        //  getActionBar().hide();
     }
 
     // Get the x and y position after the button is draw on screen
@@ -948,7 +953,14 @@ public class HomeActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu, menu);
+        // super.onCreateOptionsMenu(menu);
+        if (!dLayout.isDrawerOpen(dList)) {
+            // dLayout.closeDrawer(Gravity.LEFT);
+            getMenuInflater().inflate(R.menu.menu, menu);
+        }
+
+
         return true;
     }
 

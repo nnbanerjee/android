@@ -62,19 +62,19 @@ public class DoctorAppointmentInformation extends Fragment {
         summaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.square_blue_color);
-                documentationBtn.setBackgroundResource(R.drawable.square_grey_color);
-                doctorNoteBtn.setBackgroundResource(R.drawable.square_grey_color);
-                treatmentBtn.setBackgroundResource(R.drawable.square_grey_color);
-                invoicesBtn.setBackgroundResource(R.drawable.square_grey_color);
-                feedbackBtn.setBackgroundResource(R.drawable.square_grey_color);
+                summaryBtn.setBackgroundResource(R.drawable.tab_selected);
+                documentationBtn.setBackgroundResource(R.drawable.tab_default);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
 
-                feedbackBtn.setTextColor(Color.parseColor("#000000"));
+              /*  feedbackBtn.setTextColor(Color.parseColor("#000000"));
                 summaryBtn.setTextColor(Color.parseColor("#ffffff"));
                 documentationBtn.setTextColor(Color.parseColor("#000000"));
                 doctorNoteBtn.setTextColor(Color.parseColor("#000000"));
                 treatmentBtn.setTextColor(Color.parseColor("#000000"));
-                invoicesBtn.setTextColor(Color.parseColor("#000000"));
+                invoicesBtn.setTextColor(Color.parseColor("#000000"));*/
 
                 getSummaryInformation();
             }
@@ -83,19 +83,19 @@ public class DoctorAppointmentInformation extends Fragment {
         documentationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.square_grey_color);
-                documentationBtn.setBackgroundResource(R.drawable.square_blue_color);
-                doctorNoteBtn.setBackgroundResource(R.drawable.square_grey_color);
-                treatmentBtn.setBackgroundResource(R.drawable.square_grey_color);
-                invoicesBtn.setBackgroundResource(R.drawable.square_grey_color);
-                feedbackBtn.setBackgroundResource(R.drawable.square_grey_color);
+                summaryBtn.setBackgroundResource(R.drawable.tab_default);
+                documentationBtn.setBackgroundResource(R.drawable.tab_selected);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
 
-                feedbackBtn.setTextColor(Color.parseColor("#000000"));
+            /*    feedbackBtn.setTextColor(Color.parseColor("#000000"));
                 summaryBtn.setTextColor(Color.parseColor("#000000"));
                 documentationBtn.setTextColor(Color.parseColor("#ffffff"));
                 doctorNoteBtn.setTextColor(Color.parseColor("#000000"));
                 treatmentBtn.setTextColor(Color.parseColor("#000000"));
-                invoicesBtn.setTextColor(Color.parseColor("#000000"));
+                invoicesBtn.setTextColor(Color.parseColor("#000000"));*/
 
                 getDocumentationInformation();
             }
@@ -104,20 +104,20 @@ public class DoctorAppointmentInformation extends Fragment {
         doctorNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.square_grey_color);
-                documentationBtn.setBackgroundResource(R.drawable.square_grey_color);
-                doctorNoteBtn.setBackgroundResource(R.drawable.square_blue_color);
-                treatmentBtn.setBackgroundResource(R.drawable.square_grey_color);
-                invoicesBtn.setBackgroundResource(R.drawable.square_grey_color);
-                feedbackBtn.setBackgroundResource(R.drawable.square_grey_color);
+                summaryBtn.setBackgroundResource(R.drawable.tab_default);
+                documentationBtn.setBackgroundResource(R.drawable.tab_default);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_selected);
+                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
 
-                feedbackBtn.setTextColor(Color.parseColor("#000000"));
+             /*   feedbackBtn.setTextColor(Color.parseColor("#000000"));
                 summaryBtn.setTextColor(Color.parseColor("#000000"));
                 documentationBtn.setTextColor(Color.parseColor("#000000"));
                 doctorNoteBtn.setTextColor(Color.parseColor("#ffffff"));
                 treatmentBtn.setTextColor(Color.parseColor("#000000"));
                 invoicesBtn.setTextColor(Color.parseColor("#000000"));
-
+*/
                 getDoctorNoteInformation();
             }
         });
@@ -125,19 +125,19 @@ public class DoctorAppointmentInformation extends Fragment {
         treatmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.square_grey_color);
-                documentationBtn.setBackgroundResource(R.drawable.square_grey_color);
-                doctorNoteBtn.setBackgroundResource(R.drawable.square_grey_color);
-                treatmentBtn.setBackgroundResource(R.drawable.square_blue_color);
-                invoicesBtn.setBackgroundResource(R.drawable.square_grey_color);
-                feedbackBtn.setBackgroundResource(R.drawable.square_grey_color);
+                summaryBtn.setBackgroundResource(R.drawable.tab_default);
+                documentationBtn.setBackgroundResource(R.drawable.tab_default);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+                treatmentBtn.setBackgroundResource(R.drawable.tab_selected);
+                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
 
-                feedbackBtn.setTextColor(Color.parseColor("#000000"));
+              /*  feedbackBtn.setTextColor(Color.parseColor("#000000"));
                 summaryBtn.setTextColor(Color.parseColor("#000000"));
                 documentationBtn.setTextColor(Color.parseColor("#000000"));
                 doctorNoteBtn.setTextColor(Color.parseColor("#000000"));
                 treatmentBtn.setTextColor(Color.parseColor("#ffffff"));
-                invoicesBtn.setTextColor(Color.parseColor("#000000"));
+                invoicesBtn.setTextColor(Color.parseColor("#000000"));*/
 
                 getTreatmentInformation();
             }
@@ -146,19 +146,19 @@ public class DoctorAppointmentInformation extends Fragment {
         invoicesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.square_grey_color);
-                documentationBtn.setBackgroundResource(R.drawable.square_grey_color);
-                doctorNoteBtn.setBackgroundResource(R.drawable.square_grey_color);
-                treatmentBtn.setBackgroundResource(R.drawable.square_grey_color);
-                invoicesBtn.setBackgroundResource(R.drawable.square_blue_color);
-                feedbackBtn.setBackgroundResource(R.drawable.square_grey_color);
+                summaryBtn.setBackgroundResource(R.drawable.tab_default);
+                documentationBtn.setBackgroundResource(R.drawable.tab_default);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+                invoicesBtn.setBackgroundResource(R.drawable.tab_selected);
+                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
 
-                summaryBtn.setTextColor(Color.parseColor("#000000"));
+              /*  summaryBtn.setTextColor(Color.parseColor("#000000"));
                 documentationBtn.setTextColor(Color.parseColor("#000000"));
                 doctorNoteBtn.setTextColor(Color.parseColor("#000000"));
                 treatmentBtn.setTextColor(Color.parseColor("#000000"));
                 invoicesBtn.setTextColor(Color.parseColor("#ffffff"));
-                feedbackBtn.setTextColor(Color.parseColor("#000000"));
+                feedbackBtn.setTextColor(Color.parseColor("#000000"));*/
 
                 getInvoicesInformation();
             }
@@ -166,19 +166,19 @@ public class DoctorAppointmentInformation extends Fragment {
         feedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.square_grey_color);
-                documentationBtn.setBackgroundResource(R.drawable.square_grey_color);
-                doctorNoteBtn.setBackgroundResource(R.drawable.square_grey_color);
-                treatmentBtn.setBackgroundResource(R.drawable.square_grey_color);
-                invoicesBtn.setBackgroundResource(R.drawable.square_grey_color);
-                feedbackBtn.setBackgroundResource(R.drawable.square_blue_color);
+                summaryBtn.setBackgroundResource(R.drawable.tab_default);
+                documentationBtn.setBackgroundResource(R.drawable.tab_default);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+                feedbackBtn.setBackgroundResource(R.drawable.tab_selected);
 
-                summaryBtn.setTextColor(Color.parseColor("#000000"));
+              /*  summaryBtn.setTextColor(Color.parseColor("#000000"));
                 documentationBtn.setTextColor(Color.parseColor("#000000"));
                 doctorNoteBtn.setTextColor(Color.parseColor("#000000"));
                 treatmentBtn.setTextColor(Color.parseColor("#000000"));
                 invoicesBtn.setTextColor(Color.parseColor("#000000"));
-                feedbackBtn.setTextColor(Color.parseColor("#ffffff"));
+                feedbackBtn.setTextColor(Color.parseColor("#ffffff"));*/
 
             }
         });

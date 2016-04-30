@@ -23,6 +23,7 @@ import java.util.List;
 import Adapter.ClinicSpecialityAdapter;
 import Application.MyApi;
 import Model.Clinic;
+import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -46,6 +47,7 @@ public class AddClinicSpecialitywise extends Fragment {
     Global go;
     SharedPreferences session;
     RelativeLayout radioLayout;
+    private String loggedInUser;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class AddClinicSpecialitywise extends Fragment {
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         radioLayout = (RelativeLayout)view.findViewById(R.id.layout2);
         doctorId = session.getString("sessionID", null);
+        loggedInUser = session.getString("id", "0");
         Bundle bun = getArguments();
         speciality = bun.get("specialization").toString();
         System.out.println("Speciality Fragment::::::" + speciality);
@@ -94,7 +97,7 @@ public class AddClinicSpecialitywise extends Fragment {
     }
     public void showListView(final String speciality){
         clinicList = new ArrayList<Clinic>();
-        api.getAllClinics(new Callback<List<Clinic>>() {
+        api.getAllClinics(new PersonID(loggedInUser), new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinics, Response response) {
                 for(Clinic c : clinics){

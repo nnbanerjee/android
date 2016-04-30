@@ -49,10 +49,9 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="Visit Date"
-                android:paddingTop="15dp"
-
+                android:layout_centerVertical="true"
                 android:layout_marginTop="10dp"
-                style="@style/body2" />
+                style="@style/sub_heading" />
 
             <TextView
                 android:id="@+id/visitedDate"
@@ -69,7 +68,7 @@
                 android:id="@+id/timeBtn"
                 android:layout_marginTop="13dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/calendar2"/>
+                android:background="@drawable/cal"/>
 
         </RelativeLayout>
 
@@ -85,25 +84,25 @@
                 android:id="@+id/mobileText"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:text="Visit Type"
+                android:layout_centerVertical="true"
                 style="@style/body2" />
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey"
+                android:layout_toRightOf="@+id/mobileText"
+                 >
             <Spinner
                 android:id="@+id/visit"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_toRightOf="@+id/mobileText"
-
                 android:entries="@array/visit_type_list"
-                android:layout_alignBottom="@+id/mobileText"
-
                 android:paddingLeft="5dp"
                 android:prompt="@string/select_visit_type"
                 android:spinnerMode="dialog"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
                 />
-
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -117,8 +116,8 @@
                 android:id="@+id/genderText"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:text="Referred by"
+                android:layout_centerVertical="true"
                 style="@style/body2"/>
 
             <EditText
@@ -126,7 +125,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/genderText"
-                android:layout_alignBottom="@+id/genderText"
                 android:paddingLeft="5dp"
                 android:textColor="#1E90FF"
                 style="@style/textViewThemeForNewDesignWithoutMargin" />
@@ -146,20 +144,33 @@
                 android:id="@+id/clinic"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:text="Clinic"
+                android:layout_centerVertical="true"
                 style="@style/body2" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/clinic"
+                android:background="@color/grey">
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
 
+                android:singleLine="true"
+                android:id="@+id/clinic_spinner"
+                android:visibility="gone"
+                android:imeOptions="actionDone"
+                />
+        </RelativeLayout>
             <MultiAutoCompleteTextView
                 android:id="@+id/clinicValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:textColor="#1E90FF"
-                android:layout_alignBottom="@+id/clinic"
                 android:scrollbars="vertical"
-
                 android:text=""
+                android:visibility="visible"
                 android:layout_toRightOf="@+id/clinic"
                 style="@style/textViewThemeForNewDesignWithoutMargin" />
 
@@ -199,10 +210,10 @@
                 android:scrollbars="vertical"
                 style="@style/textViewThemeForNewDesignWithoutMargin" />
 
-            <Button
+            <ImageView
                 android:id="@+id/symptomsHistryBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
 
                 android:paddingTop="10dp"
@@ -239,10 +250,10 @@
                 style="@style/textViewThemeForNewDesignWithoutMargin"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-            <Button
+            <ImageView
                 android:id="@+id/diagnosisHistryBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/histry_icon" />
 
@@ -267,7 +278,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+android:layout_marginTop="5dp"
                 android:layout_below="@+id/medicinePrescribedText"
                 android:background="@drawable/square_grey_color"
                 android:id="@+id/relativeLayout">
@@ -303,9 +314,9 @@
                     android:id="@+id/alarm_list">
                 </ListView>
             </RelativeLayout>
-            <Button
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/add_alarm"
                 android:paddingTop="15dp"
                 android:background="@drawable/add"
@@ -315,16 +326,16 @@
                 android:layout_toLeftOf="@+id/prescribHistryBtn"
                 android:layout_toStartOf="@+id/prescribHistryBtn"
                 android:layout_marginRight="17dp" />
-            <Button
+            <ImageView
                 android:id="@+id/prescribHistryBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:background="@drawable/histry_icon"
                 android:layout_alignTop="@+id/add_alarm"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginEnd="23dp" />
 
 
@@ -364,18 +375,18 @@
 
                 android:id="@+id/test_prescribed_list">
             </ListView>
-            <Button
+            <ImageView
                 android:id="@+id/addtestsBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="17dp"
                 android:layout_toLeftOf="@+id/testHistryBtn"
 
                 android:background="@drawable/add" />
-            <Button
+            <ImageView
                 android:id="@+id/testHistryBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/histry_icon" />

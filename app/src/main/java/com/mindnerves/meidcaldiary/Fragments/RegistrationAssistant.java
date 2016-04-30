@@ -177,7 +177,7 @@ public class RegistrationAssistant extends WizardStep {
 
         final View view = inflater.inflate(R.layout.registration_assistant,
                 container, false);
-        getActivity().getActionBar().hide();
+        //getActivity().getActionBar().hide();
         cal = (ImageButton) view.findViewById(R.id.imageButton_calendar);
 
         lable = (TextView)view.findViewById(R.id.textView);

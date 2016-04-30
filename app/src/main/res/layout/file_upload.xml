@@ -1,166 +1,265 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="500dp"
+    android:layout_marginBottom="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    >
+    android:layout_marginTop="5dp">
 
     <TextView
+        android:id="@+id/doctor"
+        style="@style/sub_heading_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:ems="4"
+        android:text="Doctor" />
+
+    <TextView
+        android:id="@+id/doctorvalue"
+        style="@style/textViewThemeForNewDesignWithoutMargin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/doctor"
+        android:paddingLeft="15dp"
+        android:singleLine="true"
+        android:text="Shail jaggi"
+
+        />
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/sub_heading_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/doctorvalue"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:ems="6"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/datevalues"
+        style="@style/textViewThemeForNewDesignWithoutMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/doctorvalue"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/doctor"
+        android:gravity="center_vertical"
+        android:hint="Name"
+        android:imeOptions="actionDone"
+        android:paddingLeft="15dp"
+        android:singleLine="true" />
+
+
+    <TextView
         android:id="@+id/category"
-        style="@style/body2"
-        android:layout_marginTop="10dp"
+        style="@style/sub_heading_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datevalues"
         android:layout_marginLeft="5dp"
-        android:text="Category"/>
 
+        android:layout_marginTop="10dp"
+        android:ems="4"
+        android:text="Category" />
+
+    <RelativeLayout
+        android:id="@+id/category_spinner_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datevalues"
+        android:layout_toRightOf="@+id/category"
+        android:layout_margin="5dp"
+        android:background="@color/grey">
+
+        <Spinner
+            android:id="@+id/categoryValue"
+            style="@style/body1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:imeOptions="actionDone"
+
+            android:singleLine="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/medical_report_spinner_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_spinner_relative"
+        android:layout_margin="5dp"
+        android:background="@color/grey">
     <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/category"
-        android:singleLine="true"
-        style="@style/body1"
-        android:id="@+id/categoryValue"
-        android:imeOptions="actionDone"
-        android:background="#ffffff"
-        />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/categoryValue"
-        android:singleLine="true"
-        android:visibility="gone"
         android:id="@+id/medical_report"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:imeOptions="actionDone"
-        android:background="#ffffff"
-        />
+        android:singleLine="true"
+        android:visibility="gone" />
+</RelativeLayout>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/clinic_text"
+        style="@style/sub_heading_normal_black"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
-        style="@style/body2"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/medical_report"
+        android:layout_below="@+id/category_spinner_relative"
         android:layout_marginLeft="5dp"
-        android:text="Name"/>
+        android:layout_marginTop="10dp"
+        android:ems="4"
+        android:text="Clinic" />
+    <RelativeLayout
+        android:id="@+id/clinic_spinner_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_spinner_relative"
+        android:layout_toRightOf="@+id/clinic_text"
+        android:layout_margin="5dp"
+        android:background="@color/grey">
+    <Spinner
+        android:id="@+id/clinic"
+        style="@style/body1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+
+        android:imeOptions="actionDone"
+        android:singleLine="true" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/type"
+        style="@style/sub_heading_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clinic_spinner_relative"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:ems="4"
+        android:text="Type" />
+
+    <RelativeLayout
+        android:id="@+id/type_spinner_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clinic_spinner_relative"
+        android:layout_toRightOf="@+id/clinic_text"
+        android:layout_margin="5dp"
+        android:background="@color/grey">
+    <Spinner
+        android:id="@+id/typespinner"
+        style="@style/body1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:imeOptions="actionDone"
+        android:singleLine="true" />
+
+        </RelativeLayout>
+    <TextView
+        android:id="@+id/name"
+        style="@style/sub_heading_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/type_spinner_relative"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:ems="4"
+        android:text="Name" />
 
     <EditText
+        android:id="@+id/nameValue"
+        style="@style/editsmallTextthemeForNewDesign"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_below="@+id/type_spinner_relative"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/name"
-        android:singleLine="true"
-        android:id="@+id/nameValue"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/name"
         android:hint="Name"
-        style="@style/body1"
+        android:imeOptions="actionDone"
         android:paddingLeft="15dp"
-        android:imeOptions="actionDone"
-        android:background="#ffffff"
-        />
+        android:singleLine="true" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/clinic_text"
-        style="@style/body2"
-        android:layout_below="@+id/nameValue"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:text="Clinic"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/clinic_text"
-        android:singleLine="true"
-        style="@style/body1"
-        android:id="@+id/clinic"
-        android:imeOptions="actionDone"
-        android:background="#ffffff"
-        />
 
     <Button
+        android:id="@+id/capture_image"
         android:layout_width="90dp"
         android:layout_height="35dp"
-        android:text="Capture"
-        android:textStyle="bold"
-        android:textSize="14dp"
-        android:id="@+id/capture_image"
+        android:layout_below="@+id/nameValue"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/white"
         android:background="@drawable/rounded_orange_color"
-        android:layout_below="@+id/clinic"/>
+        android:text="Capture"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
     <Button
-        android:layout_width="90dp"
-        android:layout_height="35dp"
-        android:text="Browse Picture"
         android:id="@+id/browse_image"
-        android:textStyle="bold"
-        android:textSize="14dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/white"
-        android:background="@drawable/rounded_orange_color"
-        android:layout_below="@+id/clinic"
-        ></Button>
-    <Button
         android:layout_width="90dp"
         android:layout_height="35dp"
-        android:text="Browse Document"
-        android:id="@+id/browse_document"
-        android:textStyle="bold"
-        android:textSize="14dp"
-        android:layout_marginRight="30dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/nameValue"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/white"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_orange_color"
-        android:layout_below="@+id/clinic"
-        ></Button>
+        android:text="Browse Picture"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textStyle="bold"></Button>
+
+    <Button
+        android:id="@+id/browse_document"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/nameValue"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_orange_color"
+        android:text="Browse Document"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textStyle="bold"></Button>
 
 
     <ImageView
-       android:layout_width="100dp"
-       android:layout_height="100dp"
-       android:id="@+id/preview_image"
-       android:layout_below="@+id/browse_image"
-       android:layout_centerInParent="true"/>
+        android:id="@+id/preview_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/browse_image"
+        android:layout_marginLeft="15dp" />
 
 
     <Button
+        android:id="@+id/upload"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:text="Upload"
-        android:textSize="13dp"
-        android:background="@drawable/rounded_blue_color"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:layout_below="@id/preview_image"
-        android:layout_marginTop="10dp"
+        android:layout_alignBaseline="@+id/preview_image"
+        android:layout_below="@+id/browse_image"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/upload"
-    />
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/preview_image"
+        android:background="@drawable/rounded_blue_color"
+        android:text="Upload"
+        android:textColor="#ffffff"
+        android:textSize="13dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

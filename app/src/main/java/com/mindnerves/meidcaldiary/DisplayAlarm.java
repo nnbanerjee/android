@@ -22,7 +22,7 @@ public class DisplayAlarm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.display_alarm);
         String title = this.getIntent().getExtras().getString("title");
-        getActionBar().hide();
+       // getActionBar().hide();
         tv = (TextView)findViewById(R.id.tonetype);
         tv.setText(title);
 

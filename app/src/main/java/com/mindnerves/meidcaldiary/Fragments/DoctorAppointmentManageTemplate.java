@@ -1,14 +1,17 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -24,10 +27,13 @@ import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Adapter.TemplateAdapter;
 import Application.MyApi;
+import Model.CustomProcedureTemplate;
 import Model.ShowTemplate;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -40,12 +46,14 @@ import retrofit.client.Response;
 public class DoctorAppointmentManageTemplate extends Fragment {
     private ListView listViewManageTemplate;
     private Button searchButton;
-    private ArrayList<ShowTemplate> arrayTemplate,nameList;
+    private List<CustomProcedureTemplate> arrayTemplate,nameList;
     private TemplateAdapter adapter;
     private String doctorId,procedureName;
-    ProgressDialog progress;
+    //ProgressDialog progress;
     private EditText searchTv;
     public MyApi api;
+    Toolbar toolbar;
+    String valueFromBundle,templateName;
 
     @Override
     public void onResume() {
@@ -77,34 +85,66 @@ public class DoctorAppointmentManageTemplate extends Fragment {
 
         View view = inflater.inflate(R.layout.doctor_appointment_manage_template,container,false);
         listViewManageTemplate = (ListView)view.findViewById(R.id.list_template);
-        progress =  ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
+        //progress =  ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
         BackStress.staticflag = 1;
+        Bundle bun= getArguments();
+        if(bun!=null){
+            valueFromBundle=  bun.getString("fragment");
+            templateName=  bun.getString("TemplateName");
+        }
+
         TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
         globalTv.setText("Manage Template");
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("sessionID",null);
         procedureName = session.getString("selected_procedure_name",null);
-        getActivity().getActionBar().hide();
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.search_procedure);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Fragment f = getActivity().getFragmentManager().findFragmentById(R.id.content_frame);
+                if (f instanceof DoctorAppointmentManageProcedure) {
+                    // saveData();
+                }
+
+                return true;
+            }
+        });
+       // getActivity().getActionBar().hide();
+       /* RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
-        api = restAdapter.create(MyApi.class);
+        api = restAdapter.create(MyApi.class);*/
         final Button back = (Button)getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
-                globalTv.setText("Manage Procedure");
-                Fragment fragment = new ManageProcedure();
-                FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, fragment, "Select Template");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
-                ft.commit();
-                back.setVisibility(View.INVISIBLE);
+               // TextView globalTv = (TextView)getActivity().findViewById(R.id.show_global_tv);
+              // globalTv.setText("Manage Procedure");
+              //  Fragment fragment = new ManageProcedure();
+              //  FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+              //  ft.replace(R.id.content_frame, fragment, "Select Template");
+             //   ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+              //  ft.addToBackStack(null);
+            //    ft.commit();
+            //    back.setVisibility(View.INVISIBLE);
+
+                Fragment fragment = new DoctorAppointmentManageProcedure();
+                Bundle bun = new Bundle();
+                bun.putString("fragment",valueFromBundle);
+                fragment.setArguments(bun);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                if (valueFromBundle.equalsIgnoreCase("treatment"))
+                    fragmentManger.beginTransaction().replace(R.id.replacementTreament,fragment,"Manage Template").addToBackStack(null).commit();
+                else
+                    fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Manage Template").addToBackStack(null).commit();
+
             }
         });
         showTemplateList();
@@ -132,16 +172,39 @@ public class DoctorAppointmentManageTemplate extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    System.out.println("Array Template size::::::::::::"+arrayTemplate.size());
+                    //System.out.println("Array Template size::::::::::::"+arrayTemplate.size());
                     if(!(arrayTemplate.get(0).getTemplateName().equals("No Template Found"))) {
-                        Fragment fragment = new SelectDoctorTemplate();
-                        ShowTemplate temp = (ShowTemplate) adapter.getItem(position);
-                        go.setTemp(temp);
+                       ;
+                        CustomProcedureTemplate temp = (CustomProcedureTemplate) adapter.getItem(position);
+                      UtilSingleInstance.setCustomProcedureTemplate(temp);
+
                         FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-                        ft.replace(R.id.replacementTreament, fragment, "Select Template");
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                        ft.addToBackStack(null);
-                        ft.commit();
+                        if (valueFromBundle.equalsIgnoreCase("treatment")) {
+                            Fragment fragment = new SelectDoctorTemplate();
+                            //  ft.beginTransaction().replace(R.id.replacementTreament,fragment,"Manage Template").addToBackStack(null).commit();
+                            String templatesubName= ((CustomProcedureTemplate) adapter.getItem(position)).getTemplateSubName();
+                            Bundle bun= new Bundle();
+                            bun.putString("TemplateSubName",templatesubName);
+                            bun.putString("TemplateName",templateName);
+                            fragment.setArguments(bun);
+                            ft.replace(R.id.replacementTreament, fragment, "Select Template");
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                            ft.addToBackStack(null);
+                            ft.commit();
+                        }else {
+                            //fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Manage Template").addToBackStack(null).commit();
+                            Fragment fragment = new SelectDoctorInvoiceTemplate();
+                            ft.replace(R.id.replacementFragment, fragment, "Select Template");
+                            // ft.replace(R.id.replacementTreament, fragment, "Select Template");
+                            String templatesubName= ((CustomProcedureTemplate) adapter.getItem(position)).getTemplateSubName();
+                            Bundle bun= new Bundle();
+                            bun.putString("TemplateSubName",templatesubName);
+                            bun.putString("TemplateName",templateName);
+                            fragment.setArguments(bun);
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                            ft.addToBackStack(null);
+                            ft.commit();
+                        }
                     }
                 }
 
@@ -151,7 +214,21 @@ public class DoctorAppointmentManageTemplate extends Fragment {
     }
 
     public void showTemplateList(){
-        arrayTemplate = new ArrayList<ShowTemplate>();
+
+        List<CustomProcedureTemplate> listOfSubTemplates=new ArrayList<CustomProcedureTemplate>();
+        listOfSubTemplates=UtilSingleInstance.getListOfProcedureTemplates( );
+
+        if(listOfSubTemplates.size() == 0){
+            CustomProcedureTemplate temp = new CustomProcedureTemplate();
+            temp.setTemplateName("No Template Found");
+            //temp.setProcedureName("");
+            arrayTemplate.add(temp);
+        }
+        adapter = new TemplateAdapter(getActivity(),listOfSubTemplates);
+        listViewManageTemplate.setAdapter(adapter);
+        arrayTemplate=UtilSingleInstance.getListOfProcedureTemplates();
+
+       /* arrayTemplate = new ArrayList<ShowTemplate>();
         api.getAllTemplate(doctorId,procedureName,new Callback<ArrayList<ShowTemplate>>() {
             @Override
             public void success(ArrayList<ShowTemplate> templates, Response response) {
@@ -176,16 +253,16 @@ public class DoctorAppointmentManageTemplate extends Fragment {
                 Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
 
-        System.out.println("Template size::::::"+arrayTemplate.size());
+        //System.out.println("Template size::::::"+arrayTemplate.size());
 
     }
 
     public void showListBySearch(String searchText)
     {
-            int flagSearch = 0;
+           /* int flagSearch = 0;
             int flagNotSearch = 0;
             nameList = new ArrayList<ShowTemplate>();
             for(ShowTemplate t:arrayTemplate)
@@ -221,6 +298,6 @@ public class DoctorAppointmentManageTemplate extends Fragment {
                 listViewManageTemplate.setAdapter(adapter);
 
             }
-
+*/
     }
 }

@@ -97,7 +97,7 @@ public class AddClinic extends Fragment implements Serializable {
         globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
         BackStress.staticflag = 0;
         searchTv = (EditText) view.findViewById(R.id.searchET);
-        getActivity().getActionBar().hide();
+       // getActivity().getActionBar().hide();
         go = (Global) getActivity().getApplicationContext();
         back = (Button) getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);

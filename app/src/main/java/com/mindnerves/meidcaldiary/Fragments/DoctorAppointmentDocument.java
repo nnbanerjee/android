@@ -12,9 +12,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,6 +42,7 @@ import Adapter.DocumentAdapter;
 
 import Adapter.StickyDocumentAdapter;
 import Application.MyApi;
+import Model.AppointmentPatientIds;
 import Model.DoctorNotesVM;
 import Model.FileUpload;
 import Model.ReminderVM;
@@ -71,6 +74,9 @@ public class DoctorAppointmentDocument extends Fragment{
     ProgressDialog progress;
     String type = "";
 
+    private String appointMentId;
+    private Toolbar toolbar;
+    TextView show_global_tv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,6 +88,9 @@ public class DoctorAppointmentDocument extends Fragment{
         back = (Button)getActivity().findViewById(R.id.back_button);
         global = (Global) getActivity().getApplicationContext();
         convertView = view;
+        show_global_tv = (TextView) getActivity().findViewById(R.id.show_global_tv);
+        show_global_tv.setText("<  2 / 5  >");
+
         global = (Global) getActivity().getApplicationContext();
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +110,7 @@ public class DoctorAppointmentDocument extends Fragment{
         patientId = session.getString("doctor_patientEmail", null);
         appointmentDate = global.getAppointmentDate();
         appointmentTime = global.getAppointmentTime();
+        appointMentId= session.getString("appointmentId", "");
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
@@ -108,7 +118,23 @@ public class DoctorAppointmentDocument extends Fragment{
                 .build();
         api = restAdapter.create(MyApi.class);
         loadListData();
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.add_document);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
 
+                Fragment f = getActivity().getFragmentManager().findFragmentById(R.id.replacementFragment);
+                if (f instanceof DoctorAppointmentDocument) {
+                    FileUploadDialog adf = FileUploadDialog.newInstance();
+                    adf.show(getFragmentManager(), "Dialog");
+                }
+
+                return true;
+            }
+        });
         allDocumentDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -139,15 +165,19 @@ public class DoctorAppointmentDocument extends Fragment{
         appointmentTime = global.getAppointmentTime();
 
         System.out.println("Url 123:::::::::"+doctorId);
-        api.getFiles(doctorId,patientId,appointmentDate,appointmentTime,new Callback<List<FileUpload>>() {
+
+
+
+      //  api.addPatientVisitDocument(doctorId,patientId,appointmentDate,appointmentTime,new Callback<List<FileUpload>>() {
+        api.getPatientVisitDocuments(new AppointmentPatientIds(appointMentId, patientId), new Callback<List<FileUpload>>() {
             @Override
             public void success(List<FileUpload> fileUploads, Response response) {
 
-                System.out.println("Url123:::::::::"+fileUploads.size());
+                System.out.println("Url123:::::::::" + fileUploads.size());
 
-                DocumentAdapter adapter = new DocumentAdapter(getActivity(),fileUploads,type);
+                DocumentAdapter adapter = new DocumentAdapter(getActivity(), fileUploads, type);
                 uploadFiles = fileUploads;
-                System.out.println("Adapter size= "+adapter.getCount());
+                System.out.println("Adapter size= " + adapter.getCount());
                 allDocumentDoctor.setAdapter(adapter);
                 progress.dismiss();
 
@@ -156,7 +186,7 @@ public class DoctorAppointmentDocument extends Fragment{
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
                 progress.dismiss();
             }
         });

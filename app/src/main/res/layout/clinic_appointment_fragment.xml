@@ -29,8 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Clinic Name"
             android:textColor="#1E90FF"
-            style="@style/sub_heading"
-            android:paddingRight="30dp"
+            style="@style/title"
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@+id/backBtn"
             android:id="@+id/clinicName"
@@ -41,8 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Appointments"
-            android:textColor="#1E90FF"
-            style="@style/body2"
+            style="@style/body3"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_below="@+id/clinicName"
@@ -53,9 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Slot 1 : "
-            android:ems="6"
-            android:textColor="#1E90FF"
-            style="@style/body2"
+            android:ems="4"
+            style="@style/sub_heading_normal_black"
             android:layout_below="@+id/appointmentText"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
@@ -66,8 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="09:00 AM to 06:00 PM"
-            android:textColor="#1E90FF"
-            style="@style/body1"
+            style="@style/sub_heading_normal_grey"
             android:layout_toRightOf="@+id/shiftName"
             android:layout_below="@+id/appointmentText"
             android:layout_marginTop="10dp"
@@ -77,9 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date :"
-            android:textColor="#1E90FF"
-            style="@style/body2"
-            android:ems="6"
+            style="@style/sub_heading_normal_black"
+            android:ems="4"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/shiftName"
             android:id="@+id/dateText"
@@ -109,37 +104,42 @@
                 android:layout_height="25dp"
                 android:id="@+id/timeBtn"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/calendar2"/>
+                android:background="@drawable/cal"/>
 
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Visit Type : "
-            android:textColor="#1E90FF"
-            style="@style/body2"
-            android:ems="6"
+            android:text="Type : "
+            style="@style/sub_heading_normal_black"
+            android:ems="4"
             android:layout_below="@+id/dateLayout"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:id="@+id/visitTypeText"
             />
 
-        <Spinner
+
+        <RelativeLayout
+            android:id="@+id/visitTyperelative"
+            android:background="@color/grey"
             android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/visitTypeText"
+            android:layout_below="@+id/dateLayout"
+            android:layout_height="wrap_content">
+        <Spinner
+            android:layout_width="fill_parent"
             android:layout_height="35dp"
             android:text="Follow up"
             android:textColor="#1E90FF"
             android:spinnerMode="dialog"
-            style="@style/textViewThemeForNewDesignWithoutMargin"
             android:prompt="@string/select_visit_type"
             android:entries="@array/visit_type_list"
-            android:layout_toRightOf="@+id/visitTypeText"
-            android:layout_below="@+id/dateLayout"
+
             android:id="@+id/visitType"
             />
-
+        </RelativeLayout>
 
 
 
@@ -150,7 +150,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            android:layout_below="@+id/visitType"
+            android:layout_below="@+id/visitTyperelative"
             android:id="@+id/timeTeableList">
         </GridView>
 
@@ -194,7 +194,7 @@
                 android:layout_height="20dp"
                 android:background="@color/green"
                 android:id="@+id/greenColor"
-                style="@style/body2"
+                style="@style/caption_Style"
                 android:padding="3dp"
                 android:textColor="@color/white"
                 android:text="Confirmed"
@@ -204,7 +204,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Available"
-                style="@style/body2"
+                style="@style/caption_Style"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/green"
@@ -218,7 +218,7 @@
                 android:layout_height="20dp"
                 android:background="@color/orange"
                 android:id="@+id/orangeColor"
-                style="@style/body2"
+                style="@style/caption_Style"
                 android:layout_marginLeft="25dp"
                 android:text="Tentative"
                 android:padding="3dp"
@@ -229,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Occupied"
-                style="@style/body2"
+                style="@style/caption_Style"
                 android:layout_below="@+id/orangeColor"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
@@ -240,7 +240,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="On Request"
-                style="@style/body2"
+                style="@style/caption_Style"
                 android:id="@+id/orangeText"
                 android:visibility="gone"
                 android:layout_marginLeft="5dp"
@@ -269,7 +269,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Not Available"
-                style="@style/body2"
+                style="@style/caption_Style"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="35dp"
                 android:textColor="@color/grey_text"

@@ -10,7 +10,7 @@
         android:id="@+id/doc_category"
         android:layout_marginLeft="15dp"
         android:text="Category Name"
-        style="@style/body2"
+        style="@style/title"
         android:layout_marginTop="15dp"
         />
 
@@ -21,6 +21,7 @@
         android:id="@+id/clinic_text"
         style="@style/body2"
         android:layout_marginLeft="15dp"
+        android:visibility="gone"
         android:layout_below="@+id/doc_category"
         android:layout_marginTop="5dp"
     />
@@ -31,6 +32,7 @@
         android:id="@+id/clinic_name"
         android:text="qqqq"
         style="@style/body2"
+        android:visibility="gone"
         android:layout_below="@+id/doc_category"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
@@ -42,25 +44,28 @@
         android:id="@+id/file_name"
         android:layout_below="@+id/clinic_name"
         android:layout_marginLeft="15dp"
-        style="@style/body2"
+        style="@style/sub_heading"
         android:layout_marginTop="5dp"
     />
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:background="@drawable/reject"
         android:id="@+id/close_document"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
+        android:scaleType="fitStart"
         />
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/document_image"
         android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/close_document"
         android:layout_marginRight="45dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/pdf"
     />
 
 

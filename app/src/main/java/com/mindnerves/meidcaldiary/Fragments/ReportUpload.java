@@ -35,6 +35,7 @@ import Application.ImageUtil;
 import Application.MyApi;
 import Model.Clinic;
 import Model.FileUpload;
+import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -73,7 +74,7 @@ public class ReportUpload extends DialogFragment {
     static ReportUpload newInstance() {
         return new ReportUpload();
     }
-
+    private String loggedInUSer;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class ReportUpload extends DialogFragment {
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         id = session.getString("sessionID", null);
         type = session.getString("loginType", null);
+        loggedInUSer =  session.getString("id", "0") ;
         System.out.println("In Report Log:::::::::::::::::::::::::");
         System.out.println("DoctorEmail::::::::"+session.getString("doctor_patientEmail", null));
         nameText = (TextView) view.findViewById(R.id.name);
@@ -109,7 +111,7 @@ public class ReportUpload extends DialogFragment {
                 .build();
         api = restAdapter.create(MyApi.class);
 
-        api.getAllClinics(new Callback<List<Clinic>>() {
+        api.getAllClinics(new PersonID(loggedInUSer),new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinicsList, Response response) {
                 clinicDetailVm = clinicsList;

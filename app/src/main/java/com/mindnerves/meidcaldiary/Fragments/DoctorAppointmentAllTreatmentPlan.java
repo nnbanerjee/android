@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
@@ -28,7 +31,11 @@ import com.mindnerves.meidcaldiary.R;
 import com.mindnerves.meidcaldiary.Utility;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import Adapter.AllProcedureAdapter;
 import Adapter.HorizontalTemplateListAdapter;
@@ -38,8 +45,10 @@ import Model.AppointmentId;
 import Model.DoctorNotesVM;
 import Model.Field;
 import Model.TotalInvoice;
+import Model.TreatmenTvalueForHorizontalView;
 import Model.TreatmentField;
 import Model.TreatmentPlan;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -54,56 +63,86 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
     MyApi api;
     public SharedPreferences session;
     Global global;
-    MultiAutoCompleteTextView symptomsValue,diagnosisValue;
-    EditText doctorNotes;
-    CheckBox shareWithPatient;
-    String doctor_email,appointmentTime;
-    Button addNewTreatment;
-    ListView treatmentPlanList;
-    TextView noDataFound;
-    HorizontalListView fieldList1,fieldList;
-    String appointmentDate,doctorId,patientEmail,appointMentId;
-    ProgressDialog progress;
-    int share = 0;
+    private MultiAutoCompleteTextView symptomsValue, diagnosisValue;
+    private EditText doctorNotes;
+    private CheckBox shareWithPatient;
+    private String doctor_email, appointmentTime;
+    private Button addNewTreatment;
+    private  ListView treatmentPlanList;
+    private TextView noDataFound;
+    private HorizontalListView fieldList1, fieldList;
+    private String appointmentDate, doctorId, patientEmail, appointMentId;
+    private ProgressDialog progress;
+    private int share = 0;
+    private Toolbar toolbar;
 
+
+    public void populateSession(){
+        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        doctorId = session.getString("sessionID", null);
+        patientEmail = session.getString("patientEmail", null);
+        appointMentId = session.getString("appointmentId", "");
+        System.out.println("appointmentId Id:::::::" + appointMentId);
+    }
+    // private ImageView deleteProcedure;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.doctor_appointment_all_treatment_plan, container,false);
+        View view = inflater.inflate(R.layout.doctor_appointment_all_treatment_plan, container, false);
+
+        populateSession();
 
         global = (Global) getActivity().getApplicationContext();
-        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        doctorId = session.getString("sessionID", null);
-        patientEmail = session.getString("patientEmail", null);
-        appointmentDate = session.getString("doctor_patient_appointmentDate", null);
-        appointmentTime = session.getString("doctor_patient_appointmentTime", null);
-        appointMentId= session.getString("appointmentId", "");
-        System.out.println("appointmentId Id:::::::"+appointMentId);
-
-        shareWithPatient = (CheckBox)view.findViewById(R.id.share_with_patient);
+        shareWithPatient = (CheckBox) view.findViewById(R.id.share_with_patient);
         fieldList1 = (HorizontalListView) view.findViewById(R.id.fieldList1);
         fieldList = (HorizontalListView) view.findViewById(R.id.fieldList);
         noDataFound = (TextView) view.findViewById(R.id.noDataFound);
         treatmentPlanList = (ListView) view.findViewById(R.id.treatmentPlanList);
         addNewTreatment = (Button) view.findViewById(R.id.addNewTreatment);
-        addNewTreatment.setOnClickListener(new View.OnClickListener() {
+
+
+        /*addNewTreatment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new DoctorAppointmentManageProcedure();
+                Bundle bun = new Bundle();
+                bun.putString("fragment", "treatment");
+                fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.replacementTreament,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.replacementTreament, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });*/
+        toolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.add_treatment_plan);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Fragment f = getActivity().getFragmentManager().findFragmentById(R.id.replacementFragment);
+                if (f instanceof DoctorAppointmentTreatmentPlan) {
+                   /* Fragment fragment = new DoctorAppointmentManageProcedure();
+                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.replacementTreament, fragment, "Doctor Consultations").addToBackStack(null).commit();*/
+                    Fragment fragment = new DoctorAppointmentManageProcedure();
+                    Bundle bun = new Bundle();
+                    bun.putString("fragment", "treatment");
+                    fragment.setArguments(bun);
+                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.replacementTreament, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                }
+                return true;
             }
         });
-
         shareWithPatient.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Boolean check = shareWithPatient.isChecked();
-                System.out.println("Status:::::"+check);
+                System.out.println("Status:::::" + check);
 
-                System.out.println("Status:::::"+check);
-                System.out.println("PatientId:::::"+patientEmail);
+                System.out.println("Status:::::" + check);
+                System.out.println("PatientId:::::" + patientEmail);
                 TotalInvoice invoice = new TotalInvoice();
                 invoice.setAppointmentDate(appointmentDate);
                 invoice.setAppointmentTime(appointmentTime);
@@ -112,36 +151,31 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
                 invoice.setGrandTotal("0.0");
                 invoice.setDiscount("0.0");
                 invoice.setTaxValue("0.0");
-                if(check)
-                {
+                if (check) {
                     invoice.setShareWithPatient(1);
                     share = 1;
-                }
-                else
-                {
+                } else {
                     invoice.setShareWithPatient(0);
                     share = 0;
                 }
-                api.saveShareWithPatientTotalInvoice(invoice,new Callback<Response>() {
+               /* api.saveShareWithPatientTotalInvoice(invoice, new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
                         int status = response.getStatus();
-                        if(status == 200)
-                        {
-                            if(share == 1) {
+                        if (status == 200) {
+                            if (share == 1) {
                                 Toast.makeText(getActivity(), "Data Shared With Patient", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(getActivity(), "Data Not Shared With Patient", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
+
                     @Override
                     public void failure(RetrofitError error) {
                         error.printStackTrace();
                     }
-                });
+                });*/
 
             }
         });
@@ -155,7 +189,7 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
 
         getAllTreamentPlan();
 
-        final Button back = (Button)getActivity().findViewById(R.id.back_button);
+        final Button back = (Button) getActivity().findViewById(R.id.back_button);
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +211,7 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     goToBack();
                     return true;
                 }
@@ -186,69 +220,122 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
         });
     }
 
-    public void getAllTreamentPlan(){
+
+    public List<TreatmentPlan> newCombineArrayWithSubNameAndFields(List<TreatmentPlan> treatmentPlanList) {
+
+        List<TreatmentPlan> newTreatmentPlanListWithSubNames = new ArrayList<TreatmentPlan>();
+        //  List<List<TreatmentField>> listOflist = new ArrayList<List<TreatmentField>>();
+        Map<String, TreatmentPlan> map = new HashMap<String, TreatmentPlan>();
+        for (int i = 0; i < treatmentPlanList.size(); i++) {//Create List of same names.
+            String subname = treatmentPlanList.get(i).getTemplateSubName();
+
+            if (!map.containsKey(subname)) { //if not duplicate needs to be added in map
+                //map.put(subname, treatmentPlanList.get(i));
+                List<List<TreatmentField>> listOflist = new ArrayList<List<TreatmentField>>();
+                TreatmentPlan treat = treatmentPlanList.get(i);
+                if (treat.getTreatmentFields() != null && treat.getTreatmentFields().size() > 0) {
+                    if (listOflist.size() == 0) {//means no records in list hence read headers first and add those as a record
+                        List<TreatmentField> listofTreatMentField = new ArrayList<TreatmentField>();
+                        for (int y = 0; y < treat.getTreatmentFields().size(); y++) {
+                            TreatmentField treatment = new TreatmentField();
+                            treatment.setFieldId(treat.getTreatmentFields().get(y).getFieldId());
+                            treatment.setTreatmentAttributeId(treat.getTreatmentFields().get(y).getTreatmentAttributeId());
+                            treatment.setFieldName(treat.getTreatmentFields().get(y).getFieldName());
+                            treatment.setValue(treat.getTreatmentFields().get(y).getValue());
+                            treatment.setTreatmentId(treat.getTreatmentFields().get(y).getTreatmentId());
+                            listofTreatMentField.add(treatment);
+                        }
+                        if (treat.getTreatmentFields().size() > 0) {
+                            listOflist.add(listofTreatMentField);
+                            treat.addTreatmentValues(listOflist);
+                        }
+                        map.put(subname, treat);
+                    }
+                    listOflist = new ArrayList<List<TreatmentField>>();
+                    List<TreatmentField> listofTreatMentField = new ArrayList<TreatmentField>();
+                    for (int k = 0; k < treat.getTreatmentFields().size(); k++) {
+                        TreatmentField treatment = new TreatmentField();
+                        treatment.setFieldId(treat.getTreatmentFields().get(k).getFieldId());
+                        treatment.setTreatmentAttributeId(treat.getTreatmentFields().get(k).getTreatmentAttributeId());
+                        treatment.setFieldName(treat.getTreatmentFields().get(k).getFieldName());
+                        treatment.setValue(treat.getTreatmentFields().get(k).getValue());
+                        treatment.setTreatmentId(treat.getTreatmentFields().get(k).getTreatmentId());
+                        listofTreatMentField.add(treatment);
+                    }
+                    if (treat.getTreatmentFields().size() > 0) {
+                        listOflist.add(listofTreatMentField);
+                        treat.addTreatmentValues(listOflist);
+                    }
+                    map.put(subname, treat);
+                }
+
+            } else { //if duplicate need to to be treated.
+                TreatmentPlan treat = new TreatmentPlan();
+                List<List<TreatmentField>> listOflist = new ArrayList<List<TreatmentField>>();
+                treat = map.get(subname);
+                treat.getTreatmentFields().addAll(treatmentPlanList.get(i).getTreatmentFields());
+               /* if (listOflist.size() == 0) {//means no records in list hence read headers first and add those as a record
+                    List<TreatmentField> listofTreatMentField = new ArrayList<TreatmentField>();
+                    for (int y = 0; y < treatmentPlanList.get(i).getTreatmentFields().size(); y++) {
+                        TreatmentField treatment = new TreatmentField();
+                        treatment.setFieldId(treatmentPlanList.get(i).getTreatmentFields().get(y).getFieldId());
+                        treatment.setTreatmentAttributeId(treatmentPlanList.get(i).getTreatmentFields().get(y).getTreatmentAttributeId());
+                        treatment.setFieldName(treatmentPlanList.get(i).getTreatmentFields().get(y).getFieldName());
+                        treatment.setValue(treatmentPlanList.get(i).getTreatmentFields().get(y).getValue());
+                        treatment.setTreatmentId(treatmentPlanList.get(i).getTreatmentFields().get(y).getTreatmentId());
+                        listofTreatMentField.add(treatment);
+                    }
+                    if (treatmentPlanList.get(i).getTreatmentFields().size() > 0) {
+                        listOflist.add(listofTreatMentField);
+                        treat.addTreatmentValues(listOflist);
+                    }
+                    map.put(subname, treat);
+                }*/
+                List<TreatmentField> listofTreatMentField = new ArrayList<TreatmentField>();
+                for (int k = 0; k < treatmentPlanList.get(i).getTreatmentFields().size(); k++) {
+                    TreatmentField treatment = new TreatmentField();
+                    treatment.setFieldId(treatmentPlanList.get(i).getTreatmentFields().get(k).getFieldId());
+                    treatment.setTreatmentAttributeId(treatmentPlanList.get(i).getTreatmentFields().get(k).getTreatmentAttributeId());
+                    treatment.setFieldName(treatmentPlanList.get(i).getTreatmentFields().get(k).getFieldName());
+                    treatment.setValue(treatmentPlanList.get(i).getTreatmentFields().get(k).getValue());
+                    treatment.setTreatmentId(treatmentPlanList.get(i).getTreatmentFields().get(k).getTreatmentId());
+                    listofTreatMentField.add(treatment);
+                }
+                if (treatmentPlanList.get(i).getTreatmentFields().size() > 0) {
+                    listOflist.add(listofTreatMentField);
+                    treat.addTreatmentValues(listOflist);
+                }
+                map.put(subname, treat);
+            }
+        }
+        for (TreatmentPlan value : map.values()) {
+            System.out.println("Value = " + value.getTemplateSubName());
+            newTreatmentPlanListWithSubNames.add(value);
+        }
+        return newTreatmentPlanListWithSubNames;
+    }
+
+    public void getAllTreamentPlan() {
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         api.getPatientVisitTreatmentPlan(new AppointmentId(appointMentId), new Callback<List<TreatmentPlan>>() {
             @Override
             public void success(List<TreatmentPlan> treatmentPlan, Response response) {
-                //System.out.println("allTreatmentPlanVm.procedure = "+allTreatmentPlanVm.procedure.size());
-                //Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
 
-               /* api.getInvoice(doctorId, patientEmail, appointmentDate, appointmentTime, new Callback<TotalInvoice>() {
-                    @Override
-                    public void success(TotalInvoice totalInvoice, Response response) {
-                        if (totalInvoice.getShareWithPatient() != null) {
-                            if (totalInvoice.getShareWithPatient() == 1) {
-                                shareWithPatient.setChecked(true);
-                            } else {
-                                shareWithPatient.setChecked(false);
-                            }
-                        }
-                    }
+                treatmentPlan = newCombineArrayWithSubNameAndFields(treatmentPlan);
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
                 if (treatmentPlan == null) {
                     treatmentPlanList.setVisibility(View.GONE);
                     noDataFound.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "No Data!", Toast.LENGTH_LONG).show();
                 } else {
                     treatmentPlanList.setVisibility(View.VISIBLE);
-                    noDataFound.setVisibility(View.GONE);*/
-
-                treatmentPlanList.setVisibility(View.VISIBLE);
-                noDataFound.setVisibility(View.GONE);
-
-
-                    AllProcedureAdapter allProcedureAdapter = new AllProcedureAdapter(getActivity(),treatmentPlan);
-                    treatmentPlanList.setAdapter(allProcedureAdapter);
-                    Utility.setListViewHeightBasedOnChildren(treatmentPlanList);
-                    List<TreatmentField> templates = new ArrayList<TreatmentField>();
-                 //   templates.add(new TreatmentField("1asddffhhfg", "2asdasdsfdghfgh", "3asddfhgsghd", "4asdfghfgdcxcv"));
-                /*    templates.add(new TreatmentField("1asddffhhfg", "2asdasdsfdghfgh", "4asddfhgsghd", "4asdfghfgdcxcv"));
-                    templates.add(new TreatmentField("1asddffhhfg", "2asdasdsfdghfgh", "5asddfhgsghd", "4asdfghfgdcxcv"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "6asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "6fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "7asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "7fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "8asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "8fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "9asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "9fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "0asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "0fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "1asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "1fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "2asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "2fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "31asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "31fgjmfhhfghnv"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "32asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "62gjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "33asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "63fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "34asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "64gjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "35asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "65fgjmfhhfghnvb"));
-                    templates.add(new Field("1asddffhhfg", "2asdasdsfdghfgh", "36asddfhgsghd", "4asdfghfgdcxcv", "5ffdhgdfgghfg", "66sfgjmfhhfghnvb"));*/
-
-                    HorizontalTemplateListAdapter hrAdapter = new HorizontalTemplateListAdapter(getActivity(), templates);
-                    fieldList.setAdapter(hrAdapter);
-                    fieldList1.setAdapter(hrAdapter);
-                    progress.dismiss();
-
-               // }
+                    noDataFound.setVisibility(View.GONE);
+                }
+                AllProcedureAdapter allProcedureAdapter = new AllProcedureAdapter(getActivity(), treatmentPlan);
+                UtilSingleInstance.setTreatmentPlan(treatmentPlan);
+                treatmentPlanList.setAdapter(allProcedureAdapter);
+                Utility.setListViewHeightBasedOnChildren(treatmentPlanList);
+                progress.dismiss();
             }
 
             @Override
@@ -261,12 +348,14 @@ public class DoctorAppointmentAllTreatmentPlan extends Fragment {
 
     }
 
-    public void  goToBack(){
+    public void goToBack() {
         //Fragment fragment = new PatientAllAppointment();
-        Fragment fragment = new AllDoctorPatientAppointment();
+        Fragment fragment = new DoctorAppointmentInformation();
         FragmentManager fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
-        final Button back = (Button)getActivity().findViewById(R.id.back_button);
-        back.setVisibility(View.INVISIBLE);
+        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+      /*  final Button back = (Button) getActivity().findViewById(R.id.back_button);
+        back.setVisibility(View.INVISIBLE);*/
+
+
     }
 }

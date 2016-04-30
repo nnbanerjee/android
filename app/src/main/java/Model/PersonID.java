@@ -4,17 +4,17 @@ package Model;
  * Created by Narendra on 17-03-2016.
  */
 public class PersonID {
-    public String getPersonID() {
-        return PersonID;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPersonID(String personID) {
-        PersonID = personID;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
-    public PersonID(String personID) {
-        PersonID = personID;
+    public PersonID(String personId) {
+        this.personId = personId;
     }
 
-    private String PersonID;
+    private String personId;
 }

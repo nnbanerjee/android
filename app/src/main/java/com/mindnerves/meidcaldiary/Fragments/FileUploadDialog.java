@@ -22,14 +22,19 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.mindnerves.meidcaldiary.FileChooser;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
+import com.squareup.okhttp.OkHttpClient;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 import Application.ImageUtil;
@@ -37,6 +42,9 @@ import Application.MyApi;
 import Model.Clinic;
 import Model.ClinicDetailVm;
 import Model.FileUpload;
+import Model.PersonID;
+import Model.ResponseAddDocuments;
+import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -47,19 +55,18 @@ import retrofit.mime.TypedFile;
 /**
  * Created by MNT on 27-Mar-15.
  */
-public class FileUploadDialog extends DialogFragment
-{
+public class FileUploadDialog extends DialogFragment {
 
-    private String doctorId = "0",assistantId = "0",patientId = "0",id = "";
+    private String doctorId = "0", assistantId = "0", patientId = "0", id = "";
     private String type = "";
 
     private EditText name;
-    private Button capture,browse,upload,document;
+    private Button capture, browse, upload, document;
     public MyApi api;
-    Spinner category,clinicSpinner,medicalReportSpinner;
+    Spinner category, clinicSpinner, medicalReportSpinner,typespinner;
     Global global;
     TextView nameText;
-    String appointmentDate,appointmentTime;
+    String appointmentDate, appointmentTime;
     TypedFile typedFile;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
@@ -72,7 +79,8 @@ public class FileUploadDialog extends DialogFragment
     String[] medicalReports;
     String report;
     ProgressDialog progress;
-
+    String appointMentId;
+    TextView doctorValue,dateValue;
     static FileUploadDialog newInstance() {
         return new FileUploadDialog();
     }
@@ -80,48 +88,65 @@ public class FileUploadDialog extends DialogFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.file_upload,container,false);
+        View view = inflater.inflate(R.layout.file_upload, container, false);
         getDialog().setTitle("Upload File");
-        capture = (Button)view.findViewById(R.id.capture_image);
-        browse = (Button)view.findViewById(R.id.browse_image);
-        upload = (Button)view.findViewById(R.id.upload);
+        capture = (Button) view.findViewById(R.id.capture_image);
+        browse = (Button) view.findViewById(R.id.browse_image);
+        upload = (Button) view.findViewById(R.id.upload);
         global = (Global) getActivity().getApplicationContext();
-        name = (EditText)view.findViewById(R.id.nameValue);
-        category = (Spinner)view.findViewById(R.id.categoryValue);
-        clinicSpinner = (Spinner)view.findViewById(R.id.clinic);
-        medicalReportSpinner = (Spinner)view.findViewById(R.id.medical_report);
+        name = (EditText) view.findViewById(R.id.nameValue);
+        category = (Spinner) view.findViewById(R.id.categoryValue);
+        clinicSpinner = (Spinner) view.findViewById(R.id.clinic);
+        medicalReportSpinner = (Spinner) view.findViewById(R.id.medical_report);
         medicalReports = getResources().getStringArray(R.array.medical_report);
-        medicalReportSpinner.setAdapter(new MedicalReportSpinner(getActivity(), R.layout.customize_spinner,medicalReports));
-        document = (Button)view.findViewById(R.id.browse_document);
+
+
+        doctorValue = (TextView) view.findViewById(R.id.doctorvalue);
+       // doctorValue.setText();
+
+        dateValue = (TextView) view.findViewById(R.id.datevalues);
+        dateValue.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(""+Calendar.getInstance().getTimeInMillis()));
+        typespinner = (Spinner) view.findViewById(R.id.typespinner);
+        typespinner.setAdapter(new MedicalReportSpinner(getActivity(), R.layout.customize_spinner, medicalReports));
+
+        medicalReportSpinner.setAdapter(new MedicalReportSpinner(getActivity(), R.layout.customize_spinner, medicalReports));
+        document = (Button) view.findViewById(R.id.browse_document);
         categories = getResources().getStringArray(R.array.category_data_list);
-        System.out.println("SIze of categories:::::"+categories.length);
-        category.setAdapter(new CategorySpinner(getActivity(), R.layout.customize_spinner,categories));
+        System.out.println("SIze of categories:::::" + categories.length);
+        category.setAdapter(new CategorySpinner(getActivity(), R.layout.customize_spinner, categories));
         appointmentDate = global.getAppointmentDate();
         appointmentTime = global.getAppointmentTime();
         name.setText(global.getTestPrescribed());
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        id = session.getString("sessionID",null);
-        type = session.getString("loginType",null);
-        nameText = (TextView)view.findViewById(R.id.name);
+        id = session.getString("sessionID", null);
+        type = session.getString("loginType", null);
+        appointMentId = session.getString("appointmentId", "");
+        doctorId = session.getString("id", "0");
+
+
+        nameText = (TextView) view.findViewById(R.id.name);
+        OkHttpClient client =new OkHttpClient();
+        client.setConnectTimeout(5, TimeUnit.MINUTES);
+        client.setReadTimeout(5, TimeUnit.MINUTES);
+        client.setWriteTimeout(5, TimeUnit.MINUTES);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
+                .setClient(new OkClient(client))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
 
-        api.getAllClinics(new Callback<List<Clinic>>() {
+        api.getAllClinics(new PersonID(doctorId),new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinicsList, Response response) {
                 clinicDetailVm = clinicsList;
                 clinics = new String[clinicsList.size()];
                 int count = 0;
-                for(Clinic vm: clinicDetailVm)
-                {
+                for (Clinic vm : clinicDetailVm) {
                     clinics[count] = vm.getClinicName();
                     count = count + 1;
                 }
-                clinicSpinner.setAdapter(new ClinicSpinner(getActivity(), R.layout.customize_spinner,clinics));
+                clinicSpinner.setAdapter(new ClinicSpinner(getActivity(), R.layout.customize_spinner, clinics));
             }
 
             @Override
@@ -132,35 +157,32 @@ public class FileUploadDialog extends DialogFragment
             }
         });
 
-       category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               report = (String)category.getSelectedItem();
-               if(report.equalsIgnoreCase("Medical Report"))
-               {
-                   name.setVisibility(View.GONE);
-                   nameText.setVisibility(View.GONE);
-                   medicalReportSpinner.setVisibility(View.VISIBLE);
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                report = (String) category.getSelectedItem();
+                if (report.equalsIgnoreCase("Medical Report")) {
+                    name.setVisibility(View.GONE);
+                    nameText.setVisibility(View.GONE);
+                    medicalReportSpinner.setVisibility(View.VISIBLE);
 
-               }
-               else
-               {
-                   name.setVisibility(View.VISIBLE);
-                   nameText.setVisibility(View.VISIBLE);
-                   medicalReportSpinner.setVisibility(View.GONE);
+                } else {
+                    name.setVisibility(View.VISIBLE);
+                    nameText.setVisibility(View.VISIBLE);
+                    medicalReportSpinner.setVisibility(View.GONE);
 
-               }
-           }
+                }
+            }
 
-           @Override
-           public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-           }
-       });
+            }
+        });
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "temp.jpg")));
                 startActivityForResult(intent, 0);
@@ -185,54 +207,74 @@ public class FileUploadDialog extends DialogFragment
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
-                String clinicName = (String)clinicSpinner.getSelectedItem();
-                System.out.println("Clinic Name:::::::"+clinicName);
-                String clinicId = clinicDetailVm.get(clinicSpinner.getSelectedItemPosition()).getIdClinic();
-                System.out.println("Clinic Id:::::::"+clinicId);
+                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                String clinicName = (String) clinicSpinner.getSelectedItem();
+                System.out.println("Clinic Name:::::::" + clinicName);
+                 String clinicId = clinicDetailVm.get(clinicSpinner.getSelectedItemPosition()).getIdClinic();
+                 System.out.println("Clinic Id:::::::"+clinicId);
+               // String clinicId = "105";
                 String nameData;
+                /*
+                httpPost.addHeader("x-patientId", "102");
+                 httpPost.addHeader("x-appointmentId", "584");
+                 httpPost.addHeader("x-clinicId", "101");
+                 httpPost.addHeader("x-type", "1");
+                 httpPost.addHeader("x-loggedinUserId", "102");
+                 httpPost.addHeader("x-fileName", "ANkLE BoNe X-ray.xlsx");
+                 */
 
-                if(report.equalsIgnoreCase("Medical Report"))
-                {
-                    nameData = (String)medicalReportSpinner.getSelectedItem();
-                }
-                else
-                {
+                if (report.equalsIgnoreCase("Medical Report")) {
+                    nameData = (String) medicalReportSpinner.getSelectedItem();
+                } else {
                     nameData = name.getText().toString();
                 }
 
-                if (type.equalsIgnoreCase("doctor"))
-                {
+                if (type.equalsIgnoreCase("doctor")) {
                     doctorId = id;
-                    patientId = session.getString("doctor_patientEmail", null);
-                    System.out.println("PatientId::::::"+patientId);
+                    patientId = session.getString("patientId", null);
+                    System.out.println("PatientId::::::" + patientId);
                     String categoryData = category.getSelectedItem().toString();
                     String documentType = "";
-                    if(selectedImagePath != null) {
+                    if (selectedImagePath != null) {
                         documentType = selectedImagePath.substring(selectedImagePath.lastIndexOf("."));
-                    }
-                    else
-                    {
+                    } else {
                         documentType = "None";
                         typedFile = null;
                     }
                     System.out.println("Document TYpe::::::" + documentType);
 
-                    api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
+                    if(documentType.contains("pdf") )
+                    {
+                        documentType="1";
+                    }else{
+                        documentType="0";
+                    }
+
+
+                    //restAdapter..setHea
+
+                    // api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
+                    api.addPatientVisitDocument(patientId, appointMentId, clinicId, documentType, doctorId, nameData, typedFile, new Callback<ResponseAddDocuments >() {
+
                         @Override
-                        public void success(FileUpload uploadFile, Response response2) {
+                        public void success(ResponseAddDocuments responseAddDocuments, Response response) {
+                            {
 
-                           if (uploadFile != null) {
-                                System.out.println("Url::::::::"+uploadFile.getUrl());
-                                Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_SHORT).show();
-                                progress.dismiss();
+                                if (responseAddDocuments != null) {
+                                   // System.out.println("Url::::::::" + responseAddDocuments.getUrl());
+                                    Toast.makeText(getActivity(), "File Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                                    progress.dismiss();
 
-                                FileUploadDialog.this.getDialog().cancel();
-                            } else {
-                                Toast.makeText(getActivity(), "Data is not saved", Toast.LENGTH_SHORT).show();
+                                    FileUploadDialog.this.getDialog().cancel();
+                                } else {
+                                    Toast.makeText(getActivity(), "File upload Failed!", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
 
                         }
+
+
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
@@ -245,16 +287,14 @@ public class FileUploadDialog extends DialogFragment
                     doctorId = session.getString("patient_doctor_email", null);
                     String categoryData = category.getSelectedItem().toString();
                     String documentType = "";
-                    if(selectedImagePath != null) {
+                    if (selectedImagePath != null) {
                         documentType = selectedImagePath.substring(selectedImagePath.lastIndexOf("."));
-                    }
-                    else
-                    {
+                    } else {
                         documentType = "None";
                         typedFile = null;
                     }
                     System.out.println("Document TYpe::::::" + documentType);
-                    api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName, new Callback<FileUpload>() {
+                    api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime, clinicId, clinicName, new Callback<FileUpload>() {
                         @Override
                         public void success(FileUpload uploadFile, Response response2) {
                             if (uploadFile != null) {
@@ -267,6 +307,7 @@ public class FileUploadDialog extends DialogFragment
                             }
 
                         }
+
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
@@ -291,74 +332,58 @@ public class FileUploadDialog extends DialogFragment
         return view;
     }
 
-    
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("in onActivityResult/////////////////////////////////");
 
         try {
-            if (requestCode == ImageUtil.SELECT_PICTURE)
-            {
+            if (requestCode == ImageUtil.SELECT_PICTURE) {
                 selectedImageUri = data.getData();
                 String path = getPath(selectedImageUri);
-                System.out.println("Path::::::::"+path);
+                System.out.println("Path::::::::" + path);
                 selectedImagePath = path;
                 File file = new File(path);
                 typedFile = new TypedFile("application/octet-stream", file);
-                System.out.println("typedFIle::::::::"+typedFile.toString());
-                ImageView image = (ImageView)getView().findViewById(R.id.preview_image);
+                System.out.println("typedFIle::::::::" + typedFile.toString());
+                ImageView image = (ImageView) getView().findViewById(R.id.preview_image);
                 image.setImageURI(selectedImageUri);
-            }
-            else if (requestCode == 0)
-            {
+            } else if (requestCode == 0) {
                 File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
-                selectedImageUri =Uri.fromFile(picture);
-                ImageView image = (ImageView)getView().findViewById(R.id.preview_image);
+                selectedImageUri = Uri.fromFile(picture);
+                ImageView image = (ImageView) getView().findViewById(R.id.preview_image);
                 image.setImageURI(selectedImageUri);
                 selectedImagePath = picture.getName();
                 typedFile = new TypedFile("application/octet-stream", picture);
-                System.out.println("typedFIle::::::::"+typedFile.toString());
-            }
-            else if ((requestCode == FILE_CHOOSER) && (resultCode == -1))
-            {
+                System.out.println("typedFIle::::::::" + typedFile.toString());
+            } else if ((requestCode == FILE_CHOOSER) && (resultCode == -1)) {
                 String fileSelected = data.getStringExtra("fileSelected");
                 File picture = new File(fileSelected);
-                ImageView image = (ImageView)getView().findViewById(R.id.preview_image);
+                ImageView image = (ImageView) getView().findViewById(R.id.preview_image);
                 selectedImagePath = picture.getName();
                 typedFile = new TypedFile("application/octet-stream", picture);
-                System.out.println("typedFIle::::::::"+typedFile.toString());
+                System.out.println("typedFIle::::::::" + typedFile.toString());
                 String documentType = selectedImagePath.substring(selectedImagePath.lastIndexOf("."));
-                System.out.println("Document TYpe::::::"+documentType);
-                if(documentType.equalsIgnoreCase(".pdf"))
-                {
+                System.out.println("Document TYpe::::::" + documentType);
+                if (documentType.equalsIgnoreCase(".pdf")) {
                     image.setImageResource(R.drawable.pdf_preview);
-                }
-                else if(documentType.equalsIgnoreCase(".txt"))
-                {
+                } else if (documentType.equalsIgnoreCase(".txt")) {
                     image.setImageResource((R.drawable.text));
-                }
-                else if(documentType.equalsIgnoreCase(".doc")||(documentType.equalsIgnoreCase(".docx")))
-                {
+                } else if (documentType.equalsIgnoreCase(".doc") || (documentType.equalsIgnoreCase(".docx"))) {
                     image.setImageResource(R.drawable.doc_preview);
-                }
-                else if(documentType.equalsIgnoreCase(".xls")||(documentType.equalsIgnoreCase(".xlsx")))
-                {
+                } else if (documentType.equalsIgnoreCase(".xls") || (documentType.equalsIgnoreCase(".xlsx"))) {
                     image.setImageResource(R.drawable.xlsx);
                 }
 
 
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public String getPath(Uri uri)
-    {
+    public String getPath(Uri uri) {
 
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
@@ -368,11 +393,8 @@ public class FileUploadDialog extends DialogFragment
     }
 
 
-
-    public class ClinicSpinner extends ArrayAdapter<String>
-    {
-        public ClinicSpinner(Context ctx, int txtViewResourceId, String[] objects)
-        {
+    public class ClinicSpinner extends ArrayAdapter<String> {
+        public ClinicSpinner(Context ctx, int txtViewResourceId, String[] objects) {
             super(ctx, txtViewResourceId, objects);
         }
 
@@ -397,10 +419,8 @@ public class FileUploadDialog extends DialogFragment
 
     }
 
-    public class CategorySpinner extends ArrayAdapter<String>
-    {
-        public CategorySpinner(Context ctx, int txtViewResourceId, String[] objects)
-        {
+    public class CategorySpinner extends ArrayAdapter<String> {
+        public CategorySpinner(Context ctx, int txtViewResourceId, String[] objects) {
             super(ctx, txtViewResourceId, objects);
         }
 
@@ -424,10 +444,9 @@ public class FileUploadDialog extends DialogFragment
 
 
     }
-    public class MedicalReportSpinner extends ArrayAdapter<String>
-    {
-        public MedicalReportSpinner(Context ctx, int txtViewResourceId, String[] objects)
-        {
+
+    public class MedicalReportSpinner extends ArrayAdapter<String> {
+        public MedicalReportSpinner(Context ctx, int txtViewResourceId, String[] objects) {
             super(ctx, txtViewResourceId, objects);
         }
 

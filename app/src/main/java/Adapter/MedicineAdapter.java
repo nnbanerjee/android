@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,7 +38,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 04-11-2015.
  */
-public class MedicineAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
+public class MedicineAdapter extends BaseAdapter {
     Activity activity;
     List<MedicinePrescribed> alarms;
     LayoutInflater inflater;
@@ -96,6 +97,13 @@ public class MedicineAdapter extends BaseAdapter implements AdapterView.OnItemCl
                 mHolder.remove.setVisibility(View.GONE);
             } else
                 mHolder.medicineName.setText(alarms.get(position).getMedicineName());
+
+            if (alarms.get(position) != null && alarms.get(position).getReminder() != null && alarms.get(position).getReminder().equalsIgnoreCase("0")) {
+                mHolder.alarm.setVisibility(View.INVISIBLE);
+            }else{
+                mHolder.alarm.setVisibility(View.VISIBLE);
+            }
+
             mHolder.alarm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,7 +126,9 @@ public class MedicineAdapter extends BaseAdapter implements AdapterView.OnItemCl
                     }
                 }
             });
-            convertView.setOnClickListener(new View.OnClickListener() {
+
+
+          /*  convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int getPosition = (Integer) v.getTag();
@@ -126,12 +136,12 @@ public class MedicineAdapter extends BaseAdapter implements AdapterView.OnItemCl
                     if (!medicineVm.getMedicineName().equals("No Medicine")) {
                         Bundle args = new Bundle();
                         args.putString("state", "EDIT");
-                      /*  args.putString("visitedDate", medicineVm.g.getVisitDate());
+                      *//*  args.putString("visitedDate", medicineVm.g.getVisitDate());
                         args.putString("visit", medicineVm.visitType);
                         args.putString("referedBy", medicineVm.referredBy);
                         args.putString("symptomsValue", medicineVm.symptoms);
                         args.putString("diagnosisValue", medicineVm.diagnosis);
-                        args.putString("testPrescribedValue", medicineVm.testsPrescribed);*/
+                        args.putString("testPrescribedValue", medicineVm.testsPrescribed);*//*
                         args.putString("medicinName", medicineVm.getMedicineName());
                         args.putString("medicineEndDate", medicineVm.getEndDateTime());
                         args.putString("medicineId", medicineVm.getMedicineId());
@@ -145,7 +155,7 @@ public class MedicineAdapter extends BaseAdapter implements AdapterView.OnItemCl
                         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
                     }
                 }
-            });
+            });*/
 
             mHolder.remove.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -192,35 +202,13 @@ public class MedicineAdapter extends BaseAdapter implements AdapterView.OnItemCl
         mHolder.medicineName.setTag(position);
         mHolder.alarm.setTag(position);
         mHolder.remove.setTag(position);
-        convertView.setTag(position);
+       // convertView.setTag(position);
         return convertView;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int getPosition, long l) {
-       // int getPosition = (Integer) view.getTag();
-        MedicinePrescribed medicineVm = alarms.get(getPosition);
-        if (!medicineVm.getMedicineName().equals("No Medicine")) {
-            Bundle args = new Bundle();
-                      /*  args.putString("visitedDate", medicineVm.g.getVisitDate());
-                        args.putString("visit", medicineVm.visitType);
-                        args.putString("referedBy", medicineVm.referredBy);
-                        args.putString("symptomsValue", medicineVm.symptoms);
-                        args.putString("diagnosisValue", medicineVm.diagnosis);
-                        args.putString("testPrescribedValue", medicineVm.testsPrescribed);*/
-            args.putString("medicinName", medicineVm.getMedicineName());
-            args.putString("medicineEndDate", medicineVm.getEndDateTime());
-            args.putString("medicineId", medicineVm.getMedicineId());
-            args.putString("medicineStartDate", medicineVm.getStartDateTime());
-            args.putString("medicineReminder", medicineVm.getReminder());
 
 
-            Fragment fragment = new PatientMedicinReminder();
-            fragment.setArguments(args);
-            FragmentManager fragmentManger = activity.getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-        }
-    }
+
 
     static class ViewHolder {
         TextView medicineName;

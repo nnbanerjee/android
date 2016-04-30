@@ -14,11 +14,10 @@
 
     <ImageView
         android:id="@+id/downImg"
-        android:layout_width="25dp"
-        android:layout_height="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/doctorImg"
         android:layout_marginLeft="23dp"
-        android:layout_marginRight="5dp"
         android:background="@drawable/down_arrow"
         android:scaleType="fitCenter" />
 
@@ -33,16 +32,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Doctor Name"
-            style="@style/sub_heading" />
+            android:textColor="@color/color_blue_default"
+            style="@style/title" />
 
-        <Button
+        <ImageView
             android:id="@+id/nextBtn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/right_arrow_black"
-            android:textColor="#000000"
-            android:textSize="25sp"
+            android:background="@drawable/right_arrow_grey"
             android:layout_marginTop="2dp"
             android:textStyle="bold" />
         <TextView
@@ -51,9 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/nextBtn"
             android:text="0"
-            android:textColor="#1E90FF"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="@dimen/body2" />
+            style="@style/body1"
+          />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/doctorName"
             android:text="Speciality"
-            style="@style/body2" />
+            style="@style/sub_heading" />
 
         <TextView
             android:id="@+id/lastAppointmentDate"
@@ -84,7 +81,7 @@
             android:layout_below="@+id/doctorSpeciality"
             android:text="fdfd"
             android:visibility="visible"
-            style="@style/body1"
+            style="@style/body2"
              />
 
         <TextView

@@ -48,6 +48,7 @@ import Model.AlarmReminderVM;
 import Model.Clinic;
 import Model.MedicineVM;
 import Model.Person;
+import Model.PersonID;
 import Model.ReminderVM;
 import Model.SummaryHistoryVM;
 import retrofit.Callback;
@@ -76,12 +77,14 @@ public class PatientAppointmentSummary extends Fragment {
     ProgressDialog progress;
 
     Button logout, drawar, symptomsHistryBtn, diagnosisHistryBtn,
-            prescribHistryBtn, testHistryBtn,addAlarm;
+            prescribHistryBtn, testHistryBtn;
+    ImageView addAlarm;
     MedicineAdapter adapter;
     Set<String> medicineSet;
     List<MedicineVM> medicineVMs;
     ListView alarmListView;
     List<AlarmReminderVM> alarms;
+    private String loggedInUSer;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,16 +101,18 @@ public class PatientAppointmentSummary extends Fragment {
         clinicId = session.getString("patient_clinicId", null);
         patientId = session.getString("sessionID", null);
         type =  session.getString("loginType",null);
+
+        loggedInUSer =  session.getString("id", "0") ;
         System.out.println("Type::::::"+type);
         //Retrofit Initialization
-        addAlarm = (Button)view.findViewById(R.id.add_alarm);
+        addAlarm = (ImageView)view.findViewById(R.id.add_alarm);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getAllClinics(new Callback<List<Clinic>>() {
+        api.getAllClinics( new PersonID(loggedInUSer),new Callback<List<Clinic>>() {
             @Override
             public void success(List<Clinic> clinics, Response response) {
                 for(Clinic c:clinics)

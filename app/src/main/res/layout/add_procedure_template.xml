@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
+            android:visibility="gone"
             android:text="Procedure Name : "
             android:textSize="@dimen/sub_heading" />
 
@@ -33,6 +34,7 @@
             android:layout_toRightOf="@+id/show_name"
             android:fontFamily="sans-serif"
             android:text="Dental Procedure"
+            android:layout_centerHorizontal="true"
             android:textSize="@dimen/sub_heading" />
     </RelativeLayout>
 
@@ -43,11 +45,11 @@
         android:layout_below="@+id/layout1"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:background="#72BFC5"
-        android:padding="5dp">
+
+    >
 
         <TextView
             android:id="@+id/nameText"
@@ -57,6 +59,7 @@
             android:padding="10dp"
             android:text="Name"
             android:textColor="#ffffff"
+            android:visibility="gone"
             android:fontFamily="sans-serif-medium"
             android:textSize="@dimen/body2" />
 
@@ -70,6 +73,7 @@
             android:paddingLeft="15dp"
             android:text="Dental Procedure"
             android:textColor="#ffffff"
+            android:visibility="gone"
             android:fontFamily="sans-serif"
             android:textSize="@dimen/body1" />
 
@@ -77,8 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_list_view"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
+
             android:layout_below="@+id/procedure_name"
             android:weightSum="2"
             android:orientation="horizontal"
@@ -88,21 +91,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Name"
-                android:background="#2D2D8A"
+                android:background="@color/color_blue_default"
                 android:textColor="#ffffff"
                 android:paddingTop="10dp"
+            android:gravity="center"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="@dimen/body2"
-                android:paddingLeft="5dp"
                 android:paddingBottom="10dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Value"
+            android:gravity="center"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="@dimen/body2"
-                android:background="#2D2D8A"
+            android:background="@color/color_blue_default"
                 android:textColor="#ffffff"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"/>
@@ -114,9 +118,9 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/title_list_view"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/rounded_white_color"></ListView>
+
+
+            android:background="@color/grey"></ListView>
 
     </RelativeLayout>
 

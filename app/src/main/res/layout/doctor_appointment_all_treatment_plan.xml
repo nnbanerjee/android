@@ -45,6 +45,7 @@
             android:id="@+id/addNewTreatment"
             android:layout_alignParentRight="true"
             android:gravity="center"
+            android:visibility="gone"
             android:background="@drawable/add"/>
 
     </RelativeLayout>
@@ -55,7 +56,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layout1"
         android:fadeScrollbars="false"
-        android:background="@drawable/black_border_listview"
         android:padding="5dp"
         android:layout_above="@+id/layout2"
         android:id="@+id/treatmentPlanList">

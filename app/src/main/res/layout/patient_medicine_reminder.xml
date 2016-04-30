@@ -22,13 +22,27 @@
             android:background="#ffffff">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ems="6"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
                 android:text="Medicine : "
-                style="@style/body2"
-                android:textStyle="bold"
                 android:paddingLeft="5dp"
+                android:textColor="@color/black"
                 android:id="@+id/medecineText"
+                />
+            <MultiAutoCompleteTextView
+                android:id="@+id/medicineValueEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/medecineText"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#1E90FF"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -41,18 +55,7 @@
                 android:visibility="gone"
                 android:id="@+id/medicineValue"
              />
-            <MultiAutoCompleteTextView
-                android:id="@+id/medicineValueEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/medecineText"
-                android:completionThreshold="1"
-                android:paddingLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#1E90FF"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
-            />
+
 
         </RelativeLayout>
 
@@ -64,24 +67,30 @@
             android:id="@+id/layout5">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Schedule:"
-                style="@style/body2"
-                android:layout_marginTop="5dp"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
                 android:id="@+id/emailIdText"
                 />
+            <RelativeLayout
+                android:background="@color/grey"
+                android:layout_toRightOf="@+id/emailIdText"
+                android:layout_toEndOf="@+id/emailIdText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
                 android:textColor="#1E90FF"
                 android:id="@+id/scheduleDate"
                 android:entries="@array/scheduleDateList"
 
-                android:layout_toRightOf="@+id/emailIdText"
-                android:layout_toEndOf="@+id/emailIdText" />
-
+                />
+        </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -92,32 +101,52 @@
             android:layout_below="@+id/layout5">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of Doses"
-                style="@style/body2"
-                android:layout_marginTop="5dp"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
                 android:id="@+id/mobileText"
                 />
 
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:id="@+id/no_of_doses_edit_box"
+                android:inputType="phone"
+                android:numeric="decimal"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/schedule_text"
+                android:layout_toRightOf="@+id/mobileText"/>
+            <!--<RelativeLayout
+                android:background="@color/grey"
+                android:layout_toLeftOf="@+id/schedule_text"
+                android:layout_toRightOf="@+id/mobileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
                 android:id="@+id/numberDoses"
                 android:inputType="phone"
                 android:numeric="decimal"
                 android:textColor="#1E90FF"
-                android:layout_toLeftOf="@+id/schedule_text"
+
                 android:paddingLeft="5dp"
 
 
-                android:layout_toRightOf="@+id/mobileText"/>
+               />
+
+            </RelativeLayout>-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/schedule_text"
-                android:text="Doses"
+                android:text="/ Doses"
                 style="@style/body2"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
@@ -134,10 +163,13 @@
             android:layout_below="@+id/layout6">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Duration of Medication"
-                style="@style/body2"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
                 android:id="@+id/genderText"
                 />
             <EditText
@@ -172,10 +204,13 @@
             android:layout_below="@+id/layout7">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Start Date"
-                style="@style/body2"
+                android:text="Starts From"
+                style="@style/sub_heading"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:id="@+id/startText"
                 />
@@ -210,11 +245,13 @@
             android:layout_below="@+id/layout8">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="End Date"
-                android:layout_marginTop="5dp"
-                style="@style/body2"
+                android:text="Ends on"
+                android:ems="6"
+                android:textColor="@color/black"
+                style="@style/sub_heading"
+                android:layout_centerVertical="true"
                 android:id="@+id/endText"
                 />
 
@@ -243,8 +280,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
+            android:textColor="@color/black"
+            style="@style/sub_heading"
             android:text="Schedule Time for Medicine :"
-            style="@style/body2"
+            android:layout_centerVertical="true"
             android:layout_below="@+id/layout9"
             android:layout_marginBottom="5dp"
             />
@@ -253,8 +292,8 @@
             android:id="@+id/horizontalList"
             android:layout_below="@+id/preview"
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="150dp" />
+            android:layout_margin="10dp"
+            android:layout_height="160dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -262,12 +301,19 @@
             android:id="@+id/previewBtn"
             android:layout_margin="5dp"
             android:layout_below="@+id/horizontalList">
-
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Medicine Reminder"
-                style="@style/body2"
+                android:text="Auto Schedule"
+                style="@style/caption_Style"
+                android:id="@+id/auto_scheduleBtn"
+                />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reminder"
+                style="@style/caption_Style"
+                android:layout_below="@+id/auto_scheduleBtn"
                 android:id="@+id/medicineReminderBtn"
                 />
 
@@ -276,10 +322,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/sub_heading"
             android:text="Doctor’s Instruction / Method of Medication "
-            style="@style/body2"
+            android:layout_centerVertical="true"
             android:layout_below="@id/previewBtn"
             android:id="@+id/doctorInstructionText"
+            android:textColor="@color/black"
         />
         <EditText
             android:layout_width="match_parent"
@@ -290,6 +338,8 @@
             android:textColor="#1E90FF"
             android:layout_below="@+id/doctorInstructionText"
             android:paddingLeft="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 
          />
 

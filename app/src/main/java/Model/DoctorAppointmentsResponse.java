@@ -11,11 +11,11 @@ import java.util.Map;
 public class DoctorAppointmentsResponse {
 
     public DoctorAppointmentsResponse(List<String> bookedSlots, String date) {
-        this.bookedSlots = bookedSlots;
+        this.sequence_num = bookedSlots;
         this.date = date;
     }
 
-    public List<String> bookedSlots = new ArrayList<String>();
+    public List<String> sequence_num = new ArrayList<String>();
 
     public String getDate() {
         return date;
@@ -25,12 +25,12 @@ public class DoctorAppointmentsResponse {
         this.date = date;
     }
 
-    public List<String> getBookedSlots() {
-        return bookedSlots;
+    public List<String> getsequence_num() {
+        return sequence_num;
     }
 
-    public void setBookedSlots(List<String> bookedSlots) {
-        this.bookedSlots = bookedSlots;
+    public void setsequence_num(List<String> bookedSlots) {
+        this.sequence_num = bookedSlots;
     }
 
     public String date;

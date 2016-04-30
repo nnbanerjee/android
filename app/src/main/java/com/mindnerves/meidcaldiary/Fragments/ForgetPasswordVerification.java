@@ -46,7 +46,7 @@ public class ForgetPasswordVerification extends Fragment {
         final View view = inflater.inflate(R.layout.forget_password_verification,
                 container, false);
 
-        getActivity().getActionBar().hide();
+     //   getActivity().getActionBar().hide();
         verifyCode = (EditText) view.findViewById(R.id.et_verify_code);
 
         Bundle args = getArguments();

@@ -6,8 +6,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,22 +60,25 @@ public class AllDoctorsPatient extends Fragment {
     ListView doctorListView;
     ProgressDialog progress;
     TextView globalTv,accountName;
-    Button drawar,logout,back;
+    Button drawar,refresh,logout,back;
     ImageView profilePicture;
-    RelativeLayout profileLayout;
+    RelativeLayout profileLayout,homeLayout;
     public  String  doctorId="";
     //ImageView medicoLogo,medicoText;
     String type;
+    Toolbar toolbar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
         setHasOptionsMenu(true);
+        View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
+
         doctorListView = (ListView) view.findViewById(R.id.doctorListView);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         back = (Button)getActivity().findViewById(R.id.back_button);
+        homeLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout1);
+
         profilePicture = (ImageView) getActivity().findViewById(R.id.profile_picture);
         accountName = (TextView) getActivity().findViewById(R.id.account_name);
         logout = (Button)getActivity().findViewById(R.id.logout);
@@ -81,8 +87,22 @@ public class AllDoctorsPatient extends Fragment {
        // medicoText = (ImageView)getActivity().findViewById(R.id.home_icon);
         profileLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout2);
         drawar = (Button)getActivity().findViewById(R.id.drawar_button);
+        refresh = (Button)getActivity().findViewById(R.id.refresh);
         type = session.getString("loginType",null);
         doctorId = session.getString("id",null);
+
+      /*  getActivity(). getActionBar().show();
+        getActivity(). getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1f6599")));
+        getActivity(). getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity(). getActionBar().setTitle("Patient Profiles");*/
+
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu);
+
+      //  getActivity().setActionBar(toolbar);
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,8 +201,12 @@ public class AllDoctorsPatient extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
+        // Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
+        System.out.println("Inside fragment AllDoctorsPatient --->onCreateOptionsMenu()");
 
-        super.onCreateOptionsMenu(menu, inflater);
+         toolbar.inflateMenu(R.menu.menu);
+       //super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     public void manageScreenIcons()
@@ -190,13 +214,15 @@ public class AllDoctorsPatient extends Fragment {
         drawar.setVisibility(View.GONE);
        // medicoLogo.setVisibility(View.GONE);
        // medicoText.setVisibility(View.GONE);
-        logout.setVisibility(View.VISIBLE);
-        logout.setBackgroundResource(R.drawable.home_jump);
+        logout.setVisibility(View.GONE);
+         logout.setBackgroundResource(R.drawable.home_jump);
         profileLayout.setVisibility(View.GONE);
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         globalTv.setText("Patient Profiles");
         back.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.GONE);
+      //homeLayout.setVisibility(View.GONE);
     }
     public void goToBack(){
         globalTv.setText(type);
@@ -210,6 +236,10 @@ public class AllDoctorsPatient extends Fragment {
         profilePicture.setVisibility(View.VISIBLE);
         accountName.setVisibility(View.VISIBLE);
         back.setVisibility(View.GONE);
+        toolbar.setVisibility(View.GONE);
+        drawar.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.VISIBLE);
+        //homeLayout.setVisibility(View.VISIBLE);
        // medicoLogo.setVisibility(View.VISIBLE);
        // medicoText.setVisibility(View.VISIBLE);
     }

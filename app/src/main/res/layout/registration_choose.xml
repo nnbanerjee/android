@@ -22,12 +22,12 @@
 
             <RadioButton
                 android:id="@+id/search_name"
-                style="@style/body2"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Create new Profile"
-                android:textSize="20dp" />
+               />
 
             <RelativeLayout
                 android:id="@+id/layout_hidden"
@@ -67,11 +67,11 @@
 
             <RadioButton
                 android:id="@+id/search_phone"
-                style="@style/body2"
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Profile Already Exists"
-                android:textSize="20dp" />
+                 />
 
 
         </RadioGroup>
@@ -85,7 +85,7 @@
 
             <TextView
                 android:id="@+id/name_textViewView"
-                style="@style/body2"
+                style="@style/sub_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

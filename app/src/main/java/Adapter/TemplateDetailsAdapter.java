@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Model.Field;
+import Model.TemplateField;
 
 /**
  * Created by MNT on 28-Mar-15.
@@ -21,11 +23,11 @@ import Model.Field;
 public class TemplateDetailsAdapter extends BaseAdapter {
 
     private Activity activity;
-    private ArrayList<Field> fieldList;
+    private  List<TemplateField> fieldList;
     private LayoutInflater inflater;
     private TextView fieldNameTv,fieldTypeTv;
 
-    public TemplateDetailsAdapter(Activity activity, ArrayList<Field> fieldList){
+    public TemplateDetailsAdapter(Activity activity,  List<TemplateField> fieldList){
         this.activity = activity;
         this.fieldList = fieldList;
     }
@@ -62,8 +64,8 @@ public class TemplateDetailsAdapter extends BaseAdapter {
             fieldTypeTv.setVisibility(View.INVISIBLE);
         }
 
-        fieldNameTv.setText(fieldList.get(position).getFieldDisplayName());
-        fieldTypeTv.setText(fieldList.get(position).getFieldDefaultValue());
+        fieldNameTv.setText(fieldList.get(position).getFieldName());
+        fieldTypeTv.setText(fieldList.get(position).getValue());
         return convertView;
     }
 }

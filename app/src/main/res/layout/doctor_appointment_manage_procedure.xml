@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:id="@+id/layout1">
 
         <TextView
@@ -68,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout1"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:id="@+id/layout2">
 
         <TextView
@@ -93,7 +95,66 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/layout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout2"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff"
+        android:weightSum="4">
 
+        <Button
+            android:id="@+id/summaryBtn"
+            style="@style/body1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/tab_selected"
+            android:gravity="center"
+            android:text="Procedure"
+            />
+
+        <Button
+            android:id="@+id/documentationBtn"
+            style="@style/body1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@+id/clinicsBtn"
+            android:background="@drawable/tab_default"
+            android:layout_weight="1"
+            android:text="Invoice" />
+
+        <Button
+            android:id="@+id/doctorNoteBtn"
+            style="@style/body1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@+id/clinicsBtn"
+            android:background="@drawable/tab_default"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:enabled="false"
+            android:text="SMS" />
+
+        <Button
+            android:id="@+id/treatmentBtn"
+            style="@style/body1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@+id/clinicsBtn"
+            android:background="@drawable/tab_default"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="Email" />
+
+
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,7 +162,7 @@
         android:textSize="@dimen/body2"
         android:id="@+id/show_search_result_text"
         android:text="Search Result:"
-        android:layout_below="@+id/layout2"
+        android:layout_below="@+id/layout3"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
     

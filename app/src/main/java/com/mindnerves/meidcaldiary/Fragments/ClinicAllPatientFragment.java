@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class ClinicAllPatientFragment extends Fragment {
     public Integer clinicId = null;
     Button back;
     ClinicPatientAppointments clinicPatientAppointmentsObj;
+    Toolbar toolbar;
 
     @Nullable
     @Override
@@ -66,6 +68,10 @@ public class ClinicAllPatientFragment extends Fragment {
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("id", null);
         patientId = session.getString("patientId", null);
+        toolbar=(Toolbar)getActivity().findViewById(R.id.my_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.getMenu().clear();
+        //toolbar.inflateMenu(R.menu.menu);
 
         for (int i = 0; i < allPatients.size(); i++) {
             if (patientId.equals(allPatients.get(i).getpatientId())) {
@@ -88,7 +94,7 @@ public class ClinicAllPatientFragment extends Fragment {
             }
         });
         clinicListView = (ListView) view.findViewById(R.id.clinicListView);
-        progress = ProgressDialog.show(getActivity(), "", "Loading...Please wait...");
+        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         //Retrofit Initialization
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))

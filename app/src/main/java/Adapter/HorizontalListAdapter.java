@@ -3,30 +3,35 @@ package Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.Fragments.AddDialogFragment;
 import com.mindnerves.meidcaldiary.Fragments.EditDoseFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
+
 import java.util.List;
+
 import Model.AlarmReminderVM;
 
 
 /**
  * Created by MNT on 16-Feb-15.
  */
-public class HorizontalListAdapter extends BaseAdapter{
+public class HorizontalListAdapter extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
     private List<AlarmReminderVM> medicinReminderTables;
     Global global;
+    TextView textView1;
 
     public HorizontalListAdapter(Activity activity, List<AlarmReminderVM> medicinReminderTables) {
         this.activity = activity;
@@ -51,167 +56,59 @@ public class HorizontalListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View cv, ViewGroup parent) {
 
-        if(inflater == null){
-            inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (inflater == null) {
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.hr_medicin_reminder, null);
         global = (Global) activity.getApplicationContext();
-        final TextView day = (TextView) convertView.findViewById(R.id.day);
-        final TextView time1 = (TextView) convertView.findViewById(R.id.time1);
-        final TextView time2 = (TextView) convertView.findViewById(R.id.time2);
-        final TextView time3 = (TextView) convertView.findViewById(R.id.time3);
-        final TextView time4 = (TextView) convertView.findViewById(R.id.time4);
-        final TextView time5 = (TextView) convertView.findViewById(R.id.time5);
-        final TextView time6 = (TextView) convertView.findViewById(R.id.time6);
+
+        TextView day = (TextView) convertView.findViewById(R.id.day);
+        LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.linearLayout);
+        linearLayout.removeAllViews();
+
+        for (int i = 0; i < medicinReminderTables.get(position).getTimes().size(); i++) {
+
+            textView1 = new TextView(activity);
+            textView1.setLayoutParams(new ViewGroup.MarginLayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            textView1.setText(medicinReminderTables.get(position).getTimes().get(i));
+            textView1.setGravity(Gravity.CENTER);
+            textView1.setPadding(25, 3, 25, 3);
+            textView1.setTag(position + "#" + i);
+            // textView1.setEms();
+            textView1.setBackgroundColor(activity.getResources().getColor(R.color.grey)); // hex color 0xAARRGGBB
+            textView1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView tv = (TextView) v;
+                    //AlarmReminderVM vm = (AlarmReminderVM) tv.getTag();
+                    String[] strPos = (String[])( tv.getTag().toString().split("#"));
+
+                    int position=Integer.parseInt(strPos[0]);
+                    int selected=Integer.parseInt(strPos[1]);
+                    String text = tv.getText().toString();
+                    System.out.println("text:::::::" + text);
+                    global.setAlarmTime(medicinReminderTables);
+                    global.setSelectedPostionOfMedicineScheduleFromHorizontalList(position);
+                    global.setSelectedPostionOfMedicineScheduleFromVerticalList(selected);
+
+                   // global.setAlaramObj(vm);
+                    global.setTimeChange("Time1");
+                    global.setTimeText(text);
+                    EditDoseFragment edf = EditDoseFragment.newInstance();
+                    edf.show(activity.getFragmentManager(), "Dialog");
+
+                }
+            });
+            linearLayout.addView(textView1, new ViewGroup.MarginLayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
         day.setText(medicinReminderTables.get(position).getAlarmDate());
-       // if(medicinReminderTables.get(position).getTime1()!=null) {
-           // time1.setVisibility(View.VISIBLE);
-            time1.setText(medicinReminderTables.get(position).getTime1());
-       // } else{
-      //      time1.setVisibility(View.INVISIBLE);
-      //  }
-      //  if(medicinReminderTables.get(position).getTime2()!=null) {
-      //      time2.setVisibility(View.VISIBLE);
-            time2.setText(medicinReminderTables.get(position).getTime2());
-     //   } else{
-      //      time2.setVisibility(View.INVISIBLE);
-      //  }
-
-     //   if(medicinReminderTables.get(position).getTime3()!=null) {
-     //       time3.setVisibility(View.VISIBLE);
-            time3.setText(medicinReminderTables.get(position).getTime3());
-       // } else{
-      //      time3.setVisibility(View.INVISIBLE);
-       // }
-      //  if(medicinReminderTables.get(position).getTime4()!=null) {
-      //      time4.setVisibility(View.VISIBLE);
-            time4.setText(medicinReminderTables.get(position).getTime4());
-      ///  } else{
-      //      time4.setVisibility(View.INVISIBLE);
-    //    }
-     //   if(medicinReminderTables.get(position).getTime5()!=null) {
-     //       time5.setVisibility(View.VISIBLE);
-            time5.setText(medicinReminderTables.get(position).getTime5());
-      //  } else{
-    //        time5.setVisibility(View.INVISIBLE);
-     //   }
-    //    if(medicinReminderTables.get(position).getTime6()!=null) {
-     //       time6.setVisibility(View.VISIBLE);
-            time6.setText(medicinReminderTables.get(position).getTime6());
-     //   } else{
-      //      time6.setVisibility(View.INVISIBLE);
-      //  }
-
-
-
-
-
-
         global.setAlarmTime(medicinReminderTables);
-        time1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView)v;
-                AlarmReminderVM vm = (AlarmReminderVM)tv.getTag();
-                String text = time1.getText().toString();
-                System.out.println("text:::::::"+text);
-                global.setAlarmTime(medicinReminderTables);
-                global.setAlaramObj(vm);
-                global.setTimeChange("Time1");
-                global.setTimeText(text);
-                EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");
-             /*   EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");*/
-
-            }
-        });
-        time2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView)v;
-                AlarmReminderVM vm = (AlarmReminderVM)tv.getTag();
-                String text = time2.getText().toString();
-                System.out.println("text:::::::"+text);
-                global.setAlaramObj(vm);
-                global.setTimeChange("Time2");
-                global.setTimeText(text);
-                EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");
-
-            }
-        });
-        time3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView)v;
-                AlarmReminderVM vm = (AlarmReminderVM)tv.getTag();
-                String text = time3.getText().toString();
-                System.out.println("text:::::::"+text);
-                global.setAlaramObj(vm);
-                global.setTimeChange("Time3");
-                global.setTimeText(text);
-                EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");
-
-            }
-        });
-        time4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView)v;
-                AlarmReminderVM vm = (AlarmReminderVM)tv.getTag();
-                String text = time4.getText().toString();
-                System.out.println("text:::::::"+text);
-                global.setAlaramObj(vm);
-                global.setTimeChange("Time4");
-                global.setTimeText(text);
-                EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");
-
-            }
-        });
-        time5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView)v;
-                AlarmReminderVM vm = (AlarmReminderVM)tv.getTag();
-                String text = time5.getText().toString();
-                System.out.println("text:::::::"+text);
-                global.setAlaramObj(vm);
-                global.setTimeChange("Time5");
-                global.setTimeText(text);
-                EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");
-
-            }
-        });
-        time6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = (TextView)v;
-                AlarmReminderVM vm = (AlarmReminderVM)tv.getTag();
-                String text = time6.getText().toString();
-                System.out.println("text:::::::"+text);
-                global.setAlaramObj(vm);
-                global.setTimeChange("Time6");
-                global.setTimeText(text);
-                EditDoseFragment edf = EditDoseFragment.newInstance();
-                edf.show(activity.getFragmentManager(),"Dialog");
-
-            }
-        });
-        time1.setTag(medicinReminderTables.get(position));
-        time2.setTag(medicinReminderTables.get(position));
-        time3.setTag(medicinReminderTables.get(position));
-        time4.setTag(medicinReminderTables.get(position));
-        time5.setTag(medicinReminderTables.get(position));
-        time6.setTag(medicinReminderTables.get(position));
         convertView.setTag(medicinReminderTables);
         return convertView;
-
     }
 }

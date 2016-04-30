@@ -87,7 +87,7 @@ public class PatientMenusManage extends Fragment {
         rightArrowFirstAid = (ImageView)view.findViewById(R.id.right_arrow_first_aid);
         rightArrowMedicalAlert = (ImageView)view.findViewById(R.id.right_arrow_medical_alert);
         rightArrowAppointment = (ImageView)view.findViewById(R.id.right_arrow_appointments);
-        api.homeCountPatient(patientId,new Callback<HomePatientCount>() {
+       /* api.homeCountPatient(patientId,new Callback<HomePatientCount>() {
             @Override
             public void success(HomePatientCount homePatientCount, Response response) {
 
@@ -115,7 +115,7 @@ public class PatientMenusManage extends Fragment {
                 error.printStackTrace();
                 Toast.makeText(getActivity(), R.string.No_Data_for_Appointments,Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         lastVisited.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

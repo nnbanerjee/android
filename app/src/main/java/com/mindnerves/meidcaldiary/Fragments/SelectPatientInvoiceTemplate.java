@@ -160,7 +160,8 @@ public class SelectPatientInvoiceTemplate extends Fragment {
                         fieldArrayList.add(fe);
                     }
                     //System.out.println("Field List size::::"+fieldArrayList.size());
-                    adapter = new TemplateDetailsAdapter(getActivity(),fieldArrayList);
+                //Commented by raviraj
+                    //adapter = new TemplateDetailsAdapter(getActivity(),fieldArrayList);
                     listViewFieldTemplate.setAdapter(adapter);
             }
 

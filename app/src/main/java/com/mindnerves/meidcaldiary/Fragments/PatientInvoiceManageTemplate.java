@@ -165,8 +165,9 @@ public class PatientInvoiceManageTemplate extends Fragment {
                     temp.setProcedureName("");
                     arrayTemplate.add(temp);
                 }
-                adapter = new TemplateAdapter(getActivity(),arrayTemplate);
-                listViewManageTemplate.setAdapter(adapter);
+                //Commented by raviraj
+                /*adapter = new TemplateAdapter(getActivity(),arrayTemplate);
+                listViewManageTemplate.setAdapter(adapter);*/
 
                 progress.dismiss();
            }
@@ -187,7 +188,8 @@ public class PatientInvoiceManageTemplate extends Fragment {
 
     public void showListBySearch(String searchText)
     {
-            int flagSearch = 0;
+        //Commented by raviraj
+           /* int flagSearch = 0;
             int flagNotSearch = 0;
             nameList = new ArrayList<ShowTemplate>();
             for(ShowTemplate t:arrayTemplate)
@@ -222,7 +224,7 @@ public class PatientInvoiceManageTemplate extends Fragment {
                 adapter = new TemplateAdapter(getActivity(), nameList);
                 listViewManageTemplate.setAdapter(adapter);
 
-            }
+            }*/
 
     }
 }

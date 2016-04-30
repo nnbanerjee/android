@@ -13,6 +13,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
+import Model.CustomProcedureTemplate;
 import Model.ShowProcedure;
 import Model.ShowTemplate;
 
@@ -22,12 +23,12 @@ import Model.ShowTemplate;
 public class ProcedureAdapter extends BaseAdapter {
 
     private Activity activity;
-    private ArrayList<ShowProcedure> procedureList;
+    private ArrayList<CustomProcedureTemplate> procedureList;
     private LayoutInflater inflater;
     private TextView procedureTv,numberOfTemplate,procedureId;
     private ImageView image;
 
-    public ProcedureAdapter(Activity activity, ArrayList<ShowProcedure> procedureList)
+    public ProcedureAdapter(Activity activity, ArrayList<CustomProcedureTemplate> procedureList)
     {
             this.activity = activity;
             this.procedureList = procedureList;
@@ -62,12 +63,14 @@ public class ProcedureAdapter extends BaseAdapter {
         numberOfTemplate = (TextView)convertView.findViewById(R.id.numberOfTemplate);
         procedureId = (TextView)convertView.findViewById(R.id.procedureId);
 
-        procedureTv.setText(procedureList.get(position).getProcedureName());
-        procedureId.setText(procedureList.get(position).getId());
-        if(procedureList.get(position).getNumberOfTemplate().equals("0")){
-            numberOfTemplate.setVisibility(View.GONE);
+        procedureTv.setText(procedureList.get(position).getTemplateSubName());
+        procedureId.setText(procedureList.get(position).getTemplateId());
+        if(procedureList.get(position).getTemplateFields().size()==0){
+            numberOfTemplate.setVisibility(View.INVISIBLE);
         }else{
-            numberOfTemplate.setText(procedureList.get(position).getNumberOfTemplate());
+            numberOfTemplate.setVisibility(View.VISIBLE);
+            if(procedureList.get(position).getTemplateFields()!=null)
+            numberOfTemplate.setText(""+procedureList.get(position).getTemplateFields().size());
         }
 
         return convertView;

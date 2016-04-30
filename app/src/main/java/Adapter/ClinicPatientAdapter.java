@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import Application.MyApi;
 import Model.Appointment;
@@ -170,10 +172,10 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
                 mHolder.cancel = (TextView) layoutView.findViewById(R.id.notVisited1);
                 mHolder.visited1 = (TextView) layoutView.findViewById(R.id.visited1);
 
-                mHolder.bookOnline.setTag(i);
-                mHolder.cancel.setTag(i);
-               // mHolder.visited1.setTag(i);
-                mHolder.change.setTag(i);
+                mHolder.bookOnline.setTag(position+"#"+i);
+                mHolder.cancel.setTag(position+"#"+i);
+                mHolder.visited1.setTag(position+"#"+i);
+                mHolder.change.setTag(position+"#"+i);
 
                 if (slots.get(i).getDaysOfWeek() != null)
                     mHolder.shift1Days.setText(getTextOfDays(slots.get(i).getDaysOfWeek()));
@@ -264,7 +266,14 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
         mHolder.visited1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String clinicPosition = (String) v.getTag();
+                String clinicPosition="";
+                String[] tag= ((String) v.getTag()).split("#");
+              //  String clinicPosition = (String) v.getTag();
+                int position= Integer.parseInt(tag[0]);
+
+                if(tag!=null && tag.length>1)
+                  clinicPosition= tag[1];
+
                // AppointmentSlotsByDoctor vm = clinicSlotsByDoctorList.get(clinicPosition);
               //  progress = ProgressDialog.show(context, "", "Loading...Please wait...");
                 //saveVisitedData(doctorId, patient_email, vm.getClinic().getIdClinic(), "shift1", 1);
@@ -285,7 +294,12 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
         mHolder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clinicPositionGlobal = (Integer) v.getTag();
+                //clinicPositionGlobal = (Integer) v.getTag();
+
+                String[] tag= ((String) v.getTag()).split("#");
+
+               final int position= Integer.parseInt(tag[0]);
+                clinicPositionGlobal= Integer.parseInt(tag[1]);
                 // AppointmentSlotsByDoctor vm = clinicSlotsByDoctorList.get(clinicPositionGlobal);
                 //saveVisitedData(doctorId, patient_email, vm.getClinic().getIdClinic(), "shift1", 0);
 
@@ -309,7 +323,7 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
                             mHolder.nextAppointment1.setVisibility(View.INVISIBLE);
                             mHolder.change.setVisibility(View.GONE);
                             mHolder.nextAppointment1Value.setVisibility(View.INVISIBLE);
-                            mHolder.nextAppointment1Value.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointmentDetailsObj.get(position).getAppointments().get(0).getDateTime()));
+                            mHolder.nextAppointment1Value.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointmentDetailsObj.get(position).getAppointments().get(clinicPositionGlobal).getDateTime()));
                             mHolder.bookOnline.setVisibility(View.VISIBLE);
                             mHolder.cancel.setVisibility(View.INVISIBLE);
                             mHolder.visited1.setVisibility(View.GONE);
@@ -334,7 +348,10 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
         mHolder.change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int slotPosition = (Integer) v.getTag();
+                String[] tag= ((String) v.getTag()).split("#");
+
+               int position= Integer.parseInt(tag[0]);
+                int slotPosition= Integer.parseInt(tag[1]);
                 Slot selectedSlot = clinicSlotsByDoctorList.get(position).getSlots().get(slotPosition);
 
                 String slot0StartTime = clinicSlotsByDoctorList.get(position).getSlots().get(slotPosition).getStartTime();
@@ -363,7 +380,7 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
                 String formattedDate = df.format(c.getTime());
                 //getClinicAppointment(vm.getClinic().getIdClinic(), "shift1", null, null);
                 getClinicAppointment(selectedSlot, doctorId, clinicSlotsByDoctorList.get(position).getClinic().getDoctorClinicId(), formattedDate, slot0StartTime, slot0EndTime, clinicSlotsByDoctorList.get(position).getClinic().getClinicName(),
-                        clinicSlotsByDoctorList.get(position).getClinic().getIdClinic(), clinicListSingleObj);
+                        clinicSlotsByDoctorList.get(position).getClinic().getIdClinic(), clinicListSingleObj,true);
             }
         });
 
@@ -371,7 +388,10 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
         mHolder.bookOnline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int slotPosition = (Integer) v.getTag();
+                String[] tag= ((String) v.getTag()).split("#");
+
+                int position= Integer.parseInt(tag[0]);
+                int slotPosition= Integer.parseInt(tag[1]);
                 Slot selectedSlot = clinicSlotsByDoctorList.get(position).getSlots().get(slotPosition);
 
                 String slot0StartTime = clinicSlotsByDoctorList.get(position).getSlots().get(slotPosition).getStartTime();
@@ -409,7 +429,7 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
                 String formattedDate = df.format(c.getTime());
 
                 getClinicAppointment(selectedSlot, doctorId, clinicSlotsByDoctorList.get(position).getClinic().getDoctorClinicId(), formattedDate, slot0StartTime,
-                        slot0EndTime, clinicSlotsByDoctorList.get(position).getClinic().getClinicName(), clinicSlotsByDoctorList.get(position).getClinic().getIdClinic(), clinicListSingleObj);
+                        slot0EndTime, clinicSlotsByDoctorList.get(position).getClinic().getClinicName(), clinicSlotsByDoctorList.get(position).getClinic().getIdClinic(), clinicListSingleObj,false);
             }
         });
 
@@ -446,7 +466,7 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
         return aapt;
     }
     //Clicked on book online button
-    public void getClinicAppointment(Slot selectedSlot, String doctorId, String doctorClinicId, String dateinmilis, String startTime, String endTime, String clinicName ,String clinicId,ClinicList selectedClinic) {
+    public void getClinicAppointment(Slot selectedSlot, String doctorId, String doctorClinicId, String dateinmilis, String startTime, String endTime, String clinicName ,String clinicId,ClinicList selectedClinic,boolean reschedule) {
         System.out.println("Book Online clicked::::::::::::::::");
         SharedPreferences.Editor editor = session.edit();
         // global.setAllDoctorClinicList(appointmentDetailsObj);
@@ -466,6 +486,8 @@ public class ClinicPatientAdapter extends ArrayAdapter<AppointmentSlotsByDoctor>
         args.putString("endTime", endTime);
         args.putString("clinicName", clinicName);
         args.putString("fragment", "ClinicPatientAdapter");
+
+            args.putBoolean("reschedule", reschedule);
         Fragment fragment = new ClinicAppointmentFragment();
         fragment.setArguments(args);
         FragmentManager fragmentManger = context.getFragmentManager();

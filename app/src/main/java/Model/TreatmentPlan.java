@@ -15,6 +15,27 @@ public class TreatmentPlan {
     private String templateName;
     private String templateSubName;
 
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    //doctorId":109,"patientId":7
+    private String doctorId;
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
+
+    private String patientId;
+
     public String getIcon() {
         return icon;
     }
@@ -89,6 +110,21 @@ public class TreatmentPlan {
 
     private String icon;
     private List<TreatmentField> treatmentFields = new ArrayList<TreatmentField>();
+
+    public List<List<TreatmentField>> getTreatmentValues() {
+        return treatmentValues;
+    }
+
+    public void setTreatmentValues(List<List<TreatmentField>> treatmentValues) {
+        this.treatmentValues = treatmentValues;
+    }
+    public void addTreatmentValues(List<List<TreatmentField>> treatmentValues) {
+        for(int i=0; i< treatmentValues.size();i++)
+        this.treatmentValues.add(treatmentValues.get(i))  ;
+    }
+
+    private List<List<TreatmentField>> treatmentValues = new ArrayList<List<TreatmentField>>();
+
 
     ///Old
   /*  private Integer Id;

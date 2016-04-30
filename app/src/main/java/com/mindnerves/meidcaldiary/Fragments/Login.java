@@ -59,7 +59,7 @@ public class Login extends Fragment {
         final View view = inflater.inflate(R.layout.login,
                 container, false);
 
-        getActivity().getActionBar().hide();
+      //  getActivity().getActionBar().hide();
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText) view.findViewById(R.id.password);
 
@@ -129,34 +129,38 @@ public class Login extends Fragment {
                                 .setLogLevel(RestAdapter.LogLevel.FULL)
 
                                 .build();
-                        api = restAdapter.create(MyApi.class);
-                        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-                        Logindata param = new Logindata(emailtxt, passwordtxt);
-                        api.login(param, new Callback<ResponseVm>() {
-                            @Override
-                            public void success(ResponseVm responseVm, Response response) {
-                                System.out.println(response);
-                                progress.dismiss();
-                                //0 is failure and  {1= Doctor,2=Patient,3-Assistant, 0 = Failure}
-                                if (responseVm != null && responseVm.getId() != null && responseVm.getId().equalsIgnoreCase("0")) {
-                                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    saveToSession(responseVm);
-                                    password.setText("");
-                                    Intent intObj = new Intent(getActivity(), HomeActivity.class);
-                                    startActivity(intObj);
+                        if (passwordtxt != null && !passwordtxt.equalsIgnoreCase("")) {
+                            api = restAdapter.create(MyApi.class);
+                            progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                            Logindata param = new Logindata(emailtxt, passwordtxt);
+                            api.login(param, new Callback<ResponseVm>() {
+                                @Override
+                                public void success(ResponseVm responseVm, Response response) {
+                                    System.out.println(response);
+                                    progress.dismiss();
+                                    //0 is failure and  {1= Doctor,2=Patient,3-Assistant, 0 = Failure}
+                                    if (responseVm != null && responseVm.getId() != null && responseVm.getId().equalsIgnoreCase("0")) {
+                                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        saveToSession(responseVm);
+                                        password.setText("");
+                                        Intent intObj = new Intent(getActivity(), HomeActivity.class);
+                                        startActivity(intObj);
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                error.printStackTrace();
-                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
-                                progress.dismiss();
-                            }
-                        });
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    error.printStackTrace();
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                    progress.dismiss();
+                                }
+                            });
 
 
+                        }else{
+                            Toast.makeText(getActivity().getApplicationContext(), "Enter valid Password!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 
@@ -176,7 +180,7 @@ public class Login extends Fragment {
         //Need revisit
         if (type.equalsIgnoreCase("1"))
             session.edit().putString("loginType", "Doctor").apply();
-        if (type.equalsIgnoreCase("2"))
+        if (type.equalsIgnoreCase("0"))
             session.edit().putString("loginType", "Patient").apply();
         if (type.equalsIgnoreCase("3"))
             session.edit().putString("loginType", "Assistant").apply();
