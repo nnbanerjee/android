@@ -20,6 +20,7 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Query;
+import retrofit.http.QueryMap;
 import retrofit.mime.TypedFile;
 
 public interface MyApi {
@@ -577,7 +578,7 @@ public interface MyApi {
     void getAllClinics(@Body PersonID personID, Callback<List<Clinic>> response);
 
     @POST("/getPatientVisitTreatmentPlan")
-    void getPatientVisitTreatmentPlan(@Body AppointmentId appointmentId, Callback<List<TreatmentPlan>> response);
+    void getPatientVisitTreatmentPlan(@Query("appointmentId") String appointmentId, @Query("categoryId") String categoryId, Callback<List<TreatmentPlan>> response);
 
 
 

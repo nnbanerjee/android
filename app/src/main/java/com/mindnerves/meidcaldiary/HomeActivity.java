@@ -70,10 +70,12 @@ import Model.PatientId;
 import Model.Person;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
+import android.webkit.CookieManager;
 
 public class HomeActivity extends Activity {
     FragmentManager fragmentManger;
@@ -206,11 +208,19 @@ public class HomeActivity extends Activity {
             }
         });
         RestAdapter restAdapter = new RestAdapter.Builder()
+                .setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestInterceptor.RequestFacade request) {
+                        // assuming `cookieKey` and `cookieValue` are not null
+                        request.addHeader("Cookie", "PLAY_SESSION" + "=" + CookieManager.getInstance().getCookie("PLAY_SESSION"));
+                    }
+                })
                 .setEndpoint(this.getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
+
         BackStress.staticflag = 1;
         Global go = (Global) HomeActivity.this.getApplicationContext();
         go.setLocation("");
@@ -885,22 +895,22 @@ public class HomeActivity extends Activity {
         LinearLayout.LayoutParams lpReminder = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lpReminder.setMargins(35, 5, 0, 10);
         lpReminder.width = 50;
-        lpReminder.height = 60;
+        lpReminder.height = 62;
         notification.setLayoutParams(lpReminder);
         LinearLayout.LayoutParams lpMessage = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpMessage.setMargins(65, 5, 0, 10);
+        lpMessage.setMargins(15, 5, 0, 10);
         lpReminder.width = 50;
-        lpReminder.height = 60;
+        lpReminder.height = 62;
         messages.setLayoutParams(lpMessage);
         LinearLayout.LayoutParams lpDoctorSearch = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpDoctorSearch.setMargins(65, 5, 0, 10);
+        lpDoctorSearch.setMargins(15, 5, 0, 10);
         lpReminder.width = 50;
-        lpReminder.height = 60;
+        lpReminder.height = 62;
         doctorSearch.setLayoutParams(lpDoctorSearch);
         LinearLayout.LayoutParams lpClinicSearch = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lpReminder.width = 50;
-        lpReminder.height = 60;
-        lpClinicSearch.setMargins(65, 5, 0, 10);
+        lpReminder.height = 62;
+        lpClinicSearch.setMargins(15, 5, 0, 10);
         clinicSearch.setLayoutParams(lpClinicSearch);
     }
 

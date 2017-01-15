@@ -48,6 +48,9 @@ public class DoctorProfileEdit extends Fragment {
 	}
 
 	public void showDoctorProfileEdit(){
+
+
+
 		Fragment fragment = new ManageDoctorProfile();
 		FragmentManager fragmentManger = getFragmentManager();
 		fragmentManger.beginTransaction().replace(R.id.frame_layout,fragment,"Doctor Consultations").addToBackStack(null).commit();

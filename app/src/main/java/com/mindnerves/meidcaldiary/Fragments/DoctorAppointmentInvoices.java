@@ -35,24 +35,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Adapter.AllInvoiceAdapter;
 import Adapter.AllProcedureAdapter;
-import Adapter.AllSingleProcedureAdapter;
-import Adapter.HorizontalInvoiceListAdapter;
-import Adapter.HorizontalTemplateListAdapter;
 import Application.MyApi;
-import Model.AllProcedureVm;
-import Model.AllTemplateVm;
-import Model.AllTreatmentPlanVm;
 import Model.AppointmentId;
-import Model.Field;
 import Model.InvoiceDetails;
 import Model.InvoiceId;
 import Model.ResponseCodeVerfication;
 import Model.TotalInvoice;
-import Model.TreatmenTvalueForHorizontalView;
 import Model.TreatmentField;
 import Model.TreatmentPlan;
+import Model.TreatmentPlanRequest;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -508,7 +500,7 @@ public class DoctorAppointmentInvoices extends Fragment {
 
     public void getAllTreamentPlan(){
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getPatientVisitTreatmentPlan(new AppointmentId(appointMentId), new Callback<List<TreatmentPlan>>() {
+        api.getPatientVisitTreatmentPlan(appointMentId,"2", new Callback<List<TreatmentPlan>>() {
             @Override
             public void success(List<TreatmentPlan> treatmentPlan, Response response) {
 

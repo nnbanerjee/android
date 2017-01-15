@@ -15,6 +15,11 @@ import Model.ClinicAppointment;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.os.Build;
+
+
 
 public class AppController extends Application {
 
@@ -34,11 +39,17 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         mInstance = this;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
               .setClient(new OkClient()).build();
 
         api = restAdapter.create(MyApi.class);
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(this);
+        }
+        cookieManager.setAcceptCookie(true);
     }
 }

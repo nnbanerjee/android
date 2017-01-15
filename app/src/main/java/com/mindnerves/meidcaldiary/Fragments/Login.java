@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.mindnerves.meidcaldiary.SigninActivityDoctor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 
 import Application.MyApi;
@@ -39,6 +41,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
+import retrofit.client.Header ;
 
 /**
  * Created by User on 16-02-2015.
@@ -122,6 +125,7 @@ public class Login extends Fragment {
 
                         final String emailtxt = email.getText().toString();
                         final String passwordtxt = password.getText().toString();
+
                         //Retrofit Initialization
                         RestAdapter restAdapter = new RestAdapter.Builder()
                                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -137,9 +141,17 @@ public class Login extends Fragment {
                                 @Override
                                 public void success(ResponseVm responseVm, Response response) {
                                     System.out.println(response);
+                                    List<Header> headers = response.getHeaders();
+                                    for(Header header: headers)
+                                    {
+                                        if(header.getName().equals("Set-Cookie")) {
+                                            CookieManager.getInstance().setCookie("PLAY_SESSION", header.getValue().substring(15));
+                                            break;
+                                        }
+                                    }
                                     progress.dismiss();
                                     //0 is failure and  {1= Doctor,2=Patient,3-Assistant, 0 = Failure}
-                                    if (responseVm != null && responseVm.getId() != null && responseVm.getId().equalsIgnoreCase("0")) {
+                                    if (responseVm == null || responseVm.getId() == null || responseVm.getId().equalsIgnoreCase("0")) {
                                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
                                     } else {
                                         saveToSession(responseVm);
