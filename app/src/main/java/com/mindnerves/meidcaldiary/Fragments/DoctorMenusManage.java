@@ -44,6 +44,7 @@ public class DoctorMenusManage extends Fragment {
     private TextView totalPatientCount;
     private TextView totalAppointments;
     private TextView totalFinance;
+    private TextView totalFeedback;
 
     @Nullable
     @Override
@@ -61,7 +62,7 @@ public class DoctorMenusManage extends Fragment {
         totalPatientCount = (TextView) view.findViewById(R.id.total_patients);
         totalAppointments = (TextView) view.findViewById(R.id.total_appointments);
         totalFinance = (TextView) view.findViewById(R.id.total_finance);
-
+        totalFeedback = (TextView) view.findViewById(R.id.total_feedback);
         updateCount();
 
         patientsProfilelayout.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +124,7 @@ public class DoctorMenusManage extends Fragment {
             totalPatientCount.setText("" + doc.getPatientCount());
             totalAppointments.setText("" + doc.getAppointments());
             totalFinance.setText("" + doc.getFinanceCount());
+            totalFeedback.setText("" + doc.getFeebackCount());
         }
     }
 }

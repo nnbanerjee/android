@@ -5,7 +5,7 @@
     android:paddingTop="5dp"
     android:id="@+id/popup"
     android:paddingBottom="5dp"
-    android:background="#CC000000">
+    android:background="#ffffffff">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,7 +13,7 @@
         android:text="Self Profile"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:textColor="#ffffff"
+        android:textColor="#AAAAAA"
         android:id="@+id/self_profile_text"
         android:textStyle="bold"
         />
@@ -23,7 +23,7 @@
         android:layout_marginLeft="5dp"
         android:id="@+id/underline1"
         android:layout_below="@id/self_profile_text"
-        android:background="#ffffff"
+        android:background="#AAAAAA"
         android:layout_marginRight="10dp"
         />
     <TextView
@@ -38,11 +38,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_name"
+        android:text="ABC XYZ"
+        android:id="@+id/profile_name_dependent"
+        android:textColor="@color/color_blue_default"
+        android:padding="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Dependent Profiles"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:textColor="#ffffff"
-        android:layout_below="@+id/profile_name"
+        android:textColor="#AAAAAA"
+        android:layout_below="@+id/profile_name_dependent"
         android:id="@+id/dependent_profile_text"
         android:textStyle="bold"
         />
@@ -52,7 +61,7 @@
         android:layout_marginLeft="5dp"
         android:id="@+id/underline2"
         android:layout_below="@id/dependent_profile_text"
-        android:background="#ffffff"
+        android:background="#AAAAAA"
         android:layout_marginRight="10dp"
         />
     <ListView
@@ -63,7 +72,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="1dp">
 
-        </ListView>
+    </ListView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +80,7 @@
         android:text="Delegation Profiles"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:textColor="#ffffff"
+        android:textColor="#AAAAAA"
         android:layout_below="@+id/profile_dependent_list"
         android:id="@+id/delegation_profile_text"
         android:textStyle="bold"
@@ -82,7 +91,7 @@
         android:layout_marginLeft="5dp"
         android:id="@+id/underline3"
         android:layout_below="@id/delegation_profile_text"
-        android:background="#ffffff"
+        android:background="#AAAAAA"
         android:layout_marginRight="10dp"
         />
     <ListView

@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -54,6 +56,8 @@ import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityClinics;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityDoctor;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +104,7 @@ public class HomeActivity extends Activity {
     ProfileDelegationAdapter delegationAdapter;
     ListView dependentList, delegationList;
     TextView profileName;
+    TextView profileNamedependent;
 
     String statusString = "";
     Point p;
@@ -255,16 +260,19 @@ public class HomeActivity extends Activity {
 
             api.getDoctorLandingPageDetails(param, new Callback<DoctorProfile>() {
                 @Override
-                public void success(DoctorProfile doc1, Response response) {
+                public void success(DoctorProfile doc1, Response response)
+                {
                     doc = doc1;
-                    if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
-                        new ImageLoadTask(getResources().getString(R.string.image_base_url) + doc.getPerson().getImageUrl(), profilePicture).execute();
+//                    if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
+//                        new ImageLoadTask(getResources().getString(R.string.image_base_url) + doc.getPerson().getImageUrl(), profilePicture).execute();
                     accountName.setText(doc.getPerson().getName());
                     adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + doc.getPerson().getId());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values " + adapter.getCount());
                     dList.setAdapter(adapter);
                     ((DoctorMenusManage) fragment).updateCounts(doc);
-
+//                    Bitmap bmp = BitmapFactory.decodeFile(doc.getPerson().getImageUrl());
+//                    profilePicture.setImageBitmap(bmp);
+//                    profilePicture.setVisibility(View.VISIBLE);
                     SharedPreferences.Editor editor = session.edit();
                     Gson gson = new Gson();
                     String json = gson.toJson(doc);
@@ -591,6 +599,7 @@ public class HomeActivity extends Activity {
         dependentList = (ListView) layout.findViewById(R.id.profile_dependent_list);
         delegationList = (ListView) layout.findViewById(R.id.profile_delegation_list);
         profileName = (TextView) layout.findViewById(R.id.profile_name);
+        profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
 
         // Creating the PopupWindow
         final PopupWindow popup = new PopupWindow(context);
@@ -604,26 +613,41 @@ public class HomeActivity extends Activity {
         int OFFSET_Y = 55;
 
         // Clear the default translucent background
-        popup.setBackgroundDrawable(new BitmapDrawable());
+//        popup.setBackgroundDrawable(new BitmapDrawable());
 
         // Displaying the popup at the specified location, + offsets.
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
 
-        if (logString.equals("Doctor")) {
+        if (logString.equals("Doctor"))
+        {
 
 
-            profileName.setText(doc.getPerson().getName());
+            profileName.setText(doc.getPerson().getName()+ " (Doctor)");
+            profileNamedependent.setText(doc.getPerson().getName() + " (Patient)");
 
 
-            List<Dependent> patients = new ArrayList<Dependent>();
-            patients = doc.getDependents();
-            if (patients.size() == 0) {
+            List<Dependent> depends = doc.getDependents();
+            if (depends == null || depends.size() == 0)
+            {
+                depends = new ArrayList<Dependent>();
                 Dependent patient = new Dependent();
                 patient.setName("No Dependent Found");
-                patients.add(patient);
+                depends.add(patient);
             }
-            dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, patients);
+
+            dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, depends);
             dependentList.setAdapter(dependentAdapter);
+
+            List<Delegation> delegates = doc.getDelegates();
+            if (delegates == null || delegates.size() == 0)
+            {
+                delegates = new ArrayList<Delegation>();
+                Delegation patient = new Delegation();
+                patient.setName("No Dependent Found");
+                delegates.add(patient);
+            }
+            delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegates);
+            delegationList.setAdapter(delegationAdapter);
 
 
 
@@ -675,63 +699,63 @@ public class HomeActivity extends Activity {
                 }
             });*/
 
-            delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Delegation del = (Delegation) delegationAdapter.getItem(position);
-                    System.out.println("doctor email::::::" + del.getEmailID());
-                    if (!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
-                        String emailId = del.getEmailID();
-                        String type = del.getType();
-                        if (type.equalsIgnoreCase("D")) {
-                            type = "Doctor";
-                        } else if (type.equalsIgnoreCase("P")) {
-                            type = "Patient";
-                        } else if (type.equalsIgnoreCase("A")) {
-                            type = "Assistant";
-                        }
-                        saveToSession(emailId, type);
-                        Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
-                        startActivity(intObj);
-                    }
-                }
-            });
-
-            api.getAllDelegatesForParent(loggingId, "D", new Callback<ArrayList<Delegation>>() {
-                @Override
-                public void success(ArrayList<Delegation> delegations, Response response) {
-                    System.out.println("Kb Array " + delegations.size());
-                    ArrayList<Delegation> delegatesAdapter = new ArrayList<Delegation>();
-                    if (delegations.size() == 0) {
-                        Delegation del = new Delegation();
-                        del.setName("No Delegation Found");
-                        del.setAccessLevel("");
-                        del.setLocation("");
-                        del.setMobileNumber("");
-                        del.setStatus("");
-                        del.setEmailID("");
-                        del.setAccessLevel("");
-                        del.setType("");
-                        delegatesAdapter.add(del);
-                    } else {
-                        for (Delegation dele : delegations) {
-                            if (dele.getStatus().equalsIgnoreCase("C")) {
-                                delegatesAdapter.add(dele);
-                            }
-                        }
-                    }
-
-                    delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegatesAdapter);
-                    delegationList.setAdapter(delegationAdapter);
-                    System.out.println("Adapter list Count " + delegationAdapter.getCount());
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
+//            delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    final Delegation del = (Delegation) delegationAdapter.getItem(position);
+//                    System.out.println("doctor email::::::" + del.getEmailID());
+//                    if (!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
+//                        String emailId = del.getEmailID();
+//                        String type = del.getType();
+//                        if (type.equalsIgnoreCase("D")) {
+//                            type = "Doctor";
+//                        } else if (type.equalsIgnoreCase("P")) {
+//                            type = "Patient";
+//                        } else if (type.equalsIgnoreCase("A")) {
+//                            type = "Assistant";
+//                        }
+//                        saveToSession(emailId, type);
+//                        Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
+//                        startActivity(intObj);
+//                    }
+//                }
+//            });
+//
+//            api.getAllDelegatesForParent(loggingId, "D", new Callback<ArrayList<Delegation>>() {
+//                @Override
+//                public void success(ArrayList<Delegation> delegations, Response response) {
+//                    System.out.println("Kb Array " + delegations.size());
+//                    ArrayList<Delegation> delegatesAdapter = new ArrayList<Delegation>();
+//                    if (delegations.size() == 0) {
+//                        Delegation del = new Delegation();
+//                        del.setName("No Delegation Found");
+//                        del.setAccessLevel("");
+//                        del.setLocation("");
+//                        del.setMobileNumber("");
+//                        del.setStatus("");
+//                        del.setEmailID("");
+//                        del.setAccessLevel("");
+//                        del.setType("");
+//                        delegatesAdapter.add(del);
+//                    } else {
+//                        for (Delegation dele : delegations) {
+//                            if (dele.getStatus().equalsIgnoreCase("C")) {
+//                                delegatesAdapter.add(dele);
+//                            }
+//                        }
+//                    }
+//
+//                    delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegatesAdapter);
+//                    delegationList.setAdapter(delegationAdapter);
+//                    System.out.println("Adapter list Count " + delegationAdapter.getCount());
+//                }
+//
+//                @Override
+//                public void failure(RetrofitError error) {
+//                    error.printStackTrace();
+//                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
+//                }
+//            });
 
             //ProfileSwitchDialogDoctor profileDialog = ProfileSwitchDialogDoctor.newInstance();
             //profileDialog.show(HomeActivity.this.getFragmentManager(), "Dialog");

@@ -7,7 +7,7 @@ public class DoctorProfile {
 
     private Person person;
     private List<Dependent> dependents = new ArrayList<Dependent>();
-    private Object delegates;
+    private List<Delegation> delegates = new ArrayList<Delegation>();
     private int patientCount;
     private int appointments;
     private int financeCount;
@@ -54,7 +54,7 @@ public class DoctorProfile {
      * @return
      * The delegates
      */
-    public Object getDelegates() {
+    public List<Delegation> getDelegates() {
         return delegates;
     }
 
@@ -63,7 +63,7 @@ public class DoctorProfile {
      * @param delegates
      * The delegates
      */
-    public void setDelegates(Object delegates) {
+    public void setDelegates(List<Delegation> delegates) {
         this.delegates = delegates;
     }
 

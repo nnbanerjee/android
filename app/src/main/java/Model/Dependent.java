@@ -6,6 +6,8 @@ public class Dependent {
     private String name;
     private String relation;
 
+    private int status;
+
     /**
      *
      * @return
@@ -58,6 +60,14 @@ public class Dependent {
      */
     public void setRelation(String relation) {
         this.relation = relation;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 }
