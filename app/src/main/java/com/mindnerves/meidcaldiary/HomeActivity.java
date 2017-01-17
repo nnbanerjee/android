@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -99,7 +100,6 @@ public class HomeActivity extends Activity {
     ImageView profilePicture;
     TextView accountName, status;
     ProfileDependencyAdapter dependentAdapter;
-
     SharedPreferences session;
     ProfileDelegationAdapter delegationAdapter;
     ListView dependentList, delegationList;
@@ -111,6 +111,7 @@ public class HomeActivity extends Activity {
     View arrow;
     public DoctorProfile doc;
     Toolbar toolbar;
+    ProgressDialog progress;
 
     @Override
     public final void onBackPressed() {
@@ -252,6 +253,7 @@ public class HomeActivity extends Activity {
         }
 
         if (logString.equals("Doctor")) {
+            progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
             globalTv.setText("Doctor");
             fragment = new DoctorMenusManage();
             fragmentManger = getFragmentManager();
@@ -263,10 +265,10 @@ public class HomeActivity extends Activity {
                 public void success(DoctorProfile doc1, Response response)
                 {
                     doc = doc1;
-//                    if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
-//                        new ImageLoadTask(getResources().getString(R.string.image_base_url) + doc.getPerson().getImageUrl(), profilePicture).execute();
+                    if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
+                        new ImageLoadTask(doc.getPerson().getImageUrl(), profilePicture).execute();
                     accountName.setText(doc.getPerson().getName());
-                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + doc.getPerson().getId());//(new MenuAdapter(this,arrayMenu))
+                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values " + adapter.getCount());
                     dList.setAdapter(adapter);
                     ((DoctorMenusManage) fragment).updateCounts(doc);
@@ -278,11 +280,12 @@ public class HomeActivity extends Activity {
                     String json = gson.toJson(doc);
                     editor.putString("DoctorProfileLoggedInCounts", json);
                     editor.commit();
+                    progress.dismiss();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    // progress.dismiss();
+                     progress.dismiss();
                     error.printStackTrace();
                     Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
@@ -298,14 +301,15 @@ public class HomeActivity extends Activity {
             api.getPatientLandingPageDetails(new PatientId(loggingId), new Callback<DoctorProfile>() {
                 @Override
                 public void success(DoctorProfile person, Response response) {
-                    new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getPerson().getImageUrl(), profilePicture).execute();
+                    if (person != null && person.getPerson() != null && person.getPerson().getImageUrl() != null)
+                        new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getPerson().getImageUrl(), profilePicture).execute();
                     System.out.println("profile id:::::::" + getResources().getString(R.string.image_base_url) + person.getPerson().getId());
                     SharedPreferences session = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = session.edit();
                     editor.putString("patientId", person.getPerson().getPatientId());
                     editor.commit();
                     accountName.setText(person.getPerson().getName());
-                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, "" + person.getPerson().getPatientId());//(new MenuAdapter(this,arrayMenu))
+                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, logString, person.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values " + adapter.getCount());
                     dList.setAdapter(adapter);
                 }
@@ -316,6 +320,7 @@ public class HomeActivity extends Activity {
                     Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
 
         arrow.setOnClickListener(new View.OnClickListener() {

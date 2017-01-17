@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_picture"
                     android:layout_centerHorizontal="true"
-                    android:text="Raviraj Dongare"
+                    android:text="Doctor Name"
                     android:textColor="#ffffff"
                     style="@style/title"
                     android:textStyle="bold" />

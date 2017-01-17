@@ -25,7 +25,7 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(Void... params) {
         try {
-            URL urlConnection = new URL(url);
+            URL urlConnection = new URL(url);//"https://s3-ap-southeast-1.amazonaws.com/medico-documents/101/10107+Nov,+2016");
             HttpURLConnection connection = (HttpURLConnection) urlConnection
                     .openConnection();
             connection.setDoInput(true);

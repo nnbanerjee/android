@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import java.io.InputStream;
@@ -89,15 +90,14 @@ public class MenuAdapter extends BaseAdapter{
         if(menus.get(pos).equals("Manage Profile"))
         {
 
-            if(type.equals("Doctor"))
-            {
-                new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url)+imageUrl, imageShow).execute();
-                showTv.setText(""+menus.get(pos));
-            }
-            else if(type.equals("Patient"))
-            {
-                new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url)+imageUrl, imageShow).execute();
-                showTv.setText(""+menus.get(pos));
+            if(imageUrl != null) {
+                if (type.equals("Doctor")) {
+                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
+                    showTv.setText("" + menus.get(pos));
+                } else if (type.equals("Patient")) {
+                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
+                    showTv.setText("" + menus.get(pos));
+                }
             }
 
         }
