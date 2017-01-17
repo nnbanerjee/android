@@ -33,18 +33,18 @@ import retrofit.client.Response;
 /**
  * Created by MNT on 11-Mar-15.
  */
-public class MenuAdapter extends BaseAdapter{
+public class MenuAdapter extends ParentAdapter{
     private Activity activity;
     private ArrayList<String> menus;
     private LayoutInflater inflater;
     private ImageView imageShow;
     private TextView showTv;
-    private String type;
+    private int type;
     private String imageUrl;
     SharedPreferences session;
     String id;
 
-    public MenuAdapter(Activity activity,ArrayList<String> menus,String type,String imageUrl)
+    public MenuAdapter(Activity activity,ArrayList<String> menus,int type,String imageUrl)
     {
         this.activity = activity;
         this.menus = menus;
@@ -91,10 +91,10 @@ public class MenuAdapter extends BaseAdapter{
         {
 
             if(imageUrl != null) {
-                if (type.equals("Doctor")) {
+                if (type == DOCTOR) {
                     new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
                     showTv.setText("" + menus.get(pos));
-                } else if (type.equals("Patient")) {
+                } else if (type == PATIENT) {
                     new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
                     showTv.setText("" + menus.get(pos));
                 }

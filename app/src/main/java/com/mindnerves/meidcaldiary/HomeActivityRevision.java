@@ -180,7 +180,7 @@ public class HomeActivityRevision extends FragmentActivity{
                 public void success(Person person, Response response) {
                     new ImageLoadTask("http://"+IMAGE_URL+person.getId(), profilePicture).execute();
                     accountName.setText(person.getName());
-                    adapter = new MenuAdapter(HomeActivityRevision.this,arrayMenu,logString,""+person.getId());//(new MenuAdapter(this,arrayMenu))
+                    adapter = new MenuAdapter(HomeActivityRevision.this,arrayMenu, ParentActivity.DOCTOR,""+person.getId());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values "+adapter.getCount());
                     dList.setAdapter(adapter);
                 }
@@ -201,7 +201,7 @@ public class HomeActivityRevision extends FragmentActivity{
                 public void success(Person person, Response response) {
                     new ImageLoadTask("http://"+IMAGE_URL+person.getId(), profilePicture).execute();
                     accountName.setText(person.getName());
-                    adapter = new MenuAdapter(HomeActivityRevision.this,arrayMenu,logString,""+person.getId());//(new MenuAdapter(this,arrayMenu))
+                    adapter = new MenuAdapter(HomeActivityRevision.this,arrayMenu,ParentActivity.PATIENT, person.getImageUrl());//(new MenuAdapter(this,arrayMenu))
                     System.out.println("Adapter Values "+adapter.getCount());
                     dList.setAdapter(adapter);
                 }

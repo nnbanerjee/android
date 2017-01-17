@@ -43,6 +43,10 @@ import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.client.Header ;
 
+import static Utils.PARAM.LOGGED_IN_ID;
+import static Utils.PARAM.LOGGED_IN_USER_ROLE;
+import static Utils.PARAM.LOGGED_IN_USER_STATUS;
+
 /**
  * Created by User on 16-02-2015.
  */
@@ -199,6 +203,13 @@ public class Login extends Fragment {
         //session.edit().putString("loginType", type).apply();
         session.edit().putString("status", status).apply();
         session.edit().putString("id", id).apply();
+
+        //actual storage
+        session.edit().putInt(LOGGED_IN_ID, Integer.valueOf(userId).intValue()).apply();
+        session.edit().putInt(LOGGED_IN_USER_ROLE, Integer.valueOf(type).intValue()).apply();
+        session.edit().putInt(LOGGED_IN_USER_STATUS, Integer.valueOf(status).intValue()).apply();
+
+        session.edit().putBoolean("profileOfLoggedIn", Boolean.TRUE).apply();
 
     }
 }
