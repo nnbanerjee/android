@@ -74,11 +74,17 @@
         </activity>
 
 
-        <activity android:name="com.mindnerves.meidcaldiary.HomeActivity"
+        <activity android:name="com.mindnerves.meidcaldiary.PatientHome"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
              >
+        </activity>
+        <activity android:name="com.mindnerves.meidcaldiary.DoctorHome"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            >
         </activity>
 
         <activity android:name="com.mindnerves.meidcaldiary.MapActivity"

@@ -189,7 +189,7 @@ public class ManageDelegationFragment extends Fragment {
         });
 
         removeDoc = (Button)view.findViewById(R.id.remove_dependent);
-        removeDoc.setOnClickListener(new View.OnClickListener() {
+       /* removeDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String result = doValidation();
@@ -256,14 +256,14 @@ public class ManageDelegationFragment extends Fragment {
 
                 }
             }
-        });
+        });*/
         return view;
     }
     public void showDependencyConfirmList()
     {
       docSearchRes = new ArrayList<Delegation>();
 
-        api.getAllDelegatesForParent(patientId, typeId, new Callback<ArrayList<Delegation>>() {
+        /*api.getAllDelegatesForParent(patientId, typeId, new Callback<ArrayList<Delegation>>() {
             @Override
             public void success(ArrayList<Delegation> array, Response response) {
 
@@ -298,7 +298,7 @@ public class ManageDelegationFragment extends Fragment {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
-        });
+        });*/
 
 
     }
@@ -307,7 +307,7 @@ public class ManageDelegationFragment extends Fragment {
     {
        docSearchRes = new ArrayList<Delegation>();
 
-        api.getAllParentsForDelegates(patientId, typeId, new Callback<ArrayList<Delegation>>() {
+       /* api.getAllParentsForDelegates(patientId, typeId, new Callback<ArrayList<Delegation>>() {
             @Override
             public void success(ArrayList<Delegation> array, Response response) {
                 int flagDelegation = 0;
@@ -367,7 +367,7 @@ public class ManageDelegationFragment extends Fragment {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        });
+        });*/
 
 
 
@@ -384,7 +384,7 @@ public class ManageDelegationFragment extends Fragment {
         }
         else
         {
-            removeList = new ArrayList<Delegation>();
+           /* removeList = new ArrayList<Delegation>();
             for (int i = 0; i < len; i++) {
 
                 if ((removeListObjects.get(i)).getSelected() == true) {
@@ -400,8 +400,9 @@ public class ManageDelegationFragment extends Fragment {
             {
                 System.out.println("Remove Objects ::: " + removeList.size());
                 return "Normal";
-            }
+            }*/
 
         }
+        return null;
     }
 }

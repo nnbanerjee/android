@@ -1,89 +1,73 @@
 package Model;
 
-/**
- * Created by MNT on 26-Mar-15.
- */
 public class Delegation {
 
-    private String id;
+    private int id;
     private String name;
-    private String mobileNumber;
-    private String location;
-    private String emailID;
-    private String status;
-    private String accessLevel;
-    private String type;
-    private Boolean selected = false;
+    private String relation;
 
-    public String getId() {
+    private int status;
+
+    /**
+     *
+     * @return
+     * The id
+     */
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    /**
+     *
+     * @param id
+     * The id
+     */
+    public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     * The name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     * The name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    /**
+     *
+     * @return
+     * The relation
+     */
+    public String getRelation() {
+        return relation;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    /**
+     *
+     * @param relation
+     * The relation
+     */
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getEmailID() {
-        return emailID;
-    }
-
-    public void setEmailID(String emailID) {
-        this.emailID = emailID;
-    }
-
-    public String getAccessLevel() {
-        return accessLevel;
-    }
-
-    public void setAccessLevel(String accessLevel) {
-        this.accessLevel = accessLevel;
-    }
-
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Boolean getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Boolean selected) {
-        this.selected = selected;
-    }
 }

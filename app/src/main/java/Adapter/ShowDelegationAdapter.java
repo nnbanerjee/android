@@ -80,7 +80,7 @@ public class ShowDelegationAdapter extends BaseAdapter {
         checkBox = (CheckBox)convertView.findViewById(R.id.check_delegate);
         final Delegation del = delegates.get(pos);
 
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        /*checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CheckBox cb = (CheckBox)v;
@@ -99,7 +99,7 @@ public class ShowDelegationAdapter extends BaseAdapter {
                 }
 
             }
-        });
+        });*/
 
         convertView.setTag(del);
 
@@ -121,7 +121,7 @@ public class ShowDelegationAdapter extends BaseAdapter {
         }
         else
         {
-            if(del.getStatus().equals("WC"))
+            /*if(del.getStatus().equals("WC"))
             {
                 showStatusTv.setText("Wait");
             }
@@ -154,7 +154,7 @@ public class ShowDelegationAdapter extends BaseAdapter {
             {
                 checkBox.setChecked(false);
             }
-            checkBox.setTag(del);
+            checkBox.setTag(del);*/
 
         }
         return convertView;

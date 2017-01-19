@@ -17,10 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mindnerves.meidcaldiary.DoctorHome;
 import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
 import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.LoggingInterceptor;
 import com.mindnerves.meidcaldiary.MainActivity;
+import com.mindnerves.meidcaldiary.PatientHome;
 import com.mindnerves.meidcaldiary.R;
 import com.mindnerves.meidcaldiary.SigninActivity;
 import com.mindnerves.meidcaldiary.SigninActivityAssistance;
@@ -35,6 +37,7 @@ import java.util.Scanner;
 import Application.MyApi;
 import Model.Logindata;
 import Model.ResponseVm;
+import Utils.PARAM;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -149,19 +152,30 @@ public class Login extends Fragment {
                                     for(Header header: headers)
                                     {
                                         if(header.getName().equals("Set-Cookie")) {
+                                            CookieManager.getInstance().removeSessionCookie();
                                             CookieManager.getInstance().setCookie("PLAY_SESSION", header.getValue().substring(15));
                                             break;
                                         }
                                     }
                                     progress.dismiss();
                                     //0 is failure and  {1= Doctor,2=Patient,3-Assistant, 0 = Failure}
-                                    if (responseVm == null || responseVm.getId() == null || responseVm.getId().equalsIgnoreCase("0")) {
+                                    if (responseVm == null || responseVm.getId() == 0)
+                                    {
                                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         saveToSession(responseVm);
                                         password.setText("");
-                                        Intent intObj = new Intent(getActivity(), HomeActivity.class);
-                                        startActivity(intObj);
+                                        if(responseVm.getType() == PARAM.DOCTOR) {
+                                            Intent intObj = new Intent(getActivity(), DoctorHome.class);
+                                            startActivity(intObj);
+                                        }
+                                        else
+                                        {
+                                            Intent intObj = new Intent(getActivity(), PatientHome.class);
+                                            startActivity(intObj);
+                                        }
                                     }
                                 }
 
@@ -186,28 +200,28 @@ public class Login extends Fragment {
 
     public void saveToSession(ResponseVm result) {
 
-        String userId = result.getId();
-        String type = result.getType();
-        String status = result.getStatus();
-        String id = result.getId();
+//        String userId = result.getId();
+//        String type = result.getType();
+//        String status = result.getStatus();
+//        String id = result.getId();
         session = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        session.edit().putString("sessionID", userId).apply();
+//        session.edit().putString("sessionID", userId).apply();
 
         //Need revisit
-        if (type.equalsIgnoreCase("1"))
-            session.edit().putString("loginType", "Doctor").apply();
-        if (type.equalsIgnoreCase("0"))
-            session.edit().putString("loginType", "Patient").apply();
-        if (type.equalsIgnoreCase("3"))
-            session.edit().putString("loginType", "Assistant").apply();
+//        if (type.equalsIgnoreCase("1"))
+//            session.edit().putString("loginType", "Doctor").apply();
+//        if (type.equalsIgnoreCase("0"))
+//            session.edit().putString("loginType", "Patient").apply();
+//        if (type.equalsIgnoreCase("3"))
+//            session.edit().putString("loginType", "Assistant").apply();
         //session.edit().putString("loginType", type).apply();
-        session.edit().putString("status", status).apply();
-        session.edit().putString("id", id).apply();
+//        session.edit().putString("status", status).apply();
+//        session.edit().putString("id", id).apply();
 
         //actual storage
-        session.edit().putInt(LOGGED_IN_ID, Integer.valueOf(userId).intValue()).apply();
-        session.edit().putInt(LOGGED_IN_USER_ROLE, Integer.valueOf(type).intValue()).apply();
-        session.edit().putInt(LOGGED_IN_USER_STATUS, Integer.valueOf(status).intValue()).apply();
+        session.edit().putInt(LOGGED_IN_ID, result.getId()).apply();
+        session.edit().putInt(LOGGED_IN_USER_ROLE, result.getType()).apply();
+        session.edit().putInt(LOGGED_IN_USER_STATUS, result.getStatus()).apply();
 
         session.edit().putBoolean("profileOfLoggedIn", Boolean.TRUE).apply();
 

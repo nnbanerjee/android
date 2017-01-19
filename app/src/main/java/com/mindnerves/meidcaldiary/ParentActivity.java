@@ -12,9 +12,5 @@ import Utils.PARAM;
 public abstract class ParentActivity extends Activity implements PARAM
 {
 
-    protected int profileRole = PATIENT;
-    protected int profileId = 0;
-    protected int profileStatus = UNREGISTERED;
 
-    protected SharedPreferences session = null;
 }

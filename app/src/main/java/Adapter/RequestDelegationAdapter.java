@@ -108,7 +108,7 @@ public class RequestDelegationAdapter extends BaseAdapter {
         accept = (Button)convertView.findViewById(R.id.request_button_delegate);
         reject = (Button)convertView.findViewById(R.id.close_request_delegate);
 
-        accept.setOnClickListener(new View.OnClickListener() {
+        /*accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String type = typeId;
@@ -299,7 +299,7 @@ public class RequestDelegationAdapter extends BaseAdapter {
             locationTv.setText(del.getLocation());
             emailTv.setText(del.getEmailID());
             mobileNumberTv.setText(del.getMobileNumber());
-        }
+        }*/
 
 
 

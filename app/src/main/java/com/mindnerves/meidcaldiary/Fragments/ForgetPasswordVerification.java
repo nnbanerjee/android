@@ -50,8 +50,8 @@ public class ForgetPasswordVerification extends Fragment {
         verifyCode = (EditText) view.findViewById(R.id.et_verify_code);
 
         Bundle args = getArguments();
-        emailTxt = args.getString("email", null);
-        mobileNoTxt = args.getString("mobile", null);
+//        emailTxt = args.getString("email", null);
+//        mobileNoTxt = args.getString("mobile", null);
 
 
         view.findViewById(R.id.btn_confirm_code)
@@ -178,22 +178,22 @@ public class ForgetPasswordVerification extends Fragment {
 
     public void saveToSession(ResponseVm result) {
 
-        String userId = result.getEmail();
-        String type = result.getType();
-        String status = result.getStatus();
-        String id = result.getId();
-        session = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        session.edit().putString("sessionID", userId).apply();
-
-        //Need revisit
-        if (type.equalsIgnoreCase("1"))
-            session.edit().putString("loginType", "Doctor").apply();
-        if (type.equalsIgnoreCase("2"))
-            session.edit().putString("loginType", "Patient").apply();
-        if (type.equalsIgnoreCase("3"))
-            session.edit().putString("loginType", "Assistant").apply();
-        //session.edit().putString("loginType", type).apply();
-        session.edit().putString("status", status).apply();
-        session.edit().putString("id", id).apply();
+//        String userId = result.getEmail();
+//        String type = result.getType();
+//        String status = result.getStatus();
+//        String id = result.getId();
+//        session = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+//        session.edit().putString("sessionID", userId).apply();
+//
+//        //Need revisit
+//        if (type.equalsIgnoreCase("1"))
+//            session.edit().putString("loginType", "Doctor").apply();
+//        if (type.equalsIgnoreCase("2"))
+//            session.edit().putString("loginType", "Patient").apply();
+//        if (type.equalsIgnoreCase("3"))
+//            session.edit().putString("loginType", "Assistant").apply();
+//        //session.edit().putString("loginType", type).apply();
+//        session.edit().putString("status", status).apply();
+//        session.edit().putString("id", id).apply();
     }
 }

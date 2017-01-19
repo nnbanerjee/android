@@ -1,0 +1,322 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context=".DoctorHome">
+
+  <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+           <android.support.v7.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_blue_default"
+                android:visibility="gone"
+                android:elevation="4dp">
+               <Button
+                   android:id="@+id/back_button"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:gravity="left"
+                   android:layout_alignParentLeft="true"
+                   android:background="@drawable/back"
+                   android:visibility="visible" />
+               <Button
+                   android:id="@+id/logout"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+
+                   android:layout_marginTop="10dp"
+                   android:background="@drawable/logout"
+                   android:visibility="invisible" />
+           </android.support.v7.widget.Toolbar>
+            <RelativeLayout
+                android:id="@+id/home_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/my_toolbar"
+                android:background="@color/color_blue_default">
+                <Button
+                    android:id="@+id/refresh"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+
+                    android:layout_toLeftOf="@+id/drawar_button"
+                    android:visibility="visible"
+                    android:background="@drawable/refresh" />
+                <Button
+                    android:id="@+id/drawar_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="visible"
+                    android:background="@drawable/home" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/home_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_blue_default"
+                android:layout_below="@+id/home_layout1">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/dr_icon" />
+                <TextView
+                    android:id="@+id/account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_picture"
+                    android:layout_centerHorizontal="true"
+                    android:text="Doctor Name"
+                    android:textColor="#ffffff"
+                    style="@style/title"
+                    android:textStyle="bold" />
+                <View
+                    android:id="@+id/down_arrow"
+                    android:layout_width="15dp"
+                    android:layout_height="7dp"
+                    android:layout_toRightOf="@+id/account_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_below="@+id/profile_picture"
+                    android:layout_marginTop="17dp"
+                    android:background="@drawable/down_grey_arrow"
+                     />
+                <TextView
+                    android:id="@+id/status_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="Doctor profile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/account_name"
+                    android:textColor="#ffffff"
+                    style="@style/sub_heading_normal_grey"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/status_text_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/status_text"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="Status:"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/heading"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/notification_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_layout2"
+                android:background="@color/color_blue_default"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="20dp"
+                android:weightSum="1">
+
+                <RelativeLayout
+                    android:id="@+id/notification_layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_blue_default"
+                    android:orientation="vertical"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.25">
+                    <Button
+                        android:id="@+id/alarm_notes"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight=".18"
+                        android:background="@drawable/alarm_notes" />
+                    <TextView
+                        android:id="@+id/alarm_notes_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/alarm_notes"
+                        android:text="Alarm Notes"
+                        android:textColor="#ffffff"
+                        style="@style/summary"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/notification_layout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_blue_default"
+                    android:orientation="vertical"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.25">
+                    <Button
+                        android:id="@+id/chat"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight=".18"
+                        android:background="@drawable/chat" />
+                    <TextView
+                        android:id="@+id/chat_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/chat"
+                        android:text="Chat Message"
+                        android:textColor="#ffffff"
+                        style="@style/summary"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+                <RelativeLayout
+                   android:id="@+id/notification_layout4"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@color/color_blue_default"
+                   android:orientation="vertical"
+                   android:paddingBottom="3dp"
+                   android:paddingTop="20dp"
+                   android:layout_marginLeft="5dp"
+                        android:layout_weight="0.25">
+                   <Button
+                       android:id="@+id/search_patient"
+                       android:layout_width="50dp"
+                       android:layout_height="50dp"
+                       android:layout_marginLeft="15dp"
+                       android:layout_marginTop="5dp"
+                       android:layout_weight=".18"
+                       android:background="@drawable/search_patient" />
+                   <TextView
+                       android:id="@+id/search_patient_text"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@+id/search_patient"
+                       android:text="Search Patient"
+                       android:textColor="#ffffff"
+                       style="@style/summary"
+                       android:textStyle="normal" />
+                   </RelativeLayout>
+                   <RelativeLayout
+                       android:id="@+id/notification_layout5"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@color/color_blue_default"
+                       android:orientation="vertical"
+                       android:paddingBottom="3dp"
+                       android:paddingTop="20dp"
+                       android:layout_marginLeft="5dp"
+                       android:layout_weight="0.25">
+                   <Button
+                       android:id="@+id/search_clinic"
+                       android:layout_width="50dp"
+                       android:layout_height="50dp"
+                       android:layout_marginLeft="15dp"
+                       android:layout_marginTop="5dp"
+                       android:layout_weight=".18"
+                       android:background="@drawable/search_clinic" />
+                   <TextView
+                       android:id="@+id/search_clinic_text"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@+id/search_clinic"
+                       android:text="Search Clinic/Lab"
+                       android:textColor="#ffffff"
+                       style="@style/summary"
+                       android:textStyle="normal" />
+                   </RelativeLayout>
+            </LinearLayout>
+         <!--   <RelativeLayout
+                android:id="@+id/notification_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notification_layout"
+                android:background="@color/color_blue_default"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="20dp"
+                android:weightSum="1">
+                <TextView
+                    android:id="@+id/alarm_notes_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/alarm_notes"
+                    android:layout_centerHorizontal="true"
+                    android:text="Alarm Notes"
+                    android:textColor="#ffffff"
+                    style="@style/summary"
+                    android:textStyle="normal" />
+                <TextView
+                    android:id="@+id/chat_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/messages_ping"
+                    android:layout_centerHorizontal="true"
+                    android:text="Chat Message"
+                    android:textColor="#ffffff"
+                    style="@style/summary"
+                    android:textStyle="normal" />
+                <TextView
+                    android:id="@+id/search_patient_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/patient_ping"
+                    android:layout_centerHorizontal="true"
+                    android:text="Search Patient"
+                    android:textColor="#ffffff"
+                    style="@style/summary"
+                    android:textStyle="normal" />
+                <TextView
+                    android:id="@+id/search_clinic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/clinic_notification"
+                    android:layout_centerHorizontal="true"
+                    android:text="Search Clinic/Lab"
+                    android:textColor="#ffffff"
+                    style="@style/summary"
+                    android:textStyle="normal" />
+            </RelativeLayout> -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:id="@+id/separation_bar"
+                android:layout_below="@id/notification_layout"
+                android:background="#ffffff"
+                />
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/separation_bar"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="start"
+            android:background="#F9FDFD"
+            android:choiceMode="singleChoice" />
+  </android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

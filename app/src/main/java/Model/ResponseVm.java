@@ -6,9 +6,9 @@ package Model;
 public class ResponseVm {
 
     private String email;
-    private String loginType;
-    private String status;
-    private String id;
+    private int loginType;
+    private int status;
+    private int id;
 
     public String getSessionId() {
         return sessionId;
@@ -28,27 +28,27 @@ public class ResponseVm {
         this.email = email;
     }
 
-    public String getType() {
+    public int getType() {
         return loginType;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.loginType = type;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

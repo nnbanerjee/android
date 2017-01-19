@@ -127,7 +127,7 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
 
         });
 
-        api.getAllDelegatesForParent(doctorId,typeId,new Callback<ArrayList<Delegation>>() {
+        /*api.getAllDelegatesForParent(doctorId,typeId,new Callback<ArrayList<Delegation>>() {
             @Override
             public void success(ArrayList<Delegation> delegations, Response response) {
                 System.out.println("Kb Array " + delegations.size());
@@ -192,7 +192,7 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
                     startActivity(intObj);
                 }
             }
-        });
+        });*/
         return view;
     }
     public void saveToSession(String email,String typeId) {

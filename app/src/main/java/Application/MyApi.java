@@ -619,7 +619,7 @@ public interface MyApi {
 
 
     @POST("/getPatientLandingPageDetails")
-    void getPatientLandingPageDetails(@Body PatientId patientId, Callback<DoctorProfile> cb);
+    void getPatientLandingPageDetails(@Body PatientId patientId, Callback<PatientProfile> cb);
 
     @POST("/getDoctorProfileList")
     void getDoctorProfileList(@Body PatientId patientId, Callback<List<AllPatients>> callback);

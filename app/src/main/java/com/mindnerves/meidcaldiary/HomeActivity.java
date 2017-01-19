@@ -14,14 +14,13 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,7 +44,6 @@ import com.mindnerves.meidcaldiary.Fragments.ManagePatientFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
 import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageReminder;
-import com.mindnerves.meidcaldiary.Fragments.ManageReminderPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
 import com.mindnerves.meidcaldiary.Fragments.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
@@ -61,34 +59,51 @@ import Adapter.MenuAdapter;
 import Adapter.ProfileDelegationAdapter;
 import Adapter.ProfileDependencyAdapter;
 import Application.MyApi;
-import Model.Assistant;
 import Model.Delegation;
 import Model.Dependent;
+import Model.Doctor;
 import Model.DoctorId;
 import Model.DoctorProfile;
 import Model.Patient;
 import Model.PatientId;
+import Model.PatientProfile;
 import Model.Person;
+import Utils.PARAM;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import android.webkit.CookieManager;
 
-public class HomeActivity extends ParentActivity {
+import static Utils.PARAM.PATIENT;
+import static Utils.PARAM.UNREGISTERED;
+import static android.R.attr.data;
+
+/**
+ * Created by Narendra on 18-01-2017.
+ */
+
+public abstract class HomeActivity extends Activity implements PARAM
+{
+    protected int profileRole = PATIENT;
+    protected int profileId = 0;
+    protected int profileStatus = UNREGISTERED;
+
+    protected SharedPreferences session = null;
+    protected DoctorProfile parent = null;
+
     FragmentManager fragmentManger;
-    Button drawerButton, logout, notification, messages;
+    Button drawerButton, logout, backButton;
     int flagActionButton = 0;
-    private ArrayList<String> arrayMenu;
+    ArrayList<String> arrayMenu;
     DrawerLayout dLayout;
     ListView dList;
     MenuAdapter adapter;
     Fragment fragment;
     Model.Menu mainMenu;
     TextView globalTv;
-    Button backButton, doctorSearch, clinicSearch, patients;
+    Button notes, messages, doctorSearch, clinicSearch, patients;
     public MyApi api;
     ImageView profilePicture;
     TextView accountName, status;
@@ -101,491 +116,29 @@ public class HomeActivity extends ParentActivity {
     Point p;
     View arrow;
     public DoctorProfile doc;
+    PatientProfile patient;
     Toolbar toolbar;
     ProgressDialog progress;
-
-    @Override
-    public final void onBackPressed() {
-        System.out.println("back button= " + BackStress.staticflag);
-        Log.i("Homeactivity", "Homeactivity->onbackpressed");
-        if (dLayout.isDrawerOpen(dList)) {
-            dLayout.closeDrawer(Gravity.LEFT);
-
-        } else if (BackStress.staticflag == 1) {
-
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setMessage(R.string.confirm_logout);
-            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    BackStress.staticflag = 0;
-                    finish();
-
-                }
-            });
-
-            alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    System.out.println("Do Nothing");
-                }
-            });
-
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-        if (profileRole == DOCTOR)
-        {
-            api.getProfileDoctor(String.valueOf(profileRole), new Callback<Person>() {
-                @Override
-                public void success(Person person, Response response) {
-                    new ImageLoadTask(getResources().getString(R.string.image_base_url), profilePicture).execute();
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else if (profileRole == PATIENT)
-        {
-            api.getProfilePatient(String.valueOf(PATIENT), new Callback<Person>() {
-                @Override
-                public void success(Person person, Response response) {
-                    new ImageLoadTask(getResources().getString(R.string.image_base_url), profilePicture).execute();
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.notification_layout);
-        layout.setVisibility(View.VISIBLE);
-        session = this.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        profileId = session.getInt(LOGGED_IN_ID,PATIENT);
-        profileRole = session.getInt(LOGGED_IN_USER_ROLE, PATIENT);
-        profileStatus = session.getInt(LOGGED_IN_USER_STATUS, UNREGISTERED);
-        notification = (Button) findViewById(R.id.notification_ping);
-        messages = (Button) findViewById(R.id.msg_notification);
-        System.out.println("TYpe :::" + profileRole);
-        doctorSearch = (Button) findViewById(R.id.doctor_search);
-        status = (TextView) findViewById(R.id.status_text);
-        //status.setText(profileRole +" Profile");
-        patients = (Button) findViewById(R.id.patient_ping);
-        clinicSearch = (Button) findViewById(R.id.clinic_notification);
-        globalTv = (TextView) findViewById(R.id.show_global_tv);
-        arrow = (View) findViewById(R.id.down_arrow);
+        createView();
+        setParameters();
 
 
-        doctorSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (profileRole == PATIENT) {
-                    fragment = new ShowSpeciality();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                } else {
-                    fragment = new ShowSpecialityDoctor();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }
-
-            }
-        });
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestInterceptor.RequestFacade request) {
-                        // assuming `cookieKey` and `cookieValue` are not null
-                        request.addHeader("Cookie", "PLAY_SESSION" + "=" + CookieManager.getInstance().getCookie("PLAY_SESSION"));
-                    }
-                })
-                .setEndpoint(this.getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-
-        BackStress.staticflag = 1;
-        Global go = (Global) HomeActivity.this.getApplicationContext();
-        go.setLocation("");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setVisibility(View.GONE);
-        //setSupportActionBar(toolbar);
-       /* ActionBar actionBar = getActionBar();
 
-        actionBar.show();
-
-        actionBar.setTitle("Home");
-*/
-
-
-        flagActionButton = 0;
-        profilePicture = (ImageView) findViewById(R.id.profile_picture);
-        accountName = (TextView) findViewById(R.id.account_name);
         mainMenu = new Model.Menu();
         arrayMenu = new ArrayList<String>();
         showMenus();
 
-        for (String str : arrayMenu) {
-            System.out.println("str = " + str);
-        }
-
-        if (profileRole == DOCTOR) {
-            progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
-            globalTv.setText("Doctor");
-            fragment = new DoctorMenusManage();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
-            DoctorId param = new DoctorId(String.valueOf(profileId));
-
-            api.getDoctorLandingPageDetails(param, new Callback<DoctorProfile>() {
-                @Override
-                public void success(DoctorProfile doc1, Response response)
-                {
-                    doc = doc1;
-                    if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
-                        new ImageLoadTask(doc.getPerson().getImageUrl(), profilePicture).execute();
-                    accountName.setText(doc.getPerson().getName());
-                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, profileRole, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
-                    System.out.println("Adapter Values " + adapter.getCount());
-                    dList.setAdapter(adapter);
-                    ((DoctorMenusManage) fragment).updateCounts(doc);
-//                    Bitmap bmp = BitmapFactory.decodeFile(doc.getPerson().getImageUrl());
-//                    profilePicture.setImageBitmap(bmp);
-//                    profilePicture.setVisibility(View.VISIBLE);
-                    SharedPreferences.Editor editor = session.edit();
-                    Gson gson = new Gson();
-                    String json = gson.toJson(doc);
-                    editor.putString("DoctorProfileLoggedInCounts", json);
-                    editor.commit();
-                    progress.dismiss();
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                     progress.dismiss();
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        } else if (profileRole == PATIENT) {
-            globalTv.setText("Patient");
-            patients.setVisibility(View.GONE);
-            managePatientIcons();
-            fragment = new PatientMenusManage();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
-            api.getPatientLandingPageDetails(new PatientId(String.valueOf(profileId)), new Callback<DoctorProfile>() {
-                @Override
-                public void success(DoctorProfile person, Response response) {
-                    if (person != null && person.getPerson() != null && person.getPerson().getImageUrl() != null)
-                        new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getPerson().getImageUrl(), profilePicture).execute();
-                    System.out.println("profile id:::::::" + getResources().getString(R.string.image_base_url) + person.getPerson().getId());
-                    SharedPreferences session = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = session.edit();
-                    editor.putString("patientId", person.getPerson().getPatientId());
-                    editor.commit();
-                    accountName.setText(person.getPerson().getName());
-                    adapter = new MenuAdapter(HomeActivity.this, arrayMenu, profileRole, person.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
-                    System.out.println("Adapter Values " + adapter.getCount());
-                    dList.setAdapter(adapter);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-
-        arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (p != null)
-                    showPopup(HomeActivity.this, p);
-            }
-        });
-        accountName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (p != null)
-                    showPopup(HomeActivity.this, p);
-            }
-        });
-        patients.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (profileRole == DOCTOR) {
-                    fragment = new ShowPatients();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }
-            }
-        });
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (profileRole == DOCTOR) {
-                    fragment = new ManageReminder();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                } else {
-                    fragment = new ManageReminderPatient();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }
-
-            }
-        });
-        messages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (profileRole == DOCTOR) {
-                    fragment = new ManageMessageNotification();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-                } else if (profileRole == PATIENT) {
-                    fragment = new ManageMessageNotification();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-                }
-            }
-        });
-        backButton = (Button) findViewById(R.id.back_button);
-        backButton.setVisibility(View.INVISIBLE);
-        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        dList = (ListView) findViewById(R.id.left_drawer);
-        int[] colors = {0, 0xFFFF0000, 0}; // red for the example
-        dList.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
-        dList.setDividerHeight(1);
-
-        clinicSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (profileRole == PATIENT) {
-                    fragment = new ShowSpecialityClinics();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                } else {
-                    fragment = new ShowClinicSpecialities();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                }
-            }
-        });
-        drawerButton = (Button) findViewById(R.id.drawar_button);
-        drawerButton.setVisibility(View.VISIBLE);
-        drawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("I am here");
-                System.out.println("FLag button value " + flagActionButton);
-                if (flagActionButton == 0) {
-                    System.out.println("open");
-                    dLayout.openDrawer(dList);
-                    flagActionButton = 1;
-                } else {
-                    System.out.println("closed");
-                    dLayout.closeDrawer(Gravity.LEFT);
-                    flagActionButton = 0;
-
-                }
-            }
-        });
-        logout = (Button) findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
-                alertDialogBuilder.setMessage("R.string.confirm_logout");
-                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        finish();
-
-                    }
-                });
-
-                alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.out.println("Do Nothing");
-                    }
-                });
-
-                AlertDialog alertDialog2 = alertDialogBuilder.create();
-                alertDialog2.show();
-            }
-        });
-
-        dList.setSelector(android.R.color.holo_blue_dark);
-        dList.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> selectedItem, View v, int position, long id) {
-                dLayout.closeDrawers();
-                Bundle args = new Bundle();
-                String switchCaseId = (String) adapter.getItem(position);
-                switch (switchCaseId) {
-                    case "Manage Profile":
-                        if (profileRole == DOCTOR) {
-                            System.out.println("I am in profile condition:::::::::::::::::::");
-                            fragment = new DoctorProfileEdit();
-                            fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
-                            dList.setSelection(position);
-                            dLayout.closeDrawer(dList);
-                        } else if (profileRole == PATIENT) {
-                            System.out.println("I am in profile condition:::::::::::::::::::");
-                            fragment = new ManageProfilePatient();
-                            fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
-                            dList.setSelection(position);
-                            dLayout.closeDrawer(dList);
-                        }
-                        break;
-
-                    case "Manage Patient":
-
-                        fragment = new ManagePatientFragment();
-                        fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Patient").addToBackStack(null).commit();
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        break;
-
-                    case "Manage Clinic":
-
-                        fragment = new ManageClinicFragment();
-                        fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Clinic").addToBackStack(null).commit();
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        break;
-
-                    case "Manage Assistant":
-
-                        fragment = new ManageastantFragment();
-                        fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Assistant").addToBackStack(null).commit();
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        break;
-
-                    case "Manage Dependency":
-                        if (profileRole == DOCTOR) {
-                            fragment = new ManageDendencyDoctor();
-                            fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-                            dList.setSelection(position);
-                            dLayout.closeDrawer(dList);
-                        } else if (profileRole == PATIENT) {
-                            fragment = new ManageDendencyFragment();
-                            fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-                            dList.setSelection(position);
-                            dLayout.closeDrawer(dList);
-                        }
-                        break;
-
-                    case "Manage Reminder":
-                        fragment = new ManageReminder();
-                        fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        break;
-
-                    case "Manage Delegation":
-                        if (profileRole == DOCTOR) {
-                            fragment = new ManageDelegationFragment();
-                            fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-                            dList.setSelection(position);
-                            dLayout.closeDrawer(dList);
-                        } else if (profileRole == PATIENT) {
-                            fragment = new ManageDelegationPatient();
-                            fragmentManger = getFragmentManager();
-                            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-                            dList.setSelection(position);
-                            dLayout.closeDrawer(dList);
-                        }
-                        break;
-
-                    case "Manage Template":
-                        //fragment = new ManageTemplate();
-                        fragment = new ManageProcedure();
-                        fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Template").addToBackStack(null).commit();
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        break;
-
-                    case "Messages And Notification":
-                        fragment = new ManageMessageNotification();
-                        fragmentManger = getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        break;
-
-                    case "Logout":
-                        dList.setSelection(position);
-                        dLayout.closeDrawer(dList);
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
-                        alertDialogBuilder.setMessage(R.string.confirm_logout);
-                        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                BackStress.staticflag = 0;
-                                finish();
-
-                            }
-                        });
-
-                        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                System.out.println("Do Nothing");
-                            }
-                        });
-
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-                        break;
-                }
-            }
-        });
     }
 
     // The method that displays the popup.
-    private void showPopup(final Activity context, Point p) {
+    protected void showPopup(final Activity context, Point p) {
         int popupWidth = 350;
         int popupHeight = 500;
 
@@ -611,331 +164,76 @@ public class HomeActivity extends ParentActivity {
         int OFFSET_X = 15;
         int OFFSET_Y = 55;
 
-        // Clear the default translucent background
-//        popup.setBackgroundDrawable(new BitmapDrawable());
-
         // Displaying the popup at the specified location, + offsets.
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
-
-        if (profileRole == DOCTOR)
+        List<Dependent> depends = null;
+        List<Delegation> delegates = null;
+        if(parent != null) {
+            profileName.setText(parent.getPerson().getName() + " (Doctor)");
+            profileNamedependent.setText(parent.getPerson().getName() + " (Patient)");
+            depends = parent.getDependents();
+            delegates = parent.getDelegates();
+        }
+        else
         {
-
-
-            profileName.setText(doc.getPerson().getName()+ " (Doctor)");
+            profileName.setText(doc.getPerson().getName() + " (Doctor)");
             profileNamedependent.setText(doc.getPerson().getName() + " (Patient)");
-//            profileNamedependent.setOnClickListener();
-
-            List<Dependent> depends = doc.getDependents();
-            if (depends == null || depends.size() == 0)
-            {
-                depends = new ArrayList<Dependent>();
-                Dependent patient = new Dependent();
-                patient.setName("No Dependent Found");
-                depends.add(patient);
-            }
-
-            dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, depends);
-            dependentList.setAdapter(dependentAdapter);
-
-            List<Delegation> delegates = doc.getDelegates();
-            if (delegates == null || delegates.size() == 0)
-            {
-                delegates = new ArrayList<Delegation>();
-                Delegation patient = new Delegation();
-                patient.setName("No Dependent Found");
-                delegates.add(patient);
-            }
-            delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegates);
-            delegationList.setAdapter(delegationAdapter);
-
-
-
-           /* RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(this.getResources().getString(R.string.base_url))
-                    .setClient(new OkClient())
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .build();
-            api = restAdapter.create(MyApi.class);
-            api.getProfileDoctor(profileId, new Callback<Person>() {
-                @Override
-                public void success(Person person, Response response) {
-                    profileName.setText(person.getName());
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    //Toast.makeText(getActivity(),R.string.Failed,Toast.LENGTH_SHORT).show();
-                }
-            });*/
-           /* api.getAllDoctorDependents(profileId, new Callback<ArrayList<Patient>>() {
-                @Override
-                public void success(ArrayList<Patient> arrays, Response response) {
-                    List<Patient> patients = new ArrayList<Patient>();
-
-                    if (arrays.size() == 0) {
-                        Patient patient = new Patient();
-                        patient.setSelected(false);
-                        patient.setName("No Dependent Found");
-                        patient.setLocation(" ");
-                        patients.add(patient);
-                    } else {
-                        for (Patient pat : arrays) {
-                            if ((pat.getStatus()).equals("C")) {
-                                patients.add(pat);
-                            }
-
-                        }
-                    }
-                    dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, patients);
-                    dependentList.setAdapter(dependentAdapter);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });*/
-
-//            delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    final Delegation del = (Delegation) delegationAdapter.getItem(position);
-//                    System.out.println("doctor email::::::" + del.getEmailID());
-//                    if (!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
-//                        String emailId = del.getEmailID();
-//                        String type = del.getType();
-//                        if (type.equalsIgnoreCase("D")) {
-//                            type = "Doctor";
-//                        } else if (type.equalsIgnoreCase("P")) {
-//                            type = "Patient";
-//                        } else if (type.equalsIgnoreCase("A")) {
-//                            type = "Assistant";
-//                        }
-//                        saveToSession(emailId, type);
-//                        Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
-//                        startActivity(intObj);
-//                    }
-//                }
-//            });
-//
-//            api.getAllDelegatesForParent(profileId, "D", new Callback<ArrayList<Delegation>>() {
-//                @Override
-//                public void success(ArrayList<Delegation> delegations, Response response) {
-//                    System.out.println("Kb Array " + delegations.size());
-//                    ArrayList<Delegation> delegatesAdapter = new ArrayList<Delegation>();
-//                    if (delegations.size() == 0) {
-//                        Delegation del = new Delegation();
-//                        del.setName("No Delegation Found");
-//                        del.setAccessLevel("");
-//                        del.setLocation("");
-//                        del.setMobileNumber("");
-//                        del.setStatus("");
-//                        del.setEmailID("");
-//                        del.setAccessLevel("");
-//                        del.setType("");
-//                        delegatesAdapter.add(del);
-//                    } else {
-//                        for (Delegation dele : delegations) {
-//                            if (dele.getStatus().equalsIgnoreCase("C")) {
-//                                delegatesAdapter.add(dele);
-//                            }
-//                        }
-//                    }
-//
-//                    delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegatesAdapter);
-//                    delegationList.setAdapter(delegationAdapter);
-//                    System.out.println("Adapter list Count " + delegationAdapter.getCount());
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError error) {
-//                    error.printStackTrace();
-//                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-            //ProfileSwitchDialogDoctor profileDialog = ProfileSwitchDialogDoctor.newInstance();
-            //profileDialog.show(HomeActivity.this.getFragmentManager(), "Dialog");
-        } else if (profileRole == PATIENT) {
-
-            api.getProfilePatient(String.valueOf(profileId), new Callback<Person>() {
-                @Override
-                public void success(Person person, Response response) {
-                    profileName.setText(person.getName());
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-            api.getAllPatientDependents(String.valueOf(profileId), new Callback<ArrayList<Patient>>() {
-                @Override
-                public void success(ArrayList<Patient> patients, Response response) {
-                    int flagDependency = 0;
-                    ArrayList<Patient> arrayNew = new ArrayList<Patient>();
-                    if (patients.size() == 0) {
-                        Patient docSr = new Patient();
-                        docSr.setSelected(false);
-                        docSr.setName("No Dependent Found");
-                        docSr.setLocation(" ");
-                        docSr.setAccessLevel("");
-                        docSr.setStatus("");
-                        arrayNew.add(docSr);
-                    } else {
-                        for (Patient pat : patients) {
-                            if ((pat.getStatus()).equals("C")) {
-                                arrayNew.add(pat);
-                                flagDependency = 1;
-                            }
-
-                        }
-
-                        if (flagDependency == 0) {
-                            Patient docSr = new Patient();
-                            docSr.setSelected(false);
-                            docSr.setName("No Dependent Found");
-                            docSr.setLocation(" ");
-                            docSr.setAccessLevel("");
-                            docSr.setStatus("");
-                            arrayNew.add(docSr);
-                        }
-                    }
-                    //dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, arrayNew);
-                    // dependentList.setAdapter(dependentAdapter);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-            dependentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Patient pat = (Patient) dependentAdapter.getItem(position);
-                    System.out.println("Patient Name::::::" + pat.getName());
-                    if (!(pat.getName().equalsIgnoreCase("No Dependent Found"))) {
-                        String emailId = pat.getEmailID();
-                        saveToSession(emailId, "Patient");
-                        Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
-                        startActivity(intObj);
-                    }
-
-                }
-            });
-            api.getAllDelegatesForParent(String.valueOf(profileId), "P", new Callback<ArrayList<Delegation>>() {
-                @Override
-                public void success(ArrayList<Delegation> delegations, Response response) {
-                    System.out.println("Kb Array " + delegations.size());
-                    int flagDelegation = 0;
-                    ArrayList<Delegation> delegatesAdapter = new ArrayList<Delegation>();
-                    if (delegations.size() == 0) {
-                        Delegation del = new Delegation();
-                        del.setName("No Delegation Found");
-                        del.setAccessLevel("");
-                        del.setLocation("");
-                        del.setMobileNumber("");
-                        del.setStatus("");
-                        del.setEmailID("");
-                        del.setAccessLevel("");
-                        del.setType("");
-                        delegatesAdapter.add(del);
-                    } else {
-                        for (Delegation dele : delegations) {
-                            if (dele.getStatus().equalsIgnoreCase("C")) {
-                                flagDelegation = 1;
-                                delegatesAdapter.add(dele);
-                            }
-                        }
-
-                        if (flagDelegation == 0) {
-                            Delegation del = new Delegation();
-                            del.setName("No Delegation Found");
-                            del.setEmailID("");
-                            del.setStatus("");
-                            del.setMobileNumber("");
-                            del.setType("");
-                            del.setLocation("");
-                            del.setAccessLevel("");
-                            delegatesAdapter.add(del);
-                        }
-                    }
-
-                    // delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegatesAdapter);
-                    // delegationList.setAdapter(delegationAdapter);
-                    // System.out.println("Adapter list Count " + delegationAdapter.getCount());
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(HomeActivity.this, R.string.Failed, Toast.LENGTH_SHORT).show();
-                }
-            });
-            delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Delegation del = (Delegation) delegationAdapter.getItem(position);
-                    System.out.println("doctor email::::::" + del.getEmailID());
-                    if (!(del.getName().equalsIgnoreCase("No Delegation Found"))) {
-                        String emailId = del.getEmailID();
-                        String type = del.getType();
-                        if (type.equalsIgnoreCase("D")) {
-                            type = "Doctor";
-                        } else if (type.equalsIgnoreCase("P")) {
-                            type = "Patient";
-                        } else if (type.equalsIgnoreCase("A")) {
-                            type = "Assistant";
-                        }
-                        saveToSession(emailId, type);
-                        Intent intObj = new Intent(HomeActivity.this, HomeActivityRevision.class);
-                        startActivity(intObj);
-                    }
-                }
-            });
-
-            //ProfileSwitchDialogPatient profileDialg = ProfileSwitchDialogPatient.newInstance();
-            //profileDialg.show(HomeActivity.this.getFragmentManager(),"Dialog");
+            depends = doc.getDependents();
+            delegates = doc.getDelegates();
+        }
+        if (depends == null || depends.size() == 0)
+        {
+            depends = new ArrayList<Dependent>();
+            Dependent patient = new Dependent();
+            patient.setName("No Dependent Found");
+            depends.add(patient);
         }
 
-        // Getting a reference to Close button, and close the popup when clicked.
-        /*Button close = (Button) layout.findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
+        dependentAdapter = new ProfileDependencyAdapter(com.mindnerves.meidcaldiary.HomeActivity.this, depends);
+        dependentList.setAdapter(dependentAdapter);
 
+
+        if (delegates == null || delegates.size() == 0)
+        {
+            delegates = new ArrayList<Delegation>();
+            Delegation patient = new Delegation();
+            patient.setName("No Dependent Found");
+            delegates.add(patient);
+        }
+        delegationAdapter = new ProfileDelegationAdapter(com.mindnerves.meidcaldiary.HomeActivity.this, delegates);
+        delegationList.setAdapter(delegationAdapter);
+
+        dependentList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+                 @Override
+                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                     final Dependent del = (Dependent) dependentAdapter.getItem(position);
+
+                     if(!(del.getName().equalsIgnoreCase("No Delegation Found")) &&
+                             saveToSession(del.getId(), PATIENT, del.getStatus())) {
+                         Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
+                         startActivity(intObj);
+                         onPause();
+                     }
+                 }
+             }
+        );
+        delegationList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                popup.dismiss();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Delegation del = (Delegation) delegationAdapter.getItem(position);
+                if (!(del.getName().equalsIgnoreCase("No Delegation Found")) &&
+                        saveToSession(del.getId(), PATIENT, del.getStatus()))
+                {
+                    Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
+                    startActivity(intObj);
+                    finish();
+                }
             }
-        });*/
+        });
     }
 
-    public void managePatientIcons() {
-        LinearLayout.LayoutParams lpReminder = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpReminder.setMargins(35, 5, 0, 10);
-        lpReminder.width = 50;
-        lpReminder.height = 62;
-        notification.setLayoutParams(lpReminder);
-        LinearLayout.LayoutParams lpMessage = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpMessage.setMargins(15, 5, 0, 10);
-        lpReminder.width = 50;
-        lpReminder.height = 62;
-        messages.setLayoutParams(lpMessage);
-        LinearLayout.LayoutParams lpDoctorSearch = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpDoctorSearch.setMargins(15, 5, 0, 10);
-        lpReminder.width = 50;
-        lpReminder.height = 62;
-        doctorSearch.setLayoutParams(lpDoctorSearch);
-        LinearLayout.LayoutParams lpClinicSearch = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lpReminder.width = 50;
-        lpReminder.height = 62;
-        lpClinicSearch.setMargins(15, 5, 0, 10);
-        clinicSearch.setLayoutParams(lpClinicSearch);
-    }
 
     @Override
     protected void onResume() {
@@ -964,13 +262,32 @@ public class HomeActivity extends ParentActivity {
         p.y = location[1];
     }
 
-    public void saveToSession(String email, String typeId) {
-        String userId = email;
-        String type = typeId;
-        session = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        session.edit().putString("sessionID_Revision", userId).apply();
-        session.edit().putString("type_Revision", type).apply();
+    public boolean saveToSession(int id, int type, int status )
+    {
+        int loggedInUserId = session.getInt(LOGGED_IN_ID, -1);
+        if(type == PATIENT) {
+            if (loggedInUserId == id) {
+                session.edit().putBoolean(IS_PROFILE_OF_LOGGED_IN_USER, true).apply();
+                session.edit().remove(DEPENDENT_ID).apply();
+                session.edit().remove(DEPENDENT_ROLE).apply();
+                session.edit().remove(DEPENDENT_STATUS).apply();
+                session.edit().remove(PARENT).apply();
+            } else {
+                session.edit().putBoolean(IS_PROFILE_OF_LOGGED_IN_USER, false).apply();
+                session.edit().putInt(DEPENDENT_ID, id).apply();
+                session.edit().putInt(DEPENDENT_ROLE, type).apply();
+                session.edit().putInt(DEPENDENT_STATUS, status).apply();
+
+                Gson gson = new Gson();
+                String json = gson.toJson(doc);
+                session.edit().putString(PARENT, json).apply();
+            }
+        }
+        else
+            return false;
+        return true;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -978,9 +295,6 @@ public class HomeActivity extends ParentActivity {
         FileUploadDialog fileupload = new FileUploadDialog();
         fileupload.onActivityResult(requestCode, resultCode, data);
 
-
-        //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.replacementFragment);
-        //fragment.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -1011,24 +325,129 @@ public class HomeActivity extends ParentActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-
     }
 
     public void showMenus()
     {
-        if (profileRole == PATIENT) {
-            arrayMenu = mainMenu.getPatientMenus();
+
+        arrayMenu = mainMenu.getDoctorMenus();
+
+    }
+
+    protected abstract void createView();
+
+    protected void setParameters()
+    {
+        session = this.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if(session.getBoolean(IS_PROFILE_OF_LOGGED_IN_USER, false))
+        {
+            profileId = session.getInt(LOGGED_IN_ID, PATIENT);
+            profileRole = session.getInt(LOGGED_IN_USER_ROLE, PATIENT);
+            profileStatus = session.getInt(LOGGED_IN_USER_STATUS, UNREGISTERED);
+        }
+        else
+        {
+            profileId = session.getInt(DEPENDENT_ID, PATIENT);
+            profileRole = session.getInt(DEPENDENT_ROLE, PATIENT);
+            profileStatus = session.getInt(DEPENDENT_STATUS, UNREGISTERED);
+            String parent_string = session.getString(PARENT, null);
+            Gson gson = new Gson();
+            parent = gson.fromJson(parent_string, DoctorProfile.class);
+            System.out.println("I am here");
         }
 
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestInterceptor.RequestFacade request) {
+                        // assuming `cookieKey` and `cookieValue` are not null
+                        String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
+//                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
+                    }
+                })
+                .setEndpoint(this.getResources().getString(R.string.base_url))
+                .setClient(new OkClient())
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        api = restAdapter.create(MyApi.class);
+
+    }
+
+    protected abstract void manageProfile(int position);
+
+
+    protected void manageDependent(int position)
+    {
         if (profileRole == DOCTOR) {
-            arrayMenu = mainMenu.getDoctorMenus();
+            fragment = new ManageDendencyDoctor();
+            fragmentManger = getFragmentManager();
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+            dList.setSelection(position);
+            dLayout.closeDrawer(dList);
+        } else if (profileRole == PATIENT) {
+            fragment = new ManageDendencyFragment();
+            fragmentManger = getFragmentManager();
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+            dList.setSelection(position);
+            dLayout.closeDrawer(dList);
         }
-
-        if (profileRole == ASSISTANT) {
-            arrayMenu = mainMenu.getDoctorMenus();
+    }
+    protected void manageDelegation(int position)
+    {
+        if (profileRole == DOCTOR) {
+            fragment = new ManageDelegationFragment();
+            fragmentManger = getFragmentManager();
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+            dList.setSelection(position);
+            dLayout.closeDrawer(dList);
+        } else if (profileRole == PATIENT) {
+            fragment = new ManageDelegationPatient();
+            fragmentManger = getFragmentManager();
+            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+            dList.setSelection(position);
+            dLayout.closeDrawer(dList);
         }
+    }
+    protected void manageNotification(int position)
+    {
+        fragment = new ManageMessageNotification();
+        fragmentManger = getFragmentManager();
+        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+        dList.setSelection(position);
+        dLayout.closeDrawer(dList);
+    }
+    protected void logout(int position)
+    {
+        dList.setSelection(position);
+        dLayout.closeDrawer(dList);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(com.mindnerves.meidcaldiary.HomeActivity.this);
+        alertDialogBuilder.setMessage(R.string.confirm_logout);
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BackStress.staticflag = 0;
+                finish();
+
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.out.println("Do Nothing");
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }

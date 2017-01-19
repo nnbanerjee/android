@@ -33,13 +33,17 @@ import java.util.Date;
 import Adapter.ChatAdapter;
 import Application.MyApi;
 import Model.Chat;
+import Model.DoctorProfile;
 import Model.HomePatientCount;
 import Model.PatientAppointmentVM;
+import Model.PatientProfile;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
+
+import static com.mindnerves.meidcaldiary.R.drawable.doc;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -209,5 +213,14 @@ public class PatientMenusManage extends Fragment {
         profilePicture.setVisibility(View.GONE);
         accountName.setVisibility(View.GONE);
         back.setVisibility(View.VISIBLE);
+    }
+
+    public void updateCounts(PatientProfile patient) {
+        if(patient!=null)
+        {
+            doctorsCount.setText("" + patient.getDoctorsCount());
+            appointmentCount.setText("" + patient.getAppointmentsCount());
+            medicalAlertCount.setText("" + patient.getMedicineCount());
+        }
     }
 }

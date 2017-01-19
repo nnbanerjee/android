@@ -107,7 +107,7 @@ public class ManageDelegationPatient extends Fragment {
 
             }
         });
-        removeDoc.setOnClickListener(new View.OnClickListener() {
+        /*removeDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String result = doValidation();
@@ -163,14 +163,14 @@ public class ManageDelegationPatient extends Fragment {
 
                 }
             }
-        });
+        });*/
         showDependencyWaitingList();
         showDependencyConfirmList();
         return view;
     }
     public void showDependencyConfirmList()
     {
-        api.getAllDelegatesForParent(patientId, typeId, new Callback<ArrayList<Delegation>>() {
+        /*api.getAllDelegatesForParent(patientId, typeId, new Callback<ArrayList<Delegation>>() {
             @Override
             public void success(ArrayList<Delegation> array, Response response) {
                 System.out.println("Kb Array " + array.size());
@@ -204,7 +204,7 @@ public class ManageDelegationPatient extends Fragment {
                 error.printStackTrace();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     public void goBack()
@@ -231,7 +231,7 @@ public class ManageDelegationPatient extends Fragment {
     }
     public void showDependencyWaitingList()
     {
-        delegationRequest = new ArrayList<Delegation>();
+       /* delegationRequest = new ArrayList<Delegation>();
         api.getAllParentsForDelegates(patientId,typeId,new Callback<ArrayList<Delegation>>() {
             @Override
             public void success(ArrayList<Delegation> array, Response response)
@@ -289,7 +289,7 @@ public class ManageDelegationPatient extends Fragment {
                 error.printStackTrace();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     @Override
@@ -312,7 +312,7 @@ public class ManageDelegationPatient extends Fragment {
     }
     public String doValidation()
     {
-        int len = removeListObjects.size();
+       /* int len = removeListObjects.size();
 
         if(len == 0)
         {
@@ -339,6 +339,7 @@ public class ManageDelegationPatient extends Fragment {
                 return "Normal";
             }
 
-        }
+        }*/
+        return null;
     }
 }
