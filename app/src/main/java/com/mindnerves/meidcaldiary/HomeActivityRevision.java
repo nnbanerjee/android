@@ -7,10 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +15,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -46,14 +42,11 @@ import com.mindnerves.meidcaldiary.Fragments.ProfileSwitchDialogDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ProfileSwitchDialogPatient;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import Adapter.MenuAdapter;
 import Application.MyApi;
-import Model.Person;
+import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -175,9 +168,9 @@ public class HomeActivityRevision extends FragmentActivity{
             fragment = new DoctorMenusManage();
             fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Patients Information").addToBackStack(null).commit();
-            api.getProfileDoctor(loggingId,new Callback<Person>() {
+            api.getProfileDoctor(loggingId,new Callback<PersonTemp>() {
                 @Override
-                public void success(Person person, Response response) {
+                public void success(PersonTemp person, Response response) {
                     new ImageLoadTask("http://"+IMAGE_URL+person.getId(), profilePicture).execute();
                     accountName.setText(person.getName());
                     adapter = new MenuAdapter(HomeActivityRevision.this,arrayMenu, ParentActivity.DOCTOR,""+person.getId());//(new MenuAdapter(this,arrayMenu))
@@ -196,9 +189,9 @@ public class HomeActivityRevision extends FragmentActivity{
             fragment = new PatientMenusManage();
             fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Patients Information").addToBackStack(null).commit();
-            api.getProfilePatient(loggingId,new Callback<Person>() {
+            api.getProfilePatient(loggingId,new Callback<PersonTemp>() {
                 @Override
-                public void success(Person person, Response response) {
+                public void success(PersonTemp person, Response response) {
                     new ImageLoadTask("http://"+IMAGE_URL+person.getId(), profilePicture).execute();
                     accountName.setText(person.getName());
                     adapter = new MenuAdapter(HomeActivityRevision.this,arrayMenu,ParentActivity.PATIENT, person.getImageUrl());//(new MenuAdapter(this,arrayMenu))

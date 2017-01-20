@@ -34,6 +34,7 @@
         android:id="@+id/profile_name"
         android:textColor="@color/color_blue_default"
         android:padding="5dp"
+        android:clickable="true"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -43,6 +44,7 @@
         android:id="@+id/profile_name_dependent"
         android:textColor="@color/color_blue_default"
         android:padding="5dp"
+        android:clickable="true"
         />
     <TextView
         android:layout_width="wrap_content"

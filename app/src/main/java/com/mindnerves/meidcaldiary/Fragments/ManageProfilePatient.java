@@ -8,10 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -40,13 +37,10 @@ import com.mindnerves.meidcaldiary.MapActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Calendar;
 
 import Application.MyApi;
-import Model.Person;
+import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -233,7 +227,7 @@ public class ManageProfilePatient extends Fragment {
                             @Override
                             public void success(String s, Response response) {
                                 progress.dismiss();
-                                Person person = new Person();
+                                PersonTemp person = new PersonTemp();
                                 person.name = name;
                                 person.location = location;
                                 person.password = password;
@@ -270,7 +264,7 @@ public class ManageProfilePatient extends Fragment {
                     }
                     else
                     {
-                        Person person = new Person();
+                        PersonTemp person = new PersonTemp();
                         person.name = name;
                         person.location = location;
                         person.password = password;
@@ -326,9 +320,9 @@ public class ManageProfilePatient extends Fragment {
     public void profile()
     {
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getProfilePatient(patientId,new Callback<Person>() {
+        api.getProfilePatient(patientId,new Callback<PersonTemp>() {
             @Override
-            public void success(Person person, Response response) {
+            public void success(PersonTemp person, Response response) {
                 etNameText.setText(person.getName());
                 etlocation.setText(person.getLocation());
                 location = person.getLocation();
@@ -401,9 +395,9 @@ public class ManageProfilePatient extends Fragment {
       //  medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
-        api.getProfilePatient(patientId,new Callback<Person>() {
+        api.getProfilePatient(patientId,new Callback<PersonTemp>() {
             @Override
-            public void success(Person person, Response response) {
+            public void success(PersonTemp person, Response response) {
                 new ImageLoadTask("http://"+IMAGE_URL+person.getId(), profilePicture).execute();
             }
 

@@ -14,20 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.HomeActivityRevision;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Adapter.ProfileDelegationAdapter;
 import Adapter.ProfileDependencyAdapter;
 import Application.MyApi;
-import Model.Delegation;
 import Model.Patient;
-import Model.Person;
-import Model.ResponseVm;
+import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -68,9 +64,9 @@ public class ProfileSwitchDialogPatient extends DialogFragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getProfilePatient(patientId,new Callback<Person>() {
+        api.getProfilePatient(patientId,new Callback<PersonTemp>() {
             @Override
-            public void success(Person person, Response response) {
+            public void success(PersonTemp person, Response response) {
                 profileName.setText(person.getName());
 
             }

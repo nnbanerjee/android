@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -23,34 +22,18 @@ import android.webkit.CookieManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.mindnerves.meidcaldiary.Fragments.DoctorMenusManage;
-import com.mindnerves.meidcaldiary.Fragments.DoctorProfileEdit;
 import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
-import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-import com.mindnerves.meidcaldiary.Fragments.ManagePatientFragment;
-import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
-import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
-import com.mindnerves.meidcaldiary.Fragments.ManageReminder;
-import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
-import com.mindnerves.meidcaldiary.Fragments.PatientMenusManage;
-import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
-import com.mindnerves.meidcaldiary.Fragments.ShowPatients;
-import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
-import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityClinics;
-import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityDoctor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,24 +44,12 @@ import Adapter.ProfileDependencyAdapter;
 import Application.MyApi;
 import Model.Delegation;
 import Model.Dependent;
-import Model.Doctor;
-import Model.DoctorId;
 import Model.DoctorProfile;
-import Model.Patient;
-import Model.PatientId;
-import Model.PatientProfile;
-import Model.Person;
+import Model.PersonProfile;
 import Utils.PARAM;
-import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
-
-import static Utils.PARAM.PATIENT;
-import static Utils.PARAM.UNREGISTERED;
-import static android.R.attr.data;
 
 /**
  * Created by Narendra on 18-01-2017.
@@ -91,7 +62,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected int profileStatus = UNREGISTERED;
 
     protected SharedPreferences session = null;
-    protected DoctorProfile parent = null;
+    protected PersonProfile parent = null;
 
     FragmentManager fragmentManger;
     Button drawerButton, logout, backButton;
@@ -115,8 +86,7 @@ public abstract class HomeActivity extends Activity implements PARAM
 
     Point p;
     View arrow;
-    public DoctorProfile doc;
-    PatientProfile patient;
+    public PersonProfile personProfile;
     Toolbar toolbar;
     ProgressDialog progress;
 
@@ -124,9 +94,8 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        createView();
         setParameters();
-
+        createView();
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setVisibility(View.GONE);
@@ -150,8 +119,7 @@ public abstract class HomeActivity extends Activity implements PARAM
 
         dependentList = (ListView) layout.findViewById(R.id.profile_dependent_list);
         delegationList = (ListView) layout.findViewById(R.id.profile_delegation_list);
-        profileName = (TextView) layout.findViewById(R.id.profile_name);
-        profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
+
 
         // Creating the PopupWindow
         final PopupWindow popup = new PopupWindow(context);
@@ -168,18 +136,49 @@ public abstract class HomeActivity extends Activity implements PARAM
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
         List<Dependent> depends = null;
         List<Delegation> delegates = null;
+        boolean selfDependentProfile = false;
         if(parent != null) {
-            profileName.setText(parent.getPerson().getName() + " (Doctor)");
-            profileNamedependent.setText(parent.getPerson().getName() + " (Patient)");
-            depends = parent.getDependents();
-            delegates = parent.getDelegates();
+            if(parent.getPerson().getRole() == PATIENT)
+            {
+                profileName = (TextView) layout.findViewById(R.id.profile_name);
+                profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
+                profileNamedependent.setVisibility(View.GONE);
+                profileName.setText(parent.getPerson().getName() + " (Patient)");
+                depends = parent.getDependents();
+                delegates = parent.getDelegates();
+            }
+            else
+            {
+                profileName = (TextView) layout.findViewById(R.id.profile_name);
+                profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
+                profileName.setText(parent.getPerson().getName() + " (Doctor)");
+                profileNamedependent.setText(parent.getPerson().getName() + " (Patient)");
+                depends = parent.getDependents();
+                delegates = parent.getDelegates();
+                selfDependentProfile = true;
+            }
         }
         else
         {
-            profileName.setText(doc.getPerson().getName() + " (Doctor)");
-            profileNamedependent.setText(doc.getPerson().getName() + " (Patient)");
-            depends = doc.getDependents();
-            delegates = doc.getDelegates();
+            if(personProfile.getPerson().getRole() == PATIENT)
+            {
+
+                profileName.setText(personProfile.getPerson().getName() + " (Patient)");
+                profileNamedependent.setVisibility(View.GONE);
+                profileNamedependent = null;
+                depends = personProfile.getDependents();
+                delegates = personProfile.getDelegates();
+        }
+            else
+            {
+                profileName = (TextView) layout.findViewById(R.id.profile_name);
+                profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
+                profileName.setText(personProfile.getPerson().getName() + " (Doctor)");
+                profileNamedependent.setText(personProfile.getPerson().getName() + " (Patient)");
+                depends = personProfile.getDependents();
+                delegates = personProfile.getDelegates();
+                selfDependentProfile = true;
+            }
         }
         if (depends == null || depends.size() == 0)
         {
@@ -192,7 +191,67 @@ public abstract class HomeActivity extends Activity implements PARAM
         dependentAdapter = new ProfileDependencyAdapter(com.mindnerves.meidcaldiary.HomeActivity.this, depends);
         dependentList.setAdapter(dependentAdapter);
 
+        profileName.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                popup.dismiss();
+                if(personProfile.getDependentProfile())
+                {
+                    saveToSession(parent.getPerson().getId(), parent.getPerson().getRole(), parent.getPerson().getStatus());
+                    finish();
+                }
 
+            }
+        });
+        profileNamedependent.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                popup.dismiss();
+                int selfDependentId = -1;
+                if(personProfile.getDependentProfile())
+                {
+                    List<Dependent> dependents = parent.getDependents();
+                    for(Dependent dep: dependents)
+                    {
+                        if(dep.getRelation().equalsIgnoreCase("self")) {
+                            selfDependentId = dep.getId();
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    List<Dependent> dependents = personProfile.getDependents();
+                    for(Dependent dep: dependents)
+                    {
+                        if(dep.getRelation().equalsIgnoreCase("self")) {
+                            selfDependentId = dep.getId();
+                            break;
+                        }
+                    }
+
+                }
+                if(selfDependentId == -1)
+                {
+                    selfDependentId = 102;
+                }
+                saveToSession(selfDependentId, PATIENT, UNREGISTERED);
+                Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
+                startActivity(intObj);
+                if(personProfile.getDependentProfile())
+                {
+                    finish();
+                }
+                else
+                {
+                    onPause();
+                }
+
+            }
+        });
         if (delegates == null || delegates.size() == 0)
         {
             delegates = new ArrayList<Delegation>();
@@ -207,6 +266,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         {
                  @Override
                  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                     popup.dismiss();
                      final Dependent del = (Dependent) dependentAdapter.getItem(position);
 
                      if(!(del.getName().equalsIgnoreCase("No Delegation Found")) &&
@@ -222,13 +282,14 @@ public abstract class HomeActivity extends Activity implements PARAM
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                popup.dismiss();
                 final Delegation del = (Delegation) delegationAdapter.getItem(position);
                 if (!(del.getName().equalsIgnoreCase("No Delegation Found")) &&
                         saveToSession(del.getId(), PATIENT, del.getStatus()))
                 {
                     Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
                     startActivity(intObj);
-                    finish();
+                    onPause();
                 }
             }
         });
@@ -265,26 +326,35 @@ public abstract class HomeActivity extends Activity implements PARAM
     public boolean saveToSession(int id, int type, int status )
     {
         int loggedInUserId = session.getInt(LOGGED_IN_ID, -1);
-        if(type == PATIENT) {
-            if (loggedInUserId == id) {
+             if (loggedInUserId == id)
+            {
                 session.edit().putBoolean(IS_PROFILE_OF_LOGGED_IN_USER, true).apply();
                 session.edit().remove(DEPENDENT_ID).apply();
                 session.edit().remove(DEPENDENT_ROLE).apply();
                 session.edit().remove(DEPENDENT_STATUS).apply();
                 session.edit().remove(PARENT).apply();
-            } else {
+            }
+             else if(session.getBoolean(IS_PROFILE_OF_LOGGED_IN_USER,false))
+             {
+                 session.edit().putBoolean(IS_PROFILE_OF_LOGGED_IN_USER, false).apply();
+                 session.edit().putInt(DEPENDENT_ID, id).apply();
+                 session.edit().putInt(DEPENDENT_ROLE, type).apply();
+                 session.edit().putInt(DEPENDENT_STATUS, status).apply();
+
+                 Gson gson = new Gson();
+                 String json = gson.toJson(personProfile);
+                 session.edit().putString(PARENT, json).apply();
+             }
+             else
+             {
                 session.edit().putBoolean(IS_PROFILE_OF_LOGGED_IN_USER, false).apply();
                 session.edit().putInt(DEPENDENT_ID, id).apply();
                 session.edit().putInt(DEPENDENT_ROLE, type).apply();
                 session.edit().putInt(DEPENDENT_STATUS, status).apply();
-
                 Gson gson = new Gson();
-                String json = gson.toJson(doc);
+                String json = gson.toJson(parent);
                 session.edit().putString(PARENT, json).apply();
             }
-        }
-        else
-            return false;
         return true;
     }
 

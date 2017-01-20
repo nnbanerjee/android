@@ -8,14 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,26 +34,21 @@ import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.ImageLoadTask;
-import com.mindnerves.meidcaldiary.MainActivity;
 import com.mindnerves.meidcaldiary.MapActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import Application.MyApi;
-import Model.Person;
+import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import retrofit.http.Multipart;
 import retrofit.mime.TypedFile;
 
 /**
@@ -296,7 +286,7 @@ public class ManageDoctorProfile extends Fragment {
                             @Override
                             public void success(String status, Response response) {
                                 progress.dismiss();
-                                Person person = new Person();
+                                PersonTemp person = new PersonTemp();
                                 person.id = id;
                                 person.name = name;
                                 person.location = location;
@@ -362,7 +352,7 @@ public class ManageDoctorProfile extends Fragment {
                             }
                         });
                     } else {
-                        Person person = new Person();
+                        PersonTemp person = new PersonTemp();
                         person.id = id;
                         person.name = name;
                         person.location = location;
@@ -475,9 +465,9 @@ public class ManageDoctorProfile extends Fragment {
       //  medicoText.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.VISIBLE);
         logout.setVisibility(View.GONE);
-        api.getProfileDoctor(doctorId,new Callback<Person>() {
+        api.getProfileDoctor(doctorId,new Callback<PersonTemp>() {
             @Override
-            public void success(Person person, Response response) {
+            public void success(PersonTemp person, Response response) {
                 new ImageLoadTask("http://"+IMAGE_URL+person.getId(), profilePicture).execute();
             }
 
@@ -491,9 +481,9 @@ public class ManageDoctorProfile extends Fragment {
     public void showProfileData()
     {
         progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
-        api.getProfileDoctor(doctorId,new Callback<Person>() {
+        api.getProfileDoctor(doctorId,new Callback<PersonTemp>() {
             @Override
-            public void success(Person person, Response response) {
+            public void success(PersonTemp person, Response response) {
                 if(person.getId() != null) {
                     System.out.println("Person Name::::::" + person.getName());
                     id = ""+person.getId();

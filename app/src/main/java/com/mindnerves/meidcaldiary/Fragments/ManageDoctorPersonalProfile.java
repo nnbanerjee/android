@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
 import Model.DoctorPersonalVM;
-import Model.Person;
+import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -94,9 +93,9 @@ public class ManageDoctorPersonalProfile extends Fragment {
 	}
 
 	public void getPersonalProfileData(){
-		api.getProfileDoctor(doctorId,new Callback<Person>() {
+		api.getProfileDoctor(doctorId,new Callback<PersonTemp>() {
 			@Override
-			public void success(Person person, Response response) {
+			public void success(PersonTemp person, Response response) {
 				awardString = person.awards;
 				briefDescriptionString = person.briefDescription;
 				experienceString = person.experience;

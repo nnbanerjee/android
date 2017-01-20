@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientProfile {
+public class PatientProfile implements PersonProfile
+{
 
     private Person person;
     private List<Dependent> dependents = new ArrayList<Dependent>();
@@ -12,6 +13,7 @@ public class PatientProfile {
     private int clinicsCount;
     private int appointmentsCount;
     private int medicineCount;
+    private boolean dependentProfile = false;
 
     /**
      *
@@ -139,4 +141,13 @@ public class PatientProfile {
         this.medicineCount = medicineCount;
     }
 
+    public boolean getDependentProfile()
+    {
+        return dependentProfile;
+    }
+
+    public void setDependentProfile(boolean dependentProfile)
+    {
+        this.dependentProfile = dependentProfile;
+    }
 }

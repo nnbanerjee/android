@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorProfile {
+public class DoctorProfile implements PersonProfile
+{
 
     private Person person;
     private List<Dependent> dependents = new ArrayList<Dependent>();
@@ -137,6 +138,16 @@ public class DoctorProfile {
      */
     public void setFeebackCount(int feebackCount) {
         this.feebackCount = feebackCount;
+    }
+
+    public boolean getDependentProfile()
+    {
+        return false;
+    }
+
+    public void setDependentProfile(boolean dependentProfile)
+    {
+
     }
 
 }

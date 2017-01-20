@@ -1,757 +1,262 @@
 package Model;
 
 /**
- * Created by User on 8/7/15.
+ * Created by Narendra on 20-01-2017.
  */
-public class Person {
 
-    public String url;
+public class Person
+{
+    public Integer id;
+    public String name;
+    public Long mobile;
+    public String location;
+    public Double locationLat;
 
-    public String allegricTo;
-    public String patientId;
-    public String documentUrl;
-
-    public String registrationNumber;
-    public String practiceName;
-    public String documentName;
-    public String latitude;
-	public String awards;
-	public String briefDescription;
-	public String experience;
-	public String institution;
-	public String memeber;
-	public String qualification;
-	public String service;
-	public String doctorId;
-    public String longitude;
-
-    public String getQualification() {
-        return qualification;
+    public Integer getId() {
+        return id;
     }
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getPatientId() {
-        return patientId;
+    public String getName() {
+        return name;
     }
 
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public Long getMobile() {
+        return mobile;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setMobile(Long mobile) {
+        this.mobile = mobile;
     }
 
-    public String getAwards() {
-        return awards;
+    public String getLocation() {
+        return location;
     }
 
-    public void setAwards(String awards) {
-        this.awards = awards;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getBriefDescription() {
-        return briefDescription;
+    public Double getLocationLat() {
+        return locationLat;
     }
 
-    public void setBriefDescription(String briefDescription) {
-        this.briefDescription = briefDescription;
+    public void setLocationLat(Double locationLat) {
+        this.locationLat = locationLat;
     }
 
-    public String getExperience() {
-        return experience;
+    public Double getLocationLong() {
+        return locationLong;
     }
 
-    public void setExperience(String experience) {
-        this.experience = experience;
+    public void setLocationLong(Double locationLong) {
+        this.locationLong = locationLong;
     }
 
-    public String getInstitution() {
-        return institution;
+    public String getEmail() {
+        return email;
     }
 
-    public void setInstitution(String institution) {
-        this.institution = institution;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getMemeber() {
-        return memeber;
+    public String getAddress() {
+        return address;
     }
 
-    public void setMemeber(String memeber) {
-        this.memeber = memeber;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getService() {
-        return service;
+    public String getAllergicTo() {
+        return allergicTo;
     }
 
-    public void setService(String service) {
-        this.service = service;
+    public void setAllergicTo(String allergicTo) {
+        this.allergicTo = allergicTo;
     }
 
-    public String getDoctorId() {
-        return doctorId;
+    public String getBloodGroup() {
+        return bloodGroup;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public Long getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setDateOfBirth(Long dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-
-
-
-
-
-
-        public String id;
-        public String name;
-        public String mobileNumber;
-
-    public String getMobile_number() {
-        return mobile_number;
+    public Byte getGender() {
+        return gender;
     }
 
-    public void setMobile_number(String mobile_number) {
-        this.mobile_number = mobile_number;
+    public void setGender(Byte gender) {
+        this.gender = gender;
     }
 
-    public String mobile_number;
-        public String location;
-        public String locationLat;
-        public String locationLong;
-        public String emailID;
-        public String accessLevel;
-        public String type;
-        public String address;
-        public String allergicTo;
-        public String bloodGroup;
-        public String dateOfBirth;
-        public String emailid;
-        public String gender;
-        public String imageUrl;
-        public String loyaltyPoStrings;
-        public String password;
-        public String role;
-        public String status;
-        public String speciality;
-        public String validaity;
-        public String region;
-        public String city;
-        public String registrationDate;
-        public String addedBy;
-        public String country;
-        public String loyaltyCatId;
-        public String referredBy;
-        public String lastAppoStringmentDate;
-
-    public String PracticeName;
-
-    public String getDocumentName() {
-        return DocumentName;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setDocumentName(String documentName) {
-        DocumentName = documentName;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getUrl() {
-        return url;
+    public Integer getLoyaltyPoints() {
+        return loyaltyPoints;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLoyaltyPoints(Integer loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
     }
 
-    public String getAllegricTo() {
-        return allegricTo;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAllegricTo(String allegricTo) {
-        this.allegricTo = allegricTo;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getDocumentUrl() {
-        return documentUrl;
+    public Byte getRole() {
+        return role;
     }
 
-    public void setDocumentUrl(String documentUrl) {
-        this.documentUrl = documentUrl;
+    public void setRole(Byte role) {
+        this.role = role;
     }
 
-    public String getRegistrationNumber() {
-        return registrationNumber;
+    public Byte getStatus() {
+        return status;
     }
 
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
-    public String getPracticeName() {
-        return practiceName;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setPracticeName(String practiceName) {
-        this.practiceName = practiceName;
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
-    public String DocumentName;
-    public String RegistrationNumber;
-    public String AllergicTo;
-        /**
-         *
-         * @return
-         * The id
-         */
-        public String getId() {
-            return id;
-        }
+    public Long getValidaity() {
+        return validaity;
+    }
 
-        /**
-         *
-         * @param id
-         * The id
-         */
-        public void setId(String id) {
-            this.id = id;
-        }
+    public void setValidaity(Long validaity) {
+        this.validaity = validaity;
+    }
 
-        /**
-         *
-         * @return
-         * The name
-         */
-        public String getName() {
-            return name;
-        }
+    public String getRegion() {
+        return region;
+    }
 
-        /**
-         *
-         * @param name
-         * The name
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
-        /**
-         *
-         * @return
-         * The mobileNumber
-         */
-        public String getMobileNumber() {
-            return mobileNumber;
-        }
+    public String getCity() {
+        return city;
+    }
 
-        /**
-         *
-         * @param mobileNumber
-         * The mobileNumber
-         */
-        public void setMobileNumber(String mobileNumber) {
-            this.mobileNumber = mobileNumber;
-        }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-        /**
-         *
-         * @return
-         * The location
-         */
-        public String getLocation() {
-            return location;
-        }
+    public Long getRegistrationDate() {
+        return registrationDate;
+    }
 
-        /**
-         *
-         * @param location
-         * The location
-         */
-        public void setLocation(String location) {
-            this.location = location;
-        }
+    public void setRegistrationDate(Long registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
-        /**
-         *
-         * @return
-         * The locationLat
-         */
-        public String getLocationLat() {
-            return locationLat;
-        }
+    public Integer getAddedBy() {
+        return addedBy;
+    }
 
-        /**
-         *
-         * @param locationLat
-         * The locationLat
-         */
-        public void setLocationLat(String locationLat) {
-            this.locationLat = locationLat;
-        }
+    public void setAddedBy(Integer addedBy) {
+        this.addedBy = addedBy;
+    }
 
-        /**
-         *
-         * @return
-         * The locationLong
-         */
-        public String getLocationLong() {
-            return locationLong;
-        }
+    public String getCountry() {
+        return country;
+    }
 
-        /**
-         *
-         * @param locationLong
-         * The locationLong
-         */
-        public void setLocationLong(String locationLong) {
-            this.locationLong = locationLong;
-        }
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-        /**
-         *
-         * @return
-         * The emailID
-         */
-        public String getEmailID() {
-            return emailID;
-        }
+    public String getIsoCountry() {
+        return isoCountry;
+    }
 
-        /**
-         *
-         * @param emailID
-         * The emailID
-         */
-        public void setEmailID(String emailID) {
-            this.emailID = emailID;
-        }
+    public void setIsoCountry(String isoCountry) {
+        this.isoCountry = isoCountry;
+    }
 
-        /**
-         *
-         * @return
-         * The accessLevel
-         */
-        public String getAccessLevel() {
-            return accessLevel;
-        }
+    public Integer getLoyaltyCatId() {
+        return loyaltyCatId;
+    }
 
-        /**
-         *
-         * @param accessLevel
-         * The accessLevel
-         */
-        public void setAccessLevel(String accessLevel) {
-            this.accessLevel = accessLevel;
-        }
+    public void setLoyaltyCatId(Integer loyaltyCatId) {
+        this.loyaltyCatId = loyaltyCatId;
+    }
 
-        /**
-         *
-         * @return
-         * The type
-         */
-        public String getType() {
-            return type;
-        }
+    public Integer getReferredBy() {
+        return referredBy;
+    }
 
-        /**
-         *
-         * @param type
-         * The type
-         */
-        public void setType(String type) {
-            this.type = type;
-        }
+    public void setReferredBy(Integer referredBy) {
+        this.referredBy = referredBy;
+    }
 
-        /**
-         *
-         * @return
-         * The address
-         */
-        public String getAddress() {
-            return address;
-        }
+    public Byte getPrime() {
+        return prime;
+    }
 
-        /**
-         *
-         * @param address
-         * The address
-         */
-        public void setAddress(String address) {
-            this.address = address;
-        }
+    public void setPrime(Byte prime) {
+        this.prime = prime;
+    }
 
-        /**
-         *
-         * @return
-         * The allergicTo
-         */
-        public String getAllergicTo() {
-            return allergicTo;
-        }
-
-        /**
-         *
-         * @param allergicTo
-         * The allergicTo
-         */
-        public void setAllergicTo(String allergicTo) {
-            this.allergicTo = allergicTo;
-        }
-
-        /**
-         *
-         * @return
-         * The bloodGroup
-         */
-        public String getBloodGroup() {
-            return bloodGroup;
-        }
-
-        /**
-         *
-         * @param bloodGroup
-         * The bloodGroup
-         */
-        public void setBloodGroup(String bloodGroup) {
-            this.bloodGroup = bloodGroup;
-        }
-
-        /**
-         *
-         * @return
-         * The dateOfBirth
-         */
-        public String getDateOfBirth() {
-            return dateOfBirth;
-        }
-
-        /**
-         *
-         * @param dateOfBirth
-         * The dateOfBirth
-         */
-        public void setDateOfBirth(String dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
-        }
-
-        /**
-         *
-         * @return
-         * The emailid
-         */
-        public String getEmailid() {
-            return emailid;
-        }
-
-        /**
-         *
-         * @param emailid
-         * The emailid
-         */
-        public void setEmailid(String emailid) {
-            this.emailid = emailid;
-        }
-
-        /**
-         *
-         * @return
-         * The gender
-         */
-        public String getGender() {
-            return gender;
-        }
-
-        /**
-         *
-         * @param gender
-         * The gender
-         */
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
-
-        /**
-         *
-         * @return
-         * The imageUrl
-         */
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        /**
-         *
-         * @param imageUrl
-         * The imageUrl
-         */
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-        }
-
-        /**
-         *
-         * @return
-         * The loyaltyPoStrings
-         */
-        public String getLoyaltyPoStrings() {
-            return loyaltyPoStrings;
-        }
-
-        /**
-         *
-         * @param loyaltyPoStrings
-         * The loyalty_poStrings
-         */
-        public void setLoyaltyPoStrings(String loyaltyPoStrings) {
-            this.loyaltyPoStrings = loyaltyPoStrings;
-        }
-
-        /**
-         *
-         * @return
-         * The password
-         */
-        public String getPassword() {
-            return password;
-        }
-
-        /**
-         *
-         * @param password
-         * The password
-         */
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        /**
-         *
-         * @return
-         * The role
-         */
-        public String getRole() {
-            return role;
-        }
-
-        /**
-         *
-         * @param role
-         * The role
-         */
-        public void setRole(String role) {
-            this.role = role;
-        }
-
-        /**
-         *
-         * @return
-         * The status
-         */
-        public String getStatus() {
-            return status;
-        }
-
-        /**
-         *
-         * @param status
-         * The status
-         */
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        /**
-         *
-         * @return
-         * The specialization
-         */
-        public String getSpeciality() {
-            return speciality;
-        }
-
-        /**
-         *
-         * @param speciality
-         * The specialization
-         */
-        public void setSpeciality(String speciality) {
-            this.speciality = speciality;
-        }
-
-        /**
-         *
-         * @return
-         * The validaity
-         */
-        public String getValidaity() {
-            return validaity;
-        }
-
-        /**
-         *
-         * @param validaity
-         * The validaity
-         */
-        public void setValidaity(String validaity) {
-            this.validaity = validaity;
-        }
-
-        /**
-         *
-         * @return
-         * The region
-         */
-        public String getRegion() {
-            return region;
-        }
-
-        /**
-         *
-         * @param region
-         * The region
-         */
-        public void setRegion(String region) {
-            this.region = region;
-        }
-
-        /**
-         *
-         * @return
-         * The city
-         */
-        public String getCity() {
-            return city;
-        }
-
-        /**
-         *
-         * @param city
-         * The city
-         */
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        /**
-         *
-         * @return
-         * The registrationDate
-         */
-        public String getRegistrationDate() {
-            return registrationDate;
-        }
-
-        /**
-         *
-         * @param registrationDate
-         * The registrationDate
-         */
-        public void setRegistrationDate(String registrationDate) {
-            this.registrationDate = registrationDate;
-        }
-
-        /**
-         *
-         * @return
-         * The addedBy
-         */
-        public String getAddedBy() {
-            return addedBy;
-        }
-
-        /**
-         *
-         * @param addedBy
-         * The addedBy
-         */
-        public void setAddedBy(String addedBy) {
-            this.addedBy = addedBy;
-        }
-
-        /**
-         *
-         * @return
-         * The country
-         */
-        public String getCountry() {
-            return country;
-        }
-
-        /**
-         *
-         * @param country
-         * The country
-         */
-        public void setCountry(String country) {
-            this.country = country;
-        }
-
-        /**
-         *
-         * @return
-         * The loyaltyCatId
-         */
-        public String getLoyaltyCatId() {
-            return loyaltyCatId;
-        }
-
-        /**
-         *
-         * @param loyaltyCatId
-         * The loyaltyCatId
-         */
-        public void setLoyaltyCatId(String loyaltyCatId) {
-            this.loyaltyCatId = loyaltyCatId;
-        }
-
-        /**
-         *
-         * @return
-         * The referredBy
-         */
-        public String getReferredBy() {
-            return referredBy;
-        }
-
-        /**
-         *
-         * @param referredBy
-         * The referredBy
-         */
-        public void setReferredBy(String referredBy) {
-            this.referredBy = referredBy;
-        }
-
-        /**
-         *
-         * @return
-         * The lastAppoStringmentDate
-         */
-        public String getLastAppoStringmentDate() {
-            return lastAppoStringmentDate;
-        }
-
-        /**
-         *
-         * @param lastAppoStringmentDate
-         * The lastAppoStringmentDate
-         */
-        public void setLastAppoStringmentDate(String lastAppoStringmentDate) {
-            this.lastAppoStringmentDate = lastAppoStringmentDate;
-        }
-
-
+    public Double locationLong;
+    public String email;
+    public String address;
+    public String allergicTo;
+    public String bloodGroup;
+    public Long dateOfBirth;
+    public Byte gender;
+    public String imageUrl;
+    public Integer loyaltyPoints;
+    public String password;
+    public Byte role;
+    public Byte status;
+    public String speciality;
+    public Long validaity;
+    public String region;
+    public String city;
+    public Long registrationDate;
+    public Integer addedBy;
+    public String country;
+    public String isoCountry;
+    public Integer loyaltyCatId;
+    public Integer referredBy;
+    public Byte prime;
 }

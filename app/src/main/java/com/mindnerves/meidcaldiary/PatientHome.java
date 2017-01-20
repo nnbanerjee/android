@@ -266,9 +266,10 @@ public class PatientHome extends HomeActivity
         PatientId param = new PatientId(String.valueOf(profileId));
         api.getPatientLandingPageDetails(param, new Callback<PatientProfile>() {
             @Override
-            public void success(PatientProfile patient1, Response response)
+            public void success(PatientProfile patient, Response response)
             {
-                patient = patient1;
+                personProfile = patient;
+                if(parent != null ) personProfile.setDependentProfile(true);
                 if (patient != null && patient.getPerson() != null && patient.getPerson().getImageUrl() != null)
                     new ImageLoadTask(patient.getPerson().getImageUrl(), profilePicture).execute();
                 accountName.setText(patient.getPerson().getName());

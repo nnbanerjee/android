@@ -5,9 +5,6 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -29,9 +26,6 @@ import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +41,7 @@ import Application.MyApi;
 import Model.AlarmReminderVM;
 import Model.Clinic;
 import Model.MedicineVM;
-import Model.Person;
+import Model.PersonTemp;
 import Model.PersonID;
 import Model.ReminderVM;
 import Model.SummaryHistoryVM;
@@ -381,9 +375,9 @@ public class PatientAppointmentSummary extends Fragment {
                 back.setVisibility(View.INVISIBLE);
                 profilePicture.setVisibility(View.VISIBLE);
                 accountName.setVisibility(View.VISIBLE);
-                api.getProfilePatient(patientId, new Callback<Person>() {
+                api.getProfilePatient(patientId, new Callback<PersonTemp>() {
                     @Override
-                    public void success(Person person, Response response) {
+                    public void success(PersonTemp person, Response response) {
                         new ImageLoadTask(getResources().getString(R.string.image_base_url) + person.getId(), profilePicture).execute();
                     }
 

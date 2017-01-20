@@ -15,12 +15,10 @@ import retrofit.http.Body;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
-import retrofit.http.Headers;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Query;
-import retrofit.http.QueryMap;
 import retrofit.mime.TypedFile;
 
 public interface MyApi {
@@ -287,7 +285,7 @@ public interface MyApi {
 
 
     @GET("/getProfileDoctor")
-    void getProfileDoctor(@Query("email") String email, Callback<Person> cb);
+    void getProfileDoctor(@Query("email") String email, Callback<PersonTemp> cb);
 
     @GET("/getPicture")
     void getPicture(@Query("path") String path, Callback<TypedFile> cb);
@@ -297,17 +295,17 @@ public interface MyApi {
     void picutreUpdateDoctor(@Part("picture") TypedFile file, @Part("email") String email, Callback<String> cb);
 
     @POST("/updateDoctorProfile")
-    void updateDoctorProfile(@Body Person person, Callback<String> cb);
+    void updateDoctorProfile(@Body PersonTemp person, Callback<String> cb);
 
     @GET("/getProfilePatient")
-    void getProfilePatient(@Query("email") String email, Callback<Person> cb);
+    void getProfilePatient(@Query("email") String email, Callback<PersonTemp> cb);
 
     @Multipart
     @POST("/udatePatientProfilePicture")
     void updatePatientProfilePicture(@Part("picture") TypedFile file, @Part("email") String email, Callback<String> cb);
 
     @POST("/updatePatientProfile")
-    void updatePatientProfile(@Body Person person, Callback<String> cb);
+    void updatePatientProfile(@Body PersonTemp person, Callback<String> cb);
 
     @POST("/addPatientDependentWithoutConfirmaton")
     void addPatientDependentWithoutConfirmat(@Body AddDependent a, Callback<Response> cb);

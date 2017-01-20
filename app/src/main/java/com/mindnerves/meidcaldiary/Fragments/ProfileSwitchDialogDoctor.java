@@ -23,10 +23,8 @@ import java.util.List;
 import Adapter.ProfileDelegationAdapter;
 import Adapter.ProfileDependencyAdapter;
 import Application.MyApi;
-import Model.Delegation;
 import Model.Patient;
-import Model.Person;
-import Model.ResponseVm;
+import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -69,9 +67,9 @@ public class ProfileSwitchDialogDoctor extends DialogFragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getProfileDoctor(doctorId,new Callback<Person>() {
+        api.getProfileDoctor(doctorId,new Callback<PersonTemp>() {
             @Override
-            public void success(Person person, Response response) {
+            public void success(PersonTemp person, Response response) {
                 profileName.setText(person.getName());
             }
 
