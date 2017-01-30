@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -17,15 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.medico.view.PatientProfileListView;
+import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.List;
-
 import Application.MyApi;
 import Model.AllPatients;
-import Model.DoctorProfile;
 import Utils.UtilSingleInstance;
 
 /**
@@ -151,7 +149,7 @@ public class PatientDetailsFragment extends Fragment {
         viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AllDoctorPatientAppointment();// DoctorProfileDetails();
+                Fragment fragment = new PatientVisitDatesView();// DoctorProfileDetails();
                 SharedPreferences.Editor editor = session.edit();
                 editor.putString("patientEmail", patientEmail);
                 editor.putString("doctorId", doctorId);
@@ -194,7 +192,7 @@ public class PatientDetailsFragment extends Fragment {
         closeMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AllDoctorsPatient();
+                Fragment fragment = new PatientProfileListView();
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
@@ -236,7 +234,7 @@ public class PatientDetailsFragment extends Fragment {
     public void goToBack() {
         TextView globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
         globalTv.setText("Medical Diary");
-        Fragment fragment = new AllDoctorsPatient();
+        Fragment fragment = new PatientProfileListView();
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
         final Button back = (Button) getActivity().findViewById(R.id.back_button);

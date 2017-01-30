@@ -1,7 +1,5 @@
-package Adapter;
+package com.medico.adapter;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -11,30 +9,26 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInformation;
+import com.medico.model.PatientVisits;
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import Model.Appointment;
-import Model.ClinicAppointment;
-import Model.Visit;
 import Utils.UtilSingleInstance;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 /**
  * Created by User on 6/29/15.
  */
-public class DoctorAllPatientAppointmentAdapter extends BaseAdapter implements StickyListHeadersAdapter {
+public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
     private String[] countries;
     private LayoutInflater inflater;
-    List<Visit> appointment;
+    List<PatientVisits> appointment;
     public SharedPreferences session;
     Context context;
 
-    public DoctorAllPatientAppointmentAdapter(Context context, List<Visit> appointment) {
+    public PatientVisitDatesAdapter(Context context, List<PatientVisits> appointment) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         countries = context.getResources().getStringArray(R.array.countries);
@@ -74,9 +68,9 @@ public class DoctorAllPatientAppointmentAdapter extends BaseAdapter implements S
         }
         final int pos = position;
      
-        holder.date.setText(UtilSingleInstance.getInstance().getOnlyDateFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()) );
-        holder.time.setText(UtilSingleInstance.getInstance().getOnlyTimeFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()) );
-        holder.visitType.setText(UtilSingleInstance.getUserVisitType(appointment.get(position).getVisitType()) );
+        holder.date.setText(UtilSingleInstance.getInstance().getOnlyDateFormattedInStringFormatUsingLong(appointment.get(position).dateTime) );
+        holder.time.setText(UtilSingleInstance.getInstance().getOnlyTimeFormattedInStringFormatUsingLong(appointment.get(position).dateTime) );
+        holder.visitType.setText(UtilSingleInstance.getUserVisitType(appointment.get(position).visitType) );
       //  holder.time.setText(appointment.get(position).getBookTime());
 
         return convertView;
@@ -94,7 +88,7 @@ public class DoctorAllPatientAppointmentAdapter extends BaseAdapter implements S
             holder = (HeaderViewHolder) convertView.getTag();
         }
         //set header text as first char in name
-        String headerText = "" +UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()).subSequence(7, 11);
+        String headerText = "" +UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).dateTime).subSequence(7, 11);
         holder.text.setText(headerText);
         return convertView;
     }
@@ -102,7 +96,7 @@ public class DoctorAllPatientAppointmentAdapter extends BaseAdapter implements S
     @Override
     public long getHeaderId(int position) {
         //return the first character of the country as ID because this is what headers are based upon
-        return UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).getDateTime()).subSequence(7, 11).charAt(3);
+        return UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).dateTime).subSequence(7, 11).charAt(3);
     }
 
     class HeaderViewHolder {

@@ -20,20 +20,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.Date;
 import java.util.List;
 
 import Adapter.ClinicDoctorListAdapter;
-import Adapter.ClinicListAdapter;
-import Adapter.ClinicPatientAdapter;
 import Application.MyApi;
 import Model.AppointmentSlotsByDoctor;
-import Model.Clinic;
-import Model.DoctorId;
+import com.medico.model.DoctorId;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

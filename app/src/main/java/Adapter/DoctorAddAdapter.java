@@ -19,13 +19,11 @@ import com.mindnerves.meidcaldiary.Fragments.ClinicAllDoctorFragment;
 import com.mindnerves.meidcaldiary.Fragments.DoctorDetailsFragment;
 import com.mindnerves.meidcaldiary.Fragments.PatientAllAppointment;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;

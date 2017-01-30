@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.view;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorMenusManage;
+import com.medico.model.DoctorId;
 import com.mindnerves.meidcaldiary.Fragments.DoctorProfileEdit;
 import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
@@ -26,9 +26,10 @@ import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
 import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
 import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
 import com.mindnerves.meidcaldiary.Fragments.ShowPatients;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.mindnerves.meidcaldiary.R;
 
 import Adapter.MenuAdapter;
-import Model.DoctorId;
 import Model.DoctorProfile;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -45,6 +46,7 @@ public class DoctorHome extends HomeActivity
     @Override
     protected void createView()
     {
+        parent_activity = this;
         setContentView(R.layout.doctor_home);
         //profile layout
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
@@ -81,7 +83,7 @@ public class DoctorHome extends HomeActivity
             public void onClick(View v) {
 
                 if (p != null)
-                    showPopup(com.mindnerves.meidcaldiary.DoctorHome.this, p);
+                    showPopup(DoctorHome.this, p);
             }
         });
         accountName.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +91,7 @@ public class DoctorHome extends HomeActivity
             public void onClick(View v) {
 
                 if (p != null)
-                    showPopup(com.mindnerves.meidcaldiary.DoctorHome.this, p);
+                    showPopup(DoctorHome.this, p);
             }
         });
         patients.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +159,7 @@ public class DoctorHome extends HomeActivity
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(com.mindnerves.meidcaldiary.DoctorHome.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DoctorHome.this);
                 alertDialogBuilder.setMessage("R.string.confirm_logout");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -262,7 +264,7 @@ public class DoctorHome extends HomeActivity
             public void failure(RetrofitError error) {
                 progress.dismiss();
                 error.printStackTrace();
-                Toast.makeText(com.mindnerves.meidcaldiary.DoctorHome.this, R.string.Failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DoctorHome.this, R.string.Failed, Toast.LENGTH_SHORT).show();
             }
         });
     }

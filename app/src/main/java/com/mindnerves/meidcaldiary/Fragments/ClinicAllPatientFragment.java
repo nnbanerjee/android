@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.model.PatientProfileList;
+import com.medico.view.PatientProfileListView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -24,17 +26,12 @@ import java.util.List;
 
 import Adapter.ClinicPatientAdapter;
 import Application.MyApi;
-import Model.AllClinicsByDoctorPatientId;
-import Model.AllClinicsForDoctorIdAndPatientId;
-import Model.AllPatients;
 import Model.AppointmentSlotsByDoctor;
 import Model.ClinicPatientAppointments;
-import Model.DoctorId;
+import com.medico.model.DoctorId;
 import Model.DoctorIdPatientId;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -63,7 +60,7 @@ public class ClinicAllPatientFragment extends Fragment {
         View view = inflater.inflate(R.layout.clinic_profile_fragment, container, false);
 
         Global global = (Global) getActivity().getApplicationContext();
-        List<AllPatients> allPatients = global.getAllPatients();
+        PatientProfileList allPatients = global.getAllPatients();
         back = (Button) getActivity().findViewById(R.id.back_button);
         SharedPreferences session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctorId = session.getString("id", null);
@@ -73,39 +70,39 @@ public class ClinicAllPatientFragment extends Fragment {
         toolbar.getMenu().clear();
         //toolbar.inflateMenu(R.menu.menu);
 
-        for (int i = 0; i < allPatients.size(); i++) {
-            if (patientId.equals(allPatients.get(i).getpatientId())) {
-                AllPatients patients = allPatients.get(i);
-                bookDate = patients.getBookDate();
-                bookTime = patients.getBookTime();
-                shift = patients.getShift();
-                clinicId = patients.getClinicId();
-                SharedPreferences.Editor edit = session.edit();
-                edit.putString("patient_email", patients.getEmail());
-                edit.commit();
+        for (int i = 0; i < allPatients.getPatientlist().size(); i++) {
+//            if (patientId.equals(allPatients.get(i).getpatientId())) {
+//                PatientProfileList patients = allPatients.get(i);
+//                bookDate = patients.getBookDate();
+//                bookTime = patients.getBookTime();
+//                shift = patients.getShift();
+//                clinicId = patients.getClinicId();
+//                SharedPreferences.Editor edit = session.edit();
+//                edit.putString("patient_email", patients.getEmail());
+//                edit.commit();
                 //System.out.println("doctorSearchResponse.getEmail() = "+patients.getEmail());
                 //System.out.println("doctorSearchResponse.getDoctorId() = "+doctorSearchResponse.);
             }
-        }
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-        clinicListView = (ListView) view.findViewById(R.id.clinicListView);
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        //Retrofit Initialization
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
+//        }
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                goBack();
+//            }
+//        });
+//        clinicListView = (ListView) view.findViewById(R.id.clinicListView);
+//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//        //Retrofit Initialization
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(getResources().getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+//
+//        getAllClinicsDetails();
 
-        getAllClinicsDetails();
-
-        return view;
+        return null;//view;
     }
 
     public void getAllClinicsDetails() {
@@ -166,7 +163,7 @@ public class ClinicAllPatientFragment extends Fragment {
     public void goBack() {
         TextView globalTv = (TextView) getActivity().findViewById(R.id.show_global_tv);
         globalTv.setText("Patients");
-        Fragment fragment = new AllDoctorsPatient();
+        Fragment fragment = new PatientProfileListView();
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
         final Button back = (Button) getActivity().findViewById(R.id.back_button);

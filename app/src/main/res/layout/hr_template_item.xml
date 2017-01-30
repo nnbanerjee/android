@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:id="@+id/relative_main"
-    tools:context=".HomeActivity">
+    tools:context="com.medico.view.HomeActivity">
 
     <TextView
         android:layout_width="match_parent"

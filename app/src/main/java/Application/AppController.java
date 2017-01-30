@@ -5,19 +5,14 @@ package Application;
  */
 
 import android.app.Application;
+import android.os.Build;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-
-import Model.ClinicAppointment;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
-
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.os.Build;
 
 
 

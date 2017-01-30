@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -26,7 +27,6 @@ import java.util.List;
 import Application.MyApi;
 import Model.Clinic;
 import Model.ClinicAppointment;
-import Model.ClinicDetailVm;
 import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -124,7 +124,7 @@ public class AddAppointment extends Fragment {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
                         Toast.makeText(getActivity(), "Appointment Saved Successfully !!!", Toast.LENGTH_SHORT).show();
-                        Fragment fragment = new AllDoctorPatientAppointment();
+                        Fragment fragment = new PatientVisitDatesView();
                         FragmentManager fragmentManger = getFragmentManager();
                         fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
                     }
@@ -140,7 +140,7 @@ public class AddAppointment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AllDoctorPatientAppointment();
+                Fragment fragment = new PatientVisitDatesView();
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
             }
@@ -180,7 +180,7 @@ public class AddAppointment extends Fragment {
                 }else if(bundle.getString("fragment").equals("doctorPatientListAdapter")){
                     Bundle args = new Bundle();
                     args.putString("fragment",bundle.getString("fragment"));
-                    Fragment fragment = new AllDoctorPatientAppointment();
+                    Fragment fragment = new PatientVisitDatesView();
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getActivity().getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -189,7 +189,7 @@ public class AddAppointment extends Fragment {
             }else{
                 Bundle args = new Bundle();
                 args.putString("fragment","doctor_list");
-                Fragment fragment = new AllDoctorPatientAppointment();
+                Fragment fragment = new PatientVisitDatesView();
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();

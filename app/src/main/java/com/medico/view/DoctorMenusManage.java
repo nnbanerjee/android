@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +14,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
+import com.mindnerves.meidcaldiary.Fragments.DoctorAllClinics;
+import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
 import Model.DoctorProfile;
-import Model.HomeCountDoctor;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
+import Utils.PARAM;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -68,12 +63,16 @@ public class DoctorMenusManage extends Fragment {
         patientsProfilelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-                layout.setVisibility(View.GONE);
+//                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
+//                layout.setVisibility(View.GONE);
                 System.out.println("i am here::::::::::::");
-                Fragment fragment = new AllDoctorsPatient();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
+
             }
         });
 

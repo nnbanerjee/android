@@ -20,9 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 import com.mindnerves.meidcaldiary.Utility;
 
@@ -32,7 +33,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import Adapter.ClinicAppointmentListAdapter;
-import Adapter.ClinicListAdapter;
 import Application.MyApi;
 import DB.DatabaseHandler;
 import Model.AppointmentDB;

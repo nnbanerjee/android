@@ -34,7 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mindnerves.meidcaldiary.GPSTracker;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import org.json.JSONArray;
@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import Model.DoctorSearchResponse;
 import Model.Patient;
 
 /**

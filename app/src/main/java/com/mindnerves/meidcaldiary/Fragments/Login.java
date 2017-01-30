@@ -1,11 +1,9 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,32 +11,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.DoctorHome;
+import com.medico.view.DoctorHome;
 import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
-import com.mindnerves.meidcaldiary.HomeActivity;
-import com.mindnerves.meidcaldiary.LoggingInterceptor;
-import com.mindnerves.meidcaldiary.MainActivity;
-import com.mindnerves.meidcaldiary.PatientHome;
+import com.medico.view.PatientHome;
 import com.mindnerves.meidcaldiary.R;
 import com.mindnerves.meidcaldiary.SigninActivity;
 import com.mindnerves.meidcaldiary.SigninActivityAssistance;
 import com.mindnerves.meidcaldiary.SigninActivityDoctor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Scanner;
 
 import Application.MyApi;
 import Model.Logindata;
 import Model.ResponseVm;
 import Utils.PARAM;
-import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -7,43 +7,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.google.gson.JsonObject;
-import com.mindnerves.meidcaldiary.BackStress;
+import com.mindnerves.meidcaldiary.Fragments.PatientAllClinics;
+import com.mindnerves.meidcaldiary.Fragments.PatientAllDoctors;
+import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
+import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentStatus;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import Adapter.ChatAdapter;
 import Application.MyApi;
-import Model.Chat;
-import Model.DoctorProfile;
-import Model.HomePatientCount;
-import Model.PatientAppointmentVM;
 import Model.PatientProfile;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
-
-import static com.mindnerves.meidcaldiary.R.drawable.doc;
 
 /**
  * Created by MNT on 07-Apr-15.

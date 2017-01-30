@@ -1,17 +1,13 @@
 package Utils;
 
-import android.support.v4.app.LoaderManager;
-
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 import Model.CustomProcedureTemplate;
 import Model.TreatmentPlan;
@@ -90,6 +86,18 @@ public class UtilSingleInstance {
 
         return dateText;
     }
+    public static String getDateFormattedInStringFormatUsingLong(Long longDate) {
+        String dateText = "";
+        if (longDate != null && longDate.longValue() > 0) {
+            long val = longDate.longValue();
+            Date date = new Date(val);
+            SimpleDateFormat df2 = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+            dateText = df2.format(date);
+            System.out.println(dateText);
+        }
+
+        return dateText;
+    }
 
     public static String getOnlyDateFormattedInStringFormatUsingLong(String longDate) {
         String dateText = "";
@@ -103,11 +111,35 @@ public class UtilSingleInstance {
 
         return dateText;
     }
+    public static String getOnlyDateFormattedInStringFormatUsingLong(Long longDate) {
+        String dateText = "";
+        if (longDate != null && longDate.toString().length() > 0) {
+            long val = longDate.longValue();
+            Date date = new Date(val);
+            SimpleDateFormat df2 = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            dateText = df2.format(date);
+            System.out.println(dateText);
+        }
+
+        return dateText;
+    }
 
     public static String getOnlyTimeFormattedInStringFormatUsingLong(String longDate) {
         String dateText = "";
         if (longDate != null && longDate.toString().length() > 0) {
             long val = Long.parseLong(longDate);
+            Date date = new Date(val);
+            SimpleDateFormat df2 = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+            dateText = df2.format(date);
+            System.out.println(dateText);
+        }
+
+        return dateText;
+    }
+    public static String getOnlyTimeFormattedInStringFormatUsingLong(Long longDate) {
+        String dateText = "";
+        if (longDate != null && longDate.intValue() > 0) {
+            long val = longDate.longValue();
             Date date = new Date(val);
             SimpleDateFormat df2 = new SimpleDateFormat("HH:mm a", Locale.getDefault());
             dateText = df2.format(date);
@@ -180,26 +212,27 @@ public class UtilSingleInstance {
         return retString;
     }
 
-    public static String getUserVisitType(String type) {
+    public static String getUserVisitType(byte type) {
         //  `visit_status` TINYINT(5) NULL DEFAULT NULL COMMENT '0=not visited\n1=visited\n2=unknown\n\n',
 
         String retString = "";
-        if (type.equalsIgnoreCase("new case")) {
-            retString = "0";
-        } else if (type.equalsIgnoreCase("followup")) {
-            retString = "1";
-        } else if (type.equalsIgnoreCase("reports")) {
-            retString = "2";
-        } else if (type.equalsIgnoreCase("immunisation")) {
-            retString = "3";
-        } else if (type.equalsIgnoreCase("0")) {
-            retString = "New Case";
-        } else if (type.equalsIgnoreCase("1")) {
-            retString = "FollowUp";
-        } else if (type.equalsIgnoreCase("2")) {
-            retString = "Reports";
-        } else if (type.equalsIgnoreCase("3")) {
-            retString = "Immunisation";
+        switch( type)
+        {
+            case 0:
+                retString = "New Case";
+                break;
+            case 1:
+                retString = "Follow Up";
+                break;
+            case 2:
+                retString = "Reports";
+                break;
+            case 3:
+                retString = "Immunisation";
+                break;
+            default:
+                retString = "unknown";
+
         }
         return retString;
     }

@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -244,7 +244,7 @@ public class DoctorAppointmentInformation extends Fragment {
 
     public void  goToBack(){
         //Fragment fragment = new PatientAllAppointment();
-        Fragment fragment = new AllDoctorPatientAppointment();
+        Fragment fragment = new PatientVisitDatesView();
         FragmentManager fragmentManger = getFragmentManager();
         Bundle bun = new Bundle();
         bun.putString("fragment","from appintment information");

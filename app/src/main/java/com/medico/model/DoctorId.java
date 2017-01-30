@@ -1,10 +1,12 @@
-package Model;
+package com.medico.model;
 
 /**
  * Created by Narendra on 03-02-2016.
  */
-public class DoctorId {
-    public DoctorId(String doctorId) {
+public class DoctorId
+{
+    public DoctorId(String doctorId)
+    {
         this.doctorId = doctorId;
     }
 

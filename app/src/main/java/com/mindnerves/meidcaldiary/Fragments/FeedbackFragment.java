@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientProfileListView;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
@@ -387,7 +388,7 @@ public class FeedbackFragment extends Fragment {
                 }
             }
         }else{
-            Fragment fragment = new AllDoctorsPatient();
+            Fragment fragment = new PatientProfileListView();
             globalTv.setText("Patient Information");
             FragmentManager fragmentManger = getFragmentManager();
             fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();

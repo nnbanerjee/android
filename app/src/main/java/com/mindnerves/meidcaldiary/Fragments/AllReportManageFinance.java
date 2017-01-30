@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SyncStatusObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.ParseException;
@@ -38,9 +37,7 @@ import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
-import Adapter.ManageFinanceAdapter;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Toast;
 
 import Adapter.ReportFinanceAdapter;
 import Application.MyApi;
@@ -49,8 +46,6 @@ import Model.AllTemplateVm;
 import Model.AllTreatmentPlanVm;
 import Model.Field;
 import Model.ManageFinance;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 /**
  * Created by MNT on 07-Apr-15.

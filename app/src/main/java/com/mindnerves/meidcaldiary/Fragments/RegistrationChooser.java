@@ -1,9 +1,7 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,23 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
-import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 import com.mindnerves.meidcaldiary.SigninActivity;
 import com.mindnerves.meidcaldiary.SigninActivityAssistance;
 import com.mindnerves.meidcaldiary.SigninActivityDoctor;
 
 import Application.MyApi;
-import Model.Logindata;
-import Model.ResponseVm;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by Narendra on 11-03-2016.

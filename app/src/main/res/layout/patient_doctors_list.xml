@@ -2,22 +2,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:id="@+id/add_clinic_appointment"
-        android:background="@drawable/add"
-        android:layout_margin="5dp"
-        android:layout_alignParentRight="true"
-        android:visibility="gone"
-    />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/doctorListView"
-        android:layout_below="@+id/add_clinic_appointment"
-        android:descendantFocusability="blocksDescendants"
         android:layout_margin="5dp">
 
     </ListView>

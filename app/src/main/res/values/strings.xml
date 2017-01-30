@@ -7,14 +7,12 @@
     <string name="parentDirectory">Parent Directory</string>
     <string name="fileSize">File Size</string>
     <string name="currentDir">Current Dir</string>
-    <string name = "loading_wait">Loading... Please wait...</string>
+    <string name="loading_wait">Loading... Please wait...</string>
     <string name="error_network">Network error, try later!</string>
     <string name="error_no_response">No response from Server!</string>
     <string name="error_network_http_error">Malformed Response</string>
     <string name="error_unknown">Unknown Error</string>
     <string name="error_no_data_found">No records found!</string>
-
-
 
 
     <string-array name="bloodgroup_list">
@@ -353,13 +351,13 @@
     <!--<string name = "base_url">http://li664-78.members.linode.com:8112</string>-->
     <!--<string name = "base_url">http://54.84.103.54:9000/</string>-->
     <!--<string name = "image_base_url">http://54.84.103.54:9000/</string>-->
-    <string name = "image_base_url"></string>
+    <string name="image_base_url"></string>
     <!--<string name = "base_url">http://127.0.0.1:9000/</string>-->
-<string name = "base_url">http://192.168.42.11:9000/</string>
-<!--<string name = "base_url">http://10.0.0.36:9000/</string>-->
-<!--<string name = "base_url">http://192.168.0.104:9000</string>-->
-<!--    <string name="base_url">http://192.168.1.9:9000/</string>-->
-  <!--  <string name = "base_url">http://192.168.43.136:9000/</string>-->
+    <string name="base_url">http://192.168.42.11:9000/</string>
+    <!--<string name = "base_url">http://10.0.0.36:9000/</string>-->
+    <!--<string name = "base_url">http://192.168.0.104:9000</string>-->
+    <!--    <string name="base_url">http://192.168.1.9:9000/</string>-->
+    <!--  <string name = "base_url">http://192.168.43.136:9000/</string>-->
 
 
     <string name="listcolor">#CCFFFF</string>
@@ -420,19 +418,19 @@
     </string-array>
     <string-array name="medical_report">
 
-    <item>Blood Report</item>
-    <item>Urine Report</item>
-    <item>Cancer Report</item>
-    <item>HIV Report</item>
-    <item>X-Ray Report</item>
-    <item>Skin Report</item>
-    <item>Hair Report</item>
-    <item>Eye Report</item>
-    <item>Nose Report</item>
-    <item>MRI Report</item>
-    <item>Simple Report</item>
-    <item>Ultrasound Report </item>
-</string-array>
+        <item>Blood Report</item>
+        <item>Urine Report</item>
+        <item>Cancer Report</item>
+        <item>HIV Report</item>
+        <item>X-Ray Report</item>
+        <item>Skin Report</item>
+        <item>Hair Report</item>
+        <item>Eye Report</item>
+        <item>Nose Report</item>
+        <item>MRI Report</item>
+        <item>Simple Report</item>
+        <item>Ultrasound Report </item>
+    </string-array>
     <string-array name="type_of_docs">
 
         <item>Blood Report</item>

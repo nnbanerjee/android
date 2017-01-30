@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,21 +19,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import Adapter.ShowDependentAdapter;
-import Adapter.DependencyAdapter;
-import Adapter.DependencyBasicAdapter;
-import Adapter.PatientAdapter;
 import Adapter.RequestDependentAdapter;
-import Adapter.ShowDependentAdapter;
 import Application.MyApi;
-import Model.DoctorSearchResponse;
 import Model.Patient;
 import retrofit.Callback;
 import retrofit.RestAdapter;

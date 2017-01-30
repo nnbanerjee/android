@@ -1,6 +1,5 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -24,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import Adapter.TemplateAdapter;
 import Application.MyApi;
 import Model.ShowTemplate;
-import Model.Template;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

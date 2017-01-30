@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.BackStress;
-import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
@@ -36,11 +34,8 @@ import java.util.Map;
 import Adapter.ProcedureAdapter;
 import Application.MyApi;
 import Model.CustomProcedureTemplate;
-import Model.DoctorId;
 import Model.PersonAndCategoryId;
-import Model.ShowProcedure;
 import Model.TreatmentField;
-import Model.TreatmentPlan;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;

@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorMenusManage;
+import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
 import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
@@ -37,7 +37,7 @@ import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
 import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageReminder;
 import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
-import com.mindnerves.meidcaldiary.Fragments.PatientMenusManage;
+import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Fragments.ProfileSwitchDialogDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ProfileSwitchDialogPatient;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;

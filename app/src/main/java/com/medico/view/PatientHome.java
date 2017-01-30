@@ -1,71 +1,39 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.CookieManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorMenusManage;
-import com.mindnerves.meidcaldiary.Fragments.DoctorProfileEdit;
-import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
-import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;
+import com.medico.model.PatientId;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-import com.mindnerves.meidcaldiary.Fragments.ManagePatientFragment;
-import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
 import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
-import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
-import com.mindnerves.meidcaldiary.Fragments.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
-import com.mindnerves.meidcaldiary.Fragments.ShowPatients;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
-import com.mindnerves.meidcaldiary.Fragments.ShowSpecialityDoctor;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.mindnerves.meidcaldiary.R;
 
 import Adapter.MenuAdapter;
-import Adapter.ProfileDelegationAdapter;
-import Adapter.ProfileDependencyAdapter;
-import Application.MyApi;
-import Model.Delegation;
-import Model.Dependent;
-import Model.DoctorId;
-import Model.DoctorProfile;
-import Model.PatientId;
 import Model.PatientProfile;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -79,6 +47,7 @@ public class PatientHome extends HomeActivity
 
     protected void createView()
     {
+        parent_activity = this;
         setContentView(R.layout.patient_home);
 
         //profile layout

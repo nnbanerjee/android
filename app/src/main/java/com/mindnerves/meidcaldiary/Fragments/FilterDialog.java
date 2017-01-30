@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.GPSTracker;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import org.json.JSONArray;

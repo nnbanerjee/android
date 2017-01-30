@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -28,13 +28,8 @@ import Adapter.RequestDelegationAdapter;
 import Adapter.ShowDelegationAdapter;
 import Application.MyApi;
 import Model.Delegation;
-import Model.RemoveDelegate;
-import Model.RemoveDelegateElement;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by User on 8/13/15.

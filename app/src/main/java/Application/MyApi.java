@@ -3,6 +3,11 @@ package Application; /**
  */
 
 import com.google.gson.JsonObject;
+import com.medico.model.DoctorId;
+import com.medico.model.PatientId;
+import com.medico.model.ProfileId;
+import com.medico.model.PatientShortProfile;
+import com.medico.model.PatientVisits;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -484,12 +489,12 @@ public interface MyApi {
     void verifyCodeForNewRegistration(@Body VerifyRegistrationMobileEmailCode verifyRegistrationMobileEmailCode, Callback<ResponseVerifyRegistrationMobileEmailCode> cb);
 
     @POST("/getPatientProfileList")
-    void getPatientProfileList(@Body DoctorId param, Callback<List<AllPatients>> callback);
+    void getPatientProfileList(@Body DoctorId param, Callback<List<PatientShortProfile>> callback);
 
 
 
     @POST("/getProfile")
-    void getProfile(@Body profileId param, Callback<AllPatients> callback);
+    void getProfile(@Body ProfileId param, Callback<AllPatients> callback);
 
 
     @POST("/getClinicsByDoctor")
@@ -503,8 +508,8 @@ public interface MyApi {
     @POST("/cancelAppointment")
     void cancelAppointment(@Body AppointmentId appointmentId, Callback<ResponseCodeVerfication> cb);
 
-    @POST("/getPatientVisitDatesByDoctor")
-    void getPatientVisitDatesByDoctor(@Body DoctorIdPatientId param,Callback<  VisitHistory> response);
+    @POST("/getPatientVisitDatesByDoctor1")
+    void getPatientVisitDatesByDoctor1(@Body DoctorIdPatientId param,Callback<List<PatientVisits>> response);
 
 
     @POST("/getClinicSlotAvailabilityByDoctor")

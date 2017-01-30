@@ -25,28 +25,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.medico.view.PatientProfileListView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import Adapter.ClinicListItemAdapter;
 import Adapter.ClinicTimeTableAdapter;
-import Application.AppController;
 import Application.MyApi;
-import Model.AllPatients;
 import Model.AppointmentId;
-import Model.AppointmentSlotsByDoctor;
-import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
 import Model.ClinicList;
 import Model.DoctorAppointmentsResponse;
@@ -889,7 +881,7 @@ public class ClinicAppointmentFragment extends Fragment {
                 //fragmentManger.popBackStack();
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             } else if (args.getString("fragment").equals("DoctorPatientAdapter")) {
-                Fragment fragment = new AllDoctorsPatient();
+                Fragment fragment = new PatientProfileListView();
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }

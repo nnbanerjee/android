@@ -18,31 +18,21 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
 import Adapter.RequestDelegationAdapter;
-import Adapter.RequestDependentAdapter;
 import Adapter.ShowDelegationAdapter;
-import Adapter.ShowDependentAdapter;
 import Application.MyApi;
-import Model.AddDelegate;
-import Model.AddDelegateElement;
 import Model.Delegation;
-import Model.Patient;
-import Model.RemoveDelegate;
-import Model.RemoveDelegateElement;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by MNT on 16-Mar-15.

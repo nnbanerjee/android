@@ -26,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientProfileListView;
+import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -46,11 +48,9 @@ import Model.AddDiagnosisTestRequest;
 import Model.AlarmReminderVM;
 import Model.Clinic;
 import Model.CreateSummary;
-import Model.MedicineId;
 import Model.MedicinePrescribed;
 import Model.MedicineVM;
 import Model.PersonID;
-import Model.ReminderVM;
 import Model.ResponseCodeVerfication;
 import Model.SummaryHistoryVM;
 import Model.SummaryRequest;
@@ -589,10 +589,10 @@ public class DoctorAppointmentSummary extends Fragment {
             }
         }
         if(fragmentCall.equalsIgnoreCase("DoctorPatientAdapter")||fragmentCall.equalsIgnoreCase("doctorPatientListAdapter") ){
-            fragment = new AllDoctorsPatient();
+            fragment = new PatientProfileListView();
 
         }else{
-            fragment = new AllDoctorPatientAppointment();
+            fragment = new PatientVisitDatesView();
         }
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();

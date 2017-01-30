@@ -19,17 +19,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.DoctorAdapter;
 import Adapter.DoctorListAdapter;
 import Application.MyApi;
-import Model.Chat;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;

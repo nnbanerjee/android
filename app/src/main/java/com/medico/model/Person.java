@@ -1,4 +1,4 @@
-package Model;
+package com.medico.model;
 
 /**
  * Created by Narendra on 20-01-2017.

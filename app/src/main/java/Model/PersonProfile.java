@@ -1,5 +1,7 @@
 package Model;
 
+import com.medico.model.Person;
+
 import java.util.List;
 
 public interface PersonProfile

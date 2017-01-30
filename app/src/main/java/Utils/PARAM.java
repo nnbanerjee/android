@@ -22,6 +22,12 @@ public interface PARAM
     public static final String LOGGED_IN_USER_ROLE = "role";
     public static final String LOGGED_IN_USER_STATUS = "status";
 
+    public static final String DOCTOR_ID = "dictorId";
+    public static final String PATIENT_ID = "patientId";
+    public static final String CLINIC_ID = "clinicId";
+    public static final String APPOINTMENT_DATE = "appointment_date";
+    public static final String APPOINTMENT_TIME = "appointment_time";
+
     public static final String DEPENDENT_ID = "dependentId";
     public static final String DEPENDENT_ROLE = "dependent_role";
     public static final String DEPENDENT_STATUS = "dependent_status";

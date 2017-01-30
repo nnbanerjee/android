@@ -16,21 +16,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
+import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import Adapter.DoctorAllPatientAppointmentAdapter;
 import Application.MyApi;
-import Model.Appointment;
 import Model.AppointmentId;
 import Model.DoctorNotesResponse;
-import Model.DoctorNotesVM;
-import Model.ReminderVM;
 import Model.ResponseCodeVerfication;
 import Utils.MedicoCustomErrorHandler;
 import Utils.UtilSingleInstance;
@@ -159,7 +154,7 @@ public class DoctorAppointmentDoctorNote extends Fragment {
 
     public void  goToBack(){
         Fragment fragment;
-        fragment = new AllDoctorPatientAppointment();
+        fragment = new PatientVisitDatesView();
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
     }

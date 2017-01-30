@@ -1,16 +1,12 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,19 +19,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.BackStress;
-import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.DependencyAdapter;
-import Adapter.DoctorAdapter;
 import Adapter.DoctorAddAdapter;
 import Application.MyApi;
-import Model.Doctor;
 import Model.DoctorSearchResponse;
-import Model.Patient;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

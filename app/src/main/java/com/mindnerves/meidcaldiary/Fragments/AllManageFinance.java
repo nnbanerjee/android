@@ -16,13 +16,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.HomeActivity;
+import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.ParseException;
@@ -32,15 +32,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Adapter.DoctorAllPatientAppointmentAdapter;
-import Adapter.DoctorPatientListAdapter;
 import Adapter.ManageFinanceAdapter;
 import Application.MyApi;
-import Model.AllPatients;
 import Model.AllProcedureVm;
 import Model.AllTemplateVm;
 import Model.AllTreatmentPlanVm;
-import Model.ClinicAppointment;
 import Model.Field;
 import Model.ManageFinance;
 import retrofit.Callback;

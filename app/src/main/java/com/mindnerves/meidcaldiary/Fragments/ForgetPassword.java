@@ -3,7 +3,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,11 +11,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
-import Model.Logindata;
 import Model.ResponseVm;
 import Model.forgotPassword;
 import retrofit.Callback;

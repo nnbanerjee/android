@@ -5,6 +5,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.multidex.MultiDex;
 
+import com.medico.model.PatientProfileList;
+import com.medico.model.PatientShortProfile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +50,7 @@ public class Global extends Application {
    public  List<Field> removeFieldList = new ArrayList<Field>();
    private String location = "";
    private List<DoctorSearchResponse> doctorSearchResponses;
-   private List<AllPatients> allPatients;
+   private PatientProfileList allPatients;
 
    private List<DoctorSearchResponse> allPatientOfDoctor;
    private String timeText;
@@ -274,11 +277,11 @@ public class Global extends Application {
         this.allPatientOfDoctor = allPatientOfDoctor;
     }
 
-    public List<AllPatients> getAllPatients() {
+    public PatientProfileList getAllPatients() {
         return allPatients;
     }
 
-    public void setAllPatients(List<AllPatients> allPatients) {
+    public void setAllPatients(PatientProfileList allPatients) {
         this.allPatients = allPatients;
     }
 

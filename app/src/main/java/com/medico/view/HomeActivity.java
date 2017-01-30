@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,12 +28,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
+import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +59,10 @@ import retrofit.client.OkClient;
 
 public abstract class HomeActivity extends Activity implements PARAM
 {
-    protected int profileRole = PATIENT;
-    protected int profileId = 0;
-    protected int profileStatus = UNREGISTERED;
+    public static HomeActivity parent_activity = null;
+    public int profileRole = PATIENT;
+    public int profileId = 0;
+    public int profileStatus = UNREGISTERED;
 
     protected SharedPreferences session = null;
     protected PersonProfile parent = null;
@@ -188,7 +191,7 @@ public abstract class HomeActivity extends Activity implements PARAM
             depends.add(patient);
         }
 
-        dependentAdapter = new ProfileDependencyAdapter(com.mindnerves.meidcaldiary.HomeActivity.this, depends);
+        dependentAdapter = new ProfileDependencyAdapter(HomeActivity.this, depends);
         dependentList.setAdapter(dependentAdapter);
 
         profileName.setOnClickListener(new View.OnClickListener(){
@@ -259,7 +262,7 @@ public abstract class HomeActivity extends Activity implements PARAM
             patient.setName("No Dependent Found");
             delegates.add(patient);
         }
-        delegationAdapter = new ProfileDelegationAdapter(com.mindnerves.meidcaldiary.HomeActivity.this, delegates);
+        delegationAdapter = new ProfileDelegationAdapter(HomeActivity.this, delegates);
         delegationList.setAdapter(delegationAdapter);
 
         dependentList.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -438,7 +441,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                     public void intercept(RequestInterceptor.RequestFacade request) {
                         // assuming `cookieKey` and `cookieValue` are not null
                         String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
-//                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
+                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
                     }
                 })
                 .setEndpoint(this.getResources().getString(R.string.base_url))
@@ -496,7 +499,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     {
         dList.setSelection(position);
         dLayout.closeDrawer(dList);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(com.mindnerves.meidcaldiary.HomeActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
         alertDialogBuilder.setMessage(R.string.confirm_logout);
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -518,6 +521,11 @@ public abstract class HomeActivity extends Activity implements PARAM
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public static HomeActivity getParentAtivity()
+    {
+        return parent_activity;
     }
 
 }

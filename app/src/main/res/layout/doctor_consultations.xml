@@ -1,5 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent">
 
@@ -14,28 +15,13 @@
         android:id="@+id/layout1"
         android:layout_marginTop="20dp">
 
-    <ImageButton
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_margin="10dp"
-        android:id="@+id/doctorImg"
-        android:background="@drawable/doctor"
-        />
-    <RelativeLayout
+        <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/doctorImg">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="Doctor Consultations"
-            style="@style/sub_heading"
-            android:id="@+id/doctorBtn"
-            android:textColor="#000000"
-        />
-        <ImageView
+            <ImageView
             android:layout_width="10dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
@@ -83,16 +69,42 @@
             android:layout_toRightOf="@+id/lastAppointmentDate"
             android:layout_below="@+id/view1"/>
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Doctor Consultations"
+                style="@style/sub_heading"
+                android:id="@+id/doctorBtn"
+                android:textColor="#000000"
+                android:layout_alignBaseline="@+id/doctor_count"
+                android:layout_alignBottom="@+id/doctor_count"
+                android:layout_toRightOf="@+id/view1"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp" />
 
-</RelativeLayout>
+        </RelativeLayout>
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/doctorImg"
+            android:background="@drawable/doctor_consultation"
+            android:layout_marginLeft="13dp"
+            android:layout_alignBottom="@+id/relativeLayout3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="13dp" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout1"
         android:id="@+id/layout2"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/layout1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -102,27 +114,12 @@
             android:id="@+id/view1"
             ></View>
 
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="10dp"
-            android:id="@+id/diagnosticImg"
-            android:background="@drawable/labs"
-            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@+id/diagnosticImg">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="Diagnostic Clinics and Labs"
-                style="@style/sub_heading"
-                android:id="@+id/diagnosticText"
-                android:textColor="#000000"
-                />
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="15dp"
@@ -141,33 +138,164 @@
                 style="@style/body2"
                 android:id="@+id/clinic_count"
                 />
-            <View
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/diagnosticImg"
+                android:background="@drawable/manage_appointment"
+                tools:background="@drawable/manage_appointment"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp" />
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/diagnosticText"
-                android:background="#a0a0a0"
-                android:id="@+id/view2"
-                android:visibility="gone"
-                ></View>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last Visited"
-                android:visibility="gone"
-                android:textColor="#1E90FF"
-                android:layout_below="@+id/view2"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Consultation History"
-                android:layout_marginLeft="10dp"
-                android:textColor="#1E90FF"
-                android:visibility="gone"
-                android:layout_toRightOf="@+id/lastAppointmentDate"
-                android:layout_below="@+id/view2"/>
+                android:layout_height="30dp"
+                android:text="Manage Appointments"
+                style="@style/sub_heading"
+                android:id="@+id/diagnosticText"
+                android:textColor="#000000"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/diagnosticImg"
+                android:layout_toEndOf="@+id/diagnosticImg"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp" />
 
         </RelativeLayout>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout4"
+        android:id="@+id/layout5"
+        android:layout_marginTop="20dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_blue_default"
+            android:visibility="visible"
+            android:id="@+id/view1"
+            ></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/appointmentsImg">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/right_arrow_black"
+                android:id="@+id/right_arrow_appointments"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:layout_toLeftOf="@+id/right_arrow_appointments"
+                android:text="0"
+                style="@style/body2"
+                android:id="@+id/appointment_count"
+                />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Feedback Awaited"
+                android:textColor="#1E90FF"
+                android:id="@+id/FeedbackText"
+                android:textSize="8sp"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:layout_below="@+id/view5"/>
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Upcoming Appointments"
+                android:layout_marginLeft="8dp"
+                android:textColor="#1E90FF"
+                android:id="@+id/upcomingText"
+                android:textSize="8sp"
+                android:visibility="gone"
+                android:paddingBottom="5dp"
+                android:layout_toRightOf="@+id/FeedbackText"
+                android:layout_below="@+id/view5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Appointments"
+                android:layout_marginLeft="8dp"
+                android:textColor="#1E90FF"
+                android:id="@+id/appoText"
+                android:textSize="8sp"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/upcomingText"
+                android:layout_below="@+id/view5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="History"
+                android:layout_marginLeft="8dp"
+                android:textColor="#1E90FF"
+                android:textSize="8sp"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/appoText"
+                android:layout_below="@+id/view5"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/appointmentsText"
+                android:background="#a0a0a0"
+                android:id="@+id/view5"
+                android:visibility="gone"
+                ></View>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Medicine Alarms"
+                style="@style/sub_heading"
+                android:id="@+id/appointmentsText"
+                android:textColor="#000000"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/FeedbackText"
+                android:layout_toEndOf="@+id/FeedbackText" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_blue_default"
+            android:visibility="visible"
+            android:id="@+id/view1"
+            ></View>
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/appointmentsImg"
+            android:background="@drawable/medicine_alarm"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -251,124 +379,6 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout4"
-        android:id="@+id/layout5"
-        android:layout_marginTop="20dp">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_blue_default"
-            android:visibility="visible"
-            android:id="@+id/view1"
-            ></View>
-
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="10dp"
-            android:id="@+id/appointmentsImg"
-            android:background="@drawable/appointments"
-            />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@+id/appointmentsImg">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="Appointments"
-                style="@style/sub_heading"
-                android:id="@+id/appointmentsText"
-                android:textColor="#000000"
-                />
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="15dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/right_arrow_black"
-                android:id="@+id/right_arrow_appointments"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="3dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:layout_toLeftOf="@+id/right_arrow_appointments"
-                android:text="0"
-                style="@style/body2"
-                android:id="@+id/appointment_count"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/appointmentsText"
-                android:background="#a0a0a0"
-                android:id="@+id/view5"
-                android:visibility="gone"
-                ></View>
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="Feedback Awaited"
-                android:textColor="#1E90FF"
-                android:id="@+id/FeedbackText"
-                android:textSize="8sp"
-                android:paddingBottom="5dp"
-                android:visibility="gone"
-                android:layout_below="@+id/view5"/>
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="Upcoming Appointments"
-                android:layout_marginLeft="8dp"
-                android:textColor="#1E90FF"
-                android:id="@+id/upcomingText"
-                android:textSize="8sp"
-                android:visibility="gone"
-                android:paddingBottom="5dp"
-                android:layout_toRightOf="@+id/FeedbackText"
-                android:layout_below="@+id/view5"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Appointments"
-                android:layout_marginLeft="8dp"
-                android:textColor="#1E90FF"
-                android:id="@+id/appoText"
-                android:textSize="8sp"
-                android:visibility="gone"
-                android:layout_toRightOf="@+id/upcomingText"
-                android:layout_below="@+id/view5"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"
-                android:layout_marginLeft="8dp"
-                android:textColor="#1E90FF"
-                android:textSize="8sp"
-                android:visibility="gone"
-                android:layout_toRightOf="@+id/appoText"
-                android:layout_below="@+id/view5"/>
-
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_blue_default"
-            android:visibility="visible"
-            android:id="@+id/view1"
-            ></View>
     </RelativeLayout>
 
     <RelativeLayout
