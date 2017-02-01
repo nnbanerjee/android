@@ -1,12 +1,12 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
-import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
@@ -23,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
+import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 import com.medico.model.AppointmentId1;
 import com.medico.model.ProfileId;
 import com.medico.view.ParentFragment;
@@ -44,7 +45,6 @@ import Model.Clinic;
 import Model.ResponseCodeVerfication;
 import Model.SummaryResponse;
 import Model.SummaryResponse.MedicinePrescribed;
-import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -69,7 +69,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     Button timeBtn;
     private Spinner clinicSpinner;
 //    private Toolbar toolbar;
-    DatePickerDialog pickerDialog;
+    SlideDateTimePicker pickerDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -324,10 +324,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         {
             Bundle bundle1 = getActivity().getIntent().getExtras();
             Calendar calender = Calendar.getInstance();
-            DatePicker picker = pickerDialog.getDatePicker();
-            calender.set(Calendar.YEAR,picker.getYear());
-            calender.set(Calendar.MONTH, picker.getMonth());
-            calender.set(Calendar.HOUR_OF_DAY,picker.getDayOfMonth());
+            DateFormat.getInstance().parse(visitedDate.getText().toString());
             SummaryResponse createSummary = new SummaryResponse();
             createSummary.visitType = new Integer(visit.getSelectedItemPosition()).byteValue();
             createSummary.referredBy = (referedBy.getText().toString());
@@ -356,19 +353,38 @@ public class DoctorAppointmentSummary extends ParentFragment {
     public void setDate() {
         final Calendar calendar = Calendar.getInstance();
 
-        DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+        SlideDateTimeListener listener = new SlideDateTimeListener() {
+
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                visitedDate.setText(calendar.get(Calendar.YEAR)+"-"+ UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            public void onDateTimeSet(Date date)
+            {
+                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+                visitedDate.setText(format.format(date));
             }
 
         };
-        pickerDialog = new DatePickerDialog(getActivity(), d, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
+                .setListener(listener)
+                .setInitialDate(new Date())
+                .build();
         pickerDialog.show();
     }
+//    public void setDate() {
+//        final Calendar calendar = Calendar.getInstance();
+//
+//        DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                calendar.set(Calendar.YEAR, year);
+//                calendar.set(Calendar.MONTH, monthOfYear);
+//                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                visitedDate.setText(calendar.get(Calendar.YEAR)+"-"+ UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+//            }
+//
+//        };
+//        pickerDialog = new DatePickerDialog(getActivity(), d, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+//        pickerDialog.show();
+//    }
 
     public void getHistryData(final int histryString)
     {
@@ -445,7 +461,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         System.out.println("In doctor Login ");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(summaryResponse.getVisitDate());
-        visitedDate.setText(DateFormat.getInstance().format(new Date(summaryResponse.getVisitDate())));
+        visitedDate.setText(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT).format(new Date(summaryResponse.getVisitDate())));
         referedBy.setText(summaryResponse.getReferredBy());
         clinicValue.setText(summaryResponse.clinicName);
         symptomsValue.setText(summaryResponse.getSymptoms());
