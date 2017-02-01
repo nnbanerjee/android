@@ -1,10 +1,7 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
-import com.mindnerves.meidcaldiary.Fragments.ShowClinic;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
-
 
 import Model.Clinic;
 
@@ -83,10 +77,10 @@ public class ClinicAdapter extends BaseAdapter {
                 System.out.println("Doc " + clinic.toString());
 
                 if (cb.isChecked()) {
-                    clinic.setSelected(true);
-                    System.out.println("Doctor Object Value " + clinic.isSelected());
+                    cb.setSelected(true);
+                    System.out.println("Doctor Object Value " + cb.isSelected());
                 } else {
-                    clinic.setSelected(false);
+                    cb.setSelected(false);
                 }
 
 
@@ -96,7 +90,7 @@ public class ClinicAdapter extends BaseAdapter {
         convertView.setTag(clinicList);
         final Clinic cl = clinicList.get(position);
 
-        System.out.println("Value of Doc "+cl.isSelected());
+        System.out.println("Value of Doc "+checkBox.isSelected());
 
         if((cl.getClinicName()).equals("No Clinic Found"))
         {
@@ -107,7 +101,7 @@ public class ClinicAdapter extends BaseAdapter {
         }
         else
         {
-            if(cl.isSelected()){
+            if(checkBox.isSelected()){
                 checkBox.setChecked(true);
             }  else {
                 checkBox.setChecked(false);

@@ -1,5 +1,7 @@
 package Model;
 
+import com.medico.model.Delegation;
+import com.medico.model.Dependent;
 import com.medico.model.Person;
 
 import java.util.List;

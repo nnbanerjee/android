@@ -1,6 +1,6 @@
-package Model;
+package com.medico.model;
 
-public class Dependent {
+public class Delegation {
 
     private int id;
     private String name;

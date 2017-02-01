@@ -12,8 +12,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Model.Dependent;
-import Model.Patient;
+import com.medico.model.Dependent;
 
 /**
  * Created by User on 8/19/15.

@@ -24,18 +24,14 @@ import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Adapter.DelegateAdapter;
-import Adapter.DependencyAdapter;
 import Application.MyApi;
 import Model.AddDelegate;
 import Model.AddDelegateElement;
-import Model.AddDependent;
-import Model.AddDependentElement;
-import Model.Delegation;
+
+import com.medico.model.Delegation;
 import Model.GetDelegate;
-import Model.Patient;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

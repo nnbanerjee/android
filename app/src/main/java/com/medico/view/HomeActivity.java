@@ -28,6 +28,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.medico.model.Delegation;
+import com.medico.model.Dependent;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
@@ -44,8 +46,6 @@ import Adapter.MenuAdapter;
 import Adapter.ProfileDelegationAdapter;
 import Adapter.ProfileDependencyAdapter;
 import Application.MyApi;
-import Model.Delegation;
-import Model.Dependent;
 import Model.DoctorProfile;
 import Model.PersonProfile;
 import Utils.PARAM;

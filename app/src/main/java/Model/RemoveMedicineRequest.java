@@ -5,40 +5,30 @@ package Model;
  */
 public class RemoveMedicineRequest {
     //{"medicineId":8,"loggedinUserId":104,"userType":1}
-    private String medicineId;
+    private Integer medicineId;
 
-    public RemoveMedicineRequest(String medicineId, String loggedinUserId, String userType) {
+    public RemoveMedicineRequest(Integer medicineId, Integer loggedinUserId) {
         this.medicineId = medicineId;
         this.loggedinUserId = loggedinUserId;
-        this.userType = userType;
     }
 
-    private String loggedinUserId;
+    private Integer loggedinUserId;
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public String getMedicineId() {
+    public Integer getMedicineId() {
         return medicineId;
     }
 
-    public void setMedicineId(String medicineId) {
+    public void setMedicineId(Integer medicineId) {
         this.medicineId = medicineId;
     }
 
-    public String getLoggedinUserId() {
+    public Integer getLoggedinUserId() {
         return loggedinUserId;
     }
 
-    public void setLoggedinUserId(String loggedinUserId) {
+    public void setLoggedinUserId(Integer loggedinUserId) {
         this.loggedinUserId = loggedinUserId;
     }
 
-    private String userType;
 
 }

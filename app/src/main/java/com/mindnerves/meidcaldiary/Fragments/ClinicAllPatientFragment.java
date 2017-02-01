@@ -29,7 +29,7 @@ import Application.MyApi;
 import Model.AppointmentSlotsByDoctor;
 import Model.ClinicPatientAppointments;
 import com.medico.model.DoctorId;
-import Model.DoctorIdPatientId;
+import com.medico.model.DoctorIdPatientId;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

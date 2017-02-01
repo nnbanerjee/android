@@ -6,15 +6,15 @@ package Model;
 public class RemovePatientTestRequest {
     //{"patientTestId": 3,"loggedinUserId":104,"userType":1}
 
-    private String patientTestId;
+    private Integer patientTestId;
 
-    public RemovePatientTestRequest(String patientTestId, String loggedinUserId, String userType) {
+    public RemovePatientTestRequest(Integer patientTestId, Integer loggedinUserId) {
         this.patientTestId = patientTestId;
         this.loggedinUserId = loggedinUserId;
         this.userType = userType;
     }
 
-    private String loggedinUserId;
+    private Integer loggedinUserId;
 
     public String getUserType() {
         return userType;
@@ -24,19 +24,19 @@ public class RemovePatientTestRequest {
         this.userType = userType;
     }
 
-    public String getPatientTestId() {
+    public Integer getPatientTestId() {
         return patientTestId;
     }
 
-    public void setPatientTestId(String patientTestId) {
+    public void setPatientTestId(Integer patientTestId) {
         this.patientTestId = patientTestId;
     }
 
-    public String getLoggedinUserId() {
+    public Integer getLoggedinUserId() {
         return loggedinUserId;
     }
 
-    public void setLoggedinUserId(String loggedinUserId) {
+    public void setLoggedinUserId(Integer loggedinUserId) {
         this.loggedinUserId = loggedinUserId;
     }
 

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.medico.adapter.PatientVisitDatesAdapter;
+import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientVisits;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInformation;
 import com.mindnerves.meidcaldiary.Global;
@@ -24,7 +25,6 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Model.DoctorIdPatientId;
 import Utils.PARAM;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
@@ -139,9 +139,17 @@ public class PatientVisitDatesView extends ParentFragment
 
                 //appointments
                 //Fragment fragment = new DoctorAppointmentSummary();
+                Bundle bun = getActivity().getIntent().getExtras();
+                PatientVisits visits = (PatientVisits)parent.getAdapter().getItem(position);
+                bun.putInt(PARAM.APPOINTMENT_ID, visits.getAppointmentId());
+                bun.putLong(PARAM.APPOINTMENT_DATETIME, visits.getDateTime());
+                bun.putString(PARAM.REFERRED_BY, visits.getReferredBy());
+                bun.putString(PARAM.CLINIC_NAME, visits.getClinicName());
+                getActivity().getIntent().putExtras(bun);
                 Fragment fragment = new DoctorAppointmentInformation();
+                fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
 

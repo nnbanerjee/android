@@ -5,14 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,11 +21,9 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Application.MyApi;
-import Model.MedicinePrescribed;
-import Model.ReminderVM;
 import Model.RemoveMedicineRequest;
 import Model.ResponseCodeVerfication;
-import Utils.UtilSingleInstance;
+import Model.SummaryResponse.MedicinePrescribed;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -43,20 +38,18 @@ public class MedicineAdapter extends BaseAdapter {
     List<MedicinePrescribed> alarms;
     LayoutInflater inflater;
     ViewHolder mHolder = null;
-    ReminderVM reminder;
+//    ReminderVM reminder;
     MyApi api;
-    private String doctorId;
     SharedPreferences session;
     ProgressDialog progress;
-    private String type;
+    private int loggedInUserId;
 
-    public MedicineAdapter(Activity activity, List<MedicinePrescribed> alarms, ReminderVM reminder) {
+    public MedicineAdapter(Activity activity, List<MedicinePrescribed> alarms, int userId) {
         this.activity = activity;
         this.alarms = alarms;
-        this.reminder = reminder;
+//        this.reminder = reminder;
         session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        doctorId = session.getString("id", "0");
-        type = UtilSingleInstance.getUserType(session.getString("loginType", null));
+        loggedInUserId = userId;
     }
 
     @Override
@@ -91,14 +84,14 @@ public class MedicineAdapter extends BaseAdapter {
             mHolder.medicineName = (TextView) convertView.findViewById(R.id.medicine_name);
             mHolder.alarm = (ImageView) convertView.findViewById(R.id.alarm_button);
             mHolder.remove = (ImageView) convertView.findViewById(R.id.close_button);
-            if (alarms.get(position) != null && alarms.get(position).getMedicineName() != null && alarms.get(position).getMedicineName().equals("No Medicine")) {
-                mHolder.medicineName.setText(alarms.get(position).getMedicineName());
+            if (alarms.get(position) != null && alarms.get(position).medicineName != null && alarms.get(position).medicineName.equals("No Medicine")) {
+                mHolder.medicineName.setText(alarms.get(position).medicineName);
                 mHolder.alarm.setVisibility(View.GONE);
                 mHolder.remove.setVisibility(View.GONE);
             } else
-                mHolder.medicineName.setText(alarms.get(position).getMedicineName());
+                mHolder.medicineName.setText(alarms.get(position).medicineName);
 
-            if (alarms.get(position) != null && alarms.get(position).getReminder() != null && alarms.get(position).getReminder().equalsIgnoreCase("0")) {
+            if (alarms.get(position) != null && alarms.get(position).reminder != null && alarms.get(position).reminder.intValue() == 0) {
                 mHolder.alarm.setVisibility(View.INVISIBLE);
             }else{
                 mHolder.alarm.setVisibility(View.VISIBLE);
@@ -109,7 +102,7 @@ public class MedicineAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     int getPosition = (Integer) v.getTag();
                     MedicinePrescribed medicineVm = alarms.get(getPosition);
-                    if (!medicineVm.getMedicineName().equals("No Medicine")) {
+                    if (!medicineVm.medicineName.equals("No Medicine")) {
                         Bundle args = new Bundle();
                       /*  args.putString("visitedDate", medicineVm.g.getVisitDate());
                         args.putString("visit", medicineVm.visitType);
@@ -117,7 +110,7 @@ public class MedicineAdapter extends BaseAdapter {
                         args.putString("symptomsValue", medicineVm.symptoms);
                         args.putString("diagnosisValue", medicineVm.diagnosis);
                         args.putString("testPrescribedValue", medicineVm.testsPrescribed);*/
-                        args.putString("medicinName", medicineVm.getMedicineName());
+                        args.putString("medicinName", medicineVm.medicineName);
 
                         Fragment fragment = new PatientMedicinReminder();
                         fragment.setArguments(args);
@@ -163,11 +156,11 @@ public class MedicineAdapter extends BaseAdapter {
                     //{"medicineId":8,"loggedinUserId":104,"userType":1}
                     int getPosition = (Integer) v.getTag();
                     final MedicinePrescribed medicineVm = alarms.get(getPosition);
-                    if (!medicineVm.getMedicineName().equals("No Medicine")) {
+                    if (!medicineVm.medicineName.equals("No Medicine")) {
                         progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
                         // System.out.println("alarm size= "+medicineVm.alarms.size());
                         // reminder.alarmReminderVMList = medicineVm.alarms;
-                        RemoveMedicineRequest removeMedicineRequest = new RemoveMedicineRequest(alarms.get(getPosition).getMedicineId(), doctorId, type);
+                        RemoveMedicineRequest removeMedicineRequest = new RemoveMedicineRequest(alarms.get(getPosition).medicineId, loggedInUserId);
 
 
                         api.removePatientMedicine(removeMedicineRequest, new Callback<ResponseCodeVerfication>() {

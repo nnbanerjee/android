@@ -32,4 +32,8 @@ public interface PARAM
     public static final String DEPENDENT_ROLE = "dependent_role";
     public static final String DEPENDENT_STATUS = "dependent_status";
     public static final String PARENT = "parent_activity";
+    public static final String APPOINTMENT_ID = "appointmentId";
+    public static final String APPOINTMENT_DATETIME = "appointment_datetime";
+    public static final String REFERRED_BY = "referred_by";
+    public static final String CLINIC_NAME = "clinic_name";
 }

@@ -3,7 +3,8 @@ package Model;
 /**
  * Created by Narendra on 15-03-2016.
  */
-public class VisitEditLogRequest {
+public class VisitEditLogRequest
+{
     public VisitEditLogRequest(String appointmentId, int typeOfLog) {
         this.appointmentId = appointmentId;
         this.typeOfLog = typeOfLog;

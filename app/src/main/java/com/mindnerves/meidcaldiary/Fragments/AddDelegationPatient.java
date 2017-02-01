@@ -29,7 +29,7 @@ import Adapter.DelegateAdapter;
 import Application.MyApi;
 import Model.AddDelegate;
 import Model.AddDelegateElement;
-import Model.Delegation;
+import com.medico.model.Delegation;
 import Model.GetDelegate;
 import retrofit.Callback;
 import retrofit.RestAdapter;

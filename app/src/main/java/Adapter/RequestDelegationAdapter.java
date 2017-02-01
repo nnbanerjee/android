@@ -10,28 +10,18 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
 import Application.MyApi;
-import Model.AddConfirmDeny;
-import Model.AddConfirmDenyDelegate;
-import Model.AddDelegateElement;
-import Model.AddDependent;
-import Model.AddDependentElement;
-import Model.Delegation;
-import Model.Patient;
-import retrofit.Callback;
+
+import com.medico.model.Delegation;
+
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by MNT on 19-Mar-15.

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.multidex.MultiDex;
 
+import com.medico.model.Delegation;
 import com.medico.model.PatientProfileList;
-import com.medico.model.PatientShortProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
 import Model.ClinicPatientAppointments;
-import Model.Delegation;
 import Model.DoctorSearchResponse;
 import Model.Field;
 import Model.FileUpload;
@@ -30,7 +29,6 @@ import Model.PatientClinic;
 import Model.ReminderVM;
 import Model.Schedule;
 import Model.ShowTemplate;
-import Model.Template;
 
 
 /**

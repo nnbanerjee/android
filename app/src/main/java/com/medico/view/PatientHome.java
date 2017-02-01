@@ -232,7 +232,7 @@ public class PatientHome extends HomeActivity
     {
         super.onStart();
         progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
-        PatientId param = new PatientId(String.valueOf(profileId));
+        PatientId param = new PatientId(profileId);
         api.getPatientLandingPageDetails(param, new Callback<PatientProfile>() {
             @Override
             public void success(PatientProfile patient, Response response)

@@ -257,10 +257,10 @@
 
     <string name="select_visit_type">Selct Visitor Type</string>
     <string-array name="visit_type_list">
-        <item>New Profile</item>
-        <item>Regular Visit</item>
-        <item>Follow Up</item>
-        <item>Physical Exam</item>
+        <item>New Case</item>
+        <item>Follow up</item>
+        <item>Reports</item>
+        <item>Immunization</item>
 
     </string-array>
 

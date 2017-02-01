@@ -6,6 +6,7 @@ import android.webkit.CookieManager;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
+import Utils.PARAM;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -13,7 +14,7 @@ import retrofit.client.OkClient;
 /**
  * Created by Narendra on 27-01-2017.
  */
-public class ParentFragment extends Fragment
+public class ParentFragment extends Fragment implements PARAM
 {
     public MyApi api;
 

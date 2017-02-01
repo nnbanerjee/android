@@ -3,17 +3,109 @@ package Application; /**
  */
 
 import com.google.gson.JsonObject;
+import com.medico.model.AppointmentId1;
+import com.medico.model.Delegation;
 import com.medico.model.DoctorId;
+import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientId;
-import com.medico.model.ProfileId;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
+import com.medico.model.ProfileId;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import Model.*;
+import Model.AddConfirmDeny;
+import Model.AddConfirmDenyDelegate;
+import Model.AddDelegate;
+import Model.AddDependent;
+import Model.AddDependentDoctor;
+import Model.AddDiagnosisTestRequest;
+import Model.AddPatientMedicineSummary;
+import Model.AllClinicAppointment;
+import Model.AllPatients;
+import Model.AllProcedureVm;
+import Model.AllTreatmentPlanVm;
+import Model.AppointmentId;
+import Model.AppointmentPatientIds;
+import Model.AppointmentSlotsByDoctor;
+import Model.AppointmentStatus;
+import Model.Assistant;
+import Model.BucketPatient;
+import Model.Chat;
+import Model.Clinic;
+import Model.ClinicAppointment;
+import Model.ClinicDetailVm;
+import Model.ClinicPatientAppointments;
+import Model.CreateProfileData;
+import Model.CreateProfileDataForDoctorUpdateDetails;
+import Model.CustomProcedureTemplate;
+import Model.Doctor;
+import Model.DoctorAppointmentsResponse;
+import Model.DoctorClinicAppointments;
+import Model.DoctorClinicSchedule;
+import Model.DoctorCreatesAppoinementResponse;
+import Model.DoctorCreatesAppointment;
+import Model.DoctorNotesResponse;
+import Model.DoctorNotesVM;
+import Model.DoctorPersonalVM;
+import Model.DoctorProfile;
+import Model.DoctorSearchResponse;
+import Model.FeedbackVM;
+import Model.Field;
+import Model.FileUpload;
+import Model.GetDelegate;
+import Model.HomeCountDoctor;
+import Model.HomePatientCount;
+import Model.InvoiceDetails;
+import Model.InvoiceId;
+import Model.Logindata;
+import Model.MedicineId;
+import Model.MobileEmail;
+import Model.ModeVM;
+import Model.NotificationVM;
+import Model.Patient;
+import Model.PatientProfile;
+import Model.PatientTestId;
+import Model.PersonAndCategoryId;
+import Model.PersonID;
+import Model.PersonTemp;
+import Model.RegisterAssistantData;
+import Model.RegisterDoctorData;
+import Model.RegisterUserData;
+import Model.ReminderVM;
+import Model.RemoveDelegate;
+import Model.RemoveDoctors;
+import Model.RemoveMedicineRequest;
+import Model.RemovePatientTestRequest;
+import Model.RemovePatients;
+import Model.RemoveVisitDocument;
+import Model.ResetPassword;
+import Model.ResponseAddDocuments;
+import Model.ResponseAddTemplates;
+import Model.ResponseCheckMobileEmailAvailability;
+import Model.ResponseCodeVerfication;
+import Model.ResponseCreateProfile;
+import Model.ResponseCreateProfileForDoctorUpdateDetails;
+import Model.ResponseVerifyRegistrationMobileEmailCode;
+import Model.ResponseVm;
+import Model.ResponsegetVerificationCodeForNewRegistration;
+import Model.ShowProcedure;
+import Model.ShowTemplate;
+import Model.SummaryHistoryVM;
+import Model.SummaryResponse;
+import Model.Template;
+import Model.TestDetails;
+import Model.TotalInvoice;
+import Model.TreatmentId;
+import Model.TreatmentPlan;
+import Model.UpdateField;
+import Model.VerificationCode;
+import Model.VerifyRegistrationMobileEmailCode;
+import Model.VisitEditLogRequest;
+import Model.VisitEditLogResponse;
+import Model.forgotPassword;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -531,13 +623,13 @@ public interface MyApi {
 
     //
     @POST("/getPatientVisitSummary")
-    void getPatientVisitSummary(@Body SummaryRequest param,Callback<SummaryResponse> response);
+    void getPatientVisitSummary(@Body AppointmentId1 param, Callback<SummaryResponse> response);
 
     @POST("/createPatientVisitSummary")
-    void createPatientVisitSummary(@Body CreateSummary reminderVM, Callback<ResponseCodeVerfication> response);
+    void createPatientVisitSummary(@Body SummaryResponse reminderVM, Callback<ResponseCodeVerfication> response);
 
     @POST("/updatePatientVisitSummary")
-    void updatePatientVisitSummary(@Body CreateSummary reminderVM, Callback<ResponseCodeVerfication> response);
+    void updatePatientVisitSummary(@Body SummaryResponse reminderVM, Callback<ResponseCodeVerfication> response);
 
     @POST("/addPatientMedicine")
     void addPatientMedicine(@Body AddPatientMedicineSummary addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
@@ -576,6 +668,9 @@ public interface MyApi {
 
     @POST("/updatePatientDiagnosticTest")
     void updatePatientDiagnosticTest(@Body AddDiagnosisTestRequest addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
+
+    @POST("/getAllClinics")
+    void getAllClinics1(@Body ProfileId personID, Callback<List<Clinic>> response);
 
     @POST("/getAllClinics")
     void getAllClinics(@Body PersonID personID, Callback<List<Clinic>> response);

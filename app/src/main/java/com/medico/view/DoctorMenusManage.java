@@ -68,6 +68,9 @@ public class DoctorMenusManage extends Fragment {
                 System.out.println("i am here::::::::::::");
                 Bundle bundle = new Bundle();
                 bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
                 Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);

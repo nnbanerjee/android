@@ -3,7 +3,8 @@ package Model;
 /**
  * Created by Narendra on 08-02-2016.
  */
-public class ResponseCodeVerfication {
+public class ResponseCodeVerfication
+{
     public ResponseCodeVerfication(String status) {
         this.status = status;
     }
@@ -18,13 +19,13 @@ public class ResponseCodeVerfication {
 
     private String status;
 
-    public String getAppointmentId() {
+    public Integer getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(String appointmentId) {
+    public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
 
-    private String appointmentId;
+    private Integer appointmentId;
 }

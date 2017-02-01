@@ -14,8 +14,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Model.Delegation;
-import Model.Patient;
+import com.medico.model.Delegation;
 
 /**
  * Created by MNT on 19-Mar-15.

@@ -12,7 +12,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Model.Delegation;
+import com.medico.model.Delegation;
 
 /**
  * Created by User on 8/19/15.
