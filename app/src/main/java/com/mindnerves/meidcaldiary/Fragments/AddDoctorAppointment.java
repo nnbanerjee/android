@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,7 +30,7 @@ import java.util.List;
 
 import Application.MyApi;
 import Model.Appointment;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicAppointment;
 import Model.ModeVM;
 import Model.Patient;

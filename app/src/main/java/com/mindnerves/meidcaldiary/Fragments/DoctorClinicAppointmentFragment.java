@@ -19,13 +19,11 @@ import android.widget.Toast;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicDetailVm;
-import Model.PatientClinic;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

@@ -5,22 +5,18 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.Fragments.DoctorDetailsFragment;
 import com.mindnerves.meidcaldiary.Fragments.FeedbackFragment;
-import com.mindnerves.meidcaldiary.Fragments.FeedbackFragmentClinicAppointment;
 import com.mindnerves.meidcaldiary.Fragments.PatientAllAppointment;
 import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
 import com.mindnerves.meidcaldiary.Global;
@@ -28,7 +24,6 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Model.Clinic;
 import Model.DoctorSearchResponse;
 
 

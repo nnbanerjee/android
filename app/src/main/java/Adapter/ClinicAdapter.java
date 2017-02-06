@@ -13,7 +13,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Model.Clinic;
+import com.medico.model.Clinic;
 
 
 /**

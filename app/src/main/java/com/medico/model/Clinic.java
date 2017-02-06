@@ -1,8 +1,13 @@
-package Model;
+package com.medico.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import Model.Shift1;
+import Model.Shift2;
+import Model.Shift3;
+import Model.appointments;
 
 /**
  * Created by User on 23-02-2015.

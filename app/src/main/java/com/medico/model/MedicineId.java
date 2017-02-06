@@ -1,20 +1,20 @@
-package Model;
+package com.medico.model;
 
 /**
  * Created by Narendra on 09-03-2016.
  */
 public class MedicineId {
-    public String getMedicineId() {
+    public Integer getMedicineId() {
         return medicineId;
     }
 
-    public void setMedicineId(String medicineId) {
+    public void setMedicineId(Integer medicineId) {
         this.medicineId = medicineId;
     }
 
-    public MedicineId(String medicineId) {
+    public MedicineId(Integer medicineId) {
         this.medicineId = medicineId;
     }
 
-    private String medicineId;
+    private Integer medicineId;
 }

@@ -34,7 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Clinic;
+import com.medico.model.Clinic;
 
 /**
  * Created by User on 20-10-2015.

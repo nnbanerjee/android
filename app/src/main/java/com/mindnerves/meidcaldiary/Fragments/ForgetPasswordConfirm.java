@@ -1,10 +1,7 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.Notification;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,8 +16,8 @@ import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
 import Model.ResetPassword;
-import Model.ResponseCodeVerfication;
-import Model.ResponseVm;
+import com.medico.model.ResponseCodeVerfication;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

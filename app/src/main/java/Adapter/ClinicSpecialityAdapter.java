@@ -1,8 +1,6 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -11,17 +9,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.ClinicFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

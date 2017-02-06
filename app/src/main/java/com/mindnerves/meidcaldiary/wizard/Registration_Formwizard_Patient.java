@@ -4,25 +4,20 @@ package com.mindnerves.meidcaldiary.wizard;
  * Created by User on 12-02-2015.
  */
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.MedicalReg;
 import com.mindnerves.meidcaldiary.Fragments.Registration;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.MainActivity;
@@ -32,28 +27,21 @@ import org.codepond.wizardroid.WizardFlow;
 import org.codepond.wizardroid.layouts.BasicWizardLayout;
 import org.codepond.wizardroid.persistence.ContextVariable;
 
-import java.io.File;
 import java.util.regex.Pattern;
 
 import Application.MyApi;
 import Model.CreateProfileData;
-import Model.CreateProfileDataForDoctorUpdateDetails;
 import Model.MobileEmail;
-import Model.RegisterUserData;
 import Model.ResponseCheckMobileEmailAvailability;
-import Model.ResponseCodeVerfication;
 import Model.ResponseCreateProfile;
-import Model.ResponseCreateProfileForDoctorUpdateDetails;
 import Model.ResponseVerifyRegistrationMobileEmailCode;
 import Model.ResponsegetVerificationCodeForNewRegistration;
-import Model.VerificationCode;
 import Model.VerifyRegistrationMobileEmailCode;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 
 /**

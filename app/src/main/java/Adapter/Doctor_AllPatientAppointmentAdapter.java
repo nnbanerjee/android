@@ -12,9 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInformation;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentSummary;
-import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentSummary;
+import com.medico.view.DoctorAppointmentInformation;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;

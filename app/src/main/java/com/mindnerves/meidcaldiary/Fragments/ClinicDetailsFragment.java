@@ -22,7 +22,7 @@ import java.util.List;
 
 import Adapter.AllDoctorClinicAdapter;
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicDetailVm;
 import retrofit.Callback;
 import retrofit.RestAdapter;

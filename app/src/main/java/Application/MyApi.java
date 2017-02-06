@@ -4,13 +4,17 @@ package Application; /**
 
 import com.google.gson.JsonObject;
 import com.medico.model.AppointmentId1;
+import com.medico.model.Clinic;
 import com.medico.model.Delegation;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientId;
+import com.medico.model.PatientMedicine;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
 import com.medico.model.ProfileId;
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.model.SummaryResponse;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +38,6 @@ import Model.AppointmentStatus;
 import Model.Assistant;
 import Model.BucketPatient;
 import Model.Chat;
-import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
 import Model.ClinicPatientAppointments;
@@ -61,7 +64,7 @@ import Model.HomePatientCount;
 import Model.InvoiceDetails;
 import Model.InvoiceId;
 import Model.Logindata;
-import Model.MedicineId;
+import com.medico.model.MedicineId;
 import Model.MobileEmail;
 import Model.ModeVM;
 import Model.NotificationVM;
@@ -85,7 +88,6 @@ import Model.ResetPassword;
 import Model.ResponseAddDocuments;
 import Model.ResponseAddTemplates;
 import Model.ResponseCheckMobileEmailAvailability;
-import Model.ResponseCodeVerfication;
 import Model.ResponseCreateProfile;
 import Model.ResponseCreateProfileForDoctorUpdateDetails;
 import Model.ResponseVerifyRegistrationMobileEmailCode;
@@ -94,7 +96,6 @@ import Model.ResponsegetVerificationCodeForNewRegistration;
 import Model.ShowProcedure;
 import Model.ShowTemplate;
 import Model.SummaryHistoryVM;
-import Model.SummaryResponse;
 import Model.Template;
 import Model.TestDetails;
 import Model.TotalInvoice;
@@ -641,8 +642,8 @@ public interface MyApi {
     void removePatientMedicine(@Body RemoveMedicineRequest removeMedicineRequest, Callback<ResponseCodeVerfication> response);
 
 
-    @POST("/getMedicineDetails")
-    void getMedicineDetails(@Body MedicineId medicineId, Callback<AddPatientMedicineSummary> response);
+    @POST("/getPatientMedicine")
+    void getPatientMedicine(@Body MedicineId medicineId, Callback<PatientMedicine> response);
 
     @POST("/getTestDetails")
     void getTestDetails(@Body PatientTestId patientTestId, Callback<TestDetails> response);

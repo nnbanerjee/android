@@ -17,9 +17,7 @@ import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Fragments.AppointmentsPatient;
 import com.mindnerves.meidcaldiary.Fragments.ClinicAppointmentBook;
-import com.mindnerves.meidcaldiary.Fragments.ClinicAppointmentBookFragment;
 import com.mindnerves.meidcaldiary.Fragments.ClinicFragment;
-import com.mindnerves.meidcaldiary.Fragments.DoctorDetailsFragment;
 import com.mindnerves.meidcaldiary.Fragments.FeedbackFragment;
 import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
 import com.mindnerves.meidcaldiary.Global;
@@ -28,9 +26,8 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicDetailVm;
-import Model.DoctorSearchResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

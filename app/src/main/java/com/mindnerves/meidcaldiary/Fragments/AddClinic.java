@@ -29,7 +29,7 @@ import java.util.List;
 
 import Adapter.ShowClinicAdapter;
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

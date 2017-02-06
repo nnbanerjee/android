@@ -21,8 +21,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
-import Model.DoctorSearchResponse;
+import com.medico.model.Clinic;
 
 /**
  * Created by MNT on 07-Apr-15.

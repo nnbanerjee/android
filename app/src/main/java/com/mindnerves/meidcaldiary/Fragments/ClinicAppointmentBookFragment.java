@@ -23,13 +23,11 @@ import com.mindnerves.meidcaldiary.R;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import Adapter.ClinicAppointmentAdapter;
 import Application.MyApi;
-import Model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicAppointmentVM;
 import Model.ClinicDetailVm;

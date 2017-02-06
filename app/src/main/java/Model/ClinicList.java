@@ -1,5 +1,7 @@
 package Model;
 
+import com.medico.model.Clinic;
+
 import java.util.ArrayList;
 import java.util.List;
 

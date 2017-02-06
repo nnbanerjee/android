@@ -29,8 +29,6 @@ import com.mindnerves.meidcaldiary.R;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -39,8 +37,8 @@ import java.util.concurrent.TimeUnit;
 
 import Application.ImageUtil;
 import Application.MyApi;
-import Model.Clinic;
-import Model.ClinicDetailVm;
+import com.medico.model.Clinic;
+
 import Model.FileUpload;
 import Model.PersonID;
 import Model.ResponseAddDocuments;

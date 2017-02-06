@@ -13,7 +13,6 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Model.Clinic;
 import Model.Reminder;
 
 /**

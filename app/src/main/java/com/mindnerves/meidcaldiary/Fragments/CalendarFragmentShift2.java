@@ -35,7 +35,7 @@ import Adapter.MyAdapter;
 import Application.MyApi;
 import Model.AllClinicAppointment;
 import Model.Appointment;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ShiftAppointment;
 import retrofit.Callback;
 import retrofit.RestAdapter;

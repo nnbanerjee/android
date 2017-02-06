@@ -17,19 +17,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.mindnerves.meidcaldiary.Fragments.ClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.DoctorClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.ShowAppointmentTime;
 import com.mindnerves.meidcaldiary.Fragments.ShowShift1;
-import com.mindnerves.meidcaldiary.Fragments.ShowShift2;
-import com.mindnerves.meidcaldiary.Fragments.ShowShift3;
 import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Model.AppointmentSlotsByDoctor;
-import Model.Clinic;
 import Model.Slot;
 import Utils.UtilSingleInstance;
 

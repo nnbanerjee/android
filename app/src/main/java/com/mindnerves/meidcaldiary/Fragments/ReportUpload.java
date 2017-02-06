@@ -33,7 +33,7 @@ import java.util.List;
 
 import Application.ImageUtil;
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.FileUpload;
 import Model.PersonID;
 import retrofit.Callback;

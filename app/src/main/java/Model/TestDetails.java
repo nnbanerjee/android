@@ -1,5 +1,7 @@
 package Model;
 
+import com.medico.model.Clinic;
+
 /**
  * Created by Narendra on 17-03-2016.
  */

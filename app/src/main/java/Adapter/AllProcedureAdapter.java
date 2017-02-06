@@ -1,42 +1,27 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentFragment;
-import com.mindnerves.meidcaldiary.HorizontalListView;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Application.MyApi;
-import Model.AllProcedureVm;
-import Model.Clinic;
-import Model.ClinicDetailVm;
-import Model.InvoiceId;
-import Model.ResponseCodeVerfication;
+import com.medico.model.ResponseCodeVerfication;
 import Model.TreatmentField;
 import Model.TreatmentId;
 import Model.TreatmentPlan;
-import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

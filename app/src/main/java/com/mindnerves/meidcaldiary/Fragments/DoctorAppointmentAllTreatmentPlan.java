@@ -22,6 +22,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.DoctorAppointmentInformation;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HorizontalListView;
 import com.mindnerves.meidcaldiary.R;
@@ -34,11 +35,9 @@ import java.util.Map;
 
 import Adapter.AllProcedureAdapter;
 import Application.MyApi;
-import Model.AppointmentId;
 import Model.TotalInvoice;
 import Model.TreatmentField;
 import Model.TreatmentPlan;
-import Model.TreatmentPlanRequest;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;

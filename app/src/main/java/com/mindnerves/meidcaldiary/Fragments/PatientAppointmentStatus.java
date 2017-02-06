@@ -36,7 +36,7 @@ import Adapter.ClinicAppointmentListAdapter;
 import Application.MyApi;
 import DB.DatabaseHandler;
 import Model.AppointmentDB;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

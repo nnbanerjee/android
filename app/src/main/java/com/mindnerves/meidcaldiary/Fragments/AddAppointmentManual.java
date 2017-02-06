@@ -30,11 +30,10 @@ import java.util.List;
 
 import Application.MyApi;
 import Model.Appointment;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicAppointment;
 import Model.ModeVM;
 import Model.Patient;
-import Model.ShiftAppointment;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

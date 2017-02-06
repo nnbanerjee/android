@@ -1,29 +1,22 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.mindnerves.meidcaldiary.Fragments.ClinicAppointmentFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.AppController;
-import Model.Clinic;
 import Model.ClinicDetailVm;
 import Model.ClinicList;
 import Model.Slot;

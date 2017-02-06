@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.medico.adapter.PatientVisitDatesAdapter;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientVisits;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInformation;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 

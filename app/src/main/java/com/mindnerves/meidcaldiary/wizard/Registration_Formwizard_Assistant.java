@@ -13,45 +13,32 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.BackStress;
-import com.mindnerves.meidcaldiary.Fragments.MedicalRegDoctor;
 import com.mindnerves.meidcaldiary.Fragments.RegistrationAssistant;
-import com.mindnerves.meidcaldiary.Fragments.RegistrationDoctor;
-import com.mindnerves.meidcaldiary.Fragments.SelectDoctorAstnt;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.MainActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import org.codepond.wizardroid.WizardFlow;
 import org.codepond.wizardroid.layouts.BasicWizardLayout;
-import org.codepond.wizardroid.persistence.ContextVariable;
 
-import java.io.File;
 import java.util.regex.Pattern;
 
 import Application.MyApi;
 import Model.CreateProfileData;
 import Model.MobileEmail;
-import Model.RegisterAssistantData;
 import Model.ResponseCheckMobileEmailAvailability;
-import Model.ResponseCodeVerfication;
 import Model.ResponseCreateProfile;
 import Model.ResponseVerifyRegistrationMobileEmailCode;
 import Model.ResponsegetVerificationCodeForNewRegistration;
-import Model.VerificationCode;
 import Model.VerifyRegistrationMobileEmailCode;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 
 /**

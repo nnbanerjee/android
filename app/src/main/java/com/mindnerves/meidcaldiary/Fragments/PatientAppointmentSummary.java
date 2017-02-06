@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.PatientMedicinReminder;
 import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.ImageLoadTask;
@@ -37,10 +38,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import Adapter.MedicineAdapter;
+import com.medico.adapter.MedicineAdapter;
 import Application.MyApi;
 import Model.AlarmReminderVM;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.MedicineVM;
 import Model.PersonTemp;
 import Model.PersonID;

@@ -3,7 +3,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import com.mindnerves.meidcaldiary.R;
 import com.squareup.okhttp.OkHttpClient;
 
 import Application.MyApi;
-import Model.ResponseCodeVerfication;
+import com.medico.model.ResponseCodeVerfication;
 import Model.ResponseVm;
 import Model.VerificationCode;
 import Model.forgotPassword;

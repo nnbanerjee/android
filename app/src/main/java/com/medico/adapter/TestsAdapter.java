@@ -1,4 +1,4 @@
-package Adapter;
+package com.medico.adapter;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.model.SummaryResponse.TestPrescribed;
 import com.mindnerves.meidcaldiary.Fragments.AddDiagnosticTest;
 import com.mindnerves.meidcaldiary.R;
 
@@ -22,8 +24,6 @@ import java.util.List;
 
 import Application.MyApi;
 import Model.RemovePatientTestRequest;
-import Model.ResponseCodeVerfication;
-import Model.SummaryResponse.TestPrescribed;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -115,7 +115,7 @@ public class TestsAdapter extends BaseAdapter {
                         Fragment fragment = new AddDiagnosticTest();
                         fragment.setArguments(args);
                         FragmentManager fragmentManger = activity.getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
                     }
                 }
             });

@@ -18,7 +18,7 @@ import java.util.List;
 import Application.MyApi;
 import Model.FileUpload;
 import Model.RemoveVisitDocument;
-import Model.ResponseCodeVerfication;
+import com.medico.model.ResponseCodeVerfication;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

@@ -1,7 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,38 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
 
-import Adapter.HistryAdapter;
-import Adapter.MedicineAdapter;
 import Application.MyApi;
-import Model.AddDependent;
-import Model.AddDependentElement;
-import Model.Histry;
-import Model.MedicinePrescribed;
-import Model.Patient;
-import Model.SummaryHistoryVM;
-import Model.TestPrescribed;
 import Model.VisitEditLogResponse;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by User on 8/11/15.

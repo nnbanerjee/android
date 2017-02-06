@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import Model.Clinic;
+import com.medico.model.Clinic;
 
 
 /**

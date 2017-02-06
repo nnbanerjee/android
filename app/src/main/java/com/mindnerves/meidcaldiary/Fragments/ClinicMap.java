@@ -47,7 +47,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
-import Model.Clinic;
+import com.medico.model.Clinic;
 
 /**
  * Created by User on 21-10-2015.

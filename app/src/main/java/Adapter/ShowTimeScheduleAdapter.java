@@ -2,7 +2,6 @@ package Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,9 @@ import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
-import Model.Clinic;
 import Model.Day;
-import Model.Schedule;
 
 /**
  * Created by MNT on 27-Feb-15.

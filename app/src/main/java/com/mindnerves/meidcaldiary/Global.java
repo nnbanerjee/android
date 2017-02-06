@@ -17,7 +17,7 @@ import Model.AllTreatmentPlanVm;
 import Model.Appointment;
 import Model.AppointmentSlotsByDoctor;
 import Model.Assistant;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicAppointment;
 import Model.ClinicDetailVm;
 import Model.ClinicPatientAppointments;

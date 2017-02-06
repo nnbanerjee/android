@@ -1,4 +1,4 @@
-package Adapter;
+package com.medico.adapter;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -15,15 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.PatientMedicinReminder;
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.model.SummaryResponse.MedicinePrescribed;
+import com.medico.view.PatientMedicinReminder;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Application.MyApi;
 import Model.RemoveMedicineRequest;
-import Model.ResponseCodeVerfication;
-import Model.SummaryResponse.MedicinePrescribed;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -115,7 +115,7 @@ public class MedicineAdapter extends BaseAdapter {
                         Fragment fragment = new PatientMedicinReminder();
                         fragment.setArguments(args);
                         FragmentManager fragmentManger = activity.getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
                     }
                 }
             });

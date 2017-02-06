@@ -26,7 +26,7 @@ import com.mindnerves.meidcaldiary.R;
 import Application.MyApi;
 import Model.AppointmentId;
 import Model.DoctorNotesResponse;
-import Model.ResponseCodeVerfication;
+import com.medico.model.ResponseCodeVerfication;
 import Utils.MedicoCustomErrorHandler;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;

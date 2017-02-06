@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.medico.view.ParentFragment;
+import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDoctorNote;
+import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDocument;
+import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInvoices;
+import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentTreatmentPlan;
 import com.mindnerves.meidcaldiary.R;
 
 /**

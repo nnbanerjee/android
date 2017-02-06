@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.DoctorAppointmentInformation;
 import com.medico.view.PatientProfileListView;
 import com.mindnerves.meidcaldiary.R;
 

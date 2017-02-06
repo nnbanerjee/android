@@ -2,9 +2,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,16 +17,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.Calendar;
 
 import Application.MyApi;
-import Model.DoctorNotesVM;
-import Model.Field;
-import Model.ResponseCodeVerfication;
-import Model.ShowProcedure;
+
+import com.medico.model.ResponseCodeVerfication;
+
 import Model.TreatmentPlan;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;

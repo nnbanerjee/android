@@ -45,7 +45,7 @@ import Model.DoctorAppointmentsResponse;
 import Model.DoctorClinicAppointments;
 import Model.DoctorCreatesAppoinementResponse;
 import Model.DoctorCreatesAppointment;
-import Model.ResponseCodeVerfication;
+import com.medico.model.ResponseCodeVerfication;
 import Model.Slot;
 import Model.TimeInterval;
 import Utils.UtilSingleInstance;

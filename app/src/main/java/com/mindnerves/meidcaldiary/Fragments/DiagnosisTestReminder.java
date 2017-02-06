@@ -34,7 +34,7 @@ import java.util.List;
 import Application.MyApi;
 import DB.DatabaseHandler;
 import Model.AppointmentDB;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicAppointment;
 import Model.DoctorSearchResponse;
 import Model.PersonID;

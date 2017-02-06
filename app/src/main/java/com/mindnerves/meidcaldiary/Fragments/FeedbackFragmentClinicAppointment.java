@@ -21,9 +21,8 @@ import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
 import Model.AppointmentStatus;
-import Model.ClinicAppointment;
-import Model.FeedbackVM;
-import Model.ResponseCodeVerfication;
+
+import com.medico.model.ResponseCodeVerfication;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

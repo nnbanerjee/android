@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,14 +25,13 @@ import com.mindnerves.meidcaldiary.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import Application.MyApi;
 import Model.Appointment;
 import Model.AppointmentId;
 import Model.AppointmentSlotsByDoctor;
 import Model.ClinicList;
-import Model.ResponseCodeVerfication;
+import com.medico.model.ResponseCodeVerfication;
 import Model.Slot;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;

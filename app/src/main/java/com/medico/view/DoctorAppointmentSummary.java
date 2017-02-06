@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -24,27 +24,26 @@ import android.widget.Toast;
 
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.adapter.MedicineAdapter;
+import com.medico.adapter.TestsAdapter;
 import com.medico.model.AppointmentId1;
+import com.medico.model.Clinic;
 import com.medico.model.ProfileId;
-import com.medico.view.ParentFragment;
-import com.medico.view.PatientProfileListView;
-import com.medico.view.PatientVisitDatesView;
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.model.SummaryResponse;
+import com.medico.model.SummaryResponse.MedicinePrescribed;
+import com.mindnerves.meidcaldiary.Fragments.AddDiagnosticTest;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Adapter.MedicineAdapter;
-import Adapter.TestsAdapter;
 import Model.AddDiagnosisTestRequest;
 import Model.AlarmReminderVM;
-import Model.Clinic;
-import Model.ResponseCodeVerfication;
-import Model.SummaryResponse;
-import Model.SummaryResponse.MedicinePrescribed;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -69,7 +68,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     Button timeBtn;
     private Spinner clinicSpinner;
 //    private Toolbar toolbar;
-    SlideDateTimePicker pickerDialog;
+//    SlideDateTimePicker pickerDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -175,7 +174,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                     Fragment fragment = new PatientMedicinReminder();
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
                 }
             }
         });
@@ -189,7 +188,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 Fragment fragment = new AddDiagnosticTest();
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         addMedicineAndAlarm.setOnClickListener(new View.OnClickListener() {
@@ -201,7 +200,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 Fragment fragment = new PatientMedicinReminder();
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         saveSummary.setOnClickListener(new View.OnClickListener() {
@@ -324,7 +323,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         {
             Bundle bundle1 = getActivity().getIntent().getExtras();
             Calendar calender = Calendar.getInstance();
-            DateFormat.getInstance().parse(visitedDate.getText().toString());
+
             SummaryResponse createSummary = new SummaryResponse();
             createSummary.visitType = new Integer(visit.getSelectedItemPosition()).byteValue();
             createSummary.referredBy = (referedBy.getText().toString());
@@ -338,6 +337,15 @@ public class DoctorAppointmentSummary extends ParentFragment {
             createSummary.visitType = new Integer(visit.getSelectedItemPosition()).byteValue();
             createSummary.referredBy = referedBy.getText().toString();
             createSummary.treatmentPlanEnabled = 0;
+            try {
+                Date date = DateFormat.getInstance().parse(visitedDate.getText().toString());
+                createSummary.setVisitDate(date.getTime());
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+
             if(bundle.getInt(APPOINTMENT_ID) > 0)
                 createSummary.appointmentId = bundle.getInt(APPOINTMENT_ID);
             createSummary(createSummary);
@@ -363,9 +371,23 @@ public class DoctorAppointmentSummary extends ParentFragment {
             }
 
         };
-        pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
+        Date date = null;
+        if(visitedDate.getText().toString().trim().length() > 0)
+        {
+            DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+            try {
+                date = format.parse(visitedDate.getText().toString());
+            }
+            catch(ParseException e)
+            {
+                date = new Date();
+            }
+
+        }
+
+        SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
-                .setInitialDate(new Date())
+                .setInitialDate(date)
                 .build();
         pickerDialog.show();
     }
@@ -452,7 +474,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
             fragment = new PatientVisitDatesView();
         }
         FragmentManager fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
 
     }
 
@@ -464,6 +486,11 @@ public class DoctorAppointmentSummary extends ParentFragment {
         visitedDate.setText(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT).format(new Date(summaryResponse.getVisitDate())));
         referedBy.setText(summaryResponse.getReferredBy());
         clinicValue.setText(summaryResponse.clinicName);
+        visitedDate.setEnabled(false);
+        visit.setEnabled(false);
+        clinicValue.setEnabled(false);
+        timeBtn.setEnabled(false);
+
         symptomsValue.setText(summaryResponse.getSymptoms());
         diagnosisValue.setText(summaryResponse.getDiagnosis());
         if(summaryResponse.getTestPrescribed() !=null) {
@@ -478,7 +505,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                     Fragment fragment = new AddDiagnosticTest();
                     fragment.setArguments(bun);
                     FragmentManager fragmentManger = getActivity().getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 }
             });
         }
@@ -489,10 +516,13 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     Bundle args = getActivity().getIntent().getExtras();
+                    MedicinePrescribed medicinePrescribed = (MedicinePrescribed)adapterView.getAdapter().getItem(position);
+                    args.putInt("medicineId", medicinePrescribed.medicineId);
+                    getActivity().getIntent().putExtras(args);
                     Fragment fragment = new PatientMedicinReminder();
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getActivity().getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 }
             });
         }
@@ -507,7 +537,8 @@ public class DoctorAppointmentSummary extends ParentFragment {
             public void success(ResponseCodeVerfication reminderVM, Response response) {
                 progress.dismiss();
                 summaryResponse = summaryToCreate;
-                summaryResponse.appointmentId = reminderVM.getAppointmentId();
+                if( reminderVM.getAppointmentId() != null && reminderVM.getAppointmentId().intValue() > 0 )
+                    summaryResponse.appointmentId = reminderVM.getAppointmentId();
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
             }
 

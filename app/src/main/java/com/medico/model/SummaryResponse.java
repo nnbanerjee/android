@@ -1,4 +1,4 @@
-package Model;
+package com.medico.model;
 
 import java.util.List;
 

@@ -18,7 +18,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ClinicDetailVm;
 
 /**

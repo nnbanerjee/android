@@ -14,17 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.ClinicAppointmentFragment;
 import com.mindnerves.meidcaldiary.Fragments.ClinicProfileDetails;
-import com.mindnerves.meidcaldiary.Fragments.DoctorProfileDetails;
 import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentFragment;
-import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 import Application.MyApi;
-import Model.Clinic;
 import Model.ClinicDetailVm;
 import retrofit.Callback;
 import retrofit.RestAdapter;

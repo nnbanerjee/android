@@ -2,7 +2,6 @@ package Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.AddNewProcedureDialog;
 import com.mindnerves.meidcaldiary.Fragments.ChangeFeildValueDialog;
 import com.mindnerves.meidcaldiary.R;
 
@@ -20,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.MyApi;
-import Model.Field;
-import Model.ResponseCodeVerfication;
-import Model.TemplateField;
+
+import com.medico.model.ResponseCodeVerfication;
+
 import Model.TreatmentField;
 import Model.TreatmentPlan;
 import Utils.UtilSingleInstance;

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,7 @@ import Adapter.MyAdapter;
 import Application.MyApi;
 import Model.AllClinicAppointment;
 import Model.Appointment;
-import Model.Clinic;
+import com.medico.model.Clinic;
 import Model.ShiftAppointment;
 import retrofit.Callback;
 import retrofit.RestAdapter;

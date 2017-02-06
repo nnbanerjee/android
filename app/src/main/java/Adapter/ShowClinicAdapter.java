@@ -1,10 +1,7 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +10,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 
-import com.mindnerves.meidcaldiary.Fragments.ShowClinic;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
 
-import Model.Clinic;
+import com.medico.model.Clinic;
 
 /**
  * Created by MNT on 25-Feb-15.

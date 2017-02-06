@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -29,8 +28,8 @@ import java.util.List;
 
 import Application.MyApi;
 import Model.Appointment;
-import Model.Clinic;
-import Model.ClinicAppointment;
+import com.medico.model.Clinic;
+
 import Model.ModeVM;
 import Model.Patient;
 import retrofit.Callback;

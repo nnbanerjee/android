@@ -24,8 +24,6 @@ import java.util.List;
 
 import Application.MyApi;
 import Model.AppointmentSlotsByDoctor;
-import Model.Clinic;
-import Model.ClinicList;
 import Model.Slot;
 import Utils.UtilSingleInstance;
 
