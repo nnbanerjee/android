@@ -1,14 +1,19 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="10dp"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:overScrollMode="always"
+    android:isScrollContainer="true"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbars="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout2"
         android:layout_margin="5dp"
         >
 
@@ -18,7 +23,6 @@
             android:id="@+id/layout1"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
-            android:layout_below="@+id/layout"
             android:background="#ffffff">
 
             <TextView
@@ -44,16 +48,6 @@
                 android:textColor="#1E90FF"
                 style="@style/textViewThemeForNewDesignWithoutMargin"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#1E90FF"
-                android:textSize="@dimen/heading"
-                android:layout_toRightOf="@+id/medecineText"
-                android:textStyle="bold"
-                android:text="Crocin"
-                android:visibility="gone"
-                android:id="@+id/medicineValue"
              />
 
 
@@ -64,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_below="@+id/layout1"
-            android:id="@+id/layout5">
+            android:id="@+id/layout2">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,9 +90,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout6"
+            android:id="@+id/layout3"
             android:layout_margin="5dp"
-            android:layout_below="@+id/layout5">
+            android:layout_below="@+id/layout2">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,26 +116,6 @@
                 android:paddingLeft="5dp"
                 android:layout_toLeftOf="@+id/schedule_text"
                 android:layout_toRightOf="@+id/mobileText"/>
-            <!--<RelativeLayout
-                android:background="@color/grey"
-                android:layout_toLeftOf="@+id/schedule_text"
-                android:layout_toRightOf="@+id/mobileText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:id="@+id/numberDoses"
-                android:inputType="phone"
-                android:numeric="decimal"
-                android:textColor="#1E90FF"
-
-                android:paddingLeft="5dp"
-
-
-               />
-
-            </RelativeLayout>-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -158,9 +132,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout7"
+            android:id="@+id/layout4"
             android:layout_margin="5dp"
-            android:layout_below="@+id/layout6">
+            android:layout_below="@+id/layout3">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -199,9 +173,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout8"
+            android:id="@+id/layout5"
             android:layout_margin="5dp"
-            android:layout_below="@+id/layout7">
+            android:layout_below="@+id/layout4">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -240,9 +214,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout9"
+            android:id="@+id/layout6"
             android:layout_margin="5dp"
-            android:layout_below="@+id/layout8">
+            android:layout_below="@+id/layout5">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -275,32 +249,45 @@
                 android:background="@drawable/cal"/>
 
         </RelativeLayout>
-        <TextView
-            android:id="@+id/preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:textColor="@color/black"
-            style="@style/sub_heading"
-            android:text="Schedule Time for Medicine :"
-            android:layout_centerVertical="true"
-            android:layout_below="@+id/layout9"
-            android:layout_marginBottom="5dp"
-            />
-
-        <com.mindnerves.meidcaldiary.HorizontalListView
-            android:id="@+id/horizontalList"
-            android:layout_below="@+id/preview"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="160dp" />
+            android:layout_height="wrap_content"
+            android:id="@+id/layout7"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout6">
+            <TextView
+                android:id="@+id/preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                style="@style/sub_heading"
+                android:text="Schedule Time for Medicine :"
+                android:layout_centerVertical="false"
+                android:layout_marginBottom="5dp"
+                />
+
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                    android:id="@+id/displayLinear"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_below="@id/preview"
+                    android:orientation="horizontal"
+                    android:fadingEdge="horizontal|vertical">
+                    </TableLayout>
+
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/previewBtn"
+            android:id="@+id/layout8"
             android:layout_margin="5dp"
-            android:layout_below="@+id/horizontalList">
+            android:layout_below="@+id/layout7">
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -318,43 +305,28 @@
                 />
 
         </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout9"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/layout8">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/sub_heading"
-            android:text="Doctor’s Instruction / Method of Medication "
-            android:layout_centerVertical="true"
-            android:layout_below="@id/previewBtn"
-            android:id="@+id/doctorInstructionText"
-            android:textColor="@color/black"
-        />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/textViewThemeForNewDesignWithoutMargin"
-            android:layout_marginTop="5dp"
-            android:id="@+id/doctorInstructionValue"
-            android:textColor="#1E90FF"
-            android:layout_below="@+id/doctorInstructionText"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            <TextView
+                android:text="Doctor's Instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/doctorInstructionValue" />
 
-         />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:ems="10"
+                android:id="@+id/editText2"
+                tools:layout_below="@+id/doctorInstructionValue" />
+        </RelativeLayout>
 
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:id="@+id/saveTimeTable"
-            android:layout_below="@+id/doctorInstructionValue"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_blue_color"/>
     </RelativeLayout>
 </ScrollView>

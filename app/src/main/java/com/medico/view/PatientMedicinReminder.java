@@ -1,5 +1,6 @@
 package com.medico.view;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -12,13 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,6 @@ import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 import com.medico.model.MedicineId;
 import com.medico.model.PatientMedicine;
 import com.mindnerves.meidcaldiary.AlarmService;
-import com.mindnerves.meidcaldiary.HorizontalListView;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.DateFormat;
@@ -43,6 +44,8 @@ import Model.ReminderDate;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+
 
 //import Model.MedicineSchedule;
 
@@ -68,7 +71,10 @@ public class PatientMedicinReminder extends ParentFragment {
     ImageView calenderImg, endDateImg;
     Calendar calendar = Calendar.getInstance();
     Spinner  scheduleDate;
-    HorizontalListView horizontalList;
+//    HorizontalListView horizontalList;
+
+    TableLayout medicineSchedule;
+
     CheckBox medicineReminderBtn;
     CheckBox autoScheduleBtn;
     List<AlarmReminderVM> medicinReminderTables;
@@ -79,7 +85,7 @@ public class PatientMedicinReminder extends ParentFragment {
     String[] dosesList;
     String[] medicin_list = null;
     String type = null;
-    Button saveTimeTable;
+//    Button saveTimeTable;
 //    String appointmentDate, appointmentTime, patientId;
     ArrayList<ReminderDate> reminderDate;
     ArrayList<String> startList, endList;
@@ -101,6 +107,7 @@ public class PatientMedicinReminder extends ParentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_medicine_reminder, container, false);
+
 //        show_global_tv = (TextView) getActivity().findViewById(R.id.show_global_tv);
 //        back = (Button)getActivity().findViewById(R.id.back_button);
 //
@@ -158,15 +165,17 @@ public class PatientMedicinReminder extends ParentFragment {
         scheduleDate = (Spinner) view.findViewById(R.id.scheduleDate);
         dateValue = (TextView) view.findViewById(R.id.dateValue);
         endDateValue = (TextView) view.findViewById(R.id.endDateValue);
-        horizontalList = (HorizontalListView) view.findViewById(R.id.horizontalList);
+//        horizontalList = (HorizontalListView) view.findViewById(R.id.horizontalList);
         medicineReminderBtn = (CheckBox) view.findViewById(R.id.medicineReminderBtn);
         autoScheduleBtn = (CheckBox) view.findViewById(R.id.auto_scheduleBtn);
         medicineName = (MultiAutoCompleteTextView) view.findViewById(R.id.medicineValueEdit);
-        doctorInstructionValue = (EditText) view.findViewById(R.id.doctorInstructionValue);
-        saveTimeTable = (Button) view.findViewById(R.id.saveTimeTable);
+        doctorInstructionValue = (EditText) view.findViewById(R.id.editText2);
+//        saveTimeTable = (Button) view.findViewById(R.id.saveTimeTable);
         daysText = (TextView) view.findViewById(R.id.schedule_text);
         durationText = (TextView) view.findViewById(R.id.duration_text);
         duration = (EditText) view.findViewById(R.id.duration_days);
+
+        medicineSchedule = (TableLayout)view.findViewById(R.id.displayLinear);
 
         //Read Arguments
 //        final Bundle args = getArguments();
@@ -214,7 +223,6 @@ public class PatientMedicinReminder extends ParentFragment {
 //        medicine.setText(medicinName);
 
 
-
 //        medicineReminderBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -229,12 +237,12 @@ public class PatientMedicinReminder extends ParentFragment {
 //        });
 //
 //        //not necessary
-//        calenderImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setDate(dateValue);
-//            }
-//        });
+        calenderImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDate(dateValue);
+            }
+        });
 
 //        if (global.getDateString() != null) {
 //            dateValue.setText(global.getDateString());
@@ -277,13 +285,13 @@ public class PatientMedicinReminder extends ParentFragment {
 //            }
 //        }
 
-//        endDateImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                setDate(endDateValue);
-//            }
-//        });
+        endDateImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setDate(endDateValue);
+            }
+        });
 //
 //        duration.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -484,200 +492,200 @@ public class PatientMedicinReminder extends ParentFragment {
 //        }
 
 
-        saveTimeTable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ReminderVM saveReminderVM = new ReminderVM();
-//                patientMedicine = new AddPatientMedicineSummary();
-                List<AlarmReminderVM> alarms = new ArrayList<AlarmReminderVM>();
-                alarms = alarmList;
-                System.out.println("MedicineReminders::::::::::" + medicinReminderTables.size());
-                if (alarms == null) {
-                    alarms = medicinReminderTables;
-                }
-                System.out.println("AlarmList::::::::::" + alarms.size());
-//                doctorId = Integer.parseInt(session.getString("id", "0"));
-//                patientId = session.getString("patientId", "");
-               /* if(type.equalsIgnoreCase("Patient")){
-                    patientId = session.getString("sessionID", null);
-                }else{
-                    patientId = session.getString("doctor_patientEmail", null);
-                }*/
-
-//                appointmentTime = global.getAppointmentTime();
-//                appointmentDate = global.getAppointmentDate();
-//                System.out.println("Appointment Date:::::::" + appointmentDate);
-
-//                Bundle args = getArguments();
-//                String visitedDate = args.getString("visitedDate");
-//                String visitType = args.getString("visit");
-//                String referedBy = args.getString("referedBy");
-//                String symptomsValue = args.getString("symptomsValue");
-//                String diagnosisValue = args.getString("diagnosisValue");
-//                String testPrescribedValue = args.getString("testPrescribedValue");
-
-             /*   if (global.getReminderVM() != null) {
-                    saveReminderVM.id = global.getReminderVM().id;
-                } else {
-                    saveReminderVM.id = null;
-                }*/
-                //System.out.println("id::::::::::" + saveReminderVM.id);
-                /*
-                {"autoSchedule":1,"doctorInstruction":"morning-evening","dosesPerSchedule":2,"durationSchedule":4,"endDate":1457548200000,"medicinName":"crocine",
-                "reminder":1,"schedule":0,"startDate":1457164317533,"medicineSchedule":[{"scheduleTime":1457116200000},{"scheduleTime":1457116200000},
-                {"scheduleTime":1457375400000}],"appointmentId":584,"patientId":7,"loggedinUserId":111,"userType":1}
-                 */
-                //patientMedicine.doctorId = doctorId;
-//                patientMedicine.setPatientId(patientId);
-                // patientMedicine.setAppointmentId(appointMentID); = appointmentDate;
-                //  patientMedicine.appointmentTime = appointmentTime;
-
-                patientMedicine.setMedicinName(medicineName.getText().toString());
-                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
-                try {
-                    patientMedicine.setStartDate(format.parse(dateValue.getText().toString()).getTime());
-                    patientMedicine.setEndDate(format.parse(endDateValue.getText().toString()).getTime());
-                }
-                catch(ParseException e) {
-                    e.printStackTrace();
-                }
-                patientMedicine.setDurationSchedule(Integer.parseInt(duration.getText().toString()));
-                patientMedicine.setDosesPerSchedule(Integer.parseInt(numberDoses.getText().toString()));
-                patientMedicine.setSchedule((byte)scheduleDate.getSelectedItemPosition());
-                patientMedicine.setDoctorInstruction(doctorInstructionValue.getText().toString());
-                patientMedicine.setAutoSchedule(new Integer(1).byteValue());
-                if (autoScheduleBtn.isChecked())
-                    patientMedicine.setAutoSchedule(new Integer(1).byteValue());
-                else
-                    patientMedicine.setAutoSchedule(new Integer(0).byteValue());
-                if (medicineReminderBtn.isChecked())
-                    patientMedicine.setReminder(new Integer(1).byteValue());
-                else
-                    patientMedicine.setReminder(new Integer(0).byteValue());
-//                patientMedicine.setAppointmentId(appointMentId);
-//                patientMedicine.setLoggedinUserId("" + doctorId);
-//                patientMedicine.setUserType(UtilSingleInstance.getUserType(type));
-//                patientMedicine.setPatientId(patientId);
-
-
-                System.out.println("medicinReminderTables = " + alarms.size());
-                List<PatientMedicine.MedicineSchedule> scheduleArray = new ArrayList<PatientMedicine.MedicineSchedule>();
-//                for (AlarmReminderVM vm : alarms) {
-//                    vm.startDate = patientMedicine.getStartDate();
-//                    vm.endDate = patientMedicine.getEndDate();
-//                    vm.doses = Integer.parseInt(patientMedicine.getDosesPerSchedule());
-//                    vm.duration = Integer.parseInt(patientMedicine.getDurationSchedule());
-//                    vm.doctorInstruction = patientMedicine.getDoctorInstruction();
-//
-//
+//        saveTimeTable.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // ReminderVM saveReminderVM = new ReminderVM();
+////                patientMedicine = new AddPatientMedicineSummary();
+//                List<AlarmReminderVM> alarms = new ArrayList<AlarmReminderVM>();
+//                alarms = alarmList;
+//                System.out.println("MedicineReminders::::::::::" + medicinReminderTables.size());
+//                if (alarms == null) {
+//                    alarms = medicinReminderTables;
 //                }
-                if (reminderDate != null)
-                    for (int i = 0; i < reminderDate.size(); i++) {
-                        ReminderDate rm = reminderDate.get(i);
-                        scheduleArray.add(new PatientMedicine.MedicineSchedule(rm.getDate().getTime()));
-                    }
+//                System.out.println("AlarmList::::::::::" + alarms.size());
+////                doctorId = Integer.parseInt(session.getString("id", "0"));
+////                patientId = session.getString("patientId", "");
+//               /* if(type.equalsIgnoreCase("Patient")){
+//                    patientId = session.getString("sessionID", null);
+//                }else{
+//                    patientId = session.getString("doctor_patientEmail", null);
+//                }*/
+//
+////                appointmentTime = global.getAppointmentTime();
+////                appointmentDate = global.getAppointmentDate();
+////                System.out.println("Appointment Date:::::::" + appointmentDate);
+//
+////                Bundle args = getArguments();
+////                String visitedDate = args.getString("visitedDate");
+////                String visitType = args.getString("visit");
+////                String referedBy = args.getString("referedBy");
+////                String symptomsValue = args.getString("symptomsValue");
+////                String diagnosisValue = args.getString("diagnosisValue");
+////                String testPrescribedValue = args.getString("testPrescribedValue");
+//
+//             /*   if (global.getReminderVM() != null) {
+//                    saveReminderVM.id = global.getReminderVM().id;
+//                } else {
+//                    saveReminderVM.id = null;
+//                }*/
+//                //System.out.println("id::::::::::" + saveReminderVM.id);
+//                /*
+//                {"autoSchedule":1,"doctorInstruction":"morning-evening","dosesPerSchedule":2,"durationSchedule":4,"endDate":1457548200000,"medicinName":"crocine",
+//                "reminder":1,"schedule":0,"startDate":1457164317533,"medicineSchedule":[{"scheduleTime":1457116200000},{"scheduleTime":1457116200000},
+//                {"scheduleTime":1457375400000}],"appointmentId":584,"patientId":7,"loggedinUserId":111,"userType":1}
+//                 */
+//                //patientMedicine.doctorId = doctorId;
+////                patientMedicine.setPatientId(patientId);
+//                // patientMedicine.setAppointmentId(appointMentID); = appointmentDate;
+//                //  patientMedicine.appointmentTime = appointmentTime;
+//
+//                patientMedicine.setMedicinName(medicineName.getText().toString());
+//                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+//                try {
+//                    patientMedicine.setStartDate(format.parse(dateValue.getText().toString()).getTime());
+//                    patientMedicine.setEndDate(format.parse(endDateValue.getText().toString()).getTime());
+//                }
+//                catch(ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                patientMedicine.setDurationSchedule(Integer.parseInt(duration.getText().toString()));
+//                patientMedicine.setDosesPerSchedule(Integer.parseInt(numberDoses.getText().toString()));
+//                patientMedicine.setSchedule((byte)scheduleDate.getSelectedItemPosition());
+//                patientMedicine.setDoctorInstruction(doctorInstructionValue.getText().toString());
+//                patientMedicine.setAutoSchedule(new Integer(1).byteValue());
+//                if (autoScheduleBtn.isChecked())
+//                    patientMedicine.setAutoSchedule(new Integer(1).byteValue());
+//                else
+//                    patientMedicine.setAutoSchedule(new Integer(0).byteValue());
+//                if (medicineReminderBtn.isChecked())
+//                    patientMedicine.setReminder(new Integer(1).byteValue());
+//                else
+//                    patientMedicine.setReminder(new Integer(0).byteValue());
+////                patientMedicine.setAppointmentId(appointMentId);
+////                patientMedicine.setLoggedinUserId("" + doctorId);
+////                patientMedicine.setUserType(UtilSingleInstance.getUserType(type));
+////                patientMedicine.setPatientId(patientId);
+//
+//
+//                System.out.println("medicinReminderTables = " + alarms.size());
+//                List<PatientMedicine.MedicineSchedule> scheduleArray = new ArrayList<PatientMedicine.MedicineSchedule>();
+////                for (AlarmReminderVM vm : alarms) {
+////                    vm.startDate = patientMedicine.getStartDate();
+////                    vm.endDate = patientMedicine.getEndDate();
+////                    vm.doses = Integer.parseInt(patientMedicine.getDosesPerSchedule());
+////                    vm.duration = Integer.parseInt(patientMedicine.getDurationSchedule());
+////                    vm.doctorInstruction = patientMedicine.getDoctorInstruction();
+////
+////
+////                }
+//                if (reminderDate != null)
+//                    for (int i = 0; i < reminderDate.size(); i++) {
+//                        ReminderDate rm = reminderDate.get(i);
+//                        scheduleArray.add(new PatientMedicine.MedicineSchedule(rm.getDate().getTime()));
+//                    }
+//
+//                patientMedicine.setMedicineSchedule(scheduleArray);
+////                savePatientReminderData(patientMedicine);
+//
+//            }
+//        });
+//
+//
+//        return view;
+//    }
 
-                patientMedicine.setMedicineSchedule(scheduleArray);
-//                savePatientReminderData(patientMedicine);
-
-            }
-        });
-
-
-        return view;
-    }
-
-    private String updateTimeString(int hours, int mins) {
-
-        String timeSet = "";
-        if (hours > 12) {
-            hours -= 12;
-            timeSet = "PM";
-        } else if (hours == 0) {
-            hours += 12;
-            timeSet = "AM";
-        } else if (hours == 12)
-            timeSet = "PM";
-        else
-            timeSet = "AM";
-
-        String minutes = "";
-        if (mins < 10)
-            minutes = "0" + mins;
-        else
-            minutes = String.valueOf(mins);
-        // Append in a StringBuilder
-        String aTime = new StringBuilder().append(hours).append(':')
-                .append(minutes).append(" ").append(timeSet).toString();
-
-        return aTime;
-    }
-
-
-    public void scheduleMedicineReminder() {
-//        alarmList = global.getAlarmTime();
-        System.out.println("Alarm List::::::" + alarmList.size());
-        for (AlarmReminderVM vm : alarmList) {
-            System.out.println("Date:::::::" + vm.getAlarmDate());
-            System.out.println("Time1::::::" + vm.getTime1());
-            String time = vm.getTime1().toString();
-            if (time != null) {
-                Date alarmDate = getStringToDate(vm.getAlarmDate());
-                Calendar calendarDate = Calendar.getInstance();
-                calendarDate.setTime(alarmDate);
-                calendarDate = getStringToTime(time, calendarDate);
-                System.out.println("Calendar Object::::::" + calendarDate.toString());
-                setAlarm(calendarDate);
-            }
-            time = vm.getTime2();
-            if (time != null) {
-                Date alarmDate = getStringToDate(vm.getAlarmDate());
-                Calendar calendarDate = Calendar.getInstance();
-                calendarDate.setTime(alarmDate);
-                calendarDate = getStringToTime(time, calendarDate);
-                System.out.println("Calendar Object::::::" + calendarDate.toString());
-                setAlarm(calendarDate);
-            }
-            time = vm.getTime3();
-            if (time != null) {
-                Date alarmDate = getStringToDate(vm.getAlarmDate());
-                Calendar calendarDate = Calendar.getInstance();
-                calendarDate.setTime(alarmDate);
-                calendarDate = getStringToTime(time, calendarDate);
-                System.out.println("Calendar Object::::::" + calendarDate.toString());
-                setAlarm(calendarDate);
-            }
-            time = vm.getTime4();
-            if (time != null) {
-                Date alarmDate = getStringToDate(vm.getAlarmDate());
-                Calendar calendarDate = Calendar.getInstance();
-                calendarDate.setTime(alarmDate);
-                calendarDate = getStringToTime(time, calendarDate);
-                System.out.println("Calendar Object::::::" + calendarDate.toString());
-                setAlarm(calendarDate);
-            }
-            time = vm.getTime5();
-            if (time != null) {
-                Date alarmDate = getStringToDate(vm.getAlarmDate());
-                Calendar calendarDate = Calendar.getInstance();
-                calendarDate.setTime(alarmDate);
-                calendarDate = getStringToTime(time, calendarDate);
-                System.out.println("Calendar Object::::::" + calendarDate.toString());
-                setAlarm(calendarDate);
-            }
-            time = vm.getTime6();
-            if (time != null) {
-                Date alarmDate = getStringToDate(vm.getAlarmDate());
-                Calendar calendarDate = Calendar.getInstance();
-                calendarDate.setTime(alarmDate);
-                calendarDate = getStringToTime(time, calendarDate);
-                System.out.println("Calendar Object::::::" + calendarDate.toString());
-                setAlarm(calendarDate);
-            }
-
-        }
-
-    }
+//    private String updateTimeString(int hours, int mins) {
+//
+//        String timeSet = "";
+//        if (hours > 12) {
+//            hours -= 12;
+//            timeSet = "PM";
+//        } else if (hours == 0) {
+//            hours += 12;
+//            timeSet = "AM";
+//        } else if (hours == 12)
+//            timeSet = "PM";
+//        else
+//            timeSet = "AM";
+//
+//        String minutes = "";
+//        if (mins < 10)
+//            minutes = "0" + mins;
+//        else
+//            minutes = String.valueOf(mins);
+//        // Append in a StringBuilder
+//        String aTime = new StringBuilder().append(hours).append(':')
+//                .append(minutes).append(" ").append(timeSet).toString();
+//
+//        return aTime;
+//    }
+//
+//
+//    public void scheduleMedicineReminder() {
+////        alarmList = global.getAlarmTime();
+//        System.out.println("Alarm List::::::" + alarmList.size());
+//        for (AlarmReminderVM vm : alarmList) {
+//            System.out.println("Date:::::::" + vm.getAlarmDate());
+//            System.out.println("Time1::::::" + vm.getTime1());
+//            String time = vm.getTime1().toString();
+//            if (time != null) {
+//                Date alarmDate = getStringToDate(vm.getAlarmDate());
+//                Calendar calendarDate = Calendar.getInstance();
+//                calendarDate.setTime(alarmDate);
+//                calendarDate = getStringToTime(time, calendarDate);
+//                System.out.println("Calendar Object::::::" + calendarDate.toString());
+//                setAlarm(calendarDate);
+//            }
+//            time = vm.getTime2();
+//            if (time != null) {
+//                Date alarmDate = getStringToDate(vm.getAlarmDate());
+//                Calendar calendarDate = Calendar.getInstance();
+//                calendarDate.setTime(alarmDate);
+//                calendarDate = getStringToTime(time, calendarDate);
+//                System.out.println("Calendar Object::::::" + calendarDate.toString());
+//                setAlarm(calendarDate);
+//            }
+//            time = vm.getTime3();
+//            if (time != null) {
+//                Date alarmDate = getStringToDate(vm.getAlarmDate());
+//                Calendar calendarDate = Calendar.getInstance();
+//                calendarDate.setTime(alarmDate);
+//                calendarDate = getStringToTime(time, calendarDate);
+//                System.out.println("Calendar Object::::::" + calendarDate.toString());
+//                setAlarm(calendarDate);
+//            }
+//            time = vm.getTime4();
+//            if (time != null) {
+//                Date alarmDate = getStringToDate(vm.getAlarmDate());
+//                Calendar calendarDate = Calendar.getInstance();
+//                calendarDate.setTime(alarmDate);
+//                calendarDate = getStringToTime(time, calendarDate);
+//                System.out.println("Calendar Object::::::" + calendarDate.toString());
+//                setAlarm(calendarDate);
+//            }
+//            time = vm.getTime5();
+//            if (time != null) {
+//                Date alarmDate = getStringToDate(vm.getAlarmDate());
+//                Calendar calendarDate = Calendar.getInstance();
+//                calendarDate.setTime(alarmDate);
+//                calendarDate = getStringToTime(time, calendarDate);
+//                System.out.println("Calendar Object::::::" + calendarDate.toString());
+//                setAlarm(calendarDate);
+//            }
+//            time = vm.getTime6();
+//            if (time != null) {
+//                Date alarmDate = getStringToDate(vm.getAlarmDate());
+//                Calendar calendarDate = Calendar.getInstance();
+//                calendarDate.setTime(alarmDate);
+//                calendarDate = getStringToTime(time, calendarDate);
+//                System.out.println("Calendar Object::::::" + calendarDate.toString());
+//                setAlarm(calendarDate);
+//            }
+//
+//        }
+//
+//    }
 
 //    public void showScheduleMonth(int doses) {
 //        if (medicine.getText().equals("")) {
@@ -1287,7 +1295,8 @@ public class PatientMedicinReminder extends ParentFragment {
 //                   Toast.makeText(getActivity(), "Select duration first !!!", Toast.LENGTH_LONG).show();
 //        }
 //    }
-
+        return view;
+    }
 
     public void setAlarm(Calendar calendar) {
         AlarmManager am = (AlarmManager) getActivity().getSystemService(getActivity().getApplicationContext().ALARM_SERVICE);
@@ -1414,6 +1423,9 @@ public class PatientMedicinReminder extends ParentFragment {
                     doctorInstructionValue.setText(medicine.getDoctorInstruction());
                     medicineReminderBtn.setChecked(medicine.getReminder().byteValue() ==1);
                     autoScheduleBtn.setChecked(medicine.getReminder().byteValue()==1);
+                    List<PatientMedicine.MedicineSchedule> schedule = medicine.getMedicineSchedule();
+                    setDailySchedule(patientMedicine);
+
                 }
 
                 @Override
@@ -1429,6 +1441,126 @@ public class PatientMedicinReminder extends ParentFragment {
 
         }
     }
+
+    private void setDailySchedule(PatientMedicine medicine)
+    {
+
+        long timeBetweenTwoDoses = 24 * 60 * 60 * 1000 / medicine.getDosesPerSchedule();
+        long startTime = medicine.getStartDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(startTime));
+        calendar.add(Calendar.HOUR,3);
+//        calendar.set(Calendar.AM_PM, Calendar.PM);
+        startTime = calendar.getTimeInMillis();
+        patientMedicine.setStartDate(startTime);
+
+        long[] schedule = new long[ medicine.dosesPerSchedule * medicine.getDurationSchedule()];
+        for(int i = 0; i < schedule.length; i++)
+        {
+            schedule[i] = startTime + i * timeBetweenTwoDoses;
+        }
+        long endTine = startTime + (schedule.length - 1 ) * timeBetweenTwoDoses;
+        String dateString = null;
+        List<Long> dates = new ArrayList<Long>();
+        for(int i = 0; i < schedule.length; i++)
+        {
+            DateFormat dateFormat = DateFormat.getDateInstance();
+            String tempDate = dateFormat.format(new Date(schedule[i]));
+            DateFormat dateFormat1 = DateFormat.getDateInstance();
+            String tempDate1 = dateFormat1.format(new Date(schedule[i]));
+            if(dateString == null )
+            {
+                dates.add(new Long(schedule[i]));
+                dateString = tempDate;
+            }
+            else if (dateString.equalsIgnoreCase(tempDate) == false)
+            {
+                dates.add(new Long(schedule[i]));
+                dateString = tempDate;
+            }
+            else
+                dates.set(dates.size()-1, schedule[i]);
+        }
+
+        long date[] = new long[dates.size()];
+        int i = 0;
+        for(Long list : dates)
+        {
+            date[i] = list.longValue();
+            i++;
+        }
+        createTable(date, schedule, timeBetweenTwoDoses);
+    }
+    private void setWeeklySchedule()
+    {
+
+    }
+    private void setMontlySchedule()
+    {
+
+    }
+    private void setYearlySchedule()
+    {
+
+    }
+
+    private void createTable(long date[], long schedule[], long durationBetweenDoses)
+    {
+        Activity activity = getActivity();
+        TableRow row= new TableRow(activity);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        row.setLayoutParams(lp);
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+        DateFormat datetime = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+        for(int i = 0; i < date.length; i++)
+        {
+            TextView textView = new TextView(activity);
+            textView.setText(dateFormat.format(date[i]));
+            textView.setBackgroundResource(R.drawable.medicine_schedule);
+            row.addView(textView,i,lp);
+        }
+        medicineSchedule.addView(row);
+        medicineSchedule.setStretchAllColumns(true);
+        TableRow medicineSch[] = new TableRow[patientMedicine.dosesPerSchedule];
+
+        long startDateTime = patientMedicine.startDate;
+        Calendar startDateEndTime = Calendar.getInstance();
+        startDateEndTime.setTime(new Date(startDateTime));
+        startDateEndTime.set(Calendar.HOUR_OF_DAY,23);
+        startDateEndTime.set(Calendar.MINUTE, 59);
+        startDateEndTime.set(Calendar.SECOND, 59);
+        long startDateEndTIme = startDateEndTime.getTime().getTime();
+        long delta = startDateEndTIme - startDateTime;
+        String StartDateEndTimeString = datetime.format(startDateEndTIme);
+        String startDateTimeString = datetime.format(startDateTime);
+        int StartDayFirstIndex = medicineSch.length - Math.round(delta/durationBetweenDoses) - 1;
+        for(int i = 0; i < medicineSch.length; i++)
+        {
+            medicineSch[i] = new TableRow(activity);
+            medicineSchedule.addView(medicineSch[i]);
+            if(i < StartDayFirstIndex)
+                medicineSch[i].addView(new TextView(activity));
+        }
+        int column = 0;
+        DateFormat dateFor = DateFormat.getTimeInstance(DateFormat.SHORT);
+        for(int i = 0; i < schedule.length; i++)
+        {
+            TextView textView = new TextView(activity);
+            textView.setText(dateFor.format(schedule[i]));
+//            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            textView.setBackgroundResource(R.drawable.medicine_schedule);
+            medicineSch[StartDayFirstIndex].addView(textView);
+            StartDayFirstIndex++;
+
+            if(StartDayFirstIndex >= patientMedicine.dosesPerSchedule) {
+                StartDayFirstIndex = 0;
+                column++;
+            }
+        }
+        medicineSchedule.requestLayout();
+    }
+
+
 
 //    public void updatedate() {
 //        if (checkStartDate) {
