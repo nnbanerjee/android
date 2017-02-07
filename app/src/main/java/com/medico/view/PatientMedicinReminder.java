@@ -27,8 +27,10 @@ import android.widget.Toast;
 
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.PatientMedicine;
+import com.medico.model.SearchParameter;
 import com.mindnerves.meidcaldiary.AlarmService;
 import com.mindnerves.meidcaldiary.R;
 
@@ -180,6 +182,43 @@ public class PatientMedicinReminder extends ParentFragment {
                 }
             }
         });
+        String[] options = {};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+        medicineName.setAdapter(adapter);
+        medicineName.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        medicineName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                if(medicineName.getText().toString().trim().length() > 0 )
+                {
+                    api.searchAutoFill(new SearchParameter(medicineName.getText().toString(), 1, 1, 10, 3), new Callback<List<Medicine>>() {
+                        @Override
+                        public void success(List<Medicine> medicineList, Response response)
+                        {
+                            ArrayAdapter array = (ArrayAdapter<String>)medicineName.getAdapter();
+                            array.clear();
+                            array.addAll(medicineList);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
+            }
+        });
         medicineSchedule = (TableLayout)view.findViewById(R.id.displayLinear);
 
         //Read Arguments
@@ -203,6 +242,7 @@ public class PatientMedicinReminder extends ParentFragment {
 //                addNewFlag = true;
 //            }
 //        }
+
 //        String[] scheduleList = getResources().getStringArray(R.array.scheduleDateList);
 //        ArrayAdapter scheduleAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, scheduleList);
 //        scheduleDate.setAdapter(scheduleAdapter);
@@ -1401,6 +1441,7 @@ public class PatientMedicinReminder extends ParentFragment {
         int patientId = bundle.getInt(PATIENT_ID);
         Integer medicineId = bundle.getInt("medicineId");
         int appointMentId = bundle.getInt(APPOINTMENT_ID);
+        int logged_in_id = bundle.getInt(LOGGED_IN_ID);
         if(medicineId > 0) {
             api.getPatientMedicine(new MedicineId(medicineId), new Callback<PatientMedicine>() {
                 @Override
@@ -1433,6 +1474,31 @@ public class PatientMedicinReminder extends ParentFragment {
         }
         else
         {
+            patientMedicine = new PatientMedicine();
+            patientMedicine.setDurationSchedule(1);
+            patientMedicine.setDosesPerSchedule(1);
+            patientMedicine.setStartDate(new Date().getTime());
+            patientMedicine.setSchedule(new Integer(0).byteValue());
+            patientMedicine.setPatientId(patientId);
+            patientMedicine.setDoctorId(doctorId);
+            patientMedicine.setReminder(Byte.parseByte("1"));
+            patientMedicine.setAutoSchedule(Byte.parseByte("1"));
+            patientMedicine.setAppointmentId(appointMentId);
+            patientMedicine.setLoggedinUserId(logged_in_id);
+
+            medicineName.setText(patientMedicine.getMedicinName());
+            numberOfDosesPerSchedule.setText("" + patientMedicine.getDosesPerSchedule());
+            scheduleDate.setSelection(patientMedicine.getSchedule());
+            DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+            startDateEdit.setText(format.format(patientMedicine.getStartDate()));
+            endDateEdit.setText(format.format(patientMedicine.getEndDate()));
+            doctorInstructionValue.setText(patientMedicine.getDoctorInstruction());
+            duration.setText("" + patientMedicine.getDurationSchedule());
+            doctorInstructionValue.setText(patientMedicine.getDoctorInstruction());
+            medicineReminderBtn.setChecked(patientMedicine.getReminder().byteValue() ==1);
+            autoScheduleBtn.setChecked(patientMedicine.getReminder().byteValue()==1);
+            List<PatientMedicine.MedicineSchedule> schedule = patientMedicine.getMedicineSchedule();
+            setSchedule(patientMedicine);
 
         }
     }

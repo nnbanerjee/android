@@ -8,12 +8,15 @@ import com.medico.model.Clinic;
 import com.medico.model.Delegation;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
+import com.medico.model.Medicine;
+import com.medico.model.MedicineId;
 import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
 import com.medico.model.ProfileId;
 import com.medico.model.ResponseCodeVerfication;
+import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
 
 import java.util.ArrayList;
@@ -64,7 +67,6 @@ import Model.HomePatientCount;
 import Model.InvoiceDetails;
 import Model.InvoiceId;
 import Model.Logindata;
-import com.medico.model.MedicineId;
 import Model.MobileEmail;
 import Model.ModeVM;
 import Model.NotificationVM;
@@ -747,7 +749,8 @@ public interface MyApi {
     @POST("/updatePatientVisitInvoiceDetails")
     void updatePatientVisitInvoiceDetails(@Body InvoiceDetails invoiceId, Callback<ResponseCodeVerfication> response);
 
-
+    @POST("/searchAutoFill1")
+    void searchAutoFill(@Body SearchParameter parameter, Callback<List<Medicine>> response);
 
 
 }

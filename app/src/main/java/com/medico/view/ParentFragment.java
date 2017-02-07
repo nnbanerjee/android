@@ -16,6 +16,7 @@ import retrofit.client.OkClient;
  */
 public class ParentFragment extends Fragment implements PARAM
 {
+
     public MyApi api;
 
     @Override
@@ -28,7 +29,7 @@ public class ParentFragment extends Fragment implements PARAM
                     public void intercept(RequestInterceptor.RequestFacade request) {
                         // assuming `cookieKey` and `cookieValue` are not null
                         String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
-                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
+                        request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
                     }
                 })
                 .setEndpoint(this.getResources().getString(R.string.base_url))
@@ -36,6 +37,5 @@ public class ParentFragment extends Fragment implements PARAM
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-
     }
 }
