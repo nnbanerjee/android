@@ -11,6 +11,11 @@ public interface PARAM
     public static final int PATIENT = 0;
     public static final int ASSISTANT = 2;
 
+    public static final int DAY = 0;
+    public static final int WEEK = 1;
+    public static final int MONTH = 2;
+    public static final int YEAR = 3;
+
 
     public static final int REGISTED = 0;
     public static final int UNDER_VERIFICATION = 1;

@@ -2,19 +2,20 @@ package com.medico.view;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
@@ -41,9 +42,12 @@ import java.util.List;
 
 import Model.AlarmReminderVM;
 import Model.ReminderDate;
+import Utils.PARAM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+//import android.app.DatePickerDialog;
 
 
 
@@ -55,23 +59,11 @@ import retrofit.client.Response;
 //add medicine
 public class PatientMedicinReminder extends ParentFragment {
 
-//    Integer doctorId;
-//    MyApi api;
-//    SharedPreferences session;
-//    private int year;
-//    private int month;
-//    private int day;
-//    private int hour;
-//    private int minute;
-//    int count = 0;
-//    boolean checkStartDate = false;
-    TextView dateValue, timeValue, endDateValue, daysText, durationText;
-//    private long calStartDate, calEndDate;
-    EditText duration, doctorInstructionValue,numberDoses, doses;
-    ImageView calenderImg, endDateImg;
+    TextView startDateEdit, timeValue, endDateEdit, daysText, durationText;
+    EditText duration, doctorInstructionValue,numberOfDosesPerSchedule;
+    ImageView calenderImg;
     Calendar calendar = Calendar.getInstance();
     Spinner  scheduleDate;
-//    HorizontalListView horizontalList;
 
     TableLayout medicineSchedule;
 
@@ -79,29 +71,11 @@ public class PatientMedicinReminder extends ParentFragment {
     CheckBox autoScheduleBtn;
     List<AlarmReminderVM> medicinReminderTables;
     List<AlarmReminderVM> alarmList;
-//    String medicinName = "";
-//    Global global;
-    String[] scheduleList;
-    String[] dosesList;
-    String[] medicin_list = null;
-    String type = null;
-//    Button saveTimeTable;
-//    String appointmentDate, appointmentTime, patientId;
     ArrayList<ReminderDate> reminderDate;
     ArrayList<String> startList, endList;
-//    Bundle saveToBundle = new Bundle();
     ArrayAdapter<String> scheduleAdapter;
-   //ArrayAdapter<String> dosesAdapter;
     public MultiAutoCompleteTextView medicineName;
     PatientMedicine patientMedicine = null;
-//    AddPatientMedicineSummary patientMedicine;
-//    private String appointMentId;
-//    boolean addNewFlag = false;
-//    private String state;
-//    private String medicineName, medicineId, medicineStartDate, medicineEndDate, medicineReminder;
-//    Button  back;
-
-//    TextView show_global_tv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
@@ -143,28 +117,36 @@ public class PatientMedicinReminder extends ParentFragment {
 //        appointMentId = session.getString("appointmentId", "");
         //Load Ui controls
         calenderImg = (ImageView) view.findViewById(R.id.calenderImg);
-        endDateImg = (ImageView) view.findViewById(R.id.endDateImg);
+//        endDateImg = (ImageView) view.findViewById(R.id.endDateImg);
 //        numberDoses = (EditText) view.findViewById(R.id.no_of_doses_edit_box);
-        doses = (EditText) view.findViewById(R.id.no_of_doses_edit_box);
-//        numberDoses.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
+        numberOfDosesPerSchedule = (EditText) view.findViewById(R.id.no_of_doses_edit_box);
+        numberOfDosesPerSchedule.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                if(numberOfDosesPerSchedule.getText().length() != 0) {
+                    int number = Integer.parseInt(numberOfDosesPerSchedule.getText().toString());
+                    patientMedicine.setDosesPerSchedule(number);
+                    DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+                    endDateEdit.setText(dateFormat.format(patientMedicine.getEndDate()));
+                    setSchedule(patientMedicine);
+                }
+            }
+        });
         scheduleDate = (Spinner) view.findViewById(R.id.scheduleDate);
-        dateValue = (TextView) view.findViewById(R.id.dateValue);
-        endDateValue = (TextView) view.findViewById(R.id.endDateValue);
+        startDateEdit = (TextView) view.findViewById(R.id.start_date);
+        endDateEdit = (TextView) view.findViewById(R.id.end_date);
 //        horizontalList = (HorizontalListView) view.findViewById(R.id.horizontalList);
         medicineReminderBtn = (CheckBox) view.findViewById(R.id.medicineReminderBtn);
         autoScheduleBtn = (CheckBox) view.findViewById(R.id.auto_scheduleBtn);
@@ -174,7 +156,30 @@ public class PatientMedicinReminder extends ParentFragment {
         daysText = (TextView) view.findViewById(R.id.schedule_text);
         durationText = (TextView) view.findViewById(R.id.duration_text);
         duration = (EditText) view.findViewById(R.id.duration_days);
+        duration.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                if(duration.getText().length() != 0) {
+                    int number = Integer.parseInt(duration.getText().toString());
+                    patientMedicine.setDurationSchedule(number);
+                    DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+                    endDateEdit.setText(dateFormat.format(patientMedicine.getEndDate()));
+                    setSchedule(patientMedicine);
+                }
+            }
+        });
         medicineSchedule = (TableLayout)view.findViewById(R.id.displayLinear);
 
         //Read Arguments
@@ -198,8 +203,8 @@ public class PatientMedicinReminder extends ParentFragment {
 //                addNewFlag = true;
 //            }
 //        }
-
-//        scheduleAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, scheduleList);
+//        String[] scheduleList = getResources().getStringArray(R.array.scheduleDateList);
+//        ArrayAdapter scheduleAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, scheduleList);
 //        scheduleDate.setAdapter(scheduleAdapter);
         /*dosesAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_type, R.id.visitType, dosesList);
         numberDoses.setAdapter(dosesAdapter);*/
@@ -213,8 +218,8 @@ public class PatientMedicinReminder extends ParentFragment {
 //        startList = new ArrayList<String>();
 //        startList.add(dateString);
 //        startList.add(timeString);
-//        dateValue.setText(timeString + "  " + dateString);
-//        // dateValue.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(""+cal.getTimeInMillis()));
+//        startDateEdit.setText(timeString + "  " + dateString);
+//        // startDateEdit.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(""+cal.getTimeInMillis()));
 //        calStartDate = cal.getTimeInMillis();
 //
 //        medicin_list = getResources().getStringArray(R.array.medicin_list);
@@ -227,7 +232,7 @@ public class PatientMedicinReminder extends ParentFragment {
 //            @Override
 //            public void onClick(View v) {
 //                if (((CheckBox) v).isChecked()) {
-//                    if (duration.getText().toString().equals("") && endDateValue.getText().toString().equals("")) {
+//                    if (duration.getText().toString().equals("") && endDateEdit.getText().toString().equals("")) {
 //                        Toast.makeText(getActivity(), "Please select Total Duration or End Date", Toast.LENGTH_LONG).show();
 //                    } else {
 //                        scheduleMedicineReminder();
@@ -240,12 +245,13 @@ public class PatientMedicinReminder extends ParentFragment {
         calenderImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDate(dateValue);
+                setDate(startDateEdit);
+
             }
         });
 
 //        if (global.getDateString() != null) {
-//            dateValue.setText(global.getDateString());
+//            startDateEdit.setText(global.getDateString());
 //            String durationText="";
 //            if(args.get("duration")!=null)
 //              durationText = args.get("duration").toString();
@@ -266,7 +272,7 @@ public class PatientMedicinReminder extends ParentFragment {
 //        }
 //
 //        if (global.getEndDateString() != null) {
-//            endDateValue.setText(global.getEndDateString());
+//            endDateEdit.setText(global.getEndDateString());
 //            String durationText = args.get("duration").toString();
 //            if (durationText != null) {
 //                duration.setText(durationText);
@@ -285,13 +291,13 @@ public class PatientMedicinReminder extends ParentFragment {
 //            }
 //        }
 
-        endDateImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                setDate(endDateValue);
-            }
-        });
+//        endDateImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                setDate(endDateEdit);
+//            }
+//        });
 //
 //        duration.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -321,7 +327,7 @@ public class PatientMedicinReminder extends ParentFragment {
 //                    String timeString = updateTimeString(hour, minute);
 //                    endList.add(cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
 //                    endList.add(timeString);
-//                    endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+//                    endDateEdit.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
 ////                    calEndDate = cal.getTimeInMillis();
 //                    System.out.println(":::::::OnClick::::::");
 //                    String scheduleType = scheduleDate.getSelectedItem().toString();
@@ -343,54 +349,43 @@ public class PatientMedicinReminder extends ParentFragment {
 //            }
 //        });
 //
-//        scheduleDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                int index = position + 1;
-//                System.out.println("Index::::::" + index);
-//                endList = new ArrayList<String>();
-//                if (!duration.getText().toString().equals("")) {
-//                    int days = Integer.parseInt(duration.getText().toString().trim());
-//                    Calendar cal = Calendar.getInstance();
-//                    if (index == 1) {
-//                        cal.add(Calendar.DAY_OF_MONTH, days);
-//                    } else if (index == 2) {
-//                        cal.add(Calendar.WEEK_OF_MONTH, days);
-//                    } else if (index == 3) {
-//                        cal.add(Calendar.MONTH, days);
-//                    }
-//
-//                    System.out.println("Calculated Date:::::" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.WEEK_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
-//                    int hour = cal.get(Calendar.HOUR_OF_DAY);
-//                    int minute = cal.get(Calendar.MINUTE);
-//                    String timeString = updateTimeString(hour, minute);
-//                    endDateValue.setText(timeString + "  " + cal.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(cal.get(Calendar.MONTH)) + "-" + cal.get(Calendar.DAY_OF_MONTH));
-//                    String scheduleType = scheduleDate.getSelectedItem().toString();
-//                    int doses = Integer.parseInt(numberDoses.getText().toString());
-//                    System.out.println("ScheduleTYpe:::::::::" + scheduleType);
-//                    if (scheduleType.equals("Daily")) {
-//                        showScheduleDay(doses);
-//                        daysText.setText("/ Day");
-//                        durationText.setText("Days");
-//                    } else if (scheduleType.equals("Weekly")) {
-//                        showScheduleWeek(doses);
-//                        daysText.setText("/ Week");
-//                        durationText.setText("Weeks");
-//                    } else if (scheduleType.equals("Monthly")) {
-//                        showScheduleMonth(doses);
-//                        daysText.setText("/ Month");
-//                        durationText.setText("Months");
-//                    }
-//                } else {
-//                    Toast.makeText(getActivity(), "Please Enter Duration", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        scheduleDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                if(patientMedicine != null) {
+
+                    patientMedicine.setSchedule(new Integer(position).byteValue());
+                    DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+                    endDateEdit.setText(dateFormat.format(patientMedicine.getEndDate()));
+                    setSchedule(patientMedicine);
+                    switch(position)
+                    {
+                        case PARAM.DAY:
+                            daysText.setText(" / Day");
+                            durationText.setText(" Days");
+                            break;
+                        case PARAM.WEEK:
+                            daysText.setText(" / Week");
+                            durationText.setText(" Weeks");
+                            break;
+                        case PARAM.MONTH:
+                            daysText.setText(" / Month");
+                            durationText.setText(" Months");
+                            break;
+                        case PARAM.YEAR:
+                            daysText.setText(" / Year");
+                            durationText.setText(" Years");
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 //        numberDoses.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -402,7 +397,7 @@ public class PatientMedicinReminder extends ParentFragment {
 //            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 //                medicineReminderBtn.setChecked(false);
 ////                if (count > 0) {
-//                    String eDate = endDateValue.getText().toString();
+//                    String eDate = endDateEdit.getText().toString();
 //                    if (!eDate.equals("")&& numberDoses.getText()!=null && !numberDoses.getText().toString().equalsIgnoreCase("")) {
 //                        int doses = Integer.parseInt(numberDoses.getText().toString());
 //                        String scheduleType = scheduleDate.getSelectedItem().toString();
@@ -436,7 +431,7 @@ public class PatientMedicinReminder extends ParentFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 medicineReminderBtn.setChecked(false);
                 if (count > 0) {
-                    String eDate = endDateValue.getText().toString();
+                    String eDate = endDateEdit.getText().toString();
                     if (!eDate.equals("")) {
                         int doses = Integer.parseInt(numberDoses.getSelectedItem().toString());
                         String scheduleType = scheduleDate.getSelectedItem().toString();
@@ -475,10 +470,10 @@ public class PatientMedicinReminder extends ParentFragment {
 //                    }
 //                }
 //                if (addNewFlag) {
-//                    dateValue.setText(reminderVM.startDate);
+//                    startDateEdit.setText(reminderVM.startDate);
 //                } else {
-//                    dateValue.setText(reminderVM.alarmReminderVMList.get(0).startDate);
-//                    endDateValue.setText(reminderVM.alarmReminderVMList.get(0).endDate);
+//                    startDateEdit.setText(reminderVM.alarmReminderVMList.get(0).startDate);
+//                    endDateEdit.setText(reminderVM.alarmReminderVMList.get(0).endDate);
 //                doctorInstructionValue.setText(reminderVM.alarmReminderVMList.get(0).doctorInstruction);
 //                    System.out.println("Duration::::::" + reminderVM.duration);
 //                    duration.setText("" + reminderVM.duration);
@@ -543,8 +538,8 @@ public class PatientMedicinReminder extends ParentFragment {
 //                patientMedicine.setMedicinName(medicineName.getText().toString());
 //                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
 //                try {
-//                    patientMedicine.setStartDate(format.parse(dateValue.getText().toString()).getTime());
-//                    patientMedicine.setEndDate(format.parse(endDateValue.getText().toString()).getTime());
+//                    patientMedicine.setStartDate(format.parse(startDateEdit.getText().toString()).getTime());
+//                    patientMedicine.setEndDate(format.parse(endDateEdit.getText().toString()).getTime());
 //                }
 //                catch(ParseException e) {
 //                    e.printStackTrace();
@@ -1081,15 +1076,15 @@ public class PatientMedicinReminder extends ParentFragment {
 //    }
 //
 //    public void createDateArray() {
-//        System.out.println("Start Date::::::" + dateValue.getText().toString());
-//        System.out.println("End Date::::::" + endDateValue.getText().toString());
-//        String startString = dateValue.getText().toString();
-//        String endString = endDateValue.getText().toString();
+//        System.out.println("Start Date::::::" + startDateEdit.getText().toString());
+//        System.out.println("End Date::::::" + endDateEdit.getText().toString());
+//        String startString = startDateEdit.getText().toString();
+//        String endString = endDateEdit.getText().toString();
 //        if ((startString != null) && (endString != null)) {
 //            startList = new ArrayList<String>();
 //            endList = new ArrayList<String>();
-//            String[] startArray = dateValue.getText().toString().split("  ");
-//            String[] endArray = endDateValue.getText().toString().split("  ");
+//            String[] startArray = startDateEdit.getText().toString().split("  ");
+//            String[] endArray = endDateEdit.getText().toString().split("  ");
 //            int len = startArray.length;
 //            for (int i = 0; i < len; i++) {
 //                System.out.println("Start Date Array:::::" + startArray[i]);
@@ -1384,17 +1379,17 @@ public class PatientMedicinReminder extends ParentFragment {
 //        }
 //    }
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//            updatedate();
-        }
-
-    };
+//    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+//
+//        @Override
+//        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//            calendar.set(Calendar.YEAR, year);
+//            calendar.set(Calendar.MONTH, monthOfYear);
+//            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+////            updatedate();
+//        }
+//
+//    };
 
     //Declaration
     @Override
@@ -1413,18 +1408,18 @@ public class PatientMedicinReminder extends ParentFragment {
                 {
                     patientMedicine = medicine;
                     medicineName.setText(medicine.getMedicinName());
-                    doses.setText("" + medicine.dosesPerSchedule);
+                    numberOfDosesPerSchedule.setText("" + medicine.getDosesPerSchedule());
                     scheduleDate.setSelection(medicine.getSchedule());
                     DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
-                    dateValue.setText(format.format(medicine.getStartDate()));
-                    endDateValue.setText(format.format(medicine.getEndDate()));
+                    startDateEdit.setText(format.format(medicine.getStartDate()));
+                    endDateEdit.setText(format.format(medicine.getEndDate()));
                     doctorInstructionValue.setText(medicine.getDoctorInstruction());
                     duration.setText("" + medicine.getDurationSchedule());
                     doctorInstructionValue.setText(medicine.getDoctorInstruction());
                     medicineReminderBtn.setChecked(medicine.getReminder().byteValue() ==1);
                     autoScheduleBtn.setChecked(medicine.getReminder().byteValue()==1);
                     List<PatientMedicine.MedicineSchedule> schedule = medicine.getMedicineSchedule();
-                    setDailySchedule(patientMedicine);
+                    setSchedule(patientMedicine);
 
                 }
 
@@ -1442,121 +1437,106 @@ public class PatientMedicinReminder extends ParentFragment {
         }
     }
 
-    private void setDailySchedule(PatientMedicine medicine)
+    private void setSchedule(PatientMedicine medicine)
     {
 
-        long timeBetweenTwoDoses = 24 * 60 * 60 * 1000 / medicine.getDosesPerSchedule();
-        long startTime = medicine.getStartDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(startTime));
-        calendar.add(Calendar.HOUR,3);
-//        calendar.set(Calendar.AM_PM, Calendar.PM);
-        startTime = calendar.getTimeInMillis();
-        patientMedicine.setStartDate(startTime);
-
-        long[] schedule = new long[ medicine.dosesPerSchedule * medicine.getDurationSchedule()];
-        for(int i = 0; i < schedule.length; i++)
-        {
-            schedule[i] = startTime + i * timeBetweenTwoDoses;
-        }
-        long endTine = startTime + (schedule.length - 1 ) * timeBetweenTwoDoses;
-        String dateString = null;
+        //create dates
         List<Long> dates = new ArrayList<Long>();
+        long schedule[] = medicine.getAlarmSchedule();
+        String dateString = null;
         for(int i = 0; i < schedule.length; i++)
         {
             DateFormat dateFormat = DateFormat.getDateInstance();
             String tempDate = dateFormat.format(new Date(schedule[i]));
             DateFormat dateFormat1 = DateFormat.getDateInstance();
             String tempDate1 = dateFormat1.format(new Date(schedule[i]));
-            if(dateString == null )
+            if(dateString == null || dateString.equalsIgnoreCase(tempDate) == false)
             {
                 dates.add(new Long(schedule[i]));
                 dateString = tempDate;
             }
-            else if (dateString.equalsIgnoreCase(tempDate) == false)
-            {
-                dates.add(new Long(schedule[i]));
-                dateString = tempDate;
-            }
-            else
-                dates.set(dates.size()-1, schedule[i]);
         }
 
         long date[] = new long[dates.size()];
-        int i = 0;
+        int j = 0;
         for(Long list : dates)
         {
-            date[i] = list.longValue();
-            i++;
+            date[j] = list.longValue();
+            j++;
         }
-        createTable(date, schedule, timeBetweenTwoDoses);
-    }
-    private void setWeeklySchedule()
-    {
 
-    }
-    private void setMontlySchedule()
-    {
-
-    }
-    private void setYearlySchedule()
-    {
-
-    }
-
-    private void createTable(long date[], long schedule[], long durationBetweenDoses)
-    {
+        //Create table
+        medicineSchedule.removeAllViews();
         Activity activity = getActivity();
         TableRow row= new TableRow(activity);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row.setLayoutParams(lp);
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-        DateFormat datetime = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+        DateFormat dateTimeFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
         for(int i = 0; i < date.length; i++)
         {
             TextView textView = new TextView(activity);
             textView.setText(dateFormat.format(date[i]));
             textView.setBackgroundResource(R.drawable.medicine_schedule);
+            textView.setLeft(10);
+            textView.setTop(10);
+            textView.setRight(10);
+            textView.setBottom(10);
             row.addView(textView,i,lp);
         }
         medicineSchedule.addView(row);
         medicineSchedule.setStretchAllColumns(true);
-        TableRow medicineSch[] = new TableRow[patientMedicine.dosesPerSchedule];
-
-        long startDateTime = patientMedicine.startDate;
-        Calendar startDateEndTime = Calendar.getInstance();
-        startDateEndTime.setTime(new Date(startDateTime));
-        startDateEndTime.set(Calendar.HOUR_OF_DAY,23);
-        startDateEndTime.set(Calendar.MINUTE, 59);
-        startDateEndTime.set(Calendar.SECOND, 59);
-        long startDateEndTIme = startDateEndTime.getTime().getTime();
-        long delta = startDateEndTIme - startDateTime;
-        String StartDateEndTimeString = datetime.format(startDateEndTIme);
-        String startDateTimeString = datetime.format(startDateTime);
-        int StartDayFirstIndex = medicineSch.length - Math.round(delta/durationBetweenDoses) - 1;
-        for(int i = 0; i < medicineSch.length; i++)
-        {
-            medicineSch[i] = new TableRow(activity);
-            medicineSchedule.addView(medicineSch[i]);
-            if(i < StartDayFirstIndex)
-                medicineSch[i].addView(new TextView(activity));
-        }
-        int column = 0;
         DateFormat dateFor = DateFormat.getTimeInstance(DateFormat.SHORT);
-        for(int i = 0; i < schedule.length; i++)
+        if(medicine.getSchedule() == PARAM.DAY)
         {
-            TextView textView = new TextView(activity);
-            textView.setText(dateFor.format(schedule[i]));
-//            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            textView.setBackgroundResource(R.drawable.medicine_schedule);
-            medicineSch[StartDayFirstIndex].addView(textView);
-            StartDayFirstIndex++;
+            TableRow[] medicineSch = new TableRow[medicine.getDosesPerSchedule()];
+            int dosesPerday = medicine.getDosesPerSchedule();
 
-            if(StartDayFirstIndex >= patientMedicine.dosesPerSchedule) {
-                StartDayFirstIndex = 0;
-                column++;
+            long startDateTime = medicine.getStartDate();
+            Calendar startDateEndTime = Calendar.getInstance();
+            startDateEndTime.setTime(new Date(startDateTime));
+            startDateEndTime.set(Calendar.HOUR_OF_DAY,23);
+            startDateEndTime.set(Calendar.MINUTE, 59);
+            startDateEndTime.set(Calendar.SECOND, 59);
+            long startDateEndTIme = startDateEndTime.getTime().getTime();
+            long delta = startDateEndTIme - startDateTime;
+            int StartDayFirstIndex = medicineSch.length - Math.round(delta/medicine.durationBetweenDoses()) - 1;
+            for(int i = 0; i < medicineSch.length; i++)
+            {
+                medicineSch[i] = new TableRow(activity);
+                medicineSchedule.addView(medicineSch[i]);
+                if(i < StartDayFirstIndex)
+                    medicineSch[i].addView(new TextView(activity));
+            }
+
+            for(int i = 0; i < schedule.length; i++)
+            {
+                TextView textView = new TextView(activity);
+                textView.setText(dateFor.format(schedule[i]));
+                textView.setBackgroundResource(R.drawable.medicine_schedule);
+                medicineSch[StartDayFirstIndex].addView(textView);
+                StartDayFirstIndex++;
+
+                if(StartDayFirstIndex >= dosesPerday) {
+                    StartDayFirstIndex = 0;
+                }
             }
         }
+        else
+        {
+            int dosesPerday = 1;
+            TableRow medicineSch = new TableRow(activity);
+            for(int i = 0; i < schedule.length; i++)
+            {
+                TextView textView = new TextView(activity);
+                textView.setText(dateFor.format(schedule[i]));
+                textView.setBackgroundResource(R.drawable.medicine_schedule);
+                medicineSch.addView(textView);
+            }
+            medicineSchedule.addView(medicineSch);
+
+        }
+
         medicineSchedule.requestLayout();
     }
 
@@ -1565,10 +1545,10 @@ public class PatientMedicinReminder extends ParentFragment {
 //    public void updatedate() {
 //        if (checkStartDate) {
 //            calStartDate = calendar.getTimeInMillis();
-//            endDateValue.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+//            endDateEdit.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 //        } else {
 //            calEndDate = calendar.getTimeInMillis();
-//            dateValue.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+//            startDateEdit.setText(calendar.get(Calendar.YEAR) + "-" + UtilSingleInstance.showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 //        }
 //    }
 
@@ -1710,8 +1690,8 @@ public class PatientMedicinReminder extends ParentFragment {
 //
 //                numberDoses.setSelection(Integer.parseInt(clinics.getDosesPerSchedule()));
 //                scheduleDate.setSelection(Integer.parseInt(clinics.getSchedule()));
-//                dateValue.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(clinics.getStartDate()));
-//                endDateValue.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(clinics.getEndDate()));
+//                startDateEdit.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(clinics.getStartDate()));
+//                endDateEdit.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(clinics.getEndDate()));
 //                //horizontalList = (HorizontalListView) view.findViewById(R.id.horizontalList);
 //
 //                doctorInstructionValue.setText(clinics.getDoctorInstruction());
@@ -1738,6 +1718,10 @@ public class PatientMedicinReminder extends ParentFragment {
             {
                 DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
                 dateField.setText(format.format(date));
+                patientMedicine.setStartDate(date.getTime());
+                patientMedicine.setEndDate(patientMedicine.getEndDate());
+                endDateEdit.setText(format.format(patientMedicine.getEndDate()));
+                setSchedule(patientMedicine);
             }
 
         };

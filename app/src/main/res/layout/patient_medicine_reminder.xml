@@ -112,6 +112,7 @@
                 android:id="@+id/no_of_doses_edit_box"
                 android:inputType="phone"
                 android:numeric="decimal"
+                android:maxLength="2"
                 android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:layout_toLeftOf="@+id/schedule_text"
@@ -120,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/schedule_text"
-                android:text="/ Doses"
+                android:text="/ Day"
                 style="@style/body2"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
@@ -153,6 +154,7 @@
                 android:id="@+id/duration_days"
                 android:inputType="phone"
                 android:numeric="decimal"
+                android:maxLength="2"
                 android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:layout_toLeftOf="@+id/duration_text"
@@ -190,7 +192,7 @@
                 />
 
             <TextView
-                android:id="@+id/dateValue"
+                android:id="@+id/start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
@@ -230,7 +232,7 @@
                 />
 
             <TextView
-                android:id="@+id/endDateValue"
+                android:id="@+id/end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
@@ -240,13 +242,6 @@
                 android:layout_toLeftOf="@+id/endDateImg"
                 android:layout_toRightOf="@+id/endText"
                 />
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/endDateImg"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/cal"/>
 
         </RelativeLayout>
         <RelativeLayout
@@ -266,6 +261,11 @@
                 android:layout_centerVertical="false"
                 android:layout_marginBottom="5dp"
                 />
+            <HorizontalScrollView
+                android:id="@+id/hscrll1"
+                android:layout_width="fill_parent"
+                android:layout_below="@id/preview"
+                android:layout_height="wrap_content" >
 
                 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="fill_parent"
@@ -273,11 +273,11 @@
                     android:id="@+id/displayLinear"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:layout_below="@id/preview"
+
                     android:orientation="horizontal"
                     android:fadingEdge="horizontal|vertical">
                     </TableLayout>
-
+            </HorizontalScrollView>
 
         </RelativeLayout>
 
