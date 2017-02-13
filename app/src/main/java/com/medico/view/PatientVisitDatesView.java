@@ -1,6 +1,5 @@
 package com.medico.view;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -145,10 +144,11 @@ public class PatientVisitDatesView extends ParentFragment
                 bun.putString(PARAM.REFERRED_BY, visits.getReferredBy());
                 bun.putString(PARAM.CLINIC_NAME, visits.getClinicName());
                 getActivity().getIntent().putExtras(bun);
-                Fragment fragment = new DoctorAppointmentInformation();
+                ParentFragment fragment = new DoctorAppointmentInformation();
+                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
 

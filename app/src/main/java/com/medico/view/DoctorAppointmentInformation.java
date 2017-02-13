@@ -144,7 +144,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         }
 
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
     }
     public void getDocumentationInformation(){
         Fragment fragment = new DoctorAppointmentDocument();

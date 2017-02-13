@@ -33,7 +33,7 @@ public class ManagePatientProfile extends AppCompatActivity {
             ParentFragment fragment = new PatientProfileListView();
             fragmentList.add(fragment);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.service, fragment).commit();
+            ft.add(R.id.service, fragment).addToBackStack(null).commit();
         }
 
 //        ActionBar actionBar = getSupportActionBar();
@@ -81,16 +81,25 @@ public class ManagePatientProfile extends AppCompatActivity {
                         fragmentManger.beginTransaction().detach(fragment).commit();
 
                     }
-                    else
+                    else if(fragment instanceof DoctorAppointmentSummary)
                     {
                         fragmentList.remove(fragmentList.size()-1);
                         fragment = fragmentList.get(fragmentList.size() - 1);
+                        fragmentList.remove(fragment);
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.service, fragment).commit();
+                        ft.detach(fragment).commit();
+                    }
+                    else
+                    {
+                        fragment = fragmentList.get(fragmentList.size() - 1);
+                        fragmentList.remove(fragment);
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.detach(fragment).commit();
                     }
                     return true;
                 }
-                return false;
+                else
+                    return false;
 
             default:
                 // If we got here, the user's action was not recognized.

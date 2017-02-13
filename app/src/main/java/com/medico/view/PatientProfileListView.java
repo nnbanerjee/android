@@ -121,7 +121,7 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
 //        OkHttpClient okHttpClient = new OkHttpClient();
