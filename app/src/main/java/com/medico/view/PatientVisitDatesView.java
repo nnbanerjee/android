@@ -165,7 +165,8 @@ public class PatientVisitDatesView extends ParentFragment
 
                 //appointments
                 //Fragment fragment = new DoctorAppointmentSummary();
-                Fragment fragment = new DoctorAppointmentInformation();
+                ParentFragment fragment = new DoctorAppointmentInformation();
+                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
 

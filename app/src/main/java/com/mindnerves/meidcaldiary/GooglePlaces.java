@@ -1,9 +1,5 @@
 package com.mindnerves.meidcaldiary;
 
-import org.apache.http.client.HttpResponseException;
-
-import android.util.Log;
-
 import com.google.api.client.googleapis.GoogleHeaders;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
@@ -12,10 +8,8 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpParser;
-
 import com.google.api.client.json.jackson.JacksonFactory;
 
-import Model.PlaceDetails;
 import Model.PlacesList;
 
 @SuppressWarnings("deprecation")
@@ -74,25 +68,25 @@ public class GooglePlaces {
 
 	}
 
-	public PlaceDetails getPlaceDetails(String reference) throws Exception {
-		try {
-
-			HttpRequestFactory httpRequestFactory = createRequestFactory(HTTP_TRANSPORT);
-			HttpRequest request = httpRequestFactory
-					.buildGetRequest(new GenericUrl(PLACES_DETAILS_URL));
-			request.getUrl().put("key", API_KEY);
-			request.getUrl().put("reference", reference);
-			request.getUrl().put("sensor", "false");
-
-			PlaceDetails place = request.execute().parseAs(PlaceDetails.class);
-			
-			return place;
-
-		} catch (HttpResponseException e) {
-
-			throw e;
-		}
-	}
+//	public PlaceDetails getPlaceDetails(String reference) throws Exception {
+//		try {
+//
+//			HttpRequestFactory httpRequestFactory = createRequestFactory(HTTP_TRANSPORT);
+//			HttpRequest request = httpRequestFactory
+//					.buildGetRequest(new GenericUrl(PLACES_DETAILS_URL));
+//			request.getUrl().put("key", API_KEY);
+//			request.getUrl().put("reference", reference);
+//			request.getUrl().put("sensor", "false");
+//
+//			PlaceDetails place = request.execute().parseAs(PlaceDetails.class);
+//
+//			return place;
+//
+//		} catch (HttpResponseException e) {
+//
+//			throw e;
+//		}
+//	}
 
 	/**
 	 * Creating http request Factory

@@ -41,7 +41,7 @@ import retrofit.client.Response;
 
 public class DoctorHome extends HomeActivity
 {
-
+    public int PRACTICE_TYPE = ALLOPATHIC;
 
     @Override
     protected void createView()

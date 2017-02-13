@@ -131,7 +131,8 @@ public class DoctorAppointmentInformation extends ParentFragment {
     }
 
     public void getSummaryInformation(){
-        Fragment fragment = new DoctorAppointmentSummary();
+        ParentFragment fragment = new DoctorAppointmentSummary();
+        ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
         Bundle bundle = getArguments();
         if(bundle != null){
             if(bundle.getString("fragment") != null){
@@ -143,12 +144,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
         }
 
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").commit();
+        fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
     }
     public void getDocumentationInformation(){
         Fragment fragment = new DoctorAppointmentDocument();
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
     }
     public void getDoctorNoteInformation(){
         Fragment fragment = new DoctorAppointmentDoctorNote();

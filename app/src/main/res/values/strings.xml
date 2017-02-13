@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="ManagePatientProfileTitle">Patient Profile</string>
     <string name="app_name">Medico</string>
     <string name="action_settings">Settings</string>
     <string name="folder">Folder</string>
@@ -13,7 +14,9 @@
     <string name="error_network_http_error">Malformed Response</string>
     <string name="error_unknown">Unknown Error</string>
     <string name="error_no_data_found">No records found!</string>
-
+    <string name="add_patient">Add Patient</string>
+    <string name="short_patient">Sort Patient</string>
+    <string name="filter_patient">Filter Patient</string>
 
     <string-array name="bloodgroup_list">
         <item>Select blood group</item>
@@ -326,6 +329,12 @@
         <item>Weekly</item>
         <item>Monthly</item>
     </string-array>
+    <string-array name="medicine_type_list">
+        <item>Alopathic</item>
+        <item>Homeopathic</item>
+        <item>Ayurvedic</item>
+    </string-array>
+
 
     <string-array name="mark_as">
         <item>Not Available</item>

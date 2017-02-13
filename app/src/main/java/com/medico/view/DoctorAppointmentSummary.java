@@ -171,10 +171,11 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 if(prescribed != null )
                 {
                     Bundle args = getActivity().getIntent().getExtras();
-                    Fragment fragment = new PatientMedicinReminder();
+                    ParentFragment fragment = new PatientMedicinReminder();
+                    ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
                 }
             }
         });
@@ -194,14 +195,10 @@ public class DoctorAppointmentSummary extends ParentFragment {
         addMedicineAndAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle args = new Bundle();
-                args.putString("visitedDate", visitedDate.getText().toString());
-                args.putString("referedBy", referedBy.getText().toString());
-                Fragment fragment = new PatientMedicinReminder();
-                fragment.setArguments(args);
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
+                ParentFragment fragment = new PatientMedicinReminder();
+                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();            }
         });
         saveSummary.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -519,10 +516,11 @@ public class DoctorAppointmentSummary extends ParentFragment {
                     MedicinePrescribed medicinePrescribed = (MedicinePrescribed)adapterView.getAdapter().getItem(position);
                     args.putInt("medicineId", medicinePrescribed.medicineId);
                     getActivity().getIntent().putExtras(args);
-                    Fragment fragment = new PatientMedicinReminder();
+                    ParentFragment fragment = new PatientMedicinReminder();
+                    ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getActivity().getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 }
             });
         }

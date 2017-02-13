@@ -110,7 +110,11 @@
         <!-- <receiver android:name=".MyReceiver"/> -->
         <receiver android:name=".AlarmService" />
 
-        <activity android:name="com.medico.view.ManagePatientProfile" />
+        <activity android:name="com.medico.view.ManagePatientProfile"
+            android:label="@string/ManagePatientProfileTitle"
+            android:parentActivityName="com.medico.view.DoctorHome" >
+        </activity>
+
     </application>
 
 </manifest>

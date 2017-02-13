@@ -16,6 +16,10 @@ public interface PARAM
     public static final int MONTH = 2;
     public static final int YEAR = 3;
 
+    public static final int ALLOPATHIC = 1;
+    public static final int HOMEOPATHIC = 2;
+    public static final int AYURVEDIC = 3;
+
 
     public static final int REGISTED = 0;
     public static final int UNDER_VERIFICATION = 1;
