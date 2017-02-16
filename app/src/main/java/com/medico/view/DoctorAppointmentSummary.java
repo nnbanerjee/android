@@ -93,7 +93,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
 //                return true;
 //            }
 //        });
-
         clinicName = (TextView)view.findViewById(R.id.clinicName);
         visit = (Spinner) view.findViewById(R.id.visit);
         visitedDate = (TextView) view.findViewById(R.id.visitedDate);
@@ -621,4 +620,5 @@ public class DoctorAppointmentSummary extends ParentFragment {
             clinicValue.setVisibility(View.VISIBLE);
         }
     }
+
 }

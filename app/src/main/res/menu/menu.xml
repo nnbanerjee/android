@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item android:id="@+id/exit"
-                android:title="Home"
-            app:showAsAction="always"
+                android:title="HOME"
+            app:showAsAction="collapseActionView"
                  />
+        <item android:id="@+id/add"
+            android:title="Add"
+            android:icon= "@drawable/ic_person_add_black_24dp"
+            app:showAsAction="ifRoom"
+            />
 </menu>
-
 
 

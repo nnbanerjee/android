@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDoctorNote;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDocument;
@@ -32,13 +36,16 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
         View view = inflater.inflate(R.layout.doctor_appointment_information, container,false);
         replacementFragment = (RelativeLayout) view.findViewById(R.id.replacementFragment);
-
+        setHasOptionsMenu(true);
         summaryBtn = (Button) view.findViewById(R.id.summaryBtn);
         documentationBtn = (Button) view.findViewById(R.id.documentationBtn);
         doctorNoteBtn = (Button) view.findViewById(R.id.doctorNoteBtn);
         treatmentBtn = (Button) view.findViewById(R.id.treatmentBtn);
         invoicesBtn = (Button) view.findViewById(R.id.invoicesBtn);
         feedbackBtn = (Button)view.findViewById(R.id.feedback_btn);
+
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Visit Details");
 
         getSummaryInformation();
 
@@ -203,6 +210,14 @@ public class DoctorAppointmentInformation extends ParentFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("in onActivityResult DoctorAppointmentInformation /////////////////////////////////");
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
+        inflater.inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(R.drawable.edit);
     }
 
 }

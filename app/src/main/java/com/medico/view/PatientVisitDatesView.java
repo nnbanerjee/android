@@ -9,10 +9,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.PatientVisitDatesAdapter;
@@ -66,6 +68,8 @@ public class PatientVisitDatesView extends ParentFragment
         // patientId = session.getString("patientEmail", "");
 //        show_global_tv.setText("Visit Dates");
         addClinic = (ImageView) view.findViewById(R.id.add_clinic_appointment);
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Visit Dates");
 //        final Button back = (Button) getActivity().findViewById(R.id.back_button);
 //        back.setVisibility(View.VISIBLE);
 
@@ -186,10 +190,13 @@ public class PatientVisitDatesView extends ParentFragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
         inflater.inflate(R.menu.menu, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.patient_visit_dates, menu);
+        MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(R.drawable.ic_note_add_black_24dp);
     }
 
 

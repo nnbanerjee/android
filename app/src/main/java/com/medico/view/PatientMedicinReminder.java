@@ -11,6 +11,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -83,6 +86,7 @@ public class PatientMedicinReminder extends ParentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_medicine_reminder, container, false);
+        setHasOptionsMenu(true);
 
 //        show_global_tv = (TextView) getActivity().findViewById(R.id.show_global_tv);
 //        back = (Button)getActivity().findViewById(R.id.back_button);
@@ -95,7 +99,8 @@ public class PatientMedicinReminder extends ParentFragment {
 //
 //            }
 //        });
-
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Medicine Details");
 //        show_global_tv.setText("Add Medicine");
         // Get current date by calender
         final Calendar c = Calendar.getInstance();
@@ -1810,6 +1815,14 @@ public class PatientMedicinReminder extends ParentFragment {
                 .setInitialDate(date)
                 .build();
         pickerDialog.show();
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
+        inflater.inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(R.drawable.save);
     }
 
 }

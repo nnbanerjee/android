@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.DoctorId;
@@ -59,6 +60,8 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
 //        doctorListView = (ListView)getActivity().findViewById(R.id.doctorListView);
 
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Patient Profiles");
 //        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 //        back = (Button)getActivity().findViewById(R.id.back_button);
 //        homeLayout = (RelativeLayout)getActivity().findViewById(R.id.home_layout1);
@@ -187,14 +190,11 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
         inflater.inflate(R.menu.menu, menu);
-        // Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
-        System.out.println("Inside fragment AllDoctorsPatient --->onCreateOptionsMenu()");
-
-//         toolbar.inflateMenu(R.menu.menu);
-       //super.onCreateOptionsMenu(menu, inflater);
-
+        inflater.inflate(R.menu.patient_profile, menu);
     }
 
     public void manageScreenIcons()

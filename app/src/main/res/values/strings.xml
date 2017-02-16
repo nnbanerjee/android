@@ -14,6 +14,7 @@
     <string name="error_network_http_error">Malformed Response</string>
     <string name="error_unknown">Unknown Error</string>
     <string name="error_no_data_found">No records found!</string>
+    <string name="add_visit">Add a visit</string>
     <string name="add_patient">Add Patient</string>
     <string name="short_patient">Sort Patient</string>
     <string name="filter_patient">Filter Patient</string>
