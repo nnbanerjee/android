@@ -1,6 +1,5 @@
 package com.medico.view;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDoctorNote;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDocument;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInvoices;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentTreatmentPlan;
+import com.mindnerves.meidcaldiary.Fragments.FeedbackFragment;
 import com.mindnerves.meidcaldiary.R;
 
 /**
@@ -27,14 +28,15 @@ import com.mindnerves.meidcaldiary.R;
 public class DoctorAppointmentInformation extends ParentFragment {
 
     RelativeLayout replacementFragment;
-    Button summaryBtn,documentationBtn,doctorNoteBtn,treatmentBtn,invoicesBtn,feedbackBtn;
+    Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn, feedbackBtn;
+    ParentFragment selectedFragment, summary, document, notes, treatment, invoice, feedback;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.doctor_appointment_information, container,false);
+        View view = inflater.inflate(R.layout.doctor_appointment_information, container, false);
         replacementFragment = (RelativeLayout) view.findViewById(R.id.replacementFragment);
         setHasOptionsMenu(true);
         summaryBtn = (Button) view.findViewById(R.id.summaryBtn);
@@ -42,31 +44,36 @@ public class DoctorAppointmentInformation extends ParentFragment {
         doctorNoteBtn = (Button) view.findViewById(R.id.doctorNoteBtn);
         treatmentBtn = (Button) view.findViewById(R.id.treatmentBtn);
         invoicesBtn = (Button) view.findViewById(R.id.invoicesBtn);
-        feedbackBtn = (Button)view.findViewById(R.id.feedback_btn);
+        feedbackBtn = (Button) view.findViewById(R.id.feedback_btn);
 
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Visit Details");
 
-        getSummaryInformation();
+        selectedFragment = summary = new DoctorAppointmentSummary();
+        document = new DoctorAppointmentDocument();
+        notes = new DoctorAppointmentDoctorNote();
+        treatment = new DoctorAppointmentTreatmentPlan();
+        invoice = new DoctorAppointmentInvoices();
+        feedback = new FeedbackFragment();
 
-//        final Button back = (Button)getActivity().findViewById(R.id.back_button);
-//        back.setVisibility(View.VISIBLE);
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToBack();
-//            }
-//        });
+        Bundle bundle = getActivity().getIntent().getExtras();
+        summary.setArguments(bundle);
+        document.setArguments(bundle);
+        notes.setArguments(bundle);
+        treatment.setArguments(bundle);
+        invoice.setArguments(bundle);
+        feedback.setArguments(bundle);
 
         summaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deselectButtons();
+                summaryBtn.setSelected(true);
                 summaryBtn.setBackgroundResource(R.drawable.tab_selected);
-                documentationBtn.setBackgroundResource(R.drawable.tab_default);
-                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
-                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
-                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
-                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+                ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+                activity.fragmentList.remove(selectedFragment);
+                activity.fragmentList.add(summary);
+                selectedFragment = summary;
                 getSummaryInformation();
             }
         });
@@ -74,12 +81,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
         documentationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.tab_default);
+                deselectButtons();
+                documentationBtn.setSelected(true);
                 documentationBtn.setBackgroundResource(R.drawable.tab_selected);
-                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
-                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
-                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
-                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+                ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+                activity.fragmentList.remove(selectedFragment);
+                activity.fragmentList.add(document);
+                selectedFragment = document;
                 getDocumentationInformation();
             }
         });
@@ -87,12 +95,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
         doctorNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.tab_default);
-                documentationBtn.setBackgroundResource(R.drawable.tab_default);
+                deselectButtons();
+                doctorNoteBtn.setSelected(true);
                 doctorNoteBtn.setBackgroundResource(R.drawable.tab_selected);
-                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
-                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
-                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+                ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+                activity.fragmentList.remove(selectedFragment);
+                activity.fragmentList.add(notes);
+                selectedFragment = notes;
                 getDoctorNoteInformation();
             }
         });
@@ -100,12 +109,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
         treatmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.tab_default);
-                documentationBtn.setBackgroundResource(R.drawable.tab_default);
-                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+                deselectButtons();
+                treatmentBtn.setSelected(true);
                 treatmentBtn.setBackgroundResource(R.drawable.tab_selected);
-                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
-                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+                ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+                activity.fragmentList.remove(selectedFragment);
+                activity.fragmentList.add(treatment);
+                selectedFragment = treatment;
                 getTreatmentInformation();
             }
         });
@@ -113,23 +123,25 @@ public class DoctorAppointmentInformation extends ParentFragment {
         invoicesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.tab_default);
-                documentationBtn.setBackgroundResource(R.drawable.tab_default);
-                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
-                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+                deselectButtons();
+                invoicesBtn.setSelected(true);
                 invoicesBtn.setBackgroundResource(R.drawable.tab_selected);
-                feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+                ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+                activity.fragmentList.remove(selectedFragment);
+                activity.fragmentList.add(invoice);
+                selectedFragment = invoice;
                 getInvoicesInformation();
             }
         });
         feedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                summaryBtn.setBackgroundResource(R.drawable.tab_default);
-                documentationBtn.setBackgroundResource(R.drawable.tab_default);
-                doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
-                treatmentBtn.setBackgroundResource(R.drawable.tab_default);
-                invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+                deselectButtons();
+                feedbackBtn.setSelected(true);
+                ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+                activity.fragmentList.remove(selectedFragment);
+                activity.fragmentList.add(feedback);
+                selectedFragment = feedback;
                 feedbackBtn.setBackgroundResource(R.drawable.tab_selected);
 
             }
@@ -137,41 +149,30 @@ public class DoctorAppointmentInformation extends ParentFragment {
         return view;
     }
 
-    public void getSummaryInformation(){
-        ParentFragment fragment = new DoctorAppointmentSummary();
-        ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            if(bundle.getString("fragment") != null){
-                String fragmentCall = bundle.getString("fragment");
-                Bundle bun = new Bundle();
-                bun.putString("fragment",fragmentCall);
-                fragment.setArguments(bun);
-            }
-        }
+    public void getSummaryInformation()
+    {
+        FragmentManager fragmentManger = getActivity().getFragmentManager();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, summary, "Doctor Consultations").addToBackStack(null).commit();
+    }
 
+    public void getDocumentationInformation() {
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, summary, "Doctor Consultations").addToBackStack(null).commit();
     }
-    public void getDocumentationInformation(){
-        Fragment fragment = new DoctorAppointmentDocument();
+
+    public void getDoctorNoteInformation() {
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, summary, "Doctor Consultations").addToBackStack(null).commit();
     }
-    public void getDoctorNoteInformation(){
-        Fragment fragment = new DoctorAppointmentDoctorNote();
+
+    public void getTreatmentInformation() {
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, summary, "Doctor Consultations").addToBackStack(null).commit();
     }
-    public void getTreatmentInformation(){
-        Fragment fragment = new DoctorAppointmentTreatmentPlan();
+
+    public void getInvoicesInformation() {
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
-    }
-    public void getInvoicesInformation(){
-        Fragment fragment = new DoctorAppointmentInvoices();
-        FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, summary, "Doctor Consultations").addToBackStack(null).commit();
     }
 
 
@@ -193,31 +194,110 @@ public class DoctorAppointmentInformation extends ParentFragment {
 //            }
 //        });
     }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        summaryBtn.setSelected(true);
+        summaryBtn.setBackgroundResource(R.drawable.tab_selected);
+        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+        activity.fragmentList.remove(selectedFragment);
+        activity.fragmentList.add(summary);
+        selectedFragment = summary;
+        getSummaryInformation();
+    }
 
-
-//    public void  goToBack(){
-//        //Fragment fragment = new PatientAllAppointment();
-//        Fragment fragment = new PatientVisitDatesView();
-//        FragmentManager fragmentManger = getFragmentManager();
-//        Bundle bun = new Bundle();
-//        bun.putString("fragment","from appintment information");
-//        fragment.setArguments(bun);
-//        fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
-//        final Button back = (Button)getActivity().findViewById(R.id.back_button);
-//        back.setVisibility(View.INVISIBLE);
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("in onActivityResult DoctorAppointmentInformation /////////////////////////////////");
     }
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.edit);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(bundle.getInt(APPOINTMENT_ID) > 0) {
+            menuItem.setChecked(false);
+            selectedFragment.setEditable(false);
+            menuItem.setIcon(R.drawable.edit);
+            selectedFragment.setEditable(false);
+        }
+        else
+        {
+            selectedFragment.setEditable(true);
+            menuItem.setChecked(true);
+            menuItem.setIcon(R.drawable.save);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add: {
+                if(item.isChecked() )
+                {
+                    selectedFragment.update();
+                    if(selectedFragment.isChanged() )
+                    {
+                        if(selectedFragment.canBeSaved()) {
+                            selectedFragment.save();
+                            item.setChecked(false);
+                            selectedFragment.setEditable(false);
+                            item.setIcon(R.drawable.edit);
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else if(selectedFragment.canBeSaved()) {
+                        item.setChecked(false);
+                        item.setIcon(R.drawable.edit);
+                        selectedFragment.setEditable(false);
+                        Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                else
+                {
+                    item.setChecked(true);
+                    item.setIcon(R.drawable.save);
+                    selectedFragment.setEditable(true);
+                }
+            }
+            break;
+            case R.id.home: {
+
+            }
+            break;
+
+        }
+        return true;
+    }
+
+    private void deselectButtons()
+    {
+        summaryBtn.setSelected(false);
+        documentationBtn.setSelected(false);
+        doctorNoteBtn.setSelected(false);
+        treatmentBtn.setSelected(false);
+        invoicesBtn.setSelected(false);
+        feedbackBtn.setSelected(false);
+        summaryBtn.setBackgroundResource(R.drawable.tab_default);
+        documentationBtn.setBackgroundResource(R.drawable.tab_default);
+        doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
+        treatmentBtn.setBackgroundResource(R.drawable.tab_default);
+        invoicesBtn.setBackgroundResource(R.drawable.tab_default);
+        feedbackBtn.setBackgroundResource(R.drawable.tab_default);
     }
 
 }

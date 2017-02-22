@@ -96,6 +96,8 @@ public class ManagePatientProfile extends AppCompatActivity {
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.detach(fragment).commit();
                     }
+                    fragment.setHasOptionsMenu(false);
+                    fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
                     return true;
                 }
                 else

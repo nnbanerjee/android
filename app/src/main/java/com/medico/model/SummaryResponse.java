@@ -15,9 +15,11 @@ public class SummaryResponse {
     public String symptoms;
     public String diagnosis;
     public Integer loggedinUserId;
-    public Byte treatmentPlanEnabled;
+    public Byte treatmentPlanEnabled = 0;
     public List<MedicinePrescribed> medicinePrescribed;
     public List<TestPrescribed> testPrescribed;
+
+    public transient boolean isChanged = false;
 
     public Integer getDoctorId() {
         return doctorId;
@@ -25,6 +27,7 @@ public class SummaryResponse {
 
     public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
+        isChanged = true;
     }
 
     public Integer getPatientId() {
@@ -33,6 +36,7 @@ public class SummaryResponse {
 
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+        isChanged = true;
     }
 
     public Integer getAppointmentId() {
@@ -41,6 +45,7 @@ public class SummaryResponse {
 
     public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
+        isChanged = true;
     }
 
     public Long getVisitDate() {
@@ -48,7 +53,10 @@ public class SummaryResponse {
     }
 
     public void setVisitDate(Long visitDate) {
-        this.visitDate = visitDate;
+        if(this.visitDate == null || this.visitDate.equals(visitDate) == false) {
+            this.visitDate = visitDate;
+            isChanged = true;
+        }
     }
 
     public Byte getVisitType() {
@@ -56,7 +64,10 @@ public class SummaryResponse {
     }
 
     public void setVisitType(Byte visitType) {
-        this.visitType = visitType;
+        if(this.visitType == null || this.visitType.equals(visitType) == false) {
+            this.visitType = visitType;
+            isChanged = true;
+        }
     }
 
     public String getReferredBy() {
@@ -64,7 +75,11 @@ public class SummaryResponse {
     }
 
     public void setReferredBy(String referredBy) {
-        this.referredBy = referredBy;
+        if(this.referredBy == null || this.referredBy.equals(referredBy) == false)
+        {
+            this.referredBy = referredBy;
+            isChanged = true;
+        }
     }
 
     public Integer getClinicId() {
@@ -72,7 +87,10 @@ public class SummaryResponse {
     }
 
     public void setClinicId(Integer clinicId) {
-        this.clinicId = clinicId;
+        if(this.clinicId == null || this.clinicId.equals(clinicId) == false) {
+            this.clinicId = clinicId;
+            isChanged = true;
+        }
     }
 
     public String getClinicName() {
@@ -81,6 +99,7 @@ public class SummaryResponse {
 
     public void setClinicName(String clinicName) {
         this.clinicName = clinicName;
+        isChanged = true;
     }
 
     public String getSymptoms() {
@@ -88,7 +107,10 @@ public class SummaryResponse {
     }
 
     public void setSymptoms(String symptoms) {
-        this.symptoms = symptoms;
+        if(this.symptoms == null || this.symptoms.equals(symptoms) == false) {
+            this.symptoms = symptoms;
+            isChanged = true;
+        }
     }
 
     public String getDiagnosis() {
@@ -96,7 +118,10 @@ public class SummaryResponse {
     }
 
     public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
+        if(this.diagnosis == null || this.diagnosis.equals(diagnosis) == false) {
+            this.diagnosis = diagnosis;
+            isChanged = true;
+        }
     }
 
     public Integer getLoggedinUserId() {
@@ -105,6 +130,7 @@ public class SummaryResponse {
 
     public void setLoggedinUserId(Integer loggedinUserId) {
         this.loggedinUserId = loggedinUserId;
+        isChanged = true;
     }
 
     public Byte getTreatmentPlanEnabled() {
@@ -113,6 +139,7 @@ public class SummaryResponse {
 
     public void setTreatmentPlanEnabled(Byte treatmentPlanEnabled) {
         this.treatmentPlanEnabled = treatmentPlanEnabled;
+        isChanged = true;
     }
 
     public List<MedicinePrescribed> getMedicinePrescribed() {
@@ -121,6 +148,7 @@ public class SummaryResponse {
 
     public void setMedicinePrescribed(List<MedicinePrescribed> medicinePrescribed) {
         this.medicinePrescribed = medicinePrescribed;
+        isChanged = true;
     }
 
     public List<TestPrescribed> getTestPrescribed() {
@@ -129,6 +157,7 @@ public class SummaryResponse {
 
     public void setTestPrescribed(List<TestPrescribed> testPrescribed) {
         this.testPrescribed = testPrescribed;
+        isChanged = true;
     }
 
     public class MedicinePrescribed {
@@ -146,6 +175,36 @@ public class SummaryResponse {
         public Byte reminder;
     }
 
+    public boolean isChanged()
+    {
+        return isChanged;
+    }
+    public void setChanged(boolean changed)
+    {
+        isChanged = changed;
+    }
+    public boolean canBeSaved()
+    {
+        boolean canBeSaved = true;
+        if(doctorId == null || doctorId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(patientId == null || patientId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(visitDate == null || visitDate.longValue() > 0 == false)
+            canBeSaved = false;
+        else if(visitType == null )
+            canBeSaved = false;
+        else if(clinicId == null || clinicId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(symptoms == null || symptoms.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(diagnosis == null || diagnosis.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(loggedinUserId == null || loggedinUserId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(treatmentPlanEnabled == null )
+            canBeSaved = false;
 
-
+        return canBeSaved;
+    }
 }

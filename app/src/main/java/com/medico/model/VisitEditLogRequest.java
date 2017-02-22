@@ -1,17 +1,17 @@
-package Model;
+package com.medico.model;
 
 /**
  * Created by Narendra on 15-03-2016.
  */
 public class VisitEditLogRequest
 {
-    public VisitEditLogRequest(String appointmentId, int typeOfLog) {
+    public VisitEditLogRequest(Integer appointmentId, int typeOfLog) {
         this.appointmentId = appointmentId;
         this.typeOfLog = typeOfLog;
     }
 
     //{"appointmentId": 585,"typeOfLog":4}
-    private String appointmentId;
+    private Integer appointmentId;
 
     public int getTypeOfLog() {
         return typeOfLog;
@@ -21,11 +21,11 @@ public class VisitEditLogRequest
         this.typeOfLog = typeOfLog;
     }
 
-    public String getAppointmentId() {
+    public Integer getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(String appointmentId) {
+    public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
 

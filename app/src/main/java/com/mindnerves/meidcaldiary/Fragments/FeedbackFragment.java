@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.view.DoctorAppointmentInformation;
+import com.medico.view.ParentFragment;
 import com.medico.view.PatientProfileListView;
 import com.mindnerves.meidcaldiary.R;
 
@@ -34,7 +35,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 14-10-2015.
  */
-public class FeedbackFragment extends Fragment {
+public class FeedbackFragment extends ParentFragment {
     ImageView star1, star2, star3, star4, star5;
     int flagStar1, flagStar2, flagStar3, flagStar4, flagStar5;
     RelativeLayout visitedLayout;

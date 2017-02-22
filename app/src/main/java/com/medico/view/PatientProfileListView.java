@@ -116,6 +116,7 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
 //                        editor.putString("doctorId", doctorId);
 //                        editor.putString("patientId", allPatientsProfiles.getPatientlist()[i].getPatientId().toString());
 //                        editor.commit();
+                setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 PatientShortProfile profile = (PatientShortProfile)adapterView.getAdapter().getItem(i);
                         ParentFragment fragment = new PatientVisitDatesView();
@@ -195,6 +196,7 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         inflater.inflate(R.menu.patient_profile, menu);
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     public void manageScreenIcons()

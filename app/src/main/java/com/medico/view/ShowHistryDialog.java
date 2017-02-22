@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.DialogFragment;
 import android.graphics.Color;
@@ -13,12 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.medico.model.VisitEditLogResponse;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.Arrays;
 
 import Application.MyApi;
-import Model.VisitEditLogResponse;
 
 /**
  * Created by User on 8/11/15.

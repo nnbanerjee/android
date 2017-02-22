@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.medico.view.PatientMedicinReminder;
 import com.medico.view.PatientMenusManage;
+import com.medico.view.ShowHistryDialog;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;

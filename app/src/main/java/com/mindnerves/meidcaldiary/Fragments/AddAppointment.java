@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.medico.model.Clinic;
 import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -25,9 +26,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Application.MyApi;
-import com.medico.model.Clinic;
 import Model.ClinicAppointment;
-import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -81,28 +80,28 @@ public class AddAppointment extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         api = restAdapter.create(MyApi.class);
-        api.getAllClinics(new PersonID( loggedInUser),new Callback<List<Clinic>>() {
-            @Override
-            public void success(List<Clinic> clinics, Response response) {
-                clinicList = clinics;
-                arrayClinics = new String[clinicList.size()];
-                int i= 0;
-                for(Clinic c : clinicList){
-                    arrayClinics[i] = c.getClinicName();
-                    i = i +1;
-                }
-                clinicAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayClinics);
-                clinicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                clinicSpinner.setAdapter(clinicAdapter);
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        api.getAllClinics(new PersonID( loggedInUser),new Callback<List<Clinic>>() {
+//            @Override
+//            public void success(List<Clinic> clinics, Response response) {
+//                clinicList = clinics;
+//                arrayClinics = new String[clinicList.size()];
+//                int i= 0;
+//                for(Clinic c : clinicList){
+//                    arrayClinics[i] = c.getClinicName();
+//                    i = i +1;
+//                }
+//                clinicAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayClinics);
+//                clinicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                clinicSpinner.setAdapter(clinicAdapter);
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                error.printStackTrace();
+//                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
+//            }
+//        });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

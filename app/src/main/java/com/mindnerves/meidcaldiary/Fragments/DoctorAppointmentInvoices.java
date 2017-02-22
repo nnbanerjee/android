@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.view.DoctorAppointmentInformation;
+import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HorizontalListView;
 import com.mindnerves.meidcaldiary.R;
@@ -54,7 +55,7 @@ import retrofit.client.Response;
 /**
  * Created by MNT on 07-Apr-15.
  */
-public class DoctorAppointmentInvoices extends Fragment {
+public class DoctorAppointmentInvoices extends ParentFragment {
 
     MyApi api;
     public SharedPreferences session;

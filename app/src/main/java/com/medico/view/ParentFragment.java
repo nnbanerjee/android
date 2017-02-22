@@ -38,4 +38,21 @@ public class ParentFragment extends Fragment implements PARAM
                 .build();
         api = restAdapter.create(MyApi.class);
     }
+
+    protected boolean isChanged()
+    {
+        return false;
+    }
+    protected boolean save()
+    {
+        return false;
+    }
+    protected void update()   {    }
+    protected boolean canBeSaved()
+    {
+        return false;
+    }
+    protected void setEditable(boolean editable)
+    {
+    }
 }

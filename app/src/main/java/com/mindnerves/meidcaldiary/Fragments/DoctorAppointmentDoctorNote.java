@@ -19,6 +19,8 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.view.ParentFragment;
 import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -26,7 +28,6 @@ import com.mindnerves.meidcaldiary.R;
 import Application.MyApi;
 import Model.AppointmentId;
 import Model.DoctorNotesResponse;
-import com.medico.model.ResponseCodeVerfication;
 import Utils.MedicoCustomErrorHandler;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
@@ -39,7 +40,7 @@ import retrofit.mime.TypedByteArray;
 /**
  * Created by MNT on 07-Apr-15.
  */
-public class DoctorAppointmentDoctorNote extends Fragment {
+public class DoctorAppointmentDoctorNote extends ParentFragment {
 
     MyApi api;
     public SharedPreferences session;

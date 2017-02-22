@@ -60,7 +60,6 @@
                 android:layout_toRightOf="@+id/emailIdText"
                 android:paddingLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="12-12-2016"
                 style="@style/textViewThemeForNewDesignWithoutMargin"/>
             <Button
                 android:layout_width="25dp"

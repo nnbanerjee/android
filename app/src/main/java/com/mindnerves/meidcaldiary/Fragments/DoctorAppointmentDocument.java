@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.ParentFragment;
 import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -39,7 +40,7 @@ import retrofit.client.Response;
 /**
  * Created by MNT on 07-Apr-15.
  */
-public class DoctorAppointmentDocument extends Fragment{
+public class DoctorAppointmentDocument extends ParentFragment{
 
     Button upload,back;
     private static final int FILE_SELECT_CODE = 0;

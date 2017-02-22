@@ -5,6 +5,7 @@ package Application; /**
 import com.google.gson.JsonObject;
 import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic;
+import com.medico.model.Clinic1;
 import com.medico.model.Delegation;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
@@ -18,6 +19,7 @@ import com.medico.model.ProfileId;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
+import com.medico.model.Symptom;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,8 +108,8 @@ import Model.TreatmentPlan;
 import Model.UpdateField;
 import Model.VerificationCode;
 import Model.VerifyRegistrationMobileEmailCode;
-import Model.VisitEditLogRequest;
-import Model.VisitEditLogResponse;
+import com.medico.model.VisitEditLogRequest;
+import com.medico.model.VisitEditLogResponse;
 import Model.forgotPassword;
 import retrofit.Callback;
 import retrofit.client.Response;
@@ -676,6 +678,9 @@ public interface MyApi {
     void getAllClinics1(@Body ProfileId personID, Callback<List<Clinic>> response);
 
     @POST("/getAllClinics")
+    void getAllClinics1(@Body PersonID personID, Callback<List<Clinic1>> response);
+
+    @POST("/getAllClinics")
     void getAllClinics(@Body PersonID personID, Callback<List<Clinic>> response);
 
     @POST("/getPatientVisitTreatmentPlan")
@@ -751,6 +756,8 @@ public interface MyApi {
 
     @POST("/searchAutoFill1")
     void searchAutoFill(@Body SearchParameter parameter, Callback<List<Medicine>> response);
+    @POST("/searchAutoFill1")
+    void searchAutoFillSymptom(@Body SearchParameter parameter, Callback<List<Symptom>> response);
 
 
 }
