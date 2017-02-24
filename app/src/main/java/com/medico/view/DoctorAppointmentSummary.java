@@ -134,7 +134,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                         @Override
                         public void failure(RetrofitError error)
                         {
-                            error.printStackTrace();
+//                            error.printStackTrace();
                         }
                     });
                 }
@@ -176,7 +176,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                         @Override
                         public void failure(RetrofitError error)
                         {
-                            error.printStackTrace();
+//                            error.printStackTrace();
                         }
                     });
                 }
@@ -351,7 +351,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 public void failure(RetrofitError error) {
                     Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     error.printStackTrace();
-                    setClinic(true);
                     progress.dismiss();
                 }
             });
@@ -545,20 +544,20 @@ public class DoctorAppointmentSummary extends ParentFragment {
         if(summaryResponse.getMedicinePrescribed() != null) {
             adapter = new MedicineAdapter(getActivity(), summaryResponse.getMedicinePrescribed(), getActivity().getIntent().getExtras().getInt(LOGGED_IN_ID));
             medicineListView.setAdapter(adapter);
-            medicineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    Bundle args = getActivity().getIntent().getExtras();
-                    MedicinePrescribed medicinePrescribed = (MedicinePrescribed)adapterView.getAdapter().getItem(position);
-                    args.putInt(MEDICINE_ID, medicinePrescribed.medicineId);
-                    getActivity().getIntent().putExtras(args);
-                    ParentFragment fragment = new PatientMedicinReminder();
-                    ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
-                    fragment.setArguments(args);
-                    FragmentManager fragmentManger = getActivity().getFragmentManager();
-                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                }
-            });
+//            medicineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                    Bundle args = getActivity().getIntent().getExtras();
+//                    MedicinePrescribed medicinePrescribed = (MedicinePrescribed)adapterView.getAdapter().getItem(position);
+//                    args.putInt(MEDICINE_ID, medicinePrescribed.medicineId);
+//                    getActivity().getIntent().putExtras(args);
+//                    ParentFragment fragment = new PatientMedicinReminder();
+//                    ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+//                    fragment.setArguments(args);
+//                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                }
+//            });
         }
     }
 

@@ -193,7 +193,6 @@
                 android:minLines="2"
                 android:maxLines="4"
                 android:text=""
-
                 android:layout_below="@+id/symptomsText"
                 android:scrollbars="vertical"
                 style="@style/textViewThemeForNewDesignWithoutMargin"
