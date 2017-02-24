@@ -30,6 +30,8 @@ public class PatientMedicine
 
     private Integer type;
 
+    private transient boolean isChanged = false;
+
     //public int userType;
     private List<MedicineSchedule> medicineSchedule;
 
@@ -77,8 +79,12 @@ public class PatientMedicine
         return medicinName;
     }
 
-    public void setMedicinName(String medicinName) {
-        this.medicinName = medicinName;
+    public void setMedicinName(String medicinName)
+    {
+        if(this.medicinName == null || this.medicinName.equals(medicinName) == false) {
+            this.medicinName = medicinName;
+            isChanged = true;
+        }
     }
 
     public String getDoctorName() {
@@ -92,32 +98,49 @@ public class PatientMedicine
     public Byte getSchedule() {
         return schedule;
     }
-    public void setSchedule(Byte schedule) {
-        this.schedule = schedule;
+    public void setSchedule(Byte schedule)
+    {
+        if(this.schedule == null || this.schedule.equals(schedule) == false) {
+            this.schedule = schedule;
+            isChanged = true;
+        }
+
     }
 
     public Integer getDosesPerSchedule() {
         return dosesPerSchedule;
     }
 
-    public void setDosesPerSchedule(Integer dosesPerSchedule) {
-        this.dosesPerSchedule = dosesPerSchedule;
+    public void setDosesPerSchedule(Integer dosesPerSchedule)
+    {
+        if(this.dosesPerSchedule==null || this.dosesPerSchedule.equals(dosesPerSchedule) == false) {
+            this.dosesPerSchedule = dosesPerSchedule;
+            isChanged = true;
+        }
     }
 
     public Integer getDurationSchedule() {
         return durationSchedule;
     }
 
-    public void setDurationSchedule(Integer durationSchedule) {
-        this.durationSchedule = durationSchedule;
+    public void setDurationSchedule(Integer durationSchedule)
+    {
+        if(this.durationSchedule==null||this.durationSchedule == null || this.durationSchedule.equals(durationSchedule) == false) {
+            this.durationSchedule = durationSchedule;
+            isChanged = true;
+        }
     }
 
     public Long getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Long startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Long startDate)
+    {
+        if(this.startDate==null || this.startDate.equals(startDate) == false) {
+            this.startDate = startDate;
+            isChanged = true;
+        }
     }
 
     public Long getEndDate()
@@ -126,48 +149,72 @@ public class PatientMedicine
         return endDate;
     }
 
-    public void setEndDate(Long endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Long endDate)
+    {
+        if(this.endDate == null || this.endDate.equals(endDate) == false) {
+            this.endDate = endDate;
+            isChanged = true;
+        }
     }
 
     public Byte getReminder() {
         return reminder;
     }
 
-    public void setReminder(Byte reminder) {
-        this.reminder = reminder;
+    public void setReminder(Byte reminder)
+    {
+        if(this.reminder==null || this.reminder.equals(reminder) == false) {
+            this.reminder = reminder;
+            isChanged = true;
+        }
     }
 
     public Byte getAutoSchedule() {
         return autoSchedule;
     }
 
-    public void setAutoSchedule(Byte autoSchedule) {
-        this.autoSchedule = autoSchedule;
+    public void setAutoSchedule(Byte autoSchedule)
+    {
+        if(this.autoSchedule==null || this.autoSchedule.equals(autoSchedule) == false) {
+            this.autoSchedule = autoSchedule;
+            isChanged = true;
+        }
     }
 
     public String getDoctorInstruction() {
         return doctorInstruction;
     }
 
-    public void setDoctorInstruction(String doctorInstruction) {
-        this.doctorInstruction = doctorInstruction;
+    public void setDoctorInstruction(String doctorInstruction)
+    {
+        if(this.doctorInstruction==null || this.doctorInstruction.equals(doctorInstruction) == false) {
+            this.doctorInstruction = doctorInstruction;
+            isChanged = true;
+        }
     }
 
     public Integer getType() {
         return type;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setType(Integer type)
+    {
+        if(this.type==null || this.type.equals(type) == false) {
+            this.type = type;
+            isChanged = true;
+        }
     }
 
     public List<MedicineSchedule> getMedicineSchedule() {
         return medicineSchedule;
     }
 
-    public void setMedicineSchedule(List<MedicineSchedule> medicineSchedule) {
-        this.medicineSchedule = medicineSchedule;
+    public void setMedicineSchedule(List<MedicineSchedule> medicineSchedule)
+    {
+        if(this.medicineSchedule==null || this.medicineSchedule.equals(medicineSchedule) == false) {
+            this.medicineSchedule = medicineSchedule;
+            isChanged = true;
+        }
     }
 
     public PatientMedicine()
@@ -226,6 +273,43 @@ public class PatientMedicine
                 break;
         }
         return durationBetweenDoses;
+    }
+
+    public boolean isChanged()
+    {
+        return isChanged;
+    }
+    public void setChanged(boolean changed)
+    {
+        isChanged = changed;
+    }
+    public boolean canBeSaved()
+    {
+        boolean canBeSaved = true;
+        if(schedule == null || schedule.intValue() >= 0 == false)
+            canBeSaved = false;
+        else if(dosesPerSchedule == null || dosesPerSchedule.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(durationSchedule == null || durationSchedule.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(medicinName == null || medicinName.trim().length() > 0 == false )
+            canBeSaved = false;
+        else if(startDate == null || startDate.longValue() > 0 == false)
+            canBeSaved = false;
+        else if(endDate == null || endDate.longValue() > 0 == false)
+            canBeSaved = false;
+        else if(reminder == null || reminder.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(autoSchedule == null || autoSchedule.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(patientId == null || patientId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(doctorId == null || doctorId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(loggedinUserId == null || loggedinUserId.intValue() > 0 == false)
+            canBeSaved = false;
+
+        return canBeSaved;
     }
 
 }

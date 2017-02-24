@@ -15,11 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDoctorNote;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDocument;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInvoices;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentTreatmentPlan;
-import com.mindnerves.meidcaldiary.Fragments.FeedbackFragment;
 import com.mindnerves.meidcaldiary.R;
 
 /**
@@ -50,19 +45,19 @@ public class DoctorAppointmentInformation extends ParentFragment {
         textviewTitle.setText("Visit Details");
 
         selectedFragment = summary = new DoctorAppointmentSummary();
-        document = new DoctorAppointmentDocument();
-        notes = new DoctorAppointmentDoctorNote();
-        treatment = new DoctorAppointmentTreatmentPlan();
-        invoice = new DoctorAppointmentInvoices();
-        feedback = new FeedbackFragment();
+//        document = new DoctorAppointmentDocument();
+//        notes = new DoctorAppointmentDoctorNote();
+//        treatment = new DoctorAppointmentTreatmentPlan();
+//        invoice = new DoctorAppointmentInvoices();
+//        feedback = new FeedbackFragment();
 
         Bundle bundle = getActivity().getIntent().getExtras();
         summary.setArguments(bundle);
-        document.setArguments(bundle);
-        notes.setArguments(bundle);
-        treatment.setArguments(bundle);
-        invoice.setArguments(bundle);
-        feedback.setArguments(bundle);
+//        document.setArguments(bundle);
+//        notes.setArguments(bundle);
+//        treatment.setArguments(bundle);
+//        invoice.setArguments(bundle);
+//        feedback.setArguments(bundle);
 
         summaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,15 +215,16 @@ public class DoctorAppointmentInformation extends ParentFragment {
         super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
         Bundle bundle = getActivity().getIntent().getExtras();
+        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+        ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
         if(bundle.getInt(APPOINTMENT_ID) > 0) {
             menuItem.setChecked(false);
-            selectedFragment.setEditable(false);
+            fragment.setEditable(false);
             menuItem.setIcon(R.drawable.edit);
-            selectedFragment.setEditable(false);
         }
         else
         {
-            selectedFragment.setEditable(true);
+            fragment.setEditable(true);
             menuItem.setChecked(true);
             menuItem.setIcon(R.drawable.save);
         }
@@ -236,18 +232,20 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+        ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {
                 if(item.isChecked() )
                 {
-                    selectedFragment.update();
-                    if(selectedFragment.isChanged() )
+                    fragment.update();
+                    if(fragment.isChanged() )
                     {
-                        if(selectedFragment.canBeSaved()) {
-                            selectedFragment.save();
+                        if(fragment.canBeSaved()) {
+                            fragment.save();
                             item.setChecked(false);
-                            selectedFragment.setEditable(false);
+                            fragment.setEditable(false);
                             item.setIcon(R.drawable.edit);
                         }
                         else
@@ -255,10 +253,10 @@ public class DoctorAppointmentInformation extends ParentFragment {
                             Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                         }
                     }
-                    else if(selectedFragment.canBeSaved()) {
+                    else if(fragment.canBeSaved()) {
                         item.setChecked(false);
                         item.setIcon(R.drawable.edit);
-                        selectedFragment.setEditable(false);
+                        fragment.setEditable(false);
                         Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
                     }
                     else
@@ -271,7 +269,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
                 {
                     item.setChecked(true);
                     item.setIcon(R.drawable.save);
-                    selectedFragment.setEditable(true);
+                    fragment.setEditable(true);
                 }
             }
             break;

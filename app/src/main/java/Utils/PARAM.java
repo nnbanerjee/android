@@ -45,4 +45,6 @@ public interface PARAM
     public static final String APPOINTMENT_DATETIME = "appointment_datetime";
     public static final String REFERRED_BY = "referred_by";
     public static final String CLINIC_NAME = "clinic_name";
+
+    public static final String MEDICINE_ID = "medicineId";
 }

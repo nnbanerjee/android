@@ -20,6 +20,8 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
+import com.medico.model.VisitEditLogRequest;
+import com.medico.model.VisitEditLogResponse;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,8 +110,6 @@ import Model.TreatmentPlan;
 import Model.UpdateField;
 import Model.VerificationCode;
 import Model.VerifyRegistrationMobileEmailCode;
-import com.medico.model.VisitEditLogRequest;
-import com.medico.model.VisitEditLogResponse;
 import Model.forgotPassword;
 import retrofit.Callback;
 import retrofit.client.Response;
@@ -637,10 +637,10 @@ public interface MyApi {
     void updatePatientVisitSummary(@Body SummaryResponse reminderVM, Callback<ResponseCodeVerfication> response);
 
     @POST("/addPatientMedicine")
-    void addPatientMedicine(@Body AddPatientMedicineSummary addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
+    void addPatientMedicine(@Body PatientMedicine addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
 
     @POST("/updatePatientMedicine")
-    void updatePatientMedicine(@Body AddPatientMedicineSummary addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
+    void updatePatientMedicine(@Body PatientMedicine addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
 
     @POST("/removePatientMedicine")
     void removePatientMedicine(@Body RemoveMedicineRequest removeMedicineRequest, Callback<ResponseCodeVerfication> response);

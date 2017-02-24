@@ -63,9 +63,9 @@ public class DoctorAppointmentSummary extends ParentFragment {
     Spinner visit;
     Button medicineBtn, selectDateBtn;
     ImageView  prescribHistryBtn,testHistryBtn, addMedicine,addtestsBtn,diagnosisHistryBtn,symptomsHistryBtn;
-    ListView alarmListView;
+    ListView medicineListView;
     ListView testsListView;
-    MultiAutoCompleteTextView symptomsValue,diagnosisValue,medicineValue,testPrescribedValue,clinicValue;
+    MultiAutoCompleteTextView symptomsValue,diagnosisValue,medicineValue,testPrescribedValue;
     ProgressDialog progress;
     TextView clinicName;
     MedicineAdapter adapter;
@@ -80,7 +80,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
 
         View view = inflater.inflate(R.layout.doctor_appointment_summary, container,false);
         summaryResponse = new SummaryResponse();
-        alarmListView = (ListView)view.findViewById(R.id.alarm_list);
+        medicineListView = (ListView)view.findViewById(R.id.alarm_list);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         testsListView = (ListView)view.findViewById(R.id.test_prescribed_list);
         addMedicine = (ImageView)view.findViewById(R.id.add_alarm);
@@ -186,7 +186,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         medicineValue = (MultiAutoCompleteTextView)view.findViewById(R.id.medicineValue);
         clinicSpinner = (Spinner)view.findViewById(R.id.clinic_spinner);
 
-        clinicValue= (MultiAutoCompleteTextView)view.findViewById(R.id.clinicValue);
+//        clinicValue= (MultiAutoCompleteTextView)view.findViewById(R.id.clinicValue);
 //        symptomsValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         medicineValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -263,13 +263,22 @@ public class DoctorAppointmentSummary extends ParentFragment {
         addMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                ParentFragment fragment = new PatientMedicinReminder();
+//                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+//                FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                Bundle args = getActivity().getIntent().getExtras();
+                args.remove(MEDICINE_ID);
+                getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
                 ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+                fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();            }
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
         });
 
-        alarmListView.setOnTouchListener(new View.OnTouchListener() {
+        medicineListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -509,10 +518,10 @@ public class DoctorAppointmentSummary extends ParentFragment {
         calendar.setTimeInMillis(summaryResponse.getVisitDate());
         visitedDate.setText(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT).format(new Date(summaryResponse.getVisitDate())));
         referedBy.setText(summaryResponse.getReferredBy());
-        clinicValue.setText(summaryResponse.clinicName);
+//        clinicValue.setText(summaryResponse.clinicName);
         visitedDate.setEnabled(false);
         visit.setEnabled(false);
-        clinicValue.setEnabled(false);
+//        clinicValue.setEnabled(false);
         selectDateBtn.setEnabled(false);
 
         symptomsValue.setText(summaryResponse.getSymptoms());
@@ -535,13 +544,13 @@ public class DoctorAppointmentSummary extends ParentFragment {
         }
         if(summaryResponse.getMedicinePrescribed() != null) {
             adapter = new MedicineAdapter(getActivity(), summaryResponse.getMedicinePrescribed(), getActivity().getIntent().getExtras().getInt(LOGGED_IN_ID));
-            alarmListView.setAdapter(adapter);
-            alarmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            medicineListView.setAdapter(adapter);
+            medicineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     Bundle args = getActivity().getIntent().getExtras();
                     MedicinePrescribed medicinePrescribed = (MedicinePrescribed)adapterView.getAdapter().getItem(position);
-                    args.putInt("medicineId", medicinePrescribed.medicineId);
+                    args.putInt(MEDICINE_ID, medicinePrescribed.medicineId);
                     getActivity().getIntent().putExtras(args);
                     ParentFragment fragment = new PatientMedicinReminder();
                     ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
@@ -628,7 +637,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         if(selectionRequired)
         {
            clinicSpinner.setVisibility(View.VISIBLE);
-            clinicValue.setVisibility(View.GONE);
+//            clinicValue.setVisibility(View.GONE);
             Bundle bundle1 = getActivity().getIntent().getExtras();
             Integer doctorId = bundle1.getInt(DOCTOR_ID);
             api.getAllClinics1(new PersonID(doctorId.toString()), new Callback<List<Clinic1>>() {
@@ -645,8 +654,8 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 }
             });
         }else{
-            clinicSpinner.setVisibility(View.GONE);
-            clinicValue.setVisibility(View.VISIBLE);
+//            clinicSpinner.setVisibility(View.GONE);
+//            clinicValue.setVisibility(View.VISIBLE);
         }
     }
     @Override

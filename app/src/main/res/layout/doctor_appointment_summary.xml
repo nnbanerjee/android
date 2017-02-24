@@ -1,47 +1,46 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="10dp"
     android:background="#ffffff">
 
-    <RelativeLayout
+   <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout2"
         android:layout_margin="5dp">
 
-        <RelativeLayout
-            android:id="@+id/layout_clinic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_margin="5dp">
+       <!--    <RelativeLayout
+              android:id="@+id/layout_visit_date"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:visibility="gone"
+              android:layout_margin="5dp">
 
-            <TextView
-                android:id="@+id/clinic_text"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:text="Clinic Name"
-                style="@style/body2"
-                />
+              <TextView
+                  android:id="@+id/clinic_text"
+                  android:layout_width="120dp"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="5dp"
+                  android:text="Clinic Name"
+                  style="@style/body2"
+                  />
 
-            <TextView
-                android:id="@+id/clinicName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/clinic_text"
-                android:paddingLeft="5dp"
-                style="@style/textViewThemeForNewDesign"
-                 />
+              <TextView
+                  android:id="@+id/clinicName"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_toRightOf="@+id/clinic_text"
+                  android:paddingLeft="5dp"
+                  style="@style/textViewThemeForNewDesign"
+                   />
 
-        </RelativeLayout>
+          </RelativeLayout> -->
 
         <RelativeLayout
             android:id="@+id/layout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_clinic"
             android:layout_margin="5dp">
 
             <TextView
@@ -146,22 +145,15 @@
                 android:text="Clinic"
                 android:layout_centerVertical="true"
                 style="@style/body2" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/clinic"
-                android:background="@color/grey">
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-
-                android:singleLine="true"
+                android:layout_height="wrap_content"
                 android:id="@+id/clinic_spinner"
-                android:visibility="gone"
+                android:backgroundTint="@color/abc_primary_text_material_light"
+                android:layout_toRightOf="@+id/clinic"
                 android:imeOptions="actionDone"
-                />
-        </RelativeLayout>
-            <MultiAutoCompleteTextView
+                style="@style/body2" />
+      <!--      <MultiAutoCompleteTextView
                 android:id="@+id/clinicValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,7 +163,7 @@
                 android:text=""
                 android:visibility="visible"
                 android:layout_toRightOf="@+id/clinic"
-                style="@style/textViewThemeForNewDesignWithoutMargin" />
+                style="@style/textViewThemeForNewDesignWithoutMargin" /> -->
 
 
         </RelativeLayout>
@@ -180,7 +172,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout18"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
+            android:paddingBottom="10dp"
             android:orientation="horizontal"
              >
 
@@ -191,23 +184,22 @@
                 android:paddingTop="2dp"
                 android:text="Symptoms"
                 style="@style/body2" />
-           <!-- <ListView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:id="@+id/alarm_list">
-            </ListView>-->
             <MultiAutoCompleteTextView
                 android:id="@+id/symptomsValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:textColor="#1E90FF"
-                android:singleLine="false"
-                android:maxLines="3"
+                android:minLines="2"
+                android:maxLines="4"
                 android:text=""
+
                 android:layout_below="@+id/symptomsText"
                 android:scrollbars="vertical"
-                style="@style/textViewThemeForNewDesignWithoutMargin" />
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:keepScreenOn="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                />
 
             <ImageView
                 android:id="@+id/symptomsHistryBtn"
@@ -241,12 +233,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/diagnosisText"
                 android:completionThreshold="1"
-
-                android:singleLine="false"
-                android:maxLines="3"
+                android:minLines="2"
+                android:maxLines="4"
                 android:textColor="#1E90FF"
                 android:text=""
                 style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:scrollbars="vertical"
+                android:keepScreenOn="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
             <ImageView
@@ -277,7 +271,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-android:layout_marginTop="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/medicinePrescribedText"
                 android:background="@drawable/square_grey_color"
                 android:id="@+id/relativeLayout">
@@ -286,7 +280,6 @@ android:layout_marginTop="5dp"
                     android:id="@+id/medicineValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/medicinePrescribedText"
                     android:layout_marginTop="5dp"
                     style="@style/textViewThemeForNewDesign"
                     android:visibility="gone"
@@ -319,7 +312,7 @@ android:layout_marginTop="5dp"
                 android:id="@+id/add_alarm"
                 android:paddingTop="15dp"
                 android:background="@drawable/add"
-
+                android:clickable="true"
                 android:layout_marginEnd="17dp"
                 android:layout_above="@+id/relativeLayout"
                 android:layout_toLeftOf="@+id/prescribHistryBtn"
@@ -391,20 +384,5 @@ android:layout_marginTop="5dp"
                 android:background="@drawable/histry_icon" />
 
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/saveSummary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/layout11"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_blue_color"
-            android:gravity="center"
-            android:text="Save"
-            android:layout_marginTop="20dp"
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
     </RelativeLayout>
 </ScrollView>
