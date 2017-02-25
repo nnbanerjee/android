@@ -125,6 +125,7 @@ public class PatientMedicinReminder extends ParentFragment {
         endDateEdit = (TextView) view.findViewById(R.id.end_date);
         medicineReminderBtn = (CheckBox) view.findViewById(R.id.medicineReminderBtn);
         autoScheduleBtn = (CheckBox) view.findViewById(R.id.auto_scheduleBtn);
+        autoScheduleBtn.setEnabled(false);
         medicineName = (MultiAutoCompleteTextView) view.findViewById(R.id.medicineValueEdit);
         doctorInstructionValue = (EditText) view.findViewById(R.id.editText2);
         daysText = (TextView) view.findViewById(R.id.schedule_text);
@@ -333,7 +334,7 @@ public class PatientMedicinReminder extends ParentFragment {
                     duration.setText("" + medicine.getDurationSchedule());
                     doctorInstructionValue.setText(medicine.getDoctorInstruction());
                     medicineReminderBtn.setChecked(medicine.getReminder().byteValue() ==1);
-                    autoScheduleBtn.setChecked(medicine.getReminder().byteValue()==1);
+                    autoScheduleBtn.setChecked(medicine.getAutoSchedule().byteValue()==1);
                     List<PatientMedicine.MedicineSchedule> schedule = medicine.getMedicineSchedule();
                     patientMedicine.setLoggedinUserId(new Integer(logged_in_id));
                     setSchedule(patientMedicine);
@@ -588,8 +589,8 @@ public class PatientMedicinReminder extends ParentFragment {
         endDateEdit.setText(format.format(patientMedicine.getEndDate()));
         patientMedicine.setDoctorInstruction(doctorInstructionValue.getText().toString());
         patientMedicine.setDurationSchedule(new Integer(duration.getText().toString()));
-        patientMedicine.setReminder(medicineReminderBtn.isSelected()? new Integer(1).byteValue():new Integer(0).byteValue());
-        patientMedicine.setAutoSchedule(autoScheduleBtn.isSelected()?new Integer(1).byteValue():new Integer(0).byteValue());
+        patientMedicine.setReminder(medicineReminderBtn.isChecked()? new Integer(1).byteValue():new Integer(0).byteValue());
+        patientMedicine.setAutoSchedule(autoScheduleBtn.isChecked()?new Integer(1).byteValue():new Integer(0).byteValue());
         patientMedicine.setType(1);
         long[] schedule = patientMedicine.getAlarmSchedule();
         List<PatientMedicine.MedicineSchedule> scheduleList = new ArrayList<>();

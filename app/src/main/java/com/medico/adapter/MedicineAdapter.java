@@ -42,8 +42,6 @@ public class MedicineAdapter extends BaseAdapter {
     Activity activity;
     List<MedicinePrescribed> alarms;
     LayoutInflater inflater;
-    ViewHolder mHolder = null;
-//    ReminderVM reminder;
     MyApi api;
     SharedPreferences session;
     ProgressDialog progress;
@@ -52,7 +50,6 @@ public class MedicineAdapter extends BaseAdapter {
     public MedicineAdapter(Activity activity, List<MedicinePrescribed> alarms, int userId) {
         this.activity = activity;
         this.alarms = alarms;
-//        this.reminder = reminder;
         session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loggedInUserId = userId;
     }
@@ -168,145 +165,6 @@ public class MedicineAdapter extends BaseAdapter {
         alarm.setVisibility(alarms.get(position).reminder==1?View.VISIBLE:View.INVISIBLE);
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        if (convertView == null)
-//        {
-//            RestAdapter restAdapter = new RestAdapter.Builder()
-//                    .setEndpoint(activity.getString(R.string.base_url))
-//                    .setClient(new OkClient())
-//                    .setLogLevel(RestAdapter.LogLevel.FULL)
-//                    .build();
-//            api = restAdapter.create(MyApi.class);
-//            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            convertView = inflater.inflate(R.layout.medicine, null);
-//            mHolder = new ViewHolder();
-//            mHolder.medicineName = (TextView) convertView.findViewById(R.id.medicine_name);
-//            mHolder.alarm = (ImageView) convertView.findViewById(R.id.alarm_button);
-//            mHolder.remove = (ImageView) convertView.findViewById(R.id.close_button);
-//            if (alarms.get(position) != null && alarms.get(position).medicineName != null && alarms.get(position).medicineName.equals("No Medicine")) {
-//                mHolder.medicineName.setText(alarms.get(position).medicineName);
-//                mHolder.alarm.setVisibility(View.GONE);
-//                mHolder.remove.setVisibility(View.GONE);
-//            } else
-//                mHolder.medicineName.setText(alarms.get(position).medicineName);
-//
-//            if (alarms.get(position) != null && alarms.get(position).reminder != null && alarms.get(position).reminder.intValue() == 0) {
-//                mHolder.alarm.setVisibility(View.INVISIBLE);
-//            }else{
-//                mHolder.alarm.setVisibility(View.VISIBLE);
-//            }
-//
-//            mHolder.alarm.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int getPosition = (Integer) v.getTag();
-//                    MedicinePrescribed medicineVm = alarms.get(getPosition);
-//                    if (!medicineVm.medicineName.equals("No Medicine")) {
-//                        Bundle args = new Bundle();
-//                      /*  args.putString("visitedDate", medicineVm.g.getVisitDate());
-//                        args.putString("visit", medicineVm.visitType);
-//                        args.putString("referedBy", medicineVm.referredBy);
-//                        args.putString("symptomsValue", medicineVm.symptoms);
-//                        args.putString("diagnosisValue", medicineVm.diagnosis);
-//                        args.putString("testPrescribedValue", medicineVm.testsPrescribed);*/
-//                        args.putString("medicinName", medicineVm.medicineName);
-//
-//                        Fragment fragment = new PatientMedicinReminder();
-//                        fragment.setArguments(args);
-//                        FragmentManager fragmentManger = activity.getFragmentManager();
-//                        fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//                    }
-//                }
-//            });
-//
-//
-//          /*  convertView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int getPosition = (Integer) v.getTag();
-//                    MedicinePrescribed medicineVm = alarms.get(getPosition);
-//                    if (!medicineVm.getMedicineName().equals("No Medicine")) {
-//                        Bundle args = new Bundle();
-//                        args.putString("state", "EDIT");
-//                      *//*  args.putString("visitedDate", medicineVm.g.getVisitDate());
-//                        args.putString("visit", medicineVm.visitType);
-//                        args.putString("referedBy", medicineVm.referredBy);
-//                        args.putString("symptomsValue", medicineVm.symptoms);
-//                        args.putString("diagnosisValue", medicineVm.diagnosis);
-//                        args.putString("testPrescribedValue", medicineVm.testsPrescribed);*//*
-//                        args.putString("medicinName", medicineVm.getMedicineName());
-//                        args.putString("medicineEndDate", medicineVm.getEndDateTime());
-//                        args.putString("medicineId", medicineVm.getMedicineId());
-//                        args.putString("medicineStartDate", medicineVm.getStartDateTime());
-//                        args.putString("medicineReminder", medicineVm.getReminder());
-//
-//
-//                        Fragment fragment = new PatientMedicinReminder();
-//                        fragment.setArguments(args);
-//                        FragmentManager fragmentManger = activity.getFragmentManager();
-//                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//                    }
-//                }
-//            });*/
-//
-//            mHolder.remove.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //{"medicineId":8,"loggedinUserId":104,"userType":1}
-//                    int getPosition = (Integer) v.getTag();
-//                    final MedicinePrescribed medicineVm = alarms.get(getPosition);
-//                    if (!medicineVm.medicineName.equals("No Medicine")) {
-//                        progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-//                        // System.out.println("alarm size= "+medicineVm.alarms.size());
-//                        // reminder.alarmReminderVMList = medicineVm.alarms;
-//                        RemoveMedicineRequest removeMedicineRequest = new RemoveMedicineRequest(alarms.get(getPosition).medicineId, loggedInUserId);
-//
-//
-//                        api.removePatientMedicine(removeMedicineRequest, new Callback<ResponseCodeVerfication>() {
-//                            @Override
-//                            public void success(ResponseCodeVerfication result, Response response) {
-//                                progress.dismiss();
-//                                if (result.getStatus().equalsIgnoreCase("1")) {
-//                                    Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
-//                                    alarms.remove(medicineVm);
-//                                    notifyDataSetChanged();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void failure(RetrofitError error) {
-//                                progress.dismiss();
-//                                error.printStackTrace();
-//                                Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                }
-//            });
-//            convertView.setTag(mHolder);
-//            convertView.setTag(R.id.medicine_name, mHolder.medicineName);
-//            convertView.setTag(R.id.alarm_button, mHolder.alarm);
-//            convertView.setTag(R.id.close_button, mHolder.remove);
-//
-//        } else {
-//            mHolder = (ViewHolder) convertView.getTag();
-//        }
-//        mHolder.medicineName.setTag(position);
-//        mHolder.alarm.setTag(position);
-//        mHolder.remove.setTag(position);
-//       // convertView.setTag(position);
-//        return convertView;
-//    }
-
-
-
-
-
-    static class ViewHolder {
-        TextView medicineName;
-        ImageView alarm, remove;
-    }
 
 
 }
