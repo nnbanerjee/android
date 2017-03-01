@@ -47,4 +47,5 @@ public interface PARAM
     public static final String CLINIC_NAME = "clinic_name";
 
     public static final String MEDICINE_ID = "medicineId";
+    public static final String DIAGNOSTIC_TEST_ID = "diagnosticTestId";
 }

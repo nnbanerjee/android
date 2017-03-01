@@ -1,0 +1,236 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff"
+    android:overScrollMode="always"
+    android:isScrollContainer="true"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbars="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:id="@+id/layout0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test Type:"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:id="@+id/test_type"
+                />
+            <RelativeLayout
+                android:background="@color/grey"
+                android:layout_toRightOf="@+id/test_type"
+                android:layout_toEndOf="@+id/test_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:textColor="#1E90FF"
+                    android:id="@+id/test_type_value"
+                    android:entries="@array/diagnostic_test_type_list"
+
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/layout0"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:text="Name"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                android:id="@+id/testName"
+                />
+            <Spinner
+                android:id="@+id/testValueEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/testName"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#1E90FF"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                />
+             />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout1"
+            android:id="@+id/layout2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clinic/Lab"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:id="@+id/clinicText"
+                />
+            <RelativeLayout
+                android:background="@color/grey"
+                android:layout_toRightOf="@+id/clinicText"
+                android:layout_toEndOf="@+id/clinicText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textColor="#1E90FF"
+                android:id="@+id/clinicNames"
+                android:imeOptions="actionDone"
+                />
+        </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout3"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Referred By"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:id="@+id/referredText"
+                />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:id="@+id/referredByValue"
+                android:entries="@array/diagnostic_test_referred"
+                android:inputType="phone"
+                android:text=""
+                android:completionThreshold="1"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:layout_toRightOf="@+id/referredText"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout5"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Time"
+                style="@style/sub_heading"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:id="@+id/startText"
+                />
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:textColor="#1E90FF"
+                android:layout_toLeftOf="@+id/calenderImg"
+
+                android:layout_toRightOf="@+id/startText"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/calenderImg"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/cal"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout8"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout5">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reminder"
+                style="@style/caption_Style"
+                android:layout_below="@+id/auto_scheduleBtn"
+                android:id="@+id/medicineReminderBtn"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout9"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/layout8">
+
+            <TextView
+                android:text="Doctor's Instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/doctorInstructionValue" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:ems="10"
+                android:id="@+id/editText2"
+                tools:layout_below="@+id/doctorInstructionValue" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>

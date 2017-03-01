@@ -1,6 +1,5 @@
 package com.medico.view;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,8 +24,8 @@ import android.widget.Toast;
 
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.adapter.DiagnosticTestAdapter;
 import com.medico.adapter.MedicineAdapter;
-import com.medico.adapter.TestsAdapter;
 import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic1;
 import com.medico.model.ResponseCodeVerfication;
@@ -37,18 +35,14 @@ import com.medico.model.SummaryResponse.MedicinePrescribed;
 import com.medico.model.Symptom;
 import com.medico.model.VisitEditLogRequest;
 import com.medico.model.VisitEditLogResponse;
-import com.mindnerves.meidcaldiary.Fragments.AddDiagnosticTest;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Model.AddDiagnosisTestRequest;
-import Model.AlarmReminderVM;
 import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -69,7 +63,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     ProgressDialog progress;
     TextView clinicName;
     MedicineAdapter adapter;
-    TestsAdapter testAdapter;
+    DiagnosticTestAdapter testAdapter;
     public SummaryResponse summaryResponse;
     private Spinner clinicSpinner;
     boolean isChanged = false;
@@ -184,12 +178,14 @@ public class DoctorAppointmentSummary extends ParentFragment {
             }
         });
         medicineValue = (MultiAutoCompleteTextView)view.findViewById(R.id.medicineValue);
+        testPrescribedValue = (MultiAutoCompleteTextView)view.findViewById(R.id.testPrescribedValue);
         clinicSpinner = (Spinner)view.findViewById(R.id.clinic_spinner);
 
 //        clinicValue= (MultiAutoCompleteTextView)view.findViewById(R.id.clinicValue);
 //        symptomsValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         medicineValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        testPrescribedValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         selectDateBtn = (Button) view.findViewById(R.id.timeBtn);
         selectDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,14 +246,23 @@ public class DoctorAppointmentSummary extends ParentFragment {
         addtestsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Bundle args = getActivity().getIntent().getExtras();
+//                args.putString("visitedDate", visitedDate.getText().toString());
+//                args.putString("referedBy", referedBy.getText().toString());
+//                args.putInt("clinicId", summaryResponse.clinicId);
+//                Fragment fragment = new AddDiagnosticTest();
+//                fragment.setArguments(args);
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 Bundle args = getActivity().getIntent().getExtras();
-                args.putString("visitedDate", visitedDate.getText().toString());
-                args.putString("referedBy", referedBy.getText().toString());
-                args.putInt("clinicId", summaryResponse.clinicId);
-                Fragment fragment = new AddDiagnosticTest();
+                args.remove(DIAGNOSTIC_TEST_ID);
+                getActivity().getIntent().putExtras(args);
+                ParentFragment fragment = new PatientDiagnosticTests();
+                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(args);
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+
             }
         });
         addMedicine.setOnClickListener(new View.OnClickListener() {
@@ -526,20 +531,20 @@ public class DoctorAppointmentSummary extends ParentFragment {
         symptomsValue.setText(summaryResponse.getSymptoms());
         diagnosisValue.setText(summaryResponse.getDiagnosis());
         if(summaryResponse.getTestPrescribed() !=null) {
-            testAdapter = new TestsAdapter(getActivity(), summaryResponse.getTestPrescribed(), getActivity().getIntent().getExtras().getInt(LOGGED_IN_ID));
+            testAdapter = new DiagnosticTestAdapter(getActivity(), summaryResponse.getTestPrescribed(), getActivity().getIntent().getExtras().getInt(LOGGED_IN_ID));
             testsListView.setAdapter(testAdapter);
-            testsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    AddDiagnosisTestRequest addPatientMedicineSummary = new AddDiagnosisTestRequest();
-                    List<AlarmReminderVM> alarms = new ArrayList<AlarmReminderVM>();
-                    Bundle bun = getActivity().getIntent().getExtras();
-                    Fragment fragment = new AddDiagnosticTest();
-                    fragment.setArguments(bun);
-                    FragmentManager fragmentManger = getActivity().getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                }
-            });
+//            testsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                    AddDiagnosisTestRequest addPatientMedicineSummary = new AddDiagnosisTestRequest();
+//                    List<AlarmReminderVM> alarms = new ArrayList<AlarmReminderVM>();
+//                    Bundle bun = getActivity().getIntent().getExtras();
+//                    Fragment fragment = new AddDiagnosticTest();
+//                    fragment.setArguments(bun);
+//                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                    fragmentManger.beginTransaction().replace(R.id.replacementFragment, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                }
+//            });
         }
         if(summaryResponse.getMedicinePrescribed() != null) {
             adapter = new MedicineAdapter(getActivity(), summaryResponse.getMedicinePrescribed(), getActivity().getIntent().getExtras().getInt(LOGGED_IN_ID));

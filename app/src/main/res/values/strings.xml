@@ -335,7 +335,25 @@
         <item>Homeopathic</item>
         <item>Ayurvedic</item>
     </string-array>
-
+    <string-array name="diagnostic_test_type_list">
+        <item>All</item>
+        <item>X-ray</item>
+        <item>Biopsy</item>
+        <item>Blood Test</item>
+        <item>Electrocardiogram</item>
+        <item>Antigen</item>
+        <item>MRI</item>
+        <item>CAT Scan</item>
+        <item>Urin Test</item>
+        <item>Imaging</item>
+        <item>Endoscopy</item>
+        <item>Biopsy</item>
+        <item>Genetic</item>
+    </string-array>
+    <string-array name="diagnostic_test_referred">
+        <item>Self</item>
+        <item>Doctor</item>
+    </string-array>
 
     <string-array name="mark_as">
         <item>Not Available</item>

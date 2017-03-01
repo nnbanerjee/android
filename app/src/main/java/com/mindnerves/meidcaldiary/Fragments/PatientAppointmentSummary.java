@@ -22,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.adapter.MedicineAdapter;
+import com.medico.model.Clinic;
 import com.medico.view.PatientMedicinReminder;
 import com.medico.view.PatientMenusManage;
 import com.medico.view.ShowHistryDialog;
@@ -39,13 +41,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import com.medico.adapter.MedicineAdapter;
 import Application.MyApi;
 import Model.AlarmReminderVM;
-import com.medico.model.Clinic;
 import Model.MedicineVM;
-import Model.PersonTemp;
 import Model.PersonID;
+import Model.PersonTemp;
 import Model.ReminderVM;
 import Model.SummaryHistoryVM;
 import retrofit.Callback;
@@ -75,7 +75,7 @@ public class PatientAppointmentSummary extends Fragment {
 
     Button logout, drawar, symptomsHistryBtn, diagnosisHistryBtn,
             prescribHistryBtn, testHistryBtn;
-    ImageView addAlarm;
+    ImageView addMedicine;
     MedicineAdapter adapter;
     Set<String> medicineSet;
     List<MedicineVM> medicineVMs;
@@ -88,7 +88,7 @@ public class PatientAppointmentSummary extends Fragment {
 
         View view = inflater.inflate(R.layout.doctor_appointment_summary, container, false);
         global = (Global) getActivity().getApplicationContext();
-        alarmListView = (ListView)view.findViewById(R.id.alarm_list);
+//        alarmListView = (ListView)view.findViewById(R.id.alarm_list);
         clinicName = (TextView)view.findViewById(R.id.clinicName);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         doctor_email = session.getString("patient_doctor_email", null);
@@ -102,7 +102,7 @@ public class PatientAppointmentSummary extends Fragment {
         loggedInUSer =  session.getString("id", "0") ;
         System.out.println("Type::::::"+type);
         //Retrofit Initialization
-        addAlarm = (ImageView)view.findViewById(R.id.add_alarm);
+        addMedicine = (ImageView)view.findViewById(R.id.add_alarm);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient())
@@ -135,10 +135,10 @@ public class PatientAppointmentSummary extends Fragment {
 
         saveSummary = (Button) view.findViewById(R.id.saveSummary);
 
-        symptomsHistryBtn = (Button) view.findViewById(R.id.symptomsHistryBtn);
-        diagnosisHistryBtn = (Button) view.findViewById(R.id.diagnosisHistryBtn);
-        prescribHistryBtn = (Button) view.findViewById(R.id.prescribHistryBtn);
-        testHistryBtn = (Button) view.findViewById(R.id.testHistryBtn);
+//        symptomsHistryBtn = (Button) view.findViewById(R.id.symptomsHistryBtn);
+//        diagnosisHistryBtn = (Button) view.findViewById(R.id.diagnosisHistryBtn);
+//        prescribHistryBtn = (Button) view.findViewById(R.id.prescribHistryBtn);
+//        testHistryBtn = (Button) view.findViewById(R.id.testHistryBtn);
 
         symptoms_item = getResources().getStringArray(R.array.symptoms);
         medicin_list = getResources().getStringArray(R.array.medicin_list);
@@ -198,7 +198,7 @@ public class PatientAppointmentSummary extends Fragment {
 
             }
         });
-        addAlarm.setOnClickListener(new View.OnClickListener() {
+        addMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();

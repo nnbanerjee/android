@@ -10,13 +10,13 @@ public class SearchParameter
     int requestType;
     int treatmentType;
     int page;
-    int row;
-    public SearchParameter(String name, int treatmentType, int page, int row, int type)
+    int rows;
+    public SearchParameter(String name, int treatmentType, int page, int rows, int type)
     {
         this.name = name;
         this.treatmentType = treatmentType;
         this.page = page;
-        this.row = row;
+        this.rows = rows;
         this.requestType = type;
     }
 }

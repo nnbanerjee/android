@@ -7,10 +7,12 @@ import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic;
 import com.medico.model.Clinic1;
 import com.medico.model.Delegation;
+import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
+import com.medico.model.PatientDiagnostic;
 import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
 import com.medico.model.PatientShortProfile;
@@ -33,7 +35,6 @@ import Model.AddDelegate;
 import Model.AddDependent;
 import Model.AddDependentDoctor;
 import Model.AddDiagnosisTestRequest;
-import Model.AddPatientMedicineSummary;
 import Model.AllClinicAppointment;
 import Model.AllPatients;
 import Model.AllProcedureVm;
@@ -650,7 +651,10 @@ public interface MyApi {
     void getPatientMedicine(@Body MedicineId medicineId, Callback<PatientMedicine> response);
 
     @POST("/getTestDetails")
+    void getTestDetails1(@Body PatientTestId patientTestId, Callback<PatientDiagnostic> response);
+    @POST("/getTestDetails")
     void getTestDetails(@Body PatientTestId patientTestId, Callback<TestDetails> response);
+
 
     @POST("/removePatientDiagnosticTest")
     void removePatientDiagnosticTest(@Body RemovePatientTestRequest removeMedicineRequest, Callback<ResponseCodeVerfication> response);
@@ -667,6 +671,12 @@ public interface MyApi {
 
     @POST("/getPatientVisitEditLog")
     void getPatientVisitEditLog(@Body VisitEditLogRequest visitEditLogRequest, Callback<VisitEditLogResponse> response);
+
+    @POST("/addPatientDiagnosticTest")
+    void addPatientDiagnosticTest1(@Body PatientDiagnostic addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientDiagnosticTest")
+    void updatePatientDiagnosticTest1(@Body PatientDiagnostic addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
 
     @POST("/addPatientDiagnosticTest")
     void addPatientDiagnosticTest(@Body AddDiagnosisTestRequest addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
@@ -758,6 +768,8 @@ public interface MyApi {
     void searchAutoFill(@Body SearchParameter parameter, Callback<List<Medicine>> response);
     @POST("/searchAutoFill1")
     void searchAutoFillSymptom(@Body SearchParameter parameter, Callback<List<Symptom>> response);
+    @POST("/searchAutoFill1")
+    void searchAutoFillDiagnostic(@Body SearchParameter parameter, Callback<List<DiagnosticTest>> response);
 
 
 }

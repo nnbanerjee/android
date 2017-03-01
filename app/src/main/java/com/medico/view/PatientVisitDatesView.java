@@ -73,6 +73,7 @@ public class PatientVisitDatesView extends ParentFragment
                 bun.putLong(PARAM.APPOINTMENT_DATETIME, visits.getDateTime());
                 bun.putString(PARAM.REFERRED_BY, visits.getReferredBy());
                 bun.putString(PARAM.CLINIC_NAME, visits.getClinicName());
+                bun.putInt(PARAM.CLINIC_ID, visits.getClinicId());
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new DoctorAppointmentInformation();
                 ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
