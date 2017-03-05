@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.model.Clinic;
 import com.mindnerves.meidcaldiary.FileChooser;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
@@ -34,11 +35,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
 import Application.ImageUtil;
 import Application.MyApi;
-import com.medico.model.Clinic;
-
 import Model.FileUpload;
 import Model.PersonID;
 import Model.ResponseAddDocuments;
@@ -79,7 +77,7 @@ public class FileUploadDialog extends DialogFragment {
     ProgressDialog progress;
     String appointMentId;
     TextView doctorValue,dateValue;
-    static FileUploadDialog newInstance() {
+    public static FileUploadDialog newInstance() {
         return new FileUploadDialog();
     }
 

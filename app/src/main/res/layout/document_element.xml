@@ -3,70 +3,142 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:id="@+id/layout1"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/doc_category"
-        android:layout_marginLeft="15dp"
-        android:text="Category Name"
-        style="@style/title"
-        android:layout_marginTop="15dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/document_name"
+            android:layout_marginLeft="15dp"
+            android:text="Document Name"
+            style="@style/title"
+            android:layout_marginTop="15dp"
+            />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:id="@+id/layout2"
+            android:layout_below="@+id/document_name"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category:"
+                android:id="@+id/category_text"
+                style="@style/body4"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/category_text"
+                android:id="@+id/category_value"
+                android:text="Prescription"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/category_value"
+                android:id="@+id/added_by_text"
+                android:text="Added By:"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/added_by_text"
+                android:id="@+id/added_by_value"
+                android:text="Dr.Sanjeev Bharti"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date:"
+                android:id="@+id/date_text"
+                style="@style/body4"
+                android:layout_marginLeft="15dp"
+                android:layout_below="@+id/category_text"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/date_text"
+                android:layout_below="@+id/category_value"
+                android:id="@+id/date_value"
+                android:text="27-Oct-2017"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/date_value"
+                android:layout_below="@+id/added_by_text"
+                android:id="@+id/type_text"
+                android:text="Type:"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/type_text"
+                android:layout_below="@+id/added_by_value"
+                android:id="@+id/type_value"
+                android:text="X-Ray"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/type_value"
+                android:layout_below="@+id/added_by_value"
+                android:id="@+id/clinic_text"
+                android:text="Clinic:"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/clinic_text"
+                android:layout_below="@+id/added_by_value"
+                android:id="@+id/clinic_value"
+                android:text="Noble Hospital"
+                style="@style/body4"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clinic Name:-"
-        android:id="@+id/clinic_text"
-        style="@style/body2"
-        android:layout_marginLeft="15dp"
-        android:visibility="gone"
-        android:layout_below="@+id/doc_category"
-        android:layout_marginTop="5dp"
-    />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/clinic_text"
-        android:id="@+id/clinic_name"
-        android:text="qqqq"
-        style="@style/body2"
-        android:visibility="gone"
-        android:layout_below="@+id/doc_category"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-    />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="File Name"
-        android:id="@+id/file_name"
-        android:layout_below="@+id/clinic_name"
-        android:layout_marginLeft="15dp"
-        style="@style/sub_heading"
-        android:layout_marginTop="5dp"
-    />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/reject"
-        android:id="@+id/close_document"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:scaleType="fitStart"
-        />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/document_image"
-        android:layout_alignParentRight="true"
-        android:layout_toLeftOf="@+id/close_document"
         android:layout_marginRight="45dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/pdf"
+        android:layout_toRightOf="@+id/layout1"
+        android:layout_alignParentRight="true"
     />
-
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remove_document"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/delete"
+        android:layout_below="@+id/document_image"
+        android:layout_toRightOf="@+id/layout1"
+        android:layout_alignParentRight="true"
+        />
 </RelativeLayout>

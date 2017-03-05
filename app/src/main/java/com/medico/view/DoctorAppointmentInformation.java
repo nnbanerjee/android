@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDoctorNote;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDocument;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInvoices;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentTreatmentPlan;
 import com.mindnerves.meidcaldiary.R;
@@ -29,6 +28,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
     RelativeLayout replacementFragment;
     Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn, feedbackBtn;
     ParentFragment selectedFragment ;
+    Menu menu;
 
     @Nullable
     @Override
@@ -129,6 +129,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
         ((ManagePatientProfile)getActivity()).fragmentList.add(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
+
+        MenuItem add = menu.findItem(R.id.add);
+        add.setIcon(R.drawable.add);
     }
 
     public void getDoctorNoteInformation()
@@ -204,21 +207,22 @@ public class DoctorAppointmentInformation extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         super.onCreateOptionsMenu(menu,inflater);
+        this.menu = menu;
         MenuItem menuItem = menu.findItem(R.id.add);
-        Bundle bundle = getActivity().getIntent().getExtras();
-        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
-        ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
-        if(bundle.getInt(APPOINTMENT_ID) > 0) {
-            menuItem.setChecked(false);
-            fragment.setEditable(false);
-            menuItem.setIcon(R.drawable.edit);
-        }
-        else
-        {
-            fragment.setEditable(true);
+//        Bundle bundle = getActivity().getIntent().getExtras();
+//        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+//        ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
+//        if(bundle.getInt(APPOINTMENT_ID) > 0) {
+//            menuItem.setChecked(false);
+//            fragment.setEditable(false);
+//            menuItem.setIcon(R.drawable.edit);
+//        }
+//        else
+//        {
+//            fragment.setEditable(true);
             menuItem.setChecked(true);
             menuItem.setIcon(R.drawable.save);
-        }
+//        }
     }
 
     @Override
@@ -228,40 +232,25 @@ public class DoctorAppointmentInformation extends ParentFragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {
-                if(item.isChecked() )
-                {
-                    fragment.update();
-                    if(fragment.isChanged() )
-                    {
-                        if(fragment.canBeSaved()) {
-                            fragment.save();
-                            item.setChecked(false);
-                            fragment.setEditable(false);
-                            item.setIcon(R.drawable.edit);
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    else if(fragment.canBeSaved()) {
-                        item.setChecked(false);
-                        item.setIcon(R.drawable.edit);
-                        fragment.setEditable(false);
-                        Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
-                    }
+               if(fragment instanceof DoctorAppointmentSummary || fragment instanceof PatientMedicinReminder) {
+                   fragment.update();
+                   if (fragment.isChanged()) {
+                       if (fragment.canBeSaved()) {
+                           fragment.save();
+                       } else {
+                           Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                       }
+                   } else if (fragment.canBeSaved()) {
+                       Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                   } else {
+                       Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                   }
+               }
+                else if (fragment instanceof DoctorAppointmentDocument)
+               {
+                    fragment.save();
+               }
 
-                }
-                else
-                {
-                    item.setChecked(true);
-                    item.setIcon(R.drawable.save);
-                    fragment.setEditable(true);
-                }
             }
             break;
             case R.id.home: {

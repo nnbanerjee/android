@@ -10,6 +10,7 @@ import com.medico.model.Delegation;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
+import com.medico.model.FileUpload1;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.PatientDiagnostic;
@@ -18,6 +19,7 @@ import com.medico.model.PatientMedicine;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
 import com.medico.model.ProfileId;
+import com.medico.model.RemoveVisitDocument1;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
@@ -724,9 +726,14 @@ public interface MyApi {
     @POST("/getPatientVisitDocuments")
     void getPatientVisitDocuments(@Body AppointmentPatientIds appointmentPatientIds ,   Callback<List<FileUpload>> cb);
 
+    @POST("/getPatientVisitDocuments")
+    void getPatientVisitDocuments1(@Body AppointmentId1 appointmentPatientIds ,   Callback<List<FileUpload1>> cb);
+
     @POST("/removePatientVisitDocuments") //{"fileId":4, "loggedinUserId":104}
     void removePatientVisitDocuments(@Body RemoveVisitDocument removeVisitDocument , Callback<ResponseCodeVerfication> cb);
 
+    @POST("/removePatientVisitDocuments") //{"fileId":4, "loggedinUserId":104}
+    void removePatientVisitDocuments1(@Body RemoveVisitDocument1 removeVisitDocument , Callback<ResponseCodeVerfication> cb);
 
     @POST("/getAllCustomTemplate")
     void getAllCustomTemplate(@Body PersonAndCategoryId doctorId , Callback<List<CustomProcedureTemplate>> cb);

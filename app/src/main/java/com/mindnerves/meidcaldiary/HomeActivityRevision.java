@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.view.DoctorMenusManage;
-import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
+import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog1;
 import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
@@ -418,7 +418,7 @@ public class HomeActivityRevision extends FragmentActivity{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("in onActivityResult HomeActivity /////////////////////////////////");
-        FileUploadDialog fileupload = new FileUploadDialog();
+        FileUploadDialog1 fileupload = new FileUploadDialog1();
         fileupload.onActivityResult(requestCode,resultCode,data);
 
 

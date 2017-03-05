@@ -335,6 +335,21 @@
         <item>Homeopathic</item>
         <item>Ayurvedic</item>
     </string-array>
+    <string-array name="file_upload_category_list">
+        <item>Prescription</item>
+        <item>Diagnostic Test</item>
+        <item>Invoice</item>
+        <item>Treatment</item>
+        <item>Symptoms</item>
+        <item>Diagnosis</item>
+        <item>Physiotherapy</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="upload_document_type">
+        <item>Current Visit</item>
+        <item>Previous Visits</item>
+        <item>History</item>
+    </string-array>
     <string-array name="diagnostic_test_type_list">
         <item>All</item>
         <item>X-ray</item>

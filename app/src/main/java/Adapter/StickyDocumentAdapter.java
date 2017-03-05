@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.R;
@@ -70,11 +69,11 @@ public class StickyDocumentAdapter extends BaseAdapter implements StickyListHead
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.document_element, parent, false);
-            holder.fileName = (TextView)convertView.findViewById(R.id.file_name);
+            holder.fileName = (TextView)convertView.findViewById(R.id.document_name);
             holder.image = (ImageView)convertView.findViewById(R.id.document_image);
-            holder.close = (ImageView)convertView.findViewById(R.id.close_document);
+            holder.close = (ImageView)convertView.findViewById(R.id.remove_document);
             holder.clinicName = (TextView)convertView.findViewById(R.id.clinic_name);
-            holder.doc_category = (TextView)convertView.findViewById(R.id.doc_category);
+            holder.doc_category = (TextView)convertView.findViewById(R.id.category_value);
             holder.fileName.setText(fileList.get(position).getFileName());
             holder.clinicName.setText(fileList.get(position).getClinicName());
             holder.doc_category.setText(fileList.get(position).getCategory());

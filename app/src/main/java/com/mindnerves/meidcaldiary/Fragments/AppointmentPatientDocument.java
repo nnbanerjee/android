@@ -68,7 +68,7 @@ public class AppointmentPatientDocument extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileUploadDialog adf = FileUploadDialog.newInstance();
+                FileUploadDialog1 adf = FileUploadDialog1.newInstance();
                 adf.show(getFragmentManager(),"Dialog");
             }
         });

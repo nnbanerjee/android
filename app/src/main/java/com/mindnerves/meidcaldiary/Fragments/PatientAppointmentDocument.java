@@ -17,7 +17,6 @@ import android.widget.ListView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import java.io.File;
 import java.util.List;
 
 import Adapter.DocumentAdapter;
@@ -93,7 +92,7 @@ public class PatientAppointmentDocument extends Fragment {
                 FileUpload fileUpload = uploadFiles.get(position);
                 System.out.println("Url:::::::::" + fileUpload.getUrl());
                 global.setUpload(fileUpload);
-                ShowPreviewDialog adf = ShowPreviewDialog.newInstance();
+                ShowPreviewDialog1 adf = ShowPreviewDialog1.newInstance();
                 adf.show(getFragmentManager(), "Dialog");
             }
         });

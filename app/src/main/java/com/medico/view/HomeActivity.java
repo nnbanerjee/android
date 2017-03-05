@@ -31,13 +31,14 @@ import com.google.gson.Gson;
 import com.medico.model.Delegation;
 import com.medico.model.Dependent;
 import com.mindnerves.meidcaldiary.BackStress;
-import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
 import com.mindnerves.meidcaldiary.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,10 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                                                .build();
+        ImageLoader.getInstance().init(config);
+
         setParameters();
         createView();
 

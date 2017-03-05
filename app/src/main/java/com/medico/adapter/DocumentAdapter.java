@@ -1,8 +1,9 @@
-package Adapter;
+package com.medico.adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.model.FileUpload1;
+import com.medico.model.RemoveVisitDocument1;
 import com.medico.model.ResponseCodeVerfication;
 import com.mindnerves.meidcaldiary.R;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import Application.MyApi;
-import Model.FileUpload;
-import Model.RemoveVisitDocument;
+import Utils.PARAM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -30,18 +34,18 @@ import retrofit.client.Response;
  */
 public class DocumentAdapter extends BaseAdapter {
     Activity activity;
-    List<FileUpload> fileList;
+    List<FileUpload1> fileList;
     private LayoutInflater inflater;
     public SharedPreferences session;
     String type;
     public MyApi api;
-    private String loggedInUserId;
-    public DocumentAdapter(Activity activity, List<FileUpload> fileList,String type) {
+    String[] document_category = {"Prescription","DiagnosticTest"};
+    String[] document_subcategory = {"X-Ray","CT SCAN"};
+    public DocumentAdapter(Activity activity, List<FileUpload1> fileList, String type) {
         this.activity = activity;
         this.fileList = fileList;
         this.type = type;
         session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        loggedInUserId =  session.getString("id", "0") ;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class DocumentAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View cv, ViewGroup parent) {
+    public View getView(int position, View cv, ViewGroup parent) {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -74,34 +78,47 @@ public class DocumentAdapter extends BaseAdapter {
                 .build();
         api = restAdapter.create(MyApi.class);
         TextView fileName = (TextView) convertView.findViewById(R.id.document_name);
-        final ImageView image = (ImageView) convertView.findViewById(R.id.document_image);
-        final TextView clinicName = (TextView) convertView.findViewById(R.id.clinic_name);
-        final TextView doc_category = (TextView) convertView.findViewById(R.id.category_value);
-        final ImageView close = (ImageView)convertView.findViewById(R.id.remove_document);
-        clinicName.setText(fileList.get(position).getClinicName());
-        fileName.setText(fileList.get(position).getFileName());
-        doc_category.setText(fileList.get(position).getCategory());
-        if (fileList.get(position).getType().equalsIgnoreCase("0")) {
-            image.setImageResource(R.drawable.pdf);
-            System.out.println("I am in condition pdf :::::::");
-        } else if (fileList.get(position).getType().equalsIgnoreCase("1")   ) {
-            image.setImageResource(R.drawable.doc);
-            System.out.println("I am in condition doc :::::::");
-        }
+        TextView category = (TextView)convertView.findViewById(R.id.category_value);
+        TextView addedBy = (TextView) convertView.findViewById(R.id.added_by_value);
+        TextView date = (TextView)convertView.findViewById(R.id.date_value);
+        TextView type = (TextView)convertView.findViewById((R.id.type_value));
+        TextView clinic = (TextView)convertView.findViewById(R.id.clinic_value);
+        ImageView image = (ImageView) convertView.findViewById(R.id.document_image);
+        ImageView close = (ImageView)convertView.findViewById(R.id.remove_document);
 
-        if(loggedInUserId.equalsIgnoreCase(fileList.get(position).getPersonId())){
-            close.setVisibility(View.VISIBLE);
-        }else{
-            close.setVisibility(View.GONE);
+        FileUpload1 file = fileList.get(position);
+        fileName.setText(file.fileName);
+        category.setText(document_category[file.category]);
+        addedBy.setText(file.personName);
+        Date uploaddate = new Date(file.date);
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+        date.setText(dateFormat.format(uploaddate));
+        type.setText(document_subcategory[file.type]);
+        clinic.setText(file.clinicName);
+        Bundle bundle = activity.getIntent().getExtras();
+        int id = bundle.getInt(PARAM.LOGGED_IN_ID);
+        close.setEnabled(file.personId==bundle.getInt(PARAM.LOGGED_IN_ID)?true:false);
+
+        if (file.type.intValue() == 0)
+        {
+            image.setImageResource(R.drawable.pdf);
+        } else if (file.type.intValue() == 1   ) {
+            image.setImageResource(R.drawable.doc);
         }
+        close.setTag(fileList.get(position));
+
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                api.removePatientVisitDocuments(new RemoveVisitDocument(fileList.get(position).getFileId(),loggedInUserId),  new Callback<ResponseCodeVerfication>() {
+                final FileUpload1 file = (FileUpload1)v.getTag();
+                Bundle bundle = activity.getIntent().getExtras();
+                Integer id = bundle.getInt(PARAM.LOGGED_IN_ID);
+                api.removePatientVisitDocuments1(new RemoveVisitDocument1(file.fileId, id),  new Callback<ResponseCodeVerfication>() {
                     @Override
                     public void success(ResponseCodeVerfication s, Response response) {
                         Toast.makeText(activity, "File Deleted Successfully", Toast.LENGTH_SHORT).show();
-                        fileList.remove(position);
+                        fileList.remove(file);
                         notifyDataSetChanged();
                     }
 

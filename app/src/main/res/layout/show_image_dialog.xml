@@ -8,25 +8,9 @@
     android:layout_marginBottom="5dp"
     >
     <ImageView
-       android:layout_width="250dp"
-       android:layout_height="250dp"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
        android:id="@+id/preview_image"
        android:layout_centerHorizontal="true"
        android:layout_marginTop="10dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="CLOSE"
-        android:textSize="13dp"
-        android:background="@drawable/rounded_blue_color"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:layout_below="@id/preview_image"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/ok"
-    />
 </RelativeLayout>
