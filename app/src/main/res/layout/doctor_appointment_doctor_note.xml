@@ -103,18 +103,5 @@
 
         </RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:id="@+id/saveDoctorNotes"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/layout3"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_blue_color"/>
     </RelativeLayout>
 </ScrollView>

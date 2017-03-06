@@ -114,7 +114,7 @@ public class DoctorAppointmentDocument extends ParentFragment{
 
     @Override
     public void onResume() {
-        super.onStop();
+        super.onResume();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -137,5 +137,24 @@ public class DoctorAppointmentDocument extends ParentFragment{
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
         return true;
+    }
+
+    @Override
+    public boolean isChanged()
+    {
+        return true;
+    }
+    @Override
+    protected void update()
+    {
+    }
+    @Override
+    protected boolean canBeSaved()
+    {
+        return true;
+    }
+    @Override
+    protected void setEditable(boolean editable)
+    {
     }
 }

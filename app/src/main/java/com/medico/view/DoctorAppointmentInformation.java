@@ -193,7 +193,6 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        summaryBtn.callOnClick();
     }
 
 
@@ -232,7 +231,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {
-               if(fragment instanceof DoctorAppointmentSummary || fragment instanceof PatientMedicinReminder) {
+//               if(fragment instanceof DoctorAppointmentSummary || fragment instanceof PatientMedicinReminder || fragment instanceof PatientSummaryFileUpload) {
                    fragment.update();
                    if (fragment.isChanged()) {
                        if (fragment.canBeSaved()) {
@@ -245,11 +244,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
                    } else {
                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                    }
-               }
-                else if (fragment instanceof DoctorAppointmentDocument)
-               {
-                    fragment.save();
-               }
+//               }
+//               else if (fragment instanceof DoctorAppointmentDocument)
+//               {
+//                    fragment.save();
+//               }
 
             }
             break;

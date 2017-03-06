@@ -10,6 +10,7 @@ import com.medico.model.Delegation;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
+import com.medico.model.DoctorNotes;
 import com.medico.model.FileUpload1;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
@@ -60,7 +61,6 @@ import Model.DoctorClinicAppointments;
 import Model.DoctorClinicSchedule;
 import Model.DoctorCreatesAppoinementResponse;
 import Model.DoctorCreatesAppointment;
-import Model.DoctorNotesResponse;
 import Model.DoctorNotesVM;
 import Model.DoctorPersonalVM;
 import Model.DoctorProfile;
@@ -663,13 +663,13 @@ public interface MyApi {
 
 
     @POST("/getPatientVisitDoctorNotes")
-    void getPatientVisitDoctorNotes(@Body AppointmentId appointmentId, Callback<DoctorNotesResponse> response);
+    void getPatientVisitDoctorNotes(@Body AppointmentId1 appointmentId, Callback<DoctorNotes> response);
 
     @POST("/addPatientVisitDoctorNotes")
-    void addPatientVisitDoctorNotes(@Body DoctorNotesResponse appointmentId, Callback<ResponseCodeVerfication> response);
+    void addPatientVisitDoctorNotes(@Body DoctorNotes appointmentId, Callback<ResponseCodeVerfication> response);
 
     @POST("/updatePatientVisitDoctorNotes")
-    void updatePatientVisitDoctorNotes(@Body DoctorNotesResponse appointmentId, Callback<ResponseCodeVerfication> response);
+    void updatePatientVisitDoctorNotes(@Body DoctorNotes doctorNotes, Callback<ResponseCodeVerfication> response);
 
     @POST("/getPatientVisitEditLog")
     void getPatientVisitEditLog(@Body VisitEditLogRequest visitEditLogRequest, Callback<VisitEditLogResponse> response);
