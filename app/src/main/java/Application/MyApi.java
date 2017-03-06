@@ -25,6 +25,8 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
+import com.medico.model.TreatmentPlan1;
+import com.medico.model.TreatmentPlanRequest;
 import com.medico.model.VisitEditLogRequest;
 import com.medico.model.VisitEditLogResponse;
 
@@ -697,6 +699,8 @@ public interface MyApi {
 
     @POST("/getPatientVisitTreatmentPlan")
     void getPatientVisitTreatmentPlan(@Query("appointmentId") String appointmentId, @Query("categoryId") String categoryId, Callback<List<TreatmentPlan>> response);
+    @POST("/getPatientVisitTreatmentPlan")
+    void getPatientVisitTreatmentPlan1(@Body TreatmentPlanRequest treatmentPlanRequest, Callback<List<TreatmentPlan1>> response);
 
 
 
