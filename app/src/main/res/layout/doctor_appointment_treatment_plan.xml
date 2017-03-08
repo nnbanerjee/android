@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/layout2"
     android:id="@+id/replacementTreament">
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share with the patient"
-        android:id="@+id/share_with_patient"
-        style="@style/body1"
-        android:textColor="#1E90FF"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

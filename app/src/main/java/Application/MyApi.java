@@ -14,6 +14,7 @@ import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
 import com.medico.model.FileUpload1;
+import com.medico.model.InvoiceDetails1;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.PatientDiagnostic;
@@ -770,7 +771,8 @@ public interface MyApi {
     @POST("/getPatientVisitInvoice")
     void getPatientVisitInvoice(@Body InvoiceId invoiceId, Callback<InvoiceDetails> response);
 
-
+    @POST("/getPatientVisitInvoice")
+    void getPatientVisitInvoice1(@Body InvoiceId invoiceId, Callback<InvoiceDetails1> response);
 
     @POST("/addPatientVisitInvoice")
     void addPatientVisitInvoice(@Body TreatmentPlan treatmentPlan, Callback<ResponseAddTemplates> response);

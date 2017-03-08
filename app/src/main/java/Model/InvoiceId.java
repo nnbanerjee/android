@@ -4,17 +4,17 @@ package Model;
  * Created by Narendra on 02-04-2016.
  */
 public class InvoiceId {
-    public String getInvoiceId() {
+    public Integer getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(String invoiceId) {
+    public void setInvoiceId(Integer invoiceId) {
         this.invoiceId = invoiceId;
     }
 
-    public InvoiceId(String invoiceId) {
+    public InvoiceId(Integer invoiceId) {
         this.invoiceId = invoiceId;
     }
 
-    private String invoiceId;
+    private Integer invoiceId;
 }

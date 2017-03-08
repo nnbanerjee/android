@@ -26,7 +26,7 @@ import retrofit.client.Response;
 /**
  * Created by MNT on 07-Apr-15.
  */
-public class DoctorAppointmentTreatmentPlan extends ParentFragment {
+public class DoctorAppointmentTreatmentInvoice extends ParentFragment {
 
     private CheckBox shareWithPatient;
     private ListView treatmentPlanList;
@@ -78,7 +78,7 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, 1), new Callback<List<TreatmentPlan1>>() {
+        api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, 2), new Callback<List<TreatmentPlan1>>() {
             @Override
             public void success(List<TreatmentPlan1> treatments, Response response) {
 

@@ -16,10 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.AllInvoiceAdapter;
-import Adapter.AllProcedureAdapter;
-import Adapter.AllSingleProcedureAdapter;
 import Adapter.HorizontalInvoiceListAdapter;
-import Adapter.HorizontalTemplateListAdapter;
 import Application.MyApi;
 import Model.AllProcedureVm;
 import Model.AllTemplateVm;
@@ -56,7 +51,6 @@ public class PatientAppointmentInvoices extends Fragment {
     public SharedPreferences session;
     Global global;
     String doctor_email,appointmentTime,currencyType;
-    Button addNewInvoices,save;
     CheckBox shareWithPatient;
     ListView invoicesList;
     Double gTotalValue  = 0d;
@@ -90,46 +84,45 @@ public class PatientAppointmentInvoices extends Fragment {
         totalDueValue = (EditText) view.findViewById(R.id.totalDueValue);
         grandTotal = (EditText) view.findViewById(R.id.grandTotal);
         noDataFound = (TextView) view.findViewById(R.id.noDataFound);
-        invoicesList = (ListView) view.findViewById(R.id.invoicesList);
-        addNewInvoices = (Button) view.findViewById(R.id.addNewInvoices);
-        save = (Button)view.findViewById(R.id.saveGrandTotal);
+//        invoicesList = (ListView) view.findViewById(R.id.invoicesList);
+//        addNewInvoices = (Button) view.findViewById(R.id.addNewInvoices);
         fieldList1 = (HorizontalListView) view.findViewById(R.id.fieldList1);
         fieldList = (HorizontalListView) view.findViewById(R.id.fieldList1);
         shareWithPatient.setVisibility(View.GONE);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TotalInvoice invoice = new TotalInvoice();
-                invoice.setDoctorId(doctorId);
-                invoice.setPatientId(patientId);
-                invoice.setGrandTotal(""+grandTotal.getText().toString());
-                invoice.setShareWithPatient(share);
-                invoice.setAppointmentDate(appointmentDate);
-                invoice.setAppointmentTime(appointmentTime);
-                invoice.setTaxValue(""+tax);
-                invoice.setTotal(""+invoiceTotal.getText().toString());
-                invoice.setDiscount(""+discount);
-                invoice.setPercentageDiscount(discountPercent.getText().toString());
-                invoice.setPercentageTax(taxPercent.getText().toString());
-                invoice.setTotalDue(""+grandTotalFinal);
-                invoice.setAdvance(""+advance);
-
-                api.saveTotalInvoice(invoice,new Callback<TotalInvoice>() {
-                    @Override
-                    public void success(TotalInvoice totalInvoice, Response response) {
-                        if(totalInvoice!=null){
-                            Toast.makeText(getActivity(),"Invoice Data Saved",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-            }
-        });
+//        save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TotalInvoice invoice = new TotalInvoice();
+//                invoice.setDoctorId(doctorId);
+//                invoice.setPatientId(patientId);
+//                invoice.setGrandTotal(""+grandTotal.getText().toString());
+//                invoice.setShareWithPatient(share);
+//                invoice.setAppointmentDate(appointmentDate);
+//                invoice.setAppointmentTime(appointmentTime);
+//                invoice.setTaxValue(""+tax);
+//                invoice.setTotal(""+invoiceTotal.getText().toString());
+//                invoice.setDiscount(""+discount);
+//                invoice.setPercentageDiscount(discountPercent.getText().toString());
+//                invoice.setPercentageTax(taxPercent.getText().toString());
+//                invoice.setTotalDue(""+grandTotalFinal);
+//                invoice.setAdvance(""+advance);
+//
+//                api.saveTotalInvoice(invoice,new Callback<TotalInvoice>() {
+//                    @Override
+//                    public void success(TotalInvoice totalInvoice, Response response) {
+//                        if(totalInvoice!=null){
+//                            Toast.makeText(getActivity(),"Invoice Data Saved",Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void failure(RetrofitError error) {
+//                        error.printStackTrace();
+//                    }
+//                });
+//
+//            }
+//        });
         taxPercent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -249,20 +242,20 @@ public class PatientAppointmentInvoices extends Fragment {
         });
 
 
-        addNewInvoices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SharedPreferences.Editor editor = session.edit();
-                editor.putString("doctor_email_from_patient", doctorId);
-                editor.commit();
-                Fragment fragment = new PatientInvoiceManageProcedure();
-                FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
-                //System.out.println("in add button  ");
-
-            }
-        });
+//        addNewInvoices.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                SharedPreferences.Editor editor = session.edit();
+//                editor.putString("doctor_email_from_patient", doctorId);
+//                editor.commit();
+//                Fragment fragment = new PatientInvoiceManageProcedure();
+//                FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
+//                //System.out.println("in add button  ");
+//
+//            }
+//        });
 
         //Retrofit Initialization
         RestAdapter restAdapter = new RestAdapter.Builder()
