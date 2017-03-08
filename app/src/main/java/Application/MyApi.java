@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic;
 import com.medico.model.Clinic1;
+import com.medico.model.CustomProcedureTemplate1;
+import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorId;
@@ -19,12 +21,15 @@ import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
+import com.medico.model.PersonAndCategoryId1;
 import com.medico.model.ProfileId;
 import com.medico.model.RemoveVisitDocument1;
+import com.medico.model.ResponseAddTemplates1;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
+import com.medico.model.TreatmentId1;
 import com.medico.model.TreatmentPlan1;
 import com.medico.model.TreatmentPlanRequest;
 import com.medico.model.VisitEditLogRequest;
@@ -701,7 +706,10 @@ public interface MyApi {
     void getPatientVisitTreatmentPlan(@Query("appointmentId") String appointmentId, @Query("categoryId") String categoryId, Callback<List<TreatmentPlan>> response);
     @POST("/getPatientVisitTreatmentPlan")
     void getPatientVisitTreatmentPlan1(@Body TreatmentPlanRequest treatmentPlanRequest, Callback<List<TreatmentPlan1>> response);
-
+    @POST("/getTreatmentPlan")
+    void getTreatmentPlan(@Body TreatmentId1 treatmentId, Callback<TreatmentPlan1> response);
+    @POST("/getTreatmentPlan")
+    void getCustomTemplate(@Body TreatmentId1 treatmentId, Callback<TreatmentPlan1> response);
 
 
 
@@ -741,9 +749,16 @@ public interface MyApi {
 
     @POST("/getAllCustomTemplate")
     void getAllCustomTemplate(@Body PersonAndCategoryId doctorId , Callback<List<CustomProcedureTemplate>> cb);
+
+    @POST("/getAllCustomTemplate")
+    void getAllCustomTemplate1(@Body PersonAndCategoryId1 doctorId , Callback<List<CustomProcedureTemplate1>> cb);
     // void getAllProcedure(@Query("doctorId") String doctorId, Callback<ArrayList<ShowProcedure>> callback);
 
+    @POST("/getCustomTemplate")
+    void getCustomTemplate(@Body CustomTemplateId templateId , Callback<CustomProcedureTemplate1> cb);
 
+    @POST("/updateTemplate")
+    void updateCustomTemplate(@Body CustomProcedureTemplate1 template , Callback<ResponseVm> cb);
 
     @POST("/getPatientLandingPageDetails")
     void getPatientLandingPageDetails(@Body PatientId patientId, Callback<PatientProfile> cb);
@@ -763,6 +778,9 @@ public interface MyApi {
     @POST("/addPatientVisitTreatmentPlan")
     void addPatientVisitTreatmentPlan(@Body TreatmentPlan treatmentPlan, Callback<ResponseAddTemplates> response);
 
+    @POST("/addPatientVisitTreatmentPlan")
+    void addPatientVisitTreatmentPlan1(@Body TreatmentPlan1 treatmentPlan, Callback<ResponseAddTemplates1> response);
+
     @POST("/removePatientVisitTreatmentPlan")
     void removePatientVisitTreatmentPlan(@Body TreatmentId invoiceId, Callback< ResponseCodeVerfication > response);
     @POST("/removePatientVisitInvoiceDetails")
@@ -771,6 +789,10 @@ public interface MyApi {
 
     @POST("/updatePatientVisitTreatmentPlan")
     void updatePatientVisitTreatmentPlan(@Body TreatmentPlan treatmentPlan, Callback<ResponseCodeVerfication> response);
+
+    @POST("/updatePatientVisitTreatmentPlan")
+    void updatePatientVisitTreatmentPlan1(@Body TreatmentPlan1 treatmentPlan, Callback<ResponseCodeVerfication> response);
+
 
     @POST("/updatePatientVisitInvoiceDetails")
     void updatePatientVisitInvoiceDetails(@Body InvoiceDetails invoiceId, Callback<ResponseCodeVerfication> response);

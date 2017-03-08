@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.medico.model.DoctorNotes;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.Symptom;
-import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;

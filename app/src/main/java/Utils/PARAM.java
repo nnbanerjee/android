@@ -41,6 +41,42 @@ public interface PARAM
     public static final String DEPENDENT_ROLE = "dependent_role";
     public static final String DEPENDENT_STATUS = "dependent_status";
     public static final String PARENT = "parent_activity";
+
+    public static final int PROCEDURE_FIELD_NAME = 101;
+    public static final int PROCEDURE_FIELD_DESCRIPTION = 102;
+    public static final int PROCEDURE_FIELD_DATE = 103;
+    public static final int PROCEDURE_FIELD_CURRENCY = 104;
+    public static final int PROCEDURE_FIELD_COST = 105;
+    public static final int PROCEDURE_FIELD_DISCOUNT = 106;
+    public static final int PROCEDURE_FIELD_TAX = 107;
+    public static final int PROCEDURE_FIELD_TOTAL = 108;
+    public static final int PROCEDURE_FIELD_NOTES = 109;
+
+    public static final int TEMPLATE_CATEGORY_PROCEDURE = 1;
+    public static final int TEMPLATE_CATEGORY_INVOICE = 2;
+    public static final int TEMPLATE_CATEGORY_EMAIL = 3;
+    public static final int TEMPLATE_CATEGORY_SMS = 4;
+
+    public static final String TREATMENT_ID = "treatmentId";
+
+
+
+    public static final String CUSTOM_TEMPLATE_ID = "templateId";
+
+    public static final String CUSTOM_TEMPLATE_NAME = "custom_template_name";
+
+
+    public static final int INVOICE_FIELD_NAME = 201;
+    public static final int INVOICE_FIELD_DESCRIPTION = 202;
+    public static final int INVOICE_FIELD_DATE = 203;
+    public static final int INVOICE_FIELD_CURRENCY = 204;
+    public static final int INVOICE_FIELD_COST = 205;
+    public static final int INVOICE_FIELD_DISCOUNT = 206;
+    public static final int INVOICE_FIELD_TAX = 207;
+    public static final int INVOICE_FIELD_TOTAL = 208;
+    public static final int INVOICE_FIELD_NOTES = 209;
+
+    public static final String INVOICE_ID = "invoiceId";
     public static final String APPOINTMENT_ID = "appointmentId";
     public static final String APPOINTMENT_DATETIME = "appointment_datetime";
     public static final String REFERRED_BY = "referred_by";
@@ -48,4 +84,9 @@ public interface PARAM
 
     public static final String MEDICINE_ID = "medicineId";
     public static final String DIAGNOSTIC_TEST_ID = "diagnosticTestId";
+
+    public static final String CUSTOM_TEMPLATE_CREATE_ACTIONS = "create_template";
+    public static final int CREATE_TREATMENT = 1;
+    public static final int CREATE_INVOICE = 2;
+    public static final int COPY_TEMPLATE = 3;
 }

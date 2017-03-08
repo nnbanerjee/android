@@ -1,9 +1,11 @@
 package com.medico.adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.medico.model.TreatmentPlan1;
+import com.medico.view.DoctorTreatmentPlanEditView;
+import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Application.MyApi;
+import Utils.PARAM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -113,6 +119,22 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
                 row.addView(textView);
 
             }
+            row.setTag(plan);
+            row.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick( View v ) {
+                    TreatmentPlan1 plan = (TreatmentPlan1)v.getTag();
+                    Bundle args = activity.getIntent().getExtras();
+                    args.putInt(PARAM.TREATMENT_ID, plan.getTreatmentId());
+                    activity.getIntent().putExtras(args);
+                    ParentFragment fragment = new DoctorTreatmentPlanEditView();
+                    ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                    fragment.setArguments(args);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();
+
+                }
+            } );
             tableLayout.addView(row);
         }
         tableLayout.requestLayout();
@@ -128,8 +150,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
             for(List<TreatmentPlan1> treatmentGroup:treatmentGroups)
             {
                 if(treatmentGroup.size() > 0
-                        && treatmentGroup.get(0).getTemplateName().equals(plan.getTemplateName())
-                        && treatmentGroup.get(0).getTemplateSubName().equals(plan.templateSubName))
+                        && treatmentGroup.get(0).getTemplateName().equals(plan.getTemplateName()))
                 {
                     treatmentGroup.add(plan);
                     found = true;
@@ -143,6 +164,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
                 treatmentPlan1s.add(plan);
                 treatmentGroups.add(treatmentPlan1s);
             }
+            found = false;
         }
         return treatmentGroups;
     }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/name_text"
+        android:text="Name"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/name_value"
+        android:text=""
+        android:layout_below="@+id/name_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/description_text"
+        android:text="Description"
+        android:layout_below="@+id/name_value"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/description_value"
+        android:text=""
+        android:layout_below="@+id/description_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/date_text"
+        android:text="Date"
+        android:layout_below="@+id/description_value"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/date_text"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/date_value"
+            android:text=""
+            android:editable="false"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/calenderImg"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/cal"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/currency_text"
+        android:text="Currency"
+        android:layout_below="@+id/layout1"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/currency_value"
+        android:text=""
+        android:layout_below="@+id/currency_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/cost_text"
+        android:text="Cost"
+        android:layout_below="@+id/currency_value"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/cost_value"
+        android:text=""
+        android:layout_below="@+id/cost_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/discount_text"
+        android:text="Discount"
+        android:layout_below="@+id/cost_value"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/discount_value"
+        android:text=""
+        android:layout_below="@+id/discount_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/tax_text"
+        android:text="Tax"
+        android:layout_below="@+id/discount_value"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/tax_value"
+        android:text=""
+        android:layout_below="@+id/tax_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/total_text"
+        android:text="Total"
+        android:layout_below="@+id/tax_value"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/total_value"
+        android:text=""
+        android:layout_below="@+id/total_text"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/notes_text"
+        android:text="Notes"
+        android:layout_below="@+id/total_value"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/notes_value"
+        android:text=""
+        android:layout_below="@+id/notes_text"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

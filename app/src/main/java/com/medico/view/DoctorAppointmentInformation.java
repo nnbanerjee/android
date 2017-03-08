@@ -15,9 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentDoctorNote;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentInvoices;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAppointmentTreatmentPlan;
 import com.mindnerves.meidcaldiary.R;
 
 /**

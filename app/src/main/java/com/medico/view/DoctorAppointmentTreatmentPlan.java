@@ -1,5 +1,6 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import com.medico.adapter.TreatmentPlanListAdapter;
 import com.medico.model.TreatmentPlan1;
 import com.medico.model.TreatmentPlanRequest;
-import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
@@ -78,6 +78,42 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
             }
         });
 
+    }
+
+    @Override
+    public boolean isChanged()
+    {
+        return true;
+    }
+    @Override
+    protected void update()
+    {
+
+    }
+    @Override
+    protected boolean save()
+    {
+        ManagePatientProfile activity = (ManagePatientProfile)getActivity();
+        Bundle args = activity.getIntent().getExtras();
+        args.remove(TREATMENT_ID);
+        args.putInt(CUSTOM_TEMPLATE_CREATE_ACTIONS, CREATE_TREATMENT);
+        if(treatmentPlanModel != null && treatmentPlanModel.size() > 0)
+            args.putInt(INVOICE_ID, ((TreatmentPlan1)treatmentPlanModel.get(0)).getInvoiceId());
+        activity.getIntent().putExtras(args);
+        ParentFragment fragment = new CustomTemplateListView();
+        activity.fragmentList.add(fragment);
+        fragment.setArguments(args);
+        FragmentManager fragmentManger = activity.getFragmentManager();
+        fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();
+        return true;
+    }
+    @Override
+    protected boolean canBeSaved()
+    {
+        return true;
+    }
+    @Override
+    protected void setEditable(boolean editable) {
     }
 
 }

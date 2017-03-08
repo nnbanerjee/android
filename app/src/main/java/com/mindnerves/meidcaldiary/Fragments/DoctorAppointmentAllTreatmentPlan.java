@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.view.DoctorAppointmentInformation;
+import com.medico.view.DoctorAppointmentTreatmentPlan;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.HorizontalListView;
 import com.mindnerves.meidcaldiary.R;

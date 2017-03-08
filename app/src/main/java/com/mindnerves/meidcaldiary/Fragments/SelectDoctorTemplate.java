@@ -18,20 +18,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.BackStress;
+import com.medico.view.DoctorAppointmentTreatmentPlan;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.FieldAdapter;
 import Adapter.TemplateDetailsAdapter;
 import Application.MyApi;
 import Model.CustomProcedureTemplate;
-import Model.Field;
 import Model.ResponseAddTemplates;
-import Model.ShowTemplate;
 import Model.TemplateField;
 import Model.TreatmentField;
 import Model.TreatmentPlan;
