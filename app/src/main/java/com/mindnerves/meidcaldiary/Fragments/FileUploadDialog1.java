@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.Clinic;
-import com.mindnerves.meidcaldiary.FileChooser;
+import com.medico.view.FileChooser;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 import com.squareup.okhttp.OkHttpClient;

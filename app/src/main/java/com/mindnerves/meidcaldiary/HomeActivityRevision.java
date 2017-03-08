@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.util.ImageLoadTask;
 import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.Fragments.FileUploadDialog1;
 import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;

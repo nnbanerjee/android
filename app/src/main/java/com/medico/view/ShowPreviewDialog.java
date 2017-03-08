@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.medico.model.FileUpload1;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 /**

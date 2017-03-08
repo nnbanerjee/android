@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.view.DoctorMenusManage;
-import com.mindnerves.meidcaldiary.AlarmService;
+import com.medico.util.AlarmService;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;

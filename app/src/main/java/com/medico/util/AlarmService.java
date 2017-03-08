@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.util;
 
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;

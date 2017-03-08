@@ -46,7 +46,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DisplayAlarm"
+            android:name="com.medico.util.DisplayAlarm"
             android:configChanges="keyboardHidden|orientation"
             android:label="User SignIn"
             android:screenOrientation="portrait"
@@ -91,7 +91,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".FileChooser" />
+        <activity android:name="com.medico.view.FileChooser" />
         <activity
             android:name=".HomeActivityRevision"
             android:windowSoftInputMode="adjustResize" />
@@ -108,7 +108,7 @@
             android:enabled="true" />
 
         <!-- <receiver android:name=".MyReceiver"/> -->
-        <receiver android:name=".AlarmService" />
+        <receiver android:name="com.medico.util.AlarmService" />
 
         <activity android:name="com.medico.view.ManagePatientProfile"
             android:label="@string/ManagePatientProfileTitle"

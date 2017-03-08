@@ -30,7 +30,7 @@ import com.medico.model.DiagnosticTest;
 import com.medico.model.PatientDiagnostic;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
-import com.mindnerves.meidcaldiary.AlarmService;
+import com.medico.util.AlarmService;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.DateFormat;

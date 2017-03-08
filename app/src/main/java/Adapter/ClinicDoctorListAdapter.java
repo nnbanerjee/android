@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.mindnerves.meidcaldiary.Fragments.DoctorClinicFragment;
 import com.mindnerves.meidcaldiary.Fragments.ShowAppointmentTime;
 import com.mindnerves.meidcaldiary.Fragments.ShowShift1;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;

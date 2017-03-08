@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.AlarmService;
+import com.medico.util.AlarmService;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.R;
 

@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.util;
 
 public class Option implements Comparable<Option>{
 	private String name;

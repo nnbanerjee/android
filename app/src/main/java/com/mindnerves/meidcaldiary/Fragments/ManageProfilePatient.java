@@ -33,7 +33,7 @@ import android.widget.Toast;
 import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Global;
 import com.medico.view.HomeActivity;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.MapActivity;
 import com.mindnerves.meidcaldiary.R;
 

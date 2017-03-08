@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

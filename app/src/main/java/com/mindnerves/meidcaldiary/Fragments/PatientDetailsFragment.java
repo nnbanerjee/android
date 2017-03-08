@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 import com.medico.view.PatientProfileListView;
 import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;

@@ -27,7 +27,7 @@ import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
 import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
 import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
 import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import Adapter.MenuAdapter;

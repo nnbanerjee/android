@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Global;
+import com.medico.view.DoctorAppointmentInvoices;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
@@ -27,7 +27,6 @@ import Application.MyApi;
 import Model.CustomProcedureTemplate;
 import Model.Field;
 import Model.ResponseAddTemplates;
-import Model.ShowTemplate;
 import Model.TemplateField;
 import Model.TreatmentField;
 import Model.TreatmentPlan;

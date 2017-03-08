@@ -1,6 +1,4 @@
-package com.mindnerves.meidcaldiary;
-
-import java.util.List;
+package com.medico.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.medico.util.Option;
+import com.mindnerves.meidcaldiary.R;
+
+import java.util.List;
 
 public class FileArrayAdapter extends ArrayAdapter<Option> {
 

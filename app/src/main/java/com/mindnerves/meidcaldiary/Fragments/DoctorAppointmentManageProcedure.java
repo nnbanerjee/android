@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.DoctorAppointmentInvoices;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.R;
 

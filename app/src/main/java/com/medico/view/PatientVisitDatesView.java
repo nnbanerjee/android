@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.medico.adapter.PatientVisitDatesAdapter;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientVisits;
-import com.mindnerves.meidcaldiary.Global;
+//import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class PatientVisitDatesView extends ParentFragment
     ProgressDialog progress;
     StickyListHeadersListView allAppointments;
     String doctorId;
-    Global global;
+//    Global global;
     PatientVisits appointments;
 //    ImageView addClinic;
     String fragmentCall;

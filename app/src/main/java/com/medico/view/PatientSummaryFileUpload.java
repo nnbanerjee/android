@@ -35,7 +35,6 @@ import com.medico.model.Clinic1;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.FileUpload1;
 import com.medico.model.SearchParameter;
-import com.mindnerves.meidcaldiary.FileChooser;
 import com.mindnerves.meidcaldiary.R;
 
 import java.io.File;

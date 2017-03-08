@@ -24,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.Clinic;
-import com.mindnerves.meidcaldiary.FileChooser;
-import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -60,7 +58,7 @@ public class FileUploadDialog extends DialogFragment {
     private Button capture, browse, upload, document;
     public MyApi api;
     Spinner category, clinicSpinner, medicalReportSpinner,typespinner;
-    Global global;
+//    Global global;
     TextView nameText;
     String appointmentDate, appointmentTime;
     TypedFile typedFile;
@@ -89,7 +87,7 @@ public class FileUploadDialog extends DialogFragment {
         capture = (Button) view.findViewById(R.id.capture_image);
         browse = (Button) view.findViewById(R.id.browse_image);
         upload = (Button) view.findViewById(R.id.upload);
-        global = (Global) getActivity().getApplicationContext();
+//        global = (Global) getActivity().getApplicationContext();
         name = (EditText) view.findViewById(R.id.nameValue);
         category = (Spinner) view.findViewById(R.id.categoryValue);
         clinicSpinner = (Spinner) view.findViewById(R.id.clinic);
@@ -110,9 +108,9 @@ public class FileUploadDialog extends DialogFragment {
         categories = getResources().getStringArray(R.array.category_data_list);
         System.out.println("SIze of categories:::::" + categories.length);
         category.setAdapter(new CategorySpinner(getActivity(), R.layout.customize_spinner, categories));
-        appointmentDate = global.getAppointmentDate();
-        appointmentTime = global.getAppointmentTime();
-        name.setText(global.getTestPrescribed());
+//        appointmentDate = global.getAppointmentDate();
+//        appointmentTime = global.getAppointmentTime();
+//        name.setText(global.getTestPrescribed());
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         id = session.getString("sessionID", null);
         type = session.getString("loginType", null);

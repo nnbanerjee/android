@@ -22,7 +22,7 @@ import com.medico.model.ProfileId;
 import com.medico.view.PatientVisitDatesView;
 import com.mindnerves.meidcaldiary.Fragments.PatientDetailsFragment;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;

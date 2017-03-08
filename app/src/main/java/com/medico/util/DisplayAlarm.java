@@ -1,8 +1,7 @@
-package com.mindnerves.meidcaldiary;
+package com.medico.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -11,6 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.mindnerves.meidcaldiary.R;
 
 public class DisplayAlarm extends Activity {
 	Button dismiss;

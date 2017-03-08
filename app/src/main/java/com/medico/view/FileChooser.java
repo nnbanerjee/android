@@ -1,10 +1,4 @@
-package com.mindnerves.meidcaldiary;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+package com.medico.view;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -13,6 +7,16 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
+
+import com.medico.adapter.FileArrayAdapter;
+import com.medico.util.Option;
+import com.mindnerves.meidcaldiary.R;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FileChooser extends ListActivity {
 	private File currentDir;

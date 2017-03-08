@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.InvoiceDetails1;
-import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import Model.InvoiceId;

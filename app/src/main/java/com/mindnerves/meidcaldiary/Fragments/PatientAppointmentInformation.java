@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.medico.view.PatientMenusManage;
 import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.ImageLoadTask;
+import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import Application.MyApi;
