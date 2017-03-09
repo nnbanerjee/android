@@ -13,9 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.ClinicAllDoctorFragment;
 import com.mindnerves.meidcaldiary.Fragments.DoctorDetailsFragment;
 import com.mindnerves.meidcaldiary.Fragments.PatientAllAppointment;
 import com.mindnerves.meidcaldiary.Global;
@@ -23,13 +21,10 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorSearchResponse;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by User on 8/13/15.

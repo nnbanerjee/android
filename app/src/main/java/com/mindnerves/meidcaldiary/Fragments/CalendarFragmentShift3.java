@@ -32,7 +32,7 @@ import java.util.Locale;
 
 import Adapter.CalendarAdapter;
 import Adapter.MyAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllClinicAppointment;
 import Model.Appointment;
 import com.medico.model.Clinic;

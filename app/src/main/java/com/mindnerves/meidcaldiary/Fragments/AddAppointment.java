@@ -25,7 +25,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ClinicAppointment;
 import retrofit.Callback;
 import retrofit.RestAdapter;

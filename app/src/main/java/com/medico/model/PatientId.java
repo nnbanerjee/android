@@ -5,17 +5,17 @@ package com.medico.model;
  */
 public class PatientId {
 
-    public int getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
-    public PatientId(int patientId) {
+    public PatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
-    private int patientId;
+    private Integer patientId;
 }

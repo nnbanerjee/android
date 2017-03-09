@@ -17,12 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Fragments.DoctorConsultantAddAppointmentFragment;
-import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ClinicDetailVm;
 import retrofit.Callback;
 import retrofit.RestAdapter;

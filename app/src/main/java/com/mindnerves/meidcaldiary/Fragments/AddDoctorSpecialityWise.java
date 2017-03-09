@@ -37,7 +37,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 
 import Adapter.DoctorAddAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;

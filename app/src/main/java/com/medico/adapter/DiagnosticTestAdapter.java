@@ -25,9 +25,9 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.RemovePatientTestRequest;
-import Utils.PARAM;
+import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

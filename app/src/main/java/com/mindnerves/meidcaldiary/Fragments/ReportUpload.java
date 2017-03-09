@@ -31,8 +31,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.ImageUtil;
-import Application.MyApi;
+import com.medico.util.ImageUtil;
+import com.medico.application.MyApi;
 import com.medico.model.Clinic;
 import Model.FileUpload;
 import Model.PersonID;

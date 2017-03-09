@@ -31,8 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Application.MyApi;
-import DB.DatabaseHandler;
+import com.medico.application.MyApi;
+import com.medico.util.DatabaseHandler;
 import Model.AppointmentDB;
 import com.medico.model.Clinic;
 import Model.ClinicAppointment;

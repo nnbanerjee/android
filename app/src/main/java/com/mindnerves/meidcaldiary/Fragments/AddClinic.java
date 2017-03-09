@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ShowClinicAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import com.medico.model.Clinic;
 import retrofit.Callback;
 import retrofit.RestAdapter;

@@ -1,4 +1,4 @@
-package Utils;
+package com.medico.util;
 
 /**
  * Created by Narendra on 17-01-2017.

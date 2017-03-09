@@ -21,7 +21,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Adapter.AllDoctorClinicAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import com.medico.model.Clinic;
 import Model.ClinicDetailVm;
 import retrofit.Callback;

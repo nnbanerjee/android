@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.Global;
@@ -25,7 +24,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Field;
 import Model.FieldElement;
 import Model.UpdateField;

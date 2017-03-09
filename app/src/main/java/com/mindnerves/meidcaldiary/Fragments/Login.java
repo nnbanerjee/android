@@ -24,10 +24,10 @@ import com.mindnerves.meidcaldiary.SigninActivityDoctor;
 
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Logindata;
 import Model.ResponseVm;
-import Utils.PARAM;
+import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -35,9 +35,9 @@ import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.client.Header ;
 
-import static Utils.PARAM.LOGGED_IN_ID;
-import static Utils.PARAM.LOGGED_IN_USER_ROLE;
-import static Utils.PARAM.LOGGED_IN_USER_STATUS;
+import static com.medico.util.PARAM.LOGGED_IN_ID;
+import static com.medico.util.PARAM.LOGGED_IN_USER_ROLE;
+import static com.medico.util.PARAM.LOGGED_IN_USER_STATUS;
 
 /**
  * Created by User on 16-02-2015.

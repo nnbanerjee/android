@@ -35,7 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import Adapter.SpecialityAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Patient;
 import retrofit.Callback;
 import retrofit.RestAdapter;

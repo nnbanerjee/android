@@ -18,9 +18,8 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 
 import Adapter.DoctorClinicAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorClinicSchedule;
-import Model.Schedule;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

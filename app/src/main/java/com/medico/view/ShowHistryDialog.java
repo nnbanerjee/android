@@ -18,7 +18,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.Arrays;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 /**
  * Created by User on 8/11/15.

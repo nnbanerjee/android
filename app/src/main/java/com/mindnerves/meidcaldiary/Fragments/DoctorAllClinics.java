@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import Adapter.ClinicDoctorListAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AppointmentSlotsByDoctor;
 import com.medico.model.DoctorId;
 import retrofit.Callback;

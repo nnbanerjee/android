@@ -40,7 +40,7 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import android.view.ViewGroup.LayoutParams;
 
 import Adapter.ReportFinanceAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllProcedureVm;
 import Model.AllTemplateVm;
 import Model.AllTreatmentPlanVm;

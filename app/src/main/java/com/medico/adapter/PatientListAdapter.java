@@ -1,4 +1,4 @@
-package Adapter;
+package com.medico.adapter;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -25,7 +25,7 @@ import com.mindnerves.meidcaldiary.Global;
 import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllPatients;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
@@ -40,7 +40,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class DoctorPatientListAdapter extends BaseAdapter  {
+public class PatientListAdapter extends BaseAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
@@ -51,7 +51,7 @@ public class DoctorPatientListAdapter extends BaseAdapter  {
     SharedPreferences session;
     private ProgressDialog progress;
 
-    public DoctorPatientListAdapter(Activity activity, PatientProfileList allPatients) {
+    public PatientListAdapter(Activity activity, PatientProfileList allPatients) {
         this.activity = activity;
         this.allPatients = allPatients;
     }

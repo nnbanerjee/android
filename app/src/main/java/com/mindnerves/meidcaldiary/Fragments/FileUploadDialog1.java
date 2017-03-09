@@ -35,8 +35,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import Application.ImageUtil;
-import Application.MyApi;
+import com.medico.util.ImageUtil;
+import com.medico.application.MyApi;
 import Model.FileUpload;
 import Model.PersonID;
 import Model.ResponseAddDocuments;

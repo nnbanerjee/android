@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AppointmentStatus;
 
 import com.medico.model.ResponseCodeVerfication;

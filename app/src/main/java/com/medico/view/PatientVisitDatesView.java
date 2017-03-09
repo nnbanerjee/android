@@ -24,7 +24,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Utils.PARAM;
+import com.medico.util.PARAM;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RetrofitError;

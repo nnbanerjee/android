@@ -36,7 +36,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Assistant;
 import retrofit.Callback;
 import retrofit.RestAdapter;

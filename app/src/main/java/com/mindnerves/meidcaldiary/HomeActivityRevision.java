@@ -46,7 +46,7 @@ import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
 import java.util.ArrayList;
 
 import Adapter.MenuAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;

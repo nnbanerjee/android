@@ -1,9 +1,8 @@
 package com.mindnerves.meidcaldiary;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 
-import Utils.PARAM;
+import com.medico.util.PARAM;
 
 /**
  * Created by Narendra on 17-01-2017.

@@ -1,7 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,21 +9,16 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import Adapter.TimeAdapter;
-import Application.MyApi;
-import Model.Schedule;
+import com.medico.application.MyApi;
+
 import Model.Time;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by MNT on 24-Feb-15.

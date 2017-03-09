@@ -18,8 +18,8 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Adapter.ClinicListItemAdapter;
-import Adapter.DoctorClinicListItemAdapter;
-import Application.MyApi;
+
+import com.medico.application.MyApi;
 import Model.ClinicDetailVm;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;

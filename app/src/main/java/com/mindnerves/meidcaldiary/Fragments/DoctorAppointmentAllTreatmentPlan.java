@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.AllProcedureAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.TotalInvoice;
 import Model.TreatmentField;
 import Model.TreatmentPlan;

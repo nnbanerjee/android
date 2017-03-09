@@ -1,8 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +19,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AddDependent;
 import Model.AddDependentElement;
 import Model.Patient;

@@ -21,7 +21,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.Calendar;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 import com.medico.model.ResponseCodeVerfication;
 

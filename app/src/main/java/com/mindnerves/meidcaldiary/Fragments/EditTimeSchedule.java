@@ -24,14 +24,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Schedule;
 import Model.TimeNew;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by MNT on 02-Mar-15.

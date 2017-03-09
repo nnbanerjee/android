@@ -24,7 +24,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;
 import Adapter.DoctorAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorSearchResponse;
 import Model.MultipleDoctors;
 import Model.RemoveDoctors;

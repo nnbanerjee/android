@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.ProcedureAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.CustomProcedureTemplate;
 import Model.PersonAndCategoryId;
 import Model.TreatmentField;

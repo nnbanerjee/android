@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import Adapter.ClinicTimeTableAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AppointmentId;
 import Model.ClinicDetailVm;
 import Model.ClinicList;

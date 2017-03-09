@@ -1,11 +1,9 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,11 +16,9 @@ import org.codepond.wizardroid.persistence.ContextVariable;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.DoctorAdapter;
 import Adapter.SelectDoctorAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Doctor;
-import Model.DoctorSearchResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

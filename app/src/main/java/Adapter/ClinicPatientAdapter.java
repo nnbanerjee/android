@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Appointment;
 import Model.AppointmentId;
 import Model.AppointmentSlotsByDoctor;

@@ -114,6 +114,10 @@
             android:label="@string/ManagePatientProfileTitle"
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
+        <activity android:name="com.medico.view.DoctorConsultations"
+            android:label="@string/ManagePatientProfileTitle"
+            android:parentActivityName="com.medico.view.PatientHome" >
+        </activity>
 
     </application>
 

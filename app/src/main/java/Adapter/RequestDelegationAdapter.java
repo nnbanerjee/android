@@ -16,7 +16,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 import com.medico.model.Delegation;
 

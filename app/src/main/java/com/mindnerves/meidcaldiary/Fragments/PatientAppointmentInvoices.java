@@ -30,7 +30,7 @@ import java.util.List;
 
 import Adapter.AllInvoiceAdapter;
 import Adapter.HorizontalInvoiceListAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllProcedureVm;
 import Model.AllTemplateVm;
 import Model.AllTreatmentPlanVm;

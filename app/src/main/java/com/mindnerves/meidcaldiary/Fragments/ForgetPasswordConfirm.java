@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.mindnerves.meidcaldiary.MainActivity;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ResetPassword;
 import com.medico.model.ResponseCodeVerfication;
 

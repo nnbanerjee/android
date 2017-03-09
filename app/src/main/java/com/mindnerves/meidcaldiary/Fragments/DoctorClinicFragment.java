@@ -22,7 +22,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AppointmentSlotsByDoctor;
 import Model.Slot;
 import Utils.UtilSingleInstance;

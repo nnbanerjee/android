@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.BucketPatient;
 import Model.Patient;
 import retrofit.Callback;

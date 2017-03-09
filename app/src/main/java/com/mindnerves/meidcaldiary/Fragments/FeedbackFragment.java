@@ -23,7 +23,7 @@ import com.medico.view.ParentFragment;
 import com.medico.view.PatientProfileListView;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ClinicAppointment;
 import Model.FeedbackVM;
 import retrofit.Callback;

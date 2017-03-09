@@ -2,7 +2,7 @@ package com.medico.model;
 
 import java.util.List;
 
-import Utils.PARAM;
+import com.medico.util.PARAM;
 
 /**
  * Created by Narendra on 05-02-2017.

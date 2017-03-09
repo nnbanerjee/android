@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.PatientAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.MultiplePatient;
 import Model.Patient;
 import Model.RemovePatients;

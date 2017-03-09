@@ -13,7 +13,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 
 import Adapter.TimeAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Time;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

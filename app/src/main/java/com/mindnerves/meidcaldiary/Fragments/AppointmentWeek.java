@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -15,9 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.R;
 
@@ -28,12 +25,9 @@ import java.util.Date;
 import java.util.List;
 
 import Adapter.AppointmentWeekAdapter;
-import Adapter.MyAdapter;
-import Adapter.WeekAdapter;
-import Application.MyApi;
+
+import com.medico.application.MyApi;
 import Model.AllClinicAppointment;
-import Model.Appointment;
-import Model.Shift1;
 import Model.ShiftAppointment;
 import Model.Week;
 import Model.WeekShow;
@@ -42,7 +36,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by User on 6/30/15.

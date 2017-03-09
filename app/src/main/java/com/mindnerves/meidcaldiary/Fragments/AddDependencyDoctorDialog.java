@@ -20,8 +20,8 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
-import Application.MyApi;
-import Model.AddDependent;
+import com.medico.application.MyApi;
+
 import Model.AddDependentDoctor;
 import Model.AddDependentElement;
 import Model.Patient;

@@ -21,8 +21,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import Application.MyApi;
-import Utils.PARAM;
+import com.medico.application.MyApi;
+import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

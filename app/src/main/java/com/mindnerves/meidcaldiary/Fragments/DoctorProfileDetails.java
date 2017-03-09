@@ -1,14 +1,11 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.mindnerves.meidcaldiary.Global;
@@ -20,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorSearchResponse;
 
 /**

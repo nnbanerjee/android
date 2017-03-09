@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import Adapter.ReminderAdapter;
-import Application.MyApi;
-import DB.DatabaseHandler;
+import com.medico.application.MyApi;
+import com.medico.util.DatabaseHandler;
 import Model.NotificationVM;
 import Model.Reminder;
 import retrofit.Callback;

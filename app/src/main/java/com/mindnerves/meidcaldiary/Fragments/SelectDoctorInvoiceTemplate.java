@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.TemplateDetailsAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.CustomProcedureTemplate;
 import Model.Field;
 import Model.ResponseAddTemplates;

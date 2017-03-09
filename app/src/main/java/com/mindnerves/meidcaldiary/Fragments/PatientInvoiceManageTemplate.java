@@ -2,7 +2,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +26,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 
 import Adapter.TemplateAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ShowTemplate;
 import retrofit.Callback;
 import retrofit.RestAdapter;

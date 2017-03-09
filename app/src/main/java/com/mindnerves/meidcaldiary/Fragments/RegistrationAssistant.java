@@ -5,7 +5,6 @@ package com.mindnerves.meidcaldiary.Fragments;
  */
 
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -40,13 +39,12 @@ import com.mindnerves.meidcaldiary.R;
 import org.codepond.wizardroid.WizardStep;
 import org.codepond.wizardroid.persistence.ContextVariable;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

@@ -40,7 +40,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.io.File;
 import java.util.Calendar;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;

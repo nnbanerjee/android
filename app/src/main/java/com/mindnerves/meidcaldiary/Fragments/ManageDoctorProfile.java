@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.PersonTemp;
 import retrofit.Callback;
 import retrofit.RestAdapter;

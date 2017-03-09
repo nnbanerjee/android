@@ -22,7 +22,7 @@ import com.mindnerves.meidcaldiary.Global;
 import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllPatients;
 import Utils.UtilSingleInstance;
 

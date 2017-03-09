@@ -31,10 +31,9 @@ public class ManagePatientProfile extends AppCompatActivity {
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
         if (savedInstanceState == null) {
-            ParentFragment fragment = new PatientProfileListView();
-            fragmentList.add(fragment);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.service, fragment).addToBackStack(null).commit();
+
+            attachView();
+
         }
 
 
@@ -123,6 +122,14 @@ public class ManagePatientProfile extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    protected void attachView()
+    {
+        ParentFragment fragment = new PatientProfileListView();
+        fragmentList.add(fragment);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.service, fragment).addToBackStack(null).commit();
     }
 
 }

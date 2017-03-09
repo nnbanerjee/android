@@ -5,8 +5,8 @@ import android.webkit.CookieManager;
 
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
-import Utils.PARAM;
+import com.medico.application.MyApi;
+import com.medico.util.PARAM;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

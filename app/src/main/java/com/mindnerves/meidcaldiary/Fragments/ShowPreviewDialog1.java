@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 /**
  * Created by MNT on 27-Mar-15.

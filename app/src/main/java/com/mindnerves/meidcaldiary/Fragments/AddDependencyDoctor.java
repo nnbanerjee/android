@@ -27,9 +27,8 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.DependencyAdapter;
 import Adapter.DependencyAdapterDoctor;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AddDependent;
 import Model.AddDependentElement;
 import Model.Patient;

@@ -16,14 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.medico.application.MyApi;
+import com.medico.util.PARAM;
 import com.mindnerves.meidcaldiary.Fragments.PatientAllClinics;
-import com.mindnerves.meidcaldiary.Fragments.PatientAllDoctors;
 import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
 import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentStatus;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
 import Model.PatientProfile;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -116,34 +116,43 @@ public class PatientMenusManage extends Fragment {
         rightArrowDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
-                layout.setVisibility(View.GONE);
-                global.setSummaryJump(false);
-                Fragment fragment = new PatientAllDoctors();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.PATIENT_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), DoctorConsultations.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
             }
         });
         doctorsCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
-                layout.setVisibility(View.GONE);
-                global.setSummaryJump(false);
-                Fragment fragment = new PatientAllDoctors();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.PATIENT_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), DoctorConsultations.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
             }
         });
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
-                layout.setVisibility(View.GONE);
-                global.setSummaryJump(false);
-                Fragment fragment = new PatientAllDoctors();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.PATIENT_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), DoctorConsultations.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
             }
         });
 

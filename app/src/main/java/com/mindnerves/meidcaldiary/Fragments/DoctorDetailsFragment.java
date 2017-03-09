@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +22,7 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Adapter.ClinicListItemAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ClinicDetailVm;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;

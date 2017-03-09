@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ResponseVm;
 import Model.forgotPassword;
 import retrofit.Callback;

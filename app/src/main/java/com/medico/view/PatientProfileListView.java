@@ -17,15 +17,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.adapter.PatientListAdapter;
 import com.medico.model.DoctorId;
 import com.medico.model.PatientProfileList;
 import com.medico.model.PatientShortProfile;
+import com.medico.util.PARAM;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Adapter.DoctorPatientListAdapter;
-import Utils.PARAM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -157,7 +157,7 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
             public void success(final List<PatientShortProfile> allPatientsProfiles, Response response) {
 //                Global global = (Global) getActivity().getApplicationContext();
 //                global.setAllPatients(new PatientProfileList(allPatientsProfiles));
-                DoctorPatientListAdapter adapter = new DoctorPatientListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
+                PatientListAdapter adapter = new PatientListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
                 doctorListView.setAdapter(adapter);
                 progress.dismiss();
             }

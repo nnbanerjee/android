@@ -21,8 +21,8 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Application.MyApi;
-import Utils.PARAM;
+import com.medico.application.MyApi;
+import com.medico.util.PARAM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 

@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import Adapter.PatientAllAppointmentAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ClinicAppointment;
 import retrofit.Callback;
 import retrofit.RestAdapter;

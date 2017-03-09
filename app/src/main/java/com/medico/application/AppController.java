@@ -1,4 +1,4 @@
-package Application;
+package com.medico.application;
 
 /**
  * Created by MNT on 17-Feb-15.

@@ -25,7 +25,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Adapter.ClinicPatientAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AppointmentSlotsByDoctor;
 import Model.ClinicPatientAppointments;
 import com.medico.model.DoctorId;

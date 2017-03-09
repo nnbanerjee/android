@@ -20,7 +20,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;
 import Adapter.ClinicSpecialityAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import com.medico.model.Clinic;
 import Model.PersonID;
 import retrofit.Callback;

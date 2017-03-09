@@ -2,7 +2,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 
 import Adapter.TemplateDetailsAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Field;
 import Model.ShowTemplate;
 import Model.TreatmentPlan;

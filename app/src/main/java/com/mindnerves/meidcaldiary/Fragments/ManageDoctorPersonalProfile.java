@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorPersonalVM;
 import Model.PersonTemp;
 import retrofit.Callback;

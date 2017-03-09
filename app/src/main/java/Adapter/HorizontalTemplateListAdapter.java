@@ -17,7 +17,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 import com.medico.model.ResponseCodeVerfication;
 

@@ -3,8 +3,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,23 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.mindnerves.meidcaldiary.R;
 
-import java.util.List;
-import java.util.Date;
-import Adapter.ClinicListItemAdapter;
-import Adapter.MyAdapter;
-import Application.MyApi;
-import Model.AllClinicAppointment;
-import Model.ClinicDetailVm;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+import com.medico.application.MyApi;
 
 /**
  * Created by User on 6/29/15.

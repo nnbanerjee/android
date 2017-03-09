@@ -42,7 +42,7 @@ import java.util.List;
 
 import Model.PatientTestId;
 import Model.PersonID;
-import Utils.PARAM;
+import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

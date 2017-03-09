@@ -1,7 +1,6 @@
 package com.mindnerves.meidcaldiary.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,9 +21,8 @@ import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import Adapter.ClinicListItemAdapter;
 import Adapter.DoctorConsultantAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.ClinicDetailVm;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;

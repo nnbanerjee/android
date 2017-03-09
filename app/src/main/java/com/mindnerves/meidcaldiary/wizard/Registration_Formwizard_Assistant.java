@@ -26,7 +26,7 @@ import org.codepond.wizardroid.layouts.BasicWizardLayout;
 
 import java.util.regex.Pattern;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.CreateProfileData;
 import Model.MobileEmail;
 import Model.ResponseCheckMobileEmailAvailability;

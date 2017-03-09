@@ -1,4 +1,4 @@
-package DB;
+package com.medico.util;
 
 import android.content.ContentValues;
 import android.content.Context;

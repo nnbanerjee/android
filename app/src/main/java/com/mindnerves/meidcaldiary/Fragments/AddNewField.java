@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Field;
 import Model.ShowTemplate;
 import retrofit.Callback;

@@ -18,6 +18,9 @@
     <string name="add_patient">Add Patient</string>
     <string name="short_patient">Sort Patient</string>
     <string name="filter_patient">Filter Patient</string>
+    <string name="add_doctor">Add Doctor</string>
+    <string name="short_doctor">Sort Doctor</string>
+    <string name="filter_doctor">Filter Doctor</string>
 
     <string-array name="bloodgroup_list">
         <item>Select blood group</item>

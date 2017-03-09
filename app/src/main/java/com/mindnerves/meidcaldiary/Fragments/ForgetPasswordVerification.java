@@ -15,7 +15,7 @@ import com.mindnerves.meidcaldiary.LoggingInterceptor;
 import com.mindnerves.meidcaldiary.R;
 import com.squareup.okhttp.OkHttpClient;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import com.medico.model.ResponseCodeVerfication;
 import Model.ResponseVm;
 import Model.VerificationCode;

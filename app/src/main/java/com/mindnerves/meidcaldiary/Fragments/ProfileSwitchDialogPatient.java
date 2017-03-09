@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import Adapter.ProfileDelegationAdapter;
 import Adapter.ProfileDependencyAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Patient;
 import Model.PersonTemp;
 import retrofit.Callback;

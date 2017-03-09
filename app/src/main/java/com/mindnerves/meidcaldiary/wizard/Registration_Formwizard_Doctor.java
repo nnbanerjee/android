@@ -5,7 +5,6 @@ package com.mindnerves.meidcaldiary.wizard;
  */
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,35 +13,25 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.Fragments.MedicalRegDoctor;
 import com.mindnerves.meidcaldiary.Fragments.RegistrationDoctor;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.MainActivity;
 import com.mindnerves.meidcaldiary.R;
-import com.squareup.okhttp.Call;
 
 import org.codepond.wizardroid.WizardFlow;
 import org.codepond.wizardroid.layouts.BasicWizardLayout;
 import org.codepond.wizardroid.persistence.ContextVariable;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.CreateProfileData;
 import Model.CreateProfileDataForDoctorUpdateDetails;
 import Model.MobileEmail;
@@ -57,7 +46,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 
 /**

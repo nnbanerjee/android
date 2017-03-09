@@ -16,7 +16,7 @@ import com.mindnerves.meidcaldiary.SigninActivity;
 import com.mindnerves.meidcaldiary.SigninActivityAssistance;
 import com.mindnerves.meidcaldiary.SigninActivityDoctor;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 /**
  * Created by Narendra on 11-03-2016.

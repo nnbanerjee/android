@@ -16,14 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.medico.application.MyApi;
+import com.medico.util.PARAM;
 import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAllClinics;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
 import Model.DoctorProfile;
-import Utils.PARAM;
 
 /**
  * Created by MNT on 07-Apr-15.

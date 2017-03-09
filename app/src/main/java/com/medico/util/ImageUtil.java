@@ -1,20 +1,5 @@
 
-package Application;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LevelListDrawable;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.widget.ImageView;
-
+package com.medico.util;
 
 /*
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -27,10 +12,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 */
-
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 
 /**

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 import Adapter.RequestDelegationAdapter;
 import Adapter.ShowDelegationAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import com.medico.model.Delegation;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

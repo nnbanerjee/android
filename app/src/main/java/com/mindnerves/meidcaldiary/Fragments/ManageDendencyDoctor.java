@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 import Adapter.RequestDependentAdapterDoctor;
 import Adapter.ShowDependentAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Patient;
 import retrofit.Callback;
 import retrofit.RestAdapter;

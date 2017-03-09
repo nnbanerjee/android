@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import Adapter.MyAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllClinicAppointment;
 import Model.Appointment;
 import com.medico.model.Clinic;

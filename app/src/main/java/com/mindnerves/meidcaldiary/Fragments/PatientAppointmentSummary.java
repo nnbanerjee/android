@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AlarmReminderVM;
 import Model.MedicineVM;
 import Model.PersonID;

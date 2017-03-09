@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 import Adapter.ManageFinanceAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllProcedureVm;
 import Model.AllTemplateVm;
 import Model.AllTreatmentPlanVm;

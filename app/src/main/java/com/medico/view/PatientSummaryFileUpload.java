@@ -45,10 +45,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Application.ImageUtil;
+import com.medico.util.ImageUtil;
 import Model.PersonID;
 import Model.ResponseAddDocuments;
-import Utils.PARAM;
+import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

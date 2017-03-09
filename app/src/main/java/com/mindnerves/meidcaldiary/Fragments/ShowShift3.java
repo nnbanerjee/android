@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 
 /**
  * Created by User on 9/7/15.

@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import Adapter.AppointmentWeekAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllClinicAppointment;
 import Model.ShiftAppointment;
 import Model.Week;

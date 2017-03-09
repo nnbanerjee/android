@@ -18,7 +18,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.List;
 
 import Adapter.DocumentAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.FileUpload;
 import retrofit.Callback;
 import retrofit.RestAdapter;

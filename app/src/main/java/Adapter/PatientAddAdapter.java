@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
-import Application.MyApi;
-import Model.DoctorSearchResponse;
+import com.medico.application.MyApi;
+
 import Model.Patient;
 import retrofit.Callback;
 import retrofit.RestAdapter;

@@ -1,4 +1,4 @@
-package Application; /**
+package com.medico.application; /**
  * Created by MNT on 17-Feb-15.
  */
 
@@ -13,6 +13,7 @@ import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
+import com.medico.model.DoctorShortProfile;
 import com.medico.model.FileUpload1;
 import com.medico.model.InvoiceDetails1;
 import com.medico.model.Medicine;
@@ -765,8 +766,10 @@ public interface MyApi {
     void getPatientLandingPageDetails(@Body PatientId patientId, Callback<PatientProfile> cb);
 
     @POST("/getDoctorProfileList")
-    void getDoctorProfileList(@Body PatientId patientId, Callback<List<AllPatients>> callback);
+    void getDoctorProfileList(@Body PatientId patientId, Callback<List<DoctorShortProfile>> callback);
 
+    @POST("/getDoctorProfileList")
+    void getDoctorProfileList1(@Body PatientId patientId, Callback<List<AllPatients>> callback);
 
     @POST("/getPatientVisitInvoice")
     void getPatientVisitInvoice(@Body InvoiceId invoiceId, Callback<InvoiceDetails> response);

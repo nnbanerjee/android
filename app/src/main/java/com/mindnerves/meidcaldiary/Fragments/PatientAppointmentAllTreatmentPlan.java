@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +24,7 @@ import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.AllProcedureAdapter;
-import Adapter.HorizontalTemplateListAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllTreatmentPlanVm;
 import Model.Field;
 import retrofit.Callback;

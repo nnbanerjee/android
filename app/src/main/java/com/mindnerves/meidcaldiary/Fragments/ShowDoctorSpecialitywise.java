@@ -25,11 +25,9 @@ import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import Adapter.DoctorAddAdapter;
 import Adapter.DoctorShowAdapter;
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.DoctorSearchResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;

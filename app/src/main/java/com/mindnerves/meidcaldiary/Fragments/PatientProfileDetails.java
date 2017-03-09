@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.AllPatients;
 import Utils.UtilSingleInstance;
 

@@ -2,7 +2,7 @@ package Adapter;
 
 import android.widget.BaseAdapter;
 
-import Utils.PARAM;
+import com.medico.util.PARAM;
 
 /**
  * Created by Narendra on 17-01-2017.

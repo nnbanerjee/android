@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Application.MyApi;
+import com.medico.application.MyApi;
 import Model.Appointment;
 import Model.ClinicAppointment;
 import Model.Patient;
