@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/main_linearlayout"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shift1Layout"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/locationLayout">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/icon_clock"
+            android:id="@+id/clockIcon"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Slot 1 : "
+            style="@style/body2"
+            android:layout_toRightOf="@+id/clockIcon"
+            android:id="@+id/shift_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mon - Sun"
+            style="@style/body2"
+            android:layout_toRightOf="@+id/shift_name"
+            android:id="@+id/shiftDays"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9:00 AM – 2:45 PM"
+            style="@style/body2"
+            android:layout_toRightOf="@+id/clockIcon"
+            android:layout_below="@+id/shiftDays"
+            android:id="@+id/shiftTime"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:id="@+id/bookOnline"
+            android:layout_marginRight="10dp"
+            android:textColor="#1E90FF"
+            style="@style/body1"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_no_color"
+            android:text="Book Online"
+            android:visibility="visible"
+            />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clinic Contact"
+            style="@style/caption_Style"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/shiftTime"
+            android:id="@+id/clinicAppointments"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

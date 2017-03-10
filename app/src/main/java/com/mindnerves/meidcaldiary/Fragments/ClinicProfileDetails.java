@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.medico.view.ClinicAllPatientFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 

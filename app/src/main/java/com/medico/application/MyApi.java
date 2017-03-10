@@ -10,6 +10,7 @@ import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
 import com.medico.model.DiagnosticTest;
+import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
@@ -18,11 +19,13 @@ import com.medico.model.FileUpload1;
 import com.medico.model.InvoiceDetails1;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
+import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.model.PatientDiagnostic;
 import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
+import com.medico.model.Person;
 import com.medico.model.PersonAndCategoryId1;
 import com.medico.model.ProfileId;
 import com.medico.model.RemoveVisitDocument1;
@@ -605,14 +608,26 @@ public interface MyApi {
     @POST("/getProfile")
     void getProfile(@Body ProfileId param, Callback<AllPatients> callback);
 
+    @POST("/getProfile")
+    void getProfile1(@Body ProfileId param, Callback<Person> callback);
+
+    @POST("/getPatientShortProfile")
+    void getPatientShortProfile(@Body DoctorIdPatientId param, Callback<PatientShortProfile> callback);
+
+    @POST("/getDoctorShortProfile")
+    void getDoctorShortProfile(@Body ProfileId param, Callback<DoctorShortProfile> callback);
 
     @POST("/getClinicsByDoctor")
     void getClinicsByDoctor(@Body DoctorId param, Callback<List<AppointmentSlotsByDoctor>> callback);
 
+    @POST("/getClinicsByDoctor")
+    void getClinicsByDoctor1(@Body DoctorId param, Callback<List<DoctorClinicDetails>> callback);
+
     @POST("/getPatientAppointmentsByDoctor")
     void getPatientAppointmentsByDoctor(@Body DoctorIdPatientId param, Callback<ClinicPatientAppointments> callback);
 
-
+    @POST("/getPatientAppointmentsByDoctor")
+    void getPatientAppointmentsByDoctor1(@Body DoctorIdPatientId param, Callback<PatientAppointmentByDoctor> callback);
 
     @POST("/cancelAppointment")
     void cancelAppointment(@Body AppointmentId appointmentId, Callback<ResponseCodeVerfication> cb);

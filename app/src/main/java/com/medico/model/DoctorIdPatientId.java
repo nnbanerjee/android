@@ -5,29 +5,29 @@ package com.medico.model;
  */
 public class DoctorIdPatientId {
 
-    public DoctorIdPatientId(String doctorId, String patientId) {
+    public DoctorIdPatientId(Integer doctorId, Integer patientId) {
         this.doctorId = doctorId;
         this.patientId = patientId;
     }
 
-    private String doctorId;
+    private Integer doctorId;
 
-    public String getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(String patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
-    public String getDoctorId() {
+    public Integer getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(String doctorId) {
+    public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
     }
 
-    private String patientId;
+    private Integer patientId;
     //{"patientId":3,"doctorId":1}
 }

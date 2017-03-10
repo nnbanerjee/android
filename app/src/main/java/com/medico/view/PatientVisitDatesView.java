@@ -19,18 +19,19 @@ import android.widget.Toast;
 import com.medico.adapter.PatientVisitDatesAdapter;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientVisits;
-//import com.mindnerves.meidcaldiary.Global;
+import com.medico.util.PARAM;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
 
-import com.medico.util.PARAM;
 import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
+//import com.mindnerves.meidcaldiary.Global;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -138,7 +139,7 @@ public class PatientVisitDatesView extends ParentFragment
      {
         super.onStart();
          Bundle bundle = getActivity().getIntent().getExtras();
-        DoctorIdPatientId doc = new DoctorIdPatientId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)).toString(), new Integer(bundle.getInt(PARAM.PATIENT_ID)).toString());
+        DoctorIdPatientId doc = new DoctorIdPatientId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)), new Integer(bundle.getInt(PARAM.PATIENT_ID)));
         api.getPatientVisitDatesByDoctor1(doc, new Callback<List<PatientVisits>>()
         {
             @Override

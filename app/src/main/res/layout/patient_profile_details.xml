@@ -9,7 +9,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/layout"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="65dp"
@@ -38,10 +41,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doctor Name"
+            android:text="Patient Name"
             style="@style/title"
             android:textColor="@color/color_blue_default"
-            android:id="@+id/doctorName"
+            android:id="@+id/patient_name"
          />
 
         <ImageView
@@ -55,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#1E90FF"
-            android:id="@+id/totalAppointment"
+            android:id="@+id/visit_counts"
             android:paddingTop="3dp"
             android:layout_toLeftOf="@+id/viewAll"
             android:layout_marginTop="10dp"
@@ -75,36 +78,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="Address"
             style="@style/body2"
-            android:id="@+id/lastAppointmentDate"
+            android:id="@+id/address"
             android:layout_below="@+id/doctorSpeciality"
         />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12-04-2015"
-            style="@style/body2"
-            android:id="@+id/lastVisitedValue"
-            android:layout_toRightOf="@+id/lastAppointmentDate"
-            android:layout_below="@+id/doctorSpeciality"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout20"
+            android:layout_below="@+id/address"
+            android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/last_appointment_text"
-            android:layout_below="@+id/lastAppointmentDate"
             android:text="Last Visited : "
             style="@style/body2"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Never visited"
             style="@style/body1"
-            android:id="@+id/lastAppointmentValue"
+            android:id="@+id/last_visited"
             android:layout_below="@id/lastAppointmentDate"
-            android:layout_toRightOf="@+id/last_appointment_text"
-        />
+            android:layout_toEndOf="@+id/last_appointment_text"
+            android:layout_toRightOf="@+id/last_appointment_text" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layout20"
+            android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,18 +116,17 @@
             android:text="Upcoming Appt :"
             style="@style/body2"
             android:id="@+id/appointmentText"
-            android:layout_below="@+id/last_appointment_text"
+
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="No upcoming appointment"
             style="@style/body1"
-            android:id="@+id/appointmentDate"
-            android:layout_toRightOf="@+id/appointmentText"
-            android:layout_below="@+id/last_appointment_text"
+            android:id="@+id/next_appointment"
             android:textColor="#1E90FF"
-            />
+            android:layout_toRightOf="@+id/appointmentText"/>
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -150,7 +153,7 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:id="@+id/clinicsBtn"
+                android:id="@+id/appointment"
                 android:text="Appointment"
                 style="@style/sub_heading"
 
@@ -163,10 +166,10 @@
                 android:layout_height="40dp"
                 android:text="Profile"
                 style="@style/sub_heading"
-                android:layout_toRightOf="@+id/clinicsBtn"
+                android:layout_toRightOf="@+id/appointment"
                 android:layout_weight="5"
                 android:background="@drawable/page_selected"
-                android:id="@+id/profileBtn"
+                android:id="@+id/profile"
                 />
             </LinearLayout>
 

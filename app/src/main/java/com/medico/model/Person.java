@@ -11,6 +11,29 @@ public class Person
     public Long mobile;
     public String location;
     public Double locationLat;
+    public Double locationLong;
+    public String email;
+    public String address;
+    public String allergicTo;
+    public String bloodGroup;
+    public Long dateOfBirth;
+    public Byte gender;
+    public String imageUrl;
+    public Integer loyaltyPoints;
+    public String password;
+    public Byte role;
+    public Byte status;
+    public String speciality;
+    public Long validaity;
+    public String region;
+    public String city;
+    public Long registrationDate;
+    public Integer addedBy;
+    public String country;
+    public String isoCountry;
+    public Integer loyaltyCatId;
+    public Integer referredBy;
+    public Byte prime;
 
     public Integer getId() {
         return id;
@@ -236,27 +259,5 @@ public class Person
         this.prime = prime;
     }
 
-    public Double locationLong;
-    public String email;
-    public String address;
-    public String allergicTo;
-    public String bloodGroup;
-    public Long dateOfBirth;
-    public Byte gender;
-    public String imageUrl;
-    public Integer loyaltyPoints;
-    public String password;
-    public Byte role;
-    public Byte status;
-    public String speciality;
-    public Long validaity;
-    public String region;
-    public String city;
-    public Long registrationDate;
-    public Integer addedBy;
-    public String country;
-    public String isoCountry;
-    public Integer loyaltyCatId;
-    public Integer referredBy;
-    public Byte prime;
+
 }

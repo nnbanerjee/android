@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.ClinicAllPatientFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import com.medico.application.MyApi;

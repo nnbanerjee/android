@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/main_linearlayout"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shift1Layout"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/locationLayout">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/appointment_icon"
+            android:id="@+id/appointmentIcon"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12-may-2015  8:15PM"
+            style="@style/body1"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/appointmentIcon"
+            android:id="@+id/appointment_date_time"
+            android:textColor="#1E90FF"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:id="@+id/feedback_btn"
+            android:layout_marginRight="10dp"
+            android:textColor="#1E90FF"
+            style="@style/body1"
+            android:layout_above="@+id/nextChange1"
+            android:layout_marginBottom="5dp"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_no_color"
+            android:text="Feedback"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:id="@+id/change_btn"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#1E90FF"
+            style="@style/body1"
+            android:layout_below="@+id/feedback_btn"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_no_color"
+            android:text="Change"
+            android:visibility="visible"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:id="@+id/cancel_btn"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#1E90FF"
+            style="@style/body1"
+            android:background="@drawable/rounded_no_color"
+            android:layout_below="@+id/change_btn"
+            android:layout_alignParentRight="true"
+            android:text="Cancel"
+            android:visibility="visible"
+            />
+
+
+
+    </RelativeLayout>
+</LinearLayout>

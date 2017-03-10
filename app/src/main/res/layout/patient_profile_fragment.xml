@@ -202,7 +202,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="City"
+                android:text="Location"
                 android:ems="7"
                 style="@style/sub_heading_normal_black"
                 android:paddingTop="5dp"
@@ -229,6 +229,7 @@
                 android:layout_toRightOf="@+id/locationBtn"/>
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

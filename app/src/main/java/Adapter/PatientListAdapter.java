@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.mindnerves.meidcaldiary.Fragments.DoctorDetailsFragment;
-import com.mindnerves.meidcaldiary.Fragments.PatientDetailsFragment;
+import com.medico.view.PatientDetailsFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;

@@ -14,25 +14,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.medico.model.PatientProfileList;
-import com.medico.model.ProfileId;
-import com.medico.view.PatientVisitDatesView;
-import com.mindnerves.meidcaldiary.Fragments.PatientDetailsFragment;
-import com.mindnerves.meidcaldiary.Global;
-import com.medico.util.ImageLoadTask;
-import com.mindnerves.meidcaldiary.R;
 
 import com.medico.application.MyApi;
-import Model.AllPatients;
+import com.medico.model.PatientProfileList;
+import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
+import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentFragment;
+import com.medico.view.PatientDetailsFragment;
+import com.medico.view.PatientVisitDatesView;
+import com.mindnerves.meidcaldiary.Global;
+import com.mindnerves.meidcaldiary.R;
+
 import Utils.UtilSingleInstance;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 
 /**
@@ -146,54 +142,51 @@ public class PatientListAdapter extends BaseAdapter  {
 
 
 
-        downImage.setOnClickListener(new View.OnClickListener() {
+        viewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
-                api.getProfile(new ProfileId(allPatients.getPatientlist().get(position).getPatientId()), new Callback<AllPatients>() {
-                    @Override
-                    public void success(AllPatients patient, Response response) {
-                        //global.setClinicDetailVm(patient);
+                ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
+                Bundle bundle = parentactivity.getIntent().getExtras();
+                bundle.putInt(PARAM.PATIENT_ID, allPatients.getPatientlist().get(position).getPatientId());
+                parentactivity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new PatientDetailsFragment();
+                parentactivity.fragmentList.add(fragment);
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//
+//                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
+//                api.getProfile1(new ProfileId(allPatients.getPatientlist().get(position).getPatientId()), new Callback<Person>() {
+//                    @Override
+//                    public void success(Person patient, Response response)
+//                    {
+//
+//                        Bundle args = new Bundle();
+//                        //Store Selected Patient profile
+//                        progress.dismiss();
+//                        SharedPreferences.Editor editor = session.edit();
+////                        global.setSelectedPatientsProfile(patient);
+//                        Gson gson = new Gson();
+//                        String json = gson.toJson(patient);
+//                        editor.putString("SelectedPatient", json);
+//                        editor.commit();
+//                        editor.putString("patient_Last_Visited", allPatients.getPatientlist().get(position).getLastVisit().toString());
+//                        editor.putString("patient_Upcoming_Appt", allPatients.getPatientlist().get(position).getUpcomingVisit().toString());
+//                        editor.putString("patient_Total_visits", allPatients.getPatientlist().get(position).getNumberOfVisits().toString());
+//                        editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
+//                        editor.putString("patient_Name", allPatients.getPatientlist().get(position).getName());
+//                        editor.commit();
 
-                        //Store Selected Patient profile
-                        progress.dismiss();
-                        SharedPreferences.Editor editor = session.edit();
-                        global.setSelectedPatientsProfile(patient);
-                        Gson gson = new Gson();
-                        String json = gson.toJson(patient);
-                        editor.putString("SelectedPatient", json);
-                        editor.commit();
-
-                        Bundle args = new Bundle();
-
-
-                        editor.putString("patient_Last_Visited", allPatients.getPatientlist().get(position).getLastVisit().toString());
-                        editor.putString("patient_Upcoming_Appt", allPatients.getPatientlist().get(position).getUpcomingVisit().toString());
-                        editor.putString("patient_Total_visits", allPatients.getPatientlist().get(position).getNumberOfVisits().toString());
-
-
-                        editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
-//                        editor.putString("doctor_patientEmail", allPatients.get(position).get);
-//                        editor.putString("doctorId", allPatients.get(position).getDoctorId());
-                        editor.putString("patient_Name", allPatients.getPatientlist().get(position).getName());
-//                        editor.putString("doctor_patientEmail", allPatients.get(position).getEmail());
-//                        editor.putString("" +
-//                                "", allPatients.get(position).getEmail());
-                        editor.commit();
-                        Fragment fragment = new PatientDetailsFragment();
-                        FragmentManager fragmentManger = activity.getFragmentManager();
-                        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        progress.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+//                    }
+//
+//                    @Override
+//                    public void failure(RetrofitError error) {
+//                        progress.dismiss();
+//                        error.printStackTrace();
+//                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
             }
         });
 

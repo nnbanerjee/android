@@ -51,20 +51,20 @@
             android:text="0"
             style="@style/body1"
           />
+
         <TextView
+            android:id="@+id/total_appointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nextBtn"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="@dimen/body2"
-            android:text="0"
-            android:visibility="gone"
-            android:id="@+id/total_appointment"
-            android:textColor="#1E90FF"
-            android:layout_marginRight="40dp"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/nextBtn"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-        />
+            android:fontFamily="sans-serif-medium"
+            android:text="0"
+            android:textColor="#1E90FF"
+            android:textSize="@dimen/body2"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/doctorSpeciality"
