@@ -11,10 +11,12 @@ import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorClinicDetails;
+import com.medico.model.DoctorClinicId;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
 import com.medico.model.DoctorShortProfile;
+import com.medico.model.DoctorSlotBookings;
 import com.medico.model.FileUpload1;
 import com.medico.model.InvoiceDetails1;
 import com.medico.model.Medicine;
@@ -141,6 +143,9 @@ import retrofit.mime.TypedFile;
 public interface MyApi {
 
 
+
+    @POST("/getClinicSlotBookingByDoctor")
+    void getClinicSlotBookingByDoctor(@Body DoctorClinicId param, Callback<List<DoctorSlotBookings>> cb);
 
     @POST("/registerPatient")
     void registerPatient(@Body RegisterUserData param, Callback<String> cb);

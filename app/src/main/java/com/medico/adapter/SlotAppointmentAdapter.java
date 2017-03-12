@@ -2,7 +2,9 @@ package com.medico.adapter;
 
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +14,10 @@ import android.widget.TextView;
 
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
+import com.medico.util.PARAM;
+import com.medico.view.ClinicDoctorAppointmentFragment;
+import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.R;
 
 import java.text.DateFormat;
@@ -36,6 +42,8 @@ public class SlotAppointmentAdapter extends BaseAdapter
         this.activity = context;
         this.clinicDetails = clinicDetails;
         this.patientAppointments = patientAppointments;
+        Bundle bundle = activity.getIntent().getExtras();
+        bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
     }
     /**
      * Get the data item associated with the specified position in the data set.
@@ -88,7 +96,10 @@ public class SlotAppointmentAdapter extends BaseAdapter
         shiftName.setText("Slot " + details.slotNumber + " : ");
         shiftDays.setText(daysOfWeek(details.daysOfWeek));
         DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
-        shiftTime.setText(formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime));
+        String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
+        shiftTime.setText(shiftDateTime);
+        bookOnline.setTag(details);
+        bookOnline(bookOnline);
         if(patientAppointments != null && patientAppointments.clinicList != null && patientAppointments.clinicList.size() > 0) {
 
             List<PatientAppointmentByDoctor.Appointments> appointmentss = getAppointments(patientAppointments,details);
@@ -137,6 +148,33 @@ public class SlotAppointmentAdapter extends BaseAdapter
             }
         }
         return null;
+    }
+    private void bookOnline(Button bookonline)
+    {
+        bookonline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DoctorClinicDetails.ClinicSlots details = (DoctorClinicDetails.ClinicSlots)v.getTag();
+                Bundle bundle = activity.getIntent().getExtras();
+                DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+                String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
+
+                bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
+                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,details.doctorClinicId);
+                bundle.putInt(PARAM.SLOT_VISIT_DURATION,details.visitDuration);
+                bundle.putLong(PARAM.SLOT_START_DATETIME,details.startTime);
+                bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
+                activity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new ClinicDoctorAppointmentFragment();
+                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+
+
+            }
+        });
     }
 
 }

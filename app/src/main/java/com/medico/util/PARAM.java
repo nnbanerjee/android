@@ -36,6 +36,8 @@ public interface PARAM
     public static final String CLINIC_ID = "clinicId";
     public static final String APPOINTMENT_DATE = "appointment_date";
     public static final String APPOINTMENT_TIME = "appointment_time";
+    public static final int APPOINTMENT_CONFIRMED = 0;
+    public static final int APPOINTMENT_TENTATIVE = 1;
 
     public static final String DEPENDENT_ID = "dependentId";
     public static final String DEPENDENT_ROLE = "dependent_role";
@@ -89,4 +91,10 @@ public interface PARAM
     public static final int CREATE_TREATMENT = 1;
     public static final int CREATE_INVOICE = 2;
     public static final int COPY_TEMPLATE = 3;
+
+    public static final String DOCTOR_CLINIC_ID = "doctorClinicId";
+    public static final String SLOT_START_DATETIME = "slot_start_datetime";
+    public static final String SLOT_END_DATETIME = "slot_end_datetime";
+    public static final String SLOT_VISIT_DURATION = "slot_visit_duration";
+    public static final String SLOT_TIME = "slot_time";
 }

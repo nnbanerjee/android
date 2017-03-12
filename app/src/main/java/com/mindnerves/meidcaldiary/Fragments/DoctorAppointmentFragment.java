@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.ClinicDoctorAppointmentFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 

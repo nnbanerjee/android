@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="15dp"
+    android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -14,16 +15,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:background="#ffffff">
-
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/backBtn"
-            android:visibility="gone"
-            android:background="@drawable/back"
-            android:layout_alignParentLeft="true"
-            />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +22,6 @@
             android:textColor="#1E90FF"
             style="@style/title"
             android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@+id/backBtn"
             android:id="@+id/clinicName"
             android:gravity="center"
             />
@@ -107,87 +97,64 @@
                 android:background="@drawable/cal"/>
 
         </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type : "
-            style="@style/sub_heading_normal_black"
-            android:ems="4"
-            android:layout_below="@+id/dateLayout"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/visitTypeText"
-            />
-
-
         <RelativeLayout
-            android:id="@+id/visitTyperelative"
+            android:id="@+id/layout20"
             android:background="@color/grey"
             android:layout_width="wrap_content"
-            android:layout_toRightOf="@+id/visitTypeText"
             android:layout_below="@+id/dateLayout"
             android:layout_height="wrap_content">
-        <Spinner
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:text="Follow up"
-            android:textColor="#1E90FF"
-            android:spinnerMode="dialog"
-            android:prompt="@string/select_visit_type"
-            android:entries="@array/visit_type_list"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type : "
+                style="@style/sub_heading_normal_black"
+                android:ems="4"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/visitTypeText"
+                />
 
-            android:id="@+id/visitType"
-            />
+
+            <RelativeLayout
+                android:id="@+id/visitTyperelative"
+                android:background="@color/grey"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/visitTypeText"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="35dp"
+                    android:text="Follow up"
+                    android:textColor="#1E90FF"
+                    android:spinnerMode="dialog"
+                    android:prompt="@string/select_visit_type"
+                    android:entries="@array/visit_type_list"
+
+                    android:id="@+id/visitType"
+                    />
+            </RelativeLayout>
         </RelativeLayout>
 
-
-
         <GridView
+            android:id="@+id/timeTeableList"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="250dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/layout20"
             android:numColumns="5"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp"
+            android:columnWidth="100dp"
             android:orientation="horizontal"
-            android:layout_below="@+id/visitTyperelative"
-            android:id="@+id/timeTeableList">
-        </GridView>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
-            android:id="@+id/cancelBtn"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:layout_marginRight="5sp"
-            android:background="@drawable/rounded_orange_color"
-            android:layout_toLeftOf="@+id/bookNowBtn"
-            android:layout_below="@+id/timeTeableList"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Book Now"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
-            android:id="@+id/bookNowBtn"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:background="@drawable/rounded_blue_color"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/timeTeableList"
-            />
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbars="none"></GridView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
-            android:layout_below="@+id/bookNowBtn">
+            android:layout_below="@+id/timeTeableList">
 
             <TextView
                 android:layout_width="wrap_content"
