@@ -2,7 +2,6 @@ package com.medico.adapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -89,8 +88,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
         TextView clinicContact = (TextView)convertView.findViewById(R.id.clinicContact);
         ListView clinicSlots   = (ListView)convertView.findViewById(R.id.clinicSlots);
 
-        System.out.println("DEBUG Clinic name " + details.clinic.clinicName + " Clinic Id " + details.clinic.idClinic + " Position " + position);
-
+        DoctorClinicDetails details = clinicDetails.get(position);
         clinicName.setText(details.clinic.clinicName);
         clinicLocation.setText(details.clinic.address);
         clinicContact.setText(details.clinic.landLineNumber.toString());
