@@ -15,4 +15,16 @@ public class DoctorHoliday
     public Integer doctorClinicId;
     public Integer doctorId;
     public Byte type;
+
+    public DoctorHoliday(Integer doctorId, Long startDate, Long endDate, Byte type)
+    {
+        this.doctorId = doctorId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.type = type;
+    }
+    public DoctorHoliday()
+    {
+
+    }
 }

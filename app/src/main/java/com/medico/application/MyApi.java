@@ -4,14 +4,17 @@ package com.medico.application; /**
 
 import com.google.gson.JsonObject;
 import com.medico.model.AppointmentId1;
+import com.medico.model.AppointmentResponse;
 import com.medico.model.Clinic;
 import com.medico.model.Clinic1;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
 import com.medico.model.DiagnosticTest;
+import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorClinicId;
+import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
@@ -146,6 +149,21 @@ public interface MyApi {
 
     @POST("/getClinicSlotBookingByDoctor")
     void getClinicSlotBookingByDoctor(@Body DoctorClinicId param, Callback<List<DoctorSlotBookings>> cb);
+
+    @POST("/getDoctorHolidayList")
+    void getDoctorHolidayList(@Body DoctorHoliday param, Callback<List<DoctorHoliday>> cb);
+
+    @POST("/getPatientAppointment")
+    void getPatientAppointment(@Body AppointmentId1 param, Callback<DoctorAppointment> cb);
+
+    @POST("/createAppointment")
+    void createAppointment(@Body DoctorAppointment param, Callback<AppointmentResponse> cb);
+
+    @POST("/updateAppointment")
+    void updateAppointment(@Body DoctorAppointment param, Callback<AppointmentResponse> cb);
+
+    @POST("/cancelAppointment")
+    void cancelAppointment(@Body AppointmentId1 param, Callback<AppointmentResponse> cb);
 
     @POST("/registerPatient")
     void registerPatient(@Body RegisterUserData param, Callback<String> cb);

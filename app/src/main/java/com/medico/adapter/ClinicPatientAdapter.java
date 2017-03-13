@@ -2,6 +2,7 @@ package com.medico.adapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -79,7 +80,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = activity.getLayoutInflater().inflate(R.layout.clinic_list, null);
         }
@@ -88,12 +89,13 @@ public class ClinicPatientAdapter extends BaseAdapter {
         TextView clinicContact = (TextView)convertView.findViewById(R.id.clinicContact);
         ListView clinicSlots   = (ListView)convertView.findViewById(R.id.clinicSlots);
 
-        DoctorClinicDetails details = clinicDetails.get(position);
+        System.out.println("DEBUG Clinic name " + details.clinic.clinicName + " Clinic Id " + details.clinic.idClinic + " Position " + position);
+
         clinicName.setText(details.clinic.clinicName);
         clinicLocation.setText(details.clinic.address);
         clinicContact.setText(details.clinic.landLineNumber.toString());
         if(details.slots != null && details.slots.size() > 0) {
-            SlotAppointmentAdapter slotPatientAdapter = new SlotAppointmentAdapter(activity, details, patientAppointments);
+            SlotAppointmentAdapter slotPatientAdapter = new SlotAppointmentAdapter(activity, details, patientAppointments, details.slots);
             clinicSlots.setAdapter(slotPatientAdapter);
         }
         return convertView;

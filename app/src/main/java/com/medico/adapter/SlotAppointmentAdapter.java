@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -35,15 +36,16 @@ public class SlotAppointmentAdapter extends BaseAdapter
     ProgressDialog progress;
     DoctorClinicDetails clinicDetails;
     PatientAppointmentByDoctor patientAppointments;
+    List<DoctorClinicDetails.ClinicSlots> slots;
 
     // private RelativeLayout   mainRelative;
 
-    public SlotAppointmentAdapter(Activity context, DoctorClinicDetails clinicDetails, PatientAppointmentByDoctor patientAppointments) {
+    public SlotAppointmentAdapter(Activity context, DoctorClinicDetails clinicDetails, PatientAppointmentByDoctor patientAppointments, List<DoctorClinicDetails.ClinicSlots> slots) {
         this.activity = context;
         this.clinicDetails = clinicDetails;
         this.patientAppointments = patientAppointments;
-        Bundle bundle = activity.getIntent().getExtras();
-        bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
+        this.slots = slots;
+
     }
     /**
      * Get the data item associated with the specified position in the data set.
@@ -55,7 +57,7 @@ public class SlotAppointmentAdapter extends BaseAdapter
     @Override
     public Object getItem(int position)
     {
-        return clinicDetails.slots.get(position);
+        return slots.get(position);
     }
 
     /**
@@ -77,11 +79,11 @@ public class SlotAppointmentAdapter extends BaseAdapter
      */
     public int getCount()
     {
-        return clinicDetails.slots.size();
+        return slots.size();
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = activity.getLayoutInflater().inflate(R.layout.slot_list, null);
         }
@@ -91,7 +93,7 @@ public class SlotAppointmentAdapter extends BaseAdapter
         Button bookOnline = (Button)convertView.findViewById(R.id.bookOnline);
         ListView appointments   = (ListView)convertView.findViewById(R.id.clinicAppointments);
 
-        DoctorClinicDetails.ClinicSlots details = clinicDetails.slots.get(position);
+        System.out.println("DEBUG Slot id " + details.doctorClinicId + " Position " + position);
 
         shiftName.setText("Slot " + details.slotNumber + " : ");
         shiftDays.setText(daysOfWeek(details.daysOfWeek));
@@ -160,6 +162,8 @@ public class SlotAppointmentAdapter extends BaseAdapter
                 DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
                 String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
 
+                bundle.putInt(PARAM.CLINIC_ID, clinicDetails.clinic.idClinic);
+                bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
                 bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
                 bundle.putInt(PARAM.DOCTOR_CLINIC_ID,details.doctorClinicId);
                 bundle.putInt(PARAM.SLOT_VISIT_DURATION,details.visitDuration);

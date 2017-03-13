@@ -26,6 +26,11 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
     DoctorSlotBookings doctorSlotBookings;
     List<DoctorHoliday> doctorSlotHolidays;
     Long [] timings;
+
+    public Integer getSelectedSequenceNumber() {
+        return selectedSequenceNumber;
+    }
+
     Integer selectedSequenceNumber = 0;
     public DoctorAppointmentGridViewAdapter(Activity context, DoctorSlotBookings doctorSlotBookings, List<DoctorHoliday> doctorSlotHolidays)
     {
@@ -61,34 +66,18 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
             imageView = (Button) convertView;
         Bundle bundle = activity.getIntent().getExtras();
         Integer patientId = bundle.getInt(PARAM.PATIENT_ID);
-        if (doctorSlotBookings != null && doctorSlotBookings.bookings != null && doctorSlotBookings.bookings.size() > 0) {
-            for(DoctorSlotBookings.PersonBooking booking: doctorSlotBookings.bookings) {
-                if(booking.sequenceNo.intValue() == position+1) {
-                    if(patientId.intValue() == booking.patient.getId().intValue()) {
-                        if (booking.appointmentStatus == PARAM.APPOINTMENT_CONFIRMED)
-                            imageView.setBackground(activity.getResources().getDrawable(mThumbIds[1]));
-                        else if (booking.appointmentStatus == PARAM.APPOINTMENT_TENTATIVE)
-                            imageView.setBackground(activity.getResources().getDrawable(mThumbIds[2]));
-                        imageView.setEnabled(false);
-                    }
-                    else
-                    {
-                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
-                        imageView.setTextColor(Color.RED);
-                        imageView.setEnabled(false);
-                    }
-                    break;
-                }
-                else {
-                    if(selectedSequenceNumber.intValue() == position + 1)
-                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[3]));
-                    else
-                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
-                    imageView.setTextColor(Color.GREEN);
-                }
-            }
+
+       if(doctorSlotHolidays != null && doctorSlotHolidays.size() > 0)
+           setHoliday(imageView, position, patientId);
+
+
+        if (imageView.isEnabled() && doctorSlotBookings != null && doctorSlotBookings.bookings != null
+                && doctorSlotBookings.bookings.size() > 0) {
+            setBookings(imageView,position,patientId);
         }
-        else {
+
+        if(imageView.isEnabled())
+        {
             if(selectedSequenceNumber.intValue() == position + 1)
                 imageView.setBackground(activity.getResources().getDrawable(mThumbIds[3]));
             else
@@ -124,5 +113,48 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
             timings[i] = startTime + i * vistDuration* 60 * 1000;
 
         return timings;
+    }
+
+    private void setHoliday(Button imageView, int position, Integer patientId)
+    {
+        for(DoctorHoliday holiday: doctorSlotHolidays) {
+            if(holiday.status == 1) {
+                switch (holiday.type) {
+                    case 0:
+                        if (holiday.sequenceNo != position + 1)
+                            break;
+                    case 1:
+                    case 2:
+                    default:
+                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
+                        imageView.setEnabled(false);
+                        imageView.setTextColor(Color.GRAY);
+                }
+            }
+
+        }
+
+    }
+
+    private void setBookings(Button imageView, int position, Integer patientId)
+    {
+        for(DoctorSlotBookings.PersonBooking booking: doctorSlotBookings.bookings) {
+            if(booking.sequenceNo.intValue() == position+1) {
+                if(patientId.intValue() == booking.patient.getId().intValue()) {
+                    if (booking.appointmentStatus == PARAM.APPOINTMENT_CONFIRMED)
+                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[1]));
+                    else if (booking.appointmentStatus == PARAM.APPOINTMENT_TENTATIVE)
+                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[2]));
+                    imageView.setEnabled(false);
+                }
+                else
+                {
+                    imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
+                    imageView.setTextColor(Color.RED);
+                    imageView.setEnabled(false);
+                }
+                break;
+            }
+        }
     }
 }

@@ -72,7 +72,7 @@ public class AppointmentAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = activity.getLayoutInflater().inflate(R.layout.appointment_list, null);
         }
@@ -82,7 +82,7 @@ public class AppointmentAdapter extends BaseAdapter
         TextView appointmentDateTime = (TextView)convertView.findViewById(R.id.appointment_date_time);
         Date current = new Date();
         DateFormat formatDate = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
-
+        System.out.println("DEBUG Appointment Id " + patientAppointments.get(position).appointmentId+ " " +formatDate.format(new Date(patientAppointments.get(position).dateTime))+ " Position " + position );
         appointmentDateTime.setText(formatDate.format(new Date(patientAppointments.get(position).dateTime)));
         if(current.getTime() > patientAppointments.get(position).dateTime) {
             feedback.setVisibility(View.VISIBLE);
