@@ -1,8 +1,10 @@
 package com.medico.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.application.MyApi;
+import com.medico.model.AppointmentId1;
+import com.medico.model.AppointmentResponse;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
@@ -45,12 +49,15 @@ public class ClinicPatientAdapter extends BaseAdapter {
     List<DoctorClinicDetails> clinicDetails;
     PatientAppointmentByDoctor patientAppointments;
 
+    ClinicPatientAdapter adapter;
+
     // private RelativeLayout   mainRelative;
 
     public ClinicPatientAdapter(Activity context, List<DoctorClinicDetails> clinicDetails, PatientAppointmentByDoctor patientAppointments) {
         this.activity = context;
         this.clinicDetails = clinicDetails;
         this.patientAppointments = patientAppointments;
+        adapter = this;
     }
 
     /**
@@ -175,6 +182,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
         }
         rescheduleAppointment(change,clinicDetails, slot, appointments);
         feedbackAppointment(feedback,clinicDetails, slot, appointments);
+        cancelAppointment(cancel,clinicDetails,slot,appointments);
     }
     private String daysOfWeek(String days)
     {
@@ -290,6 +298,56 @@ public class ClinicPatientAdapter extends BaseAdapter {
             }
         });
     }
+    private void cancelAppointment(Button cancel, final DoctorClinicDetails clinicDetails, final DoctorClinicDetails.ClinicSlots details, final PatientAppointmentByDoctor.Appointments appointments)
+    {
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Close buttom clicked");
+                new AlertDialog.Builder(activity)
+                        .setTitle("Delete Appointment")
+                        .setMessage("Are you sure you want to delete this appointment?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                RestAdapter restAdapter = new RestAdapter.Builder()
+                                        .setEndpoint(activity.getString(R.string.base_url))
+                                        .setClient(new OkClient())
+                                        .setLogLevel(RestAdapter.LogLevel.FULL)
+                                        .build();
+                                MyApi api = restAdapter.create(MyApi.class);
+                                api.cancelAppointment(new AppointmentId1(appointments.appointmentId), new Callback<AppointmentResponse>() {
+                                    @Override
+                                    public void success(AppointmentResponse result, Response response) {
+                                        progress.dismiss();
+//                                        if (result.getStatus().equalsIgnoreCase("1")) {
+                                            Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+                                            adapter.notifyDataSetChanged();
+//                                        }
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        progress.dismiss();
+                                        error.printStackTrace();
+                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }
+        });
+    }
+
 
 //    public void addAllEventListeners(){
 //        mHolder.visited1.setOnClickListener(new View.OnClickListener() {
