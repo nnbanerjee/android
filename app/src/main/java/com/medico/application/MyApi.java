@@ -638,7 +638,7 @@ public interface MyApi {
     void getPatientShortProfile(@Body DoctorIdPatientId param, Callback<PatientShortProfile> callback);
 
     @POST("/getDoctorShortProfile")
-    void getDoctorShortProfile(@Body ProfileId param, Callback<DoctorShortProfile> callback);
+    void getDoctorShortProfile(@Body DoctorIdPatientId param, Callback<DoctorShortProfile> callback);
 
     @POST("/getClinicsByDoctor")
     void getClinicsByDoctor(@Body DoctorId param, Callback<List<AppointmentSlotsByDoctor>> callback);
