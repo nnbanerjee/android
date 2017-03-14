@@ -31,7 +31,10 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
         return selectedSequenceNumber;
     }
     public Long getSelectedAppointmentTime() {
+        if(selectedSequenceNumber > 0)
         return timings[selectedSequenceNumber-1];
+        else
+            return null;
     }
 
     Integer selectedSequenceNumber = 0;
@@ -166,4 +169,6 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
             }
         }
     }
+
+
 }

@@ -378,6 +378,8 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
     @Override
     protected boolean canBeSaved()
     {
+        if(((DoctorAppointmentGridViewAdapter)timeTeableList.getAdapter()).getSelectedAppointmentTime() == null)
+            return false;
         return doctorAppointment.canBeSaved();
     }
     @Override

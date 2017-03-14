@@ -3,6 +3,7 @@ package com.medico.application; /**
  */
 
 import com.google.gson.JsonObject;
+import com.medico.model.AppointmentFeedback;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.Clinic;
@@ -62,7 +63,6 @@ import Model.AllTreatmentPlanVm;
 import Model.AppointmentId;
 import Model.AppointmentPatientIds;
 import Model.AppointmentSlotsByDoctor;
-import Model.AppointmentStatus;
 import Model.Assistant;
 import Model.BucketPatient;
 import Model.Chat;
@@ -667,9 +667,11 @@ public interface MyApi {
     @POST("/createAppointment")
     void createAppointment(@Body DoctorCreatesAppointment param,Callback<DoctorCreatesAppoinementResponse> response);
 
-    //
+    @POST("/setAppointmentVisitStatus")
+    void setAppointmentVisitStatus(@Body AppointmentFeedback appointmentStatus, Callback<ResponseCodeVerfication> response);
+
     @POST("/setAppointmentStatus")
-    void setAppointmentStatus(@Body AppointmentStatus appointmentStatus, Callback<ResponseCodeVerfication> response);
+    void setAppointmentStatus(@Body AppointmentFeedback appointmentStatus, Callback<ResponseCodeVerfication> response);
     //
 
     @POST("/updateAppointment")

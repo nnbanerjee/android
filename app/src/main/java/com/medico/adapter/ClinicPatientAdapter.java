@@ -17,6 +17,7 @@ import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
+import com.medico.view.FeedbackFragmentClinicAppointment;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.mindnerves.meidcaldiary.R;
@@ -173,6 +174,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
             cancel.setVisibility(View.VISIBLE);
         }
         rescheduleAppointment(change,clinicDetails, slot, appointments);
+        feedbackAppointment(feedback,clinicDetails, slot, appointments);
     }
     private String daysOfWeek(String days)
     {
@@ -248,6 +250,37 @@ public class ClinicPatientAdapter extends BaseAdapter {
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new ClinicDoctorAppointmentFragment();
+                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+
+
+            }
+        });
+    }
+
+    private void feedbackAppointment(Button feedback, final DoctorClinicDetails clinicDetails, final DoctorClinicDetails.ClinicSlots details, final PatientAppointmentByDoctor.Appointments appointments)
+    {
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle bundle = activity.getIntent().getExtras();
+                DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+                String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
+                bundle.putInt(PARAM.APPOINTMENT_ID,appointments.appointmentId);
+                bundle.putLong(PARAM.APPOINTMENT_DATETIME, appointments.dateTime);
+                bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, appointments.sequenceNumber);
+                bundle.putInt(PARAM.CLINIC_ID, clinicDetails.clinic.idClinic);
+                bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
+                bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
+                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,details.doctorClinicId);
+                bundle.putInt(PARAM.SLOT_VISIT_DURATION,details.visitDuration);
+                bundle.putLong(PARAM.SLOT_START_DATETIME,details.startTime);
+                bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
+                activity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new FeedbackFragmentClinicAppointment();
                 ((ManagePatientProfile)activity).fragmentList.add(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
