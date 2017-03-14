@@ -81,6 +81,7 @@ public interface PARAM
     public static final String INVOICE_ID = "invoiceId";
     public static final String APPOINTMENT_ID = "appointmentId";
     public static final String APPOINTMENT_DATETIME = "appointment_datetime";
+    public static final String APPOINTMENT_SEQUENCE_NUMBER = "appointment_sequence_number";
     public static final String REFERRED_BY = "referred_by";
     public static final String CLINIC_NAME = "clinic_name";
 

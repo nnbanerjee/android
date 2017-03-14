@@ -8,4 +8,5 @@ public class AppointmentResponse
 {
     Integer appointmentId;
     Byte status;
+    String errorCode;
 }

@@ -30,6 +30,9 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
     public Integer getSelectedSequenceNumber() {
         return selectedSequenceNumber;
     }
+    public Long getSelectedAppointmentTime() {
+        return timings[selectedSequenceNumber-1];
+    }
 
     Integer selectedSequenceNumber = 0;
     public DoctorAppointmentGridViewAdapter(Activity context, DoctorSlotBookings doctorSlotBookings, List<DoctorHoliday> doctorSlotHolidays)
@@ -66,6 +69,7 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
             imageView = (Button) convertView;
         Bundle bundle = activity.getIntent().getExtras();
         Integer patientId = bundle.getInt(PARAM.PATIENT_ID);
+        Integer sequenceNumber = bundle.getInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER);
 
        if(doctorSlotHolidays != null && doctorSlotHolidays.size() > 0)
            setHoliday(imageView, position, patientId);
@@ -73,7 +77,7 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
 
         if (imageView.isEnabled() && doctorSlotBookings != null && doctorSlotBookings.bookings != null
                 && doctorSlotBookings.bookings.size() > 0) {
-            setBookings(imageView,position,patientId);
+            setBookings(imageView,position,patientId, sequenceNumber);
         }
 
         if(imageView.isEnabled())
@@ -111,7 +115,7 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
         Long[] timings = new Long[numberOfPatients];
         for(int i = 0; i < timings.length; i++)
             timings[i] = startTime + i * vistDuration* 60 * 1000;
-
+        Long currentTime = new Date().getTime();
         return timings;
     }
 
@@ -136,7 +140,7 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
 
     }
 
-    private void setBookings(Button imageView, int position, Integer patientId)
+    private void setBookings(Button imageView, int position, Integer patientId, Integer sequenceNumber)
     {
         for(DoctorSlotBookings.PersonBooking booking: doctorSlotBookings.bookings) {
             if(booking.sequenceNo.intValue() == position+1) {
@@ -145,6 +149,11 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
                         imageView.setBackground(activity.getResources().getDrawable(mThumbIds[1]));
                     else if (booking.appointmentStatus == PARAM.APPOINTMENT_TENTATIVE)
                         imageView.setBackground(activity.getResources().getDrawable(mThumbIds[2]));
+                    if(sequenceNumber != null && sequenceNumber.intValue() == booking.sequenceNo.intValue())
+                    {
+                        imageView.setBackgroundColor(Color.BLUE);
+                    }
+
                     imageView.setEnabled(false);
                 }
                 else

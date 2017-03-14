@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -92,7 +91,7 @@ public class SlotAppointmentAdapter extends BaseAdapter
         TextView shiftTime = (TextView)convertView.findViewById(R.id.shiftTime);
         Button bookOnline = (Button)convertView.findViewById(R.id.bookOnline);
         ListView appointments   = (ListView)convertView.findViewById(R.id.clinicAppointments);
-
+        DoctorClinicDetails.ClinicSlots details = clinicDetails.slots.get(position);
         System.out.println("DEBUG Slot id " + details.doctorClinicId + " Position " + position);
 
         shiftName.setText("Slot " + details.slotNumber + " : ");

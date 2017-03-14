@@ -92,9 +92,10 @@
                 android:layout_toRightOf="@+id/clinicContactText"
                 android:id="@+id/clinicContact"
                 />
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:text="Clinic Contact"
                 style="@style/caption_Style"
                 android:layout_margin="5dp"

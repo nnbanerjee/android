@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -68,17 +67,22 @@ public class ClinicAllPatientFragment extends ParentFragment {
                         if(clinicDetails != null && clinicDetails.size() > 0) {
                             ClinicPatientAdapter clinicListItemAdapter = new ClinicPatientAdapter(getActivity(), clinicDetails, clinicPatientAppointmentsObj);
                             clinicListView.setAdapter(clinicListItemAdapter);
-//                            setListViewHeightBasedOnChildren(clinicListView);
+
                         }
+
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         progress.dismiss();
-                        Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                        error.printStackTrace();
+                        if(clinicDetails != null && clinicDetails.size() > 0) {
+                            ClinicPatientAdapter clinicListItemAdapter = new ClinicPatientAdapter(getActivity(), clinicDetails, null);
+                            clinicListView.setAdapter(clinicListItemAdapter);
+                        }
                     }
                 });
+
+
                 //[{"clinicId":2,"clinicName":"demo2","slots":[{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5}],"upcomingAppointment":null,"lastAppointmentl":null}]
 
                 progress.dismiss();
@@ -95,76 +99,76 @@ public class ClinicAllPatientFragment extends ParentFragment {
 
     }
 
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.EXACTLY);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            ListView appointments   = (ListView)view.findViewById(R.id.clinicSlots);
-            setListViewHeightBasedOnChildren2(appointments);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-            view.setMinimumHeight(view.getMeasuredHeight());
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.setMinimumHeight(totalHeight);
-        listView.requestLayout();
-    }
-    public void setListViewHeightBasedOnChildren2(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.EXACTLY);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            ListView appointments   = (ListView)view.findViewById(R.id.clinicAppointments);
-            setListViewChildHeightBasedOnChildren(appointments);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-            view.setMinimumHeight(view.getMeasuredHeight());
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.setMinimumHeight(totalHeight);
+//    public void setListViewHeightBasedOnChildren(ListView listView) {
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null)
+//            return;
+//
+//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.EXACTLY);
+//        int totalHeight = 0;
+//        View view = null;
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            view = listAdapter.getView(i, view, listView);
+//            ListView appointments   = (ListView)view.findViewById(R.id.clinicSlots);
+//            setListViewHeightBasedOnChildren2(appointments);
+//            if (i == 0)
+//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+//            totalHeight += view.getMeasuredHeight();
+//            view.setMinimumHeight(view.getMeasuredHeight());
+//        }
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.setMinimumHeight(totalHeight);
 //        listView.requestLayout();
-    }
-    public void setListViewChildHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.EXACTLY);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-            view.setMinimumHeight(view.getMeasuredHeight());
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.setMinimumHeight(totalHeight);
-//        listView.requestLayout();
-    }
+//    }
+//    public void setListViewHeightBasedOnChildren2(ListView listView) {
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null)
+//            return;
+//
+//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.EXACTLY);
+//        int totalHeight = 0;
+//        View view = null;
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            view = listAdapter.getView(i, view, listView);
+//            ListView appointments   = (ListView)view.findViewById(R.id.clinicAppointments);
+//            setListViewChildHeightBasedOnChildren(appointments);
+//            if (i == 0)
+//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+//            totalHeight += view.getMeasuredHeight();
+//            view.setMinimumHeight(view.getMeasuredHeight());
+//        }
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.setMinimumHeight(totalHeight);
+////        listView.requestLayout();
+//    }
+//    public void setListViewChildHeightBasedOnChildren(ListView listView) {
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null)
+//            return;
+//
+//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.EXACTLY);
+//        int totalHeight = 0;
+//        View view = null;
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            view = listAdapter.getView(i, view, listView);
+//            if (i == 0)
+//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+//            totalHeight += view.getMeasuredHeight();
+//            view.setMinimumHeight(view.getMeasuredHeight());
+//        }
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.setMinimumHeight(totalHeight);
+////        listView.requestLayout();
+//    }
 
 
 }

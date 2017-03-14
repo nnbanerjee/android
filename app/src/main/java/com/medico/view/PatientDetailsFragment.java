@@ -38,6 +38,7 @@ public class PatientDetailsFragment extends ParentFragment {
     TextView patientName,doctorSpeciality, address, lastVisitedValue, nextAppointment, visitCounts;
     Button appointmentsBtn,profileBtn;
     ImageView viewImage, visitDates,closeMenu;
+    Fragment childfragment;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class PatientDetailsFragment extends ParentFragment {
                 appointmentsBtn.setBackgroundResource(R.drawable.page_selected);
                 profileBtn.setBackgroundResource(R.drawable.page_default);
                 Fragment fragment = new ClinicAllPatientFragment();
+                childfragment = fragment;
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
@@ -91,6 +93,7 @@ public class PatientDetailsFragment extends ParentFragment {
                   appointmentsBtn.setBackgroundResource(R.drawable.page_default);
                 profileBtn.setBackgroundResource(R.drawable.page_selected);
                 Fragment fragment = new PatientProfileDetails();
+                childfragment = fragment;
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
@@ -169,6 +172,9 @@ public class PatientDetailsFragment extends ParentFragment {
                     Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
                 }
             });
+        if(childfragment != null && childfragment.isDetached() == false)
+            childfragment.onStart();
+
 
 //        api.getProfile1(new ProfileId(allPatients.getPatientlist().get(position).getPatientId()), new Callback<Person>() {
 //                    @Override

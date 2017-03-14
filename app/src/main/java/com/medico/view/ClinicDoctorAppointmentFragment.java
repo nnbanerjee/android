@@ -105,8 +105,8 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         Bundle bundle = activity.getIntent().getExtras();
         clinicName.setText(bundle.getString(CLINIC_NAME));
         slotTime.setText(bundle.getString(SLOT_TIME));
-        DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        Long datetime = bundle.getLong(APPOINTMENT_DATE);
+        DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+        Long datetime = bundle.getLong(APPOINTMENT_DATETIME);
         Integer appointmentId = bundle.getInt(APPOINTMENT_ID);
         if(appointmentId != null && appointmentId.intValue() > 0)
             getAppointment(appointmentId);
@@ -158,8 +158,6 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         }
 
     }
-
-
     public void setDate(final TextView dateField) {
         final Calendar calendar = Calendar.getInstance();
 
@@ -168,9 +166,9 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
             @Override
             public void onDateTimeSet(Date date)
             {
-                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+                DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
                 dateField.setText(format.format(date));
-                doctorAppointment.setAppointmentDate(date.getTime());
+//                doctorAppointment.setAppointmentDate(date.getTime());
                 setAdapter(date);
             }
 
@@ -196,25 +194,57 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         pickerDialog.show();
     }
 
+//    public void setDate(TextView dateField) {
+//        final Calendar calendar = Calendar.getInstance();
+//
+//        Date date = null;
+//        if(dateValue.getText().toString().trim().length() > 0)
+//        {
+//            DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+//            try {
+//                date = format.parse(dateValue.getText().toString());
+//            }
+//            catch(ParseException e)
+//            {
+//                date = new Date();
+//            }
+//
+//        }
+//        Calendar newCalendar = Calendar.getInstance();
+//        newCalendar.setTime(date);
+//        DatePickerDialog fromDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+//            {
+//                Calendar newDate = Calendar.getInstance();
+//                newDate.set(year, monthOfYear, dayOfMonth);
+//                DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+//                dateValue.setText(format.format(newDate.getTime()));
+//                doctorAppointment.setAppointmentDate(newDate.getTimeInMillis());
+//                setAdapter(newDate.getTime());}
+//            },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+//        fromDatePickerDialog.show();
+//    }
+
     private void setAdapter(Date date)
     {
         final Activity activity = getActivity();
         Bundle bundle = activity.getIntent().getExtras();
         clinicName.setText(bundle.getString(CLINIC_NAME));
         slotTime.setText(bundle.getString(SLOT_TIME));
-        final DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
-
+//        Long time = bundle.getLong(APPOINTMENT_DATETIME);
+        final DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+        dateValue.setText(format.format(date));
         Calendar calendar1 = Calendar.getInstance();
         calendar1.setTime(date);
         calendar1.set(Calendar.HOUR_OF_DAY,0);
-        calendar1.set(Calendar.MINUTE,1);
-        calendar1.set(Calendar.SECOND,0);
+        calendar1.set(Calendar.MINUTE,00);
+        calendar1.set(Calendar.SECOND,59);
         final Date date1 = calendar1.getTime();
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTime(date);
         calendar2.set(Calendar.HOUR_OF_DAY,23);
         calendar2.set(Calendar.MINUTE,59);
-        calendar2.set(Calendar.SECOND,0);
+        calendar2.set(Calendar.SECOND,00);
         final Date date2 = calendar2.getTime();
         Integer doctorId = bundle.getInt(DOCTOR_ID);
         Integer slotId = bundle.getInt(DOCTOR_CLINIC_ID);
@@ -306,11 +336,31 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         else
             doctorAppointment.appointmentStatus = APPOINTMENT_TENTATIVE;
 
+
+        DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+        Date date = null;
+        try {
+            date = format.parse(dateValue.getText().toString());
+        }
+        catch (ParseException e)
+        {
+
+        }
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(date);
+
+        Long time = ((DoctorAppointmentGridViewAdapter)timeTeableList.getAdapter()).getSelectedAppointmentTime();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTimeInMillis(time);
+        calendar2.set(Calendar.YEAR,calendar1.get(Calendar.YEAR));
+        calendar2.set(Calendar.MONTH,calendar1.get(Calendar.MONTH));
+        calendar2.set(Calendar.DAY_OF_MONTH,calendar1.get(Calendar.DAY_OF_MONTH));
         doctorAppointment.patientId = patientId;
         doctorAppointment.clinicId = clinicId;
         doctorAppointment.doctorId = doctorId;
         doctorAppointment.doctorClinicId = doctorClinicId;
         doctorAppointment.setSequenceNumber(((DoctorAppointmentGridViewAdapter)timeTeableList.getAdapter()).getSelectedSequenceNumber());
+        doctorAppointment.setAppointmentDate(calendar2.getTime().getTime());
         doctorAppointment.setVisitType(new Integer(visitType.getSelectedItemPosition()).byteValue());
         doctorAppointment.visitStatus = 2;
         doctorAppointment.type  = 0;
