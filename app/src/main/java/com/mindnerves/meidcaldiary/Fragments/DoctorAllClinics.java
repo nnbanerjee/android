@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.view.DoctorMenusManage;
+import com.medico.view.ManageClinicFragment;
 import com.mindnerves.meidcaldiary.Global;
 import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;

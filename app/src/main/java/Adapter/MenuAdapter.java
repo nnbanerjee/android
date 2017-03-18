@@ -27,7 +27,7 @@ public class MenuAdapter extends ParentAdapter{
     private ArrayList<String> menus;
     private LayoutInflater inflater;
     private ImageView imageShow;
-    private TextView showTv;
+
     private int type;
     private String imageUrl;
     SharedPreferences session;
@@ -73,82 +73,70 @@ public class MenuAdapter extends ParentAdapter{
         SharedPreferences session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         id = session.getString("sessionID",null);
         imageShow = (ImageView)convertView.findViewById(R.id.image_show);
-        showTv = (TextView)convertView.findViewById(R.id.text_show);
-
+        TextView showTv = (TextView)convertView.findViewById(R.id.text_show);
+        showTv.setText("" + menus.get(pos));
         System.out.println("menus.get(pos) = "+menus.get(pos));
         if(menus.get(pos).equals("Manage Profile"))
         {
 
-            if(imageUrl != null) {
-                if (type == DOCTOR) {
-                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
-                    showTv.setText("" + menus.get(pos));
-                } else if (type == PATIENT) {
-                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
-                    showTv.setText("" + menus.get(pos));
-                }
-            }
+//            if(imageUrl != null)
+//            {
+//                new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
+//
+//            }
+//            else
+//            {
+//                Bundle bundle = activity.getIntent().getExtras();
+//                if (bundle.getInt(LOGGED_IN_USER_ROLE) == DOCTOR) {
+//                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
+//               } else if (bundle.getInt(LOGGED_IN_USER_ROLE) == PATIENT) {
+//                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
+//                }
+//            }
 
         }
         else if(menus.get(pos).equals("Manage Doctor"))
         {
             imageShow.setBackgroundResource(R.drawable.doctor_image);
-            showTv.setText(""+menus.get(pos));
-        }
+         }
         else if(menus.get(pos).equals("Manage Patient"))
         {
             imageShow.setBackgroundResource(R.drawable.patient);
-            showTv.setText(""+menus.get(pos));
         }
         else if(menus.get(pos).equals("Manage Clinic"))
         {
             imageShow.setBackgroundResource(R.drawable.clinic);
-            showTv.setText(""+menus.get(pos));
-        }
+         }
         else if(menus.get(pos).equals("Manage Assistant"))
         {
             imageShow.setBackgroundResource(R.drawable.nurse);
-            showTv.setText(""+menus.get(pos));
         }
         else if(menus.get(pos).equals("Manage Dependency"))
         {
             imageShow.setBackgroundResource(R.drawable.depend);
-            showTv.setText(""+menus.get(pos));
-        }
+         }
         else if(menus.get(pos).equals("Manage Reminder"))
         {
             imageShow.setBackgroundResource(R.drawable.medicine_reminder);
-            showTv.setText(""+menus.get(pos));
         }
         else if(menus.get(pos).equals("Manage Delegation"))
         {
             imageShow.setBackgroundResource(R.drawable.delegate);
-            showTv.setText(""+menus.get(pos));
         }
         else if(menus.get(pos).equals("Manage Template"))
         {
             imageShow.setBackgroundResource(R.drawable.templates);
-            showTv.setText(""+menus.get(pos));
         }
         else if (menus.get(pos).equals("Messages And Notification"))
         {
             imageShow.setBackgroundResource(R.drawable.msg);
-            showTv.setText(""+menus.get(pos));
-        }
+         }
         else if (menus.get(pos).equals("Doctor Consultations")) {
             imageShow.setBackgroundResource(R.drawable.msg);
-            showTv.setText("" + menus.get(pos));
         }
         else if (menus.get(pos).equals("Logout")) {
             imageShow.setBackgroundResource(R.drawable.logout_menu);
-            showTv.setText("" + menus.get(pos));
         }
-        /*else if (menus.get(pos).equals("Patients Information"))
-        {
-            imageShow.setBackgroundResource(R.drawable.msg);
-            showTv.setText("Patients Information");
-        }*/
-
         return convertView;
     }
 

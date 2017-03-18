@@ -1,0 +1,109 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff"
+    android:overScrollMode="always"
+    android:isScrollContainer="true"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbars="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout3"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/layout2"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:text="Name"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                android:id="@+id/testName"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/testName"
+                android:ems="6"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:text=""
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                android:id="@+id/testValueEdit1"
+                />
+             />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/layout3"
+            android:id="@+id/layout7"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/document_browse"
+                    android:text="Browse Document"
+                    android:layout_width="wrap_content"
+                    android:enabled="true"
+                    android:checked="true"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/image_browse"
+                    android:text="Browse Picture"
+                    android:checked="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:text="Capture Picture"
+                    android:checked="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/radiogroup"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/image_previw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layout7"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/preview_image"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

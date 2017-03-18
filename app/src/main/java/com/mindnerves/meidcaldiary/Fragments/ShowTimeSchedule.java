@@ -3,7 +3,6 @@ package com.mindnerves.meidcaldiary.Fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.medico.view.AddClinic;
 import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import Adapter.ShowTimeScheduleAdapter;

@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.ManageastantFragment;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.MapActivity;

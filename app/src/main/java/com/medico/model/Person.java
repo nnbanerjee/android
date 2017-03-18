@@ -35,6 +35,8 @@ public class Person
     public Integer referredBy;
     public Byte prime;
 
+    boolean isChanged = true;
+
     public Integer getId() {
         return id;
     }
@@ -259,5 +261,52 @@ public class Person
         this.prime = prime;
     }
 
+    public boolean isChanged()
+    {
+        return isChanged;
+    }
+    public void setChanged(boolean changed)
+    {
+        isChanged = changed;
+    }
+    public boolean canBeSaved()
+    {
+        boolean canBeSaved = true;
+        if(id == null || id.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(name == null )
+            canBeSaved = false;
+        else if(mobile == null || mobile.longValue() > 0 == false)
+            canBeSaved = false;
+        else if(locationLat == null || locationLat.doubleValue() > 0 == false)
+            canBeSaved = false;
+        else if(locationLong == null || locationLong.doubleValue() > 0 == false)
+            canBeSaved = false;
+        else if(email == null )
+            canBeSaved = false;
+        else if(address == null )
+            canBeSaved = false;
+        else if(dateOfBirth == null )
+            canBeSaved = false;
+        else if(gender == null || gender.byteValue() >= 0 == false || gender.byteValue() < 2 == false)
+            canBeSaved = false;
+        else if(role == null || role.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(status == null || status.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(speciality == null && speciality.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(region == null || region.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(city == null || city.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(country == null || country.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(loyaltyCatId == null || loyaltyCatId.intValue() > 0 == false)
+            canBeSaved = false;
+        else if(prime == null || prime.byteValue() >= 0 == false)
+            canBeSaved = false;
 
+        return canBeSaved;
+    }
 }

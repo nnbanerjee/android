@@ -19,7 +19,6 @@ import com.google.gson.Gson;
 import com.medico.application.MyApi;
 import com.medico.util.PARAM;
 import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAllClinics;
 import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
 import com.mindnerves.meidcaldiary.R;
 
@@ -93,11 +92,15 @@ public class DoctorMenusManage extends Fragment {
         layout4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-                 layout.setVisibility(View.GONE);
-                Fragment fragment = new DoctorAllClinics();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
             }
         });
         manage_feedback.setOnClickListener(new View.OnClickListener() {

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.view.ManagePatientFragment;
 import com.mindnerves.meidcaldiary.BackStress;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.MapActivity;

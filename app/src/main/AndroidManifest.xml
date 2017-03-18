@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+
     <application
         android:name=".Global"
         android:allowBackup="true"
@@ -100,8 +101,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDcCZdYp-XEjrbjpR06xcX-hXGPNwAWVt4" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDVnTfS1ryjF0Nex1tmMjcDih-AgrOeWo0" />
 
         <service
             android:name=".MyAlarmService"
@@ -117,6 +118,10 @@
         <activity android:name="com.medico.view.DoctorConsultations"
             android:label="@string/ManagePatientProfileTitle"
             android:parentActivityName="com.medico.view.PatientHome" >
+        </activity>
+        <activity android:name="com.medico.view.ManagePersonSettings"
+            android:label="Personal Profile"
+            android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
 
     </application>

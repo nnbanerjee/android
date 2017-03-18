@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -20,10 +20,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.view.DoctorMenusManage;
 import com.mindnerves.meidcaldiary.BackStress;
+import com.mindnerves.meidcaldiary.Fragments.EditClinic;
 import com.mindnerves.meidcaldiary.Global;
-import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 import java.util.ArrayList;
 import java.util.List;

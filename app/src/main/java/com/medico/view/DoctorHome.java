@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,15 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.DoctorId;
-import com.mindnerves.meidcaldiary.Fragments.DoctorProfileEdit;
-import com.mindnerves.meidcaldiary.Fragments.ManageClinicFragment;
+import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-import com.mindnerves.meidcaldiary.Fragments.ManagePatientFragment;
-import com.mindnerves.meidcaldiary.Fragments.ManageProcedure;
-import com.mindnerves.meidcaldiary.Fragments.ManageastantFragment;
 import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
 import com.mindnerves.meidcaldiary.Fragments.ShowPatients;
-import com.medico.util.ImageLoadTask;
 import com.mindnerves.meidcaldiary.R;
 
 import Adapter.MenuAdapter;
@@ -271,19 +268,30 @@ public class DoctorHome extends HomeActivity
     @Override
     protected void manageProfile(int position)
     {
-        System.out.println("I am in profile condition:::::::::::::::::::");
-        fragment = new DoctorProfileEdit();
-        fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
-        dList.setSelection(position);
+        System.out.println("i am here::::::::::::");
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        Intent intObj = new Intent(this, com.medico.view.ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
         dLayout.closeDrawer(dList);
     }
     protected void managePatient(int position)
     {
-        fragment = new ManagePatientFragment();
-        fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Patient").addToBackStack(null).commit();
-        dList.setSelection(position);
+        System.out.println("i am here::::::::::::");
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        Intent intObj = new Intent(this, com.medico.view.ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
         dLayout.closeDrawer(dList);
     }
     protected void manageClinic(int position)

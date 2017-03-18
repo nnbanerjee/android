@@ -33,11 +33,13 @@ import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientVisits;
 import com.medico.model.Person;
 import com.medico.model.PersonAndCategoryId1;
+import com.medico.model.PersonDetailProfile;
 import com.medico.model.ProfileId;
 import com.medico.model.RemoveVisitDocument1;
 import com.medico.model.ResponseAddTemplates1;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
+import com.medico.model.ServerResponse;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
 import com.medico.model.TreatmentId1;
@@ -434,6 +436,12 @@ public interface MyApi {
     @POST("/profilePictureUpdateDoctor")
     void picutreUpdateDoctor(@Part("picture") TypedFile file, @Part("email") String email, Callback<String> cb);
 
+    @POST("/updateProfile")
+    void updateProfile(@Body Person person, Callback<ServerResponse> cb);
+
+    @POST("/updateDetailedProfile")
+    void updateDetailedProfile(@Body PersonDetailProfile person, Callback<ServerResponse> cb);
+
     @POST("/updateDoctorProfile")
     void updateDoctorProfile(@Body PersonTemp person, Callback<String> cb);
 
@@ -629,7 +637,10 @@ public interface MyApi {
 
 
     @POST("/getProfile")
-    void getProfile(@Body ProfileId param, Callback<AllPatients> callback);
+    void getProfile(@Body ProfileId param, Callback<Person> callback);
+
+    @POST("/getDetailedProfile")
+    void getDetailedProfile(@Body ProfileId param, Callback<PersonDetailProfile> callback);
 
     @POST("/getProfile")
     void getProfile1(@Body ProfileId param, Callback<Person> callback);

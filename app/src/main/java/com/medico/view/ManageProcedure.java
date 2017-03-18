@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -25,16 +25,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.view.DoctorMenusManage;
+import com.medico.application.MyApi;
 import com.mindnerves.meidcaldiary.BackStress;
+import com.mindnerves.meidcaldiary.Fragments.AddNewProcedureDialog;
+import com.mindnerves.meidcaldiary.Fragments.ManageTemplate;
 import com.mindnerves.meidcaldiary.Global;
-import com.medico.view.HomeActivity;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 
 import Adapter.ProcedureAdapter;
-import com.medico.application.MyApi;
 import Model.ShowProcedure;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -67,7 +67,7 @@ public class ManageProcedure extends Fragment {
     String type;
     @Override
     public void onResume() {
-        super.onStop();
+        super.onResume();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         //showTemplateList();

@@ -1,4 +1,4 @@
-package com.mindnerves.meidcaldiary.Fragments;
+package com.medico.view;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -19,7 +19,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.MyApi;
+import com.medico.model.Clinic;
+import com.medico.view.ManageClinicFragment;
 import com.mindnerves.meidcaldiary.BackStress;
+import com.mindnerves.meidcaldiary.Fragments.AddDoctor;
+import com.mindnerves.meidcaldiary.Fragments.AddNewClinic;
+import com.mindnerves.meidcaldiary.Fragments.EditClinic;
 import com.mindnerves.meidcaldiary.Global;
 import com.mindnerves.meidcaldiary.R;
 
@@ -28,8 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ShowClinicAdapter;
-import com.medico.application.MyApi;
-import com.medico.model.Clinic;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.medico.application.MyApi;
+import com.medico.util.PARAM;
 import com.medico.view.DoctorHome;
-import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
 import com.medico.view.PatientHome;
+import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
 import com.mindnerves.meidcaldiary.R;
 import com.mindnerves.meidcaldiary.SigninActivity;
 import com.mindnerves.meidcaldiary.SigninActivityAssistance;
@@ -24,16 +27,14 @@ import com.mindnerves.meidcaldiary.SigninActivityDoctor;
 
 import java.util.List;
 
-import com.medico.application.MyApi;
 import Model.Logindata;
 import Model.ResponseVm;
-import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.Header;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import retrofit.client.Header ;
 
 import static com.medico.util.PARAM.LOGGED_IN_ID;
 import static com.medico.util.PARAM.LOGGED_IN_USER_ROLE;
@@ -49,6 +50,7 @@ public class Login extends Fragment {
     public SharedPreferences session;
     private EditText email;
     private EditText password;
+    private Button loginBtn;
     ProgressDialog progress;
     Login login;
 
@@ -61,6 +63,7 @@ public class Login extends Fragment {
       //  getActivity().getActionBar().hide();
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText) view.findViewById(R.id.password);
+        loginBtn = (Button) view.findViewById(R.id.login);
 
         view.findViewById(R.id.signin)
                 .setOnClickListener(new View.OnClickListener() {
@@ -154,6 +157,7 @@ public class Login extends Fragment {
                                     }
                                     else
                                     {
+                                        saveAutoLoginData(emailtxt,passwordtxt);
                                         saveToSession(responseVm);
                                         password.setText("");
                                         if(responseVm.getType() == PARAM.DOCTOR) {
@@ -186,6 +190,16 @@ public class Login extends Fragment {
         return view;
 
     }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        if(getAutoLoginData(email,password))
+        {
+            loginBtn.callOnClick();
+        }
+
+    }
 
     public void saveToSession(ResponseVm result) {
 
@@ -214,5 +228,31 @@ public class Login extends Fragment {
 
         session.edit().putBoolean("profileOfLoggedIn", Boolean.TRUE).apply();
 
+
     }
+
+    private void saveAutoLoginData(String login, String password)
+    {
+        session = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = session.edit();
+        edit.putString("LOGIN",login);
+        edit.putString("PASSWORD",password);
+        edit.commit();
+    }
+
+    private boolean getAutoLoginData(EditText email, EditText password)
+    {
+        session = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String loginId = session.getString("LOGIN",null);
+        String psw = session.getString("PASSWORD",null);
+        Boolean status = session.getBoolean("USER_STATUS",true);
+        if(loginId != null && loginId.trim().length() > 0 && psw.trim().length() > 0 && psw != null && status)
+        {
+            email.setText(loginId);
+            password.setText(psw);
+            return true;
+        }
+        return false;
+    }
+
 }

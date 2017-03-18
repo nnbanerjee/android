@@ -19,9 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.PatientId;
-import com.mindnerves.meidcaldiary.Fragments.ManageDelegationFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
-import com.mindnerves.meidcaldiary.Fragments.ManageDendencyDoctor;
 import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
 import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
 import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;

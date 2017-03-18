@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.medico.view.ManageProcedure;
 import com.mindnerves.meidcaldiary.R;
 
 import com.medico.application.MyApi;
@@ -37,7 +38,7 @@ public class AddNewProcedureDialog extends DialogFragment {
     public MyApi api;
     Spinner category;
 
-    static AddNewProcedureDialog newInstance() {
+    public static AddNewProcedureDialog newInstance() {
         return new AddNewProcedureDialog();
     }
 
