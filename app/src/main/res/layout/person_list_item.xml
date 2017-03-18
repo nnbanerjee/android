@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/doctorImg"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/doctor"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/doctorImg"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doctor Name"
+            android:textColor="@color/color_blue_default"
+            style="@style/title" />
+
+        <ImageView
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/right_arrow_grey"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/totalCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/nextBtn"
+            android:visibility="gone"
+            android:text="0"
+            style="@style/body1"
+            />
+        <TextView
+            android:id="@+id/doctorSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorName"
+            android:text="Speciality"
+            style="@style/sub_heading" />
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorSpeciality"
+            android:text="Address"
+            style="@style/sub_heading" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

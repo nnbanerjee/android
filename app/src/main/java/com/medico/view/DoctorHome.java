@@ -274,6 +274,7 @@ public class DoctorHome extends HomeActivity
         bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
         bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
         bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.MANAGE_DOCTOR_PROFILE_VIEW);
         Intent intObj = new Intent(this, com.medico.view.ManagePersonSettings.class);
         intObj.putExtras(bundle);
         startActivity(intObj);
@@ -288,6 +289,7 @@ public class DoctorHome extends HomeActivity
         bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
         bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
         bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
         Intent intObj = new Intent(this, com.medico.view.ManagePersonSettings.class);
         intObj.putExtras(bundle);
         startActivity(intObj);

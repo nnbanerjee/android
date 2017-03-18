@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.medico.util.PARAM;
+import com.medico.view.settings.ManagePatientListView;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
@@ -122,10 +124,23 @@ public class ManagePersonSettings extends AppCompatActivity {
 
     protected void attachView()
     {
-        ParentFragment fragment = new DoctorProfileEdit();
-        fragmentList.add(fragment);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.service, fragment).addToBackStack(null).commit();
+        Bundle bundle = getIntent().getExtras();
+        int viewId = bundle.getInt(PARAM.SETTING_VIEW_ID);
+        switch (viewId) {
+            case PARAM.MANAGE_DOCTOR_PROFILE_VIEW:
+                ParentFragment fragment = new DoctorProfileEdit();
+                fragmentList.add(fragment);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fragment).addToBackStack(null).commit();
+                break;
+            case PARAM.PATIENT_SETTING_VIEW:
+                ParentFragment patientListView = new ManagePatientListView();
+                fragmentList.add(patientListView);
+                FragmentTransaction fft = getFragmentManager().beginTransaction();
+                fft.add(R.id.service, patientListView).addToBackStack(null).commit();
+                break;
+
+        }
     }
 
 }

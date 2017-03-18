@@ -24,8 +24,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/doctorImg"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:id="@+id/doctorName"

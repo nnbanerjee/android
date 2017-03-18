@@ -16,14 +16,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.adapter.PatientListAdapter;
-import com.medico.model.DoctorId;
-import com.medico.model.PatientProfileList;
-import com.medico.model.PatientShortProfile;
+import com.medico.adapter.PatientSettingListAdapter;
+import com.medico.model.LinkedPersonRequest;
+import com.medico.model.Person;
 import com.medico.util.PARAM;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ManagePersonSettings;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientVisitDatesView;
+import com.medico.view.PatientProfileDetails;
 import com.mindnerves.meidcaldiary.R;
 
 import java.util.List;
@@ -62,10 +61,10 @@ public class ManagePatientListView extends ParentFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                PatientShortProfile profile = (PatientShortProfile)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new PatientVisitDatesView();
-                        ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
-                        bun.putInt(PARAM.PATIENT_ID, profile.getPatientId().intValue());
+                Person profile = (Person)adapterView.getAdapter().getItem(i);
+                        ParentFragment fragment = new PatientProfileDetails();
+                        ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
+                        bun.putInt(PARAM.PATIENT_ID, profile.getId().intValue());
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
@@ -82,11 +81,11 @@ public class ManagePatientListView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-        DoctorId doc= new DoctorId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)).toString());
-        api.getPatientProfileList(doc, new Callback<List<PatientShortProfile>>() {
+        LinkedPersonRequest request= new LinkedPersonRequest(bundle.getInt(DOCTOR_ID),PATIENT);
+        api.getPersonLinkage(request, new Callback<List<Person>>() {
             @Override
-            public void success(final List<PatientShortProfile> allPatientsProfiles, Response response) {
-                PatientListAdapter adapter = new PatientListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
+            public void success(final List<Person> allPatientsProfiles, Response response) {
+                PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), allPatientsProfiles);
                 patientListView.setAdapter(adapter);
                 progress.dismiss();
             }

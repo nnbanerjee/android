@@ -98,4 +98,9 @@ public interface PARAM
     public static final String SLOT_END_DATETIME = "slot_end_datetime";
     public static final String SLOT_VISIT_DURATION = "slot_visit_duration";
     public static final String SLOT_TIME = "slot_time";
+
+
+    public static final String SETTING_VIEW_ID = "setting_view_id";
+    public static final int MANAGE_DOCTOR_PROFILE_VIEW = 1;
+    public static final int PATIENT_SETTING_VIEW = 2;
 }

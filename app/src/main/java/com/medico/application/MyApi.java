@@ -23,6 +23,7 @@ import com.medico.model.DoctorShortProfile;
 import com.medico.model.DoctorSlotBookings;
 import com.medico.model.FileUpload1;
 import com.medico.model.InvoiceDetails1;
+import com.medico.model.LinkedPersonRequest;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.PatientAppointmentByDoctor;
@@ -634,6 +635,8 @@ public interface MyApi {
     @POST("/getPatientProfileList")
     void getPatientProfileList(@Body DoctorId param, Callback<List<PatientShortProfile>> callback);
 
+    @POST("/getPersonLinkage")
+    void getPersonLinkage(@Body LinkedPersonRequest param, Callback<List<Person>> callback);
 
 
     @POST("/getProfile")
