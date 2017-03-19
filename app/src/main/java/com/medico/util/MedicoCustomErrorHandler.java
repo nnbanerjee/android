@@ -3,13 +3,9 @@ package com.medico.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.model.ErrorResponse;
+import com.medico.application.R;
 
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import Model.ErrorResponse;
 import retrofit.RetrofitError;
 
 /**

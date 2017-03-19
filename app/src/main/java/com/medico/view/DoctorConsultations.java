@@ -2,7 +2,7 @@ package com.medico.view;
 
 import android.app.FragmentTransaction;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 public class DoctorConsultations extends ManagePatientProfile {
 

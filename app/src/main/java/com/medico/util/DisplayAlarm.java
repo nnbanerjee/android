@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 public class DisplayAlarm extends Activity {
 	Button dismiss;

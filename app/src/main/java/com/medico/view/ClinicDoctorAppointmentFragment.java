@@ -18,8 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.DoctorAppointment;
@@ -27,7 +27,7 @@ import com.medico.model.DoctorAppointmentGridViewAdapter;
 import com.medico.model.DoctorClinicId;
 import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorSlotBookings;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -27,15 +27,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.adapter.ClinicSpinnerAdapter;
 import com.medico.adapter.DiagnosticTestSpinnerAdapter;
 import com.medico.model.Clinic1;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.FileUpload1;
+import com.medico.model.PersonID;
+import com.medico.model.ResponseAddDocuments;
 import com.medico.model.SearchParameter;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.util.ImageUtil;
+import com.medico.util.PARAM;
+import com.medico.application.R;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -45,14 +49,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.medico.util.ImageUtil;
-import Model.PersonID;
-import Model.ResponseAddDocuments;
-import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
+
+//import Model.PersonID;
+//import Model.ResponseAddDocuments;
 
 //import android.app.DatePickerDialog;
 

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.medico.model.AppointmentFeedback;
 import com.medico.model.ResponseCodeVerfication;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;

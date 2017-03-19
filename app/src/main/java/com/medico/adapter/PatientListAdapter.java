@@ -23,10 +23,11 @@ import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
 import com.medico.view.PatientVisitDatesView;
-import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
-import Utils.UtilSingleInstance;
+import java.text.DateFormat;
+import java.util.Date;
+
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -41,7 +42,6 @@ public class PatientListAdapter extends BaseAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     PatientProfileList allPatients;
-    Global global;
     MyApi api;
     String doctorId;
     SharedPreferences session;
@@ -127,7 +127,8 @@ public class PatientListAdapter extends BaseAdapter  {
                 appointmentDate.setText("None");
 
             } else {
-                appointmentDate.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(allPatients.getPatientlist().get(position).getUpcomingVisit()));
+                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+                appointmentDate.setText(format.format(new Date(allPatients.getPatientlist().get(position).getUpcomingVisit())));
 
             }
         }
@@ -135,7 +136,8 @@ public class PatientListAdapter extends BaseAdapter  {
             lastAppointment.setText("None");
 
         } else {
-            lastAppointment.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(allPatients.getPatientlist().get(position).getLastVisit()));
+            DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+            lastAppointment.setText(format.format(new Date(allPatients.getPatientlist().get(position).getLastVisit())));
         }
         doctorName.setText(allPatients.getPatientlist().get(position).getName());
         doctorSpeciality.setText(allPatients.getPatientlist().get(position).getProfession());

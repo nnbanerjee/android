@@ -18,7 +18,7 @@ import com.medico.model.DoctorNotes;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.Symptom;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 

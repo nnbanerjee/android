@@ -22,12 +22,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.adapter.DiagnosticTestAdapter;
 import com.medico.adapter.MedicineAdapter;
 import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic1;
+import com.medico.model.PersonID;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
@@ -35,7 +36,7 @@ import com.medico.model.SummaryResponse.MedicinePrescribed;
 import com.medico.model.Symptom;
 import com.medico.model.VisitEditLogRequest;
 import com.medico.model.VisitEditLogResponse;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -43,7 +44,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Model.PersonID;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

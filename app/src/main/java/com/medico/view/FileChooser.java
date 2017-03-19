@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.medico.adapter.FileArrayAdapter;
 import com.medico.util.Option;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.io.File;
 import java.io.FileFilter;

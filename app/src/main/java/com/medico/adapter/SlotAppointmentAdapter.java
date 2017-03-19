@@ -18,7 +18,7 @@ import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.List;

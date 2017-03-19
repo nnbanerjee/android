@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 /**
  * Created by MNT on 07-Apr-15.

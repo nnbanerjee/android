@@ -23,28 +23,33 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.model.Clinic;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.MyApi;
+import com.medico.model.Clinic1;
+import com.medico.model.FileUpload;
+import com.medico.model.PersonID;
+import com.medico.model.ResponseAddDocuments;
+import com.medico.util.ImageUtil;
+import com.medico.application.R;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.medico.util.ImageUtil;
-import com.medico.application.MyApi;
-import Model.FileUpload;
-import Model.PersonID;
-import Model.ResponseAddDocuments;
-import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
+
+//import Model.FileUpload;
+//import Model.PersonID;
+//import Model.ResponseAddDocuments;
 
 /**
  * Created by MNT on 27-Mar-15.
@@ -67,7 +72,7 @@ public class FileUploadDialog extends DialogFragment {
     private static int SELECT_PICTURE = 1;
     private static final int FILE_CHOOSER = 2;
     SharedPreferences session;
-    List<Clinic> clinicDetailVm;
+    List<Clinic1> clinicDetailVm;
     String[] clinics;
     String[] categories;
     String[] medicalReports;
@@ -99,7 +104,8 @@ public class FileUploadDialog extends DialogFragment {
        // doctorValue.setText();
 
         dateValue = (TextView) view.findViewById(R.id.datevalues);
-        dateValue.setText(UtilSingleInstance.getDateFormattedInStringFormatUsingLongForMedicinDetails(""+Calendar.getInstance().getTimeInMillis()));
+        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+        dateValue.setText(format.format(new Date(Calendar.getInstance().getTimeInMillis())));
         typespinner = (Spinner) view.findViewById(R.id.typespinner);
         typespinner.setAdapter(new MedicalReportSpinner(getActivity(), R.layout.customize_spinner, medicalReports));
 
@@ -130,14 +136,14 @@ public class FileUploadDialog extends DialogFragment {
                 .build();
         api = restAdapter.create(MyApi.class);
 
-        api.getAllClinics(new PersonID(doctorId),new Callback<List<Clinic>>() {
+        api.getAllClinics(new PersonID(doctorId),new Callback<List<Clinic1>>() {
             @Override
-            public void success(List<Clinic> clinicsList, Response response) {
+            public void success(List<Clinic1> clinicsList, Response response) {
                 clinicDetailVm = clinicsList;
                 clinics = new String[clinicsList.size()];
                 int count = 0;
-                for (Clinic vm : clinicDetailVm) {
-                    clinics[count] = vm.getClinicName();
+                for (Clinic1 vm : clinicDetailVm) {
+                    clinics[count] = vm.clinicName;
                     count = count + 1;
                 }
                 clinicSpinner.setAdapter(new ClinicSpinner(getActivity(), R.layout.customize_spinner, clinics));
@@ -204,7 +210,7 @@ public class FileUploadDialog extends DialogFragment {
                 progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 String clinicName = (String) clinicSpinner.getSelectedItem();
                 System.out.println("Clinic Name:::::::" + clinicName);
-                 String clinicId = clinicDetailVm.get(clinicSpinner.getSelectedItemPosition()).getIdClinic();
+                 Integer clinicId = clinicDetailVm.get(clinicSpinner.getSelectedItemPosition()).idClinic;
                  System.out.println("Clinic Id:::::::"+clinicId);
                // String clinicId = "105";
                 String nameData;
@@ -248,7 +254,7 @@ public class FileUploadDialog extends DialogFragment {
                     //restAdapter..setHea
 
                     // api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
-                    api.addPatientVisitDocument(patientId, appointMentId, clinicId, documentType, doctorId, nameData, typedFile, new Callback<ResponseAddDocuments >() {
+                    api.addPatientVisitDocument(patientId, appointMentId, clinicId.toString(), documentType, doctorId, nameData, typedFile, new Callback<ResponseAddDocuments >() {
 
                         @Override
                         public void success(ResponseAddDocuments responseAddDocuments, Response response) {
@@ -288,7 +294,7 @@ public class FileUploadDialog extends DialogFragment {
                         typedFile = null;
                     }
                     System.out.println("Document TYpe::::::" + documentType);
-                    api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime, clinicId, clinicName, new Callback<FileUpload>() {
+                    api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime, clinicId.toString(), clinicName, new Callback<FileUpload>() {
                         @Override
                         public void success(FileUpload uploadFile, Response response2) {
                             if (uploadFile != null) {

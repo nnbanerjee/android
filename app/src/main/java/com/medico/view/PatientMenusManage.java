@@ -1,7 +1,6 @@
 package com.medico.view;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,16 +16,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.medico.application.MyApi;
+import com.medico.model.PatientProfile;
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.Fragments.PatientAllClinics;
-import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
-import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentStatus;
-import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
-import Model.PatientProfile;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+
+//import com.mindnerves.meidcaldiary.Fragments.PatientAllClinics;
+//import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
+//import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentStatus;
+//import com.mindnerves.meidcaldiary.Global;
+//import Model.PatientProfile;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -38,7 +39,6 @@ public class PatientMenusManage extends Fragment {
     String doctorId = "";
     MyApi api;
     String patientId;
-    Global global;
     private Button drawar,logout;
     SharedPreferences session;
     TextView doctorsCount,clinicCount,firstAidCount,medicalAlertCount,appointmentCount,lastVisited;
@@ -49,7 +49,6 @@ public class PatientMenusManage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_consultations,container,false);
-        global = (Global)getActivity().getApplicationContext();
         RelativeLayout layout1 = (RelativeLayout) view.findViewById(R.id.layout1);
         RelativeLayout layout2 = (RelativeLayout) view.findViewById(R.id.layout2);
         RelativeLayout layout3 = (RelativeLayout) view.findViewById(R.id.layout5);
@@ -106,11 +105,10 @@ public class PatientMenusManage extends Fragment {
         lastVisited.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideLayout();
-                global.setSummaryJump(true);
-                Fragment fragment = new PatientAppointmentInformation();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+//                hideLayout();
+//                Fragment fragment = new PatientAppointmentInformation();
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
             }
         });
         rightArrowDoctor.setOnClickListener(new View.OnClickListener() {
@@ -159,22 +157,21 @@ public class PatientMenusManage extends Fragment {
         layout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
-                layout.setVisibility(View.GONE);
-                global.setSummaryJump(false);
-                Fragment fragment = new PatientAllClinics();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+//                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
+//                layout.setVisibility(View.GONE);
+//                Fragment fragment = new PatientAllClinics();
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
             }
         });
         layout3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
-                layout.setVisibility(View.GONE);
-                Fragment fragment = new PatientAppointmentStatus();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
+//                LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
+//                layout.setVisibility(View.GONE);
+//                Fragment fragment = new PatientAppointmentStatus();
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame,fragment,"Doctor Consultations").addToBackStack(null).commit();
             }
         });
 

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.medico.model.FileUpload1;
 import com.medico.util.ImageLoadTask;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 /**
  * Created by MNT on 27-Mar-15.

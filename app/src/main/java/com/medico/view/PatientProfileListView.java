@@ -21,7 +21,7 @@ import com.medico.model.DoctorId;
 import com.medico.model.PatientProfileList;
 import com.medico.model.PatientShortProfile;
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 

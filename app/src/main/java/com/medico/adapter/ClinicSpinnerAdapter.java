@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.medico.model.Clinic1;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 

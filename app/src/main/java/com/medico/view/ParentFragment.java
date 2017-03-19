@@ -3,7 +3,7 @@ package com.medico.view;
 import android.app.Fragment;
 import android.webkit.CookieManager;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import com.medico.application.MyApi;
 import com.medico.util.PARAM;

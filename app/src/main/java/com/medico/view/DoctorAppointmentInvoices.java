@@ -14,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.InvoiceDetails1;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.model.InvoiceId;
+import com.medico.application.R;
 
-import Model.InvoiceId;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

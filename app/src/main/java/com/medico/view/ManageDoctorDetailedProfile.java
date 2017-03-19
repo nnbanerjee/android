@@ -16,12 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.PersonDetailProfile;
 import com.medico.model.ProfileId;
 import com.medico.model.ServerResponse;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;

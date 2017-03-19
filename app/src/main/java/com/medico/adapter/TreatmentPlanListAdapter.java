@@ -18,7 +18,7 @@ import com.medico.model.TreatmentPlan1;
 import com.medico.view.DoctorTreatmentPlanEditView;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.ArrayList;
 import java.util.List;

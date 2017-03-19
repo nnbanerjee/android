@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 /**
  * Created by JAY GANESH on 12/14/2015.

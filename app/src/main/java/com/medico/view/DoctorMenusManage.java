@@ -1,7 +1,6 @@
 package com.medico.view;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,12 +16,14 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.medico.application.MyApi;
+import com.medico.model.DoctorProfile;
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
-import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
-import Model.DoctorProfile;
+//import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
+//import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
+
+//import Model.DoctorProfile;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -81,11 +82,11 @@ public class DoctorMenusManage extends Fragment {
         manage_finance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-                 layout.setVisibility(View.GONE);
-                Fragment fragment = new AllManageFinance();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
+//                 layout.setVisibility(View.GONE);
+//                Fragment fragment = new AllManageFinance();
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
 
@@ -106,11 +107,11 @@ public class DoctorMenusManage extends Fragment {
         manage_feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-                 layout.setVisibility(View.GONE);
-                Fragment fragment = new DoctorAllFeedback();
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
+//                 layout.setVisibility(View.GONE);
+//                Fragment fragment = new DoctorAllFeedback();
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         return view;

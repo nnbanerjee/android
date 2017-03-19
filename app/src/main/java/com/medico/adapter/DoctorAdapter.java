@@ -9,12 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
-import com.mindnerves.meidcaldiary.R;
+import com.medico.model.DoctorSearchResponse;
+import com.medico.application.R;
 
 import java.util.List;
 
-import Model.DoctorSearchResponse;
 
 
 /**

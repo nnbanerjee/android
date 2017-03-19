@@ -16,7 +16,7 @@ import android.widget.ListView;
 import com.medico.adapter.DocumentAdapter;
 import com.medico.model.AppointmentId1;
 import com.medico.model.FileUpload1;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 

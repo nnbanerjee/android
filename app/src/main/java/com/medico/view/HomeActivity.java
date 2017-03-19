@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -28,29 +27,36 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.medico.adapter.MenuAdapter;
+import com.medico.adapter.ProfileDelegationAdapter;
+import com.medico.adapter.ProfileDependencyAdapter;
 import com.medico.application.MyApi;
 import com.medico.model.Delegation;
 import com.medico.model.Dependent;
+import com.medico.model.DoctorProfile;
+import com.medico.model.PersonProfile;
+import com.medico.util.BackStress;
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.BackStress;
-import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
-import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
-import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.MenuAdapter;
-import Adapter.ProfileDelegationAdapter;
-import Adapter.ProfileDependencyAdapter;
-import Model.DoctorProfile;
-import Model.PersonProfile;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+
+//import com.mindnerves.meidcaldiary.BackStress;
+//import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
+//import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
+//import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
+//import Adapter.MenuAdapter;
+//import Adapter.ProfileDelegationAdapter;
+//import Adapter.ProfileDependencyAdapter;
+//import Model.DoctorProfile;
+//import Model.PersonProfile;
 
 /**
  * Created by Narendra on 18-01-2017.
@@ -74,7 +80,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     ListView dList;
     MenuAdapter adapter;
     Fragment fragment;
-    Model.Menu mainMenu;
+    Menu mainMenu;
     TextView globalTv;
     Button notes, messages, doctorSearch, clinicSearch, patients;
     public MyApi api;
@@ -106,7 +112,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setVisibility(View.GONE);
 
-        mainMenu = new Model.Menu();
+        mainMenu = new Menu();
         arrayMenu = new ArrayList<String>();
         showMenus();
 
@@ -374,7 +380,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu, menu);
         // super.onCreateOptionsMenu(menu);
@@ -460,43 +466,43 @@ public abstract class HomeActivity extends Activity implements PARAM
 
     protected void manageDependent(int position)
     {
-        if (profileRole == DOCTOR) {
-            fragment = new ManageDendencyDoctor();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        } else if (profileRole == PATIENT) {
-            fragment = new ManageDendencyFragment();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        }
+//        if (profileRole == DOCTOR) {
+//            fragment = new ManageDendencyDoctor();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        } else if (profileRole == PATIENT) {
+//            fragment = new ManageDendencyFragment();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        }
     }
     protected void manageDelegation(int position)
     {
-        if (profileRole == DOCTOR) {
-            fragment = new ManageDelegationFragment();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        } else if (profileRole == PATIENT) {
-            fragment = new ManageDelegationPatient();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        }
+//        if (profileRole == DOCTOR) {
+//            fragment = new ManageDelegationFragment();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        } else if (profileRole == PATIENT) {
+//            fragment = new ManageDelegationPatient();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        }
     }
     protected void manageNotification(int position)
     {
-        fragment = new ManageMessageNotification();
-        fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-        dList.setSelection(position);
-        dLayout.closeDrawer(dList);
+//        fragment = new ManageMessageNotification();
+//        fragmentManger = getFragmentManager();
+//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+//        dList.setSelection(position);
+//        dLayout.closeDrawer(dList);
     }
     protected void logout(int position)
     {

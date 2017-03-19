@@ -23,7 +23,7 @@ import com.medico.util.PARAM;
 import com.medico.view.ManagePersonSettings;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientProfileDetails;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 

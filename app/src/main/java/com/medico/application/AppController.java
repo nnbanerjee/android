@@ -9,7 +9,7 @@ import android.os.Build;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

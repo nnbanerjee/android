@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.ArrayList;
 import java.util.List;

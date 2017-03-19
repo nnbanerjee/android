@@ -13,17 +13,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.CustomProcedureTemplate1;
+import com.medico.util.PARAM;
 import com.medico.view.CustomTemplateSubListView;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
-import com.mindnerves.meidcaldiary.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.medico.application.MyApi;
-import com.medico.util.PARAM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 

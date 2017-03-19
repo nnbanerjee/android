@@ -22,19 +22,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.model.FileUpload1;
+import com.medico.model.ResponseAddDocuments;
 import com.medico.util.ImageUtil;
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import Model.ResponseAddDocuments;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
+
+//import Model.ResponseAddDocuments;
 
 //import android.app.DatePickerDialog;
 

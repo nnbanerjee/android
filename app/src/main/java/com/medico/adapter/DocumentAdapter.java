@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.medico.model.FileUpload1;
 import com.medico.model.RemoveVisitDocument1;
 import com.medico.model.ResponseCodeVerfication;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;

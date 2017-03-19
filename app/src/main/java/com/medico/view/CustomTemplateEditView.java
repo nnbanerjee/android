@@ -15,18 +15,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.model.ResponseVm;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import Model.ResponseVm;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

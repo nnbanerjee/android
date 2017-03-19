@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.medico.adapter.CustomTemplateSubListAdapter;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.PersonAndCategoryId1;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.ArrayList;
 import java.util.List;

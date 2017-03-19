@@ -16,18 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.MyApi;
+import com.medico.model.RemovePatientTestRequest;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SummaryResponse;
+import com.medico.util.PARAM;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDiagnosticTests;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 
-import com.medico.application.MyApi;
-import Model.RemovePatientTestRequest;
-import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

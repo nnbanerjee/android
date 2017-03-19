@@ -23,7 +23,7 @@ import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
 import com.medico.view.PatientVisitDatesView;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
 

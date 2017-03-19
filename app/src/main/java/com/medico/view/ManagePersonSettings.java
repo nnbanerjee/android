@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.medico.util.PARAM;
 import com.medico.view.settings.ManagePatientListView;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.ArrayList;
 import java.util.List;

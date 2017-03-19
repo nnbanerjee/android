@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientShortProfile;
 import com.medico.util.ImageLoadTask;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;

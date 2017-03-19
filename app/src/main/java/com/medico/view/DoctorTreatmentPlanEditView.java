@@ -15,15 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.ResponseAddTemplates1;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.TreatmentId1;
 import com.medico.model.TreatmentPlan1;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -10,11 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.medico.model.PatientVisits;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
-import Utils.UtilSingleInstance;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 /**
@@ -67,10 +68,11 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
             holder = (ViewHolder) convertView.getTag();
         }
         final int pos = position;
-     
-        holder.date.setText(UtilSingleInstance.getInstance().getOnlyDateFormattedInStringFormatUsingLong(appointment.get(position).dateTime) );
-        holder.time.setText(UtilSingleInstance.getInstance().getOnlyTimeFormattedInStringFormatUsingLong(appointment.get(position).dateTime) );
-        holder.visitType.setText(UtilSingleInstance.getUserVisitType(appointment.get(position).visitType) );
+        DateFormat format1 = DateFormat.getDateInstance(DateFormat.SHORT);
+        DateFormat format2 = DateFormat.getTimeInstance(DateFormat.SHORT);
+        holder.date.setText(format1.format(new Date(appointment.get(position).dateTime)) );
+        holder.time.setText(format2.format(new Date((appointment.get(position).dateTime)) ));
+        holder.visitType.setText(context.getResources().getStringArray(R.array.visit_type_list)[appointment.get(position).visitType] );
       //  holder.time.setText(appointment.get(position).getBookTime());
 
         return convertView;
@@ -88,7 +90,8 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
             holder = (HeaderViewHolder) convertView.getTag();
         }
         //set header text as first char in name
-        String headerText = "" +UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).dateTime).subSequence(7, 11);
+        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+        String headerText = format.format(new Date(appointment.get(position).dateTime)).toString();
         holder.text.setText(headerText);
         return convertView;
     }
@@ -96,7 +99,8 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
     @Override
     public long getHeaderId(int position) {
         //return the first character of the country as ID because this is what headers are based upon
-        return UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(appointment.get(position).dateTime).subSequence(7, 11).charAt(3);
+        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+        return format.format(new Date(appointment.get(position).dateTime)).subSequence(7, 11).charAt(3);
     }
 
     class HeaderViewHolder {

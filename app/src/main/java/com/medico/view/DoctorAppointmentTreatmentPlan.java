@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.medico.adapter.TreatmentPlanListAdapter;
 import com.medico.model.TreatmentPlan1;
 import com.medico.model.TreatmentPlanRequest;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.ArrayList;
 import java.util.List;

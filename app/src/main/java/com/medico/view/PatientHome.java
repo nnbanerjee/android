@@ -18,21 +18,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.adapter.MenuAdapter;
 import com.medico.model.PatientId;
-import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
-import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
-import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
-import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
-import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
+import com.medico.model.PatientProfile;
 import com.medico.util.ImageLoadTask;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
-import Adapter.MenuAdapter;
-import Model.PatientProfile;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+//import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
+//import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
+//import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
+//import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
+//import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
+//import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
+//import Adapter.MenuAdapter;
+//import Model.PatientProfile;
 
 /**
  * Created by Narendra on 18-01-2017.
@@ -87,9 +90,9 @@ public class PatientHome extends HomeActivity
             @Override
             public void onClick(View v)
             {
-                    fragment = new ShowSpeciality();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
+//                    fragment = new ShowSpeciality();
+//                    fragmentManger = getFragmentManager();
+//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
             }
         });
         arrow.setOnClickListener(new View.OnClickListener() {
@@ -112,15 +115,15 @@ public class PatientHome extends HomeActivity
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (profileRole == DOCTOR) {
-                    fragment = new ManageMessageNotification();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-                } else if (profileRole == PATIENT) {
-                    fragment = new ManageMessageNotification();
-                    fragmentManger = getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-                }
+//                if (profileRole == DOCTOR) {
+//                    fragment = new ManageMessageNotification();
+//                    fragmentManger = getFragmentManager();
+//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+//                } else if (profileRole == PATIENT) {
+//                    fragment = new ManageMessageNotification();
+//                    fragmentManger = getFragmentManager();
+//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+//                }
             }
         });
         backButton = (Button) findViewById(R.id.back_button);
@@ -136,9 +139,9 @@ public class PatientHome extends HomeActivity
             public void onClick(View v)
             {
 
-                fragment = new ShowClinicSpecialities();
-                fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
+//                fragment = new ShowClinicSpecialities();
+//                fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
             }
         });
         drawerButton = (Button) findViewById(R.id.drawar_button);
@@ -258,53 +261,53 @@ public class PatientHome extends HomeActivity
 
     protected void manageProfile(int position)
     {
-        System.out.println("I am in profile condition:::::::::::::::::::");
-        fragment = new ManageProfilePatient();
-        fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
-        dList.setSelection(position);
-        dLayout.closeDrawer(dList);
+//        System.out.println("I am in profile condition:::::::::::::::::::");
+//        fragment = new ManageProfilePatient();
+//        fragmentManger = getFragmentManager();
+//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
+//        dList.setSelection(position);
+//        dLayout.closeDrawer(dList);
     }
      protected void manageDependent(int position)
     {
-        if (profileRole == DOCTOR) {
-            fragment = new ManageDendencyDoctor();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        } else if (profileRole == PATIENT) {
-            fragment = new ManageDendencyFragment();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        }
+//        if (profileRole == DOCTOR) {
+//            fragment = new ManageDendencyDoctor();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        } else if (profileRole == PATIENT) {
+//            fragment = new ManageDendencyFragment();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        }
 
     }
     protected void manageDelegation(int position)
     {
-        if (profileRole == DOCTOR) {
-            fragment = new ManageDelegationFragment();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        } else if (profileRole == PATIENT) {
-            fragment = new ManageDelegationPatient();
-            fragmentManger = getFragmentManager();
-            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-            dList.setSelection(position);
-            dLayout.closeDrawer(dList);
-        }
+//        if (profileRole == DOCTOR) {
+//            fragment = new ManageDelegationFragment();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        } else if (profileRole == PATIENT) {
+//            fragment = new ManageDelegationPatient();
+//            fragmentManger = getFragmentManager();
+//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+//            dList.setSelection(position);
+//            dLayout.closeDrawer(dList);
+//        }
     }
      protected void manageNotification(int position)
     {
-        fragment = new ManageMessageNotification();
-        fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-        dList.setSelection(position);
-        dLayout.closeDrawer(dList);
+//        fragment = new ManageMessageNotification();
+//        fragmentManger = getFragmentManager();
+//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+//        dList.setSelection(position);
+//        dLayout.closeDrawer(dList);
     }
     // The method that displays the popup.
     @Override

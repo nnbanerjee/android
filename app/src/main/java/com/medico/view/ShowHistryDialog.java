@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.medico.model.VisitEditLogResponse;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.Arrays;
 

@@ -24,10 +24,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_toRightOf="@+id/doctorImg"
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/doctorName"
@@ -52,21 +50,21 @@
             android:layout_toLeftOf="@+id/nextBtn"
             android:text="0"
             style="@style/body1"
-          />
-
+            />
         <TextView
-            android:id="@+id/total_appointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/nextBtn"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
-            android:text="0"
-            android:textColor="#1E90FF"
             android:textSize="@dimen/body2"
-            android:visibility="gone" />
+            android:text="0"
+            android:visibility="gone"
+            android:id="@+id/total_appointment"
+            android:textColor="#1E90FF"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            />
 
         <TextView
             android:id="@+id/doctorSpeciality"
@@ -84,7 +82,7 @@
             android:text="fdfd"
             android:visibility="visible"
             style="@style/body2"
-             />
+            />
 
         <TextView
             android:id="@+id/lastVisitedValue"
@@ -115,7 +113,7 @@
             style="@style/body1"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
-              />
+            />
 
         <TextView
             android:id="@+id/upcomingText"

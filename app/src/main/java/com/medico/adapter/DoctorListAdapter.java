@@ -23,10 +23,11 @@ import com.medico.view.DoctorDetailsFragment;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientVisitDatesView;
-import com.mindnerves.meidcaldiary.Global;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
-import Utils.UtilSingleInstance;
+import java.text.DateFormat;
+import java.util.Date;
+
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -41,7 +42,6 @@ public class DoctorListAdapter extends BaseAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     DoctorProfileList allDoctors;
-    Global global;
     MyApi api;
     String doctorId;
     SharedPreferences session;
@@ -130,8 +130,10 @@ public class DoctorListAdapter extends BaseAdapter  {
             if (allDoctors.getDoctorList().get(position).getUpcomingVisit().equals("")) {
                 appointmentDate.setText("None");
 
-            } else {
-                appointmentDate.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(allDoctors.getDoctorList().get(position).getUpcomingVisit()));
+            } else
+                {
+                    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+                appointmentDate.setText(format.format(new Date(allDoctors.getDoctorList().get(position).getUpcomingVisit())));
 
             }
         }
@@ -139,7 +141,8 @@ public class DoctorListAdapter extends BaseAdapter  {
             lastAppointment.setText("None");
 
         } else {
-            lastAppointment.setText(UtilSingleInstance.getInstance().getDateFormattedInStringFormatUsingLong(allDoctors.getDoctorList().get(position).getLastVisit()));
+            DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+            lastAppointment.setText(format.format(new Date((allDoctors.getDoctorList().get(position).getLastVisit()))));
         }
         doctorName.setText(allDoctors.getDoctorList().get(position).getName());
         doctorSpeciality.setText(allDoctors.getDoctorList().get(position).getProfession());

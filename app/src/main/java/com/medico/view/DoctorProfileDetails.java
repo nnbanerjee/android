@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;

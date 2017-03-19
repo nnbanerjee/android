@@ -20,11 +20,11 @@ import com.medico.adapter.PatientVisitDatesAdapter;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientVisits;
 import com.medico.util.PARAM;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.application.R;
 
 import java.util.List;
-
-import Utils.UtilSingleInstance;
+//
+//import Utils.UtilSingleInstance;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -145,7 +145,6 @@ public class PatientVisitDatesView extends ParentFragment
             @Override
             public void success(List<PatientVisits> visits, Response response) {
                 String json = new String(((TypedByteArray) response.getBody()).getBytes());
-                if (UtilSingleInstance.checkForServerErrorsInResponse(json).equalsIgnoreCase("")) {
 
                     if (visits != null) {
                         PatientVisitDatesAdapter adapter = new PatientVisitDatesAdapter(getActivity().getApplicationContext(), visits);
@@ -154,11 +153,7 @@ public class PatientVisitDatesView extends ParentFragment
                         Toast.makeText(getActivity(), "No Visits found!", Toast.LENGTH_LONG).show();
                     }
                     progress.dismiss();
-                } else {
-//                    Toast.makeText(getActivity(), UtilSingleInstance.checkForServerErrorsInResponse(json), Toast.LENGTH_LONG).show();
-                    progress.dismiss();
 
-                }
 
             }
             @Override

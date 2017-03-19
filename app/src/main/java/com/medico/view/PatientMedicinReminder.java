@@ -28,15 +28,18 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
+import com.medico.model.AlarmReminderVM;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.PatientMedicine;
+import com.medico.model.ReminderDate;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.util.AlarmService;
-import com.mindnerves.meidcaldiary.R;
+import com.medico.util.PARAM;
+import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -46,12 +49,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Model.AlarmReminderVM;
-import Model.ReminderDate;
-import com.medico.util.PARAM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+//import Model.AlarmReminderVM;
+//import Model.ReminderDate;
 
 //import android.app.DatePickerDialog;
 
