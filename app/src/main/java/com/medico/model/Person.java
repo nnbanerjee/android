@@ -272,9 +272,7 @@ public class Person
     public boolean canBeSaved()
     {
         boolean canBeSaved = true;
-        if(id == null || id.intValue() > 0 == false)
-            canBeSaved = false;
-        else if(name == null )
+        if(name == null )
             canBeSaved = false;
         else if(mobile == null || mobile.longValue() > 0 == false)
             canBeSaved = false;
@@ -296,13 +294,9 @@ public class Person
             canBeSaved = false;
         else if(speciality == null && speciality.trim().length() > 0 == false)
             canBeSaved = false;
-        else if(region == null || region.trim().length() > 0 == false)
-            canBeSaved = false;
         else if(city == null || city.trim().length() > 0 == false)
             canBeSaved = false;
         else if(country == null || country.trim().length() > 0 == false)
-            canBeSaved = false;
-        else if(loyaltyCatId == null || loyaltyCatId.intValue() > 0 == false)
             canBeSaved = false;
         else if(prime == null || prime.byteValue() >= 0 == false)
             canBeSaved = false;

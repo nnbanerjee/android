@@ -1,12 +1,9 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.util.ImageLoadTask;
-import com.medico.util.PARAM;
-import com.medico.view.ManagePatientProfile;
-import com.medico.view.ParentFragment;
-import com.medico.view.PatientDetailsFragment;
-import com.medico.view.PatientVisitDatesView;
-import com.medico.application.R;
 
 import java.util.List;
 
@@ -108,40 +100,40 @@ public class PatientSettingListAdapter extends BaseAdapter  {
         doctorSpeciality.setText(personList.get(position).getSpeciality());
 
 
-
-        viewImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
-                Bundle bundle = parentactivity.getIntent().getExtras();
-                bundle.putInt(PARAM.PATIENT_ID, personList.get(position).getId());
-                parentactivity.getIntent().putExtras(bundle);
-                ParentFragment fragment = new PatientDetailsFragment();
-                parentactivity.fragmentList.add(fragment);
-                FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
-        });
-
-
-        rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-               // patientId = session.getString("patientId", null);
-                SharedPreferences.Editor editor = session.edit();
-//                editor.putString("doctorId", allPatients.get(position).getDoctorId());
-                editor.putString("patientId", personList.get(position).getId().toString());
-                editor.commit();
-                Bundle bun = new Bundle();
-                bun.putString("fragment", "doctorPatientListAdapter");
-                Fragment fragment = new PatientVisitDatesView();
-                fragment.setArguments(bun);
-                FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
-        });
+//
+//        viewImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
+//                Bundle bundle = parentactivity.getIntent().getExtras();
+//                bundle.putInt(PARAM.PATIENT_ID, personList.get(position).getId());
+//                parentactivity.getIntent().putExtras(bundle);
+//                ParentFragment fragment = new PatientDetailsFragment();
+//                parentactivity.fragmentList.add(fragment);
+//                FragmentManager fragmentManger = activity.getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//            }
+//        });
+//
+//
+//        rightButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//               // patientId = session.getString("patientId", null);
+//                SharedPreferences.Editor editor = session.edit();
+////                editor.putString("doctorId", allPatients.get(position).getDoctorId());
+//                editor.putString("patientId", personList.get(position).getId().toString());
+//                editor.commit();
+//                Bundle bun = new Bundle();
+//                bun.putString("fragment", "doctorPatientListAdapter");
+//                Fragment fragment = new PatientVisitDatesView();
+//                fragment.setArguments(bun);
+//                FragmentManager fragmentManger = activity.getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//            }
+//        });
         return convertView;
 
     }

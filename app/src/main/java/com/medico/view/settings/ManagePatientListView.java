@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,13 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.PatientSettingListAdapter;
+import com.medico.application.R;
 import com.medico.model.LinkedPersonRequest;
 import com.medico.model.Person;
 import com.medico.util.PARAM;
-import com.medico.view.ManagePersonSettings;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientProfileDetails;
-import com.medico.application.R;
 
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class ManagePatientListView extends ParentFragment {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 Person profile = (Person)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new PatientProfileDetails();
+                        ParentFragment fragment = new PatientProfileEditView();
                         ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                         bun.putInt(PARAM.PATIENT_ID, profile.getId().intValue());
                         getActivity().getIntent().putExtras(bun);
@@ -126,5 +125,24 @@ public class ManagePatientListView extends ParentFragment {
         super.onCreateOptionsMenu(menu,inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add: {
+                setHasOptionsMenu(false);
+                Bundle bun = getActivity().getIntent().getExtras();
+                ParentFragment fragment = new PatientProfileEditView();
+                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
+                bun.remove(PATIENT_ID);
+                getActivity().getIntent().putExtras(bun);
+                fragment.setArguments(bun);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
+            }
+            break;
+        }
+        return true;
+    }
 }

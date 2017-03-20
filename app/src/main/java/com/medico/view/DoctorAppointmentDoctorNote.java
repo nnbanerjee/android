@@ -214,7 +214,7 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
         return doctorNotesModel.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         doctorNotesModel.setAppointmentId(bundle1.getInt(APPOINTMENT_ID));
@@ -223,7 +223,7 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
         doctorNotesModel.setDoctorNotes(doctorNotes.getText().toString());
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(doctorNotesModel.canBeSaved())
         {
@@ -234,12 +234,12 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return doctorNotesModel.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
     }
 

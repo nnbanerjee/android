@@ -182,12 +182,12 @@ public class RegistrationFileUpload extends ParentFragment {
         menuItem.setIcon(R.drawable.save);
     }
     @Override
-    protected boolean isChanged()
+    public boolean isChanged()
     {
         return true;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return fileupload.canBeSaved();
     }
@@ -204,7 +204,7 @@ public class RegistrationFileUpload extends ParentFragment {
         fileupload.file = this.typedFile;;
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         saveFile(fileupload);
         return true;

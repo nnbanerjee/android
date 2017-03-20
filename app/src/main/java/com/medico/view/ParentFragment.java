@@ -39,20 +39,20 @@ public class ParentFragment extends Fragment implements PARAM
         api = restAdapter.create(MyApi.class);
     }
 
-    protected boolean isChanged()
+    public boolean isChanged()
     {
         return false;
     }
-    protected boolean save()
+    public boolean save()
     {
         return false;
     }
-    protected void update()   {    }
-    protected boolean canBeSaved()
+    public void update()   {    }
+    public boolean canBeSaved()
     {
         return false;
     }
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
     }
 }

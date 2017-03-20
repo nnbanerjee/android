@@ -224,12 +224,12 @@ public class DoctorAppointmentInvoices extends ParentFragment {
         return true;
     }
     @Override
-    protected void update()
+    public void update()
     {
 
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
 //        ManagePatientProfile activity = (ManagePatientProfile)getActivity();
 //        Bundle args = activity.getIntent().getExtras();
@@ -246,12 +246,12 @@ public class DoctorAppointmentInvoices extends ParentFragment {
         return true;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return true;
     }
     @Override
-    protected void setEditable(boolean editable) {
+    public void setEditable(boolean editable) {
     }
 
 }

@@ -22,6 +22,7 @@ import com.medico.model.PersonDetailProfile;
 import com.medico.model.ProfileId;
 import com.medico.model.ServerResponse;
 import com.medico.application.R;
+import com.medico.view.settings.ManagePersonSettings;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -254,7 +255,7 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
         return profile.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         profile.awards = awards.getText().toString();
@@ -269,7 +270,7 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
         profile.uploadFileUrl = registrationFile.getText().toString();
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(profile.canBeSaved())
         {
@@ -279,12 +280,12 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return profile.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
 
 

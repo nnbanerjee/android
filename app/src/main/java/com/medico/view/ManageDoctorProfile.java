@@ -282,7 +282,7 @@ public class ManageDoctorProfile extends ParentFragment  implements ActivityComp
         return personModel.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         personModel.role = new Integer(bundle1.getInt(LOGGED_IN_USER_ROLE)).byteValue();
@@ -296,7 +296,7 @@ public class ManageDoctorProfile extends ParentFragment  implements ActivityComp
         personModel.setSpeciality(specialization.getText().toString());
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(personModel.canBeSaved())
         {
@@ -309,12 +309,12 @@ public class ManageDoctorProfile extends ParentFragment  implements ActivityComp
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return personModel.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
 
 

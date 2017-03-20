@@ -668,7 +668,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         return summaryResponse.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         if(bundle1.getInt(APPOINTMENT_ID) == 0)
@@ -681,7 +681,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         summaryResponse.setDiagnosis(diagnosisValue.getText().toString());
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(summaryResponse.canBeSaved())
         {
@@ -694,12 +694,12 @@ public class DoctorAppointmentSummary extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return summaryResponse.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
             if (summaryResponse.getAppointmentId() != null && summaryResponse.getAppointmentId().intValue() > 0)
             {

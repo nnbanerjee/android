@@ -581,7 +581,7 @@ public class PatientMedicinReminder extends ParentFragment {
         return patientMedicine.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         patientMedicine.setMedicinName(medicineName.getText().toString());
@@ -604,7 +604,7 @@ public class PatientMedicinReminder extends ParentFragment {
         patientMedicine.setMedicineSchedule(scheduleList);
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(patientMedicine.canBeSaved())
         {
@@ -614,12 +614,12 @@ public class PatientMedicinReminder extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return patientMedicine.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
         medicineName.setEnabled(editable);
         numberOfDosesPerSchedule.setEnabled(editable);

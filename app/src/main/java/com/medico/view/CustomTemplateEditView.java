@@ -155,7 +155,7 @@ public class CustomTemplateEditView extends ParentFragment {
         return doctorNotesModel.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         if(doctorNotesModel.getCategoryId() == TEMPLATE_CATEGORY_PROCEDURE)
         {
@@ -190,7 +190,7 @@ public class CustomTemplateEditView extends ParentFragment {
 
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(doctorNotesModel.canBeSaved())
         {
@@ -201,12 +201,12 @@ public class CustomTemplateEditView extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return doctorNotesModel.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
     }
 

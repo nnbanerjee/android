@@ -1,4 +1,4 @@
-package com.medico.view;
+package com.medico.view.settings;
 
 import android.app.FragmentManager;
 import android.graphics.Color;
@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.medico.application.R;
+import com.medico.view.ManageDoctorDetailedProfile;
+import com.medico.view.ManageDoctorProfile;
+import com.medico.view.ParentFragment;
 
 /**
  * Created by JAY GANESH on 12/14/2015.

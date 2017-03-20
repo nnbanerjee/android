@@ -341,7 +341,7 @@ public class PatientDiagnosticTests extends ParentFragment {
         return patientMedicine.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         patientMedicine.setDiagnosticTest((DiagnosticTest)testName.getSelectedItem());
@@ -354,7 +354,7 @@ public class PatientDiagnosticTests extends ParentFragment {
             patientMedicine.setReferredId(bundle1.getInt(DOCTOR_ID));
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(patientMedicine.canBeSaved())
         {
@@ -364,12 +364,12 @@ public class PatientDiagnosticTests extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return patientMedicine.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
 //        testName.setEnabled(editable);
 //        calenderImg.setEnabled(editable);

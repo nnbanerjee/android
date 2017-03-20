@@ -322,7 +322,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         return doctorAppointment.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         Integer patientId = bundle1.getInt(PATIENT_ID);
@@ -366,7 +366,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         doctorAppointment.type  = 0;
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(doctorAppointment.canBeSaved())
         {
@@ -376,14 +376,14 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         if(((DoctorAppointmentGridViewAdapter)timeTeableList.getAdapter()).getSelectedAppointmentTime() == null)
             return false;
         return doctorAppointment.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
 
 

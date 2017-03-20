@@ -184,7 +184,7 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
         return appointmentFeedback.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         appointmentFeedback.appointmentId = bundle.getInt(APPOINTMENT_ID);
@@ -205,20 +205,20 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
         appointmentFeedback.setAppointmentVisitStatus(visited.isChecked()?new Integer(1).byteValue():new Integer(0).byteValue());
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         save(appointmentFeedback);
         return true;
     }
 
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return appointmentFeedback.canBeSaved(isPatient);
     }
 
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
 
 

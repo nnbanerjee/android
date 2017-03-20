@@ -327,12 +327,12 @@ public class PatientSummaryFileUpload extends ParentFragment {
         menuItem.setIcon(R.drawable.save);
     }
     @Override
-    protected boolean isChanged()
+    public boolean isChanged()
     {
         return true;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return fileupload.canBeSaved();
     }
@@ -370,7 +370,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
         }
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         saveFile(fileupload);
         return true;

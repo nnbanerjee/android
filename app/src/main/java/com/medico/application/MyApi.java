@@ -371,6 +371,9 @@ public interface MyApi {
     @POST("/updateProfile")
     void updateProfile(@Body Person person, Callback<ServerResponse> cb);
 
+    @POST("/createProfile")
+    void createProfile(@Body Person person, Callback<ServerResponse> cb);
+
     @POST("/updateDetailedProfile")
     void updateDetailedProfile(@Body PersonDetailProfile person, Callback<ServerResponse> cb);
 

@@ -14,13 +14,13 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.medico.adapter.DocumentAdapter;
+import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.FileUpload1;
-import com.medico.application.R;
 
 import java.util.List;
 
-import com.medico.application.MyApi;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -145,16 +145,16 @@ public class DoctorAppointmentDocument extends ParentFragment{
         return true;
     }
     @Override
-    protected void update()
+    public void update()
     {
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return true;
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
     }
 }

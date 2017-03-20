@@ -97,7 +97,7 @@
             android:label="@string/ManagePatientProfileTitle"
             android:parentActivityName="com.medico.view.PatientHome" >
         </activity>
-        <activity android:name="com.medico.view.ManagePersonSettings"
+        <activity android:name="com.medico.view.settings.ManagePersonSettings"
             android:label="Personal Profile"
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>

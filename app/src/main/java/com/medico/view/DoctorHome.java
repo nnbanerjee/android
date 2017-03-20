@@ -24,6 +24,7 @@ import com.medico.model.DoctorProfile;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.application.R;
+import com.medico.view.settings.ManagePersonSettings;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -278,7 +279,7 @@ public class DoctorHome extends HomeActivity
         bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
         bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
         bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.MANAGE_DOCTOR_PROFILE_VIEW);
-        Intent intObj = new Intent(this, com.medico.view.ManagePersonSettings.class);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
         intObj.putExtras(bundle);
         startActivity(intObj);
         onPause();
@@ -293,7 +294,7 @@ public class DoctorHome extends HomeActivity
         bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
         bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
         bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
-        Intent intObj = new Intent(this, com.medico.view.ManagePersonSettings.class);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
         intObj.putExtras(bundle);
         startActivity(intObj);
         onPause();

@@ -226,7 +226,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
         return doctorNotesModel.isChanged();
     }
     @Override
-    protected void update()
+    public void update()
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer treatmentId = bundle.getInt(TREATMENT_ID);
@@ -287,7 +287,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
 
     }
     @Override
-    protected boolean save()
+    public boolean save()
     {
         if(doctorNotesModel.canBeSaved())
         {
@@ -297,12 +297,12 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
         return false;
     }
     @Override
-    protected boolean canBeSaved()
+    public boolean canBeSaved()
     {
         return doctorNotesModel.canBeSaved();
     }
     @Override
-    protected void setEditable(boolean editable)
+    public void setEditable(boolean editable)
     {
     }
 
