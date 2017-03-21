@@ -16,6 +16,7 @@ import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
 
 import java.util.List;
 
@@ -82,7 +83,19 @@ public class PatientSettingListAdapter extends BaseAdapter  {
         TextView address = (TextView) convertView.findViewById(R.id.address);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
 
-        new ImageLoadTask(activity.getString(R.string.image_base_url) + personList.get(position).getImageUrl(), viewImage).execute();
+        int role = personList.get(position).role;
+        switch (role)
+        {
+            case PARAM.PATIENT:
+                viewImage.setImageResource(R.drawable.patient);
+                break;
+            case PARAM.DOCTOR:
+                viewImage.setImageResource(R.drawable.doctor);
+                break;
+            case PARAM.ASSISTANT:
+                viewImage.setImageResource(R.drawable.assistant);
+                break;
+        }
 
         viewImage.setBackgroundResource(R.drawable.patient);
 
@@ -95,45 +108,14 @@ public class PatientSettingListAdapter extends BaseAdapter  {
 
             }
         }
+        String imageUrl = personList.get(position).getImageUrl();
+        if (imageUrl != null && imageUrl.trim().length() > 0) {
+                new ImageLoadTask(imageUrl, viewImage).execute();
+        }
 
         doctorName.setText(personList.get(position).getName());
         doctorSpeciality.setText(personList.get(position).getSpeciality());
 
-
-//
-//        viewImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
-//                Bundle bundle = parentactivity.getIntent().getExtras();
-//                bundle.putInt(PARAM.PATIENT_ID, personList.get(position).getId());
-//                parentactivity.getIntent().putExtras(bundle);
-//                ParentFragment fragment = new PatientDetailsFragment();
-//                parentactivity.fragmentList.add(fragment);
-//                FragmentManager fragmentManger = activity.getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//            }
-//        });
-//
-//
-//        rightButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//               // patientId = session.getString("patientId", null);
-//                SharedPreferences.Editor editor = session.edit();
-////                editor.putString("doctorId", allPatients.get(position).getDoctorId());
-//                editor.putString("patientId", personList.get(position).getId().toString());
-//                editor.commit();
-//                Bundle bun = new Bundle();
-//                bun.putString("fragment", "doctorPatientListAdapter");
-//                Fragment fragment = new PatientVisitDatesView();
-//                fragment.setArguments(bun);
-//                FragmentManager fragmentManger = activity.getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//            }
-//        });
         return convertView;
 
     }

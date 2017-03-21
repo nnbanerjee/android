@@ -43,7 +43,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class PatientProfileEditView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class AssistantProfileEditView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
@@ -63,7 +63,7 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.patient_profile_edit_view,container,false);
+        final View view = inflater.inflate(R.layout.assistant_profile_edit_view,container,false);
         setHasOptionsMenu(true);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
@@ -98,7 +98,7 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
         super.onStart();
         final Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        Integer patientId = bundle.getInt(PATIENT_ID);
+        Integer patientId = bundle.getInt(ASSISTANT_ID);
         if(patientId != null && patientId.intValue() > 0) {
             api.getProfile(new ProfileId(patientId), new Callback<Person>() {
                 @Override
@@ -265,7 +265,7 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
             personModel.setName(name.getText().toString());
             personModel.setMobile(new Long(mobile.getText().toString()));
             personModel.setEmail(email.getText().toString());
-            personModel.setRole(new Integer(0).byteValue());
+            personModel.setRole(new Integer(2).byteValue());
             personModel.setStatus(new Integer(2).byteValue());
             personModel.setAddedBy(bundle1.getInt(LOGGED_IN_ID));
             personModel.setPrime(new Integer(0).byteValue());

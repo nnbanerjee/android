@@ -43,7 +43,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class PatientProfileEditView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class PersonProfileEditView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
@@ -51,7 +51,7 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
     MenuItem menuItem;
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
-    TextView profileId;
+    TextView personId;
     EditText name, email, dob, country, city,allergicTo, mobile;
     Spinner mobile_country;
     Spinner gender_spinner;
@@ -65,9 +65,10 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.patient_profile_edit_view,container,false);
         setHasOptionsMenu(true);
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
-        profileId = (TextView) view.findViewById(R.id.person_id);
+        personId = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
@@ -89,6 +90,42 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
         specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
         bloodGroup = (MultiAutoCompleteTextView)view.findViewById(R.id.bloodGroup);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        switch (bundle.getInt(PROFILE_TYPE))
+        {
+            case PATIENT:
+                textviewTitle.setText("Patient Profile");
+                profilePic.setImageResource(R.drawable.patient);
+                break;
+            case DOCTOR:
+                textviewTitle.setText("Doctor Profile");
+                profilePic.setImageResource(R.drawable.doctor);
+                break;
+            case ASSISTANT:
+                textviewTitle.setText("Assistant Profile");
+                profilePic.setImageResource(R.drawable.assistant);
+                break;
+//            case DEPENDENT:
+//                textviewTitle.setText("Dependent Profile");
+//                profilePic.setImageResource(R.drawable.patient);
+//                break;
+//            case DELEGATE:
+//                textviewTitle.setText("Delagated Profile");
+//                switch (bundle.getInt(PROFILE_ROLE))
+//                {
+//                    case PATIENT:
+//                        profilePic.setImageResource(R.drawable.patient);
+//                        break;
+//                    case DOCTOR:
+//                        profilePic.setImageResource(R.drawable.doctor);
+//                        break;
+//                    case ASSISTANT:
+//                        profilePic.setImageResource(R.drawable.assistant);
+//                        break;
+//                }
+//
+//                break;
+        }
         return view;
     }
 
@@ -96,18 +133,23 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
     public void onStart()
     {
         super.onStart();
-        final Bundle bundle = getActivity().getIntent().getExtras();
+        Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        Integer patientId = bundle.getInt(PATIENT_ID);
-        if(patientId != null && patientId.intValue() > 0) {
-            api.getProfile(new ProfileId(patientId), new Callback<Person>() {
+        Integer profileId = bundle.getInt(PROFILE_ID);
+        Integer profileRole = bundle.getInt(PROFILE_ROLE);
+        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
+        if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
+            api.getProfile(new ProfileId(profileId), new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     if (person != null && person.getId() != null) {
                         personModel = person;
-                        new ImageLoadTask(person.imageUrl, profilePic).execute();
-                        profileId.setText(person.getId().toString());
+                        String url = person.getImageUrl();
+                        if(url != null && url.trim().length() > 0)
+                            new ImageLoadTask(url, profilePic).execute();
+                        personId.setText(person.getId().toString());
                         name.setText(person.getName());
+                        mobile.setText(person.getMobile().toString());
                         email.setText(person.getEmail());
                         gender_spinner.setSelection(person.gender.intValue());
                         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
@@ -120,7 +162,7 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
                         bloodGroup.setText(person.getBloodGroup());
                         allergicTo.setText(person.getAllergicTo());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == bundle.getInt(LOGGED_IN_ID)) {
+                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == loggedinUserId) {
                             menuItem.setEnabled(true);
                         } else
                             menuItem.setEnabled(false);
@@ -142,6 +184,10 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
         else
         {
             personModel = new Person();
+            personModel.setRole(profileRole.byteValue());
+            personModel.setStatus(new Integer(2).byteValue());
+            personModel.setAddedBy(loggedinUserId);
+            personModel.setPrime(new Integer(0).byteValue());
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             setEditable(true);
             progress.dismiss();
@@ -251,7 +297,6 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
         }
         else
         {
-            Bundle bundle1 = getActivity().getIntent().getExtras();
             personModel.setAddress(mAutocompleteView.getText().toString());
             personModel.setCity(city.getText().toString());
             personModel.setCountry(country.getText().toString().trim());
@@ -265,10 +310,7 @@ public class PatientProfileEditView extends ParentFragment  implements ActivityC
             personModel.setName(name.getText().toString());
             personModel.setMobile(new Long(mobile.getText().toString()));
             personModel.setEmail(email.getText().toString());
-            personModel.setRole(new Integer(0).byteValue());
-            personModel.setStatus(new Integer(2).byteValue());
-            personModel.setAddedBy(bundle1.getInt(LOGGED_IN_ID));
-            personModel.setPrime(new Integer(0).byteValue());
+
         }
     }
     @Override

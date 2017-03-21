@@ -21,7 +21,7 @@ public class GeoClient implements GoogleApiClient.OnConnectionFailedListener
     private GeoClient(Activity activity, int clientId)
     {
         this.activity = activity;
-        mGoogleApiClient = new GoogleApiClient.Builder(activity).enableAutoManage((AppCompatActivity)activity, clientId /* clientId */, this)
+        mGoogleApiClient = new GoogleApiClient.Builder(activity.getApplicationContext()).enableAutoManage((AppCompatActivity)activity, clientId /* clientId */, this)
 
                 .addApi(Places.GEO_DATA_API)
 

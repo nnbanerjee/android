@@ -10,6 +10,8 @@ public interface PARAM
     public static final int DOCTOR = 1;
     public static final int PATIENT = 0;
     public static final int ASSISTANT = 2;
+    public static final int DEPENDENT = 10;
+    public static final int DELEGATE = 11;
 
     public static final int DAY = 0;
     public static final int WEEK = 1;
@@ -30,9 +32,14 @@ public interface PARAM
     public static final String LOGGED_IN_ID = "Id";
     public static final String LOGGED_IN_USER_ROLE = "role";
     public static final String LOGGED_IN_USER_STATUS = "status";
+    public static final String PROFILE_ROLE = "profile_role";
 
+    public static final String PROFILE_TYPE = "profile_type";
+
+    public static final String PROFILE_ID = "profileId";
     public static final String DOCTOR_ID = "dictorId";
     public static final String PATIENT_ID = "patientId";
+    public static final String ASSISTANT_ID = "assistantId";
     public static final String CLINIC_ID = "clinicId";
     public static final String APPOINTMENT_DATE = "appointment_date";
     public static final String APPOINTMENT_TIME = "appointment_time";
@@ -103,4 +110,5 @@ public interface PARAM
     public static final String SETTING_VIEW_ID = "setting_view_id";
     public static final int MANAGE_DOCTOR_PROFILE_VIEW = 1;
     public static final int PATIENT_SETTING_VIEW = 2;
+    public static final int ASSISTANT_SETTING_VIEW = 3;
 }

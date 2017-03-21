@@ -10,6 +10,7 @@ import com.medico.model.Clinic1;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
+import com.medico.model.DependentDelegatePersonRequest;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
@@ -572,6 +573,8 @@ public interface MyApi {
     @POST("/getPersonLinkage")
     void getPersonLinkage(@Body LinkedPersonRequest param, Callback<List<Person>> callback);
 
+    @POST("/getAllDependentsDelegates")
+    void getAllDependentsDelegates(@Body DependentDelegatePersonRequest param, Callback<List<Person>> callback);
 
     @POST("/getProfile")
     void getProfile(@Body ProfileId param, Callback<Person> callback);
