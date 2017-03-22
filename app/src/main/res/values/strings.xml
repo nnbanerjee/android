@@ -76,7 +76,35 @@
         <item>Assistant</item>
         <item>Other</item>
     </string-array>
-
+    <string-array name="patient_professions">
+        <item>IT Profession</item>
+        <item>Healthcare</item>
+        <item>Scientist</item>
+        <item>Judiciary</item>
+        <item>Social Worker</item>
+        <item>Government Employee</item>
+        <item>Banking</item>
+        <item>Insurance</item>
+        <item>Engineer</item>
+        <item>Teaching</item>
+        <item>Student</item>
+        <item>House Wife</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="assistant_professions">
+        <item>Homecare Nurse</item>
+        <item>Emergency Nurse</item>
+        <item>Old Age Nurse</item>
+        <item>Critical Care Nurse</item>
+        <item>Orthopedic Nurse</item>
+        <item>Nurse Practitioner</item>
+        <item>Clinical Nurse </item>
+        <item>Neonatal Nurse</item>
+        <item>Daycare Nurse</item>
+        <item>Full Day Nurse</item>
+        <item>Part Time Nurse</item>
+        <item>Other</item>
+    </string-array>
     <string-array name="type_list">
         <item>String</item>
         <item>Numeric</item>

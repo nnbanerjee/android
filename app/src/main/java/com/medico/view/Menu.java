@@ -47,7 +47,7 @@ public class Menu {
         arrayMenuList.add("Manage Doctors");
         arrayMenuList.add("Manage Dependents");
         arrayMenuList.add("Manage Delegations");
-        arrayMenuList.add("Terms & Conditions");
+//        arrayMenuList.add("Terms & Conditions");
         arrayMenuList.add("Logout");
         return arrayMenuList;
     }
@@ -60,9 +60,9 @@ public class Menu {
         arrayMenuList.add("Manage Clinics");
         arrayMenuList.add("Manage Assistants");
         arrayMenuList.add("Manage Dependents");
-        arrayMenuList.add("Manage Delegations");
-        arrayMenuList.add("Manage Templates");
-        arrayMenuList.add("Terms & Conditions");
+//        arrayMenuList.add("Manage Delegations");
+//        arrayMenuList.add("Manage Templates");
+//        arrayMenuList.add("Terms & Conditions");
         arrayMenuList.add("Logout");
         return arrayMenuList;
     }

@@ -52,26 +52,9 @@ public class ManagePersonListView extends ParentFragment {
         listView = (ListView) view.findViewById(R.id.doctorListView);
 
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        Bundle bundle = getActivity().getIntent().getExtras();
-        switch (bundle.getInt(PROFILE_TYPE))
-        {
-            case PATIENT:
-                textviewTitle.setText("Patient Profiles");
-                break;
-            case DOCTOR:
-                textviewTitle.setText("Doctor Profiles");
-                break;
-            case ASSISTANT:
-                textviewTitle.setText("Assistant Profiles");
-                break;
-//            case DEPENDENT:
-//                textviewTitle.setText("Dependent Profiles");
-//                break;
-//            case DELEGATE:
-//                textviewTitle.setText("Delagated Profiles");
-//                break;
-        }
+
+//        Bundle bundle = getActivity().getIntent().getExtras();
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,47 +84,36 @@ public class ManagePersonListView extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
-//        switch(profileType) {
-//            case PATIENT:
-//            case DOCTOR:
-//            case ASSISTANT:
-            LinkedPersonRequest request = new LinkedPersonRequest(loggedinUserId,profileType);
-            api.getPersonLinkage(request, new Callback<List<Person>>() {
-                @Override
-                public void success(final List<Person> allPatientsProfiles, Response response) {
-                    PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), allPatientsProfiles);
-                    listView.setAdapter(adapter);
-                    progress.dismiss();
-                }
+        LinkedPersonRequest request = new LinkedPersonRequest(loggedinUserId,profileType);
+        api.getPersonLinkage(request, new Callback<List<Person>>() {
+            @Override
+            public void success(final List<Person> allPatientsProfiles, Response response) {
+                PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), allPatientsProfiles);
+                listView.setAdapter(adapter);
+                progress.dismiss();
+            }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    progress.dismiss();
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                }
-            });
-//                break;
-//            case DELEGATE:
-//            case DEPENDENT:
-//                DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(loggedinUserId, profileType);
-//                api.getAllDependentsDelegates(request1, new Callback<List<Person>>() {
-//                    @Override
-//                    public void success(final List<Person> allPatientsProfiles, Response response) {
-//                        PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), allPatientsProfiles);
-//                        listView.setAdapter(adapter);
-//                        progress.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        progress.dismiss();
-//                        Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-//                        error.printStackTrace();
-//                    }
-//                });
-//                break;
-//        }
+            @Override
+            public void failure(RetrofitError error) {
+                progress.dismiss();
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        });
+
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        switch (profileType)
+        {
+            case PATIENT:
+                textviewTitle.setText("Patient Profiles");
+                break;
+            case DOCTOR:
+                textviewTitle.setText("Doctor Profiles");
+                break;
+            case ASSISTANT:
+                textviewTitle.setText("Assistant Profiles");
+                break;
+        }
     }
 
     @Override
