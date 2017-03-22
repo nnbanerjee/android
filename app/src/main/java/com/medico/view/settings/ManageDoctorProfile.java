@@ -1,4 +1,4 @@
-package com.medico.view;
+package com.medico.view.settings;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -28,6 +28,7 @@ import com.medico.model.ServerResponse;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.application.R;
+import com.medico.view.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -41,7 +42,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class ManageDoctorProfile extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class ManageDoctorProfile extends ParentFragment implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;

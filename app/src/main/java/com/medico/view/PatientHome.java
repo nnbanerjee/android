@@ -206,26 +206,34 @@ public class PatientHome extends HomeActivity
                 String switchCaseId = (String) adapter.getItem(position);
                 switch (switchCaseId) {
                     case "Manage Profile":
-                        manageProfile(position);
+                        manageProfile();
                         break;
-
-                    case "Manage Dependency":
-                        manageDependent(position);
+                    case "Manage Doctors":
+                        manageDoctors();
                         break;
-                    case "Manage Delegation":
-                        manageDelegation(position);
+                    case "Manage Dependents":
+                        manageDependents();
                         break;
-
-                    case "Messages And Notification":
-                        manageNotification(position);
+                    case "Manage Delegations":
+                        manageDelegations();
+                        break;
+                    case "Terms & Conditions":
+                        termsAndConditions();
                         break;
 
                     case "Logout":
-                        logout(position);
+                        logout();
                         break;
                 }
             }
         });
+    }
+
+    public void showMenus()
+    {
+
+        arrayMenu = mainMenu.getPatientMenus();
+
     }
 
     @Override
@@ -259,7 +267,7 @@ public class PatientHome extends HomeActivity
         });
     }
 
-    protected void manageProfile(int position)
+    protected void manageProfile()
     {
 //        System.out.println("I am in profile condition:::::::::::::::::::");
 //        fragment = new ManageProfilePatient();
@@ -268,47 +276,52 @@ public class PatientHome extends HomeActivity
 //        dList.setSelection(position);
 //        dLayout.closeDrawer(dList);
     }
-     protected void manageDependent(int position)
+    protected void manageDoctors()
     {
-//        if (profileRole == DOCTOR) {
-//            fragment = new ManageDendencyDoctor();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        } else if (profileRole == PATIENT) {
-//            fragment = new ManageDendencyFragment();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        }
 
     }
-    protected void manageDelegation(int position)
-    {
-//        if (profileRole == DOCTOR) {
-//            fragment = new ManageDelegationFragment();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        } else if (profileRole == PATIENT) {
-//            fragment = new ManageDelegationPatient();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        }
-    }
-     protected void manageNotification(int position)
-    {
-//        fragment = new ManageMessageNotification();
-//        fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-//        dList.setSelection(position);
-//        dLayout.closeDrawer(dList);
-    }
+
+//     protected void manageDependent(in)
+//    {
+////        if (profileRole == DOCTOR) {
+////            fragment = new ManageDendencyDoctor();
+////            fragmentManger = getFragmentManager();
+////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+////            dList.setSelection(position);
+////            dLayout.closeDrawer(dList);
+////        } else if (profileRole == PATIENT) {
+////            fragment = new ManageDendencyFragment();
+////            fragmentManger = getFragmentManager();
+////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
+////            dList.setSelection(position);
+////            dLayout.closeDrawer(dList);
+////        }
+//
+//    }
+//    protected void manageDelegation(int position)
+//    {
+////        if (profileRole == DOCTOR) {
+////            fragment = new ManageDelegationFragment();
+////            fragmentManger = getFragmentManager();
+////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+////            dList.setSelection(position);
+////            dLayout.closeDrawer(dList);
+////        } else if (profileRole == PATIENT) {
+////            fragment = new ManageDelegationPatient();
+////            fragmentManger = getFragmentManager();
+////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
+////            dList.setSelection(position);
+////            dLayout.closeDrawer(dList);
+////        }
+//    }
+//     protected void manageNotification(int position)
+//    {
+////        fragment = new ManageMessageNotification();
+////        fragmentManger = getFragmentManager();
+////        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+////        dList.setSelection(position);
+////        dLayout.closeDrawer(dList);
+//    }
     // The method that displays the popup.
     @Override
     protected void showPopup(final Activity context, Point p) {

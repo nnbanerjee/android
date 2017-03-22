@@ -68,7 +68,7 @@
                 android:background="@drawable/black_border"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:enabled="false"
+                android:enabled="true"
                 android:paddingLeft="3dp"
                 android:singleLine="true"
                 android:layout_alignParentRight="true"
@@ -124,8 +124,8 @@
                 android:layout_below="@+id/email"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/black_border"
+                android:minWidth="50dp"
                 android:enabled="false"
-                android:entries="@array/STD_CODE"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp"
                 android:textColor="#000000" />
@@ -138,10 +138,12 @@
                 android:layout_below="@+id/email"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/black_border"
+                android:layout_alignRight="@+id/email"
+                android:layout_alignEnd="@+id/email"
                 android:enabled="false"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp"
-                android:text="1234567890"
+                android:text=""
                 android:inputType="phone"
                 android:textColor="#000000" />
 
@@ -327,6 +329,7 @@
                       android:imeOptions="actionNext"
                       android:spinnerMode="dropdown"
                       android:textSize="14dp"
+                      android:keepScreenOn="true"
                       android:layout_below="@+id/city"
                       android:layout_alignLeft="@+id/dob"
                       android:layout_alignStart="@+id/dob"
@@ -343,7 +346,7 @@
                     android:layout_marginTop="20dp"
                     android:text="Blood Group" />
 
-                <MultiAutoCompleteTextView
+                <Spinner
                     android:id="@+id/bloodGroup"
                     android:layout_width="fill_parent"
                     android:layout_height="30dp"
@@ -380,6 +383,31 @@
                     android:layout_alignLeft="@+id/dob"
                     android:layout_alignStart="@+id/dob"
                     android:layout_toRightOf="@+id/speciality_text"
+                    android:layout_toEndOf="@+id/speciality_text" />
+                <TextView
+                    android:id="@+id/relation_text"
+                    style="@style/body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/allergic_to"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Relation" />
+
+                <Spinner
+                    android:id="@+id/relation"
+                    android:entries="@array/dependent_relations"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/black_border"
+                    android:imeOptions="actionNext"
+                    android:spinnerMode="dropdown"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/allergic_to"
+                    android:layout_alignLeft="@+id/dob"
+                    android:layout_alignStart="@+id/dob"
+                    android:layout_toRightOf="@+id/relation_text"
                     android:layout_toEndOf="@+id/speciality_text" />
         </RelativeLayout>
     </RelativeLayout>

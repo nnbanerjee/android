@@ -31,13 +31,14 @@ import com.medico.adapter.MenuAdapter;
 import com.medico.adapter.ProfileDelegationAdapter;
 import com.medico.adapter.ProfileDependencyAdapter;
 import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.Delegation;
 import com.medico.model.Dependent;
 import com.medico.model.DoctorProfile;
 import com.medico.model.PersonProfile;
 import com.medico.util.BackStress;
 import com.medico.util.PARAM;
-import com.medico.application.R;
+import com.medico.view.settings.ManagePersonSettings;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -461,42 +462,36 @@ public abstract class HomeActivity extends Activity implements PARAM
 
     }
 
-    protected abstract void manageProfile(int position);
+    protected abstract void manageProfile();
 
 
-    protected void manageDependent(int position)
+    protected void manageDependents()
     {
-//        if (profileRole == DOCTOR) {
-//            fragment = new ManageDendencyDoctor();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        } else if (profileRole == PATIENT) {
-//            fragment = new ManageDendencyFragment();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        }
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DEPENDENT_SETTING_VIEW);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
+        dLayout.closeDrawer(dList);
     }
-    protected void manageDelegation(int position)
+    protected void manageDelegations()
     {
-//        if (profileRole == DOCTOR) {
-//            fragment = new ManageDelegationFragment();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        } else if (profileRole == PATIENT) {
-//            fragment = new ManageDelegationPatient();
-//            fragmentManger = getFragmentManager();
-//            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-//            dList.setSelection(position);
-//            dLayout.closeDrawer(dList);
-//        }
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DELEGATE_SETTING_VIEW);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
+        dLayout.closeDrawer(dList);
     }
-    protected void manageNotification(int position)
+    protected void termsAndConditions()
     {
 //        fragment = new ManageMessageNotification();
 //        fragmentManger = getFragmentManager();
@@ -504,9 +499,9 @@ public abstract class HomeActivity extends Activity implements PARAM
 //        dList.setSelection(position);
 //        dLayout.closeDrawer(dList);
     }
-    protected void logout(int position)
+    protected void logout()
     {
-        dList.setSelection(position);
+//        dList.setSelection(position);
         dLayout.closeDrawer(dList);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
         alertDialogBuilder.setMessage(R.string.confirm_logout);
@@ -515,6 +510,9 @@ public abstract class HomeActivity extends Activity implements PARAM
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 BackStress.staticflag = 0;
+                SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("USER_STATUS",false).commit();
                 finish();
 
             }

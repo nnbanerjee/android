@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +28,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
+import com.medico.model.Country;
+import com.medico.model.DependentDelegatePerson;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
+import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
+import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.view.ParentFragment;
@@ -35,6 +43,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -43,7 +52,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class AssistantProfileEditView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class DependentDelegateProfileView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
@@ -51,25 +60,27 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
     MenuItem menuItem;
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
-    TextView profileId;
+    TextView personId;
     EditText name, email, dob, country, city,allergicTo, mobile;
-    Spinner mobile_country;
+    Spinner mobile_country,bloodGroup,relation;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    MultiAutoCompleteTextView specialization,bloodGroup;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.assistant_profile_edit_view,container,false);
+        final View view = inflater.inflate(R.layout.patient_profile_edit_view,container,false);
         setHasOptionsMenu(true);
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
-        profileId = (TextView) view.findViewById(R.id.person_id);
+        personId = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
+        email.setEnabled(false);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         dob = (EditText) view.findViewById(R.id.dob);
         dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
@@ -85,10 +96,73 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
         country = (EditText) view.findViewById(R.id.country_spinner);
         city = (EditText) view.findViewById(R.id.city);
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
+        mobile.setEnabled(false);
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
         specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
-        bloodGroup = (MultiAutoCompleteTextView)view.findViewById(R.id.bloodGroup);
+        bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
+        relation = (Spinner) view.findViewById(R.id.relation);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        switch (bundle.getInt(PROFILE_TYPE))
+        {
+            case DEPENDENT:
+                textviewTitle.setText("Dependent Profile");
+                profilePic.setImageResource(R.drawable.patient);
+                break;
+            case DELEGATE:
+                textviewTitle.setText("Delagated Profile");
+                switch (bundle.getInt(PROFILE_ROLE))
+                {
+                    case PATIENT:
+                        profilePic.setImageResource(R.drawable.patient);
+                        break;
+                    case DOCTOR:
+                        profilePic.setImageResource(R.drawable.doctor);
+                        break;
+                    case ASSISTANT:
+                        profilePic.setImageResource(R.drawable.assistant);
+                        break;
+                }
+
+                break;
+        }
+        Specialization[] options = {};
+        ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+        specialization.setAdapter(specializationArrayAdapter);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
+        specialization.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1);
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 1, 1, 10, 5), new Callback<List<Specialization>>() {
+                        @Override
+                        public void success(List<Specialization> symptomList, Response response) {
+                            ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,symptomList);
+                            specialization.setAdapter(specializationArrayAdapter);
+                        }
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
+            }
+        });
         return view;
     }
 
@@ -96,18 +170,27 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
     public void onStart()
     {
         super.onStart();
-        final Bundle bundle = getActivity().getIntent().getExtras();
+        Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        Integer patientId = bundle.getInt(ASSISTANT_ID);
-        if(patientId != null && patientId.intValue() > 0) {
-            api.getProfile(new ProfileId(patientId), new Callback<Person>() {
+        Integer profileId = bundle.getInt(PROFILE_ID);
+        Integer profileRole = bundle.getInt(PROFILE_ROLE);
+        final Integer profileType = bundle.getInt(PROFILE_TYPE);
+        final String profileRelation = bundle.getString(DEPENDENT_DELEGATE_RELATION);
+        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
+        SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
+        mobile_country.setAdapter(countryListAdapter);
+        if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
+            api.getProfile(new ProfileId(profileId), new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     if (person != null && person.getId() != null) {
                         personModel = person;
-                        new ImageLoadTask(person.imageUrl, profilePic).execute();
-                        profileId.setText(person.getId().toString());
+                        String url = person.getImageUrl();
+                        if(url != null && url.trim().length() > 0)
+                            new ImageLoadTask(url, profilePic).execute();
+                        personId.setText(person.getId().toString());
                         name.setText(person.getName());
+                        mobile.setText(person.getMobile().toString());
                         email.setText(person.getEmail());
                         gender_spinner.setSelection(person.gender.intValue());
                         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
@@ -117,15 +200,26 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
                         country.setText(person.getCountry());
                         city.setText(person.getCity());
                         specialization.setText(person.getSpeciality());
-                        bloodGroup.setText(person.getBloodGroup());
+                        bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
+                        relation.setSelection(getRelationIndex( profileRelation));
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == bundle.getInt(LOGGED_IN_ID)) {
-                            menuItem.setEnabled(true);
-                        } else
+//                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == loggedinUserId) {
+//                            menuItem.setEnabled(false);
+//                            setEditableAll(false);
+//                        } else
+//                            menuItem.setEnabled(false);
+                        if(profileType.intValue() == DELEGATE || profileType.intValue() == DEPENDENT && profileRelation.equalsIgnoreCase("self")
+                                || person.getStatus() != UNREGISTERED || person.addedBy == null || person.addedBy.intValue() != loggedinUserId) {
+                            setEditableAll(false);
                             menuItem.setEnabled(false);
+                        }
+                        else {
+                            menuItem.setEnabled(true);
+                            setEditable(false);
+                        }
+                        mobile_country.setSelection(getCountryIndex(person.getLocation()));
                     }
-                    setEditable(false);
                     progress.dismiss();
 
 
@@ -141,11 +235,51 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
         }
         else
         {
-            personModel = new Person();
+            final DependentDelegatePerson personModel = new DependentDelegatePerson();
+            personModel.setRole(profileRole.byteValue());
+            personModel.setStatus(new Integer(2).byteValue());
+            personModel.setAddedBy(loggedinUserId);
+            personModel.setPrime(new Integer(0).byteValue());
+            personModel.primePersonId = loggedinUserId;
+            personModel.accessLevel = 1;
+            personModel.delegationStatus = 1;
+            personModel.type = 0;
+            api.getProfile(new ProfileId(loggedinUserId), new Callback<Person>() {
+                @Override
+                public void success(Person person, Response response) {
+                    if (person != null && person.getId() != null) {
+                        personModel.setEmail(person.getEmail());
+                        personModel.setMobile(person.getMobile());
+                        personModel.setAddress(person.getAddress());
+                        personModel.setCountry(person.getCountry());
+                        personModel.setCity(person.getCity());
+                        personModel.setLocationLat(person.getLocationLat());
+                        personModel.setLocationLong(person.getLocationLong());
+                        personModel.setRegion(person.getRegion());
+
+                        email.setText(person.getEmail());
+                        mobile.setText(person.getMobile().toString());
+                        mAutocompleteView.setText(person.getAddress());
+                        country.setText(person.getCountry());
+                        city.setText(person.getCity());
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    error.printStackTrace();
+                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+                }
+            });
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-            setEditable(true);
+
+            this.personModel = personModel;
+
             progress.dismiss();
         }
+
+
     }
 
     @Override
@@ -163,7 +297,7 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-
+                    getActivity().onBackPressed();
                 }
 
                 @Override
@@ -174,14 +308,14 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
         }
         else
         {
-            api.createProfile(person, new Callback<ServerResponse>() {
+            api.createDependentProfile((DependentDelegatePerson)person, new Callback<ServerResponse>() {
                 @Override
                 public void success(ServerResponse s, Response response) {
                     if (s.status == 1)
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-
+                    getActivity().onBackPressed();
                 }
 
                 @Override
@@ -242,33 +376,33 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
             personModel.setAddress(mAutocompleteView.getText().toString());
             personModel.setCity(city.getText().toString());
             personModel.setCountry(country.getText().toString().trim());
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
+            personModel.setLocation(mobile_country.getSelectedItem().toString());
         }
         else
         {
-            Bundle bundle1 = getActivity().getIntent().getExtras();
+            DependentDelegatePerson personModel = (DependentDelegatePerson)this.personModel;
             personModel.setAddress(mAutocompleteView.getText().toString());
             personModel.setCity(city.getText().toString());
             personModel.setCountry(country.getText().toString().trim());
             personModel.setRegion(" ");
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());
             personModel.setMobile(new Long(mobile.getText().toString()));
             personModel.setEmail(email.getText().toString());
-            personModel.setRole(new Integer(2).byteValue());
-            personModel.setStatus(new Integer(2).byteValue());
-            personModel.setAddedBy(bundle1.getInt(LOGGED_IN_ID));
-            personModel.setPrime(new Integer(0).byteValue());
+            personModel.setLocation(mobile_country.getSelectedItem().toString());
+            personModel.relation = relation.getSelectedItem().toString();
+
         }
     }
     @Override
@@ -289,10 +423,31 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
     @Override
     public void setEditable(boolean editable)
     {
-        name.setEnabled(editable);
         mobile.setEnabled(editable);
         email.setEnabled(editable);
+        mobile_country.setEnabled(editable);
+        relation.setEnabled(editable);
     }
+    public void setEditableAll(boolean editable)
+    {
+        mobile.setEnabled(editable);
+        email.setEnabled(editable);
+//        menuItem.setEnabled(editable);
+        profilePicUploadBtn.setEnabled(editable);
+        location_delete_button.setEnabled(editable);
+        current_location_button.setEnabled(editable);
+        name.setEnabled(editable);
+        dob.setEnabled(editable);
+        allergicTo.setEnabled(editable);
+        mobile_country.setEnabled(editable);
+        bloodGroup.setEnabled(editable);
+        relation.setEnabled(editable);
+        gender_spinner.setEnabled(editable);
+        dob_calendar.setEnabled(editable);
+        specialization.setEnabled(editable);
+        mAutocompleteView.setEnabled(editable);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
@@ -325,6 +480,37 @@ public class AssistantProfileEditView extends ParentFragment  implements Activit
             break;
         }
         return true;
+    }
+
+    private int getBloodgroupIndex(String bloodgroup)
+    {
+        String[] bloodgroups = getActivity().getResources().getStringArray(R.array.bloodgroup_list);
+        for(int i = 0; i < bloodgroups.length; i++)
+        {
+            if(bloodgroups[i].equalsIgnoreCase(bloodgroup))
+                return i;
+        }
+        return 0;
+    }
+    private int getRelationIndex(String relation)
+    {
+        String[] relations = getActivity().getResources().getStringArray(R.array.dependent_relations);
+        for(int i = 0; i < relations.length; i++)
+        {
+            if(relations[i].equalsIgnoreCase(relation))
+                return i;
+        }
+        return 0;
+    }
+    private int getCountryIndex(String isdCode)
+    {
+        int i = 0;
+        for(Country country : countriesList)
+        {
+            if(country.toString().equalsIgnoreCase(isdCode))
+                return i;
+        }
+        return 0;
     }
 
 

@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.medico.application.R;
-import com.medico.view.ManageDoctorDetailedProfile;
-import com.medico.view.ManageDoctorProfile;
 import com.medico.view.ParentFragment;
 
 /**

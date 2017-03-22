@@ -194,38 +194,38 @@ public class DoctorHome extends HomeActivity
                 String switchCaseId = (String) adapter.getItem(position);
                 switch (switchCaseId) {
                     case "Manage Profile":
-                        manageProfile(position);
+                        manageProfile();
                         break;
 
-                    case "Manage Patient":
-                        managePatient(position);
+                    case "Manage Patients":
+                        managePatients();
                         break;
-                    case "Manage Clinic":
+                    case "Manage Clinics":
 
-                        manageClinic(position);
-                        break;
-
-                    case "Manage Assistant":
-                        manageAssistant(position);
+                        manageClinics();
                         break;
 
-                    case "Manage Dependency":
-                        manageDependent(position);
-                        break;
-                    case "Manage Delegation":
-                        manageDelegation(position);
+                    case "Manage Assistants":
+                        manageAssistants();
                         break;
 
-                    case "Manage Template":
-                        manageTemplate(position);
+                    case "Manage Dependents":
+                        manageDependents();
+                        break;
+                    case "Manage Delegations":
+                        manageDelegations();
                         break;
 
-                    case "Messages And Notification":
-                        manageNotification(position);
+                    case "Manage Templates":
+                        manageTemplates();
+                        break;
+
+                    case "Terms & Conditions":
+                        termsAndConditions();
                         break;
 
                     case "Logout":
-                        logout(position);
+                        logout();
                         break;
                 }
             }
@@ -238,6 +238,13 @@ public class DoctorHome extends HomeActivity
         profileId = session.getInt(LOGGED_IN_ID,PATIENT);
         profileRole = session.getInt(LOGGED_IN_USER_ROLE, PATIENT);
         profileStatus = session.getInt(LOGGED_IN_USER_STATUS, UNREGISTERED);
+    }
+
+    public void showMenus()
+    {
+
+        arrayMenu = mainMenu.getDoctorMenus();
+
     }
 
     @Override
@@ -270,7 +277,7 @@ public class DoctorHome extends HomeActivity
         });
     }
     @Override
-    protected void manageProfile(int position)
+    protected void manageProfile()
     {
         System.out.println("i am here::::::::::::");
         Bundle bundle = new Bundle();
@@ -285,7 +292,7 @@ public class DoctorHome extends HomeActivity
         onPause();
         dLayout.closeDrawer(dList);
     }
-    protected void managePatient(int position)
+    protected void managePatients()
     {
         System.out.println("i am here::::::::::::");
         Bundle bundle = new Bundle();
@@ -300,7 +307,7 @@ public class DoctorHome extends HomeActivity
         onPause();
         dLayout.closeDrawer(dList);
     }
-    protected void manageClinic(int position)
+    protected void manageClinics()
     {
 //        fragment = new ManageClinicFragment();
 //        fragmentManger = getFragmentManager();
@@ -308,7 +315,7 @@ public class DoctorHome extends HomeActivity
 //        dList.setSelection(position);
 //        dLayout.closeDrawer(dList);
     }
-    protected void manageAssistant(int position)
+    protected void manageAssistants()
     {
         System.out.println("i am here::::::::::::");
         Bundle bundle = new Bundle();
@@ -324,7 +331,7 @@ public class DoctorHome extends HomeActivity
         dLayout.closeDrawer(dList);
     }
 
-    protected void manageTemplate(int position)
+    protected void manageTemplates()
     {
 //        //fragment = new ManageTemplate();
 //        fragment = new ManageProcedure();

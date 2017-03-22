@@ -61,7 +61,21 @@
         <item>Chilean peso</item>
         <item>USD</item>
     </string-array>
-
+    <string-array name="dependent_relations">
+        <item>self</item>
+        <item>Wife</item>
+        <item>Daughter</item>
+        <item>Son</item>
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Friend</item>
+        <item>Doctor</item>
+        <item>Family Doctor</item>
+        <item>Assistant</item>
+        <item>Other</item>
+    </string-array>
 
     <string-array name="type_list">
         <item>String</item>

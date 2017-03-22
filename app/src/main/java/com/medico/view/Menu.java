@@ -44,8 +44,10 @@ public class Menu {
     {
         arrayMenuList = new ArrayList<String>();
         arrayMenuList.add("Manage Profile");
-      /*  arrayMenuList.add("Manage Dependency");
-        arrayMenuList.add("Manage Delegation");*/
+        arrayMenuList.add("Manage Doctors");
+        arrayMenuList.add("Manage Dependents");
+        arrayMenuList.add("Manage Delegations");
+        arrayMenuList.add("Terms & Conditions");
         arrayMenuList.add("Logout");
         return arrayMenuList;
     }
@@ -54,13 +56,13 @@ public class Menu {
     {
         arrayMenuList = new ArrayList<String>();
         arrayMenuList.add("Manage Profile");
-        arrayMenuList.add("Manage Patient");
-        arrayMenuList.add("Manage Clinic");
-        arrayMenuList.add("Manage Assistant");
-    /*    arrayMenuList.add("Manage Dependency");
-        arrayMenuList.add("Manage Delegation");*/
-        arrayMenuList.add("Manage Template");
-        /*arrayMenuList.add("Patients Information");*/
+        arrayMenuList.add("Manage Patients");
+        arrayMenuList.add("Manage Clinics");
+        arrayMenuList.add("Manage Assistants");
+        arrayMenuList.add("Manage Dependents");
+        arrayMenuList.add("Manage Delegations");
+        arrayMenuList.add("Manage Templates");
+        arrayMenuList.add("Terms & Conditions");
         arrayMenuList.add("Logout");
         return arrayMenuList;
     }

@@ -7,9 +7,11 @@ import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentPatientIds;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.Clinic1;
+import com.medico.model.Country;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
+import com.medico.model.DependentDelegatePerson;
 import com.medico.model.DependentDelegatePersonRequest;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorAppointment;
@@ -53,6 +55,7 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.ResponseVm;
 import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
+import com.medico.model.Specialization;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
 import com.medico.model.TreatmentId1;
@@ -80,7 +83,8 @@ import retrofit.mime.TypedFile;
 
 public interface MyApi {
 
-
+    @POST("/getSupportedCountryList")
+    void getSupportedCountryList(@Body ProfileId param, Callback<List<Country>> cb);
 
     @POST("/getClinicSlotBookingByDoctor")
     void getClinicSlotBookingByDoctor(@Body DoctorClinicId param, Callback<List<DoctorSlotBookings>> cb);
@@ -375,6 +379,9 @@ public interface MyApi {
     @POST("/createProfile")
     void createProfile(@Body Person person, Callback<ServerResponse> cb);
 
+    @POST("/createProfile")
+    void createDependentProfile(@Body DependentDelegatePerson person, Callback<ServerResponse> cb);
+
     @POST("/updateDetailedProfile")
     void updateDetailedProfile(@Body PersonDetailProfile person, Callback<ServerResponse> cb);
 
@@ -574,10 +581,12 @@ public interface MyApi {
     void getPersonLinkage(@Body LinkedPersonRequest param, Callback<List<Person>> callback);
 
     @POST("/getAllDependentsDelegates")
-    void getAllDependentsDelegates(@Body DependentDelegatePersonRequest param, Callback<List<Person>> callback);
+    void getAllDependentsDelegates(@Body DependentDelegatePersonRequest param, Callback<List<DependentDelegatePerson>> callback);
 
     @POST("/getProfile")
     void getProfile(@Body ProfileId param, Callback<Person> callback);
+    @POST("/getProfile")
+    void getDependentProfile(@Body ProfileId param, Callback<DependentDelegatePerson> callback);
 
     @POST("/getDetailedProfile")
     void getDetailedProfile(@Body ProfileId param, Callback<PersonDetailProfile> callback);
@@ -799,6 +808,7 @@ public interface MyApi {
     void searchAutoFillSymptom(@Body SearchParameter parameter, Callback<List<Symptom>> response);
     @POST("/searchAutoFill1")
     void searchAutoFillDiagnostic(@Body SearchParameter parameter, Callback<List<DiagnosticTest>> response);
-
+    @POST("/searchAutoFill1")
+    void searchAutoFillSpecialization(@Body SearchParameter parameter, Callback<List<Specialization>> response);
 
 }

@@ -10,8 +10,8 @@ public interface PARAM
     public static final int DOCTOR = 1;
     public static final int PATIENT = 0;
     public static final int ASSISTANT = 2;
-    public static final int DEPENDENT = 10;
-    public static final int DELEGATE = 11;
+    public static final int DEPENDENT = 0;
+    public static final int DELEGATE = 1;
 
     public static final int DAY = 0;
     public static final int WEEK = 1;
@@ -111,4 +111,9 @@ public interface PARAM
     public static final int MANAGE_DOCTOR_PROFILE_VIEW = 1;
     public static final int PATIENT_SETTING_VIEW = 2;
     public static final int ASSISTANT_SETTING_VIEW = 3;
+    public static final int DEPENDENT_SETTING_VIEW = 4;
+    public static final int DELEGATE_SETTING_VIEW = 5;
+
+
+    public static final String DEPENDENT_DELEGATE_RELATION = "dependent_delegate_relation";
 }

@@ -53,10 +53,10 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     Button profilePicUploadBtn,location_delete_button,current_location_button;
     TextView personId;
     EditText name, email, dob, country, city,allergicTo, mobile;
-    Spinner mobile_country;
+    Spinner mobile_country,bloodGroup;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    MultiAutoCompleteTextView specialization,bloodGroup;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
@@ -89,7 +89,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
         specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
-        bloodGroup = (MultiAutoCompleteTextView)view.findViewById(R.id.bloodGroup);
+        bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
         Bundle bundle = getActivity().getIntent().getExtras();
         switch (bundle.getInt(PROFILE_TYPE))
         {
@@ -105,26 +105,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                 textviewTitle.setText("Assistant Profile");
                 profilePic.setImageResource(R.drawable.assistant);
                 break;
-//            case DEPENDENT:
-//                textviewTitle.setText("Dependent Profile");
-//                profilePic.setImageResource(R.drawable.patient);
-//                break;
-//            case DELEGATE:
-//                textviewTitle.setText("Delagated Profile");
-//                switch (bundle.getInt(PROFILE_ROLE))
-//                {
-//                    case PATIENT:
-//                        profilePic.setImageResource(R.drawable.patient);
-//                        break;
-//                    case DOCTOR:
-//                        profilePic.setImageResource(R.drawable.doctor);
-//                        break;
-//                    case ASSISTANT:
-//                        profilePic.setImageResource(R.drawable.assistant);
-//                        break;
-//                }
-//
-//                break;
+
         }
         return view;
     }
@@ -159,7 +140,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                         country.setText(person.getCountry());
                         city.setText(person.getCity());
                         specialization.setText(person.getSpeciality());
-                        bloodGroup.setText(person.getBloodGroup());
+                        bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
                         if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == loggedinUserId) {
@@ -209,7 +190,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-
+                    getActivity().onBackPressed();
                 }
 
                 @Override
@@ -227,7 +208,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-
+                    getActivity().onBackPressed();
                 }
 
                 @Override
@@ -288,12 +269,12 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             personModel.setAddress(mAutocompleteView.getText().toString());
             personModel.setCity(city.getText().toString());
             personModel.setCountry(country.getText().toString().trim());
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
         }
         else
         {
@@ -301,12 +282,12 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             personModel.setCity(city.getText().toString());
             personModel.setCountry(country.getText().toString().trim());
             personModel.setRegion(" ");
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getText().toString());
+            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());
             personModel.setMobile(new Long(mobile.getText().toString()));
             personModel.setEmail(email.getText().toString());
@@ -369,5 +350,14 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         return true;
     }
 
-
+    private int getBloodgroupIndex(String bloodgroup)
+    {
+        String[] bloodgroups = getActivity().getResources().getStringArray(R.array.bloodgroup_list);
+        for(int i = 0; i < bloodgroups.length; i++)
+        {
+            if(bloodgroups[i].equalsIgnoreCase(bloodgroup))
+                return i;
+        }
+        return 0;
+    }
 }
