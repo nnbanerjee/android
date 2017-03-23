@@ -136,7 +136,7 @@ public class FileUploadDialog extends DialogFragment {
                 .build();
         api = restAdapter.create(MyApi.class);
 
-        api.getAllClinics(new PersonID(doctorId),new Callback<List<Clinic1>>() {
+        api.getAllClinics(new PersonID(new Integer(doctorId)),new Callback<List<Clinic1>>() {
             @Override
             public void success(List<Clinic1> clinicsList, Response response) {
                 clinicDetailVm = clinicsList;

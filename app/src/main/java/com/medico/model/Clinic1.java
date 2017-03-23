@@ -34,9 +34,46 @@ public class Clinic1
     public Integer numberOfDoctors;
     public Integer numberOfServices;
 
+    private boolean isChanged = true;
+
     @Override
     public String toString()
     {
         return clinicName;
+    }
+
+    public boolean isChanged()
+    {
+        return isChanged;
+    }
+    public void setChanged(boolean changed)
+    {
+        isChanged = changed;
+    }
+    public boolean canBeSaved()
+    {
+        boolean canBeSaved = true;
+        if(clinicName == null )
+            canBeSaved = false;
+        else if(mobile == null || mobile.longValue() > 0 == false)
+            canBeSaved = false;
+        else if(locationLat == null || locationLat.doubleValue() > 0 == false)
+            canBeSaved = false;
+        else if(locationLong == null || locationLong.doubleValue() > 0 == false)
+            canBeSaved = false;
+        else if(email == null )
+            canBeSaved = false;
+        else if(address == null )
+            canBeSaved = false;
+        else if(type == null || type.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(speciality == null && speciality.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(city == null || city.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(country == null || country.trim().length() > 0 == false)
+            canBeSaved = false;
+
+        return canBeSaved;
     }
 }

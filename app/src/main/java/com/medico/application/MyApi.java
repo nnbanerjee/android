@@ -7,6 +7,7 @@ import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentPatientIds;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.Clinic1;
+import com.medico.model.ClinicId;
 import com.medico.model.Country;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
@@ -143,8 +144,14 @@ public interface MyApi {
 //    @GET("/searchClinic")
 //    void searchClinic(@Query("clinicName") String clinicName, Callback<List<Clinic>> callback);
 //
-//    @POST("/addClinic")
-//    void addClinic(@Body Clinic clinicDetails, Callback<String> callback);
+    @POST("/addClinic")
+    void addClinic(@Body Clinic1 clinicDetails, Callback<ServerResponse> callback);
+
+    @POST("/getClinicDetails")
+    void getClinicDetails(@Body ClinicId clinicId, Callback<Clinic1> callback);
+
+    @POST("/updateClinic")
+    void updateClinic(@Body Clinic1 clinic, Callback<ServerResponse> response);
 
 //    @POST("/saveDoctorClinicScheduleTime")
 //    void addTimeSchedule(@Body DoctorClinicSchedule toc, Callback<Response> callback);
@@ -695,11 +702,11 @@ public interface MyApi {
 //    @POST("/updatePatientDiagnosticTest")
 //    void updatePatientDiagnosticTest(@Body AddDiagnosisTestRequest addDiagnosisTestRequest, Callback<ResponseCodeVerfication> response);
 //
-    @POST("/getAllClinics")
-    void getAllClinics1(@Body ProfileId personID, Callback<List<Clinic1>> response);
+//    @POST("/getAllClinics")
+//    void getAllClinics1(@Body ProfileId personID, Callback<List<Clinic1>> response);
 //
-    @POST("/getAllClinics")
-    void getAllClinics1(@Body PersonID personID, Callback<List<Clinic1>> response);
+//    @POST("/getAllClinics")
+//    void getAllClinics1(@Body PersonID personID, Callback<List<Clinic1>> response);
 //
     @POST("/getAllClinics")
     void getAllClinics(@Body PersonID personID, Callback<List<Clinic1>> response);

@@ -4,17 +4,17 @@ package com.medico.model;
  * Created by Narendra on 17-03-2016.
  */
 public class PersonID {
-    public String getPersonId() {
+    public Integer getPersonId() {
         return personId;
     }
 
-    public void setPersonId(String personId) {
+    public void setPersonId(Integer personId) {
         this.personId = personId;
     }
 
-    public PersonID(String personId) {
+    public PersonID(Integer personId) {
         this.personId = personId;
     }
 
-    private String personId;
+    private Integer personId;
 }

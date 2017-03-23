@@ -9,7 +9,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_margin="5dp"
-        android:background="@drawable/doctor"/>
+        android:background="@drawable/clinic_default"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

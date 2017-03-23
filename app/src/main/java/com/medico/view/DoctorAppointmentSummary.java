@@ -22,10 +22,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.datepicker.SlideDateTimeListener;
-import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.adapter.DiagnosticTestAdapter;
 import com.medico.adapter.MedicineAdapter;
+import com.medico.application.R;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic1;
 import com.medico.model.PersonID;
@@ -36,7 +37,6 @@ import com.medico.model.SummaryResponse.MedicinePrescribed;
 import com.medico.model.Symptom;
 import com.medico.model.VisitEditLogRequest;
 import com.medico.model.VisitEditLogResponse;
-import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -644,7 +644,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
 //            clinicValue.setVisibility(View.GONE);
             Bundle bundle1 = getActivity().getIntent().getExtras();
             Integer doctorId = bundle1.getInt(DOCTOR_ID);
-            api.getAllClinics1(new PersonID(doctorId.toString()), new Callback<List<Clinic1>>() {
+            api.getAllClinics(new PersonID(doctorId), new Callback<List<Clinic1>>() {
                 @Override
                 public void success(List<Clinic1> clinicsList, Response response) {
                     clinicSpinner.setAdapter(new ClinicSpinner(getActivity(), R.layout.customize_spinner, clinicsList));

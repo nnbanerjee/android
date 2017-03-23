@@ -309,11 +309,19 @@ public class DoctorHome extends HomeActivity
     }
     protected void manageClinics()
     {
-//        fragment = new ManageClinicFragment();
-//        fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Clinic").addToBackStack(null).commit();
-//        dList.setSelection(position);
-//        dLayout.closeDrawer(dList);
+
+        System.out.println("i am here::::::::::::");
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.CLINIC_SETTING_VIEW);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
+        dLayout.closeDrawer(dList);
     }
     protected void manageAssistants()
     {

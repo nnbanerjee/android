@@ -19,6 +19,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.medico.adapter.PlaceAutocompleteAdapter;
+import com.medico.model.Clinic1;
 import com.medico.model.Person;
 
 import java.util.StringTokenizer;
@@ -44,13 +45,13 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
     private AutoCompleteTextView mAutocompleteView;
     public TextView countryView;
     public TextView cityView;
-    private Person profile;
+    private Object profile;
 
     private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
     public static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(7.798000, 68.14712), new LatLng(37.090000, 97.34466));
 //    LocationService locationService = LocationService.getLocationManager(activity);
 
-    public GeoUtility(final Activity activity, AutoCompleteTextView geoField, final TextView country, TextView city, Button deletebutton, Button currentbutton, final Person profile)
+    public GeoUtility(final Activity activity, AutoCompleteTextView geoField, final TextView country, TextView city, Button deletebutton, Button currentbutton, final Object profile)
     {
         this.activity = activity;
         mGoogleApiClient = GeoClient.getInstance(activity).getGeoApiClient();
@@ -260,10 +261,22 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
             }
             countryView.setText(countryString);
             cityView.setText(cityString);
-            profile.setAddress(address);
-            profile.setLocationLat(place.getLatLng().latitude);
-            profile.setLocationLong(place.getLatLng().longitude);
-            profile.setCity(cityString);
+            if(profile instanceof Person)
+            {
+                Person person = (Person)profile;
+                person.setAddress(address);
+                person.setLocationLat(place.getLatLng().latitude);
+                person.setLocationLong(place.getLatLng().longitude);
+                person.setCity(cityString);
+            }
+            else if(profile instanceof Clinic1)
+            {
+                Clinic1 person = (Clinic1)profile;
+                person.address = address;
+                person.locationLat = place.getLatLng().latitude;
+                person.locationLong = place.getLatLng().longitude;
+                person.city = cityString;
+            }
             places.release();
 //            profile.setCountry(getCode(countryString));
         }

@@ -113,7 +113,17 @@ public interface PARAM
     public static final int ASSISTANT_SETTING_VIEW = 3;
     public static final int DEPENDENT_SETTING_VIEW = 4;
     public static final int DELEGATE_SETTING_VIEW = 5;
+    public static final int CLINIC_SETTING_VIEW = 6;
 
 
     public static final String DEPENDENT_DELEGATE_RELATION = "dependent_delegate_relation";
+
+
+    public static final String CLINIC_TYPE = "clinic_type";
+    public static final int CLINIC = 0;
+    public static final int PATHOLOGY = 1;
+    public static final int DIAGNOSTIC = 3;
+    public static final int ONLINE_CONSULATION = 4;
+    public static final int HOME_VISIT = 5;
+
 }

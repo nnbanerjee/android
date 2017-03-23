@@ -21,10 +21,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.datepicker.SlideDateTimeListener;
-import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.adapter.ClinicSpinnerAdapter;
 import com.medico.adapter.DiagnosticTestSpinnerAdapter;
+import com.medico.application.R;
+import com.medico.datepicker.SlideDateTimeListener;
+import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.Clinic1;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.PatientDiagnostic;
@@ -34,7 +35,6 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.util.AlarmService;
 import com.medico.util.PARAM;
-import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -212,7 +212,7 @@ public class PatientDiagnosticTests extends ParentFragment {
             medicineReminderBtn.setChecked(true);
         }
 
-        api.getAllClinics1(new PersonID(new Integer(doctorId).toString()), new Callback<List<Clinic1>>() {
+        api.getAllClinics(new PersonID(new Integer(doctorId)), new Callback<List<Clinic1>>() {
             @Override
             public void success(List<Clinic1> clinicsList, Response response) {
 

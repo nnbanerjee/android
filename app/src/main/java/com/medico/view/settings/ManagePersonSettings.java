@@ -141,6 +141,15 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
                 FragmentTransaction fft1 = getFragmentManager().beginTransaction();
                 fft1.add(R.id.service, assistantListView).addToBackStack(null).commit();
                 break;
+            case PARAM.CLINIC_SETTING_VIEW:
+                bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
+                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+                getIntent().putExtras(bundle);
+                ParentFragment clinicListView = new ManageClinicListView();
+                fragmentList.add(clinicListView);
+                FragmentTransaction fft33 = getFragmentManager().beginTransaction();
+                fft33.add(R.id.service, clinicListView).addToBackStack(null).commit();
+                break;
             case PARAM.DEPENDENT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
                 bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
