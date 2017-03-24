@@ -56,7 +56,7 @@ import retrofit.client.Response;
 public class ClinicSlotEditView extends ParentFragment {
 
     EditText slotNames,startTime,endTime,visitDuration,numberOfPatients,doctorFeeValue;
-    Spinner slotNumber,currency_value,assistant_list;
+    Spinner slotNumber,currency_value,assistant_list,time_unit;
     ImageView starttimestampImg,endtimestampImg;
     CheckBox[] days = new CheckBox[7];
     RadioButton[] policies = new RadioButton[4];
@@ -81,11 +81,13 @@ public class ClinicSlotEditView extends ParentFragment {
         endTime = (EditText)view.findViewById(R.id.endTime);
         visitDuration = (EditText)view.findViewById(R.id.visitDuration);
         numberOfPatients = (EditText)view.findViewById(R.id.numberOfPatients);
+        numberOfPatients.setEnabled(false);
         doctorFeeValue = (EditText)view.findViewById(R.id.doctorFeeValue);
 
         slotNumber = (Spinner) view.findViewById(R.id.slotNumber);
         currency_value = (Spinner) view.findViewById(R.id.currency_value);
         assistant_list = (Spinner) view.findViewById(R.id.assistant_list);
+        time_unit = (Spinner) view.findViewById(R.id.time_unit);
 
         starttimestampImg = (ImageView)view.findViewById(R.id.starttimestampImg);
         endtimestampImg = (ImageView)view.findViewById(R.id.endtimestampImg);
@@ -140,24 +142,7 @@ public class ClinicSlotEditView extends ParentFragment {
                 }
             }
         });
-        numberOfPatients.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                updateDurationAndPatientNumber();
-            }
-        });
 
         return view;
     }
@@ -232,6 +217,7 @@ public class ClinicSlotEditView extends ParentFragment {
         else
         {
             slotModel = new ClinicSlotDetails();
+            slotModel.availability = 1;
 
         }
     }
@@ -286,7 +272,10 @@ public class ClinicSlotEditView extends ParentFragment {
             {
                 DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
                 dateField.setText(format.format(date));
-                slotModel.timeToStart = date.getTime();
+                if(dateField == startTime)
+                    slotModel.timeToStart = date.getTime();
+                else
+                    slotModel.TimeToStop = date.getTime();
                 updateDurationAndPatientNumber();
             }
 
@@ -362,7 +351,8 @@ public class ClinicSlotEditView extends ParentFragment {
         slotModel.slotName = slotNames.getText().toString();
         slotModel.slotNumber = new Integer(slotNumber.getSelectedItem().toString()).byteValue();
         slotModel.slotType = new Integer(generalSlotType.isChecked()?0:1).byteValue();
-        slotModel.visitDuration = new Integer(visitDuration.getText().toString());
+        int visitDur = new Integer(visitDuration.getText().toString()) * (time_unit.getSelectedItemPosition()==0?1:60);
+        slotModel.visitDuration = new Integer(visitDur);
         slotModel.clinicId = bundle1.getInt(CLINIC_ID);
         slotModel.doctorId = bundle1.getInt(DOCTOR_ID);
         Person assistant = ((Person)assistant_list.getSelectedItem());
@@ -392,7 +382,14 @@ public class ClinicSlotEditView extends ParentFragment {
 
     private void updateDurationAndPatientNumber()
     {
-
+        String duration = visitDuration.getText().toString().trim();
+        if(slotModel.TimeToStop != null && slotModel.timeToStart != null && duration.length() > 0)
+        {
+            long visitDur = new Integer(duration) * (time_unit.getSelectedItemPosition()==0?60000:3600000);
+            long totalDuration = slotModel.TimeToStop.longValue() - slotModel.timeToStart.longValue();
+            long numberOfPa = totalDuration/visitDur;
+            numberOfPatients.setText(new Long(numberOfPa).toString());
+        }
     }
 
     private int getPolicySelectedIndex()
