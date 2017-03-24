@@ -182,4 +182,14 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
         client.getGeoApiClient().disconnect();
         super.onStop();
     }
+
+    public void registerView(ParentFragment fragment)
+    {
+        if(fragmentList.size() > 0)
+        {
+            ParentFragment previousFragment = fragmentList.get(fragmentList.size()-1);
+            previousFragment.setHasOptionsMenu(false);
+            fragmentList.add(fragment);
+        }
+    }
 }

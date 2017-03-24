@@ -1,0 +1,509 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="#ffffff"
+    android:overScrollMode="always"
+    android:isScrollContainer="true"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbars="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:id="@+id/layout0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slot Name"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:id="@+id/slotNameText"
+                />
+            <EditText
+                android:background="@color/grey"
+                android:layout_toRightOf="@+id/slotNameText"
+                android:layout_toEndOf="@+id/slotNameText"
+                android:layout_width="match_parent"
+                android:textColor="#1E90FF"
+                android:id="@+id/slotName"
+                android:layout_height="wrap_content">
+            </EditText>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/layout0"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:text="Slot Number"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                android:id="@+id/slotNumberText"
+                />
+            <Spinner
+                android:id="@+id/slotNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/slotNumberText"
+                android:completionThreshold="1"
+                android:paddingLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:entries="@array/slot_number"
+                android:layout_marginLeft="5dp"
+                android:textColor="#1E90FF"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                />
+             />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout1"
+            android:id="@+id/layout2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Timee"
+                style="@style/sub_heading"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:id="@+id/startTimeText"
+                />
+
+            <EditText
+                android:id="@+id/startTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:textColor="#1E90FF"
+                android:layout_toLeftOf="@+id/starttimestampImg"
+
+                android:layout_toRightOf="@+id/startTimeText"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/starttimestampImg"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/icon_clock"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout3"
+            android:layout_margin="5dp"
+
+            android:layout_below="@+id/layout2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Time"
+                style="@style/sub_heading"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:id="@+id/endTimeText"
+                />
+
+            <EditText
+                android:id="@+id/endTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:textColor="#1E90FF"
+                android:layout_toLeftOf="@+id/endtimestampImg"
+                android:layout_toRightOf="@+id/endTimeText"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/endtimestampImg"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/icon_clock"/>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/weekOfDays"
+            android:orientation="horizontal"
+            android:layout_below="@+id/layout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Days of Week"
+                style="@style/sub_heading"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:id="@+id/daysOfWeek"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/monday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/monday"
+                    android:text="MON"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/tuesday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/tuesday"
+                    android:text="TUE"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/wednesday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/wednesday"
+                    android:text="WED"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/thursday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/thursday"
+                    android:text="THU"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/friday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/friday"
+                    android:text="FRI"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/saturday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/saturday"
+                    android:text="SAT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/sunday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/sunday"
+                    android:text="SUN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout4"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/weekOfDays">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visit Duration"
+                android:ems="6"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                style="@style/sub_heading"
+                android:id="@+id/visitDurationText"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:id="@+id/visitDuration"
+                android:inputType="phone"
+                android:text="1"
+                android:maxLength="2"
+                android:completionThreshold="1"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/time_unit"
+                android:layout_toRightOf="@+id/visitDurationText"/>
+            <Spinner
+                android:id="@+id/time_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/visit_duration_unit"
+                android:layout_alignTop="@+id/duration_days"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout5"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/layout4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Patients"
+            style="@style/sub_heading"
+            android:ems="6"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:id="@+id/numberOfPatientsText"
+            />
+
+        <EditText
+            android:id="@+id/numberOfPatients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:completionThreshold="1"
+            android:inputType="number"
+            style="@style/textViewThemeForNewDesignWithoutMargin"
+            android:textColor="#1E90FF"
+            android:layout_toRightOf="@+id/numberOfPatientsText"
+            />
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout6"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slot Type"
+                android:ems="6"
+                android:textColor="@color/black"
+                style="@style/sub_heading"
+                android:layout_centerVertical="true"
+                android:id="@+id/slotType"
+                />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@id/slotType"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:id="@+id/generalSlotType"
+                        android:text="General"
+                        android:checked="true"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:id="@+id/primeSlotType"
+                        android:text="Prime"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout7"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout6">
+            <TextView
+                android:id="@+id/doctorFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                style="@style/sub_heading"
+                android:text="Doctor's Fee"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textViewThemeForNewDesignWithoutMargin"
+                android:id="@+id/doctorFeeValue"
+                android:inputType="number"
+                android:text="1"
+                android:maxLength="4"
+                android:completionThreshold="1"
+                android:textColor="#1E90FF"
+                android:paddingLeft="5dp"
+                android:layout_toLeftOf="@+id/currency_value"
+                android:layout_toRightOf="@+id/preview"/>
+            <Spinner
+                android:id="@+id/currency_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/currency_list"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout8"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/layout7">
+            <TextView
+                android:id="@+id/assistantText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                style="@style/sub_heading"
+                android:text="Assistant"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                />
+            <Spinner
+                android:id="@+id/assistant_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/assistantText"
+                 />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/onlineAppointmentConfirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout8"
+            android:paddingLeft="5dp"
+            android:textColor="@color/black"
+            style="@style/sub_heading"
+            android:text="Appointment Booking Auto Confirm Policy:"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/onlineAppointmentConfirmation"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="Always"
+                    android:id="@+id/always"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="Always except current slot"
+                    android:id="@+id/alwaysExceptCurrentSlot"
+                    android:checked="true"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="Always except current day"
+                    android:id="@+id/alwaysExceptCurrentDay"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="Never"
+                    android:id="@+id/never"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

@@ -41,25 +41,35 @@
         <item>Google Drive</item>
         <item>Dropbox</item>
     </string-array>
-
+    <string-array name="visit_duration_unit">
+        <item>Min</item>
+        <item>Hour</item>
+    </string-array>
+    <string-array name="slot_number">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
     <string-array name="access_level">
         <item>Read Only</item>
         <item>Full Access</item>
     </string-array>
-
     <string-array name="gender_list">
         <item>Male</item>
         <item>Female</item>
     </string-array>
 
     <string-array name="currency_list">
-        <item>Dollar</item>
-        <item>Rupees</item>
-        <item>Euro</item>
-        <item>Belize dollar</item>
-        <item>Bulgarian lev</item>
-        <item>Chilean peso</item>
+        <item>INR</item>
         <item>USD</item>
+        <item>Euro</item>
     </string-array>
     <string-array name="dependent_relations">
         <item>self</item>

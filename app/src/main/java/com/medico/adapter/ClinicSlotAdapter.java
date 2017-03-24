@@ -17,14 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.application.MyApi;
-import com.medico.model.RemovePatientTestRequest;
-import com.medico.model.ResponseCodeVerfication;
-import com.medico.model.SummaryResponse;
-import com.medico.util.PARAM;
-import com.medico.view.ManagePatientProfile;
-import com.medico.view.ParentFragment;
-import com.medico.view.PatientDiagnosticTests;
 import com.medico.application.R;
+import com.medico.model.ClinicSlotDetails;
+import com.medico.model.DoctorClinicId;
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.util.PARAM;
+import com.medico.view.ParentFragment;
+import com.medico.view.settings.ClinicSlotEditView;
+import com.medico.view.settings.ManagePersonSettings;
 
 import java.util.List;
 
@@ -37,30 +37,30 @@ import retrofit.client.Response;
 /**
  * Created by User on 04-11-2015.
  */
-public class DiagnosticTestAdapter extends BaseAdapter {
+public class ClinicSlotAdapter extends BaseAdapter {
     Activity activity;
-    List<SummaryResponse.TestPrescribed> alarms;
+    List<ClinicSlotDetails> slots;
     LayoutInflater inflater;
     MyApi api;
     SharedPreferences session;
     ProgressDialog progress;
     private int loggedInUserId;
 
-    public DiagnosticTestAdapter(Activity activity, List<SummaryResponse.TestPrescribed> alarms, int userId) {
+    public ClinicSlotAdapter(Activity activity, List<ClinicSlotDetails> slotDetailses, int userId) {
         this.activity = activity;
-        this.alarms = alarms;
+        this.slots = slotDetailses;
         session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loggedInUserId = userId;
     }
 
     @Override
     public int getCount() {
-        return alarms.size();
+        return slots.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return alarms.get(position);
+        return slots.get(position);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class DiagnosticTestAdapter extends BaseAdapter {
                         .build();
                 api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.diagnostic_test, null);
+                convertView = inflater.inflate(R.layout.medicine, null);
                 setView(convertView,position);
             }
             else
@@ -91,45 +91,45 @@ public class DiagnosticTestAdapter extends BaseAdapter {
     private void setView(final View convertView, int position)
     {
         final TextView name = (TextView)convertView.findViewById(R.id.medicine_name);
-        name.setTag(alarms.get(position));
+        name.setTag(slots.get(position));
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle args = activity.getIntent().getExtras();
-                SummaryResponse.TestPrescribed testPrescribed = (SummaryResponse.TestPrescribed)name.getTag();
-                args.putInt(PARAM.DIAGNOSTIC_TEST_ID, testPrescribed.testId);
+                ClinicSlotDetails medicinePrescribed = (ClinicSlotDetails)name.getTag();
+                args.putInt(PARAM.DOCTOR_CLINIC_ID, medicinePrescribed.doctorClinicId);
                 activity.getIntent().putExtras(args);
-                ParentFragment fragment = new PatientDiagnosticTests();
-                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                ParentFragment fragment = new ClinicSlotEditView();
+                ((ManagePersonSettings)activity).registerView(fragment);
                 fragment.setArguments(args);
-                FragmentManager fragmentManger = ((ManagePatientProfile) activity).getFragmentManager();
+                FragmentManager fragmentManger = ((ManagePersonSettings) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
-        name.setText(alarms.get(position).testName);
-        convertView.setTag(alarms.get(position));
+        name.setText(slots.get(position).slotName + " ( " + slots.get(position).slotNumber + " )");
+        convertView.setTag(slots.get(position));
         ImageView close = (ImageView)convertView.findViewById(R.id.close_button);
-        close.setTag(alarms.get(position));
+        close.setTag(slots.get(position));
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Close buttom clicked");
-                final SummaryResponse.TestPrescribed testPrescribed = (SummaryResponse.TestPrescribed)v.getTag();
+                final ClinicSlotDetails medicine = (ClinicSlotDetails)v.getTag();
                 new AlertDialog.Builder(convertView.getContext())
-                        .setTitle("Delete Diagnostic Test")
-                        .setMessage("Are you sure you want to delete this diagnostic test?")
+                        .setTitle("Delete Medicine")
+                        .setMessage("Are you sure you want to delete this medicine?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-                                RemovePatientTestRequest removeMedicineRequest = new RemovePatientTestRequest(testPrescribed.testId, loggedInUserId);
-                                api.removePatientDiagnosticTest(removeMedicineRequest, new Callback<ResponseCodeVerfication>() {
+                                DoctorClinicId removeSlotRequest = new DoctorClinicId(medicine.doctorClinicId);
+                                api.removeSlot(removeSlotRequest, new Callback<ResponseCodeVerfication>() {
                                     @Override
                                     public void success(ResponseCodeVerfication result, Response response) {
                                         progress.dismiss();
                                         if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
-                                            Toast.makeText(activity, "Diagnostic Test Removed!!!!!", Toast.LENGTH_SHORT).show();
-                                            alarms.remove(testPrescribed);
+                                            Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+                                            slots.remove(medicine);
                                             notifyDataSetChanged();
                                         }
                                     }
@@ -154,14 +154,13 @@ public class DiagnosticTestAdapter extends BaseAdapter {
             }
         });
         ImageView alarm = (ImageView)convertView.findViewById(R.id.alarm_button);
-        alarm.setTag(alarms.get(position));
+        alarm.setTag(slots.get(position));
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("alarm buttom clicked");
             }
         });
-        alarm.setVisibility(alarms.get(position).reminder==1?View.VISIBLE:View.INVISIBLE);
     }
 
 

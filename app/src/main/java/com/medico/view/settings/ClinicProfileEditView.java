@@ -1,5 +1,6 @@
 package com.medico.view.settings;
 
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,20 +16,26 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.medico.adapter.ClinicSlotAdapter;
 import com.medico.application.R;
 import com.medico.model.Clinic1;
 import com.medico.model.ClinicId;
+import com.medico.model.ClinicSlotDetails;
 import com.medico.model.Country;
+import com.medico.model.DoctorClinicRequest;
 import com.medico.model.ServerResponse;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.view.ParentFragment;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -42,7 +50,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     public static int SELECT_DOCUMENT = 2;
     ProgressDialog progress;
     MenuItem menuItem;
-    ImageView profilePic;
+    ImageView profilePic,addClinicSlot;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
     TextView id;
     EditText name, email, country, city, mobile;
@@ -52,6 +60,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Clinic1 clinicModel;
+    ListView slotListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +81,8 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         country = (EditText) view.findViewById(R.id.country_spinner);
         city = (EditText) view.findViewById(R.id.city);
         specialization = (Spinner) view.findViewById(R.id.specialization);
+        addClinicSlot = (ImageView)view.findViewById(R.id.add_alarm);
+        slotListView = (ListView)view.findViewById(R.id.alarm_list);
         Bundle bundle = getActivity().getIntent().getExtras();
         switch (bundle.getInt(CLINIC_TYPE)) {
             case CLINIC:
@@ -110,6 +121,41 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 specialization.setAdapter(home_professionsArrayAdapter);
                 break;
        }
+        addClinicSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = getActivity().getIntent().getExtras();
+                args.putInt(DOCTOR_CLINIC_ID,0);
+                getActivity().getIntent().putExtras(args);
+                ParentFragment fragment = new ClinicSlotEditView();
+                ((ManagePersonSettings)getActivity()).registerView(fragment);
+                fragment.setArguments(args);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });
+        slotListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
         return view;
     }
 
@@ -119,6 +165,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        final Integer doctorId = bundle.getInt(DOCTOR_ID);
         final Integer clinicId = bundle.getInt(CLINIC_ID);
         final Integer clinicType = bundle.getInt(CLINIC_TYPE);
         final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
@@ -153,7 +200,23 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                             menuItem.setEnabled(false);
                             setEditableAll(false);
                         }
-                        mobile_country.setSelection(getCountryIndex(clinic.location));
+                        api.getAllSlotDetails(new DoctorClinicRequest(doctorId,clinicId), new Callback<List<ClinicSlotDetails>>() {
+                            @Override
+                            public void success(List<ClinicSlotDetails> clinicslots, Response response) {
+                                if (clinicslots != null && clinicslots.size() > 0)
+                                {
+                                    ClinicSlotAdapter adapter = new ClinicSlotAdapter(getActivity(), clinicslots, loggedinUserId);
+                                    slotListView.setAdapter(adapter);
+                                }
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                error.printStackTrace();
+                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                progress.dismiss();
+                            }
+                        });
 
                     }
                     setEditable(false);

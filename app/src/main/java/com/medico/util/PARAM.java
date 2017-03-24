@@ -7,6 +7,11 @@ package com.medico.util;
 public interface PARAM
 {
     public static final String MyPREFERENCES = "MyPrefs";
+
+    public static String EXECUTION_STATUS = "status";
+    public static int STATUS_SUCCESS = 1;
+    public static int STATUS_FAILED = 0;
+
     public static final int DOCTOR = 1;
     public static final int PATIENT = 0;
     public static final int ASSISTANT = 2;

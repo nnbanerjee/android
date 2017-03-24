@@ -8,6 +8,7 @@ import com.medico.model.AppointmentPatientIds;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.Clinic1;
 import com.medico.model.ClinicId;
+import com.medico.model.ClinicSlotDetails;
 import com.medico.model.Country;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
@@ -18,6 +19,7 @@ import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorClinicId;
+import com.medico.model.DoctorClinicRequest;
 import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
@@ -146,6 +148,21 @@ public interface MyApi {
 //
     @POST("/addClinic")
     void addClinic(@Body Clinic1 clinicDetails, Callback<ServerResponse> callback);
+
+    @POST("/createSlot")
+    void createSlot(@Body ClinicSlotDetails request, Callback<ResponseCodeVerfication> callback);
+
+    @POST("/updateSlot")
+    void updateSlot(@Body ClinicSlotDetails request, Callback<ResponseCodeVerfication> callback);
+
+    @POST("/removeSlot")
+    void removeSlot(@Body DoctorClinicId request, Callback<ResponseCodeVerfication> callback);
+
+    @POST("/getSlotDetail")
+    void getSlotDetail(@Body DoctorClinicId request, Callback<ClinicSlotDetails> callback);
+
+    @POST("/getAllSlotDetails")
+    void getAllSlotDetails(@Body DoctorClinicRequest request, Callback<List<ClinicSlotDetails>> callback);
 
     @POST("/getClinicDetails")
     void getClinicDetails(@Body ClinicId clinicId, Callback<Clinic1> callback);

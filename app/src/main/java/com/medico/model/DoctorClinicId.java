@@ -14,4 +14,12 @@ public class DoctorClinicId
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
+    public DoctorClinicId(Integer doctorClinicId)
+    {
+        this.doctorClinicId = doctorClinicId;
+    }
+    public DoctorClinicId()
+    {
+
+    }
 }

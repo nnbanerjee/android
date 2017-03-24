@@ -335,51 +335,73 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout10"
+        <RelativeLayout
+            android:id="@+id/layout10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout9"
+
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/medicinePrescribedText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout9"
+                android:text="Slots Defined"
+                android:paddingTop="15dp"
+                style="@style/body2"/>
 
-                android:layout_margin="5dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/medicinePrescribedText"
+                android:background="@drawable/square_grey_color"
+                android:id="@+id/relativeLayout">
 
-                <TextView
-                    android:id="@+id/slot_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Defined Slots"
-                    android:paddingTop="15dp"
-                    style="@style/body2"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
-
-                <RelativeLayout
+                <MultiAutoCompleteTextView
+                    android:id="@+id/medicineValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/slot_text"
-                    android:background="@drawable/square_grey_color"
-                    android:id="@+id/relativeLayout">
+                    style="@style/textViewThemeForNewDesign"
+                    android:visibility="gone"
+                    android:layout_toLeftOf="@+id/reminderBtn"
+                    android:completionThreshold="1"
+                    android:paddingLeft="5dp"
+                    android:textColor="#1E90FF"
+                    android:textSize="@dimen/edit_text" />
 
-                    <Button
-                        android:id="@+id/add_slot"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:visibility="gone"
-                        android:layout_marginRight="5dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                <Button
+                    android:id="@+id/reminderBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
 
-                        android:background="@drawable/medicine_reminder" />
-                    <ListView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_margin="5dp"
-                        android:id="@+id/Slot_list">
-                    </ListView>
-                </RelativeLayout>
-
+                    android:background="@drawable/medicine_reminder" />
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    android:id="@+id/alarm_list">
+                </ListView>
             </RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_alarm"
+                android:paddingTop="15dp"
+                android:background="@drawable/add"
+                android:clickable="true"
+                android:layout_above="@+id/relativeLayout"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="23dp"
+                android:layout_marginRight="17dp" />
+
+        </RelativeLayout>
         </RelativeLayout>
 </ScrollView>

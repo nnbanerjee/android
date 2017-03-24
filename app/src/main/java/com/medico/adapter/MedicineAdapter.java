@@ -128,7 +128,7 @@ public class MedicineAdapter extends BaseAdapter {
                                     @Override
                                     public void success(ResponseCodeVerfication result, Response response) {
                                         progress.dismiss();
-                                        if (result.getStatus().equalsIgnoreCase("1")) {
+                                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
                                             Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
                                             alarms.remove(medicine);
                                             notifyDataSetChanged();
