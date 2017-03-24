@@ -392,7 +392,7 @@ public class ClinicSlotEditView extends ParentFragment {
         }
     }
 
-    private int getPolicySelectedIndex()
+    private int getPolicySelectedIndex() 
     {
         for(int i = 0; i < policies.length; i++)
         {
