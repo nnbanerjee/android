@@ -7,6 +7,7 @@ package com.medico.model;
 public class DoctorClinicId
 {
     Integer doctorClinicId;
+    Integer availability;
     Long fromDate, toDate;
     public DoctorClinicId(Integer doctorClinicId, Long fromDate, Long toDate)
     {
@@ -17,6 +18,11 @@ public class DoctorClinicId
     public DoctorClinicId(Integer doctorClinicId)
     {
         this.doctorClinicId = doctorClinicId;
+    }
+    public DoctorClinicId(Integer doctorClinicId, Integer availability)
+    {
+        this.doctorClinicId = doctorClinicId;
+        this.availability = availability;
     }
     public DoctorClinicId()
     {

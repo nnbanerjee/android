@@ -158,6 +158,9 @@ public interface MyApi {
     @POST("/removeSlot")
     void removeSlot(@Body DoctorClinicId request, Callback<ResponseCodeVerfication> callback);
 
+    @POST("/setSlotAvailability")
+    void setSlotAvailability(@Body DoctorClinicId request, Callback<ResponseCodeVerfication> callback);
+
     @POST("/getSlotDetail")
     void getSlotDetail(@Body DoctorClinicId request, Callback<ClinicSlotDetails> callback);
 

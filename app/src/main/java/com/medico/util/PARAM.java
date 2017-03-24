@@ -9,6 +9,7 @@ public interface PARAM
     public static final String MyPREFERENCES = "MyPrefs";
 
     public static String EXECUTION_STATUS = "status";
+    public static int STATUS_WARNING = 2;
     public static int STATUS_SUCCESS = 1;
     public static int STATUS_FAILED = 0;
 

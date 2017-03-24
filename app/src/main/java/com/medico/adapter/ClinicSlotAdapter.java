@@ -1,11 +1,9 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -110,46 +108,78 @@ public class ClinicSlotAdapter extends BaseAdapter {
         convertView.setTag(slots.get(position));
         ImageView close = (ImageView)convertView.findViewById(R.id.close_button);
         close.setTag(slots.get(position));
+//        close.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                System.out.println("Close buttom clicked");
+//                final ClinicSlotDetails medicine = (ClinicSlotDetails)v.getTag();
+//                new AlertDialog.Builder(convertView.getContext())
+//                        .setTitle("Delete Medicine")
+//                        .setMessage("Are you sure you want to disable the slot?")
+//                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // continue with delete
+//                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+//                                DoctorClinicId removeSlotRequest = new DoctorClinicId(medicine.doctorClinicId);
+//                                api.removeSlot(removeSlotRequest, new Callback<ResponseCodeVerfication>() {
+//                                    @Override
+//                                    public void success(ResponseCodeVerfication result, Response response) {
+//                                        progress.dismiss();
+//                                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
+//                                            Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+//                                            slots.remove(medicine);
+//                                            notifyDataSetChanged();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void failure(RetrofitError error) {
+//                                        progress.dismiss();
+//                                        error.printStackTrace();
+//                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                            }
+//                        })
+//                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // do nothing
+//                            }
+//                        })
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+//                        .show();
+//
+//            }
+//        });
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Close buttom clicked");
                 final ClinicSlotDetails medicine = (ClinicSlotDetails)v.getTag();
-                new AlertDialog.Builder(convertView.getContext())
-                        .setTitle("Delete Medicine")
-                        .setMessage("Are you sure you want to delete this medicine?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-                                DoctorClinicId removeSlotRequest = new DoctorClinicId(medicine.doctorClinicId);
-                                api.removeSlot(removeSlotRequest, new Callback<ResponseCodeVerfication>() {
-                                    @Override
-                                    public void success(ResponseCodeVerfication result, Response response) {
-                                        progress.dismiss();
-                                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
-                                            Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
-                                            slots.remove(medicine);
-                                            notifyDataSetChanged();
-                                        }
-                                    }
+                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                DoctorClinicId removeSlotRequest = new DoctorClinicId(medicine.doctorClinicId,0);
+                api.setSlotAvailability(removeSlotRequest, new Callback<ResponseCodeVerfication>() {
+                    @Override
+                    public void success(ResponseCodeVerfication result, Response response) {
+                        progress.dismiss();
+                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
+                            Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
+                        }
+                        else if (result.getStatus().intValue() == PARAM.STATUS_WARNING) {
+                            Toast.makeText(activity, "Medicine Removed however there are future appointments", Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
+                        }
+                    }
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        progress.dismiss();
-                                        error.printStackTrace();
-                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progress.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
             }
         });
