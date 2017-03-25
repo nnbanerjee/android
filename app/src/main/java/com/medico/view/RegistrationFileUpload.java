@@ -21,11 +21,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.R;
 import com.medico.model.FileUpload1;
 import com.medico.model.ResponseAddDocuments;
 import com.medico.util.ImageUtil;
-import com.medico.util.PARAM;
-import com.medico.application.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -132,13 +131,13 @@ public class RegistrationFileUpload extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        Bundle bundle = getActivity().getIntent().getExtras();
-        final int doctorId = bundle.getInt(DOCTOR_ID);
-        final int patientId = bundle.getInt(PATIENT_ID);
-        final Integer testId = bundle.getInt(PARAM.DIAGNOSTIC_TEST_ID);
-        final Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
-        final Integer clinicId = bundle.getInt(CLINIC_ID);
-        final int logged_in_id = bundle.getInt(LOGGED_IN_ID);
+//        Bundle bundle = getActivity().getIntent().getExtras();
+//        final int doctorId = bundle.getInt(DOCTOR_ID);
+//        final int patientId = bundle.getInt(PATIENT_ID);
+//        final Integer testId = bundle.getInt(PARAM.DIAGNOSTIC_TEST_ID);
+//        final Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
+//        final Integer clinicId = bundle.getInt(CLINIC_ID);
+//        final int logged_in_id = bundle.getInt(LOGGED_IN_ID);
 
     }
 

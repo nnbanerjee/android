@@ -39,6 +39,7 @@ public interface PARAM
     public static final String LOGGED_IN_USER_ROLE = "role";
     public static final String LOGGED_IN_USER_STATUS = "status";
     public static final String PROFILE_ROLE = "profile_role";
+    public static final String PROFILE_STATUS = "profile_status";
 
     public static final String PROFILE_TYPE = "profile_type";
 
@@ -114,12 +115,13 @@ public interface PARAM
 
 
     public static final String SETTING_VIEW_ID = "setting_view_id";
-    public static final int MANAGE_DOCTOR_PROFILE_VIEW = 1;
+    public static final int MANAGE_PROFILE_VIEW = 1;
     public static final int PATIENT_SETTING_VIEW = 2;
     public static final int ASSISTANT_SETTING_VIEW = 3;
     public static final int DEPENDENT_SETTING_VIEW = 4;
     public static final int DELEGATE_SETTING_VIEW = 5;
     public static final int CLINIC_SETTING_VIEW = 6;
+    public static final int DOCTOR_SETTING_VIEW = 7;
 
 
     public static final String DEPENDENT_DELEGATE_RELATION = "dependent_delegate_relation";

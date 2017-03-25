@@ -164,9 +164,9 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        Integer profileId = bundle.getInt(PROFILE_ID);
+        final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
-        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
+//        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
         mobile_country.setAdapter(countryListAdapter);
         if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
@@ -193,7 +193,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                         bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == loggedinUserId)
+                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == profileId.intValue())
                         {
                             menuItem.setEnabled(true);
                             setEditableAll(true);
@@ -225,7 +225,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             personModel = new Person();
             personModel.setRole(profileRole.byteValue());
             personModel.setStatus(new Integer(2).byteValue());
-            personModel.setAddedBy(loggedinUserId);
+            personModel.setAddedBy(profileId);
             personModel.setPrime(new Integer(0).byteValue());
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             setEditable(true);

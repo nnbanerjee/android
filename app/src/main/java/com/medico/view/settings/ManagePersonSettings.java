@@ -117,15 +117,22 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
         Bundle bundle = getIntent().getExtras();
         int viewId = bundle.getInt(PARAM.SETTING_VIEW_ID);
         switch (viewId) {
-            case PARAM.MANAGE_DOCTOR_PROFILE_VIEW:
-                ParentFragment fragment = new DoctorProfileEdit();
-                fragmentList.add(fragment);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.service, fragment).addToBackStack(null).commit();
+            case PARAM.MANAGE_PROFILE_VIEW:
+                if(bundle.getInt(LOGGED_IN_USER_ROLE) == DOCTOR)
+                {
+                    ParentFragment fragment = new DoctorProfileEdit();
+                    fragmentList.add(fragment);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.service, fragment).addToBackStack(null).commit();
+                }
+                else if(bundle.getInt(LOGGED_IN_USER_ROLE) == PATIENT)
+                {
+                    //open patient profile
+                }
                 break;
             case PARAM.PATIENT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, PATIENT);
-                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment patientListView = new ManagePersonListView();
                 fragmentList.add(patientListView);
@@ -143,7 +150,7 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
                 break;
             case PARAM.CLINIC_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
-                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment clinicListView = new ManageClinicListView();
                 fragmentList.add(clinicListView);
@@ -152,7 +159,8 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
                 break;
             case PARAM.DEPENDENT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
-                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+//                bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
+//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment dependentListView = new ManageDependentDelegateListView();
                 fragmentList.add(dependentListView);
@@ -161,14 +169,23 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
                 break;
             case PARAM.DELEGATE_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
-                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+//                bundle.putInt(LOGGED_IN_ID,bundle.getInt(PROFILE_ID));
+//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment delegateListView = new ManageDependentDelegateListView();
                 fragmentList.add(delegateListView);
                 FragmentTransaction fft3 = getFragmentManager().beginTransaction();
                 fft3.add(R.id.service, delegateListView).addToBackStack(null).commit();
                 break;
-
+            case PARAM.DOCTOR_SETTING_VIEW:
+                bundle.putInt(PARAM.PROFILE_TYPE, DOCTOR);
+//                bundle.putInt(PARAM.PROFILE_ROLE, DOCTOR);
+                getIntent().putExtras(bundle);
+                ParentFragment doctorListView = new ManagePersonListView();
+                fragmentList.add(doctorListView);
+                FragmentTransaction fft5 = getFragmentManager().beginTransaction();
+                fft5.add(R.id.service, doctorListView).addToBackStack(null).commit();
+                break;
         }
     }
     @Override

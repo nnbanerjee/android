@@ -181,7 +181,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                 profileNamedependent = null;
                 depends = personProfile.getDependents();
                 delegates = personProfile.getDelegates();
-        }
+            }
             else
             {
                 profileName = (TextView) layout.findViewById(R.id.profile_name);
@@ -462,15 +462,23 @@ public abstract class HomeActivity extends Activity implements PARAM
 
     }
 
-    protected abstract void manageProfile();
 
-
+    protected void manageProfile()
+    {
+        System.out.println("i am here::::::::::::");
+        Bundle bundle = new Bundle();
+        setSettingParameters(bundle);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.MANAGE_PROFILE_VIEW);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
+        dLayout.closeDrawer(dList);
+    }
     protected void manageDependents()
     {
         Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        setSettingParameters(bundle);
         bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DEPENDENT_SETTING_VIEW);
         Intent intObj = new Intent(this, ManagePersonSettings.class);
         intObj.putExtras(bundle);
@@ -478,19 +486,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         onPause();
         dLayout.closeDrawer(dList);
     }
-    protected void manageDelegations()
-    {
-        Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
-        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DELEGATE_SETTING_VIEW);
-        Intent intObj = new Intent(this, ManagePersonSettings.class);
-        intObj.putExtras(bundle);
-        startActivity(intObj);
-        onPause();
-        dLayout.closeDrawer(dList);
-    }
+
     protected void termsAndConditions()
     {
 //        fragment = new ManageMessageNotification();
@@ -534,5 +530,23 @@ public abstract class HomeActivity extends Activity implements PARAM
     {
         return parent_activity;
     }
+    protected void setSettingParameters(Bundle bundle)
+    {
+        if(parent != null)
+        {
+            bundle.putInt(PARAM.LOGGED_IN_ID, parent.getPerson().getId());
+            bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, parent.getPerson().getRole());
+            bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, parent.getPerson().getStatus());
+        }
+        else
+        {
+            bundle.putInt(PARAM.LOGGED_IN_ID, profileId);
+            bundle.putInt(PARAM.LOGGED_IN_USER_ROLE,profileRole);
+            bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, profileStatus);
+        }
+        bundle.putInt(PARAM.PROFILE_ID, profileId);
+        bundle.putInt(PARAM.PROFILE_ROLE, profileRole);
+        bundle.putInt(PARAM.PROFILE_STATUS,profileStatus);
 
+    }
 }

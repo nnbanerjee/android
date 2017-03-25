@@ -83,8 +83,9 @@ public class ManagePersonListView extends ParentFragment {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
+        Integer profileId = bundle.getInt(PROFILE_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
-        LinkedPersonRequest request = new LinkedPersonRequest(loggedinUserId,profileType);
+        LinkedPersonRequest  request = new LinkedPersonRequest(profileId,profileType);
         api.getPersonLinkage(request, new Callback<List<Person>>() {
             @Override
             public void success(final List<Person> allPatientsProfiles, Response response) {

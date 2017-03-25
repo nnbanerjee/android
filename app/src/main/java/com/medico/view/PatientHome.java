@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -19,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.MenuAdapter;
+import com.medico.application.R;
 import com.medico.model.PatientId;
 import com.medico.model.PatientProfile;
 import com.medico.util.ImageLoadTask;
-import com.medico.application.R;
+import com.medico.util.PARAM;
+import com.medico.view.settings.ManagePersonSettings;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -267,62 +270,32 @@ public class PatientHome extends HomeActivity
         });
     }
 
-    protected void manageProfile()
-    {
-//        System.out.println("I am in profile condition:::::::::::::::::::");
-//        fragment = new ManageProfilePatient();
-//        fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Doctor").addToBackStack(null).commit();
-//        dList.setSelection(position);
-//        dLayout.closeDrawer(dList);
-    }
+
     protected void manageDoctors()
     {
-
+        System.out.println("i am here::::::::::::");
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM.PATIENT_ID, profileId);
+        setSettingParameters(bundle);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
+        dLayout.closeDrawer(dList);
+    }
+    protected void manageDelegations()
+    {
+        Bundle bundle = new Bundle();
+        setSettingParameters(bundle);
+        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DELEGATE_SETTING_VIEW);
+        Intent intObj = new Intent(this, ManagePersonSettings.class);
+        intObj.putExtras(bundle);
+        startActivity(intObj);
+        onPause();
+        dLayout.closeDrawer(dList);
     }
 
-//     protected void manageDependent(in)
-//    {
-////        if (profileRole == DOCTOR) {
-////            fragment = new ManageDendencyDoctor();
-////            fragmentManger = getFragmentManager();
-////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-////            dList.setSelection(position);
-////            dLayout.closeDrawer(dList);
-////        } else if (profileRole == PATIENT) {
-////            fragment = new ManageDendencyFragment();
-////            fragmentManger = getFragmentManager();
-////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Dependency").addToBackStack(null).commit();
-////            dList.setSelection(position);
-////            dLayout.closeDrawer(dList);
-////        }
-//
-//    }
-//    protected void manageDelegation(int position)
-//    {
-////        if (profileRole == DOCTOR) {
-////            fragment = new ManageDelegationFragment();
-////            fragmentManger = getFragmentManager();
-////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-////            dList.setSelection(position);
-////            dLayout.closeDrawer(dList);
-////        } else if (profileRole == PATIENT) {
-////            fragment = new ManageDelegationPatient();
-////            fragmentManger = getFragmentManager();
-////            fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Delegation").addToBackStack(null).commit();
-////            dList.setSelection(position);
-////            dLayout.closeDrawer(dList);
-////        }
-//    }
-//     protected void manageNotification(int position)
-//    {
-////        fragment = new ManageMessageNotification();
-////        fragmentManger = getFragmentManager();
-////        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-////        dList.setSelection(position);
-////        dLayout.closeDrawer(dList);
-//    }
-    // The method that displays the popup.
     @Override
     protected void showPopup(final Activity context, Point p) {
 

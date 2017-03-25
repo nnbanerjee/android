@@ -212,9 +212,6 @@ public class DoctorHome extends HomeActivity
                     case "Manage Dependents":
                         manageDependents();
                         break;
-                    case "Manage Delegations":
-                        manageDelegations();
-                        break;
 
                     case "Manage Templates":
                         manageTemplates();
@@ -276,30 +273,12 @@ public class DoctorHome extends HomeActivity
             }
         });
     }
-    @Override
-    protected void manageProfile()
-    {
-        System.out.println("i am here::::::::::::");
-        Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
-        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.MANAGE_DOCTOR_PROFILE_VIEW);
-        Intent intObj = new Intent(this, ManagePersonSettings.class);
-        intObj.putExtras(bundle);
-        startActivity(intObj);
-        onPause();
-        dLayout.closeDrawer(dList);
-    }
+
     protected void managePatients()
     {
         System.out.println("i am here::::::::::::");
         Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        setSettingParameters(bundle);
         bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
         Intent intObj = new Intent(this, ManagePersonSettings.class);
         intObj.putExtras(bundle);
@@ -312,10 +291,7 @@ public class DoctorHome extends HomeActivity
 
         System.out.println("i am here::::::::::::");
         Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        setSettingParameters(bundle);
         bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.CLINIC_SETTING_VIEW);
         Intent intObj = new Intent(this, ManagePersonSettings.class);
         intObj.putExtras(bundle);
@@ -327,10 +303,7 @@ public class DoctorHome extends HomeActivity
     {
         System.out.println("i am here::::::::::::");
         Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-        bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-        bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+        setSettingParameters(bundle);
         bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.ASSISTANT_SETTING_VIEW);
         Intent intObj = new Intent(this, ManagePersonSettings.class);
         intObj.putExtras(bundle);

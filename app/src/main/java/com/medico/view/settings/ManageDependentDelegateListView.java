@@ -82,10 +82,10 @@ public class ManageDependentDelegateListView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-
+        Integer profileId = bundle.getInt(PROFILE_ID);
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
-        DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(loggedinUserId, profileType);
+        DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(profileId, profileType);
         api.getAllDependentsDelegates(request1, new Callback<List<DependentDelegatePerson>>() {
             @Override
             public void success(final List<DependentDelegatePerson> allPatientsProfiles, Response response) {

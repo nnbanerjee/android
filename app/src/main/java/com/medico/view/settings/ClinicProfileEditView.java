@@ -165,7 +165,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        final Integer doctorId = bundle.getInt(DOCTOR_ID);
+        final Integer doctorId = bundle.getInt(PROFILE_ID);
         final Integer clinicId = bundle.getInt(CLINIC_ID);
         final Integer clinicType = bundle.getInt(CLINIC_TYPE);
         final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
