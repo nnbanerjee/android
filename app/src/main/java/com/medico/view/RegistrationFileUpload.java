@@ -26,7 +26,7 @@ import com.medico.model.FileUpload1;
 import com.medico.model.ResponseAddDocuments;
 import com.medico.util.ImageUtil;
 
-import java.io.File;
+import java.io.File; 
 import java.util.ArrayList;
 import java.util.Calendar;
 

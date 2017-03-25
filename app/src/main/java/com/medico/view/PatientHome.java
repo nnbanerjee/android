@@ -27,7 +27,7 @@ import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.settings.ManagePersonSettings;
 
-import retrofit.Callback;
+import retrofit.Callback; 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 

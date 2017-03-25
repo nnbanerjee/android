@@ -177,7 +177,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 public void success(Clinic1 clinic, Response response) {
                     if (clinic != null && clinic.idClinic != null) {
                         clinicModel = clinic;
-                        String url = clinic.imageUrl;
+                        String url = clinic.imageUrl; 
                         if(url != null && url.trim().length() > 0)
                             new ImageLoadTask(url, profilePic).execute();
                         id.setText(clinic.idClinic.toString());

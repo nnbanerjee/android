@@ -40,7 +40,7 @@ public interface PARAM
     public static final String LOGGED_IN_USER_STATUS = "status";
     public static final String PROFILE_ROLE = "profile_role";
     public static final String PROFILE_STATUS = "profile_status";
-
+ 
     public static final String PROFILE_TYPE = "profile_type";
 
     public static final String PROFILE_ID = "profileId";

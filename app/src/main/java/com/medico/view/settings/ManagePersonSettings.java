@@ -131,7 +131,7 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
                 }
                 break;
             case PARAM.PATIENT_SETTING_VIEW:
-                bundle.putInt(PARAM.PROFILE_TYPE, PATIENT);
+                bundle.putInt(PARAM.PROFILE_TYPE, PATIENT); 
 //                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment patientListView = new ManagePersonListView();

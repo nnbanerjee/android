@@ -232,7 +232,7 @@ public class DoctorHome extends HomeActivity
     protected void setParameters()
     {
         session = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        profileId = session.getInt(LOGGED_IN_ID,PATIENT);
+        profileId = session.getInt(LOGGED_IN_ID,PATIENT); 
         profileRole = session.getInt(LOGGED_IN_USER_ROLE, PATIENT);
         profileStatus = session.getInt(LOGGED_IN_USER_STATUS, UNREGISTERED);
     }

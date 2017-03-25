@@ -95,7 +95,7 @@ public class ManageDependentDelegateListView extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error) { 
                 progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();

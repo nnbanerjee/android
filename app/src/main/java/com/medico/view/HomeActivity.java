@@ -191,7 +191,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                 depends = personProfile.getDependents();
                 delegates = personProfile.getDelegates();
                 selfDependentProfile = true;
-            }
+            } 
         }
         if (depends == null || depends.size() == 0)
         {

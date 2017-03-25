@@ -405,7 +405,7 @@ public class ClinicSlotEditView extends ParentFragment {
     private String getDaysOfWeek()
     {
         String daysOfWeek = null;
-        for(int i = 0; i < days.length; i++)
+        for(int i = 0; i < days.length; i++) 
         {
             if(days[i].isChecked()) {
                 if(daysOfWeek == null)

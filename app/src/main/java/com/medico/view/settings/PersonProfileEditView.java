@@ -172,7 +172,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
             api.getProfile(new ProfileId(profileId), new Callback<Person>() {
                 @Override
-                public void success(Person person, Response response) {
+                public void success(Person person, Response response) { 
                     if (person != null && person.getId() != null) {
                         personModel = person;
                         String url = person.getImageUrl();
