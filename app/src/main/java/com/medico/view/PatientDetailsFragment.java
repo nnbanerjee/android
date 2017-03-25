@@ -45,7 +45,7 @@ public class PatientDetailsFragment extends ParentFragment {
 
         View view = inflater.inflate(R.layout.patient_profile_details, container, false);
         patientName = (TextView) view.findViewById(R.id.patient_name);
-        doctorSpeciality = (TextView) view.findViewById(R.id.doctorSpeciality);
+        doctorSpeciality = (TextView) view.findViewById(R.id.clinicSpeciality);
         address = (TextView)view.findViewById(R.id.address);
         lastVisitedValue = (TextView) view.findViewById(R.id.last_visited);
         nextAppointment = (TextView) view.findViewById(R.id.next_appointment);
@@ -56,7 +56,7 @@ public class PatientDetailsFragment extends ParentFragment {
         appointmentsBtn = (Button) view.findViewById(R.id.appointment);
         profileBtn = (Button) view.findViewById(R.id.profile);
 
-        viewImage = (ImageView) view.findViewById(R.id.doctorImg);
+        viewImage = (ImageView) view.findViewById(R.id.clinic_image);
         viewImage.setBackgroundResource(R.drawable.patient);
         visitDates = (ImageView) view.findViewById(R.id.viewAll);
         closeMenu = (ImageView) view.findViewById(R.id.downImg);

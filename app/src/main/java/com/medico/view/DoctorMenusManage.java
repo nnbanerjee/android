@@ -19,6 +19,7 @@ import com.medico.application.MyApi;
 import com.medico.model.DoctorProfile;
 import com.medico.util.PARAM;
 import com.medico.application.R;
+import com.medico.view.appointment.ManageDoctorAppointment;
 
 //import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
 //import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
@@ -52,7 +53,7 @@ public class DoctorMenusManage extends Fragment {
         RelativeLayout patientsProfilelayout = (RelativeLayout) view.findViewById(R.id.layout1);
         RelativeLayout layout2 = (RelativeLayout) view.findViewById(R.id.layout2);
         RelativeLayout manage_finance = (RelativeLayout) view.findViewById(R.id.manage_finance);
-        RelativeLayout layout4 = (RelativeLayout) view.findViewById(R.id.layout4);
+        RelativeLayout manageAppointment = (RelativeLayout) view.findViewById(R.id.layout4);
         RelativeLayout manage_feedback = (RelativeLayout) view.findViewById(R.id.manage_feedback);
         totalPatientCount = (TextView) view.findViewById(R.id.total_patients);
         totalAppointments = (TextView) view.findViewById(R.id.total_appointments);
@@ -90,15 +91,15 @@ public class DoctorMenusManage extends Fragment {
             }
         });
 
-        layout4.setOnClickListener(new View.OnClickListener() {
+        manageAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
-                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
-                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
-                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
-                Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManageDoctorAppointment.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
                 onPause();

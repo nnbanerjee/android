@@ -1,0 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/clinic_image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/clinic_default"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/clinic_image"
+        android:background="#ffffff"
+        android:id="@+id/relativeLayout2">
+
+        <TextView
+            android:id="@+id/clinic_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doctor Name"
+            android:textColor="@color/color_blue_default"
+            style="@style/title" />
+
+        <ImageView
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_toLeftOf="@id/nextBtn"
+            android:background="@drawable/right_arrow_grey"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/totalCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/nextBtn"
+            android:visibility="gone"
+            android:text="0"
+            style="@style/body1"
+            />
+        <TextView
+            android:id="@+id/clinicSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clinic_name"
+            android:text="Speciality"
+            style="@style/sub_heading" />
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clinicSpeciality"
+            android:text="Address"
+            style="@style/sub_heading" />
+
+        <TextView
+            android:id="@+id/upcoming_appoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address"
+            android:text="Upcoming Appointments" />
+
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_toEndOf="@+id/clinic_image"
+        android:layout_toRightOf="@+id/clinic_image">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/upcoming_appointment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:id="@+id/date_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:id="@+id/nr_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </TableLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ImageView
+        android:id="@+id/down_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/clinic_image"
+        android:layout_alignRight="@+id/clinic_image"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:background="@drawable/down_arrow" />
+
+    <TextView
+        android:id="@+id/total_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:inputType="number"
+        android:text="TextView"
+        android:layout_alignTop="@+id/clinic_image"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

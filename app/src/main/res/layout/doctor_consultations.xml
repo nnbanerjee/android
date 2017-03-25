@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_toRightOf="@+id/doctorImg">
+        android:layout_toRightOf="@+id/clinic_image">
 
             <ImageView
             android:layout_width="10dp"
@@ -87,7 +87,7 @@
         <ImageButton
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:id="@+id/doctorImg"
+            android:id="@+id/clinic_image"
             android:background="@drawable/doctor_consultation"
             android:layout_marginLeft="13dp"
             android:layout_alignBottom="@+id/relativeLayout3"

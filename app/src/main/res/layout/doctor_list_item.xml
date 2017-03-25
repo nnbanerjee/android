@@ -5,7 +5,7 @@
     android:background="#ffffff">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/doctorImg"
+        android:id="@+id/clinic_image"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_margin="5dp"
@@ -16,7 +16,7 @@
         android:id="@+id/downImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/doctorImg"
+        android:layout_below="@+id/clinic_image"
         android:layout_marginLeft="23dp"
         android:background="@drawable/down_arrow"
         android:scaleType="fitCenter" />
@@ -24,11 +24,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/doctorImg"
+        android:layout_toRightOf="@+id/clinic_image"
         android:background="#ffffff">
 
         <TextView
-            android:id="@+id/doctorName"
+            android:id="@+id/clinic_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Doctor Name"
@@ -67,10 +67,10 @@
             />
 
         <TextView
-            android:id="@+id/doctorSpeciality"
+            android:id="@+id/clinicSpeciality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctorName"
+            android:layout_below="@+id/clinic_name"
             android:text="Speciality"
             style="@style/sub_heading" />
 
@@ -78,7 +78,7 @@
             android:id="@+id/lastAppointmentDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctorSpeciality"
+            android:layout_below="@+id/clinicSpeciality"
             android:text="fdfd"
             android:visibility="visible"
             style="@style/body2"
@@ -88,7 +88,7 @@
             android:id="@+id/lastVisitedValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/doctorSpeciality"
+            android:layout_below="@+id/clinicSpeciality"
             android:layout_toRightOf="@+id/lastAppointmentDate"
             android:text="12-04-2015"
             android:visibility="gone"

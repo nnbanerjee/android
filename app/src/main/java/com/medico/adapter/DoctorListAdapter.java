@@ -89,10 +89,10 @@ public class DoctorListAdapter extends BaseAdapter  {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.doctor_list_item, null);
 //        global = (Global) activity.getApplicationContext();
-        TextView doctorName = (TextView) convertView.findViewById(R.id.doctorName);
-        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.doctorSpeciality);
+        TextView doctorName = (TextView) convertView.findViewById(R.id.clinic_name);
+        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.clinicSpeciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
-        ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctorImg);
+        ImageView viewImage = (ImageView) convertView.findViewById(R.id.clinic_image);
 
         TextView address = (TextView) convertView.findViewById(R.id.lastAppointmentDate);
         TextView appointmentDate = (TextView) convertView.findViewById(R.id.appointmentDate);
