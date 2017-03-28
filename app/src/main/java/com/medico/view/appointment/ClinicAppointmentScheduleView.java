@@ -110,6 +110,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
             }
         });
+
         return view;
     }
 
@@ -152,7 +153,19 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         int i = 0;
         for(DoctorClinicDetails.AppointmentCounts count:counts)
         {
-            TextView dateView = new TextView(activity);
+            final TextView dateView = new TextView(activity);
+            dateView.setTag(new Date(count.date));
+            dateView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setSelection(dateView);
+                    DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
+                    Date date = (Date)v.getTag();
+                    TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+                    textviewTitle.setText(format.format(date));
+                    setAdapter(date);
+                }
+            });
             TextView countView = new TextView(activity);
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date(count.date));
@@ -163,6 +176,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             dateView.setRight(10);
             dateView.setBottom(10);
             dateRow.addView(dateView,i,lp);
+//            dateRow.setTag(new Date(count.date));
             countView.setText(getDayString(cal.get(Calendar.DAY_OF_WEEK)));
             countView.setBackgroundResource(R.drawable.medicine_schedule);
             countView.setLeft(10);
@@ -170,9 +184,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             countView.setRight(10);
             countView.setBottom(10);
             dayRow.addView(countView,i,lp);
-            if(i > 6)
-                break;
-
+            i++;
         }
         date_value.requestLayout();
     }
@@ -283,13 +295,13 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         calendar1.setTime(date);
         calendar1.set(Calendar.HOUR_OF_DAY,0);
         calendar1.set(Calendar.MINUTE,00);
-        calendar1.set(Calendar.SECOND,59);
+        calendar1.set(Calendar.SECOND,00);
         final Date date1 = calendar1.getTime();
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTime(date);
         calendar2.set(Calendar.HOUR_OF_DAY,23);
         calendar2.set(Calendar.MINUTE,59);
-        calendar2.set(Calendar.SECOND,00);
+        calendar2.set(Calendar.SECOND,59);
         final Date date2 = calendar2.getTime();
         Integer doctorId = bundle.getInt(PROFILE_ID);
 //        Integer slotId = bundle.getInt(DOCTOR_CLINIC_ID);
@@ -302,12 +314,12 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             @Override
             public void success(List<DoctorHoliday> holidayList, Response response) {
                 doctorholidayList = holidayList;
-                Toast.makeText(getActivity(), "Holiday Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Holiday Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Holiday Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Holiday Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorholidayList = null;
             }
         });
@@ -317,17 +329,17 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             public void success(List<DoctorSlotBookings> slotBookingses, Response response) {
                 if(slotBookingses != null && slotBookingses.size() > 0) {
                     doctorSlotBookings = slotBookingses;
-                    ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date);
+                    ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date1);
                     appointment_schedule.setAdapter(adapter);
                 }
-                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorSlotBookings = null;
-                ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date);
+                ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date1);
                 appointment_schedule.setAdapter(adapter);
                 error.printStackTrace();
             }
@@ -358,6 +370,29 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
         return days;
 
+    }
+    private void setSelection(TextView view)
+    {
+        for(int i = 0; i < dateRow.getChildCount();i++)
+        {
+            TextView textview = (TextView)dateRow.getChildAt(i);
+            Date date = (Date)textview.getTag();
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(date);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(new Date());
+            if(calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
+                    && calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)
+                    && calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR))
+            {
+                textview.setTextColor(Color.GREEN);
+            }
+            else
+                textview.setTextColor(Color.BLACK);
+
+            if(textview == view)
+                textview.setTextColor(Color.BLUE);
+        }
     }
 
 }

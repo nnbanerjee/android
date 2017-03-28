@@ -18,6 +18,9 @@ import com.medico.util.PARAM;
 import com.medico.view.appointment.ClinicAppointmentScheduleView;
 import com.medico.view.appointment.ManageDoctorAppointment;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -78,7 +81,8 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
         ImageView rightArrow = (ImageView)convertView.findViewById(R.id.imageView7);
         slotName.setText(slot.name + " ( " + slot.slotNumber + " ) Type: " + (slot.slotType==0?"General":"Prime"));
         slotDays.setText(daysOfWeek(slot.daysOfWeek));
-        slotTimings.setText(slot.startTime.toString() + " - " + slot.endTime);
+        DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
+        slotTimings.setText(format.format(new Date(slot.startTime)) + " - " + format.format(new Date(slot.endTime)));
         rightArrow.setTag(slot);
         if(slot.feesConsultation != null)
             slotFees.setText(slot.feesConsultation.toString());

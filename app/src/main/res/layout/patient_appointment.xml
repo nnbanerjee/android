@@ -9,10 +9,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/appointment_number"
+            android:textAlignment="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:text="23" />
         <TextView
             android:id="@+id/appointment_time"
             android:layout_width="wrap_content"
@@ -25,22 +30,26 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <Spinner
             android:id="@+id/appointment_type"
-            android:entries="@array/visit_type_list"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:entries="@array/visit_type_list" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <Spinner
             android:id="@+id/appointment_visit_status"
-            android:entries="@array/visit_status"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:entries="@array/visit_status" />
     </LinearLayout>
     <RelativeLayout
         android:layout_below="@+id/appointment_header"
+        android:id="@+id/profile"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <de.hdodenhof.circleimageview.CircleImageView
@@ -156,14 +165,16 @@
                 android:text="sdfsdf"
                 android:textColor="@color/black"
                 style="@style/body1" />
-            <Button
-                android:id="@+id/appointment_menu"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/speciality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
 
         </RelativeLayout>
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/appointment_menu"
+        android:background="@drawable/arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appointment_header"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="67dp" />
 </RelativeLayout>
