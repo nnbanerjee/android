@@ -255,7 +255,10 @@
         <item>Immunization</item>
 
     </string-array>
-
+    <string-array name="holiday_choice">
+        <item>Available</item>
+        <item>Absense</item>
+    </string-array>
 
     <string-array name="symptoms">
         <item>Abdominal Pain</item>

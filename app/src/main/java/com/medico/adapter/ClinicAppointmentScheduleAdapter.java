@@ -1,9 +1,7 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,6 @@ import android.widget.TextView;
 import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
-import com.medico.util.PARAM;
-import com.medico.view.appointment.ClinicAppointmentScheduleView;
-import com.medico.view.appointment.ManageDoctorAppointment;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -27,20 +22,22 @@ import retrofit.client.OkClient;
  */
 
 //Doctor Login
-public class ClinicSlotListAdapter extends BaseAdapter  {
+public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
     DoctorClinicDetails details;
+    DoctorClinicDetails.ClinicSlots slot;
 
-    public ClinicSlotListAdapter(Activity activity, DoctorClinicDetails details) {
+    public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails details, DoctorClinicDetails.ClinicSlots slot) {
         this.activity = activity;
         this.details = details;
+        this.slot = slot;
     }
 
     @Override
     public int getCount() {
-        return details.slots.size();
+        return slot.numberOfPatients;
     }
 
     @Override
@@ -76,10 +73,11 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
         TextView slotDuration = (TextView) convertView.findViewById(R.id.slotDuration);
         TextView numberOfPatients = (TextView) convertView.findViewById(R.id.numberOfPatients);
         ImageView rightArrow = (ImageView)convertView.findViewById(R.id.imageView7);
+        rightArrow.setTag(1,slot);
+        rightArrow.setTag(2,details);
         slotName.setText(slot.name + " ( " + slot.slotNumber + " ) Type: " + (slot.slotType==0?"General":"Prime"));
         slotDays.setText(daysOfWeek(slot.daysOfWeek));
         slotTimings.setText(slot.startTime.toString() + " - " + slot.endTime);
-        rightArrow.setTag(slot);
         if(slot.feesConsultation != null)
             slotFees.setText(slot.feesConsultation.toString());
         slotDuration.setText(slot.visitDuration.toString());
@@ -92,16 +90,19 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DoctorClinicDetails.ClinicSlots slot = ( DoctorClinicDetails.ClinicSlots)v.getTag();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
-                Bundle bundle = activity.getIntent().getExtras();
-                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
-                activity.getIntent().putExtras(bundle);
-                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
-                fragment.setModel(slot);
-                ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
-                FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                DoctorClinicDetails model = (DoctorClinicDetails)v.getTag(2);
+//                DoctorClinicDetails.ClinicSlots slot = ( DoctorClinicDetails.ClinicSlots)v.getTag(1);
+//                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
+//                Bundle bundle = parentactivity.getIntent().getExtras();
+//                bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
+//                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
+//                parentactivity.getIntent().putExtras(bundle);
+//                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+//                fragment.setModel(model);
+//                parentactivity.fragmentList.add(fragment);
+//                FragmentManager fragmentManger = activity.getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+
             }
         });
 
@@ -116,7 +117,7 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
                 "1,2,3,4,5,6","1,2,3,4,5","1,2,3,4","1,2,3","1,2","1",
                 "2,3,4,5,6","2,3,4,5","2,3,4","2,3","2",
                 "3,4,5,6","3,4,5","3,4","3",
-                "4,5,6","4,5","3",
+                "4,5,6","4,5","4",
                 "5,6","5",
                 "6"};
         String[] daysWord = {"MON-SUN","MON-SAT","MON-FRI","MON-THU","MON-WED","MON-TUE","MON",
@@ -133,6 +134,11 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
         }
 
         return days;
+
+    }
+
+    class AppointmentHolder
+    {
 
     }
 }
