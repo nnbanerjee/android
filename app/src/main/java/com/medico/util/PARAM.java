@@ -50,8 +50,23 @@ public interface PARAM
     public static final String CLINIC_ID = "clinicId";
     public static final String APPOINTMENT_DATE = "appointment_date";
     public static final String APPOINTMENT_TIME = "appointment_time";
+
     public static final int APPOINTMENT_CONFIRMED = 0;
     public static final int APPOINTMENT_TENTATIVE = 1;
+    public static final int APPOINTMENT_AVAILABLE = 2;
+    public static final int APPOINTMENT_ABSENCE = 3;
+
+    public static final int VISIT_TYPE_NEWCASE = 0;
+    public static final int VISIT_TYPE_FOLLOWUP = 1;
+    public static final int VISIT_TYPE_REPORTS = 2;
+    public static final int VISIT_TYPE_IMMUNIZATION = 3;
+    public static final int VISIT_TYPE_NONE = 4;
+
+    public static final int VISIT_STATUS_VISITED = 0;
+    public static final int VISIT_STATUS_ABASENSE = 1;
+    public static final int VISIT_STATUS_UNKNOWN = 2;
+    public static final int VISIT_STATUS_FUTURE = 3;
+    public static final int VISIT_STATUS_EMPTY = 4;
 
     public static final String DEPENDENT_ID = "dependentId";
     public static final String DEPENDENT_ROLE = "dependent_role";

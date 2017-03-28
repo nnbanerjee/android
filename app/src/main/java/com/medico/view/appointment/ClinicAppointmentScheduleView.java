@@ -17,6 +17,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.adapter.ClinicAppointmentScheduleAdapter;
 import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
@@ -134,6 +135,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
         setWeekDays(model);
         //slot and appointments
+        setAdapter(new Date());
     }
 
     private void setWeekDays(DoctorClinicDetails.ClinicSlots slot)
@@ -272,7 +274,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         pickerDialog.show();
     }
 
-    private void setAdapter(Date date)
+    private void setAdapter(final Date date)
     {
         final Activity activity = getActivity();
         Bundle bundle = activity.getIntent().getExtras();
@@ -289,12 +291,12 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         calendar2.set(Calendar.MINUTE,59);
         calendar2.set(Calendar.SECOND,00);
         final Date date2 = calendar2.getTime();
-        Integer doctorId = bundle.getInt(DOCTOR_ID);
-        Integer slotId = bundle.getInt(DOCTOR_CLINIC_ID);
-        Long startTime = bundle.getLong(SLOT_START_DATETIME);
-        Long endTime = bundle.getLong(SLOT_END_DATETIME);
-        Integer vistDuration = bundle.getInt(SLOT_VISIT_DURATION);
-        int numberOfPatients = Math.round((endTime - startTime)/(vistDuration * 60 * 1000));
+        Integer doctorId = bundle.getInt(PROFILE_ID);
+//        Integer slotId = bundle.getInt(DOCTOR_CLINIC_ID);
+//        Long startTime = bundle.getLong(SLOT_START_DATETIME);
+//        Long endTime = bundle.getLong(SLOT_END_DATETIME);
+//        Integer vistDuration = bundle.getInt(SLOT_VISIT_DURATION);
+        int numberOfPatients = Math.round((model.endTime - model.startTime)/(model.visitDuration * 60 * 1000));
 
         api.getDoctorHolidayList(new DoctorHoliday(doctorId,calendar1.getTimeInMillis(),calendar2.getTimeInMillis(), new Integer(2).byteValue()), new Callback<List<DoctorHoliday>>(){
             @Override
@@ -310,13 +312,13 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             }
         });
 
-        api.getClinicSlotBookingByDoctor(new DoctorClinicId(slotId,calendar1.getTimeInMillis(),calendar2.getTimeInMillis()), new Callback<List<DoctorSlotBookings>>(){
+        api.getClinicSlotBookingByDoctor(new DoctorClinicId(model.doctorClinicId,calendar1.getTimeInMillis(),calendar2.getTimeInMillis()), new Callback<List<DoctorSlotBookings>>(){
             @Override
             public void success(List<DoctorSlotBookings> slotBookingses, Response response) {
                 if(slotBookingses != null && slotBookingses.size() > 0) {
                     doctorSlotBookings = slotBookingses;
-//                    DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList);
-//                    timeTeableList.setAdapter(adapter);
+                    ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date);
+                    appointment_schedule.setAdapter(adapter);
                 }
                 Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
             }
@@ -325,8 +327,8 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorSlotBookings = null;
-//                DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList);
-//                timeTeableList.setAdapter(adapter);
+                ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date);
+                appointment_schedule.setAdapter(adapter);
                 error.printStackTrace();
             }
         });

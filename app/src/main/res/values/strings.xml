@@ -61,6 +61,12 @@
         <item>Read Only</item>
         <item>Full Access</item>
     </string-array>
+    <string-array name="appointment_status">
+        <item>Confirmed</item>
+        <item>Tentative</item>
+        <item>Available</item>
+        <item>Absence</item>
+    </string-array>
     <string-array name="gender_list">
         <item>Male</item>
         <item>Female</item>
@@ -253,7 +259,14 @@
         <item>Follow up</item>
         <item>Reports</item>
         <item>Immunization</item>
-
+        <item>" "</item>
+    </string-array>
+    <string-array name="visit_status">
+        <item>Visited</item>
+        <item>Absence</item>
+        <item>Unknown</item>
+        <item>Future</item>
+        <item>" "</item>
     </string-array>
     <string-array name="holiday_choice">
         <item>Available</item>

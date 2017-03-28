@@ -1,17 +1,36 @@
 package com.medico.adapter;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
+import com.medico.model.DoctorHoliday;
+import com.medico.model.DoctorSlotBookings;
+import com.medico.model.Person;
+import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
+import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentFragment;
+import com.medico.view.PatientDetailsFragment;
+import com.medico.view.PatientVisitDatesView;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -26,23 +45,30 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
-    DoctorClinicDetails details;
-    DoctorClinicDetails.ClinicSlots slot;
+    DoctorClinicDetails.ClinicSlots model;
+    List<DoctorSlotBookings> slotBookingses;
+    List<DoctorHoliday> holidayList;
+    List<AppointmentHolder> holders;
+    Date date;
 
-    public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails details, DoctorClinicDetails.ClinicSlots slot) {
+    public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails.ClinicSlots model, List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date) {
         this.activity = activity;
-        this.details = details;
-        this.slot = slot;
+        this.slotBookingses = slotBookingses;
+        this.holidayList = holidayList;
+        this.model = model;
+        this.date = date;
+        holders = createAppointmentHolders( model, slotBookingses,holidayList, date);
     }
 
     @Override
     public int getCount() {
-        return slot.numberOfPatients;
+
+        return holders.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return details.slots.get(position);
+        return holders.get(position);
     }
 
     @Override
@@ -64,49 +90,99 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
         MyApi api = restAdapter.create(MyApi.class);
         View convertView = cv;
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.clinic_detailed_slot_view, null);
-        DoctorClinicDetails.ClinicSlots slot = details.slots.get(position);
-        TextView slotName = (TextView) convertView.findViewById(R.id.slot_name);
-        TextView slotDays = (TextView) convertView.findViewById(R.id.slotDays);
-        TextView slotTimings = (TextView) convertView.findViewById(R.id.slotTimings);
-        TextView slotFees = (TextView) convertView.findViewById(R.id.slotFees);
-        TextView slotDuration = (TextView) convertView.findViewById(R.id.slotDuration);
-        TextView numberOfPatients = (TextView) convertView.findViewById(R.id.numberOfPatients);
-        ImageView rightArrow = (ImageView)convertView.findViewById(R.id.imageView7);
-        rightArrow.setTag(1,slot);
-        rightArrow.setTag(2,details);
-        slotName.setText(slot.name + " ( " + slot.slotNumber + " ) Type: " + (slot.slotType==0?"General":"Prime"));
-        slotDays.setText(daysOfWeek(slot.daysOfWeek));
-        slotTimings.setText(slot.startTime.toString() + " - " + slot.endTime);
-        if(slot.feesConsultation != null)
-            slotFees.setText(slot.feesConsultation.toString());
-        slotDuration.setText(slot.visitDuration.toString());
-        if(slot.counts != null)
-            numberOfPatients.setText(new Integer(slot.counts.size()).toString());
-        else
-            numberOfPatients.setText(new Integer(0).toString());
+            convertView = inflater.inflate(R.layout.patient_appointment, null);
 
+        AppointmentHolder holder = holders.get(position);
+        //Appointment headings
+        TextView appointment_number = (TextView)convertView.findViewById(R.id.appointment_number);
+        TextView appointment_time = (TextView)convertView.findViewById(R.id.appointment_time);
+        Spinner appointment_status = (Spinner)convertView.findViewById(R.id.appointment_status);
+        Spinner appointment_type = (Spinner)convertView.findViewById(R.id.appointment_type);
+        Spinner appointment_visit_status = (Spinner)convertView.findViewById(R.id.appointment_visit_status);
+//        global = (Global) activity.getApplicationContext();
+        TextView patient_name = (TextView) convertView.findViewById(R.id.patient_name);
+        TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
+        ImageView patient_image = (ImageView) convertView.findViewById(R.id.patient_image);
+        TextView address = (TextView) convertView.findViewById(R.id.address);
+        TextView upcomingappointmentDate = (TextView) convertView.findViewById(R.id.appointmentDate);
+        final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
+        ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
+        final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);
+        TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
+        ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
+        TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
+        totalAppointment.setVisibility(View.GONE);
 
-        rightArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                DoctorClinicDetails model = (DoctorClinicDetails)v.getTag(2);
-//                DoctorClinicDetails.ClinicSlots slot = ( DoctorClinicDetails.ClinicSlots)v.getTag(1);
-//                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
-//                Bundle bundle = parentactivity.getIntent().getExtras();
-//                bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
-//                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
-//                parentactivity.getIntent().putExtras(bundle);
-//                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
-//                fragment.setModel(model);
-//                parentactivity.fragmentList.add(fragment);
-//                FragmentManager fragmentManger = activity.getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+        patient_image.setBackgroundResource(R.drawable.patient);
+        if(holder.patient != null)
+        {
+            DoctorSlotBookings.PersonBooking booking = holder.patient;
+            final Person patient = booking.patient;
+
+            if(patient.getImageUrl() != null)
+                new ImageLoadTask( patient.getImageUrl(), patient_image).execute();
+
+            totalCount.setText(booking.numberOfVisits);
+
+            if (patient.getAddress() != null)
+                    address.setText(patient.getAddress());
+
+            if (booking.upcomingAppointments != null) {
+                    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+                upcomingappointmentDate.setText(format.format(new Date(booking.upcomingAppointments)));
 
             }
-        });
+            else
+                upcomingappointmentDate.setText("None");
+
+            if (booking.lastAppointment != null) {
+                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+                lastVisitedValue.setText(format.format(new Date(booking.lastAppointment)));
+
+            }
+            else
+                lastVisitedValue.setText("None");
+
+            patient_name.setText(patient.getName());
+
+            speciality.setText(patient.speciality);
+
+            appointment_number.setText(new Integer(holder.sequenceNumber).toString());
+            appointment_time.setText(holder.getTime());
+            appointment_status.setSelection(holder.getAppointmentStatus());
+            appointment_type.setSelection(holder.getVisitType());
+            appointment_visit_status.setSelection(holder.getVisitStatus());
+
+            downImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
+                    Bundle bundle = activity.getIntent().getExtras();
+                    bundle.putInt(PARAM.PATIENT_ID, patient.getId());
+                    parentactivity.getIntent().putExtras(bundle);
+                    ParentFragment fragment = new PatientDetailsFragment();
+                    parentactivity.fragmentList.add(fragment);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                }
+            });
 
 
+            rightButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Bundle bundle = activity.getIntent().getExtras();
+                    bundle.putInt(PARAM.PATIENT_ID, patient.getId());
+                    Fragment fragment = new PatientVisitDatesView();
+                    fragment.setArguments(bundle);
+                    activity.getIntent().putExtras(bundle);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                }
+            });
+        }
         return convertView;
 
     }
@@ -139,6 +215,117 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
 
     class AppointmentHolder
     {
+        int sequenceNumber;
+        Integer duration;
+        Integer doctorId;
+        Integer clinicSlotId;
+        boolean isHoliday = false;
+        DoctorSlotBookings.PersonBooking patient;
+        DoctorClinicDetails.ClinicSlots model;
+        Date date;
 
+        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model)
+        {
+            sequenceNumber = i+1;
+            this.model = model;
+        }
+        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model, DoctorSlotBookings.PersonBooking personBooking)
+        {
+            sequenceNumber = i+1;
+            this.model = model;
+            this.patient = personBooking;
+        }
+        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model, DoctorSlotBookings.PersonBooking personBooking,List<DoctorHoliday> doctorHolidays , Date date)
+        {
+            sequenceNumber = i+1;
+            this.model = model;
+            this.patient = personBooking;
+            setAppointmentDateTime(i, date, model.startTime, model.endTime, model.visitDuration);
+        }
+
+        private void setAppointmentDateTime(int i, Date date, long startTime, long endTime, int visitDuration)
+        {
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(date);
+            long appointmentTime = startTime + i * visitDuration * 60 * 1000;
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTimeInMillis(appointmentTime);
+            calendar2.set(Calendar.YEAR,calendar1.get(Calendar.YEAR));
+            calendar2.set(Calendar.MONTH,calendar1.get(Calendar.MONTH));
+            calendar2.set(Calendar.DAY_OF_MONTH,calendar1.get(Calendar.DAY_OF_MONTH));
+            date = calendar2.getTime();
+        }
+        public String getTime()
+        {
+            DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
+            return format.format(date);
+        }
+        public int getAppointmentStatus()
+        {
+            if(patient == null)
+                return PARAM.APPOINTMENT_AVAILABLE;
+            else
+                return patient.appointmentStatus;
+        }
+        public int getVisitStatus()
+        {
+            if(patient == null)
+                return PARAM.VISIT_STATUS_EMPTY;
+            else
+                return patient.visitStatus;
+        }
+
+        public int getVisitType()
+        {
+            if(patient == null)
+                return PARAM.VISIT_TYPE_NONE;
+            else
+                return patient.visitType;
+        }
+    }
+
+    private List<AppointmentHolder> createAppointmentHolders( DoctorClinicDetails.ClinicSlots model, List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date)
+    {
+        List<DoctorSlotBookings.PersonBooking> bookings = null;
+        List<DoctorHoliday> doctorHolidays = null;
+
+        if(slotBookingses != null && slotBookingses.size() > 0) {
+            for (DoctorSlotBookings booking : slotBookingses) {
+                if (booking.doctorClinicSlotId.intValue() == model.doctorClinicId.intValue())
+                    bookings = booking.bookings;
+            }
+        }
+        if(holidayList != null && holidayList.size() > 0) {
+            for (DoctorHoliday holiday : holidayList) {
+                if (holiday.doctorClinicId.intValue() == model.doctorClinicId.intValue()) {
+                    if (doctorHolidays == null)
+                        doctorHolidays = new ArrayList<>();
+                    doctorHolidays.add(holiday);
+                }
+            }
+        }
+        List<AppointmentHolder> holders = new ArrayList<>();
+
+        for(int i = 0; i < model.numberOfPatients;i++)
+        {
+            if(bookings != null)
+            {
+                boolean found = false;
+                for (DoctorSlotBookings.PersonBooking bookings1:bookings)
+                {
+                    if(bookings1.sequenceNo.intValue() == i+1)
+                    {
+                        found = true;
+                        holders.add(new AppointmentHolder(i,model, bookings1,doctorHolidays, date));
+                        break;
+                    }
+                }
+                if(found == false)
+                    holders.add(new AppointmentHolder(i,model, null ,doctorHolidays, date));
+            }
+            else
+                holders.add(new AppointmentHolder(i,model, null,doctorHolidays, date));
+        }
+        return holders;
     }
 }
