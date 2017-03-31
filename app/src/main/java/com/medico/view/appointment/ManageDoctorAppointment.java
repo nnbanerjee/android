@@ -1,6 +1,5 @@
 package com.medico.view.appointment;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,9 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medico.application.R;
-import com.medico.view.DoctorAppointmentSummary;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientMedicinReminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,14 +70,7 @@ public class ManageDoctorAppointment extends AppCompatActivity {
         {
 
             ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
-            if(fragment instanceof PatientMedicinReminder)
-            {
-                fragmentList.remove(fragmentList.size()-1);
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().detach(fragment).commit();
-
-            }
-            else if(fragment instanceof DoctorAppointmentSummary)
+            if(fragment instanceof ClinicSlotListView )
             {
                 fragmentList.remove(fragmentList.size()-1);
                 fragment = fragmentList.get(fragmentList.size() - 1);
@@ -90,7 +80,6 @@ public class ManageDoctorAppointment extends AppCompatActivity {
             }
             else
             {
-                fragment = fragmentList.get(fragmentList.size() - 1);
                 fragmentList.remove(fragment);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.detach(fragment).commit();
@@ -101,6 +90,8 @@ public class ManageDoctorAppointment extends AppCompatActivity {
             fragmentList.get(fragmentList.size()-1).onStart();
 
         }
+        else
+            super.onBackPressed();
     }
 
 
@@ -110,14 +101,9 @@ public class ManageDoctorAppointment extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // User chose the "Settings" item, show the app settings UI...
-                if (fragmentList.size() > 1) {
+//                if (fragmentList.size() > 1) {
                     onBackPressed();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
 
 
             default:
@@ -133,6 +119,12 @@ public class ManageDoctorAppointment extends AppCompatActivity {
         fragmentList.add(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment).addToBackStack(null).commit();
+    }
+
+    public void attachFragment(ParentFragment fragment)
+    {
+        fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
+        fragmentList.add(fragment);
     }
 
 }
