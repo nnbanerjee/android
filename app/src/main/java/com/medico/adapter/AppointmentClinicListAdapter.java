@@ -120,7 +120,7 @@ public class AppointmentClinicListAdapter extends BaseAdapter  {
                 parentactivity.getIntent().putExtras(bundle);
                 ClinicDetailedView fragment = new ClinicDetailedView();
                 fragment.setModel(model);
-                parentactivity.fragmentList.add(fragment);
+                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
 

@@ -85,9 +85,9 @@ public class ManageDoctorAppointment extends AppCompatActivity {
                 ft.detach(fragment).commit();
             }
 
-            fragment.setHasOptionsMenu(false);
-            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
-            fragmentList.get(fragmentList.size()-1).onStart();
+//            fragment.setHasOptionsMenu(false);
+//            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
+//            fragmentList.get(fragmentList.size()-1).onStart();
 
         }
         else
@@ -103,7 +103,7 @@ public class ManageDoctorAppointment extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
 //                if (fragmentList.size() > 1) {
                     onBackPressed();
-
+                    return true;
 
 
             default:
@@ -123,8 +123,13 @@ public class ManageDoctorAppointment extends AppCompatActivity {
 
     public void attachFragment(ParentFragment fragment)
     {
-        fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
+//        fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
         fragmentList.add(fragment);
     }
-
+    public void deattachFragment(ParentFragment fragment)
+    {
+//        fragment.setHasOptionsMenu(false);
+        fragmentList.remove(fragment);
+//        fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(true);
+    }
 }

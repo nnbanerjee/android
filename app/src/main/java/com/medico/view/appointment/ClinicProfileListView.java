@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,7 +45,7 @@ public class ClinicProfileListView extends ParentFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
 
         patientListView = (ListView) view.findViewById(R.id.doctorListView);
@@ -99,7 +100,7 @@ public class ClinicProfileListView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
+//        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorId = bundle.getInt(DOCTOR_ID);
         final Integer patientId = bundle.getInt(PATIENT_ID);
@@ -109,12 +110,12 @@ public class ClinicProfileListView extends ParentFragment {
                 clinicDetails = clinicDetailsreturn;
                 AppointmentClinicListAdapter adapter = new AppointmentClinicListAdapter(getActivity(), clinicDetailsreturn);
                 patientListView.setAdapter(adapter);
-                 progress.dismiss();
+//                 progress.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
+//                progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
@@ -149,6 +150,20 @@ public class ClinicProfileListView extends ParentFragment {
         inflater.inflate(R.menu.patient_profile, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case android.R.id.home:
 
+
+
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

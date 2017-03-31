@@ -1,6 +1,5 @@
 package com.medico.view.appointment;
 
-import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +18,6 @@ import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PersonID;
 import com.medico.view.ParentFragment;
-import com.medico.view.settings.ClinicProfileEditView;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -37,7 +35,7 @@ public class ClinicSlotListView extends ParentFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.list_view,container,false);
 
         listView = (ListView) view.findViewById(R.id.doctorListView);
@@ -128,16 +126,16 @@ public class ClinicSlotListView extends ParentFragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {
-                setHasOptionsMenu(false);
-                Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(CLINIC_ID,0);
-                bun.putInt(CLINIC_TYPE,0);
-                getActivity().getIntent().putExtras(bun);
-                ParentFragment fragment = new ClinicProfileEditView();
-                ((ManageDoctorAppointment)getActivity()).fragmentList.add(fragment);
-                fragment.setArguments(bun);
-                FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                setHasOptionsMenu(false);
+//                Bundle bun = getActivity().getIntent().getExtras();
+//                bun.putInt(CLINIC_ID,0);
+//                bun.putInt(CLINIC_TYPE,0);
+//                getActivity().getIntent().putExtras(bun);
+//                ParentFragment fragment = new ClinicProfileEditView();
+//                ((ManageDoctorAppointment)getActivity()).fragmentList.add(fragment);
+//                fragment.setArguments(bun);
+//                FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
             }
             break;

@@ -88,11 +88,11 @@ public class ClinicDetailedView extends ParentFragment {
 
                 ManageDoctorAppointment activity = (ManageDoctorAppointment)getActivity();
                 if(profile != null)
-                    activity.fragmentList.remove(profile);
+                    activity.deattachFragment(profile);
                 appointmentsBtn.setBackgroundResource(R.drawable.page_selected);
                 profileBtn.setBackgroundResource(R.drawable.page_default);
                 appointment = new ClinicSlotListView();
-                activity.fragmentList.add(appointment);
+                activity.attachFragment(appointment);
                 appointment.setModel(model);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_details1, appointment, "Doctor Consultations").addToBackStack(null).commit();
@@ -106,11 +106,11 @@ public class ClinicDetailedView extends ParentFragment {
             public void onClick(View v) {
                 ManageDoctorAppointment activity = (ManageDoctorAppointment)getActivity();
                 if(appointment != null)
-                activity.fragmentList.remove(appointment);
+                activity.deattachFragment(appointment);
                 appointmentsBtn.setBackgroundResource(R.drawable.page_default);
                 profileBtn.setBackgroundResource(R.drawable.page_selected);
                 profile = new ClinicProfileEditView();
-                activity.fragmentList.add(profile);
+                activity.attachFragment(profile);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_details1, profile, "Doctor Consultations").addToBackStack(null).commit();
 

@@ -103,7 +103,7 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
                 activity.getIntent().putExtras(bundle);
                 ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
                 fragment.setModel(slot);
-                ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+                ((ManageDoctorAppointment)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
