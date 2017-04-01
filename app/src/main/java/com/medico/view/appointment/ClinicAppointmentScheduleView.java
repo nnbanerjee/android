@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -49,6 +50,7 @@ import retrofit.client.Response;
 //Doctor Login
 public class ClinicAppointmentScheduleView extends ParentFragment {
 
+    int[] daysOfWeek = {2,3,4,5,6,7,1};
     Date activateDate = new Date();
     TextView slot_name;
     Spinner holidayList;
@@ -119,11 +121,11 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return view;
     }
 
-
-    public void setModel(DoctorClinicDetails.ClinicSlots model)
-    {
-        this.model = model;
-    }
+//
+//    public void setModel(DoctorClinicDetails.ClinicSlots model)
+//    {
+//        this.model = model;
+//    }
 
     @Override
     public void onResume() {
@@ -166,60 +168,60 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 //        setAdapter(new Date());
     }
 
-    private void setWeekDays(DoctorClinicDetails.ClinicSlots slot)
-    {
-        if(slot == null ) return;
-        Activity activity = getActivity();
-        date_value.setStretchAllColumns(true);
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-        dateRow = new TableRow(getActivity());
-        dayRow = new TableRow(getActivity());
-        dateRow.setLayoutParams(lp);
-        dateRow.removeAllViews();
-        dayRow.removeAllViews();
-        List<DoctorClinicDetails.AppointmentCounts> counts = slot.counts;
-        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-
-        int i = 0;
-        for(DoctorClinicDetails.AppointmentCounts count:counts)
-        {
-            final TextView dateView = new TextView(activity);
-            dateView.setTag(new Date(count.date));
-            dateView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setSelection(dateView);
-                    DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
-                    Date date = (Date)v.getTag();
-                    TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-                    textviewTitle.setText(format.format(date));
-                    setAdapter(date);
-                }
-            });
-            TextView countView = new TextView(activity);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date(count.date));
-            dateView.setText(new Integer(cal.get(Calendar.DAY_OF_MONTH)).toString());
-            dateView.setBackgroundResource(R.drawable.medicine_schedule);
-            dateView.setLeft(10);
-            dateView.setTop(10);
-            dateView.setRight(10);
-            dateView.setBottom(10);
-            dateRow.addView(dateView,i,lp);
-//            dateRow.setTag(new Date(count.date));
-            countView.setText(getDayString(cal.get(Calendar.DAY_OF_WEEK)));
-            countView.setBackgroundResource(R.drawable.medicine_schedule);
-            countView.setLeft(10);
-            countView.setTop(10);
-            countView.setRight(10);
-            countView.setBottom(10);
-            dayRow.addView(countView,i,lp);
-            i++;
-        }
-        date_value.addView(dayRow);
-        date_value.addView(dateRow);
-        date_value.requestLayout();
-    }
+//    private void setWeekDays(DoctorClinicDetails.ClinicSlots slot)
+//    {
+//        if(slot == null ) return;
+//        Activity activity = getActivity();
+//        date_value.setStretchAllColumns(true);
+//        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+//        dateRow = new TableRow(getActivity());
+//        dayRow = new TableRow(getActivity());
+//        dateRow.setLayoutParams(lp);
+//        dateRow.removeAllViews();
+//        dayRow.removeAllViews();
+//        List<DoctorClinicDetails.AppointmentCounts> counts = slot.counts;
+//        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+//
+//        int i = 0;
+//        for(DoctorClinicDetails.AppointmentCounts count:counts)
+//        {
+//            final TextView dateView = new TextView(activity);
+//            dateView.setTag(new Date(count.date));
+//            dateView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    setSelection(dateView);
+//                    DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
+//                    Date date = (Date)v.getTag();
+//                    TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+//                    textviewTitle.setText(format.format(date));
+//                    setAdapter(date);
+//                }
+//            });
+//            TextView countView = new TextView(activity);
+//            Calendar cal = Calendar.getInstance();
+//            cal.setTime(new Date(count.date));
+//            dateView.setText(new Integer(cal.get(Calendar.DAY_OF_MONTH)).toString());
+//            dateView.setBackgroundResource(R.drawable.medicine_schedule);
+//            dateView.setLeft(10);
+//            dateView.setTop(10);
+//            dateView.setRight(10);
+//            dateView.setBottom(10);
+//            dateRow.addView(dateView,i,lp);
+////            dateRow.setTag(new Date(count.date));
+//            countView.setText(getDayString(cal.get(Calendar.DAY_OF_WEEK)));
+//            countView.setBackgroundResource(R.drawable.medicine_schedule);
+//            countView.setLeft(10);
+//            countView.setTop(10);
+//            countView.setRight(10);
+//            countView.setBottom(10);
+//            dayRow.addView(countView,i,lp);
+//            i++;
+//        }
+//        date_value.addView(dayRow);
+//        date_value.addView(dateRow);
+//        date_value.requestLayout();
+//    }
     private void setWeekDays(Date date, DoctorClinicDetails.ClinicSlots slot)
     {
         date_value.removeAllViews();
@@ -230,8 +232,9 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         dateRow = new TableRow(getActivity());
         dayRow = new TableRow(getActivity());
         dateRow.setLayoutParams(lp);
-        dateRow.removeAllViews();
-        dayRow.removeAllViews();
+        dayRow.setLayoutParams(lp);
+//        dateRow.removeAllViews();
+//        dayRow.removeAllViews();
         List<DoctorClinicDetails.AppointmentCounts> counts = slot.counts;
         DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
 
@@ -259,6 +262,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             dateView.setTop(10);
             dateView.setRight(10);
             dateView.setBottom(10);
+            dateView.setEnabled(isValid(cal.get(Calendar.DAY_OF_WEEK)));
             dateRow.addView(dateView,i,lp);
             countView.setText(getDayString(cal.get(Calendar.DAY_OF_WEEK)));
             countView.setBackgroundResource(R.drawable.medicine_schedule);
@@ -449,24 +453,27 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         {
             TextView textview = (TextView)dateRow.getChildAt(i);
             Date date = (Date)textview.getTag();
-
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(date);
             Calendar calendar2 = Calendar.getInstance();
             calendar2.setTime(new Date());
+
             if(calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
                     && calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)
                     && calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR))
             {
                 textview.setTextColor(Color.GREEN);
             }
-            else
+            else if(textview.isEnabled())
                 textview.setTextColor(Color.BLACK);
+            else
+                textview.setTextColor(Color.LTGRAY);
 
             if(textview == view) {
                 activateDate = date;
                 textview.setTextColor(Color.BLUE);
             }
+//            textview.setEnabled(isValid(calendar1.get(Calendar.DAY_OF_WEEK)));
         }
     }
     private void setSelection(Date selectedDate)
@@ -480,6 +487,19 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 break;
             }
         }
+    }
+    private boolean isValid(int dayOfWeek)
+    {
+        boolean isValid = false;
+        StringTokenizer tokenizer = new StringTokenizer(model.daysOfWeek,",");
+        for(;tokenizer.hasMoreTokens();)
+        {
+            Integer day = new Integer(tokenizer.nextToken());
+            if(daysOfWeek[day.intValue()] == dayOfWeek )
+                return true;
+        }
+
+        return isValid;
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
