@@ -4,7 +4,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion '25.0.1'
     defaultConfig {
-        applicationId 'com.mindnerves.meidcaldiary'
+        applicationId 'com.medico.application'
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
