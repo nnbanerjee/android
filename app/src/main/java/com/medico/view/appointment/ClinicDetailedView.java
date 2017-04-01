@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medico.application.R;
+import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.util.ImageLoadTask;
 import com.medico.view.ParentFragment;
@@ -23,6 +25,10 @@ import com.medico.view.settings.ClinicProfileEditView;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -122,10 +128,10 @@ public class ClinicDetailedView extends ParentFragment {
     }
 
 
-    public void setModel(DoctorClinicDetails model)
-    {
-        this.model = model;
-    }
+//    public void setModel(DoctorClinicDetails model)
+//    {
+//        this.model = model;
+//    }
 
     @Override
     public void onResume() {
@@ -137,25 +143,35 @@ public class ClinicDetailedView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        Bundle bundle = getActivity().getIntent().getExtras();
+        final Integer doctorId = bundle.getInt(DOCTOR_ID);
+        final Integer patientId = bundle.getInt(PATIENT_ID);
+        final Integer clinicId = bundle.getInt(CLINIC_ID);
+        api.getClinicByDoctor(new ClinicByDoctorRequest(doctorId,clinicId), new Callback<DoctorClinicDetails>() {
+            @Override
+            public void success(DoctorClinicDetails clinicDetailsreturn, Response response) {
+                model = clinicDetailsreturn;
+                if(model != null)
+                    new ImageLoadTask(model.clinic.imageUrl, viewImage).execute();
+                address.setText(model.clinic.address);
+                clinicName.setText(model.clinic.clinicName);
+                speciality.setText(model.clinic.speciality);
+                if(model.datecounts != null)
+                    totalCount.setText(new Integer(model.datecounts.size()).toString());
+                else
+                    totalCount.setText(new Integer(0).toString());
+                setAppointmentDates(model);
+                appointmentsBtn.callOnClick();
+            }
 
-//        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
-        if(model != null)
-            new ImageLoadTask(model.clinic.imageUrl, viewImage).execute();
-//        totalCount.setText( clinicDetails.get(position).);
-        address.setText(model.clinic.address);
-        clinicName.setText(model.clinic.clinicName);
-        speciality.setText(model.clinic.speciality);
-        if(model.datecounts != null)
-            totalCount.setText(new Integer(model.datecounts.size()).toString());
-        else
-            totalCount.setText(new Integer(0).toString());
-        setAppointmentDates(model);
+            @Override
+            public void failure(RetrofitError error) {
+//                progress.dismiss();
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        });
 
-//        if(childfragment != null && childfragment.isDetached() == false)
-//            childfragment.onStart();
-//        else
-            appointmentsBtn.callOnClick();
-//        progress.dismiss();
 
     }
 

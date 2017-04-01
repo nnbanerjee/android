@@ -40,6 +40,14 @@ public class DoctorClinicDetails
         public int counts;
     }
 
-
+    public DoctorClinicDetails.ClinicSlots getSlot(Integer doctorClinicId)
+    {
+        for(ClinicSlots slot:slots)
+        {
+            if(slot.doctorClinicId.intValue() == doctorClinicId.intValue())
+                return slot;
+        }
+        return null;
+    }
 
 }

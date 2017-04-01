@@ -1,5 +1,7 @@
 package com.medico.view.appointment;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +20,7 @@ import com.medico.adapter.ClinicSlotListAdapter;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PersonID;
+import com.medico.util.PARAM;
 import com.medico.view.ParentFragment;
 
 /**
@@ -61,7 +65,22 @@ public class ClinicSlotListView extends ParentFragment {
 //                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
 //            }
 //        });
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Activity activity = getActivity();
+                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
+                Bundle bundle = activity.getIntent().getExtras();
+                DoctorClinicDetails.ClinicSlots slot = (DoctorClinicDetails.ClinicSlots)listView.getAdapter().getItem(position);
+                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
+                activity.getIntent().putExtras(bundle);
+                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+//                fragment.setModel(slot);
+                ((ManageDoctorAppointment)activity).attachFragment(fragment);
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });
         return view;
     }
 

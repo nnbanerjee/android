@@ -1,9 +1,7 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,6 @@ import android.widget.TextView;
 import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
-import com.medico.util.PARAM;
-import com.medico.view.appointment.ClinicAppointmentScheduleView;
-import com.medico.view.appointment.ManageDoctorAppointment;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -93,21 +88,21 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
             numberOfPatients.setText(new Integer(0).toString());
 
 
-        rightArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DoctorClinicDetails.ClinicSlots slot = ( DoctorClinicDetails.ClinicSlots)v.getTag();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
-                Bundle bundle = activity.getIntent().getExtras();
-                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
-                activity.getIntent().putExtras(bundle);
-                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
-                fragment.setModel(slot);
-                ((ManageDoctorAppointment)activity).attachFragment(fragment);
-                FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
-        });
+//        rightArrow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DoctorClinicDetails.ClinicSlots slot = ( DoctorClinicDetails.ClinicSlots)v.getTag();
+//                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
+//                Bundle bundle = activity.getIntent().getExtras();
+//                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
+//                activity.getIntent().putExtras(bundle);
+//                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+////                fragment.setModel(slot);
+//                ((ManageDoctorAppointment)activity).attachFragment(fragment);
+//                FragmentManager fragmentManger = activity.getFragmentManager();
+//                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//            }
+//        });
 
 
         return convertView;

@@ -20,6 +20,7 @@ import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
 import com.medico.view.appointment.ClinicDetailedView;
 import com.medico.view.appointment.ManageDoctorAppointment;
 
@@ -117,9 +118,10 @@ public class AppointmentClinicListAdapter extends BaseAdapter  {
                 DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
                 ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
                 Bundle bundle = parentactivity.getIntent().getExtras();
+                bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
                 parentactivity.getIntent().putExtras(bundle);
                 ClinicDetailedView fragment = new ClinicDetailedView();
-                fragment.setModel(model);
+//                fragment.setModel(model);
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

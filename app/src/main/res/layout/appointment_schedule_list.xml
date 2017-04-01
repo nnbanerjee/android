@@ -33,18 +33,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true">
 
-        <TableRow
-            android:id="@+id/dayRow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
-
-        <TableRow
-            android:id="@+id/dateRow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
-
     </TableLayout>
 
     <RelativeLayout

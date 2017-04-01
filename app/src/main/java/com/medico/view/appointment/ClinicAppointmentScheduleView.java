@@ -22,6 +22,7 @@ import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.AppointmentResponse;
+import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorClinicId;
@@ -52,7 +53,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
     TableLayout date_value;
     TableRow dateRow, dayRow;
     ListView appointment_schedule;
-
+    DoctorClinicDetails doctorClinicDetails;
     DoctorClinicDetails.ClinicSlots model;
     List<DoctorHoliday> doctorholidayList;
     List<DoctorSlotBookings> doctorSlotBookings;
@@ -68,8 +69,8 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
         slot_name = (TextView) view.findViewById(R.id.slot_name);
         date_value = (TableLayout) view.findViewById(R.id.date_value);
-        dateRow = (TableRow) view.findViewById(R.id.dateRow);
-        dayRow = (TableRow) view.findViewById(R.id.dayRow);
+//        dateRow = (TableRow) view.findViewById(R.id.dateRow);
+//        dayRow = (TableRow) view.findViewById(R.id.dayRow);
         appointment_schedule = (ListView)view.findViewById(R.id.appointment_schedule);
 
         holidayList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -131,19 +132,44 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-        Integer doctorSlotId = bundle.getInt(DOCTOR_CLINIC_ID);
-        DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
-        slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
-        setWeekDays(model);
+        final Integer doctorSlotId = bundle.getInt(DOCTOR_CLINIC_ID);
+        final Integer doctorId = bundle.getInt(DOCTOR_ID);
+        final Integer patientId = bundle.getInt(PATIENT_ID);
+        final Integer clinicId = bundle.getInt(CLINIC_ID);
+        api.getClinicByDoctor(new ClinicByDoctorRequest(doctorId,clinicId), new Callback<DoctorClinicDetails>() {
+            @Override
+            public void success(DoctorClinicDetails clinicDetailsreturn, Response response) {
+                doctorClinicDetails = clinicDetailsreturn;
+                model = doctorClinicDetails.getSlot(doctorSlotId);
+                DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
+                slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
+                setWeekDays(model);
+                //slot and appointments
+                setAdapter(new Date());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+//                progress.dismiss();
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        });
+//        DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
+//        slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
+//        setWeekDays(model);
         //slot and appointments
-        setAdapter(new Date());
+//        setAdapter(new Date());
     }
 
     private void setWeekDays(DoctorClinicDetails.ClinicSlots slot)
     {
+        if(slot == null ) return;
         Activity activity = getActivity();
         date_value.setStretchAllColumns(true);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        dateRow = new TableRow(getActivity());
+        dayRow = new TableRow(getActivity());
         dateRow.setLayoutParams(lp);
         dateRow.removeAllViews();
         dayRow.removeAllViews();
@@ -186,6 +212,8 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             dayRow.addView(countView,i,lp);
             i++;
         }
+        date_value.addView(dayRow);
+        date_value.addView(dateRow);
         date_value.requestLayout();
     }
 
