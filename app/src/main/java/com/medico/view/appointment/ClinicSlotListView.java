@@ -78,7 +78,7 @@ public class ClinicSlotListView extends ParentFragment {
 //                fragment.setModel(slot);
                 ((ManageDoctorAppointment)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         return view;
