@@ -112,6 +112,8 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
+        Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
+        appointment_menu.setAdapter(new AppointmentMenuAdapter(activity,holder));
         totalAppointment.setVisibility(View.GONE);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
 
@@ -190,12 +192,14 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
                     fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 }
             });
+//            appointment_menu.setAdapter(new AppointmentAdapter(activity));
         }
         else {
             layout.setVisibility(View.GONE);
             appointment_type.setVisibility(View.GONE);
             appointment_visit_status.setVisibility(View.GONE);
         }
+
         return convertView;
 
     }

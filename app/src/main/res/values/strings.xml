@@ -58,6 +58,7 @@
         <item>10</item>
     </string-array>
     <string-array name="access_level">
+        <item></item>
         <item>Read Only</item>
         <item>Full Access</item>
     </string-array>
