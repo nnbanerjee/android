@@ -466,6 +466,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.doctor_manage_appointment_schedule, menu);
         super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
         menuItem.setChecked(true);
@@ -482,7 +483,22 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
             }
             break;
+            case R.id.addFilter:
+            {
+                if(item.isChecked())
+                {
+                    setDateAndDateRange(activateDate);
+                    item.setChecked(false);
+                }
+                else
+                {
+                    filterDateAndDateRange();
+                    item.setChecked(true);
+                }
 
+
+            }
+            break;
         }
         return true;
     }
@@ -538,5 +554,21 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         }
         setWeekDays();
         setSelection();
+    }
+    public void filterDateAndDateRange()
+    {
+        List<DoctorClinicDetails.AppointmentCounts> counts = model.counts;
+        if(counts != null && counts.size() > 1) {
+            activatedDateRange = new Date[counts.size()];
+            int i = 0;
+            for(DoctorClinicDetails.AppointmentCounts date:counts)
+            {
+                activatedDateRange[i] = new Date(date.date);
+                i++;
+            }
+            activateDate = activatedDateRange[0];
+            setWeekDays();
+            setSelection();
+        }
     }
 }

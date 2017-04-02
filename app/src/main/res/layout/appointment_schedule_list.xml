@@ -24,6 +24,7 @@
 
     <TableLayout
         android:id="@+id/date_value"
+        android:scrollbars="horizontal"
         android:stretchColumns="*"
         android:layout_width="match_parent"
         android:background="@color/white"
