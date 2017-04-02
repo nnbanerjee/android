@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -49,12 +49,12 @@ import retrofit.client.Response;
 
 //Doctor Login
 public class ClinicAppointmentScheduleView extends ParentFragment {
-
+    float slideActive = 0f;
     int[] daysOfWeek = {2,3,4,5,6,7,1};
-    Date activateDate = new Date();
-    TextView slot_name;
+    Date activateDate;
+    Date[] activatedDateRange;
+//    TextView slot_name;
     Spinner holidayList;
-//    ImageView arrow_left, arrow_right;
     TableLayout date_value;
     TableRow dateRow, dayRow;
     ListView appointment_schedule;
@@ -68,64 +68,62 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
         View view = inflater.inflate(R.layout.appointment_schedule_list, container, false);
         setHasOptionsMenu(true);
-//        arrow_left = (ImageView) view.findViewById(R.id.arrow_left);
-//        arrow_right = (ImageView) view.findViewById(R.id.arrow_right);
-
-        holidayList = (Spinner) view.findViewById(R.id.holidayList);
-
-        slot_name = (TextView) view.findViewById(R.id.slot_name);
+//        holidayList = (Spinner) view.findViewById(R.id.holidayList);
+//        slot_name = (TextView) view.findViewById(R.id.slot_name_for_clinic);
         date_value = (TableLayout) view.findViewById(R.id.date_value);
-//        dateRow = (TableRow) view.findViewById(R.id.dateRow);
-//        dayRow = (TableRow) view.findViewById(R.id.dayRow);
         appointment_schedule = (ListView)view.findViewById(R.id.appointment_schedule);
+//        holidayList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if(holidayList.getSelectedItemPosition() == 0) {
+//                    holidayList.setBackgroundColor(Color.GREEN);
+//                    slot_name.setBackgroundColor(Color.GREEN);
+//                }
+//                else {
+//                    holidayList.setBackgroundColor(Color.RED);
+//                    slot_name.setBackgroundColor(Color.RED);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        } );
 
-        holidayList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        date_value.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(holidayList.getSelectedItemPosition() == 0) {
-                    holidayList.setBackgroundColor(Color.GREEN);
-                    slot_name.setBackgroundColor(Color.GREEN);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()  ) {
+                    case MotionEvent.ACTION_DOWN:
+                        slideActive = event.getX();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        float finalx = event.getX();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(activateDate);
+
+                        if(finalx - slideActive > 0) {
+
+                            calendar.add(Calendar.DATE, -7);
+                        }
+                        else
+                        {
+                            calendar.add(Calendar.DATE, 7);
+
+                        }
+                        setDateAndDateRange(calendar.getTime());
+                        return true;
+                    default:
+                        return false;
                 }
-                else {
-                    holidayList.setBackgroundColor(Color.RED);
-                    slot_name.setBackgroundColor(Color.RED);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        } );
-
-//        arrow_left.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        arrow_right.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//
-//        arrow_right.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        });
 
         return view;
     }
 
-//
-//    public void setModel(DoctorClinicDetails.ClinicSlots model)
-//    {
-//        this.model = model;
-//    }
 
     @Override
     public void onResume() {
@@ -134,22 +132,21 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
     }
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorSlotId = bundle.getInt(DOCTOR_CLINIC_ID);
         final Integer doctorId = bundle.getInt(DOCTOR_ID);
         final Integer patientId = bundle.getInt(PATIENT_ID);
         final Integer clinicId = bundle.getInt(CLINIC_ID);
-        api.getClinicByDoctor(new ClinicByDoctorRequest(doctorId,clinicId), new Callback<DoctorClinicDetails>() {
+        api.getClinicByDoctor(new ClinicByDoctorRequest(doctorId, clinicId), new Callback<DoctorClinicDetails>() {
             @Override
             public void success(DoctorClinicDetails clinicDetailsreturn, Response response) {
                 doctorClinicDetails = clinicDetailsreturn;
                 model = doctorClinicDetails.getSlot(doctorSlotId);
                 DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
-                slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
-                setWeekDays(activateDate,model);
+//                slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
+                setDateAndDateRange(new Date());
                 //slot and appointments
                 setAdapter(new Date());
             }
@@ -161,11 +158,6 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 error.printStackTrace();
             }
         });
-//        DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
-//        slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
-//        setWeekDays(model);
-        //slot and appointments
-//        setAdapter(new Date());
     }
 
 //    private void setWeekDays(DoctorClinicDetails.ClinicSlots slot)
@@ -222,10 +214,10 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 //        date_value.addView(dateRow);
 //        date_value.requestLayout();
 //    }
-    private void setWeekDays(Date date, DoctorClinicDetails.ClinicSlots slot)
+    private void setWeekDays()
     {
         date_value.removeAllViews();
-        Date[] weekdays = getFirstDatyOfWeek(date);
+        Date[] weekdays = activatedDateRange;
         Activity activity = getActivity();
         date_value.setStretchAllColumns(true);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
@@ -233,27 +225,22 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         dayRow = new TableRow(getActivity());
         dateRow.setLayoutParams(lp);
         dayRow.setLayoutParams(lp);
-//        dateRow.removeAllViews();
-//        dayRow.removeAllViews();
-        List<DoctorClinicDetails.AppointmentCounts> counts = slot.counts;
         DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
 
         for(int i = 0; i < weekdays.length; i++)
         {
             final TextView dateView = new TextView(activity);
+            dateView.setBackgroundColor(Color.WHITE);
             dateView.setTag(weekdays[i]);
             dateView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelection(dateView);
-                    DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
-                    Date date = (Date)v.getTag();
-                    TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-                    textviewTitle.setText(format.format(date));
-                    setAdapter(date);
+                    activateDate = (Date)v.getTag();
+                    setSelection();
                 }
             });
             TextView countView = new TextView(activity);
+            countView.setBackgroundColor(Color.WHITE);
             Calendar cal = Calendar.getInstance();
             cal.setTime(weekdays[i]);
             dateView.setText(new Integer(cal.get(Calendar.DAY_OF_MONTH)).toString());
@@ -292,17 +279,6 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return null;
     }
 
-//    private DoctorClinicDetails.ClinicSlots getClinicSlot(Integer slotId)
-//    {
-//        List<DoctorClinicDetails.ClinicSlots> slots = model.slots;
-//        for(DoctorClinicDetails.ClinicSlots slot : slots)
-//        {
-//            if(slot.doctorClinicId.intValue() == slotId.intValue())
-//                return slot;
-//        }
-//        return  null;
-//    }
-
     public void saveAppointment( DoctorAppointment appointment) {
 
         if(appointment.appointmentId == null || appointment.appointmentId.intValue() == 0) {
@@ -337,7 +313,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         }
 
     }
-    public void setDate(Date initialDate)
+    public void setDate()
     {
         final Calendar calendar = Calendar.getInstance();
 
@@ -347,16 +323,14 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             public void onDateTimeSet(Date date)
             {
                 DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
-                activateDate = date;
-                setWeekDays(date,model);
-                setSelection(date);
+                setDateAndDateRange(date);
             }
 
         };
 
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
-                .setInitialDate(initialDate)
+                .setInitialDate(activateDate)
                 .build();
         pickerDialog.show();
 
@@ -380,10 +354,6 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         calendar2.set(Calendar.SECOND,59);
         final Date date2 = calendar2.getTime();
         Integer doctorId = bundle.getInt(PROFILE_ID);
-//        Integer slotId = bundle.getInt(DOCTOR_CLINIC_ID);
-//        Long startTime = bundle.getLong(SLOT_START_DATETIME);
-//        Long endTime = bundle.getLong(SLOT_END_DATETIME);
-//        Integer vistDuration = bundle.getInt(SLOT_VISIT_DURATION);
         int numberOfPatients = Math.round((model.endTime - model.startTime)/(model.visitDuration * 60 * 1000));
 
         api.getDoctorHolidayList(new DoctorHoliday(doctorId,calendar1.getTimeInMillis(),calendar2.getTimeInMillis(), new Integer(2).byteValue()), new Callback<List<DoctorHoliday>>(){
@@ -447,8 +417,12 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return days;
 
     }
-    private void setSelection(TextView view)
+    private void setSelection()
     {
+        DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText(format.format(activateDate));
+        setAdapter(activateDate);
         for(int i = 0; i < dateRow.getChildCount();i++)
         {
             TextView textview = (TextView)dateRow.getChildAt(i);
@@ -469,25 +443,12 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             else
                 textview.setTextColor(Color.LTGRAY);
 
-            if(textview == view) {
-                activateDate = date;
+            if(date.equals(activateDate)) {
                 textview.setTextColor(Color.BLUE);
             }
-//            textview.setEnabled(isValid(calendar1.get(Calendar.DAY_OF_WEEK)));
         }
     }
-    private void setSelection(Date selectedDate)
-    {
-        for(int i = 0; i < dateRow.getChildCount();i++)
-        {
-            TextView textview = (TextView)dateRow.getChildAt(i);
-            Date date = (Date)textview.getTag();
-            if(date.equals(selectedDate)) {
-                textview.callOnClick();
-                break;
-            }
-        }
-    }
+
     private boolean isValid(int dayOfWeek)
     {
         boolean isValid = false;
@@ -517,7 +478,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         switch (id) {
             case R.id.add:
             {
-                setDate(activateDate);
+                setDate();
 
             }
             break;
@@ -526,7 +487,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return true;
     }
 
-    public Date[] getFirstDatyOfWeek(Date date)
+    public Date[] daysOfTheWeek(Date date)
     {
         Calendar calendar = GregorianCalendar.getInstance();//Calendar.getInstance();
         calendar.clear();
@@ -541,5 +502,41 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             weekDays[i] = new Date(calendar.getTime().getTime());
         }
         return weekDays;
+    }
+
+//    public Date getFirstValidDayOfWeek(Date date)
+//    {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        Date[] weekDays = getFirstDatyOfWeek(date);
+//        for(int i = 0; i < weekDays.length; i++ )
+//        {
+//            if(isValid(calendar.get(Calendar.DAY_OF_WEEK)))
+//                return date;
+//        }
+//        return null;
+//    }
+
+    public void setDateAndDateRange(Date date)
+    {
+        activatedDateRange = daysOfTheWeek(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        if (isValid(calendar.get(Calendar.DAY_OF_WEEK)))
+            activateDate = date;
+        else
+        {
+            for(int i = 0; i < activatedDateRange.length; i++)
+            {
+                calendar.clear();
+                calendar.setTime(activatedDateRange[i]);
+                if(isValid(calendar.get(Calendar.DAY_OF_WEEK))) {
+                    activateDate = activatedDateRange[i];
+                    break;
+                }
+            }
+        }
+        setWeekDays();
+        setSelection();
     }
 }
