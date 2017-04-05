@@ -4,9 +4,10 @@ package com.medico.util;
  * Created by Narendra on 17-01-2017.
  */
 
-public interface PARAM
-{
+public interface PARAM {
     public static final String MyPREFERENCES = "MyPrefs";
+
+    public static int LOCATION_UPDATED = 1;
 
     public static String EXECUTION_STATUS = "status";
     public static int STATUS_WARNING = 2;
@@ -40,10 +41,11 @@ public interface PARAM
     public static final String LOGGED_IN_USER_STATUS = "status";
     public static final String PROFILE_ROLE = "profile_role";
     public static final String PROFILE_STATUS = "profile_status";
- 
+
     public static final String PROFILE_TYPE = "profile_type";
 
-    public static final String PROFILE_ID = "profileId"; 
+    public static final String SEARCH_ROLE = "searchRole";
+    public static final String PROFILE_ID = "profileId";
     public static final String DOCTOR_ID = "dictorId";
     public static final String PATIENT_ID = "patientId";
     public static final String ASSISTANT_ID = "assistantId";
@@ -89,7 +91,6 @@ public interface PARAM
     public static final int TEMPLATE_CATEGORY_SMS = 4;
 
     public static final String TREATMENT_ID = "treatmentId";
-
 
 
     public static final String CUSTOM_TEMPLATE_ID = "templateId";
@@ -149,4 +150,10 @@ public interface PARAM
     public static final int ONLINE_CONSULATION = 4;
     public static final int HOME_VISIT = 5;
 
+
+    public static final int SEARCH_BY_PERSON_ID = 3;
+    public static final int SEARCH_BY_PERSON_NAME = 0;
+    public static final int SEARCH_BY_MOBILE_NUMBER = 1;
+    public static final int SEARCH_BY_PERSON_EMAIL_ID = 2;
+    public static final int SEARCH_BY_PERSON_SPECIALITY = 4;
 }

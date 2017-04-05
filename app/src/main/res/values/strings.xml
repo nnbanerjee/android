@@ -133,7 +133,13 @@
         <item>Note</item>
         <item>Custom</item>
     </string-array>
-
+    <string-array name="search_by">
+        <item>Name</item>
+        <item>Mobile Number</item>
+        <item>Email Id Date</item>
+        <item>Registration Id</item>
+        <item>Speciality</item>
+    </string-array>
     <string-array name="name_list">
         <item>Name</item>
         <item>Cost</item>

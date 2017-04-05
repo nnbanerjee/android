@@ -58,6 +58,7 @@ import com.medico.model.ResponseAddTemplates1;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.ResponseVm;
 import com.medico.model.SearchParameter;
+import com.medico.model.SearchParameterRequest;
 import com.medico.model.ServerResponse;
 import com.medico.model.Specialization;
 import com.medico.model.SummaryResponse;
@@ -86,6 +87,12 @@ import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 public interface MyApi {
+
+    @POST("/searchPerson")
+    void searchPerson(@Body SearchParameterRequest param, Callback<List<Person>> cb);
+
+    @POST("/searchPerson")
+    void searchPersonById(@Body SearchParameterRequest param, Callback<Person> cb);
 
     @POST("/getSupportedCountryList")
     void getSupportedCountryList(@Body ProfileId param, Callback<List<Country>> cb);

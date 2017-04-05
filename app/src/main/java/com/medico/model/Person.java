@@ -34,6 +34,7 @@ public class Person
     public Integer loyaltyCatId;
     public Integer referredBy;
     public Byte prime;
+    Integer linkedWith;
 
     boolean isChanged = true;
 

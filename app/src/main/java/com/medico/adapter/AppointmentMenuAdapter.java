@@ -1,12 +1,14 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import com.medico.application.R;
 
 /**
  * Created by Narendra on 10-03-2017.
@@ -70,16 +72,25 @@ public class AppointmentMenuAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ImageView view = new ImageView(activity);
-        view.setImageResource(android.R.drawable.ic_menu_add);
+        view.setImageResource(R.drawable.ic_reorder_black_24dp);
         return view;
     }
     @Override
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
-        TextView text = new TextView(activity);
-        text.setTextColor(Color.BLACK);
-        text.setText(manageAppointment[position]);
-        return text;
+        View view = activity.getLayoutInflater().inflate(R.layout.list_view,null);
+        ListView listview = (ListView)view.findViewById(R.id.doctorListView);
+        listview.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item, manageAppointment));
+        return listview.getAdapter().getView(position,convertView,parent);
+//        TextView text = new TextView(activity);
+//        text.setTextColor(Color.BLACK);
+//        text.setText(manageAppointment[position]);
+//        text.setWidth(300);
+//        text.setMar(20);
+//        text.setRight(20);
+//        text.setTop(20);
+//        text.setBottom(20);
+//        return text;
     }
 
 //    private void bookOnline(Button bookonline, final DoctorClinicDetails clinicDetails, final DoctorClinicDetails.ClinicSlots details)

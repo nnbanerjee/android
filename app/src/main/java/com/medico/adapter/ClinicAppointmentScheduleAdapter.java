@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,6 +28,8 @@ import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
 import com.medico.view.PatientVisitDatesView;
+import com.medico.view.appointment.ManageDoctorAppointment;
+import com.medico.view.search.PersonSearchView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -44,6 +48,7 @@ import retrofit.client.OkClient;
 //Doctor Login
 public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
 
+
     private Activity activity;
     private LayoutInflater inflater;
     DoctorClinicDetails.ClinicSlots model;
@@ -51,6 +56,9 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
     List<DoctorHoliday> holidayList;
     List<AppointmentHolder> holders;
     Date date;
+
+    String[] emptyAppointment = {"Add Appointment","Mark Not Available"};
+    String[] filledAppointment = {"Reschedule Appointment","Cancel Appointment","Appointment Feedback"};
 
     public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails.ClinicSlots model, List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date) {
         this.activity = activity;
@@ -93,7 +101,7 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.patient_appointment, null);
 
-        AppointmentHolder holder = holders.get(position);
+        final AppointmentHolder holder = holders.get(position);
         //Appointment headings
         TextView appointment_number = (TextView)convertView.findViewById(R.id.appointment_number);
         TextView appointment_time = (TextView)convertView.findViewById(R.id.appointment_time);
@@ -113,7 +121,51 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
         Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
-        appointment_menu.setAdapter(new AppointmentMenuAdapter(activity,holder));
+        appointment_menu.setTag(holder);
+        String[] menuArray = holder.patient != null? filledAppointment: emptyAppointment;
+        appointment_menu.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item, menuArray)
+        {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent)
+            {
+                ImageView view = new ImageView(activity);
+                view.setImageResource(R.drawable.ic_reorder_black_24dp);
+                return view;
+            }
+        });
+        appointment_menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+               @Override
+               public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                   if(parent.getSelectedItem().equals(emptyAppointment[0])) //new appointment
+                   {
+//                       bookOnline(holder);
+                   }
+                   else if (parent.getSelectedItem().equals(emptyAppointment[1])) //mark as blok
+                   {
+                       bookOnline(holder);
+                   }
+                   else if (parent.getSelectedItem().equals(filledAppointment[0])) //Reschedule
+                   {
+
+                   }
+                   else if (parent.getSelectedItem().equals(emptyAppointment[1])) //Cancel
+                   {
+
+                   }
+
+                   else if (parent.getSelectedItem().equals(emptyAppointment[1])) //Feedback
+                   {
+
+                   }
+               }
+
+               @Override
+               public void onNothingSelected(AdapterView<?> parent) {
+
+               }
+           });
+
+
         totalAppointment.setVisibility(View.GONE);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
 
@@ -344,5 +396,26 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
                 holders.add(new AppointmentHolder(i,model, null,doctorHolidays, date));
         }
         return holders;
+    }
+
+    private void bookOnline(AppointmentHolder holder)
+    {
+        Bundle bundle = activity.getIntent().getExtras();
+        DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+//        String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
+//
+//        bundle.putInt(PARAM.CLINIC_ID, clinicDetails.clinic.idClinic);
+//        bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
+//        bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
+//        bundle.putInt(PARAM.DOCTOR_CLINIC_ID,details.doctorClinicId);
+//        bundle.putInt(PARAM.SLOT_VISIT_DURATION,details.visitDuration);
+//        bundle.putLong(PARAM.SLOT_START_DATETIME,details.startTime);
+//        bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
+        activity.getIntent().putExtras(bundle);
+        ParentFragment fragment = new PersonSearchView();
+        ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManger = activity.getFragmentManager();
+        fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
     }
 }
