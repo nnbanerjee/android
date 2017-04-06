@@ -65,6 +65,8 @@
     <string-array name="appointment_status">
         <item>Confirmed</item>
         <item>Tentative</item>
+    </string-array>
+    <string-array name="no_appointment_status">
         <item>Available</item>
         <item>Absence</item>
     </string-array>
@@ -271,9 +273,7 @@
     <string-array name="visit_status">
         <item>Visited</item>
         <item>Absence</item>
-        <item>Unknown</item>
-        <item>Future</item>
-        <item>" "</item>
+        <item>Scheduled</item>
     </string-array>
     <string-array name="holiday_choice">
         <item>Available</item>

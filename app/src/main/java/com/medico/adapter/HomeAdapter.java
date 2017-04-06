@@ -19,8 +19,10 @@ public abstract class HomeAdapter extends BaseAdapter
 {
     MyApi api;
     Activity activity;
+    HomeAdapter adapter;
 
     public HomeAdapter(Activity activity) {
+        adapter = this;
         this.activity = activity;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setRequestInterceptor(new RequestInterceptor() {

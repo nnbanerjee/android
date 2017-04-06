@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.util.GeoClient;
+import com.medico.util.LocationService;
 import com.medico.util.PARAM;
 import com.medico.view.ParentFragment;
 
@@ -58,6 +59,7 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
 //        abar.setIcon(R.color.transparent);
         abar.setHomeButtonEnabled(true);
         client = GeoClient.getInstance(this);
+        LocationService locationService = LocationService.getLocationManager(this);
     }
 
     //    @Override

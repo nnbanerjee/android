@@ -37,6 +37,7 @@ import com.medico.model.Dependent;
 import com.medico.model.DoctorProfile;
 import com.medico.model.PersonProfile;
 import com.medico.util.BackStress;
+import com.medico.util.LocationService;
 import com.medico.util.PARAM;
 import com.medico.view.settings.ManagePersonSettings;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -116,6 +117,8 @@ public abstract class HomeActivity extends Activity implements PARAM
         mainMenu = new Menu();
         arrayMenu = new ArrayList<String>();
         showMenus();
+
+//        locationService.addNotifyListeber(this);
 
     }
 

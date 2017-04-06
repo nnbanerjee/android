@@ -1,9 +1,13 @@
 package com.medico.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import com.medico.application.MyApi;
 import com.medico.application.R;
+import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
@@ -26,6 +31,8 @@ import com.medico.model.DoctorSlotBookings;
 import com.medico.model.Person;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
+import com.medico.view.ClinicDoctorAppointmentFragment;
+import com.medico.view.FeedbackFragmentClinicAppointment;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
@@ -63,8 +70,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
     List<AppointmentHolder> holders;
     Date date;
 
-    String[] emptyAppointment = {"Add Appointment","Mark Not Available"};
-    String[] filledAppointment = {"Reschedule Appointment","Cancel Appointment","Appointment Feedback"};
+    String[] emptyAppointment = {"","Add Appointment"};
+    String[] filledAppointment = {"","Reschedule Appointment","Cancel Appointment","Appointment Feedback"};
 
     public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails.ClinicSlots model, DoctorClinicDetails details,List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date) {
         super(activity);
@@ -129,6 +136,15 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
         Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
+        totalAppointment.setVisibility(View.GONE);
+        RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
+        final RelativeLayout parentLayout = (RelativeLayout)convertView.findViewById(R.id.layout);
+        patient_image.setBackgroundResource(R.drawable.patient);
+        appointment_number.setText(new Integer(holder.sequenceNumber).toString());
+        appointment_time.setText(holder.getTime());
+        appointment_status.setSelection(holder.getAppointmentStatus());
+        appointment_type.setSelection(holder.getVisitType());
+        appointment_visit_status.setSelection(holder.getVisitStatus());
         appointment_menu.setTag(holder);
         String[] menuArray = holder.patient != null? filledAppointment: emptyAppointment;
         appointment_menu.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item, menuArray)
@@ -144,26 +160,22 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         appointment_menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                @Override
                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                   if(parent.getSelectedItem().equals(emptyAppointment[0])) //new appointment
-                   {
-//                       bookOnline(holder);
-                   }
-                   else if (parent.getSelectedItem().equals(emptyAppointment[1])) //mark as blok
+                   if(parent.getSelectedItem().equals(emptyAppointment[1])) //new appointment
                    {
                        bookOnline(holder);
                    }
-                   else if (parent.getSelectedItem().equals(filledAppointment[0])) //Reschedule
+                   else if (parent.getSelectedItem().equals(filledAppointment[1])) //Reschedule
                    {
-
+                       rescheduleAppointment(holder);
                    }
-                   else if (parent.getSelectedItem().equals(emptyAppointment[1])) //Cancel
+                   else if (parent.getSelectedItem().equals(filledAppointment[2])) //Cancel
                    {
-
+                        cancelAppointment(holder);
                    }
 
-                   else if (parent.getSelectedItem().equals(emptyAppointment[1])) //Feedback
+                   else if (parent.getSelectedItem().equals(filledAppointment[3])) //Feedback
                    {
-
+                        feedbackAppointment(holder);
                    }
                }
 
@@ -172,18 +184,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
                }
            });
-
-
-        totalAppointment.setVisibility(View.GONE);
-        RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
-
-        patient_image.setBackgroundResource(R.drawable.patient);
-
-        appointment_number.setText(new Integer(holder.sequenceNumber).toString());
-        appointment_time.setText(holder.getTime());
-        appointment_status.setSelection(holder.getAppointmentStatus());
-        appointment_type.setSelection(holder.getVisitType());
-        appointment_visit_status.setSelection(holder.getVisitStatus());
 
         if(holder.patient != null)
         {
@@ -253,11 +253,19 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 }
             });
 //            appointment_menu.setAdapter(new AppointmentAdapter(activity));
+            appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.appointment_status)));
+            appointment_status.setSelection(holder.getAppointmentStatus());
         }
-        else {
+        else
+        {
             layout.setVisibility(View.GONE);
             appointment_type.setVisibility(View.GONE);
             appointment_visit_status.setVisibility(View.GONE);
+            if(holder.isHoliday)
+                parentLayout.setBackgroundColor(Color.LTGRAY);
+            appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.no_appointment_status)));
+            appointment_status.setSelection(holder.isHoliday?1:0);
+
         }
 
         return convertView;
@@ -293,26 +301,12 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
     class AppointmentHolder
     {
         int sequenceNumber;
-//        Integer duration;
-//        Integer doctorId;
-//        Integer clinicSlotId;
         boolean isHoliday = false;
         DoctorClinicDetails details;
         DoctorSlotBookings.PersonBooking patient;
         DoctorClinicDetails.ClinicSlots model;
         Date date;
 
-//        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model)
-//        {
-//            sequenceNumber = i+1;
-//            this.model = model;
-//        }
-//        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model, DoctorSlotBookings.PersonBooking personBooking)
-//        {
-//            sequenceNumber = i+1;
-//            this.model = model;
-//            this.patient = personBooking;
-//        }
         public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model, DoctorClinicDetails details, DoctorSlotBookings.PersonBooking personBooking,List<DoctorHoliday> doctorHolidays , Date date)
         {
             sequenceNumber = i+1;
@@ -320,6 +314,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             this.details = details;
             this.patient = personBooking;
             setAppointmentDateTime(i, date, model.startTime, model.endTime, model.visitDuration);
+            setDoctorHoliday(doctorHolidays);
         }
 
         private void setAppointmentDateTime(int i, Date date, long startTime, long endTime, int visitDuration)
@@ -333,6 +328,30 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             calendar2.set(Calendar.MONTH,calendar1.get(Calendar.MONTH));
             calendar2.set(Calendar.DAY_OF_MONTH,calendar1.get(Calendar.DAY_OF_MONTH));
             this.date = calendar2.getTime();
+        }
+        private void setDoctorHoliday(List<DoctorHoliday> holidays)
+        {
+            if(holidays != null && !holidays.isEmpty())
+            {
+                for(DoctorHoliday holiday:holidays)
+                {
+                    switch (holiday.type) {
+                        case 2:
+                            isHoliday = true;
+                            break;
+                        case 1:
+                            isHoliday = true;
+                            break;
+                        case 0:
+                            if (sequenceNumber == holiday.sequenceNo) {
+                                isHoliday = true;
+                            }
+                            break;
+                        default:
+                            isHoliday = false;
+                    }
+                }
+            }
         }
         public String getTime()
         {
@@ -361,10 +380,14 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             else
                 return patient.visitType;
         }
-//        public void update(DoctorAppointment appointment, Person person)
-//        {
-//            patient = new DoctorSlotBookings.PersonBooking(appointment,person);
-//        }
+        public boolean isHoliday()
+        {
+            return isHoliday;
+        }
+        public void setHoliday(boolean holiday)
+        {
+            isHoliday = holiday;
+        }
     }
 
     private List<AppointmentHolder> createAppointmentHolders( DoctorClinicDetails.ClinicSlots model, List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date)
@@ -415,16 +438,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
     private void bookOnline(AppointmentHolder holder)
     {
         Bundle bundle = activity.getIntent().getExtras();
-        DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
-//        String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
-//
-//        bundle.putInt(PARAM.CLINIC_ID, clinicDetails.clinic.idClinic);
-//        bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
-//        bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
-//        bundle.putInt(PARAM.DOCTOR_CLINIC_ID,details.doctorClinicId);
-//        bundle.putInt(PARAM.SLOT_VISIT_DURATION,details.visitDuration);
-//        bundle.putLong(PARAM.SLOT_START_DATETIME,details.startTime);
-//        bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
         activity.getIntent().putExtras(bundle);
         PersonSearchView fragment = new PersonSearchView();
         fragment.setAdapter(this,holder);
@@ -463,5 +476,95 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             }
         });
 
+    }
+
+    private void rescheduleAppointment(AppointmentHolder holder)
+    {
+
+        Bundle bundle = activity.getIntent().getExtras();
+        DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+        String shiftDateTime = formatTime.format(holder.model.startTime) +" - " + formatTime.format(holder.model.endTime);
+        bundle.putInt(PARAM.APPOINTMENT_ID,holder.patient.appointmentId);
+        bundle.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
+        bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, holder.sequenceNumber);
+        bundle.putInt(PARAM.CLINIC_ID, holder.details.clinic.idClinic);
+        bundle.putString(PARAM.CLINIC_NAME,holder.details.clinic.clinicName);
+        bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
+        bundle.putInt(PARAM.DOCTOR_CLINIC_ID,holder.model.doctorClinicId);
+        bundle.putInt(PARAM.SLOT_VISIT_DURATION,model.visitDuration);
+        bundle.putLong(PARAM.SLOT_START_DATETIME,model.startTime);
+        bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
+        activity.getIntent().putExtras(bundle);
+        ParentFragment fragment = new ClinicDoctorAppointmentFragment();
+        ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManger = activity.getFragmentManager();
+        fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+    }
+
+    private void feedbackAppointment(AppointmentHolder holder)
+    {
+        Bundle bundle = activity.getIntent().getExtras();
+        DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+        String shiftDateTime = formatTime.format(holder.model.startTime) +" - " + formatTime.format(holder.model.endTime);
+        bundle.putInt(PARAM.APPOINTMENT_ID,holder.patient.appointmentId);
+        bundle.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
+        bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, holder.sequenceNumber);
+        bundle.putInt(PARAM.CLINIC_ID, holder.details.clinic.idClinic);
+        bundle.putString(PARAM.CLINIC_NAME,holder.details.clinic.clinicName);
+        bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
+        bundle.putInt(PARAM.DOCTOR_CLINIC_ID,holder.model.doctorClinicId);
+        bundle.putInt(PARAM.SLOT_VISIT_DURATION,model.visitDuration);
+        bundle.putLong(PARAM.SLOT_START_DATETIME,model.startTime);
+        bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
+        activity.getIntent().putExtras(bundle);
+        ParentFragment fragment = new FeedbackFragmentClinicAppointment();
+        ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManger = activity.getFragmentManager();
+        fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+    }
+    private void cancelAppointment(final AppointmentHolder holder)
+    {
+        new AlertDialog.Builder(activity)
+                .setTitle("Delete Appointment")
+                .setMessage("Are you sure you want to delete this appointment?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        final ProgressDialog progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                        RestAdapter restAdapter = new RestAdapter.Builder()
+                                .setEndpoint(activity.getString(R.string.base_url))
+                                .setClient(new OkClient())
+                                .setLogLevel(RestAdapter.LogLevel.FULL)
+                                .build();
+                        MyApi api = restAdapter.create(MyApi.class);
+                        api.cancelAppointment(new AppointmentId1(holder.patient.appointmentId), new Callback<AppointmentResponse>() {
+                            @Override
+                            public void success(AppointmentResponse result, Response response) {
+                                progress.dismiss();
+//                                        if (result.getStatus().equalsIgnoreCase("1")) {
+                                Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+                                holder.patient = null;
+                                adapter.notifyDataSetChanged();
+//                                        }
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                progress.dismiss();
+                                error.printStackTrace();
+                                Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

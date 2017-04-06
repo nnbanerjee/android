@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medico.application.R;
+import com.medico.util.LocationService;
 import com.medico.view.ParentFragment;
 import com.medico.view.search.SearchPersonListView;
 
@@ -55,7 +56,7 @@ public class ManageDoctorAppointment extends AppCompatActivity {
         abar.setDisplayHomeAsUpEnabled(true);
 //        abar.setIcon(R.color.transparent);
         abar.setHomeButtonEnabled(true);
-
+        LocationService locationService = LocationService.getLocationManager(this);
     }
 
 //    @Override

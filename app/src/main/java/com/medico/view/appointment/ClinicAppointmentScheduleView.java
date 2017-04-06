@@ -51,7 +51,7 @@ import retrofit.client.Response;
 public class ClinicAppointmentScheduleView extends ParentFragment {
     float slideActive = 0f;
     int[] daysOfWeek = {2,3,4,5,6,7,1};
-    Date activateDate;
+    Date activateDate = new Date();
     Date[] activatedDateRange;
 //    TextView slot_name;
     Spinner holidayList;
@@ -146,9 +146,9 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 model = doctorClinicDetails.getSlot(doctorSlotId);
                 DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
 //                slot_name.setText(model.name + " " + daysOfWeek(model.daysOfWeek) + format.format(model.startTime) + " - " + format.format(model.endTime));
-                setDateAndDateRange(new Date());
+                setDateAndDateRange(activateDate);
                 //slot and appointments
-                setAdapter(new Date());
+                setAdapter(activateDate);
             }
 
             @Override

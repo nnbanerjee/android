@@ -25,8 +25,6 @@ import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.model.SearchParameterRequest;
 import com.medico.util.LocationService;
-import com.medico.util.Notifier;
-import com.medico.util.NotifyListener;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
 import com.medico.view.appointment.ManageDoctorAppointment;
@@ -43,7 +41,7 @@ import retrofit.client.Response;
  */
 
 
-public class PersonSearchView extends ParentFragment implements View.OnClickListener, NotifyListener {
+public class PersonSearchView extends ParentFragment implements View.OnClickListener {
 
 //    ProgressDialog progress;
     int LOCATION_REFRESH_TIME = 5000;
@@ -108,14 +106,14 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void onStart()
     {
         super.onStart();
-
+        getCurrentLocation();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LocationService locationService = LocationService.getLocationManager(getActivity());
-        locationService.addNotifyListeber(this);
+//        LocationService locationService = LocationService.getLocationManager(getActivity());
+//        locationService.addNotifyListeber(this);
     }
 
     @Override
@@ -343,19 +341,30 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
             return false;
     }
 
-    public void notify(int id, Notifier source, Object parameter)
+    private void getCurrentLocation()
     {
-        if(source instanceof LocationService) {
-
-            LocationService service = (LocationService)source;
-            model.lattitude = service.latitude;
-            model.longitude = service.longitude;
-            model.country = service.countryCode;
-            model.city = service.city;
-            city_list.setText(service.city);
-            country_list.setText(service.country);
-        }
+        LocationService service = LocationService.getLocationManager(getActivity());
+        model.lattitude = service.latitude;
+        model.longitude = service.longitude;
+        model.country = service.countryCode;
+        model.city = service.city;
+        city_list.setText(service.city);
+        country_list.setText(service.country);
     }
+
+//    public void notify(int id, Notifier source, Object parameter)
+//    {
+//        if(source instanceof LocationService) {
+//
+//            LocationService service = (LocationService)source;
+//            model.lattitude = service.latitude;
+//            model.longitude = service.longitude;
+//            model.country = service.countryCode;
+//            model.city = service.city;
+//            city_list.setText(service.city);
+//            country_list.setText(service.country);
+//        }
+//    }
 
     private void showResult(List<Person> result)
     {

@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +25,7 @@ public class LocationService extends  Notifier implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
 
     //The minimum time beetwen updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 5000;//1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
 
     private final static boolean forceNetwork = false;
 
@@ -96,25 +95,25 @@ public class LocationService extends  Notifier implements LocationListener {
                     this.locationServiceAvailable = true;
 
                     if (isNetworkEnabled) {
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                            updateCoordinates();
-                        }
+                        locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this,null);
+//                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+//                                MIN_TIME_BW_UPDATES,
+//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//                        if (locationManager != null) {
+//                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                        }
                     }//end if
 
-                    else if (isGPSEnabled) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                        if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                            updateCoordinates();
-                        }
-                    }
+//                    else if (isGPSEnabled) {
+//                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+//                                MIN_TIME_BW_UPDATES,
+//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//
+//                        if (locationManager != null) {
+//                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+////                            updateCoordinates();
+//                        }
+//                    }
                 }
             }
         } catch (Exception ex)  {
@@ -233,9 +232,9 @@ public class LocationService extends  Notifier implements LocationListener {
         }
 
          city =  cityName;
-        Toast.makeText(context, "New GPS location:" + cityName + " " + region + " " + country
-                + String.format("%9.6f", location.getLatitude()) + ", "
-                + String.format("%9.6f", location.getLongitude()) + "\n" , Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, "New GPS location:" + cityName + " " + region + " " + country
+//                + String.format("%9.6f", location.getLatitude()) + ", "
+//                + String.format("%9.6f", location.getLongitude()) + "\n" , Toast.LENGTH_LONG).show();
         notifyListeners(PARAM.LOCATION_UPDATED,this, city);
     }
 
