@@ -189,7 +189,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 public void success(ResponseAddTemplates1 jsonObject, Response response) {
                     Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
                     progress.dismiss();
-                    ((ManagePatientProfile) getActivity()).onBackPressed();
+                    ((ParentActivity) getActivity()).onBackPressed();
                 }
 
                 @Override
@@ -208,7 +208,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 public void success(ResponseCodeVerfication jsonObject, Response response) {
                     Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
                     progress.dismiss();
-                    ((ManagePatientProfile) getActivity()).onBackPressed();
+                    ((ParentActivity) getActivity()).onBackPressed();
                 }
 
                 @Override
@@ -354,7 +354,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+        ParentActivity activity = ((ParentActivity) getActivity());
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {

@@ -16,14 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.DoctorProfileList;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.DoctorDetailsFragment;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientVisitDatesView;
-import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -154,7 +154,7 @@ public class DoctorListAdapter extends BaseAdapter  {
             public void onClick(View v) {
 
 //                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
-                ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
+                ParentActivity parentactivity = (ParentActivity)activity;
                 Bundle bundle = parentactivity.getIntent().getExtras();
                 bundle.putInt(PARAM.DOCTOR_ID, allDoctors.getDoctorList().get(position).getDoctorId());
                 parentactivity.getIntent().putExtras(bundle);

@@ -236,7 +236,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 {
                     Bundle args = getActivity().getIntent().getExtras();
                     ParentFragment fragment = new PatientMedicinReminder();
-                    ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+                    ((ParentActivity)getActivity()).fragmentList.add(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -258,7 +258,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 args.remove(DIAGNOSTIC_TEST_ID);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientDiagnosticTests();
-                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+                ((ParentActivity)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -276,7 +276,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 args.remove(MEDICINE_ID);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
-                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+                ((ParentActivity)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -341,15 +341,31 @@ public class DoctorAppointmentSummary extends ParentFragment {
         final int patientId = bundle.getInt(PATIENT_ID);
         final int appointMentId = bundle.getInt(APPOINTMENT_ID);
         final int loggedInUserId = bundle.getInt(LOGGED_IN_ID);
+        final int clinicId = bundle.getInt(CLINIC_ID);
+        final long date = bundle.getLong(APPOINTMENT_DATETIME);
+        final int visitType = bundle.getInt(VISIT_TYPE);
+        final String clinicName = bundle.getString(CLINIC_NAME);
         if(appointMentId > 0) {
             api.getPatientVisitSummary(new AppointmentId1(appointMentId), new Callback<SummaryResponse>() {
                 @Override
                 public void success(SummaryResponse summary, Response response) {
                     summaryResponse = summary;
+                    if(summary.status == 0)
+                    {
+                        summaryResponse.setDoctorId(doctorId);
+                        summaryResponse.setPatientId(patientId);
+                        summaryResponse.setLoggedinUserId(loggedInUserId);
+                        summaryResponse.setAppointmentId(appointMentId);
+                        summaryResponse.setClinicId(clinicId);
+                        summaryResponse.setClinicName(clinicName);
+                        summaryResponse.setVisitType(new Integer(visitType).byteValue());
+                        summaryResponse.setVisitDate(date);
+                    }
                     summary.setLoggedinUserId(loggedInUserId);
                     progress.dismiss();
                     setPatientSummary();
                     setClinic(false);
+                    progress.dismiss();
                 }
 
                 @Override
@@ -685,7 +701,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     {
         if(summaryResponse.canBeSaved())
         {
-            if(summaryResponse.appointmentId == null)
+            if(summaryResponse.appointmentId == null || summaryResponse.status == 0)
                 createSummary(summaryResponse);
             else
                 updateSummary(summaryResponse);

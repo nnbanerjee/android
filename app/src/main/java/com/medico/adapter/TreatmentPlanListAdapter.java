@@ -14,17 +14,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.medico.model.TreatmentPlan1;
-import com.medico.view.DoctorTreatmentPlanEditView;
-import com.medico.view.ManagePatientProfile;
-import com.medico.view.ParentFragment;
+import com.medico.application.MyApi;
 import com.medico.application.R;
+import com.medico.model.TreatmentPlan1;
+import com.medico.util.PARAM;
+import com.medico.view.DoctorTreatmentPlanEditView;
+import com.medico.view.ParentActivity;
+import com.medico.view.ParentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.medico.application.MyApi;
-import com.medico.util.PARAM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -128,7 +128,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
                     args.putInt(PARAM.TREATMENT_ID, plan.getTreatmentId());
                     activity.getIntent().putExtras(args);
                     ParentFragment fragment = new DoctorTreatmentPlanEditView();
-                    ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                    ((ParentActivity)activity).fragmentList.add(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();

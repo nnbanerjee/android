@@ -119,11 +119,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void getDocumentationInformation()
     {
         if(selectedFragment != null)
-            ((ManagePatientProfile)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
         selectedFragment = new DoctorAppointmentDocument();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ManagePatientProfile)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
 
@@ -134,11 +134,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void getDoctorNoteInformation()
     {
         if(selectedFragment != null)
-            ((ManagePatientProfile)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
         selectedFragment = new DoctorAppointmentDoctorNote();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ManagePatientProfile)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
     }
@@ -146,11 +146,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void getTreatmentInformation()
     {
         if(selectedFragment != null)
-            ((ManagePatientProfile)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
         selectedFragment = new DoctorAppointmentTreatmentPlan();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ManagePatientProfile)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
     }
@@ -158,11 +158,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void getInvoicesInformation()
     {
         if(selectedFragment != null)
-            ((ManagePatientProfile)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
         selectedFragment = new DoctorAppointmentInvoices();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ManagePatientProfile)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
     }
@@ -223,7 +223,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+        ParentActivity activity = ((ParentActivity) getActivity());
         ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
         int id = item.getItemId();
         switch (id) {

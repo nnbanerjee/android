@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.DoctorClinicDetails;
@@ -22,9 +23,8 @@ import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
 import com.medico.view.FeedbackFragmentClinicAppointment;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -228,7 +228,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new ClinicDoctorAppointmentFragment();
-                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).fragmentList.add(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -258,7 +258,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new ClinicDoctorAppointmentFragment();
-                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).fragmentList.add(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -289,7 +289,7 @@ public class ClinicPatientAdapter extends BaseAdapter {
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new FeedbackFragmentClinicAppointment();
-                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).fragmentList.add(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();

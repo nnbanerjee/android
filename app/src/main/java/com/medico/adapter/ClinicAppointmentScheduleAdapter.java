@@ -33,7 +33,7 @@ import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
 import com.medico.view.FeedbackFragmentClinicAppointment;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
 import com.medico.view.PatientVisitDatesView;
@@ -227,7 +227,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 @Override
                 public void onClick(View v) {
 
-                    ManagePatientProfile parentactivity = (ManagePatientProfile)activity;
+                    ParentActivity parentactivity = (ParentActivity)activity;
                     Bundle bundle = activity.getIntent().getExtras();
                     bundle.putInt(PARAM.PATIENT_ID, patient.getId());
                     parentactivity.getIntent().putExtras(bundle);
@@ -509,6 +509,15 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
         String shiftDateTime = formatTime.format(holder.model.startTime) +" - " + formatTime.format(holder.model.endTime);
 //        bundle.putInt(PARAM.DOCTOR_ID, bundle.getInt(PARAM.LOGGED_IN_ID));
+//        public Long visitDate;
+//        public Byte visitType;
+//        public String referredBy;
+//        public Integer clinicId;
+//        public String clinicName;
+        bundle.putLong(PARAM.APPOINTMENT_DATETIME,holder.date.getTime());
+        bundle.putInt(PARAM.VISIT_TYPE,holder.patient.visitType);
+        bundle.putString(PARAM.CLINIC_NAME,holder.details.clinic.clinicName);
+        bundle.putInt(PARAM.PATIENT_ID,holder.patient.patient.getId());
         bundle.putInt(PARAM.APPOINTMENT_ID,holder.patient.appointmentId);
         bundle.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
         bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, holder.sequenceNumber);

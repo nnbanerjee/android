@@ -18,7 +18,7 @@ import com.medico.application.R;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.util.PARAM;
 import com.medico.view.CustomTemplateSubListView;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class CustomTemplateListAdapter extends BaseAdapter {
                     args.putString(PARAM.CUSTOM_TEMPLATE_NAME,temp.get(0).getTemplateName());
                     activity.getIntent().putExtras(args);
                     ParentFragment fragment = new CustomTemplateSubListView();
-                    ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                    ((ParentActivity)activity).fragmentList.add(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();

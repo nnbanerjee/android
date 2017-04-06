@@ -138,7 +138,7 @@ public class CustomTemplateEditView extends ParentFragment {
             public void success(ResponseVm jsonObject, Response response) {
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
                 progress.dismiss();
-                ((ManagePatientProfile)getActivity()).onBackPressed();
+                ((ParentActivity)getActivity()).onBackPressed();
             }
 
             @Override

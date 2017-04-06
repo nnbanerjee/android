@@ -17,14 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.RemovePatientTestRequest;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SummaryResponse;
 import com.medico.util.PARAM;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDiagnosticTests;
-import com.medico.application.R;
 
 import java.util.List;
 
@@ -100,9 +100,9 @@ public class DiagnosticTestAdapter extends BaseAdapter {
                 args.putInt(PARAM.DIAGNOSTIC_TEST_ID, testPrescribed.testId);
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new PatientDiagnosticTests();
-                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).fragmentList.add(fragment);
                 fragment.setArguments(args);
-                FragmentManager fragmentManger = ((ManagePatientProfile) activity).getFragmentManager();
+                FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });

@@ -118,7 +118,7 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
     @Override
     public boolean save()
     {
-        ManagePatientProfile activity = (ManagePatientProfile)getActivity();
+        ParentActivity activity = (ParentActivity)getActivity();
         Bundle args = activity.getIntent().getExtras();
         args.remove(TREATMENT_ID);
         args.putInt(CUSTOM_TEMPLATE_CREATE_ACTIONS, CREATE_TREATMENT);

@@ -18,6 +18,8 @@ public class SummaryResponse {
     public Byte treatmentPlanEnabled = 0;
     public List<MedicinePrescribed> medicinePrescribed;
     public List<TestPrescribed> testPrescribed;
+    public String errorCode = null;
+    public int status = 1;
 
     public transient boolean isChanged = false;
 

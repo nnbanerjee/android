@@ -7,6 +7,7 @@ package com.medico.util;
 public interface PARAM {
     public static final String MyPREFERENCES = "MyPrefs";
 
+
     public static int LOCATION_UPDATED = 1;
 
     public static String EXECUTION_STATUS = "status";
@@ -63,6 +64,8 @@ public interface PARAM {
     public static final int VISIT_TYPE_REPORTS = 2;
     public static final int VISIT_TYPE_IMMUNIZATION = 3;
     public static final int VISIT_TYPE_NONE = 4;
+
+    public static final String VISIT_TYPE = "visit_type";
 
     public static final int VISIT_STATUS_VISITED = 0;
     public static final int VISIT_STATUS_ABASENSE = 1;

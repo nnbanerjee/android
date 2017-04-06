@@ -25,7 +25,7 @@ import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.model.SearchParameterRequest;
 import com.medico.util.LocationService;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.appointment.ManageDoctorAppointment;
 
@@ -206,7 +206,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+        ParentActivity activity = ((ParentActivity) getActivity());
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {

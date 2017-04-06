@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
-import com.medico.view.ManagePatientProfile;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.application.R;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -170,7 +170,7 @@ public class SlotAppointmentAdapter extends BaseAdapter
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new ClinicDoctorAppointmentFragment();
-                ((ManagePatientProfile)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).fragmentList.add(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
