@@ -6,21 +6,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medico.application.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ManagePatientProfile extends AppCompatActivity {
+public class ManagePatientProfile extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
-    public List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +51,6 @@ public class ManagePatientProfile extends AppCompatActivity {
         abar.setHomeButtonEnabled(true);
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu)
-//    {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
     @Override
     public void onBackPressed() {
 
@@ -100,29 +88,6 @@ public class ManagePatientProfile extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // User chose the "Settings" item, show the app settings UI...
-                if (fragmentList.size() > 1) {
-                    onBackPressed();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     protected void attachView()
     {

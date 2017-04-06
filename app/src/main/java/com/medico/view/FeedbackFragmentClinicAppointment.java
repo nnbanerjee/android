@@ -87,7 +87,9 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
             }
         });
         Bundle bundle = getActivity().getIntent().getExtras();
-        if(bundle.getInt(LOGGED_IN_ID) == bundle.getInt(DOCTOR_ID))
+        Integer role = bundle.getInt(PROFILE_ROLE);
+//        if(bundle.getInt(LOGGED_IN_ID) == bundle.getInt(DOCTOR_ID))
+        if(role.intValue() == DOCTOR)
         {
             isPatient = false;
             view.findViewById(R.id.visited_layout).setVisibility(View.INVISIBLE);
@@ -155,7 +157,7 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 ParentFragment fragment = new DoctorAppointmentInformation();
-                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
+                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -225,7 +227,7 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+//        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {

@@ -390,7 +390,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
+//        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {

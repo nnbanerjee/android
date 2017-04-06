@@ -484,9 +484,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         Bundle bundle = activity.getIntent().getExtras();
         DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
         String shiftDateTime = formatTime.format(holder.model.startTime) +" - " + formatTime.format(holder.model.endTime);
+        bundle.putInt(PARAM.PATIENT_ID,holder.patient.patient.getId());
         bundle.putInt(PARAM.APPOINTMENT_ID,holder.patient.appointmentId);
         bundle.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
-        bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, holder.sequenceNumber);
+        bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, holder.patient.sequenceNo);
         bundle.putInt(PARAM.CLINIC_ID, holder.details.clinic.idClinic);
         bundle.putString(PARAM.CLINIC_NAME,holder.details.clinic.clinicName);
         bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
@@ -496,7 +497,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
         activity.getIntent().putExtras(bundle);
         ParentFragment fragment = new ClinicDoctorAppointmentFragment();
-        ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+        ((ManageDoctorAppointment)activity).attachFragment(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -507,6 +508,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         Bundle bundle = activity.getIntent().getExtras();
         DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
         String shiftDateTime = formatTime.format(holder.model.startTime) +" - " + formatTime.format(holder.model.endTime);
+//        bundle.putInt(PARAM.DOCTOR_ID, bundle.getInt(PARAM.LOGGED_IN_ID));
         bundle.putInt(PARAM.APPOINTMENT_ID,holder.patient.appointmentId);
         bundle.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
         bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, holder.sequenceNumber);
@@ -519,7 +521,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
         activity.getIntent().putExtras(bundle);
         ParentFragment fragment = new FeedbackFragmentClinicAppointment();
-        ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+        ((ManageDoctorAppointment)activity).attachFragment(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();

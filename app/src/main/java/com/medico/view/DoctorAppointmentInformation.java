@@ -107,11 +107,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void getSummaryInformation()
     {
         if(selectedFragment != null)
-            ((ManagePatientProfile)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
         selectedFragment = new DoctorAppointmentSummary();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ManagePatientProfile)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
     }

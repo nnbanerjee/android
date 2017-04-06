@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +13,13 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.util.LocationService;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.search.SearchPersonListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ManageDoctorAppointment extends AppCompatActivity {
+public class ManageDoctorAppointment extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
-    public List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
+//    public List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,15 +129,5 @@ public class ManageDoctorAppointment extends AppCompatActivity {
         ft.add(R.id.service, fragment).addToBackStack(null).commit();
     }
 
-    public void attachFragment(ParentFragment fragment)
-    {
-//        fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
-        fragmentList.add(fragment);
-    }
-    public void deattachFragment(ParentFragment fragment)
-    {
-//        fragment.setHasOptionsMenu(false);
-        fragmentList.remove(fragment);
-//        fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(true);
-    }
+
 }
