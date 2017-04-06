@@ -26,6 +26,15 @@ public class DoctorSlotBookings
         public Byte visitStatus;
         public Integer numberOfVisits;
 
+        public PersonBooking(DoctorAppointment appointment, Person patient)
+        {
+            this.patient = patient;
+            sequenceNo = appointment.sequenceNumber;
+            visitStatus = appointment.visitStatus;
+            visitType = appointment.visitType;
+//            lastAppointment
+        }
+
     }
 
 

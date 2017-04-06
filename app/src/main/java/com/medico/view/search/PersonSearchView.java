@@ -1,6 +1,7 @@
 package com.medico.view.search;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.adapter.HomeAdapter;
 import com.medico.adapter.PatientSearchListAdapter;
 import com.medico.application.R;
 import com.medico.model.Person;
@@ -27,6 +29,7 @@ import com.medico.util.Notifier;
 import com.medico.util.NotifyListener;
 import com.medico.view.ManagePatientProfile;
 import com.medico.view.ParentFragment;
+import com.medico.view.appointment.ManageDoctorAppointment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,94 +57,9 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     boolean isGPSEnabled, isNetworkEnabled;
 //    LocationManager lm;
     SearchParameterRequest model = new SearchParameterRequest();
-//    private final LocationListener gpsLocationListener =new LocationListener(){
-//
-//        @Override
-//        public void onStatusChanged(String provider, int status, Bundle extras) {
-//            switch (status) {
-//                case LocationProvider.AVAILABLE:
-//                    Toast.makeText(getActivity(), "GPS Service available again" , Toast.LENGTH_LONG).show();
-//                    break;
-//                case LocationProvider.OUT_OF_SERVICE:
-//                    Toast.makeText(getActivity(), "GPS out of service\n" , Toast.LENGTH_LONG).show();
-//                    break;
-//                case LocationProvider.TEMPORARILY_UNAVAILABLE:
-//                    Toast.makeText(getActivity(), "GPS temporarily unavailable\nn" , Toast.LENGTH_LONG).show();
-//                    break;
-//            }
-//        }
-//
-//        @Override
-//        public void onProviderEnabled(String provider) {
-//            Toast.makeText(getActivity(), "GPS Provider Enabled\nn" , Toast.LENGTH_LONG).show();
-//        }
-//
-//        @Override
-//        public void onProviderDisabled(String provider) {
-//            Toast.makeText(getActivity(), "GPS Provider Disabled" , Toast.LENGTH_LONG).show();
-//        }
-//
-//        @Override
-//        public void onLocationChanged(Location location) {
-//            lm.removeUpdates(networkLocationListener);
-//            Toast.makeText(getActivity(), "New GPS location:"
-//                    + String.format("%9.6f", location.getLatitude()) + ", "
-//                    + String.format("%9.6f", location.getLongitude()) + "\n" , Toast.LENGTH_LONG).show();
-//        }
-//    };
-//    private final LocationListener networkLocationListener =
-//            new LocationListener(){
-//
-//                @Override
-//                public void onStatusChanged(String provider, int status, Bundle extras) {
-//                    switch (status) {
-//                        case LocationProvider.AVAILABLE:
-//                            Toast.makeText(getActivity(), "NW Service available again" , Toast.LENGTH_LONG).show();
-//                            break;
-//                        case LocationProvider.OUT_OF_SERVICE:
-//                            Toast.makeText(getActivity(), "NW out of service\n" , Toast.LENGTH_LONG).show();
-//                            break;
-//                        case LocationProvider.TEMPORARILY_UNAVAILABLE:
-//                            Toast.makeText(getActivity(), "NW temporarily unavailable\nn" , Toast.LENGTH_LONG).show();
-//                            break;
-//                    }
-//                }
-//
-//                @Override
-//                public void onProviderEnabled(String provider) {
-//                    Toast.makeText(getActivity(), "NW Provider Enabled\nn" , Toast.LENGTH_LONG).show();
-//                }
-//
-//                @Override
-//                public void onProviderDisabled(String provider) {
-//                    Toast.makeText(getActivity(), "NW Provider Disabled" , Toast.LENGTH_LONG).show();
-//                }
-//
-//                @Override
-//                public void onLocationChanged(Location location) {
-//                    lm.removeUpdates(networkLocationListener);
-//                    Toast.makeText(getActivity(), "New NW location:"
-//                            + String.format("%9.6f", location.getLatitude()) + ", "
-//                            + String.format("%9.6f", location.getLongitude()) + "\n" , Toast.LENGTH_LONG).show();
-//                    String cityName = null;
-//                    Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-//                    List<Address> addresses;
-//                    try {
-//                        addresses = gcd.getFromLocation(location.getLatitude(),
-//                                location.getLongitude(), 1);
-//                        if (addresses.size() > 0)
-//                            System.out.println(addresses.get(0).getLocality());
-//                        cityName = addresses.get(0).getLocality();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    String s =  cityName;
-//                    city_list.setText(s);
-//
-//                }
-//            };
 
+    HomeAdapter adapter;
+    Object adapterParameter;
 
     @Nullable
     @Override
@@ -149,15 +67,6 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
         setHasOptionsMenu(false);
-//        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//        try {
-//            mLocationManager.requestSingleUpdate (LocationManager.GPS_PROVIDER, this, null);
-//        }
-//        catch(SecurityException e)
-//        {
-//            e.printStackTrace();
-//        }
-
         country_list = (TextView) view.findViewById(R.id.country_list);
         city_list = (TextView) view.findViewById(R.id.city_list);
         search_parameter = (EditText) view.findViewById(R.id.search_parameter);
@@ -199,59 +108,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void onStart()
     {
         super.onStart();
-//        getLocation();
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
-
-//    public void AddLink( DoctorAppointment appointment) {
-//
-//        if(appointment.appointmentId == null || appointment.appointmentId.intValue() == 0) {
-//
-//            api.createAppointment(appointment, new Callback<AppointmentResponse>() {
-//                @Override
-//                public void success(AppointmentResponse s, Response response) {
-//                    Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
-//                    getActivity().onBackPressed();
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError error) {
-//                    Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
-//        else
-//        {
-//            api.updateAppointment(appointment, new Callback<AppointmentResponse>() {
-//                @Override
-//                public void success(AppointmentResponse s, Response response) {
-//                    Toast.makeText(getActivity(), "Appointment update Successful!!", Toast.LENGTH_LONG).show();
-//                    getActivity().onBackPressed();
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError error) {
-//                    Toast.makeText(getActivity(), "Appointment update failed!!", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
-//
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        if ( Build.VERSION.SDK_INT >= 23 &&
-//                ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-//                ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(getActivity(), "No Permission Granted" , Toast.LENGTH_LONG).show();
-//            return  ;
-//        }
-//        lm.requestLocationUpdates(
-//                LocationManager.NETWORK_PROVIDER, 5000, 0,
-//                networkLocationListener);
-//        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                3000, 0, gpsLocationListener);
         LocationService locationService = LocationService.getLocationManager(getActivity());
         locationService.addNotifyListeber(this);
     }
@@ -282,6 +144,45 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void update()
     {
 
+        switch (search_by_criteria.getSelectedItemPosition()) {
+            case SEARCH_BY_PERSON_ID: {
+                model.personId = new Integer(search_parameter.getText().toString());
+             }
+            break;
+            case SEARCH_BY_PERSON_NAME: {
+                model.personName = search_parameter.getText().toString();
+            }
+            break;
+            case SEARCH_BY_MOBILE_NUMBER: {
+                model.mobileNum = search_parameter.getText().toString();
+             }
+            break;
+
+            case SEARCH_BY_PERSON_EMAIL_ID: {
+                model.emailAddr = search_parameter.getText().toString();
+             }
+            break;
+            case SEARCH_BY_PERSON_SPECIALITY: {
+                model.speciality = search_parameter.getText().toString();
+             }
+            break;
+        }
+//        radius ;
+//        public String daysOfWeek;
+//        public String gender;
+//        public Long timeToStart;
+//        public Long timeToEnd;
+//        public String speciality;
+//        public String country;
+//        public Integer personId;
+//        public String emailAddr;
+//        public String mobileNum;
+
+
+//        public String city;
+//        public Integer reqId;
+//        public int page = 1;
+//        public int rows = 10;
     }
     @Override
     public boolean save()
@@ -342,7 +243,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         Integer profileRole = bundle.getInt(PROFILE_ROLE);
         Integer searchRole = bundle.getInt(SEARCH_ROLE);
         Integer appointmentId = bundle.getInt(APPOINTMENT_ID);
-
+        update();
         if(isValid(search_by_criteria.getSelectedItemPosition())) {
             if (searchRole == PATIENT || searchRole == ASSISTANT) {
 
@@ -371,7 +272,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             @Override
                             public void success(List<Person> s, Response response) {
                                 Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
-                                search_result.setAdapter(new PatientSearchListAdapter(getActivity(),s));
+                                showResult(s);
                             }
                             @Override
                             public void failure(RetrofitError error) {
@@ -385,7 +286,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             @Override
                             public void success(List<Person> s, Response response) {
                                 Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
-                                search_result.setAdapter(new PatientSearchListAdapter(getActivity(),s));
+                                showResult(s);
                             }
                             @Override
                             public void failure(RetrofitError error) {
@@ -400,7 +301,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             @Override
                             public void success(List<Person> s, Response response) {
                                 Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
-                                search_result.setAdapter(new PatientSearchListAdapter(getActivity(),s));
+                                showResult(s);
                             }
                             @Override
                             public void failure(RetrofitError error) {
@@ -414,7 +315,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             @Override
                             public void success(List<Person> s, Response response) {
                                 Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
-                                search_result.setAdapter(new PatientSearchListAdapter(getActivity(),s));
+                                showResult(s);
                             }
                             @Override
                             public void failure(RetrofitError error) {
@@ -422,8 +323,9 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
                         });
                     }
-                    break;
+
                 }
+
 
             }
             else if (searchRole == DOCTOR)
@@ -440,77 +342,34 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         else
             return false;
     }
-//    @Override
-//    public void onLocationChanged(Location location)
-//    {
-//        model.lat = location.getLatitude();
-//        model.lat = location.getLongitude();
-//        Bundle bundle = location.getExtras();
-//        Toast.makeText(getActivity(), "On Location Changed!!" +location.getLatitude()+" "+ location.getLongitude() , Toast.LENGTH_LONG).show();
-//    }
-//    public void onProviderEnabled(String string)
-//    {
-//        Toast.makeText(getActivity(), "On Provider Enabled" , Toast.LENGTH_LONG).show();
-//
-//    }
-//    public void onProviderDisabled(String string)
-//    {
-//        Toast.makeText(getActivity(), "On Provider Disabled" , Toast.LENGTH_LONG).show();
-//    }
-//    public void onStatusChanged(String provider, int status, Bundle extras)
-//    {
-//        Toast.makeText(getActivity(), "On Status Changed" , Toast.LENGTH_LONG).show();
-//    }
-//    private void getLocation() {
-//        lm = (LocationManager) getActivity().getSystemService(
-//                Context.LOCATION_SERVICE);
-//
-//        // getting GPS status
-//        isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-//
-//        // getting network status
-//        isNetworkEnabled = lm
-//                .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-//
-//        if (!isGPSEnabled && !isNetworkEnabled) {
-//            // no network provider is enabled
-//            Toast.makeText(getActivity(), "No Provider available" , Toast.LENGTH_LONG).show();
-//        } else {
-//            if ( Build.VERSION.SDK_INT >= 23 &&
-//                    ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-//                    ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(getActivity(), "No Permission Granted" , Toast.LENGTH_LONG).show();
-//                return  ;
-//            }
-//
-//
-//            if (isGPSEnabled) {
-//                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                        LOCATION_REFRESH_TIME, 0, gpsLocationListener);
-//                Toast.makeText(getActivity(), "GPS Provider available" , Toast.LENGTH_LONG).show();
-//            }
-//
-//            if (isNetworkEnabled) {
-//                if (lm == null) {
-//                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-//                            LOCATION_REFRESH_TIME, 0, networkLocationListener);
-//                    Toast.makeText(getActivity(), "NW Provider available" , Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }
-//    }
+
     public void notify(int id, Notifier source, Object parameter)
     {
         if(source instanceof LocationService) {
 
             LocationService service = (LocationService)source;
-            model.lat = service.latitude;
-            model.lon = service.longitude;
-            model.country = service.country;
+            model.lattitude = service.latitude;
+            model.longitude = service.longitude;
+            model.country = service.countryCode;
             model.city = service.city;
             city_list.setText(service.city);
             country_list.setText(service.country);
         }
+    }
+
+    private void showResult(List<Person> result)
+    {
+        SearchPersonListView personListView = new SearchPersonListView();
+        personListView.setModel(result);
+        personListView.setAdapter(adapter,adapterParameter);
+        ((ManageDoctorAppointment)getActivity()).fragmentList.add(personListView);
+        FragmentTransaction fft = getFragmentManager().beginTransaction();
+        fft.add(R.id.service, personListView).addToBackStack(null).commit();
+    }
+    public void setAdapter(HomeAdapter adapter, Object parameter)
+    {
+        this.adapter = adapter;
+        this.adapterParameter = parameter;
     }
 }
 

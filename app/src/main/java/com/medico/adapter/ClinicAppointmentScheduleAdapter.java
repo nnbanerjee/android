@@ -10,14 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medico.application.MyApi;
 import com.medico.application.R;
+import com.medico.model.AppointmentResponse;
+import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorSlotBookings;
@@ -37,8 +39,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.OkClient;
+import retrofit.client.Response;
 
 
 /**
@@ -46,11 +51,12 @@ import retrofit.client.OkClient;
  */
 
 //Doctor Login
-public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
+public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
 
     private Activity activity;
     private LayoutInflater inflater;
+    DoctorClinicDetails details;
     DoctorClinicDetails.ClinicSlots model;
     List<DoctorSlotBookings> slotBookingses;
     List<DoctorHoliday> holidayList;
@@ -60,7 +66,9 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
     String[] emptyAppointment = {"Add Appointment","Mark Not Available"};
     String[] filledAppointment = {"Reschedule Appointment","Cancel Appointment","Appointment Feedback"};
 
-    public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails.ClinicSlots model, List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date) {
+    public ClinicAppointmentScheduleAdapter(Activity activity, DoctorClinicDetails.ClinicSlots model, DoctorClinicDetails details,List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date) {
+        super(activity);
+        this.details = details;
         this.activity = activity;
         this.slotBookingses = slotBookingses;
         this.holidayList = holidayList;
@@ -285,10 +293,11 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
     class AppointmentHolder
     {
         int sequenceNumber;
-        Integer duration;
-        Integer doctorId;
-        Integer clinicSlotId;
+//        Integer duration;
+//        Integer doctorId;
+//        Integer clinicSlotId;
         boolean isHoliday = false;
+        DoctorClinicDetails details;
         DoctorSlotBookings.PersonBooking patient;
         DoctorClinicDetails.ClinicSlots model;
         Date date;
@@ -304,10 +313,11 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
 //            this.model = model;
 //            this.patient = personBooking;
 //        }
-        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model, DoctorSlotBookings.PersonBooking personBooking,List<DoctorHoliday> doctorHolidays , Date date)
+        public AppointmentHolder(int i, DoctorClinicDetails.ClinicSlots model, DoctorClinicDetails details, DoctorSlotBookings.PersonBooking personBooking,List<DoctorHoliday> doctorHolidays , Date date)
         {
             sequenceNumber = i+1;
             this.model = model;
+            this.details = details;
             this.patient = personBooking;
             setAppointmentDateTime(i, date, model.startTime, model.endTime, model.visitDuration);
         }
@@ -351,6 +361,10 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
             else
                 return patient.visitType;
         }
+//        public void update(DoctorAppointment appointment, Person person)
+//        {
+//            patient = new DoctorSlotBookings.PersonBooking(appointment,person);
+//        }
     }
 
     private List<AppointmentHolder> createAppointmentHolders( DoctorClinicDetails.ClinicSlots model, List<DoctorSlotBookings> slotBookingses, List<DoctorHoliday> holidayList, Date date)
@@ -385,15 +399,15 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
                     if(bookings1.sequenceNo.intValue() == i+1)
                     {
                         found = true;
-                        holders.add(new AppointmentHolder(i,model, bookings1,doctorHolidays, date));
+                        holders.add(new AppointmentHolder(i,model, details,bookings1,doctorHolidays, date));
                         break;
                     }
                 }
                 if(found == false)
-                    holders.add(new AppointmentHolder(i,model, null ,doctorHolidays, date));
+                    holders.add(new AppointmentHolder(i,model, details, null ,doctorHolidays, date));
             }
             else
-                holders.add(new AppointmentHolder(i,model, null,doctorHolidays, date));
+                holders.add(new AppointmentHolder(i,model,details,null,doctorHolidays, date));
         }
         return holders;
     }
@@ -412,10 +426,42 @@ public class ClinicAppointmentScheduleAdapter extends BaseAdapter  {
 //        bundle.putLong(PARAM.SLOT_START_DATETIME,details.startTime);
 //        bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
         activity.getIntent().putExtras(bundle);
-        ParentFragment fragment = new PersonSearchView();
+        PersonSearchView fragment = new PersonSearchView();
+        fragment.setAdapter(this,holder);
         ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+    }
+    public void callBack(int id, final Object source, Object parameter)
+    {
+        Bundle bundle = activity.getIntent().getExtras();
+        final AppointmentHolder holder = (AppointmentHolder)parameter;
+        final DoctorAppointment request = new DoctorAppointment();
+        request.doctorId = bundle.getInt(PARAM.PROFILE_ID);
+        request.patientId = id;
+        request.clinicId = holder.details.clinic.idClinic;
+        request.appointmentDate = holder.date.getTime();
+        request.type = holder.details.clinic.type;
+        request.sequenceNumber = holder.sequenceNumber;
+        request.appointmentStatus = PARAM.APPOINTMENT_CONFIRMED;
+        request.visitType = PARAM.VISIT_TYPE_NEWCASE;
+        request.visitStatus = PARAM.VISIT_STATUS_UNKNOWN;
+        request.doctorClinicId = holder.model.doctorClinicId;
+
+        api.createAppointment(request, new Callback<AppointmentResponse>() {
+            @Override
+            public void success(AppointmentResponse s, Response response) {
+                Toast.makeText(activity, "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+                request.appointmentId = s.appointmentId;
+//                holder.update(request, source);
+
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(activity, "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

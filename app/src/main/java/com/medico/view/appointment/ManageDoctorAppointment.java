@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.view.ParentFragment;
+import com.medico.view.search.SearchPersonListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,15 @@ public class ManageDoctorAppointment extends AppCompatActivity {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.detach(fragment).commit();
             }
+            else if(fragment instanceof ClinicSlotListView || fragment instanceof SearchPersonListView)
+            {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                fragmentList.remove(fragmentList.size()-1);
+                ft.detach(fragment);
+                fragment = fragmentList.get(fragmentList.size() - 1);
+                fragmentList.remove(fragment);
+                ft.detach(fragment).commit();
+            }
             else
             {
                 fragmentList.remove(fragment);
@@ -85,9 +95,9 @@ public class ManageDoctorAppointment extends AppCompatActivity {
                 ft.detach(fragment).commit();
             }
 
-//            fragment.setHasOptionsMenu(false);
-//            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
-//            fragmentList.get(fragmentList.size()-1).onStart();
+            fragment.setHasOptionsMenu(false);
+            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
+            fragmentList.get(fragmentList.size()-1).onStart();
 
         }
         else

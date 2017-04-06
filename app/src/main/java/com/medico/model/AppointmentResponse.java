@@ -6,7 +6,7 @@ package com.medico.model;
 
 public class AppointmentResponse
 {
-    Integer appointmentId;
-    Byte status;
-    String errorCode;
+    public Integer appointmentId;
+    public Byte status;
+    public String errorCode;
 }

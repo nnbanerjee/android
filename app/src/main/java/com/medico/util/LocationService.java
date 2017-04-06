@@ -36,7 +36,7 @@ public class LocationService extends  Notifier implements LocationListener {
     public Location location;
     public double longitude;
     public double latitude;
-    public String city,country,region;
+    public String city,country,region,countryCode;
     boolean isGPSEnabled, isNetworkEnabled,locationServiceAvailable;
     Context context;
 
@@ -227,6 +227,7 @@ public class LocationService extends  Notifier implements LocationListener {
             cityName = addresses.get(0).getLocality();
             country = addresses.get(0).getCountryName();
             region = addresses.get(0).getAdminArea();
+            countryCode=addresses.get(0).getCountryCode();
         } catch (IOException e) {
             e.printStackTrace();
         }

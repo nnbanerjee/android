@@ -6,11 +6,11 @@ package com.medico.model;
 
 public class SearchParameterRequest
 {
-    public Double lat;
-    public Double lon;
-    public Double radius;
+    public Double lattitude;
+    public Double longitude;
+    public Double radius = 10.0;
     public String daysOfWeek;
-    public String gender;
+    public String gender = "M";
     public Long timeToStart;
     public Long timeToEnd;
     public String speciality;
@@ -23,4 +23,5 @@ public class SearchParameterRequest
     public Integer reqId;
     public int page = 1;
     public int rows = 10;
+    public int role = 0;
 }

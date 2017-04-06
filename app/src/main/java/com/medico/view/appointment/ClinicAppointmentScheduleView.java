@@ -375,7 +375,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             public void success(List<DoctorSlotBookings> slotBookingses, Response response) {
                 if(slotBookingses != null && slotBookingses.size() > 0) {
                     doctorSlotBookings = slotBookingses;
-                    ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date1);
+                    ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorClinicDetails,doctorSlotBookings, doctorholidayList, date1);
                     appointment_schedule.setAdapter(adapter);
                 }
 //                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
@@ -385,7 +385,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             public void failure(RetrofitError error) {
 //                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorSlotBookings = null;
-                ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorSlotBookings, doctorholidayList, date1);
+                ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorClinicDetails,doctorSlotBookings, doctorholidayList, date1);
                 appointment_schedule.setAdapter(adapter);
                 error.printStackTrace();
             }
