@@ -15,7 +15,6 @@ import com.medico.application.R;
 import com.medico.util.LocationService;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.view.search.SearchPersonListView;
 
 public class ManageDoctorAppointment extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
@@ -26,8 +25,7 @@ public class ManageDoctorAppointment extends ParentActivity {
         setContentView(R.layout.activity_manage_patient_profile);
         FrameLayout frame = new FrameLayout(this);
         frame.setId(R.id.service);
-        setContentView(frame, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        setContentView(frame, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
         if (savedInstanceState == null) {
 
@@ -62,45 +60,70 @@ public class ManageDoctorAppointment extends ParentActivity {
 //        getMenuInflater().inflate(R.menu.menu, menu);
 //        return true;
 //    }
-    @Override
-    public void onBackPressed() {
+//    @Override
+//    public void onBackPressed() {
+//
+//        if(getFragmentManager().getBackStackEntryCount() > 0)
+//        {
+//            FragmentManager manager = getFragmentManager();
+//            manager.popBackStack(identifier,0);
 
-        if(fragmentList.size() > 1)
-        {
+//            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
+//            if(fragment instanceof ClinicSlotListView )
+//            {
+//                fragmentList.remove(fragmentList.size()-1);
+//                fragment = fragmentList.get(fragmentList.size() - 1);
+//                fragmentList.remove(fragment);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//            }
+//            else if(fragment instanceof ClinicSlotListView || fragment instanceof SearchPersonListView)
+//            {
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                fragmentList.remove(fragmentList.size()-1);
+//                ft.detach(fragment);
+//                fragment = fragmentList.get(fragmentList.size() - 1);
+//                fragmentList.remove(fragment);
+//                ft.detach(fragment).commit();
+//            }
+//            else if(fragment instanceof PatientMedicinReminder)
+//            {
+//                fragmentList.remove(fragmentList.size()-1);
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().detach(fragment).commit();
+//
+//            }
+//            else if(fragment instanceof DoctorAppointmentSummary)
+//            {
+//                fragmentList.remove(fragmentList.size()-1);
+//                fragment = fragmentList.get(fragmentList.size() - 1);
+//                fragmentList.remove(fragment);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//            }
+//            else if(fragment instanceof PatientDetailsFragment)
+//            {
+//                fragmentList.remove(fragmentList.size()-1);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//                final ClinicAppointmentScheduleView fragment1 = (ClinicAppointmentScheduleView) getFragmentManager().findFragmentByTag("TAG_FRAGMENT");
+//                fragment1.onStart();
+//            }
+//            else
+//            {
+//                fragmentList.remove(fragment);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//            }
+//
+//            fragment.setHasOptionsMenu(false);
+//            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
+//            fragmentList.get(fragmentList.size()-1).onStart();
 
-            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
-            if(fragment instanceof ClinicSlotListView )
-            {
-                fragmentList.remove(fragmentList.size()-1);
-                fragment = fragmentList.get(fragmentList.size() - 1);
-                fragmentList.remove(fragment);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(fragment).commit();
-            }
-            else if(fragment instanceof ClinicSlotListView || fragment instanceof SearchPersonListView)
-            {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                fragmentList.remove(fragmentList.size()-1);
-                ft.detach(fragment);
-                fragment = fragmentList.get(fragmentList.size() - 1);
-                fragmentList.remove(fragment);
-                ft.detach(fragment).commit();
-            }
-            else
-            {
-                fragmentList.remove(fragment);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(fragment).commit();
-            }
-
-            fragment.setHasOptionsMenu(false);
-            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
-            fragmentList.get(fragmentList.size()-1).onStart();
-
-        }
-        else
-            super.onBackPressed();
-    }
+//        }
+//        else
+//            super.onBackPressed();
+//    }
 
 
     @Override
@@ -124,7 +147,7 @@ public class ManageDoctorAppointment extends ParentActivity {
     protected void attachView()
     {
         ParentFragment fragment = new ClinicProfileListView();
-        fragmentList.add(fragment);
+        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment).addToBackStack(null).commit();
     }

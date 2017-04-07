@@ -61,7 +61,7 @@ public class PatientProfileListView extends com.medico.view.ParentFragment {
                 Bundle bun = getActivity().getIntent().getExtras();
                 PatientShortProfile profile = (PatientShortProfile)adapterView.getAdapter().getItem(i);
                         ParentFragment fragment = new PatientVisitDatesView();
-                        ((ParentActivity)getActivity()).fragmentList.add(fragment);
+                        ((ParentActivity)getActivity()).attachFragment(fragment);
                         bun.putInt(PARAM.PATIENT_ID, profile.getPatientId().intValue());
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);

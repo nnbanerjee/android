@@ -100,7 +100,7 @@ public class DiagnosticTestAdapter extends BaseAdapter {
                 args.putInt(PARAM.DIAGNOSTIC_TEST_ID, testPrescribed.testId);
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new PatientDiagnosticTests();
-                ((ParentActivity)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

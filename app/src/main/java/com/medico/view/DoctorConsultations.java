@@ -10,7 +10,7 @@ public class DoctorConsultations extends ManagePatientProfile {
     protected void attachView()
     {
         ParentFragment fragment = new DoctorProfileListView();
-        fragmentList.add(fragment);
+        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment).addToBackStack(null).commit();
     }

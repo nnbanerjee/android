@@ -1,7 +1,6 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -159,7 +158,7 @@ public class DoctorListAdapter extends BaseAdapter  {
                 bundle.putInt(PARAM.DOCTOR_ID, allDoctors.getDoctorList().get(position).getDoctorId());
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new DoctorDetailsFragment();
-                parentactivity.fragmentList.add(fragment);
+                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
 
@@ -222,8 +221,9 @@ public class DoctorListAdapter extends BaseAdapter  {
                 editor.commit();
                 Bundle bun = new Bundle();
                 bun.putString("fragment", "doctorPatientListAdapter");
-                Fragment fragment = new PatientVisitDatesView();
+                ParentFragment fragment = new PatientVisitDatesView();
                 fragment.setArguments(bun);
+                ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }

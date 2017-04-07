@@ -20,9 +20,9 @@ import com.medico.model.ClinicSlotDetails;
 import com.medico.model.DoctorClinicId;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.util.PARAM;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.settings.ClinicSlotEditView;
-import com.medico.view.settings.ManagePersonSettings;
 
 import java.util.List;
 
@@ -98,9 +98,9 @@ public class ClinicSlotAdapter extends BaseAdapter {
                 args.putInt(PARAM.DOCTOR_CLINIC_ID, medicinePrescribed.doctorClinicId);
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new ClinicSlotEditView();
-                ((ManagePersonSettings)activity).registerView(fragment);
+                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
-                FragmentManager fragmentManger = ((ManagePersonSettings) activity).getFragmentManager();
+                FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });

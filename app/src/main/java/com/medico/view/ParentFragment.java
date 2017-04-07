@@ -27,11 +27,12 @@ public class ParentFragment extends Fragment implements PARAM
 
     public MyApi api;
     public static List<Country> countriesList = null;
-
+    public Fragment fragment;
     @Override
     public void onStart()
     {
         super.onStart();
+        fragment = this;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override

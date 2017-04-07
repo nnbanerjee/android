@@ -128,7 +128,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
                     args.putInt(PARAM.TREATMENT_ID, plan.getTreatmentId());
                     activity.getIntent().putExtras(args);
                     ParentFragment fragment = new DoctorTreatmentPlanEditView();
-                    ((ParentActivity)activity).fragmentList.add(fragment);
+                    ((ParentActivity)activity).attachFragment(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();

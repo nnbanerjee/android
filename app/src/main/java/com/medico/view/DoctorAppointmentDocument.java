@@ -132,7 +132,7 @@ public class DoctorAppointmentDocument extends ParentFragment{
     {
         Bundle args = getActivity().getIntent().getExtras();
         ParentFragment fragment = new PatientSummaryFileUpload();
-        ((ParentActivity)getActivity()).fragmentList.add(fragment);
+        ((ParentActivity)getActivity()).attachFragment(fragment);
         fragment.setArguments(args);
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

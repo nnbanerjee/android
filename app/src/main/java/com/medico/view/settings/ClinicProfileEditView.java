@@ -33,6 +33,7 @@ import com.medico.model.DoctorClinicRequest;
 import com.medico.model.ServerResponse;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 
 import java.util.List;
@@ -128,7 +129,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 args.putInt(DOCTOR_CLINIC_ID,0);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new ClinicSlotEditView();
-                ((ManagePersonSettings)getActivity()).registerView(fragment);
+                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

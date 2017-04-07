@@ -61,7 +61,7 @@ public class DoctorProfileListView extends ParentFragment {
                 Bundle bun = getActivity().getIntent().getExtras();
                 DoctorShortProfile profile = (DoctorShortProfile)adapterView.getAdapter().getItem(i);
                         ParentFragment fragment = new PatientVisitDatesView();
-                        ((ParentActivity)getActivity()).fragmentList.add(fragment);
+                        ((ParentActivity)getActivity()).attachFragment(fragment);
                         bun.putInt(PARAM.DOCTOR_ID, profile.getDoctorId().intValue());
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);

@@ -101,7 +101,7 @@ public class MedicineAdapter extends BaseAdapter {
                 args.putInt(PARAM.MEDICINE_ID, medicinePrescribed.medicineId);
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
-                ((ParentActivity)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

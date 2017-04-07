@@ -63,6 +63,8 @@ public class SearchPersonListView extends ParentFragment {
                 adapter.callBack(profile.getId(),profile, adapterParameter);
                 getActivity().getIntent().putExtras(bun);
                 ((ManageDoctorAppointment)getActivity()).onBackPressed();
+                ((ManageDoctorAppointment)getActivity()).onBackPressed();
+//                getActivity().getFragmentManager().beginTransaction().detach(fragment).commit();
 //                        ParentFragment fragment = new PersonProfileEditView();
 //                        ((Doc)getActivity()).fragmentList.add(fragment);
 //                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());

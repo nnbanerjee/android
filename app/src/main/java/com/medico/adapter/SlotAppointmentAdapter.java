@@ -170,7 +170,7 @@ public class SlotAppointmentAdapter extends BaseAdapter
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new ClinicDoctorAppointmentFragment();
-                ((ParentActivity)activity).fragmentList.add(fragment);
+                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();

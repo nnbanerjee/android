@@ -99,7 +99,7 @@ public class CustomTemplateListAdapter extends BaseAdapter {
                     args.putString(PARAM.CUSTOM_TEMPLATE_NAME,temp.get(0).getTemplateName());
                     activity.getIntent().putExtras(args);
                     ParentFragment fragment = new CustomTemplateSubListView();
-                    ((ParentActivity)activity).fragmentList.add(fragment);
+                    ((ParentActivity)activity).attachFragment(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();

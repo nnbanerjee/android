@@ -36,7 +36,6 @@ import com.medico.view.FeedbackFragmentClinicAppointment;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
-import com.medico.view.appointment.ManageDoctorAppointment;
 import com.medico.view.search.PersonSearchView;
 
 import java.text.DateFormat;
@@ -250,7 +249,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     bun.putInt(PARAM.CLINIC_ID, holder.details.clinic.idClinic);
                     activity.getIntent().putExtras(bun);
                     ParentFragment fragment = new DoctorAppointmentInformation();
-                    ((ParentActivity)activity).fragmentList.add(fragment);
+                    ((ParentActivity)activity).attachFragment(fragment);
                     fragment.setArguments(bun);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -445,7 +444,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         activity.getIntent().putExtras(bundle);
         PersonSearchView fragment = new PersonSearchView();
         fragment.setAdapter(this,holder);
-        ((ManageDoctorAppointment)activity).fragmentList.add(fragment);
+        ((ParentActivity)activity).attachFragment(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -501,7 +500,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
         activity.getIntent().putExtras(bundle);
         ParentFragment fragment = new ClinicDoctorAppointmentFragment();
-        ((ManageDoctorAppointment)activity).attachFragment(fragment);
+        ((ParentActivity)activity).attachFragment(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -534,7 +533,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
         activity.getIntent().putExtras(bundle);
         ParentFragment fragment = new FeedbackFragmentClinicAppointment();
-        ((ManageDoctorAppointment)activity).attachFragment(fragment);
+        ((ParentActivity)activity).attachFragment(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();

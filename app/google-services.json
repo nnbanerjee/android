@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "256641275337",
+    "project_id": "medico-163517"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256641275337:android:d4196005d9709fbe",
+        "android_client_info": {
+          "package_name": "com.medico.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEBDvRAFGySGU-hVW7G9dpI-izesy5ix0"
+        },
+		,
+        {
+          "current_key": "AIzaSyBSjBCIH5skuFlAcYF1uZVgGrA39Rm62lE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

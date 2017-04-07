@@ -371,7 +371,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         SearchPersonListView personListView = new SearchPersonListView();
         personListView.setModel(result);
         personListView.setAdapter(adapter,adapterParameter);
-        ((ManageDoctorAppointment)getActivity()).fragmentList.add(personListView);
+        ((ManageDoctorAppointment)getActivity()).attachFragment(personListView);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
     }

@@ -236,7 +236,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 {
                     Bundle args = getActivity().getIntent().getExtras();
                     ParentFragment fragment = new PatientMedicinReminder();
-                    ((ParentActivity)getActivity()).fragmentList.add(fragment);
+                    ((ParentActivity)getActivity()).attachFragment(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.replacementFragment,fragment,"Doctor Consultations").addToBackStack(null).commit();
@@ -258,7 +258,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 args.remove(DIAGNOSTIC_TEST_ID);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientDiagnosticTests();
-                ((ParentActivity)getActivity()).fragmentList.add(fragment);
+                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
@@ -276,7 +276,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 args.remove(MEDICINE_ID);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
-                ((ParentActivity)getActivity()).fragmentList.add(fragment);
+                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

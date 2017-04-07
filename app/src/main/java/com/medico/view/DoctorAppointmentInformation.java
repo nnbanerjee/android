@@ -61,6 +61,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
             public void onClick(View v) {
                 deselectButtons();
                 documentationBtn.setSelected(true);
+                summaryBtn.setBackgroundResource(R.drawable.tab_selected);
                 getDocumentationInformation();
             }
         });
@@ -70,6 +71,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
             public void onClick(View v) {
                 deselectButtons();
                 doctorNoteBtn.setSelected(true);
+                summaryBtn.setBackgroundResource(R.drawable.tab_selected);
                 getDoctorNoteInformation();
             }
         });
@@ -107,64 +109,64 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void getSummaryInformation()
     {
         if(selectedFragment != null)
-            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentSummary();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
 
     public void getDocumentationInformation()
     {
         if(selectedFragment != null)
-            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentDocument();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
 
-        MenuItem add = menu.findItem(R.id.add);
-        add.setIcon(R.drawable.add);
+//        MenuItem add = menu.findItem(R.id.add);
+//        add.setIcon(R.drawable.add);
     }
 
     public void getDoctorNoteInformation()
     {
         if(selectedFragment != null)
-            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentDoctorNote();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
 
     public void getTreatmentInformation()
     {
         if(selectedFragment != null)
-            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentTreatmentPlan();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
 
     public void getInvoicesInformation()
     {
         if(selectedFragment != null)
-            ((ParentActivity)getActivity()).fragmentList.remove(selectedFragment);
+            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentInvoices();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-        ((ParentActivity)getActivity()).fragmentList.add(selectedFragment);
+        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
 
 
@@ -189,7 +191,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
     @Override
     public void onStart()
     {
+
         super.onStart();
+//        summaryBtn.callOnClick();
     }
 
 
@@ -224,7 +228,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ParentActivity activity = ((ParentActivity) getActivity());
-        ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
+        ParentFragment fragment = (ParentFragment)activity.getParentFragment();
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {

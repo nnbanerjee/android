@@ -1,6 +1,5 @@
 package com.medico.view;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -51,48 +50,48 @@ public class ManagePatientProfile extends ParentActivity {
         abar.setHomeButtonEnabled(true);
 
     }
-    @Override
-    public void onBackPressed() {
-
-        if(fragmentList.size() > 1)
-        {
-
-            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
-            if(fragment instanceof PatientMedicinReminder)
-            {
-                fragmentList.remove(fragmentList.size()-1);
-                FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().detach(fragment).commit();
-
-            }
-            else if(fragment instanceof DoctorAppointmentSummary)
-            {
-                fragmentList.remove(fragmentList.size()-1);
-                fragment = fragmentList.get(fragmentList.size() - 1);
-                fragmentList.remove(fragment);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(fragment).commit();
-            }
-            else
-            {
-                fragment = fragmentList.get(fragmentList.size() - 1);
-                fragmentList.remove(fragment);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(fragment).commit();
-            }
-
-            fragment.setHasOptionsMenu(false);
-            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
-            fragmentList.get(fragmentList.size()-1).onStart();
-
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//        if(fragmentList.size() > 1)
+//        {
+//
+//            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
+//            if(fragment instanceof PatientMedicinReminder)
+//            {
+//                fragmentList.remove(fragmentList.size()-1);
+//                FragmentManager fragmentManger = getFragmentManager();
+//                fragmentManger.beginTransaction().detach(fragment).commit();
+//
+//            }
+//            else if(fragment instanceof DoctorAppointmentSummary)
+//            {
+//                fragmentList.remove(fragmentList.size()-1);
+//                fragment = fragmentList.get(fragmentList.size() - 1);
+//                fragmentList.remove(fragment);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//            }
+//            else
+//            {
+//                fragment = fragmentList.get(fragmentList.size() - 1);
+//                fragmentList.remove(fragment);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//            }
+//
+//            fragment.setHasOptionsMenu(false);
+//            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
+//            fragmentList.get(fragmentList.size()-1).onStart();
+//
+//        }
+//    }
 
 
     protected void attachView()
     {
         ParentFragment fragment = new PatientProfileListView();
-        fragmentList.add(fragment);
+        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment).addToBackStack(null).commit();
     }

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +15,13 @@ import com.medico.application.R;
 import com.medico.util.GeoClient;
 import com.medico.util.LocationService;
 import com.medico.util.PARAM;
+import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagePersonSettings extends AppCompatActivity implements PARAM{
+public class ManagePersonSettings extends ParentActivity implements PARAM{
     private static final int CONTENT_VIEW_ID = 10101010;
     public List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
     GeoClient client;
@@ -68,34 +68,34 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
 //        getMenuInflater().inflate(R.menu.menu, menu);
 //        return true;
 //    }
-    @Override
-    public void onBackPressed() {
-
-        if(fragmentList.size() > 1)
-        {
-
-            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
-            if(fragment instanceof ManageDoctorProfile || fragment instanceof ManageDoctorDetailedProfile)
-            {
-
-                super.onBackPressed();
-            }
-            else
-            {
-                fragmentList.remove(fragment);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(fragment).commit();
-            }
-
-            fragment.setHasOptionsMenu(false);
-            fragment = fragmentList.get(fragmentList.size() - 1);
-            fragment.setHasOptionsMenu(true);
-            fragment.onStart();
-
-        }
-        else
-            super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//        if(fragmentList.size() > 1)
+//        {
+//
+//            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
+//            if(fragment instanceof ManageDoctorProfile || fragment instanceof ManageDoctorDetailedProfile)
+//            {
+//
+//                super.onBackPressed();
+//            }
+//            else
+//            {
+//                fragmentList.remove(fragment);
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(fragment).commit();
+//            }
+//
+//            fragment.setHasOptionsMenu(false);
+//            fragment = fragmentList.get(fragmentList.size() - 1);
+//            fragment.setHasOptionsMenu(true);
+//            fragment.onStart();
+//
+//        }
+//        else
+//            super.onBackPressed();
+//    }
 
 
     @Override
@@ -202,13 +202,13 @@ public class ManagePersonSettings extends AppCompatActivity implements PARAM{
         super.onStop();
     }
 
-    public void registerView(ParentFragment fragment)
-    {
-        if(fragmentList.size() > 0)
-        {
-            ParentFragment previousFragment = fragmentList.get(fragmentList.size()-1);
-            previousFragment.setHasOptionsMenu(false);
-            fragmentList.add(fragment);
-        }
-    }
+//    public void registerView(ParentFragment fragment)
+//    {
+//        if(fragmentList.size() > 0)
+//        {
+//            ParentFragment previousFragment = fragmentList.get(fragmentList.size()-1);
+//            previousFragment.setHasOptionsMenu(false);
+//            fragmentList.add(fragment);
+//        }
+//    }
 }

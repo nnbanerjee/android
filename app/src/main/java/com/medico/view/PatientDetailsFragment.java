@@ -81,8 +81,8 @@ public class PatientDetailsFragment extends ParentFragment {
                 Fragment fragment = new ClinicAllPatientFragment();
                 childfragment = fragment;
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
-
+//                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").commit();
 
             }
         });
@@ -95,8 +95,8 @@ public class PatientDetailsFragment extends ParentFragment {
                 Fragment fragment = new PatientProfileDetails();
                 childfragment = fragment;
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
-
+//                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").commit();
 
             }
         });

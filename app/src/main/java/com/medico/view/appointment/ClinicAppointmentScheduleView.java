@@ -49,6 +49,8 @@ import retrofit.client.Response;
 
 //Doctor Login
 public class ClinicAppointmentScheduleView extends ParentFragment {
+    private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
+
     float slideActive = 0f;
     int[] daysOfWeek = {2,3,4,5,6,7,1};
     Date activateDate = new Date();
