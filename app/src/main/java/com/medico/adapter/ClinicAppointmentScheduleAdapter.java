@@ -2,7 +2,6 @@ package com.medico.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -32,11 +31,11 @@ import com.medico.model.Person;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
+import com.medico.view.DoctorAppointmentInformation;
 import com.medico.view.FeedbackFragmentClinicAppointment;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 import com.medico.view.PatientDetailsFragment;
-import com.medico.view.PatientVisitDatesView;
 import com.medico.view.appointment.ManageDoctorAppointment;
 import com.medico.view.search.PersonSearchView;
 
@@ -232,7 +231,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     bundle.putInt(PARAM.PATIENT_ID, patient.getId());
                     parentactivity.getIntent().putExtras(bundle);
                     ParentFragment fragment = new PatientDetailsFragment();
-                    parentactivity.fragmentList.add(fragment);
+                    parentactivity.attachFragment(fragment);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 }
@@ -243,13 +242,18 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 @Override
                 public void onClick(View v) {
 
-                    Bundle bundle = activity.getIntent().getExtras();
-                    bundle.putInt(PARAM.PATIENT_ID, patient.getId());
-                    Fragment fragment = new PatientVisitDatesView();
-                    fragment.setArguments(bundle);
-                    activity.getIntent().putExtras(bundle);
+                    Bundle bun = activity.getIntent().getExtras();
+                    bun.putInt(PARAM.APPOINTMENT_ID, holder.patient.appointmentId);
+                    bun.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
+//                    bun.putString(PARAM.REFERRED_BY, holder.patient.);
+                    bun.putString(PARAM.CLINIC_NAME, holder.details.clinic.clinicName);
+                    bun.putInt(PARAM.CLINIC_ID, holder.details.clinic.idClinic);
+                    activity.getIntent().putExtras(bun);
+                    ParentFragment fragment = new DoctorAppointmentInformation();
+                    ((ParentActivity)activity).fragmentList.add(fragment);
+                    fragment.setArguments(bun);
                     FragmentManager fragmentManger = activity.getFragmentManager();
-                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
                 }
             });
 //            appointment_menu.setAdapter(new AppointmentAdapter(activity));
