@@ -23,11 +23,13 @@ import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
+import com.medico.model.AppointmentStatusRequest;
 import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorSlotBookings;
 import com.medico.model.Person;
+import com.medico.model.ServerResponse;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.ClinicDoctorAppointmentFragment;
@@ -109,7 +111,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 .setClient(new OkClient())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
-        MyApi api = restAdapter.create(MyApi.class);
+        api = restAdapter.create(MyApi.class);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.patient_appointment, null);
@@ -118,9 +120,9 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         //Appointment headings
         TextView appointment_number = (TextView)convertView.findViewById(R.id.appointment_number);
         TextView appointment_time = (TextView)convertView.findViewById(R.id.appointment_time);
-        Spinner appointment_status = (Spinner)convertView.findViewById(R.id.appointment_status);
-        Spinner appointment_type = (Spinner)convertView.findViewById(R.id.appointment_type);
-        Spinner appointment_visit_status = (Spinner)convertView.findViewById(R.id.appointment_visit_status);
+        final Spinner appointment_status = (Spinner)convertView.findViewById(R.id.appointment_status);
+        final Spinner appointment_type = (Spinner)convertView.findViewById(R.id.appointment_type);
+        final Spinner appointment_visit_status = (Spinner)convertView.findViewById(R.id.appointment_visit_status);
 //        global = (Global) activity.getApplicationContext();
         TextView patient_name = (TextView) convertView.findViewById(R.id.patient_name);
         TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
@@ -133,15 +135,15 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
-        Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
+        final Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
         totalAppointment.setVisibility(View.GONE);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
         final RelativeLayout parentLayout = (RelativeLayout)convertView.findViewById(R.id.layout);
         patient_image.setBackgroundResource(R.drawable.patient);
         appointment_number.setText(new Integer(holder.sequenceNumber).toString());
         appointment_time.setText(holder.getTime());
-        appointment_status.setSelection(holder.getAppointmentStatus());
-        appointment_type.setSelection(holder.getVisitType());
+//        appointment_status.setSelection(holder.getAppointmentStatus());
+//        appointment_type.setSelection(holder.getVisitType());
         appointment_visit_status.setSelection(holder.getVisitStatus());
         appointment_menu.setTag(holder);
         String[] menuArray = holder.patient != null? filledAppointment: emptyAppointment;
@@ -155,6 +157,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 return view;
             }
         });
+//        appointment_type.setSelection(holder.getVisitType());
+//        appointment_visit_status.setSelection(holder.getVisitStatus());
+        appointment_menu.setTag(holder);
+
         appointment_menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                @Override
                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -186,10 +192,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         if(holder.patient != null)
         {
             layout.setVisibility(View.VISIBLE);
-            appointment_type.setVisibility(View.VISIBLE);
-            appointment_visit_status.setVisibility(View.VISIBLE);
-            appointment_type.setSelection(holder.getVisitType());
-            appointment_visit_status.setSelection(holder.getVisitStatus());
             DoctorSlotBookings.PersonBooking booking = holder.patient;
             final Person patient = booking.patient;
 
@@ -257,7 +259,14 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             });
 //            appointment_menu.setAdapter(new AppointmentAdapter(activity));
             appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.appointment_status)));
-            appointment_status.setSelection(holder.getAppointmentStatus());
+            appointment_status.setSelection(holder.getAppointmentStatus(),false);
+            appointment_type.setVisibility(View.VISIBLE);
+            appointment_visit_status.setVisibility(View.VISIBLE);
+            appointment_type.setSelection(holder.getVisitType(),false);
+            appointment_visit_status.setSelection(holder.getVisitStatus(),false);
+            appointment_status.setTag(holder.getAppointmentStatus());
+            appointment_type.setTag(holder.getVisitType());
+            appointment_visit_status.setTag(holder.getVisitStatus());
         }
         else
         {
@@ -267,10 +276,135 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             if(holder.isHoliday)
                 parentLayout.setBackgroundColor(Color.LTGRAY);
             appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.no_appointment_status)));
-            appointment_status.setSelection(holder.isHoliday?1:0);
+            appointment_status.setSelection(holder.isHoliday?1:0,false);
+            appointment_status.setTag(holder.isHoliday?1:0);
 
         }
+        appointment_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                if(appointment_status.getTag().equals(position))
+                    return;
+                if(holder.patient != null)
+                {
+                    api.setAppointmentStatus(new AppointmentStatusRequest(holder.patient.appointmentId,position,AppointmentStatusRequest.APPOINTMENT_STATUS), new Callback<ServerResponse>() {
+                        @Override
+                        public void success(ServerResponse responseCodeVerfication, Response response) {
+                            Toast.makeText(activity, "Appointment Status update is Successful!!", Toast.LENGTH_LONG).show();
+                            appointment_status.setTag(position);
+                        }
 
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                            Toast.makeText(activity, "Appointment Status update is Failed!!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else
+                {
+                    if(position == 1) {
+                        if(!holder.isHoliday) {
+                            final Bundle bundle = activity.getIntent().getExtras();
+                            api.addDoctorHoliday(new DoctorHoliday(bundle.getInt(PARAM.DOCTOR_ID), holder.date.getTime(), holder.date.getTime(), new Integer(0).byteValue(), holder.sequenceNumber, holder.details.clinic.idClinic,holder.model.doctorClinicId), new Callback<ServerResponse>() {
+                                @Override
+                                public void success(ServerResponse responseCodeVerfication, Response response) {
+                                    Toast.makeText(activity, "Add doctor holiday is Successful!!", Toast.LENGTH_LONG).show();
+                                    appointment_status.setTag(1);
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    error.printStackTrace();
+                                    Toast.makeText(activity, "Add doctor holiday is Failed!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                    else
+                    {
+                        DoctorHoliday holiday = holder.getHolidayForAppointmentSequence();
+                        if(holder.isHoliday && holiday != null) {
+                            final Bundle bundle = activity.getIntent().getExtras();
+                            api.removeDoctorHoliday(new DoctorHoliday(holiday.idHoliday,holiday.sequenceNo), new Callback<ServerResponse>() {
+                                @Override
+                                public void success(ServerResponse responseCodeVerfication, Response response) {
+                                    Toast.makeText(activity, "Remove doctor holiday is Successful!!", Toast.LENGTH_LONG).show();
+                                    appointment_status.setTag(0);
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    error.printStackTrace();
+                                    Toast.makeText(activity, "Remove doctor holiday is Failed!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        appointment_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                if(appointment_type.getTag().equals(position))
+                    return;
+                if(holder.patient != null)
+                {
+                    api.setAppointmentVisitType(new AppointmentStatusRequest(holder.patient.appointmentId,position,AppointmentStatusRequest.VISIT_TYPE), new Callback<ServerResponse>() {
+                        @Override
+                        public void success(ServerResponse responseCodeVerfication, Response response) {
+                            Toast.makeText(activity, "Set Appointment Visit Type is Successful!!", Toast.LENGTH_LONG).show();
+                            appointment_type.setTag(position);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                            Toast.makeText(activity, "Set Appointment Visit Type is Failed!!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        appointment_visit_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                if(appointment_visit_status.getTag().equals(position))
+                    return;
+                if(holder.patient != null)
+                {
+                    api.setAppointmentVisitStatus(new AppointmentStatusRequest(holder.patient.appointmentId,position,AppointmentStatusRequest.VISIT_STATUS), new Callback<ServerResponse>() {
+                        @Override
+                        public void success(ServerResponse responseCodeVerfication, Response response) {
+                            Toast.makeText(activity, "Set Appointment Visit Status is Successful!!", Toast.LENGTH_LONG).show();
+                            appointment_visit_status.setTag(position);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                            Toast.makeText(activity, "Set Appointment Visit Status is Failed!!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return convertView;
 
     }
@@ -303,6 +437,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
     class AppointmentHolder
     {
+        int position = 0;
         int sequenceNumber;
         boolean isHoliday = false;
         DoctorClinicDetails details;
@@ -390,6 +525,17 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         public void setHoliday(boolean holiday)
         {
             isHoliday = holiday;
+        }
+        public DoctorHoliday getHolidayForAppointmentSequence()
+        {
+            if(holidayList != null && !holidayList.isEmpty())
+            {
+                for (DoctorHoliday holiday : holidayList) {
+                    if (holiday.type == 0 && holiday.sequenceNo == sequenceNumber)
+                        return holiday;
+                }
+            }
+            return null;
         }
     }
 
@@ -581,4 +727,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
+
 }

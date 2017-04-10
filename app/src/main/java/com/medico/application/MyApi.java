@@ -6,6 +6,7 @@ import com.medico.model.AppointmentFeedback;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentPatientIds;
 import com.medico.model.AppointmentResponse;
+import com.medico.model.AppointmentStatusRequest;
 import com.medico.model.Clinic1;
 import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.ClinicId;
@@ -114,6 +115,17 @@ public interface MyApi {
 
     @POST("/cancelAppointment")
     void cancelAppointment(@Body AppointmentId1 param, Callback<AppointmentResponse> cb);
+
+    @POST("/setAppointmentStatus")
+    void setAppointmentStatus(@Body AppointmentStatusRequest param, Callback<ServerResponse> cb);
+    @POST("/setAppointmentVisitType")
+    void setAppointmentVisitType(@Body AppointmentStatusRequest param, Callback<ServerResponse> cb);
+    @POST("/setAppointmentVisitStatus")
+    void setAppointmentVisitStatus(@Body AppointmentStatusRequest param, Callback<ServerResponse> cb);
+    @POST("/addDoctorHoliday")
+    void addDoctorHoliday(@Body DoctorHoliday param, Callback<ServerResponse> cb);
+    @POST("/removeDoctorHoliday")
+    void removeDoctorHoliday(@Body DoctorHoliday param, Callback<ServerResponse> cb);
 
 //    @POST("/registerPatient")
 //    void registerPatient(@Body RegisterUserData param, Callback<String> cb);

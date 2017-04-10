@@ -6,6 +6,7 @@ package com.medico.model;
 
 public class DoctorHoliday
 {
+    public Integer doctorHolidayId;
     public Integer idHoliday;
     public Long startDate;
     public Long endDate;
@@ -22,6 +23,23 @@ public class DoctorHoliday
         this.startDate = startDate;
         this.endDate = endDate;
         this.type = type;
+    }
+    public DoctorHoliday(Integer doctorId, Long startDate, Long endDate, Byte type, Integer sequenceNo,Integer clinicId, Integer doctorClinicId)
+    {
+        this.doctorId = doctorId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.type = type;
+        this.sequenceNo = sequenceNo;
+        this.clinicId = clinicId;
+        this.doctorClinicId = doctorClinicId;
+        this.status = 1;
+    }
+    public DoctorHoliday(Integer idHoliday, Integer sequenceNo)
+    {
+        this.doctorHolidayId = idHoliday;
+        this.idHoliday = idHoliday;
+        this.sequenceNo = sequenceNo;
     }
     public DoctorHoliday()
     {
