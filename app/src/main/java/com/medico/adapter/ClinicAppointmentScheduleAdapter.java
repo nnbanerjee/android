@@ -275,6 +275,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             appointment_visit_status.setVisibility(View.GONE);
             if(holder.isHoliday)
                 parentLayout.setBackgroundColor(Color.LTGRAY);
+            else
+                parentLayout.setBackgroundColor(Color.WHITE);
             appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.no_appointment_status)));
             appointment_status.setSelection(holder.isHoliday?1:0,false);
             appointment_status.setTag(holder.isHoliday?1:0);
@@ -311,6 +313,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                                 public void success(ServerResponse responseCodeVerfication, Response response) {
                                     Toast.makeText(activity, "Add doctor holiday is Successful!!", Toast.LENGTH_LONG).show();
                                     appointment_status.setTag(1);
+                                    holder.setHoliday(true);
+                                    notifyDataSetInvalidated();
                                 }
 
                                 @Override
@@ -331,6 +335,9 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                                 public void success(ServerResponse responseCodeVerfication, Response response) {
                                     Toast.makeText(activity, "Remove doctor holiday is Successful!!", Toast.LENGTH_LONG).show();
                                     appointment_status.setTag(0);
+                                    holder.setHoliday(false);
+                                    notifyDataSetInvalidated();
+
                                 }
 
                                 @Override
