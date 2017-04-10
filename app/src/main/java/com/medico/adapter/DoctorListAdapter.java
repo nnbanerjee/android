@@ -19,10 +19,10 @@ import com.medico.application.R;
 import com.medico.model.DoctorProfileList;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
-import com.medico.view.DoctorDetailsFragment;
+import com.medico.view.profile.DoctorDetailsFragment;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientVisitDatesView;
+import com.medico.view.profile.PatientVisitDatesView;
 
 import java.text.DateFormat;
 import java.util.Date;

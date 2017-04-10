@@ -21,8 +21,8 @@ import com.medico.model.AppointmentResponse;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
-import com.medico.view.ClinicDoctorAppointmentFragment;
-import com.medico.view.FeedbackFragmentClinicAppointment;
+import com.medico.view.profile.ClinicDoctorAppointmentFragment;
+import com.medico.view.profile.FeedbackFragmentClinicAppointment;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 

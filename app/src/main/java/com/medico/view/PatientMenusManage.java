@@ -19,6 +19,7 @@ import com.medico.application.MyApi;
 import com.medico.model.PatientProfile;
 import com.medico.util.PARAM;
 import com.medico.application.R;
+import com.medico.view.profile.DoctorConsultations;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

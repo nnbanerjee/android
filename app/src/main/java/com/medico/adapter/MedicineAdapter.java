@@ -25,7 +25,7 @@ import com.medico.model.SummaryResponse.MedicinePrescribed;
 import com.medico.util.PARAM;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientMedicinReminder;
+import com.medico.view.profile.PatientMedicinReminder;
 
 import java.util.List;
 

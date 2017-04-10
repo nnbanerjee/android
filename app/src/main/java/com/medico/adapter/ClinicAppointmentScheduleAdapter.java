@@ -32,12 +32,12 @@ import com.medico.model.Person;
 import com.medico.model.ServerResponse;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
-import com.medico.view.ClinicDoctorAppointmentFragment;
-import com.medico.view.DoctorAppointmentInformation;
-import com.medico.view.FeedbackFragmentClinicAppointment;
+import com.medico.view.profile.ClinicDoctorAppointmentFragment;
+import com.medico.view.profile.DoctorAppointmentInformation;
+import com.medico.view.profile.FeedbackFragmentClinicAppointment;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientDetailsFragment;
+import com.medico.view.profile.PatientDetailsFragment;
 import com.medico.view.search.PersonSearchView;
 
 import java.text.DateFormat;

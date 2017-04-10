@@ -1,24 +1,25 @@
-package com.medico.application;
+package com.medico.view.registration;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.medico.view.registration.Login;
+import com.medico.application.MainActivity;
+import com.medico.view.registration.ForgetPassword;
 
+//import com.mindnerves.meidcaldiary.Fragments.ForgetPassword;
+//import com.mindnerves.meidcaldiary.Fragments.Login;
 //import com.mindnerves.meidcaldiary.Fragments.Login;
 
-
-public class MainActivity extends Activity
-{
-    public Login login;
+/**
+ * Created by Narendra on 17-02-2016.
+ */
+public class ForgotPasswordActivity extends FragmentActivity {
+    public ForgetPassword forgetPassword;
 
     @Override
     public void onBackPressed() {
@@ -26,19 +27,18 @@ public class MainActivity extends Activity
         // initialize variables
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        Log.i("MainActivity","mainActviity->onbackpressed");
 
-        Fragment f =  getFragmentManager().findFragmentById(com.medico.application.R.id.lower_content);
-
-            // check to see if stack is empty
+// check to see if stack is empty
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             ft.commit();
-        } else   if (f instanceof Login){
-            finish();
-        }else{
+        } else{
+
+            Intent intObj = new Intent(this, MainActivity.class);
+            startActivity(intObj);
+        }/*else {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setMessage(com.medico.application.R.string.confirm_logout);
+            alertDialogBuilder.setMessage(R.string.confirm_logout);
             alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                 @Override
@@ -57,28 +57,34 @@ public class MainActivity extends Activity
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-        }
+        }*/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.medico.application.R.layout.activity_main);
+        setContentView(com.medico.application.R.layout.activity_forget_password);
 
-        login = new Login();
+        forgetPassword = new ForgetPassword();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(com.medico.application.R.id.lower_content, new Login());
+        ft.add(com.medico.application.R.id.lower_content, forgetPassword);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
 
-
-
+        /* Fragment frag = new ForgetPassword();
+                        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+                        ft.replace(R.id.lower_content, frag, "Forget_Password");
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                        ft.addToBackStack(null);
+                        ft.commit();
+*/
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(com.medico.application.R.menu.menu, menu);
+        getMenuInflater().inflate(com.medico.application.R.menu.menu_main, menu);
         return true;
     }
 
@@ -96,5 +102,6 @@ public class MainActivity extends Activity
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

@@ -20,6 +20,7 @@ import com.medico.model.DoctorProfile;
 import com.medico.util.PARAM;
 import com.medico.application.R;
 import com.medico.view.appointment.ManageDoctorAppointment;
+import com.medico.view.profile.ManagePatientProfile;
 
 //import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
 //import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;

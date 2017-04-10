@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name="com.medico.view.SigninActivity"
+            android:name="com.medico.view.registration.SigninActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="User SignIn"
             android:screenOrientation="portrait"
@@ -54,17 +54,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.medico.view.SigninActivityDoctor"
+            android:name="com.medico.view.registration.SigninActivityDoctor"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.medico.view.ForgotPasswordActivity"
+            android:name="com.medico.view.registration.ForgotPasswordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.medico.view.SigninActivityAssistance"
+            android:name="com.medico.view.registration.SigninActivityAssistance"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -89,11 +89,11 @@
         <!-- <receiver android:name=".MyReceiver"/> -->
         <receiver android:name="com.medico.util.AlarmService" />
 
-        <activity android:name="com.medico.view.ManagePatientProfile"
+        <activity android:name="com.medico.view.profile.ManagePatientProfile"
             android:label="@string/ManagePatientProfileTitle"
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.DoctorConsultations"
+        <activity android:name="com.medico.view.profile.DoctorConsultations"
             android:label="@string/ManagePatientProfileTitle"
             android:parentActivityName="com.medico.view.PatientHome" >
         </activity>

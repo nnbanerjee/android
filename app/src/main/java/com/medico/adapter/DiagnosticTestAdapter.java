@@ -24,7 +24,7 @@ import com.medico.model.SummaryResponse;
 import com.medico.util.PARAM;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.view.PatientDiagnosticTests;
+import com.medico.view.profile.PatientDiagnosticTests;
 
 import java.util.List;
 

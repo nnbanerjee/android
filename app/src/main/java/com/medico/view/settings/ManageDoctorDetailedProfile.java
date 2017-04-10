@@ -23,8 +23,7 @@ import com.medico.model.ProfileId;
 import com.medico.model.ServerResponse;
 import com.medico.application.R;
 import com.medico.view.ParentFragment;
-import com.medico.view.RegistrationFileUpload;
-import com.medico.view.settings.ManagePersonSettings;
+import com.medico.view.registration.RegistrationFileUpload;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -18,7 +18,7 @@ import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.TreatmentPlan1;
 import com.medico.util.PARAM;
-import com.medico.view.DoctorTreatmentPlanEditView;
+import com.medico.view.profile.DoctorTreatmentPlanEditView;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
 
