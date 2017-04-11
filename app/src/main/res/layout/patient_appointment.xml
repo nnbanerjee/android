@@ -157,7 +157,7 @@
                 style="@style/body1"/>
 
             <TextView
-                android:id="@+id/appointmentDate"
+                android:id="@+id/review_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lastVisitedValue"

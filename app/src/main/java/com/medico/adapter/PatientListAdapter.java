@@ -90,7 +90,7 @@ public class PatientListAdapter extends BaseAdapter  {
         ImageView viewImage = (ImageView) convertView.findViewById(R.id.clinic_image);
 
         TextView address = (TextView) convertView.findViewById(R.id.lastAppointmentDate);
-        TextView appointmentDate = (TextView) convertView.findViewById(R.id.appointmentDate);
+        TextView appointmentDate = (TextView) convertView.findViewById(R.id.review_value);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);

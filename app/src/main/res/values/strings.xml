@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="ManageDoctorConsultationTitle">Doctor Consultations</string>
     <string name="ManagePatientProfileTitle">Patient Profile</string>
     <string name="app_name">Medico</string>
     <string name="action_settings">Settings</string>

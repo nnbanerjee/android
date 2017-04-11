@@ -128,7 +128,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
         ImageView patient_image = (ImageView) convertView.findViewById(R.id.patient_image);
         TextView address = (TextView) convertView.findViewById(R.id.address);
-        TextView upcomingappointmentDate = (TextView) convertView.findViewById(R.id.appointmentDate);
+        TextView upcomingappointmentDate = (TextView) convertView.findViewById(R.id.review_value);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);

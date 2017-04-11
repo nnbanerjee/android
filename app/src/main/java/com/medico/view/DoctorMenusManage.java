@@ -20,7 +20,9 @@ import com.medico.model.DoctorProfile;
 import com.medico.util.PARAM;
 import com.medico.application.R;
 import com.medico.view.appointment.ManageDoctorAppointment;
+import com.medico.view.finance.ManageFinanceView;
 import com.medico.view.profile.ManagePatientProfile;
+import com.medico.view.review.ManagePatientReviewView;
 
 //import com.mindnerves.meidcaldiary.Fragments.AllManageFinance;
 //import com.mindnerves.meidcaldiary.Fragments.DoctorAllFeedback;
@@ -84,12 +86,19 @@ public class DoctorMenusManage extends Fragment {
         manage_finance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-//                 layout.setVisibility(View.GONE);
-//                Fragment fragment = new AllManageFinance();
-//                FragmentManager fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManageFinanceView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();            }
         });
 
         manageAppointment.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +122,19 @@ public class DoctorMenusManage extends Fragment {
         manage_feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-//                 layout.setVisibility(View.GONE);
-//                Fragment fragment = new DoctorAllFeedback();
-//                FragmentManager fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManagePatientReviewView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();            }
         });
         return view;
     }

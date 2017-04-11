@@ -94,15 +94,23 @@
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
         <activity android:name="com.medico.view.profile.DoctorConsultations"
-            android:label="@string/ManagePatientProfileTitle"
+            android:label="@string/ManageDoctorConsultationTitle"
             android:parentActivityName="com.medico.view.PatientHome" >
         </activity>
         <activity android:name="com.medico.view.settings.ManagePersonSettings"
-            android:label="Personal Profile"
+            android:label="Personal Settings"
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
         <activity android:name="com.medico.view.appointment.ManageDoctorAppointment"
-            android:label="Personal Profile"
+            android:label="Manage Appointments"
+            android:parentActivityName="com.medico.view.DoctorHome" >
+        </activity>
+        <activity android:name="com.medico.view.finance.ManageFinanceView"
+            android:label="Manage Finance"
+            android:parentActivityName="com.medico.view.DoctorHome" >
+        </activity>
+        <activity android:name="com.medico.view.review.ManagePatientReviewView"
+            android:label="Patient Reviews"
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
     </application>

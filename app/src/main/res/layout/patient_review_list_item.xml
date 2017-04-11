@@ -5,18 +5,17 @@
     android:background="#ffffff">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/clinic_image"
+        android:id="@+id/patient_image"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_margin="5dp"
-        android:background="@drawable/doctor"/>
-
+        android:background="@drawable/patient"/>
 
     <ImageView
         android:id="@+id/downImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/clinic_image"
+        android:layout_below="@+id/patient_image"
         android:layout_marginLeft="23dp"
         android:background="@drawable/down_arrow"
         android:scaleType="fitCenter" />
@@ -24,14 +23,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/clinic_image"
+        android:layout_toRightOf="@+id/patient_image"
         android:background="#ffffff">
 
         <TextView
-            android:id="@+id/clinic_name"
+            android:id="@+id/patient_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doctor Name"
+            android:text="Patient Name"
             android:textColor="@color/color_blue_default"
             style="@style/title" />
 
@@ -52,108 +51,97 @@
             style="@style/body1"
             />
         <TextView
+            android:id="@+id/speciality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nextBtn"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="@dimen/body2"
-            android:text="0"
-            android:visibility="gone"
-            android:id="@+id/total_appointment"
-            android:textColor="#1E90FF"
-            android:layout_marginRight="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            />
-
-        <TextView
-            android:id="@+id/clinicSpeciality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/clinic_name"
+            android:layout_below="@+id/patient_name"
             android:text="Speciality"
             style="@style/sub_heading" />
 
         <TextView
-            android:id="@+id/lastAppointmentDate"
+            android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/clinicSpeciality"
-            android:text="fdfd"
+            android:layout_below="@+id/speciality"
+            android:text="Address:"
             android:visibility="visible"
             style="@style/body2"
             />
-
         <TextView
-            android:id="@+id/lastVisitedValue"
+            android:id="@+id/visited_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/clinicSpeciality"
-            android:layout_toRightOf="@+id/lastAppointmentDate"
+            android:layout_below="@+id/address"
+            android:text="Visited : "
+            style="@style/body4"/>
+        <TextView
+            android:id="@+id/visited_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address"
+            android:layout_toRightOf="@+id/visited_text"
             android:text="12-04-2015"
-            android:visibility="gone"
-            style="@style/body1"
-            android:textColor="#1E90FF" />
-
-
-        <TextView
-            android:id="@+id/lastAppointment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointmentDate"
-            android:text="Last Visited. : "
-            style="@style/body1"/>
-        <TextView
-            android:id="@+id/lastAppointmentValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointmentDate"
-            android:layout_toRightOf="@+id/lastAppointment"
-            android:text="12-04-2015"
-            style="@style/body1"
+            style="@style/body4"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
             />
 
         <TextView
-            android:id="@+id/upcomingText"
+            android:id="@+id/ratingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointment"
-            android:text="Upcoming Visit:  "
+            android:text="Rating:  "
             android:textColor="#000000"
-            android:textSize="10sp"
-            android:visibility="gone" />
+            style="@style/body4"
+            android:layout_alignBaseline="@+id/rating_value"
+            android:layout_alignBottom="@+id/rating_value"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointmentValue"
-            android:layout_toRightOf="@+id/upcomingText"
-            android:text="12-04-2015"
+            android:layout_below="@+id/visited_value"
+            android:layout_toRightOf="@+id/ratingText"
+            android:text=""
             android:textColor="#1E90FF"
-
-            android:textSize="10sp"
-            android:visibility="gone" />
+            style="@style/body4"
+            android:id="@+id/rating_value" />
 
         <TextView
-            android:id="@+id/appointmentText"
+            android:id="@+id/recommdation_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/upcomingText"
-            android:text="Upcoming Appt. : "
+            android:layout_below="@+id/ratingText"
+            android:text="Recommendations: "
+            style="@style/body4"/>
 
-            style="@style/body1"/>
+        <ImageView
+            android:id="@+id/recommdation_value"
+            style="@style/body4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingText"
+            android:layout_toRightOf="@+id/recommdation_text"
+            android:text="YES"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/reviews_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recommdation_text"
+            android:text="Reviews: "
+            style="@style/body4"/>
 
         <TextView
             android:id="@+id/review_value"
+            style="@style/body4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lastAppointmentValue"
-            android:layout_toRightOf="@+id/appointmentText"
-            android:text="sdfsdf"
-            android:textColor="@color/black"
-            style="@style/body1" />
+            android:layout_below="@id/recommdation_text"
+            android:layout_toRightOf="@+id/reviews_text"
+            android:text=""
+            android:textColor="@color/black" />
 
 
     </RelativeLayout>

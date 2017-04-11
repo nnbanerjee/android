@@ -24,6 +24,7 @@ import com.medico.model.DoctorClinicId;
 import com.medico.model.DoctorClinicRequest;
 import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorId;
+import com.medico.model.DoctorId1;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
 import com.medico.model.DoctorProfile;
@@ -31,6 +32,9 @@ import com.medico.model.DoctorShortProfile;
 import com.medico.model.DoctorSlotBookings;
 import com.medico.model.FileUpload;
 import com.medico.model.FileUpload1;
+import com.medico.model.FinanceDetails;
+import com.medico.model.FinanceReportRequest;
+import com.medico.model.FinanceSummary;
 import com.medico.model.InvoiceDetails1;
 import com.medico.model.InvoiceId;
 import com.medico.model.LinkedPersonRequest;
@@ -42,6 +46,7 @@ import com.medico.model.PatientDiagnostic;
 import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
 import com.medico.model.PatientProfile;
+import com.medico.model.PatientReview;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientTestId;
 import com.medico.model.PatientVisits;
@@ -126,6 +131,13 @@ public interface MyApi {
     void addDoctorHoliday(@Body DoctorHoliday param, Callback<ServerResponse> cb);
     @POST("/removeDoctorHoliday")
     void removeDoctorHoliday(@Body DoctorHoliday param, Callback<ServerResponse> cb);
+    @POST("/getFinanceSummary1")
+    void getFinanceSummary(@Body FinanceReportRequest param, Callback<List<FinanceSummary>> cb);
+
+    @POST("/getFinanceSummaryDetails")
+    void getFinanceSummaryDetails(@Body FinanceReportRequest param, Callback<List<FinanceDetails>> cb);
+    @POST("/getAllReviews1")
+    void getReviewsForDoctor(@Body DoctorId1 param, Callback<List<PatientReview>> cb);
 
 //    @POST("/registerPatient")
 //    void registerPatient(@Body RegisterUserData param, Callback<String> cb);
