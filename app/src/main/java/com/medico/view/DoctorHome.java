@@ -19,11 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.MenuAdapter;
+import com.medico.application.R;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorProfile;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
-import com.medico.application.R;
 import com.medico.view.settings.ManagePersonSettings;
 
 import retrofit.Callback;
@@ -97,13 +97,22 @@ public class DoctorHome extends HomeActivity
         });
         patients.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                if (profileRole == DOCTOR) {
-//                    fragment = new ShowPatients();
-//                    fragmentManger = getFragmentManager();
-//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-//                }
-            }
+            public void onClick(View v)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(DoctorHome.this, ManageHomeView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
+             }
         });
         fragment = new DoctorMenusManage();
         fragmentManger = getFragmentManager();

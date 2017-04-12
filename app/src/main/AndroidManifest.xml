@@ -113,6 +113,10 @@
             android:label="Patient Reviews"
             android:parentActivityName="com.medico.view.DoctorHome" >
         </activity>
+        <activity android:name="com.medico.view.ManageHomeView"
+            android:label="Search Patient"
+            android:parentActivityName="com.medico.view.DoctorHome" >
+        </activity>
     </application>
 
 </manifest>

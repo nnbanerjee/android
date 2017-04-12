@@ -20,7 +20,6 @@ import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.view.ParentFragment;
 import com.medico.view.appointment.ManageDoctorAppointment;
-import com.medico.view.settings.ManagePersonSettings;
 import com.medico.view.settings.PersonProfileEditView;
 
 import java.util.List;
@@ -129,7 +128,7 @@ public class SearchPersonListView extends ParentFragment {
                 bun.putInt(PROFILE_ID,0);
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new PersonProfileEditView();
-                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
+//                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

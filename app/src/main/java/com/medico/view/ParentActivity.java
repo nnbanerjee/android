@@ -39,6 +39,7 @@ public class ParentActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         document = getDocument();
+//        LocationService locationService = LocationService.getLocationManager(this);
     }
 
     @Override

@@ -27,7 +27,6 @@ import com.medico.model.SearchParameterRequest;
 import com.medico.util.LocationService;
 import com.medico.view.ParentActivity;
 import com.medico.view.ParentFragment;
-import com.medico.view.appointment.ManageDoctorAppointment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -371,7 +370,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         SearchPersonListView personListView = new SearchPersonListView();
         personListView.setModel(result);
         personListView.setAdapter(adapter,adapterParameter);
-        ((ManageDoctorAppointment)getActivity()).attachFragment(personListView);
+//        ((ManageDoctorAppointment)getActivity()).attachFragment(personListView);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
     }
