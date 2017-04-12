@@ -15,7 +15,7 @@ import com.medico.model.DoctorId;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 

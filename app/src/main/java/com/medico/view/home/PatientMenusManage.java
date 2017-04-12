@@ -1,7 +1,6 @@
-package com.medico.view;
+package com.medico.view.home;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,14 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.PatientProfile;
 import com.medico.util.PARAM;
-import com.medico.application.R;
 import com.medico.view.profile.DoctorConsultations;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 //import com.mindnerves.meidcaldiary.Fragments.PatientAllClinics;
 //import com.mindnerves.meidcaldiary.Fragments.PatientAppointmentInformation;
@@ -38,7 +33,7 @@ import retrofit.client.OkClient;
 public class PatientMenusManage extends Fragment {
 
     String doctorId = "";
-    MyApi api;
+//    MyApi api;
     String patientId;
     private Button drawar,logout;
     SharedPreferences session;
@@ -55,13 +50,13 @@ public class PatientMenusManage extends Fragment {
         RelativeLayout layout3 = (RelativeLayout) view.findViewById(R.id.layout5);
         LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(this.getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(this.getResources().getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+//        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("sessionID", null);
         doctorsCount = (TextView)view.findViewById(R.id.doctor_count);
         clinicCount = (TextView)view.findViewById(R.id.clinic_count);

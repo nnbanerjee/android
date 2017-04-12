@@ -5,22 +5,13 @@ package com.medico.application;
  */
 
 import android.app.Application;
-import android.os.Build;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-
-import com.medico.application.R;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-
 
 
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
     private static AppController mInstance;
-    public static MyApi api;
+
 
 
     private String baseUrl = "";
@@ -36,15 +27,8 @@ public class AppController extends Application {
         super.onCreate();
 
         mInstance = this;
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-              .setClient(new OkClient()).build();
 
-        api = restAdapter.create(MyApi.class);
-        CookieManager cookieManager = CookieManager.getInstance();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this);
-        }
-        cookieManager.setAcceptCookie(true);
     }
+
+
 }

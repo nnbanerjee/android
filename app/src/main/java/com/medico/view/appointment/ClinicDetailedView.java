@@ -19,7 +19,7 @@ import com.medico.application.R;
 import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.util.ImageLoadTask;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.ClinicProfileEditView;
 
 import java.text.DateFormat;

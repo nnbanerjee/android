@@ -4,31 +4,25 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.PatientProfileList;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.PatientDetailsFragment;
 import com.medico.view.profile.PatientVisitDatesView;
 
 import java.text.DateFormat;
 import java.util.Date;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 
 /**
@@ -36,17 +30,19 @@ import retrofit.client.OkClient;
  */
 
 //Doctor Login
-public class PatientListAdapter extends BaseAdapter  {
+public class PatientListAdapter extends HomeAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
     PatientProfileList allPatients;
-    MyApi api;
-    String doctorId;
-    SharedPreferences session;
+//    MyApi api;
+//    String doctorId;
+//    SharedPreferences session;
     private ProgressDialog progress;
 
-    public PatientListAdapter(Activity activity, PatientProfileList allPatients) {
+    public PatientListAdapter(Activity activity, PatientProfileList allPatients)
+    {
+        super(activity);
         this.activity = activity;
         this.allPatients = allPatients;
     }
@@ -72,14 +68,14 @@ public class PatientListAdapter extends BaseAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-        doctorId = session.getString("id", null);
+//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+//        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.doctor_list_item, null);
@@ -197,10 +193,10 @@ public class PatientListAdapter extends BaseAdapter  {
             public void onClick(View v) {
 
                // patientId = session.getString("patientId", null);
-                SharedPreferences.Editor editor = session.edit();
+//                SharedPreferences.Editor editor = session.edit();
 //                editor.putString("doctorId", allPatients.get(position).getDoctorId());
-                editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
-                editor.commit();
+//                editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
+//                editor.commit();
                 Bundle bun = new Bundle();
                 bun.putString("fragment", "doctorPatientListAdapter");
                 ParentFragment fragment = new PatientVisitDatesView();

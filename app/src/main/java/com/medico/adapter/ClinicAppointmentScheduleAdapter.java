@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
@@ -32,11 +31,11 @@ import com.medico.model.Person;
 import com.medico.model.ServerResponse;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.ClinicDoctorAppointmentFragment;
 import com.medico.view.profile.DoctorAppointmentInformation;
 import com.medico.view.profile.FeedbackFragmentClinicAppointment;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
 import com.medico.view.profile.PatientDetailsFragment;
 import com.medico.view.search.PersonSearchView;
 
@@ -47,9 +46,7 @@ import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
@@ -106,12 +103,12 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.patient_appointment, null);
@@ -700,12 +697,12 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
                         final ProgressDialog progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-                        RestAdapter restAdapter = new RestAdapter.Builder()
-                                .setEndpoint(activity.getString(R.string.base_url))
-                                .setClient(new OkClient())
-                                .setLogLevel(RestAdapter.LogLevel.FULL)
-                                .build();
-                        MyApi api = restAdapter.create(MyApi.class);
+//                        RestAdapter restAdapter = new RestAdapter.Builder()
+//                                .setEndpoint(activity.getString(R.string.base_url))
+//                                .setClient(new OkClient())
+//                                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                                .build();
+//                        MyApi api = restAdapter.create(MyApi.class);
                         api.cancelAppointment(new AppointmentId1(holder.patient.appointmentId), new Callback<AppointmentResponse>() {
                             @Override
                             public void success(AppointmentResponse result, Response response) {

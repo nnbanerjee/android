@@ -26,7 +26,7 @@ import com.medico.model.FileUpload1;
 import com.medico.model.ResponseAddDocuments;
 import com.medico.util.FileChooser;
 import com.medico.util.ImageUtil;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.io.File; 
 import java.util.ArrayList;

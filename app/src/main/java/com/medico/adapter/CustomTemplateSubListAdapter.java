@@ -9,36 +9,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.util.PARAM;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.DoctorTreatmentPlanEditView;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
 
 import java.util.List;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 /**
  * Created by User on 04-11-2015.
  */
-public class CustomTemplateSubListAdapter extends BaseAdapter {
+public class CustomTemplateSubListAdapter extends HomeAdapter {
     Activity activity;
     List<CustomProcedureTemplate1> templates;
     LayoutInflater inflater;
-    MyApi api;
+//    MyApi api;
     SharedPreferences session;
     ProgressDialog progress;
     private Integer loggedInUserId;
 
-    public CustomTemplateSubListAdapter(Activity activity, List<CustomProcedureTemplate1> templates, Integer userId) {
+    public CustomTemplateSubListAdapter(Activity activity, List<CustomProcedureTemplate1> templates, Integer userId)
+    {
+        super(activity);
         this.activity = activity;
         this.loggedInUserId = userId;
         this.templates = templates;
@@ -64,12 +61,12 @@ public class CustomTemplateSubListAdapter extends BaseAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(activity.getString(R.string.base_url))
-                        .setClient(new OkClient())
-                        .setLogLevel(RestAdapter.LogLevel.FULL)
-                        .build();
-                api = restAdapter.create(MyApi.class);
+//                RestAdapter restAdapter = new RestAdapter.Builder()
+//                        .setEndpoint(activity.getString(R.string.base_url))
+//                        .setClient(new OkClient())
+//                        .setLogLevel(RestAdapter.LogLevel.FULL)
+//                        .build();
+//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.manage_settings, null);
                 setView(convertView,position);

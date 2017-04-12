@@ -1,9 +1,9 @@
-package com.medico.view;
+package com.medico.view.home;
 
 import android.app.Fragment;
-import android.webkit.CookieManager;
 import android.widget.Toast;
 
+import com.medico.application.MainActivity;
 import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.Country;
@@ -13,10 +13,7 @@ import com.medico.util.PARAM;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -33,21 +30,21 @@ public class ParentFragment extends Fragment implements PARAM
     {
         super.onStart();
         fragment = this;
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestInterceptor.RequestFacade request) {
-                        // assuming `cookieKey` and `cookieValue` are not null
-                        String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
-                        request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
-                    }
-                })
-                .setEndpoint(this.getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setRequestInterceptor(new RequestInterceptor() {
+//                    @Override
+//                    public void intercept(RequestInterceptor.RequestFacade request) {
+//                        // assuming `cookieKey` and `cookieValue` are not null
+//                        String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
+//                        request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
+//                    }
+//                })
+//                .setEndpoint(this.getResources().getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+        api = MainActivity.api;
         if(countriesList == null)
             loadSupportedCountryList();
 

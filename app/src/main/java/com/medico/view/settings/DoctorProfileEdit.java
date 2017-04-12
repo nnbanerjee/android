@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 /**
  * Created by JAY GANESH on 12/14/2015.

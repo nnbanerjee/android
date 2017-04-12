@@ -12,12 +12,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.medico.view.registration.Login;
+import com.squareup.okhttp.OkHttpClient;
+
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+
+import retrofit.RestAdapter;
+import retrofit.client.Client;
+import retrofit.client.OkClient;
 
 //import com.mindnerves.meidcaldiary.Fragments.Login;
 
 
 public class MainActivity extends Activity
 {
+    public static MyApi api;
     public Login login;
 
     @Override
@@ -64,14 +73,11 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.medico.application.R.layout.activity_main);
-
+        getMyAPI(this);
         login = new Login();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(com.medico.application.R.id.lower_content, new Login());
         ft.commit();
-
-
-
     }
 
 
@@ -96,5 +102,21 @@ public class MainActivity extends Activity
 
         return super.onOptionsItemSelected(item);
     }
+    public static MyApi getMyAPI(Activity activity)
+    {
+        if(api == null)
+        {
+            CookieManager cookieManager = new CookieManager(null, null);
+            cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+            OkHttpClient okHttpClient = new OkHttpClient();
+            okHttpClient.setCookieHandler(cookieManager);
+            Client client = new OkClient(okHttpClient);
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(activity.getResources().getString(R.string.base_url))
+                    .setClient(client).build();
 
+            api = restAdapter.create(MyApi.class);
+        }
+        return api;
+    }
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.model.FinanceSummary;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.finance.ManageFinanceDetailsView;
 
 import java.text.NumberFormat;

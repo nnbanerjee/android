@@ -19,7 +19,7 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.Symptom;
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.medico.view;
+package com.medico.view.home;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,7 +17,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.CookieManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +29,7 @@ import com.google.gson.Gson;
 import com.medico.adapter.MenuAdapter;
 import com.medico.adapter.ProfileDelegationAdapter;
 import com.medico.adapter.ProfileDependencyAdapter;
+import com.medico.application.MainActivity;
 import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.Delegation;
@@ -45,10 +45,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 //import com.mindnerves.meidcaldiary.BackStress;
 //import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
@@ -448,21 +444,21 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected void onStart()
     {
         super.onStart();
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestInterceptor.RequestFacade request) {
-                        // assuming `cookieKey` and `cookieValue` are not null
-                        String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
-                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
-                    }
-                })
-                .setEndpoint(this.getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setRequestInterceptor(new RequestInterceptor() {
+//                    @Override
+//                    public void intercept(RequestInterceptor.RequestFacade request) {
+//                        // assuming `cookieKey` and `cookieValue` are not null
+//                        String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
+//                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
+//                    }
+//                })
+//                .setEndpoint(this.getResources().getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+          api = MainActivity.api;
     }
 
 

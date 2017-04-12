@@ -7,32 +7,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.FileUpload1;
 import com.medico.model.RemoveVisitDocument1;
 import com.medico.model.ResponseCodeVerfication;
-import com.medico.application.R;
+import com.medico.util.PARAM;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.medico.application.MyApi;
-import com.medico.util.PARAM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
  * Created by User on 7/13/15.
  */
-public class DocumentAdapter extends BaseAdapter {
+public class DocumentAdapter extends HomeAdapter {
     Activity activity;
     List<FileUpload1> fileList;
     private LayoutInflater inflater;
@@ -41,7 +38,9 @@ public class DocumentAdapter extends BaseAdapter {
     public MyApi api;
     String[] document_category = {"Prescription","DiagnosticTest"};
     String[] document_subcategory = {"X-Ray","CT SCAN"};
-    public DocumentAdapter(Activity activity, List<FileUpload1> fileList, String type) {
+    public DocumentAdapter(Activity activity, List<FileUpload1> fileList, String type)
+    {
+        super(activity);
         this.activity = activity;
         this.fileList = fileList;
         this.type = type;
@@ -71,12 +70,12 @@ public class DocumentAdapter extends BaseAdapter {
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.document_element, null);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
         TextView fileName = (TextView) convertView.findViewById(R.id.document_name);
         TextView category = (TextView)convertView.findViewById(R.id.category_value);
         TextView addedBy = (TextView) convertView.findViewById(R.id.added_by_value);

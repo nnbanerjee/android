@@ -1,4 +1,4 @@
-package com.medico.view;
+package com.medico.view.home;
 
 import java.util.ArrayList;
 

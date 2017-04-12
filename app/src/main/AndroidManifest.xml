@@ -70,12 +70,12 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="com.medico.view.PatientHome"
+            android:name="com.medico.view.home.PatientHome"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.medico.view.DoctorHome"
+            android:name="com.medico.view.home.DoctorHome"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -91,31 +91,31 @@
 
         <activity android:name="com.medico.view.profile.ManagePatientProfile"
             android:label="@string/ManagePatientProfileTitle"
-            android:parentActivityName="com.medico.view.DoctorHome" >
+            android:parentActivityName="com.medico.view.home.DoctorHome" >
         </activity>
         <activity android:name="com.medico.view.profile.DoctorConsultations"
             android:label="@string/ManageDoctorConsultationTitle"
-            android:parentActivityName="com.medico.view.PatientHome" >
+            android:parentActivityName="com.medico.view.home.PatientHome" >
         </activity>
         <activity android:name="com.medico.view.settings.ManagePersonSettings"
             android:label="Personal Settings"
-            android:parentActivityName="com.medico.view.DoctorHome" >
+            android:parentActivityName="com.medico.view.home.DoctorHome" >
         </activity>
         <activity android:name="com.medico.view.appointment.ManageDoctorAppointment"
             android:label="Manage Appointments"
-            android:parentActivityName="com.medico.view.DoctorHome" >
+            android:parentActivityName="com.medico.view.home.DoctorHome" >
         </activity>
         <activity android:name="com.medico.view.finance.ManageFinanceView"
             android:label="Manage Finance"
-            android:parentActivityName="com.medico.view.DoctorHome" >
+            android:parentActivityName="com.medico.view.home.DoctorHome" >
         </activity>
         <activity android:name="com.medico.view.review.ManagePatientReviewView"
             android:label="Patient Reviews"
-            android:parentActivityName="com.medico.view.DoctorHome" >
+            android:parentActivityName="com.medico.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.ManageHomeView"
+        <activity android:name="com.medico.view.home.ManageHomeView"
             android:label="Search Patient"
-            android:parentActivityName="com.medico.view.DoctorHome" >
+            android:parentActivityName="com.medico.view.home.DoctorHome" >
         </activity>
     </application>
 

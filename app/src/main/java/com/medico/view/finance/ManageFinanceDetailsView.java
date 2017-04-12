@@ -18,7 +18,7 @@ import com.medico.adapter.FinanceProcedureListAdapter;
 import com.medico.application.R;
 import com.medico.model.FinanceDetails;
 import com.medico.model.FinanceReportRequest;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.NumberFormat;
 import java.util.List;

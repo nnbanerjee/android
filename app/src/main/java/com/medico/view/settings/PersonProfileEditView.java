@@ -32,7 +32,7 @@ import com.medico.model.ServerResponse;
 import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;

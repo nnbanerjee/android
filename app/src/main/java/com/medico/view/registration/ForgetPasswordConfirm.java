@@ -1,9 +1,7 @@
 package com.medico.view.registration;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.medico.application.MainActivity;
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.ResetPassword;
 import com.medico.model.ResponseCodeVerfication;
+import com.medico.view.home.ParentFragment;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 //import com.mindnerves.meidcaldiary.MainActivity;
@@ -30,11 +26,12 @@ import retrofit.client.Response;
 /**
  * Created by User on 16-02-2015.
  */
-public class ForgetPasswordConfirm extends Fragment {
+public class ForgetPasswordConfirm extends ParentFragment
+{
 
-    MyApi api;
-    public static final String MyPREFERENCES = "MyPrefs";
-    public SharedPreferences session;
+//    MyApi api;
+//    public static final String MyPREFERENCES = "MyPrefs";
+//    public SharedPreferences session;
     private EditText etOldPass;
     private EditText etNewPass;
     private EditText etRetypePass;
@@ -64,12 +61,12 @@ public class ForgetPasswordConfirm extends Fragment {
                         final String newPass = etNewPass.getText().toString();
                         final String reTypePass = etRetypePass.getText().toString();
                         //Retrofit Initialization
-                        RestAdapter restAdapter = new RestAdapter.Builder()
-                                .setEndpoint(getResources().getString(R.string.base_url))
-                                .setClient(new OkClient())
-                                .setLogLevel(RestAdapter.LogLevel.FULL)
-                                .build();
-                        api = restAdapter.create(MyApi.class);
+//                        RestAdapter restAdapter = new RestAdapter.Builder()
+//                                .setEndpoint(getResources().getString(R.string.base_url))
+//                                .setClient(new OkClient())
+//                                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                                .build();
+//                        api = restAdapter.create(MyApi.class);
                         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                         ResetPassword param = new ResetPassword(email, "", newPass);
                         api.changePassword(param, new Callback<ResponseCodeVerfication>() {

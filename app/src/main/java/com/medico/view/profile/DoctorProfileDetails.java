@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.util.Date;

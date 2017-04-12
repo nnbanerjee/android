@@ -7,20 +7,15 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.Clinic1;
 import com.medico.util.PARAM;
 
 import java.util.List;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 
 /**
@@ -28,17 +23,19 @@ import retrofit.client.OkClient;
  */
 
 //Doctor Login
-public class ClinicSettingListAdapter extends BaseAdapter  {
+public class ClinicSettingListAdapter extends HomeAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
     List<Clinic1> personList;
-    MyApi api;
-    String doctorId;
+//    MyApi api;
+//    String doctorId;
     SharedPreferences session;
     private ProgressDialog progress;
 
-    public ClinicSettingListAdapter(Activity activity, List<Clinic1> personList) {
+    public ClinicSettingListAdapter(Activity activity, List<Clinic1> personList)
+    {
+        super(activity);
         this.activity = activity;
         this.personList = personList;
     }
@@ -64,14 +61,14 @@ public class ClinicSettingListAdapter extends BaseAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-        doctorId = session.getString("id", null);
+//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+//        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.person_list_item, null);

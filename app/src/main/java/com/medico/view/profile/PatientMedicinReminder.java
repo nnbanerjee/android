@@ -40,7 +40,7 @@ import com.medico.model.SearchParameter;
 import com.medico.util.AlarmService;
 import com.medico.util.PARAM;
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;

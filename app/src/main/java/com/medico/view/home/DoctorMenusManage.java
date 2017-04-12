@@ -1,4 +1,4 @@
-package com.medico.view;
+package com.medico.view.home;
 
 import android.app.Fragment;
 import android.content.Context;

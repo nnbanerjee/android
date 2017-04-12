@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.medico.util.PARAM;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

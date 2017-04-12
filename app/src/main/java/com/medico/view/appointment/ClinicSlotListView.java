@@ -21,8 +21,8 @@ import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PersonID;
 import com.medico.util.PARAM;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 /**
  * Created by MNT on 07-Apr-15.

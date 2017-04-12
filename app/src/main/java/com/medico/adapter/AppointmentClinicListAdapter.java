@@ -4,19 +4,16 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.util.ImageLoadTask;
@@ -28,26 +25,25 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-
 
 /**
  * Created by MNT on 23-Feb-15.
  */
 
 //Doctor Login
-public class AppointmentClinicListAdapter extends BaseAdapter  {
+public class AppointmentClinicListAdapter extends HomeAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
     List<DoctorClinicDetails> clinicDetails;
-    MyApi api;
-    String doctorId;
-    SharedPreferences session;
+//    MyApi api;
+//    String doctorId;
+//    SharedPreferences session;
     private ProgressDialog progress;
 
-    public AppointmentClinicListAdapter(Activity activity, List<DoctorClinicDetails> clinicDetails) {
+    public AppointmentClinicListAdapter(Activity activity, List<DoctorClinicDetails> clinicDetails)
+    {
+        super(activity);
         this.activity = activity;
         this.clinicDetails = clinicDetails;
     }
@@ -73,14 +69,14 @@ public class AppointmentClinicListAdapter extends BaseAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-        doctorId = session.getString("id", null);
+//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
+//        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.appointment_clinic_list, null);

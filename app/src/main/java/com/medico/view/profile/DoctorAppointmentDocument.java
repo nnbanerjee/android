@@ -14,20 +14,17 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.medico.adapter.DocumentAdapter;
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.FileUpload1;
 import com.medico.util.FileUploadDialog;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -57,12 +54,12 @@ public class DoctorAppointmentDocument extends ParentFragment {
                 adf.show(getFragmentManager(),"Dialog");
             }
         });
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(getResources().getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
 
          allDocumentDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -37,8 +37,8 @@ import com.medico.model.SummaryResponse.MedicinePrescribed;
 import com.medico.model.Symptom;
 import com.medico.model.VisitEditLogRequest;
 import com.medico.model.VisitEditLogResponse;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;

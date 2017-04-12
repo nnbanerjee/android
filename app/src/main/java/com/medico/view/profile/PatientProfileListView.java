@@ -22,8 +22,8 @@ import com.medico.model.PatientProfileList;
 import com.medico.model.PatientShortProfile;
 import com.medico.util.PARAM;
 import com.medico.application.R;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 
@@ -36,7 +36,8 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class PatientProfileListView extends com.medico.view.ParentFragment {
+public class PatientProfileListView extends ParentFragment
+{
 
 
     SharedPreferences session;

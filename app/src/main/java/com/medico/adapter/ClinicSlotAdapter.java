@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,22 +19,20 @@ import com.medico.model.ClinicSlotDetails;
 import com.medico.model.DoctorClinicId;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.util.PARAM;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.ClinicSlotEditView;
 
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
  * Created by User on 04-11-2015.
  */
-public class ClinicSlotAdapter extends BaseAdapter {
+public class ClinicSlotAdapter extends HomeAdapter {
     Activity activity;
     List<ClinicSlotDetails> slots;
     LayoutInflater inflater;
@@ -44,7 +41,9 @@ public class ClinicSlotAdapter extends BaseAdapter {
     ProgressDialog progress;
     private int loggedInUserId;
 
-    public ClinicSlotAdapter(Activity activity, List<ClinicSlotDetails> slotDetailses, int userId) {
+    public ClinicSlotAdapter(Activity activity, List<ClinicSlotDetails> slotDetailses, int userId)
+    {
+        super(activity);
         this.activity = activity;
         this.slots = slotDetailses;
         session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -69,12 +68,12 @@ public class ClinicSlotAdapter extends BaseAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(activity.getString(R.string.base_url))
-                        .setClient(new OkClient())
-                        .setLogLevel(RestAdapter.LogLevel.FULL)
-                        .build();
-                api = restAdapter.create(MyApi.class);
+//                RestAdapter restAdapter = new RestAdapter.Builder()
+//                        .setEndpoint(activity.getString(R.string.base_url))
+//                        .setClient(new OkClient())
+//                        .setLogLevel(RestAdapter.LogLevel.FULL)
+//                        .build();
+//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.medicine, null);
                 setView(convertView,position);

@@ -15,14 +15,13 @@ import com.medico.adapter.FinanceSummaryListAdapter;
 import com.medico.application.R;
 import com.medico.model.FinanceReportRequest;
 import com.medico.model.FinanceSummary;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 //
@@ -128,7 +127,7 @@ public class FinanceReportListView extends ParentFragment
             @Override
             public void success(List<FinanceSummary> reports, Response response)
             {
-                String json = new String(((TypedByteArray) response.getBody()).getBytes());
+//                String json = new String(((TypedByteArray) response.getBody()).getBytes());
 
                 if (reports != null && !reports.isEmpty())
                 {

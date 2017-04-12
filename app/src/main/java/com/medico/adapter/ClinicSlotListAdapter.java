@@ -5,19 +5,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 
 import java.text.DateFormat;
 import java.util.Date;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 
 /**
@@ -25,13 +20,15 @@ import retrofit.client.OkClient;
  */
 
 //Doctor Login
-public class ClinicSlotListAdapter extends BaseAdapter  {
+public class ClinicSlotListAdapter extends HomeAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
     DoctorClinicDetails details;
 
-    public ClinicSlotListAdapter(Activity activity, DoctorClinicDetails details) {
+    public ClinicSlotListAdapter(Activity activity, DoctorClinicDetails details)
+    {
+        super(activity);
         this.activity = activity;
         this.details = details;
     }
@@ -57,12 +54,12 @@ public class ClinicSlotListAdapter extends BaseAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        MyApi api = restAdapter.create(MyApi.class);
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        MyApi api = restAdapter.create(MyApi.class);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.clinic_detailed_slot_view, null);

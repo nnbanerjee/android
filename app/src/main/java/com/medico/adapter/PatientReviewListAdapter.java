@@ -17,8 +17,8 @@ import com.medico.application.R;
 import com.medico.model.PatientReview;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.PatientDetailsFragment;
 import com.medico.view.profile.PatientVisitDatesView;
 

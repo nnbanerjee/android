@@ -30,7 +30,7 @@ import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorClinicId;
 import com.medico.model.DoctorHoliday;
 import com.medico.model.DoctorSlotBookings;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.util.Calendar;

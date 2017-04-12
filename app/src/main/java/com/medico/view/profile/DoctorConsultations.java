@@ -3,7 +3,7 @@ package com.medico.view.profile;
 import android.app.FragmentTransaction;
 
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 public class DoctorConsultations extends ManagePatientProfile {
 

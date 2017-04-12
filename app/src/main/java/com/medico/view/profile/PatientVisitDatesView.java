@@ -17,22 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.PatientVisitDatesAdapter;
+import com.medico.application.R;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientVisits;
 import com.medico.util.PARAM;
-import com.medico.application.R;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
-import com.medico.view.profile.DoctorAppointmentInformation;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
-//
-//import Utils.UtilSingleInstance;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
+//
+//import Utils.UtilSingleInstance;
 
 //import com.mindnerves.meidcaldiary.Global;
 
@@ -147,7 +147,7 @@ public class PatientVisitDatesView extends ParentFragment
         {
             @Override
             public void success(List<PatientVisits> visits, Response response) {
-                String json = new String(((TypedByteArray) response.getBody()).getBytes());
+//                String json = new String(((TypedByteArray) response.getBody()).getBytes());
 
                     if (visits != null) {
                         PatientVisitDatesAdapter adapter = new PatientVisitDatesAdapter(getActivity().getApplicationContext(), visits);

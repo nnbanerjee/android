@@ -22,7 +22,7 @@ import com.medico.model.PersonDetailProfile;
 import com.medico.model.ProfileId;
 import com.medico.model.ServerResponse;
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.registration.RegistrationFileUpload;
 
 import java.text.DateFormat;

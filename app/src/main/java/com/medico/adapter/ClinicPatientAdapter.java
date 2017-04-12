@@ -8,32 +8,28 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.ClinicDoctorAppointmentFragment;
 import com.medico.view.profile.FeedbackFragmentClinicAppointment;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
@@ -42,7 +38,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class ClinicPatientAdapter extends BaseAdapter {
+public class ClinicPatientAdapter extends HomeAdapter {
 
     Activity activity;
     ProgressDialog progress;
@@ -53,7 +49,9 @@ public class ClinicPatientAdapter extends BaseAdapter {
 
     // private RelativeLayout   mainRelative;
 
-    public ClinicPatientAdapter(Activity context, List<DoctorClinicDetails> clinicDetails, PatientAppointmentByDoctor patientAppointments) {
+    public ClinicPatientAdapter(Activity context, List<DoctorClinicDetails> clinicDetails, PatientAppointmentByDoctor patientAppointments)
+    {
+        super(context);
         this.activity = context;
         this.clinicDetails = clinicDetails;
         this.patientAppointments = patientAppointments;
@@ -311,12 +309,12 @@ public class ClinicPatientAdapter extends BaseAdapter {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-                                RestAdapter restAdapter = new RestAdapter.Builder()
-                                        .setEndpoint(activity.getString(R.string.base_url))
-                                        .setClient(new OkClient())
-                                        .setLogLevel(RestAdapter.LogLevel.FULL)
-                                        .build();
-                                MyApi api = restAdapter.create(MyApi.class);
+//                                RestAdapter restAdapter = new RestAdapter.Builder()
+//                                        .setEndpoint(activity.getString(R.string.base_url))
+//                                        .setClient(new OkClient())
+//                                        .setLogLevel(RestAdapter.LogLevel.FULL)
+//                                        .build();
+//                                MyApi api = restAdapter.create(MyApi.class);
                                 api.cancelAppointment(new AppointmentId1(appointments.appointmentId), new Callback<AppointmentResponse>() {
                                     @Override
                                     public void success(AppointmentResponse result, Response response) {
@@ -350,13 +348,13 @@ public class ClinicPatientAdapter extends BaseAdapter {
 
     public void saveVisitedData(String doctorId, String patientId, String clinicId, String shift, Integer visited) {
 
-        MyApi api;
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(activity.getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
+//        MyApi api;
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint(activity.getResources().getString(R.string.base_url))
+//                .setClient(new OkClient())
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                .build();
+//        api = restAdapter.create(MyApi.class);
 
 
         api.saveVisitedPatientAppointment(doctorId, patientId, clinicId, shift, visited, new Callback<String>() {

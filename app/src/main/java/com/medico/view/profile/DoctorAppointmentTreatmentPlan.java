@@ -15,8 +15,8 @@ import com.medico.adapter.TreatmentPlanListAdapter;
 import com.medico.model.TreatmentPlan1;
 import com.medico.model.TreatmentPlanRequest;
 import com.medico.application.R;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.CustomTemplateListView;
 
 import java.util.ArrayList;

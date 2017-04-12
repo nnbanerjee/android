@@ -20,9 +20,8 @@ import android.widget.Toast;
 import com.medico.model.AppointmentFeedback;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.application.R;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
-import com.medico.view.profile.DoctorAppointmentInformation;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

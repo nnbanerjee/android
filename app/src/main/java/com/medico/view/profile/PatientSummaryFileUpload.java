@@ -41,7 +41,7 @@ import com.medico.model.SearchParameter;
 import com.medico.util.FileChooser;
 import com.medico.util.ImageUtil;
 import com.medico.util.PARAM;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.io.File;
 import java.text.DateFormat;

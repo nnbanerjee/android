@@ -33,8 +33,8 @@ import com.medico.model.DoctorClinicRequest;
 import com.medico.model.ServerResponse;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 

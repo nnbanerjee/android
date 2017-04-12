@@ -11,8 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medico.application.R;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 public class ManagePatientProfile extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;

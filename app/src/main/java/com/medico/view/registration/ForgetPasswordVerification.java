@@ -3,7 +3,6 @@ package com.medico.view.registration;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +10,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.ResponseVm;
 import com.medico.model.VerificationCode;
 import com.medico.model.forgotPassword;
 import com.medico.util.LoggingInterceptor;
+import com.medico.view.home.ParentFragment;
 import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 //import com.mindnerves.meidcaldiary.LoggingInterceptor;
@@ -35,11 +32,12 @@ import retrofit.client.Response;
 /**
  * Created by User on 16-02-2015.
  */
-public class ForgetPasswordVerification extends Fragment {
+public class ForgetPasswordVerification extends ParentFragment
+{
 
-    MyApi api;
-    public static final String MyPREFERENCES = "MyPrefs";
-    public SharedPreferences session;
+//    MyApi api;
+//    public static final String MyPREFERENCES = "MyPrefs";
+//    public SharedPreferences session;
     private EditText verifyCode;
 
     ProgressDialog progress;
@@ -67,13 +65,13 @@ public class ForgetPasswordVerification extends Fragment {
                         okHttpClient.networkInterceptors().add(new LoggingInterceptor());
 
                         //Retrofit Initialization
-                        RestAdapter restAdapter = new RestAdapter.Builder()
-                                .setEndpoint(getResources().getString(R.string.base_url))
-                                .setClient(new OkClient(okHttpClient))
-                                .setLogLevel(RestAdapter.LogLevel.FULL)
-
-                                .build();
-                        api = restAdapter.create(MyApi.class);
+//                        RestAdapter restAdapter = new RestAdapter.Builder()
+//                                .setEndpoint(getResources().getString(R.string.base_url))
+//                                .setClient(new OkClient(okHttpClient))
+//                                .setLogLevel(RestAdapter.LogLevel.FULL)
+//
+//                                .build();
+//                        api = restAdapter.create(MyApi.class);
                         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
 
@@ -123,12 +121,12 @@ public class ForgetPasswordVerification extends Fragment {
                        /* emailtxt = email.getText().toString();
                         passwordtxt = mobileNo.getText().toString();*/
                         //Retrofit Initialization
-                        RestAdapter restAdapter = new RestAdapter.Builder()
-                                .setEndpoint(getResources().getString(R.string.base_url))
-                                .setClient(new OkClient())
-                                .setLogLevel(RestAdapter.LogLevel.FULL)
-                                .build();
-                        api = restAdapter.create(MyApi.class);
+//                        RestAdapter restAdapter = new RestAdapter.Builder()
+//                                .setEndpoint(getResources().getString(R.string.base_url))
+//                                .setClient(new OkClient())
+//                                .setLogLevel(RestAdapter.LogLevel.FULL)
+//                                .build();
+//                        api = restAdapter.create(MyApi.class);
                         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
                         forgotPassword fObj=null;

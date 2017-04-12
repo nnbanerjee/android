@@ -21,8 +21,8 @@ import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.ResponseVm;
 import com.medico.application.R;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;

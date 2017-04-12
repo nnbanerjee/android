@@ -10,31 +10,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.medico.application.MyApi;
+import com.medico.application.MainActivity;
 import com.medico.application.R;
 import com.medico.model.Logindata;
 import com.medico.model.ResponseVm;
 import com.medico.util.PARAM;
-import com.medico.view.DoctorHome;
-import com.medico.view.PatientHome;
-
-import java.util.List;
+import com.medico.view.home.DoctorHome;
+import com.medico.view.home.PatientHome;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.Header;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
-
-import static com.medico.util.PARAM.LOGGED_IN_ID;
-import static com.medico.util.PARAM.LOGGED_IN_USER_ROLE;
-import static com.medico.util.PARAM.LOGGED_IN_USER_STATUS;
 
 //import com.mindnerves.meidcaldiary.ForgotPasswordActivity;
 //import com.mindnerves.meidcaldiary.SigninActivity;
@@ -47,9 +37,10 @@ import static com.medico.util.PARAM.LOGGED_IN_USER_STATUS;
 /**
  * Created by User on 16-02-2015.
  */
-public class Login extends Fragment {
+public class Login extends Fragment implements PARAM
+{
 
-    MyApi api;
+//    MyApi api;
     public static final String MyPREFERENCES = "MyPrefs";
     public SharedPreferences session;
     private EditText email;
@@ -130,29 +121,29 @@ public class Login extends Fragment {
                         final String passwordtxt = password.getText().toString();
 
                         //Retrofit Initialization
-                        RestAdapter restAdapter = new RestAdapter.Builder()
-                                .setEndpoint(getResources().getString(R.string.base_url))
-                                .setClient(new OkClient())
-                                .setLogLevel(RestAdapter.LogLevel.FULL)
-
-                                .build();
+//                        RestAdapter restAdapter = new RestAdapter.Builder()
+//                                .setEndpoint(getResources().getString(R.string.base_url))
+//                                .setClient(new OkClient())
+//                                .setLogLevel(RestAdapter.LogLevel.FULL)
+//
+//                                .build();
                         if (passwordtxt != null && !passwordtxt.equalsIgnoreCase("")) {
-                            api = restAdapter.create(MyApi.class);
+//                            api = restAdapter.create(MyApi.class);
                             progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                             Logindata param = new Logindata(emailtxt, passwordtxt);
-                            api.login(param, new Callback<ResponseVm>() {
+                            MainActivity.api.login(param, new Callback<ResponseVm>() {
                                 @Override
                                 public void success(ResponseVm responseVm, Response response) {
                                     System.out.println(response);
-                                    List<Header> headers = response.getHeaders();
-                                    for(Header header: headers)
-                                    {
-                                        if(header.getName().equals("Set-Cookie")) {
-                                            CookieManager.getInstance().removeSessionCookie();
-                                            CookieManager.getInstance().setCookie("PLAY_SESSION", header.getValue().substring(15));
-                                            break;
-                                        }
-                                    }
+//                                    List<Header> headers = response.getHeaders();
+//                                    for(Header header: headers)
+//                                    {
+//                                        if(header.getName().equals("Set-Cookie")) {
+//                                            CookieManager cookieManager = CookieManager.getInstance();
+//                                            CookieManager.getInstance().setCookie("PLAY_SESSION", header.getValue().substring(15));
+//                                            break;
+//                                        }
+//                                    }
                                     progress.dismiss();
                                     //0 is failure and  {1= Doctor,2=Patient,3-Assistant, 0 = Failure}
                                     if (responseVm == null || responseVm.getId() == 0)

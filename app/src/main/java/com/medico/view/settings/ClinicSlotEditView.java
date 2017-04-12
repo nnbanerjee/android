@@ -28,7 +28,7 @@ import com.medico.model.ClinicSlotDetails;
 import com.medico.model.DoctorClinicId;
 import com.medico.model.Person;
 import com.medico.model.ResponseCodeVerfication;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;

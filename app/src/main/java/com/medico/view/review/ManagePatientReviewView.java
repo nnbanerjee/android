@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.util.LocationService;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
-import com.medico.view.finance.FinanceReportListView;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 
 public class ManagePatientReviewView extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;

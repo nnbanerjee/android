@@ -18,7 +18,7 @@ import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorShortProfile;
 import com.medico.util.ImageLoadTask;
 import com.medico.application.R;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.util.Date;

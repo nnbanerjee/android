@@ -6,50 +6,47 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.RemovePatientTestRequest;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SummaryResponse;
 import com.medico.util.PARAM;
-import com.medico.view.ParentActivity;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.PatientDiagnosticTests;
 
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
  * Created by User on 04-11-2015.
  */
-public class DiagnosticTestAdapter extends BaseAdapter {
+public class DiagnosticTestAdapter extends HomeAdapter {
     Activity activity;
     List<SummaryResponse.TestPrescribed> alarms;
     LayoutInflater inflater;
-    MyApi api;
-    SharedPreferences session;
+//    MyApi api;
+//    SharedPreferences session;
     ProgressDialog progress;
     private int loggedInUserId;
 
-    public DiagnosticTestAdapter(Activity activity, List<SummaryResponse.TestPrescribed> alarms, int userId) {
+    public DiagnosticTestAdapter(Activity activity, List<SummaryResponse.TestPrescribed> alarms, int userId)
+    {
+        super(activity);
         this.activity = activity;
         this.alarms = alarms;
-        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loggedInUserId = userId;
     }
 
@@ -71,12 +68,12 @@ public class DiagnosticTestAdapter extends BaseAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(activity.getString(R.string.base_url))
-                        .setClient(new OkClient())
-                        .setLogLevel(RestAdapter.LogLevel.FULL)
-                        .build();
-                api = restAdapter.create(MyApi.class);
+//                RestAdapter restAdapter = new RestAdapter.Builder()
+//                        .setEndpoint(activity.getString(R.string.base_url))
+//                        .setClient(new OkClient())
+//                        .setLogLevel(RestAdapter.LogLevel.FULL)
+//                        .build();
+//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.diagnostic_test, null);
                 setView(convertView,position);

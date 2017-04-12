@@ -20,7 +20,7 @@ import com.medico.adapter.AppointmentClinicListAdapter;
 import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.DoctorId;
-import com.medico.view.ParentFragment;
+import com.medico.view.home.ParentFragment;
 
 import java.util.List;
 
