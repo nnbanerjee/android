@@ -71,7 +71,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected PersonProfile parent = null;
 
     FragmentManager fragmentManger;
-    Button drawerButton, logout, backButton;
+    Button drawerButton, logout;
     int flagActionButton = 0;
     ArrayList<String> arrayMenu;
     DrawerLayout dLayout;

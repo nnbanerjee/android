@@ -5,10 +5,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
         android:text="ABC XYZ"
         android:padding="10dp"
-        android:textColor="@color/color_blue_default"
+        android:textAppearance="@style/body4_blue"
         android:id="@+id/dependent_candidate"
     />
 

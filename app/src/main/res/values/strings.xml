@@ -569,4 +569,21 @@
         <item>92</item>
     </string-array>
 
+
+    <string name="PatientsProfiles">Patients Profiles</string>
+    <string name="PatientsProfile">Patient Profile</string>
+    <string name="DoctorProfile">Doctor Profile</string>
+
+    <string name="AlarmNotes">Alarm Notes</string>
+    <string name="ChatMessage">Chat Message</string>
+    <string name="SearchDoctor">Search Doctor</string>
+    <string name="SearchPatient">Search Patient</string>
+
+    <string name="SearchClinicLab">Search Clinic/Lab</string>
+
+    <string name="ManageAppointments">Manage Appointments</string>
+    <string name="ManageFinance">Manage Finance</string>
+    <string name="Feedback">Feedback</string>
+    <string name="DoctorConsultations">Doctor Consultations</string>
+    <string name="MedicineAlarm">Medicine Alarm</string>
 </resources>

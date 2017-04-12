@@ -13,17 +13,17 @@
         android:text="Self Profile"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:textColor="#AAAAAA"
+        android:textAppearance="@style/body4"
         android:id="@+id/self_profile_text"
-        android:textStyle="bold"
+
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:id="@+id/underline1"
         android:layout_below="@id/self_profile_text"
-        android:background="#AAAAAA"
+        android:background="@color/gray_holo_dark"
         android:layout_marginRight="10dp"
         />
     <TextView
@@ -32,7 +32,7 @@
         android:layout_below="@+id/underline1"
         android:text="ABC XYZ"
         android:id="@+id/profile_name"
-        android:textColor="@color/color_blue_default"
+        android:textAppearance="@style/body4_blue"
         android:padding="5dp"
         android:clickable="true"
         />
@@ -42,7 +42,7 @@
         android:layout_below="@+id/profile_name"
         android:text="ABC XYZ"
         android:id="@+id/profile_name_dependent"
-        android:textColor="@color/color_blue_default"
+        android:textAppearance="@style/body4_blue"
         android:padding="5dp"
         android:clickable="true"
         />
@@ -52,18 +52,17 @@
         android:text="Dependent Profiles"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:textColor="#AAAAAA"
         android:layout_below="@+id/profile_name_dependent"
         android:id="@+id/dependent_profile_text"
-        android:textStyle="bold"
+        android:textAppearance="@style/body4"
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:id="@+id/underline2"
         android:layout_below="@id/dependent_profile_text"
-        android:background="#AAAAAA"
+        android:background="@color/gray_holo_dark"
         android:layout_marginRight="10dp"
         />
     <ListView
@@ -71,6 +70,8 @@
         android:layout_height="100dp"
         android:id="@+id/profile_dependent_list"
         android:layout_below="@+id/underline2"
+        android:textColor="@color/color_blue_default"
+        android:textAppearance="@style/body4"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="1dp">
 
@@ -82,18 +83,17 @@
         android:text="Delegation Profiles"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:textColor="#AAAAAA"
         android:layout_below="@+id/profile_dependent_list"
         android:id="@+id/delegation_profile_text"
-        android:textStyle="bold"
+        android:textAppearance="@style/body4"
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:id="@+id/underline3"
         android:layout_below="@id/delegation_profile_text"
-        android:background="#AAAAAA"
+        android:background="@color/gray_holo_dark"
         android:layout_marginRight="10dp"
         />
     <ListView
@@ -101,6 +101,8 @@
         android:layout_height="100dp"
         android:id="@+id/profile_delegation_list"
         android:layout_below="@+id/underline3"
+        android:textColor="@color/color_blue_default"
+        android:textAppearance="@style/body4"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="1dp">

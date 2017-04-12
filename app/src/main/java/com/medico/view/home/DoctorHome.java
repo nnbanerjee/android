@@ -126,8 +126,8 @@ public class DoctorHome extends HomeActivity
 //                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
             }
         });
-        backButton = (Button) findViewById(R.id.back_button);
-        backButton.setVisibility(View.INVISIBLE);
+//        backButton = (Button) findViewById(R.id.back_button);
+//        backButton.setVisibility(View.INVISIBLE);
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
         int[] colors = {0, 0xFFFF0000, 0}; // red for the example

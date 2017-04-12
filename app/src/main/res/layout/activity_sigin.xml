@@ -12,19 +12,17 @@
     />
 
 
-
     <TextView
+        android:id="@+id/upperTxtLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/centerLogo"
-        android:id="@+id/upperTxtLabel"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="Registration As Patient"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        />
+        android:textAppearance="@style/heading2"
+        android:textStyle="bold" />
 
     <fragment
         android:layout_width="fill_parent"

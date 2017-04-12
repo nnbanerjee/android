@@ -49,7 +49,7 @@ public class DoctorMenusManage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.patient_consultations, container, false);
+        View view = inflater.inflate(R.layout.doctor_home_menu, container, false);
         LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);

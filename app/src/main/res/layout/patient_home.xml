@@ -47,7 +47,6 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="5dp"
-
                     android:layout_toLeftOf="@+id/drawar_button"
                     android:visibility="visible"
                     android:background="@drawable/refresh" />
@@ -80,9 +79,7 @@
                     android:layout_below="@+id/profile_picture"
                     android:layout_centerHorizontal="true"
                     android:text="Patient Name"
-                    android:textColor="#ffffff"
-                    style="@style/title"
-                    android:textStyle="bold" />
+                    style="@style/heading2_white" />
                 <View
                     android:id="@+id/down_arrow"
                     android:layout_width="15dp"
@@ -100,27 +97,11 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text="Patient profile"
+                    android:text="@string/PatientsProfile"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/account_name"
-                    android:textColor="#ffffff"
-                    style="@style/sub_heading_normal_grey"
-                    android:textStyle="bold"
+                    style="@style/body4_white"
                     android:visibility="visible" />
-                <TextView
-                    android:id="@+id/status_text_show"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/status_text"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:text="Status:"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/heading"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
 
             </RelativeLayout>
             <LinearLayout
@@ -157,10 +138,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/alarm_notes"
-                        android:text="Alarm Notes"
-                        android:textColor="#ffffff"
-                        style="@style/summary"
-                        android:textStyle="normal" />
+                        android:text="@string/AlarmNotes"
+                        style="@style/body12_white" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/notification_layout3"
@@ -185,10 +164,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/chat"
-                        android:text="Chat Message"
-                        android:textColor="#ffffff"
-                        style="@style/summary"
-                        android:textStyle="normal" />
+                        android:text="@string/ChatMessage"
+                        style="@style/body12_white" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/notification_layout4"
@@ -213,10 +190,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/search_doctor"
-                        android:text="Search Doctor"
-                        android:textColor="#ffffff"
-                        style="@style/summary"
-                        android:textStyle="normal" />
+                        android:text="@string/SearchDoctor"
+                        style="@style/body12_white" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/notification_layout5"
@@ -241,10 +216,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/search_clinic"
-                        android:text="Search Clinic/Lab"
-                        android:textColor="#ffffff"
-                        style="@style/summary"
-                        android:textStyle="normal" />
+                        android:text="@string/SearchClinicLab"
+                        style="@style/body12_white" />
                 </RelativeLayout>
             </LinearLayout>
             <View
