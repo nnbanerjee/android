@@ -1,6 +1,7 @@
 package com.medico.view.home;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class PatientMenusManage extends Fragment {
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 //                .build();
 //        api = restAdapter.create(MyApi.class);
-//        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         patientId = session.getString("sessionID", null);
         doctorsCount = (TextView)view.findViewById(R.id.doctor_count);
         clinicCount = (TextView)view.findViewById(R.id.clinic_count);
