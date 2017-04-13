@@ -12,7 +12,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout1"
+            android:id="@+id/patient_profile"
+            android:background="@color/white"
             android:layout_marginTop="20dp">
 
             <ImageButton
@@ -26,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:id="@+id/patient_profile_container"
                 android:layout_toRightOf="@+id/doctor_image">
 
                 <TextView
@@ -60,7 +62,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-        android:layout_below="@+id/layout1"
+        android:layout_below="@+id/patient_profile"
             android:background="@color/color_blue_default"
             android:visibility="visible"
             android:id="@+id/view1"
@@ -68,8 +70,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout1"
-            android:id="@+id/layout4"
+            android:layout_below="@+id/patient_profile"
+            android:id="@+id/manage_appointment"
 
             android:layout_marginTop="20dp">
 
@@ -77,21 +79,21 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
-                android:id="@+id/medicineAlertsImg"
+                android:id="@+id/manage_appointment_image"
                 android:background="@drawable/appointments"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/medicineAlertsImg">
+                android:layout_toRightOf="@+id/manage_appointment_image">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/manage_appointments"
                     style="@style/heading2"
-                    android:id="@+id/medicineAlertsText"
+                    android:id="@+id/manage_appointment_text"
                     />
                 <ImageView
                     android:layout_width="16dp"
@@ -117,7 +119,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/layout4"
+            android:layout_below="@+id/manage_appointment"
             android:background="@color/color_blue_default"
             android:visibility="visible"
             android:id="@+id/view33"
@@ -125,7 +127,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout4"
+            android:layout_below="@+id/manage_appointment"
             android:id="@+id/manage_finance"
 
             android:layout_marginTop="20dp">
@@ -148,7 +150,7 @@
                     android:layout_height="30dp"
                     android:text="@string/manage_finance"
                     style="@style/heading2"
-                    android:id="@+id/firstAidKitsText"
+                    android:id="@+id/manage_finance_text"
                     />
                 <ImageView
                     android:layout_width="16dp"

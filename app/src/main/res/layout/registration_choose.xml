@@ -77,7 +77,7 @@
         </RadioGroup>
 
         <RelativeLayout
-            android:id="@+id/layout1"
+            android:id="@+id/patient_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/group"

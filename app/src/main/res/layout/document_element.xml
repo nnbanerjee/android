@@ -6,7 +6,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:id="@+id/layout1"
+        android:id="@+id/patient_profile"
         android:layout_height="match_parent">
 
         <TextView
@@ -128,7 +128,7 @@
         android:layout_marginRight="45dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/pdf"
-        android:layout_toRightOf="@+id/layout1"
+        android:layout_toRightOf="@+id/patient_profile"
         android:layout_alignParentRight="true"
     />
     <ImageView
@@ -138,7 +138,7 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/delete"
         android:layout_below="@+id/document_image"
-        android:layout_toRightOf="@+id/layout1"
+        android:layout_toRightOf="@+id/patient_profile"
         android:layout_alignParentRight="true"
         />
 </RelativeLayout>

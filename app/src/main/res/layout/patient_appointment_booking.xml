@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/layout1"
+        android:id="@+id/patient_profile"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_marginLeft="14dp"
@@ -56,8 +56,8 @@
         android:orientation="horizontal"
         android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/layout1"
-        android:layout_below="@+id/layout1">
+        android:layout_alignLeft="@+id/patient_profile"
+        android:layout_below="@+id/patient_profile">
 
         <TextView
             android:id="@+id/search_text"
@@ -84,7 +84,7 @@
     </LinearLayout>
     <LinearLayout
     android:id="@+id/layout3"
-    android:layout_alignLeft="@+id/layout1"
+    android:layout_alignLeft="@+id/patient_profile"
     android:layout_below="@+id/layout2"
     android:layout_width="match_parent"
     android:orientation="horizontal"
@@ -94,8 +94,8 @@
             android:id="@+id/search_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/layout1"
-            android:layout_alignLeft="@+id/layout1"
+            android:layout_alignStart="@+id/patient_profile"
+            android:layout_alignLeft="@+id/patient_profile"
             android:layout_below="@+id/search_text"
             android:text="By" />
         <Spinner
@@ -105,8 +105,8 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/layout4"
-        android:layout_alignLeft="@+id/layout1"
+        android:id="@+id/manage_appointment"
+        android:layout_alignLeft="@+id/patient_profile"
         android:layout_below="@+id/layout3"
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -117,8 +117,8 @@
             android:id="@+id/visit_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/layout1"
-            android:layout_alignLeft="@+id/layout1"
+            android:layout_alignStart="@+id/patient_profile"
+            android:layout_alignLeft="@+id/patient_profile"
             android:layout_below="@+id/search_text"
             android:text="Visit Type" />
         <Spinner
@@ -130,8 +130,8 @@
     <ListView
         android:id="@+id/search_result"
         android:layout_width="match_parent"
-        android:layout_below="@+id/layout4"
+        android:layout_below="@+id/manage_appointment"
         android:layout_height="match_parent"
-        android:layout_alignLeft="@+id/layout1"/>
+        android:layout_alignLeft="@+id/patient_profile"/>
 
 </RelativeLayout>

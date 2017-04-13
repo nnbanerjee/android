@@ -18,7 +18,7 @@ import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
-import com.medico.view.profile.PatientDetailsFragment;
+import com.medico.view.profile.PatientDetailsView;
 import com.medico.view.profile.PatientVisitDatesView;
 
 import java.text.DateFormat;
@@ -114,7 +114,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
                 Bundle bundle = parentactivity.getIntent().getExtras();
                 bundle.putInt(PARAM.PATIENT_ID, patientReviews.get(position).patientId);
                 parentactivity.getIntent().putExtras(bundle);
-                ParentFragment fragment = new PatientDetailsFragment();
+                ParentFragment fragment = new PatientDetailsView();
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

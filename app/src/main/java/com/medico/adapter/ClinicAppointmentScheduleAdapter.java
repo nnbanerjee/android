@@ -36,7 +36,7 @@ import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.ClinicDoctorAppointmentFragment;
 import com.medico.view.profile.DoctorAppointmentInformation;
 import com.medico.view.profile.FeedbackFragmentClinicAppointment;
-import com.medico.view.profile.PatientDetailsFragment;
+import com.medico.view.profile.PatientDetailsView;
 import com.medico.view.search.PersonSearchView;
 
 import java.text.DateFormat;
@@ -228,7 +228,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     Bundle bundle = activity.getIntent().getExtras();
                     bundle.putInt(PARAM.PATIENT_ID, patient.getId());
                     parentactivity.getIntent().putExtras(bundle);
-                    ParentFragment fragment = new PatientDetailsFragment();
+                    ParentFragment fragment = new PatientDetailsView();
                     parentactivity.attachFragment(fragment);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();

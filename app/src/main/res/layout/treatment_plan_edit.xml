@@ -33,7 +33,7 @@
         android:layout_below="@+id/description_value"
         android:layout_height="wrap_content" />
     <RelativeLayout
-        android:id="@+id/layout1"
+        android:id="@+id/patient_profile"
         android:layout_width="match_parent"
         android:layout_below="@+id/date_text"
         android:layout_height="wrap_content">
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:id="@+id/currency_text"
         android:text="Currency"
-        android:layout_below="@+id/layout1"
+        android:layout_below="@+id/patient_profile"
         android:layout_height="wrap_content" />
     <EditText
         android:layout_width="match_parent"

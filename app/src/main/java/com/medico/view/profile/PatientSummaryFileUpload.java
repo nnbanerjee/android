@@ -102,7 +102,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
         //Load Ui controls
         testValueEdit1 = (EditText)view.findViewById(R.id.testValueEdit1);
         testValueEdit = (Spinner)view.findViewById(R.id.testValueEdit);
-        layout4 = (RelativeLayout)view.findViewById(R.id.layout4);
+        layout4 = (RelativeLayout)view.findViewById(R.id.manage_appointment);
         layout5 = (RelativeLayout)view.findViewById(R.id.layout5);
         layout6 = (RelativeLayout)view.findViewById(R.id.layout6);
 

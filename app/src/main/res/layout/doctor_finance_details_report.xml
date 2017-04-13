@@ -68,7 +68,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout4"
+                android:id="@+id/manage_appointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout3"
@@ -114,7 +114,7 @@
                 android:id="@+id/layout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout4"
+                android:layout_below="@+id/manage_appointment"
                 android:paddingBottom="5dp"
                 android:weightSum="3">
 

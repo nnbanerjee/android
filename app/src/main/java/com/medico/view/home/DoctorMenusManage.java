@@ -50,11 +50,14 @@ public class DoctorMenusManage extends ParentFragment {
         LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        RelativeLayout patientsProfilelayout = (RelativeLayout) view.findViewById(R.id.layout1);
-        RelativeLayout layout2 = (RelativeLayout) view.findViewById(R.id.layout2);
+        RelativeLayout patientsProfilelayout = (RelativeLayout) view.findViewById(R.id.patient_profile);
         RelativeLayout manage_finance = (RelativeLayout) view.findViewById(R.id.manage_finance);
-        RelativeLayout manageAppointment = (RelativeLayout) view.findViewById(R.id.layout4);
+        RelativeLayout manageAppointment = (RelativeLayout) view.findViewById(R.id.manage_appointment);
         RelativeLayout manage_feedback = (RelativeLayout) view.findViewById(R.id.manage_feedback);
+        TextView doctorBtn = (TextView)view.findViewById(R.id.doctorBtn);
+        TextView manage_appointment_text = (TextView)view.findViewById(R.id.manage_appointment_text);
+        TextView manage_finance_text = (TextView)view.findViewById(R.id.manage_finance_text);
+        TextView feedback_text = (TextView)view.findViewById(R.id.feedback_text);
         totalPatientCount = (TextView) view.findViewById(R.id.total_patients);
         totalAppointments = (TextView) view.findViewById(R.id.total_appointments);
         totalFinance = (TextView) view.findViewById(R.id.total_finance);
@@ -64,8 +67,6 @@ public class DoctorMenusManage extends ParentFragment {
         patientsProfilelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
-//                layout.setVisibility(View.GONE);
                 System.out.println("i am here::::::::::::");
                 Bundle bundle = new Bundle();
                 bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
@@ -79,7 +80,22 @@ public class DoctorMenusManage extends ParentFragment {
 
             }
         });
+        doctorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("i am here::::::::::::");
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
 
+            }
+        });
         manage_finance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +113,23 @@ public class DoctorMenusManage extends ParentFragment {
                 startActivity(intObj);
                 onPause();            }
         });
-
+        manage_finance_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManageFinanceView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();            }
+        });
         manageAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +148,42 @@ public class DoctorMenusManage extends ParentFragment {
                 onPause();
             }
         });
+        manage_appointment_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManageDoctorAppointment.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
+            }
+        });
         manage_feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManagePatientReviewView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();            }
+        });
+        feedback_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();

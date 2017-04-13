@@ -91,7 +91,7 @@
                     android:layout_height="30dp"
                     android:text="@string/manage_appointments"
                     style="@style/heading2"
-                    android:id="@+id/medicineAlertsText"
+                    android:id="@+id/manage_appointment"
                     />
                 <ImageView
                     android:layout_width="16dp"
@@ -148,7 +148,7 @@
                     android:layout_height="30dp"
                     android:text="@string/medicine_alarm"
                     style="@style/heading2"
-                    android:id="@+id/firstAidKitsText"
+                    android:id="@+id/manage_finance"
                     />
                 <ImageView
                     android:layout_width="16dp"

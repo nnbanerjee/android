@@ -14,4 +14,9 @@
     <dimen name="body">14sp</dimen>
     <dimen name="body_sumary">11sp</dimen>
     <dimen name="week_body2">12sp</dimen>
+    <dimen name="button_margin">20dp</dimen>
+    <dimen name="button_hight">40dp</dimen>
+    <dimen name="edit_top_margin">10dp</dimen>
+    <dimen name="edit_height">30dp</dimen>
+    <dimen name="text_top_margin">20dp</dimen>
 </resources>
