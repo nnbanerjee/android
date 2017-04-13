@@ -55,7 +55,7 @@ public class PatientProfileListView extends ParentFragment
 
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Patient Profiles");
+        textviewTitle.setText(getActivity().getResources().getString(R.string.patients_profiles));
 
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -1,8 +1,6 @@
 package com.medico.view.profile;
 
 import android.app.FragmentTransaction;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Gravity;
@@ -42,9 +40,10 @@ public class ManagePatientProfile extends ParentActivity {
                 Gravity.CENTER);
         viewActionBar.setBackgroundColor(0xFF206799);
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Patient Profile");
-        abar.setBackgroundDrawable((new ColorDrawable(Color.parseColor("#FF206799"))));
+        textviewTitle.setText(getResources().getString(R.string.patients_profiles));
+//        abar.setBackgroundDrawable((new ColorDrawable(Color.parseColor("#FF206799"))));
         abar.setCustomView(viewActionBar, params);
+        abar.setBackgroundDrawable(getResources().getDrawable(R.color.medico_blue));
         abar.setDisplayShowCustomEnabled(true);
         abar.setDisplayShowTitleEnabled(false);
         abar.setDisplayHomeAsUpEnabled(true);
@@ -52,44 +51,6 @@ public class ManagePatientProfile extends ParentActivity {
         abar.setHomeButtonEnabled(true);
 
     }
-//    @Override
-//    public void onBackPressed() {
-//
-//        if(fragmentList.size() > 1)
-//        {
-//
-//            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
-//            if(fragment instanceof PatientMedicinReminder)
-//            {
-//                fragmentList.remove(fragmentList.size()-1);
-//                FragmentManager fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().detach(fragment).commit();
-//
-//            }
-//            else if(fragment instanceof DoctorAppointmentSummary)
-//            {
-//                fragmentList.remove(fragmentList.size()-1);
-//                fragment = fragmentList.get(fragmentList.size() - 1);
-//                fragmentList.remove(fragment);
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.detach(fragment).commit();
-//            }
-//            else
-//            {
-//                fragment = fragmentList.get(fragmentList.size() - 1);
-//                fragmentList.remove(fragment);
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.detach(fragment).commit();
-//            }
-//
-//            fragment.setHasOptionsMenu(false);
-//            fragmentList.get(fragmentList.size() - 1).setHasOptionsMenu(true);
-//            fragmentList.get(fragmentList.size()-1).onStart();
-//
-//        }
-//    }
-
-
     protected void attachView()
     {
         ParentFragment fragment = new PatientProfileListView();

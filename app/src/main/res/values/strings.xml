@@ -570,20 +570,28 @@
     </string-array>
 
 
-    <string name="PatientsProfiles">Patients Profiles</string>
-    <string name="PatientsProfile">Patient Profile</string>
-    <string name="DoctorProfile">Doctor Profile</string>
+    <string name="patients_profiles">Patient Profiles</string>
+    <string name="patient_profile">Patient Profile</string>
+    <string name="doctor_profile">Doctor Profile</string>
 
-    <string name="AlarmNotes">Alarm Notes</string>
-    <string name="ChatMessage">Chat Message</string>
-    <string name="SearchDoctor">Search Doctor</string>
-    <string name="SearchPatient">Search Patient</string>
+    <string name="alarm_notes">Alarm Notes</string>
+    <string name="chat_message">Chat Message</string>
+    <string name="search_doctor">Search Doctor</string>
+    <string name="search_patient">Search Patient</string>
 
-    <string name="SearchClinicLab">Search Clinic/Lab</string>
+    <string name="search_clinic_lab">Search Clinic/Lab</string>
 
-    <string name="ManageAppointments">Manage Appointments</string>
-    <string name="ManageFinance">Manage Finance</string>
-    <string name="Feedback">Feedback</string>
-    <string name="DoctorConsultations">Doctor Consultations</string>
-    <string name="MedicineAlarm">Medicine Alarm</string>
+    <string name="manage_appointments">Manage Appointments</string>
+    <string name="manage_finance">Manage Finance</string>
+    <string name="feedback">Feedback</string>
+    <string name="doctor_consultations">Doctor Consultations</string>
+    <string name="medicine_alarm">Medicine Alarm</string>
+    
+    <string name="last_visited">Last Visited :</string>
+    <string name="upcoming_appointment">Upcoming Appointment :</string>
+
+    <string name="appointments">Appointments</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="no_visit">None</string>
+    
 </resources>

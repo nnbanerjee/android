@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.medico.application.MyApi;
 import com.medico.application.R;
+import com.medico.util.ServerConnectionAdapter;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -33,13 +35,14 @@ public class ParentActivity extends AppCompatActivity
 
     private List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
     private Document document;
+    public MyApi api;
 //    public int identifier = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         document = getDocument();
-//        LocationService locationService = LocationService.getLocationManager(this);
+        api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
     }
 
     @Override

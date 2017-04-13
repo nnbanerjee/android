@@ -73,10 +73,10 @@ public class PatientSearchListAdapter extends HomeAdapter  {
 //        doctorId = session.getString("id", null);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.person_list_item, null);
-        TextView doctorName = (TextView) convertView.findViewById(R.id.clinic_name);
-        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.clinicSpeciality);
+        TextView doctorName = (TextView) convertView.findViewById(R.id.doctor_name);
+        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
-        ImageView viewImage = (ImageView) convertView.findViewById(R.id.clinic_image);
+        ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
         TextView address = (TextView) convertView.findViewById(R.id.address);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
 

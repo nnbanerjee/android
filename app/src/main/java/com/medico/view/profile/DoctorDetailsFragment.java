@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,34 +45,37 @@ public class DoctorDetailsFragment extends ParentFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.patient_profile_details, container, false);
+        View view = inflater.inflate(R.layout.doctor_patient_profile_list, container, false);
+        RelativeLayout detailsLayout = (RelativeLayout)view.findViewById(R.id.layout11);
+        detailsLayout.setVisibility(View.VISIBLE);
         patientName = (TextView) view.findViewById(R.id.patient_name);
-        doctorSpeciality = (TextView) view.findViewById(R.id.clinicSpeciality);
+        doctorSpeciality = (TextView) view.findViewById(R.id.speciality);
         address = (TextView)view.findViewById(R.id.address);
-        lastVisitedValue = (TextView) view.findViewById(R.id.last_visited);
-        nextAppointment = (TextView) view.findViewById(R.id.next_appointment);
+        lastVisitedValue = (TextView) view.findViewById(R.id.lastAppointment);
+        nextAppointment = (TextView) view.findViewById(R.id.review_value);
 
-        visitCounts = (TextView) view.findViewById(R.id.visit_counts);
+        visitCounts = (TextView) view.findViewById(R.id.totalCount);
 
         //---------------------------------------------------------------
         appointmentsBtn = (Button) view.findViewById(R.id.appointment);
         profileBtn = (Button) view.findViewById(R.id.profile);
 
-        viewImage = (ImageView) view.findViewById(R.id.clinic_image);
+        viewImage = (ImageView) view.findViewById(R.id.doctor_image);
         viewImage.setBackgroundResource(R.drawable.patient);
-        visitDates = (ImageView) view.findViewById(R.id.viewAll);
+//        visitDates = (ImageView) view.findViewById(R.id.viewAll);
         closeMenu = (ImageView) view.findViewById(R.id.downImg);
+        closeMenu.setImageResource(R.drawable.up_arrow);
 
         //------------------------------------------------------------------------
 
 
-        visitDates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+//        visitDates.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
 
         appointmentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,17 +117,6 @@ public class DoctorDetailsFragment extends ParentFragment {
         return view;
     }
 
-//    public void getClinicsProfile() {
-//        Fragment fragment = new ClinicAllPatientFragment();
-//        FragmentManager fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//    }
-//
-//    public void getPatientProfile() {
-//        Fragment fragment = new PatientProfileDetails();
-//        FragmentManager fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//    }
 
     @Override
     public void onResume() {
@@ -175,38 +168,6 @@ public class DoctorDetailsFragment extends ParentFragment {
             });
         if(childfragment != null && childfragment.isDetached() == false)
         childfragment.onStart();
-
-
-//        api.getProfile1(new ProfileId(allPatients.getPatientlist().get(position).getPatientId()), new Callback<Person>() {
-//                    @Override
-//                    public void success(Person patient, Response response)
-//                    {
-//
-//                        Bundle args = new Bundle();
-//                        //Store Selected Patient profile
-//                        progress.dismiss();
-//                        SharedPreferences.Editor editor = session.edit();
-////                        global.setSelectedPatientsProfile(patient);
-//                        Gson gson = new Gson();
-//                        String json = gson.toJson(patient);
-//                        editor.putString("SelectedPatient", json);
-//                        editor.commit();
-//                        editor.putString("patient_Last_Visited", allPatients.getPatientlist().get(position).getLastVisit().toString());
-//                        editor.putString("patient_Upcoming_Appt", allPatients.getPatientlist().get(position).getUpcomingVisit().toString());
-//                        editor.putString("patient_Total_visits", allPatients.getPatientlist().get(position).getNumberOfVisits().toString());
-//                        editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
-//                        editor.putString("patient_Name", allPatients.getPatientlist().get(position).getName());
-//                        editor.commit();
-//
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        progress.dismiss();
-//                        error.printStackTrace();
-//                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
 
     }
 

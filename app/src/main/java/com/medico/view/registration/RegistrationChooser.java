@@ -1,6 +1,5 @@
 package com.medico.view.registration;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,16 +10,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
+import com.medico.view.home.ParentFragment;
 
 /**
  * Created by Narendra on 11-03-2016.
  */
-public class RegistrationChooser extends Fragment {
-
-
-    MyApi api;
+public class RegistrationChooser extends ParentFragment
+{
     public static final String MyPREFERENCES = "MyPrefs";
     public SharedPreferences session;
     private EditText email;

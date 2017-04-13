@@ -131,7 +131,7 @@ public class Login extends Fragment implements PARAM
 //                            api = restAdapter.create(MyApi.class);
                             progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                             Logindata param = new Logindata(emailtxt, passwordtxt);
-                            MainActivity.api.login(param, new Callback<ResponseVm>() {
+                            ((MainActivity)getActivity()).api.login(param, new Callback<ResponseVm>() {
                                 @Override
                                 public void success(ResponseVm responseVm, Response response) {
                                     System.out.println(response);

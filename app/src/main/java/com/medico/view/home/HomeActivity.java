@@ -29,7 +29,6 @@ import com.google.gson.Gson;
 import com.medico.adapter.MenuAdapter;
 import com.medico.adapter.ProfileDelegationAdapter;
 import com.medico.adapter.ProfileDependencyAdapter;
-import com.medico.application.MainActivity;
 import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.Delegation;
@@ -39,6 +38,7 @@ import com.medico.model.PersonProfile;
 import com.medico.util.BackStress;
 import com.medico.util.FileUploadDialog;
 import com.medico.util.PARAM;
+import com.medico.util.ServerConnectionAdapter;
 import com.medico.view.settings.ManagePersonSettings;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -444,21 +444,8 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected void onStart()
     {
         super.onStart();
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setRequestInterceptor(new RequestInterceptor() {
-//                    @Override
-//                    public void intercept(RequestInterceptor.RequestFacade request) {
-//                        // assuming `cookieKey` and `cookieValue` are not null
-//                        String cookie = CookieManager.getInstance().getCookie("PLAY_SESSION");
-//                       request.addHeader("Cookie", "PLAY_SESSION" + "=" + cookie);
-//                    }
-//                })
-//                .setEndpoint(this.getResources().getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
-          api = MainActivity.api;
+
+          api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
     }
 
 

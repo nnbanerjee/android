@@ -81,10 +81,10 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.appointment_clinic_list, null);
 //        global = (Global) activity.getApplicationContext();
-        TextView clinicName = (TextView) convertView.findViewById(R.id.clinic_name);
-        TextView speciality = (TextView) convertView.findViewById(R.id.clinicSpeciality);
+        TextView clinicName = (TextView) convertView.findViewById(R.id.doctor_name);
+        TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
-        ImageView viewImage = (ImageView) convertView.findViewById(R.id.clinic_image);
+        ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
 
         TextView address = (TextView) convertView.findViewById(R.id.address);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.down_arrow);

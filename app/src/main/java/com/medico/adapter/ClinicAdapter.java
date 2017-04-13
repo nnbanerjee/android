@@ -59,7 +59,7 @@ public class ClinicAdapter extends BaseAdapter {
 
         final int pos = position;
 
-        firstNameTv = (TextView) convertView.findViewById(R.id.clinic_name);
+        firstNameTv = (TextView) convertView.findViewById(R.id.doctor_name);
 
         locationTv = (TextView) convertView.findViewById(R.id.clinic_location);
         checkBox = (CheckBox) convertView.findViewById(R.id.checkbox_clinic);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,34 +45,25 @@ public class PatientDetailsFragment extends ParentFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.patient_profile_details, container, false);
-        patientName = (TextView) view.findViewById(R.id.patient_name);
-        doctorSpeciality = (TextView) view.findViewById(R.id.clinicSpeciality);
+        View view = inflater.inflate(R.layout.doctor_patient_profile_list, container, false);
+        RelativeLayout detailsLayout = (RelativeLayout)view.findViewById(R.id.layout11);
+        detailsLayout.setVisibility(View.VISIBLE);
+        patientName = (TextView) view.findViewById(R.id.doctor_name);
+        doctorSpeciality = (TextView) view.findViewById(R.id.speciality);
         address = (TextView)view.findViewById(R.id.address);
-        lastVisitedValue = (TextView) view.findViewById(R.id.last_visited);
-        nextAppointment = (TextView) view.findViewById(R.id.next_appointment);
+        lastVisitedValue = (TextView) view.findViewById(R.id.lastAppointmentValue);
+        nextAppointment = (TextView) view.findViewById(R.id.review_value);
 
-        visitCounts = (TextView) view.findViewById(R.id.visit_counts);
+        visitCounts = (TextView) view.findViewById(R.id.totalCount);
 
         //---------------------------------------------------------------
         appointmentsBtn = (Button) view.findViewById(R.id.appointment);
         profileBtn = (Button) view.findViewById(R.id.profile);
 
-        viewImage = (ImageView) view.findViewById(R.id.clinic_image);
+        viewImage = (ImageView) view.findViewById(R.id.doctor_image);
         viewImage.setBackgroundResource(R.drawable.patient);
-        visitDates = (ImageView) view.findViewById(R.id.viewAll);
         closeMenu = (ImageView) view.findViewById(R.id.downImg);
-
-        //------------------------------------------------------------------------
-
-
-        visitDates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+        closeMenu.setBackgroundResource(R.drawable.up_arrow);
 
         appointmentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,23 +99,12 @@ public class PatientDetailsFragment extends ParentFragment {
             public void onClick(View v) {
                 Fragment fragment = new PatientProfileListView();
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         return view;
     }
 
-//    public void getClinicsProfile() {
-//        Fragment fragment = new ClinicAllPatientFragment();
-//        FragmentManager fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//    }
-//
-//    public void getPatientProfile() {
-//        Fragment fragment = new PatientProfileDetails();
-//        FragmentManager fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//    }
 
     @Override
     public void onResume() {
@@ -152,10 +133,14 @@ public class PatientDetailsFragment extends ParentFragment {
                         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
                         if(patient.getLastVisit() != null)
                             lastVisitedValue.setText(dateFormat.format(new Date(patient.getLastVisit())));
+                        else
+                            lastVisitedValue.setText(getActivity().getResources().getString(R.string.no_visit));
                         if(patient.getUpcomingVisit() != null)
                             nextAppointment.setText(dateFormat.format(new Date(patient.getUpcomingVisit())));
+                        else
+                            nextAppointment.setText(getActivity().getResources().getString(R.string.no_visit));
                         visitCounts.setText(patient.getNumberOfVisits().toString());
-                        viewImage.setBackgroundResource(R.drawable.patient);
+
                         if(patient.getImageUrl() != null && patient.getImageUrl().trim().length() > 0)
                         {
                             new ImageLoadTask(patient.getImageUrl(),viewImage);

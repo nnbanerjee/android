@@ -1,6 +1,5 @@
 package com.medico.view.home;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,10 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.medico.application.MyApi;
+import com.medico.application.R;
 import com.medico.model.DoctorProfile;
 import com.medico.util.PARAM;
-import com.medico.application.R;
 import com.medico.view.appointment.ManageDoctorAppointment;
 import com.medico.view.finance.ManageFinanceView;
 import com.medico.view.profile.ManagePatientProfile;
@@ -34,10 +32,9 @@ import com.medico.view.review.ManagePatientReviewView;
  */
 
 //Doctor Login
-public class DoctorMenusManage extends Fragment {
+public class DoctorMenusManage extends ParentFragment {
 
     String doctorId = "";
-    MyApi api;
     Button drawar, logout;
     SharedPreferences session;
     private TextView totalPatientCount;

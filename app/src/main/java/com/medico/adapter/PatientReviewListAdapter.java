@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.PatientReview;
 import com.medico.util.ImageLoadTask;
@@ -36,7 +35,6 @@ public class PatientReviewListAdapter extends ParentAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<PatientReview> patientReviews;
-    MyApi api;
     private ProgressDialog progress;
 
     public PatientReviewListAdapter(Activity activity, List<PatientReview> patientReviews)

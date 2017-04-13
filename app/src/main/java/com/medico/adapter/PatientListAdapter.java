@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.model.PatientProfileList;
+import com.medico.model.PatientShortProfile;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentActivity;
@@ -35,9 +36,6 @@ public class PatientListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     PatientProfileList allPatients;
-//    MyApi api;
-//    String doctorId;
-//    SharedPreferences session;
     private ProgressDialog progress;
 
     public PatientListAdapter(Activity activity, PatientProfileList allPatients)
@@ -68,78 +66,58 @@ public class PatientListAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
-//        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.doctor_list_item, null);
-//        global = (Global) activity.getApplicationContext();
-        TextView doctorName = (TextView) convertView.findViewById(R.id.clinic_name);
-        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.clinicSpeciality);
+            convertView = inflater.inflate(R.layout.doctor_patient_profile_list, null);
+        TextView doctorName = (TextView) convertView.findViewById(R.id.doctor_name);
+        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
-        ImageView viewImage = (ImageView) convertView.findViewById(R.id.clinic_image);
+        ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
 
-        TextView address = (TextView) convertView.findViewById(R.id.lastAppointmentDate);
+        TextView address = (TextView) convertView.findViewById(R.id.address);
         TextView appointmentDate = (TextView) convertView.findViewById(R.id.review_value);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
-        TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
-        totalAppointment.setVisibility(View.GONE);
-
-        new ImageLoadTask(activity.getString(R.string.image_base_url) + allPatients.getPatientlist().get(position).getImageUrl(), viewImage).execute();
-
+        PatientShortProfile profile = allPatients.getPatientlist().get(position);
+        new ImageLoadTask(activity.getString(R.string.image_base_url) + profile.getImageUrl(), viewImage).execute();
         viewImage.setBackgroundResource(R.drawable.patient);
-        totalCount.setText("" + allPatients.getPatientlist().get(position).getNumberOfVisits());
-       /* if (allPatients.get(position).getAddress() == null || allPatients.get(position).getAddress().equals("")) {
-            lastVisitedValue.setText("None");
+        totalCount.setText("" + profile.getNumberOfVisits());
 
-        } else {
-            lastVisitedValue.setText(allPatients.get(position).getLastVisit());
-
-        }*/
-
-        if (allPatients.getPatientlist().get(position).getAddress() != null) {
-            if (allPatients.getPatientlist().get(position).getAddress().equals("")) {
+        if (profile.getAddress() != null) {
+            if (profile.getAddress().equals("")) {
                 address.setText("None");
 
             } else {
-                address.setText(allPatients.getPatientlist().get(position).getAddress());
+                address.setText(profile.getAddress());
 
             }
         }
-
-        if (allPatients.getPatientlist().get(position).getUpcomingVisit() != null) {
-            if (allPatients.getPatientlist().get(position).getUpcomingVisit().equals("")) {
+        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
+        if (profile.getUpcomingVisit() != null) {
+            if (profile.getUpcomingVisit().equals("")) {
                 appointmentDate.setText("None");
 
             } else {
-                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
-                appointmentDate.setText(format.format(new Date(allPatients.getPatientlist().get(position).getUpcomingVisit())));
+                appointmentDate.setText(format.format(new Date(profile.getUpcomingVisit())));
 
             }
         }
-        if (allPatients.getPatientlist().get(position).getLastVisit() == null || allPatients.getPatientlist().get(position).getLastVisit().equals("")) {
+        if (profile.getLastVisit() == null || profile.getLastVisit().equals("")) {
             lastAppointment.setText("None");
 
         } else {
-            DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
-            lastAppointment.setText(format.format(new Date(allPatients.getPatientlist().get(position).getLastVisit())));
+
+            lastAppointment.setText(format.format(new Date(profile.getLastVisit())));
         }
-        doctorName.setText(allPatients.getPatientlist().get(position).getName());
-        doctorSpeciality.setText(allPatients.getPatientlist().get(position).getProfession());
+        doctorName.setText(profile.getName());
+        doctorSpeciality.setText(profile.getProfession());
 
 
 
-        viewImage.setOnClickListener(new View.OnClickListener() {
+        downImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -151,39 +129,6 @@ public class PatientListAdapter extends HomeAdapter  {
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//
-//                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
-//                api.getProfile1(new ProfileId(allPatients.getPatientlist().get(position).getPatientId()), new Callback<Person>() {
-//                    @Override
-//                    public void success(Person patient, Response response)
-//                    {
-//
-//                        Bundle args = new Bundle();
-//                        //Store Selected Patient profile
-//                        progress.dismiss();
-//                        SharedPreferences.Editor editor = session.edit();
-////                        global.setSelectedPatientsProfile(patient);
-//                        Gson gson = new Gson();
-//                        String json = gson.toJson(patient);
-//                        editor.putString("SelectedPatient", json);
-//                        editor.commit();
-//                        editor.putString("patient_Last_Visited", allPatients.getPatientlist().get(position).getLastVisit().toString());
-//                        editor.putString("patient_Upcoming_Appt", allPatients.getPatientlist().get(position).getUpcomingVisit().toString());
-//                        editor.putString("patient_Total_visits", allPatients.getPatientlist().get(position).getNumberOfVisits().toString());
-//                        editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
-//                        editor.putString("patient_Name", allPatients.getPatientlist().get(position).getName());
-//                        editor.commit();
-
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        progress.dismiss();
-//                        error.printStackTrace();
-//                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
             }
         });
 
@@ -191,19 +136,13 @@ public class PatientListAdapter extends HomeAdapter  {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               // patientId = session.getString("patientId", null);
-//                SharedPreferences.Editor editor = session.edit();
-//                editor.putString("doctorId", allPatients.get(position).getDoctorId());
-//                editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
-//                editor.commit();
-                Bundle bun = new Bundle();
-                bun.putString("fragment", "doctorPatientListAdapter");
+                ParentActivity parentactivity = (ParentActivity)activity;
+                Bundle bundle = activity.getIntent().getExtras();
+                bundle.putInt(PARAM.PATIENT_ID, allPatients.getPatientlist().get(position).getPatientId());
+                parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new PatientVisitDatesView();
-                fragment.setArguments(bun);
-                ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
         return convertView;

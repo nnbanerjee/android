@@ -1,52 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/layout0"
+        android:id="@+id/layout10"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/images"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/doctor_image"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/clinic_default"/>
+            android:background="@drawable/doctor"/>
 
+        <ImageView
+            android:id="@+id/downImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/doctor_image"
+            android:background="@drawable/down_arrow"
+            android:scaleType="center" />
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/doctor_image"
-            android:background="#ffffff"
-            android:id="@+id/relativeLayout2">
+            android:layout_toRightOf="@+id/images"
+            android:background="#ffffff">
 
             <TextView
                 android:id="@+id/doctor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Doctor Name"
-                android:textColor="@color/color_blue_default"
-                style="@style/title" />
+                android:textAppearance="@style/heading1.1_blue" />
 
             <ImageView
                 android:id="@+id/nextBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="2dp"
-                android:layout_toLeftOf="@id/nextBtn"
                 android:background="@drawable/right_arrow_grey"
+                android:layout_marginTop="2dp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/totalCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/nextBtn"
-                android:visibility="gone"
+                android:inputType="number"
                 android:text="0"
-                style="@style/body1"
+                android:textAppearance="@style/sub_heading3"
                 />
             <TextView
                 android:id="@+id/speciality"
@@ -54,91 +65,64 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/doctor_name"
                 android:text="Speciality"
-                style="@style/sub_heading" />
+                android:textAppearance="@style/sub_heading3" />
+
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/speciality"
-                android:text="Address"
-                style="@style/sub_heading" />
-
+                android:text="fdfd"
+                android:textAppearance="@style/sub_heading3" />
             <TextView
-                android:id="@+id/upcoming_appoint"
+                android:id="@+id/lastAppointment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/address"
-                android:text="Upcoming Appointments" />
+                android:layout_below="@+id/address"
+                android:text="@string/last_visited"
+                android:textAppearance="@style/sub_heading5"/>
+            <TextView
+                android:id="@+id/lastAppointmentValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_toRightOf="@+id/lastAppointment"
+                android:text="12-04-2015"
+                android:textAppearance="@style/sub_heading5_light_grey"/>
+
+            <TextView
+                android:id="@+id/appointmentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lastAppointment"
+                android:text="@string/upcoming_appointment"
+                android:textAppearance="@style/sub_heading5"/>
+
+            <TextView
+                android:id="@+id/review_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lastAppointmentValue"
+                android:layout_toRightOf="@+id/appointmentText"
+                android:text="sdfsdf"
+                android:textAppearance="@style/sub_heading5_light_grey"/>
+
 
         </RelativeLayout>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayout2"
-            android:layout_toEndOf="@+id/doctor_image"
-            android:layout_toRightOf="@+id/doctor_image">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TableLayout
-                    android:id="@+id/upcoming_appointment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TableRow
-                        android:id="@+id/date_row"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <TableRow
-                        android:id="@+id/nr_row"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </TableLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <ImageView
-            android:id="@+id/down_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/doctor_image"
-            android:layout_alignRight="@+id/doctor_image"
-            android:layout_below="@+id/relativeLayout2"
-            android:layout_marginEnd="21dp"
-            android:layout_marginRight="21dp"
-            android:background="@drawable/down_arrow" />
-
-        <TextView
-            android:id="@+id/total_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:inputType="number"
-            android:text="TextView"
-            android:layout_alignTop="@+id/doctor_image"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/layout21"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/layout0"
-        android:layout_height="wrap_content">
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout10"
+        android:id="@+id/layout11"
+        android:visibility="gone"
+         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/layout2"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_below="@+id/layout"
             android:background="#ffffff">
 
             <LinearLayout
@@ -153,9 +137,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:id="@+id/appointment"
-                    android:text="Appointment"
-                    style="@style/sub_heading"
-
+                    android:text="@string/appointments"
+                    android:textAppearance="@style/sub_heading3"
                     android:layout_weight="5"
                     android:background="@drawable/page_default"
 
@@ -163,8 +146,8 @@
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
-                    android:text="Profile"
-                    style="@style/sub_heading"
+                    android:text="@string/profile_details"
+                    android:textAppearance="@style/sub_heading3"
                     android:layout_toRightOf="@+id/appointment"
                     android:layout_weight="5"
                     android:background="@drawable/page_selected"
@@ -173,12 +156,10 @@
             </LinearLayout>
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/content_details1"
+        <FrameLayout
+            android:id="@+id/content_details"
             android:layout_width="match_parent"
             android:layout_below="@+id/layout2"
             android:layout_height="fill_parent"/>
-
     </RelativeLayout>
 </RelativeLayout>

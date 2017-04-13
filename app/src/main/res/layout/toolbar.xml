@@ -14,9 +14,6 @@
         android:clickable="false"
         android:focusable="false"
         android:longClickable="false"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="Just Profile"
-        android:textColor="#FFFFFF" />
+        android:textAppearance="@style/heading2_white" />
 
 </LinearLayout>

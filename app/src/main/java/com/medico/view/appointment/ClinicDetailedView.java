@@ -53,9 +53,9 @@ public class ClinicDetailedView extends ParentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.appointment_clinic_slot_list, container, false);
-        clinicName = (TextView) view.findViewById(R.id.clinic_name);
-        speciality = (TextView) view.findViewById(R.id.clinicSpeciality);
-        viewImage = (ImageView) view.findViewById(R.id.clinic_image);
+        clinicName = (TextView) view.findViewById(R.id.doctor_name);
+        speciality = (TextView) view.findViewById(R.id.speciality);
+        viewImage = (ImageView) view.findViewById(R.id.doctor_image);
 
         address = (TextView) view.findViewById(R.id.address);
         downImage = (ImageView) view.findViewById(R.id.down_arrow);

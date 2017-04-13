@@ -30,11 +30,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-//import com.medico.adapter.MenuAdapter;
-
-//import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-//import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
-//import com.mindnerves.meidcaldiary.Fragments.ShowPatients;
 
 /**
  * Created by Narendra on 18-01-2017.
@@ -47,6 +42,7 @@ public class DoctorHome extends HomeActivity
     @Override
     protected void createView()
     {
+
         parent_activity = this;
         setContentView(R.layout.doctor_home);
         //profile layout

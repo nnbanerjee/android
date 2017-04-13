@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.application.MyApi;
 import com.medico.application.R;
 import com.medico.model.FileUpload1;
 import com.medico.model.RemoveVisitDocument1;
@@ -35,7 +34,6 @@ public class DocumentAdapter extends HomeAdapter {
     private LayoutInflater inflater;
     public SharedPreferences session;
     String type;
-    public MyApi api;
     String[] document_category = {"Prescription","DiagnosticTest"};
     String[] document_subcategory = {"X-Ray","CT SCAN"};
     public DocumentAdapter(Activity activity, List<FileUpload1> fileList, String type)

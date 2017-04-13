@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text="@string/DoctorProfile"
+                    android:text="@string/doctor_profile"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/account_name"
                     style="@style/body4_white"
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/alarm_notes"
-                        android:text="@string/AlarmNotes"
+                        android:text="@string/alarm_notes"
                         style="@style/body12_white"
                         android:textStyle="normal" />
                 </RelativeLayout>
@@ -167,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/chat"
-                        android:text="@string/ChatMessage"
+                        android:text="@string/chat_message"
                         style="@style/body12_white"
                         android:textStyle="normal" />
                 </RelativeLayout>
@@ -194,7 +194,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:layout_below="@+id/search_patient"
-                       android:text="@string/SearchPatient"
+                       android:text="@string/search_patient"
                        style="@style/body12_white"
                        android:textStyle="normal" />
                    </RelativeLayout>
@@ -221,7 +221,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:layout_below="@+id/search_clinic"
-                       android:text="@string/SearchClinicLab"
+                       android:text="@string/search_clinic_lab"
                        style="@style/body12_white"
                        android:textStyle="normal" />
                    </RelativeLayout>

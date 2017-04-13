@@ -82,14 +82,14 @@ public class DoctorListAdapter extends HomeAdapter{
 //        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.doctor_list_item, null);
+            convertView = inflater.inflate(R.layout.doctor_patient_profile_list, null);
 //        global = (Global) activity.getApplicationContext();
-        TextView doctorName = (TextView) convertView.findViewById(R.id.clinic_name);
-        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.clinicSpeciality);
+        TextView doctorName = (TextView) convertView.findViewById(R.id.doctor_name);
+        TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
-        ImageView viewImage = (ImageView) convertView.findViewById(R.id.clinic_image);
+        ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
 
-        TextView address = (TextView) convertView.findViewById(R.id.lastAppointmentDate);
+        TextView address = (TextView) convertView.findViewById(R.id.address);
         TextView appointmentDate = (TextView) convertView.findViewById(R.id.review_value);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);

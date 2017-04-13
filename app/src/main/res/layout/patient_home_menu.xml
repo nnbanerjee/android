@@ -19,19 +19,19 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
-                android:id="@+id/clinic_image"
+                android:id="@+id/doctor_image"
                 android:background="@drawable/doctor_consultation"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/clinic_image">
+                android:layout_toRightOf="@+id/doctor_image">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="@string/DoctorConsultations"
+                    android:text="@string/doctor_consultations"
                     style="@style/heading2"
                     android:id="@+id/doctorBtn"
                     />
@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="@string/ManageAppointments"
+                    android:text="@string/manage_appointments"
                     style="@style/heading2"
                     android:id="@+id/medicineAlertsText"
                     />
@@ -146,7 +146,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="@string/MedicineAlarm"
+                    android:text="@string/medicine_alarm"
                     style="@style/heading2"
                     android:id="@+id/firstAidKitsText"
                     />
@@ -203,7 +203,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="@string/Feedback"
+                    android:text="@string/feedback"
                     style="@style/heading2"
                     android:id="@+id/feedback_text"
                     />

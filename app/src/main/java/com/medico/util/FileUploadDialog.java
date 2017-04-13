@@ -23,12 +23,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.application.MainActivity;
 import com.medico.application.R;
 import com.medico.model.Clinic1;
 import com.medico.model.FileUpload;
 import com.medico.model.PersonID;
 import com.medico.model.ResponseAddDocuments;
+import com.medico.view.home.ParentActivity;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
@@ -111,9 +111,7 @@ public class FileUploadDialog extends DialogFragment {
         categories = getResources().getStringArray(R.array.category_data_list);
         System.out.println("SIze of categories:::::" + categories.length);
         category.setAdapter(new CategorySpinner(getActivity(), R.layout.customize_spinner, categories));
-//        appointmentDate = global.getAppointmentDate();
-//        appointmentTime = global.getAppointmentTime();
-//        name.setText(global.getTestPrescribed());
+
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         id = session.getString("sessionID", null);
         type = session.getString("loginType", null);
@@ -126,14 +124,9 @@ public class FileUploadDialog extends DialogFragment {
         client.setConnectTimeout(5, TimeUnit.MINUTES);
         client.setReadTimeout(5, TimeUnit.MINUTES);
         client.setWriteTimeout(5, TimeUnit.MINUTES);
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(getResources().getString(R.string.base_url))
-//                .setClient(new OkClient(client))
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
 
-        MainActivity.api.getAllClinics(new PersonID(new Integer(doctorId)),new Callback<List<Clinic1>>() {
+
+        ((ParentActivity)getActivity()).api.getAllClinics(new PersonID(new Integer(doctorId)),new Callback<List<Clinic1>>() {
             @Override
             public void success(List<Clinic1> clinicsList, Response response) {
                 clinicDetailVm = clinicsList;
@@ -251,7 +244,7 @@ public class FileUploadDialog extends DialogFragment {
                     //restAdapter..setHea
 
                     // api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
-                    MainActivity.api.addPatientVisitDocument(patientId, appointMentId, clinicId.toString(), documentType, doctorId, nameData, typedFile, new Callback<ResponseAddDocuments >() {
+                    ((ParentActivity)getActivity()).api.addPatientVisitDocument(patientId, appointMentId, clinicId.toString(), documentType, doctorId, nameData, typedFile, new Callback<ResponseAddDocuments >() {
 
                         @Override
                         public void success(ResponseAddDocuments responseAddDocuments, Response response) {
@@ -291,7 +284,7 @@ public class FileUploadDialog extends DialogFragment {
                         typedFile = null;
                     }
                     System.out.println("Document TYpe::::::" + documentType);
-                    MainActivity.api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime, clinicId.toString(), clinicName, new Callback<FileUpload>() {
+                    ((ParentActivity)getActivity()).api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime, clinicId.toString(), clinicName, new Callback<FileUpload>() {
                         @Override
                         public void success(FileUpload uploadFile, Response response2) {
                             if (uploadFile != null) {
