@@ -26,9 +26,7 @@
                 android:id="@+id/doctor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Doctor Name"
-                android:textColor="@color/color_blue_default"
-                style="@style/title" />
+                android:text="Doctor Name" />
 
             <ImageView
                 android:id="@+id/nextBtn"
@@ -46,22 +44,19 @@
                 android:layout_toLeftOf="@+id/nextBtn"
                 android:visibility="gone"
                 android:text="0"
-                style="@style/body1"
                 />
             <TextView
                 android:id="@+id/speciality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/doctor_name"
-                android:text="Speciality"
-                style="@style/sub_heading" />
+                android:text="Speciality" />
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/speciality"
-                android:text="Address"
-                style="@style/sub_heading" />
+                android:text="Address" />
 
             <TextView
                 android:id="@+id/upcoming_appoint"
@@ -154,7 +149,6 @@
                     android:layout_height="40dp"
                     android:id="@+id/appointment"
                     android:text="Appointment"
-                    style="@style/sub_heading"
 
                     android:layout_weight="5"
                     android:background="@drawable/page_default"
@@ -164,7 +158,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:text="Profile"
-                    style="@style/sub_heading"
                     android:layout_toRightOf="@+id/appointment"
                     android:layout_weight="5"
                     android:background="@drawable/page_selected"

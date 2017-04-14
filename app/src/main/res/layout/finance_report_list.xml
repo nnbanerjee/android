@@ -22,7 +22,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
                 android:text="Day"
-                style="@style/sub_heading"
                 android:layout_weight="5"
                 android:background="@drawable/page_selected"
                 android:id="@+id/daily"
@@ -32,7 +31,6 @@
                 android:layout_height="40dp"
                 android:id="@+id/weekly"
                 android:text="Week"
-                style="@style/sub_heading"
                 android:layout_toRightOf="@+id/daily"
                 android:layout_weight="5"
                 android:background="@drawable/page_default"
@@ -44,7 +42,6 @@
                 android:id="@+id/monthly"
                 android:text="Month"
                 android:layout_toRightOf="@+id/weekly"
-                style="@style/sub_heading"
                 android:layout_weight="5"
                 android:background="@drawable/page_default"
 

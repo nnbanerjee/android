@@ -23,8 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Symptoms / Observations"
-                android:fontFamily="sans-serif-medium"
-                style="@style/sub_heading_normal_black"
                 android:id="@+id/symptomsText"
                 />
 
@@ -34,9 +32,6 @@
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
                 android:paddingLeft="5dp"
-                android:fontFamily="sans-serif"
-                style="@style/caption_Style"
-                android:background="@drawable/square_grey_color"
                 android:layout_below="@+id/symptomsText"
                 />
 
@@ -53,8 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Diagnosis / Inference"
-                android:fontFamily="sans-serif-medium"
-                style="@style/sub_heading_normal_black"
                 android:id="@+id/diagnosisText"
                 />
 
@@ -64,9 +57,6 @@
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
                 android:paddingLeft="5dp"
-                android:fontFamily="sans-serif"
-                style="@style/caption_Style"
-                android:background="@drawable/square_grey_color"
                 android:layout_below="@+id/diagnosisText"
                 />
 
@@ -83,21 +73,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Doctor's Note"
-                android:fontFamily="sans-serif-medium"
-                style="@style/sub_heading_normal_black"
                 android:id="@+id/doctorNotesText"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:fontFamily="sans-serif"
-                style="@style/caption_Style"
                 android:ems="10"
                 android:paddingLeft="5dp"
                 android:id="@+id/doctorNotes"
                 android:gravity="left|top"
                 android:inputType="textMultiLine"
-                android:background="@drawable/square_grey_color"
                 android:layout_below="@+id/doctorNotesText"/>
 
 

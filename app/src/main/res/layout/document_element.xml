@@ -15,7 +15,6 @@
             android:id="@+id/document_name"
             android:layout_marginLeft="15dp"
             android:text="Document Name"
-            style="@style/title"
             android:layout_marginTop="15dp"
             />
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:text="Category:"
                 android:id="@+id/category_text"
-                style="@style/body4"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"/>
             <TextView
@@ -38,7 +36,6 @@
                 android:layout_toRightOf="@+id/category_text"
                 android:id="@+id/category_value"
                 android:text="Prescription"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -47,7 +44,6 @@
                 android:layout_toRightOf="@+id/category_value"
                 android:id="@+id/added_by_text"
                 android:text="Added By:"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -56,7 +52,6 @@
                 android:layout_toRightOf="@+id/added_by_text"
                 android:id="@+id/added_by_value"
                 android:text="Dr.Sanjeev Bharti"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -64,7 +59,6 @@
                 android:layout_height="wrap_content"
                 android:text="Date:"
                 android:id="@+id/date_text"
-                style="@style/body4"
                 android:layout_marginLeft="15dp"
                 android:layout_below="@+id/category_text"
                 android:layout_marginTop="5dp"/>
@@ -75,7 +69,6 @@
                 android:layout_below="@+id/category_value"
                 android:id="@+id/date_value"
                 android:text="27-Oct-2017"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -85,7 +78,6 @@
                 android:layout_below="@+id/added_by_text"
                 android:id="@+id/type_text"
                 android:text="Type:"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -95,7 +87,6 @@
                 android:layout_below="@+id/added_by_value"
                 android:id="@+id/type_value"
                 android:text="X-Ray"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -105,7 +96,6 @@
                 android:layout_below="@+id/added_by_value"
                 android:id="@+id/clinic_text"
                 android:text="Clinic:"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -115,7 +105,6 @@
                 android:layout_below="@+id/added_by_value"
                 android:id="@+id/clinic_value"
                 android:text="Noble Hospital"
-                style="@style/body4"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"/>
         </RelativeLayout>

@@ -12,26 +12,21 @@
 
         <TextView
             android:id="@+id/slot_text"
-            style="@style/sub_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@+id/slot"
-            android:text=""
-            android:textColor="@color/color_blue_default"
-            android:textStyle="bold" />
+            android:text="" />
 
         <TextView
             android:id="@+id/slot"
-            style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:text="2015"
-            android:textColor="@color/color_blue_default"
             />
 
         <View

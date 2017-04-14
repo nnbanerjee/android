@@ -27,9 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="Test Type:"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:id="@+id/test_type"
                 />
             <RelativeLayout
@@ -41,7 +39,6 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:textColor="#1E90FF"
                     android:id="@+id/test_type_value"
                     android:entries="@array/diagnostic_test_type_list"
 
@@ -63,10 +60,8 @@
                 android:layout_height="wrap_content"
                 android:ems="6"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:text="Name"
                 android:paddingLeft="5dp"
-                android:textColor="@color/black"
                 android:id="@+id/testName"
                 />
             <Spinner
@@ -78,8 +73,6 @@
                 android:paddingLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#1E90FF"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
                 />
              />
 
@@ -98,9 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="Clinic/Lab"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:id="@+id/clinicText"
                 />
             <RelativeLayout
@@ -112,7 +103,6 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:textColor="#1E90FF"
                 android:id="@+id/clinicNames"
                 android:imeOptions="actionDone"
                 />
@@ -131,22 +121,18 @@
                 android:layout_height="wrap_content"
                 android:text="Referred By"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:id="@+id/referredText"
                 />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
                 android:id="@+id/referredByValue"
                 android:entries="@array/diagnostic_test_referred"
                 android:inputType="phone"
                 android:text=""
                 android:completionThreshold="1"
-                android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:layout_toRightOf="@+id/referredText"/>
 
@@ -163,9 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date Time"
-                style="@style/sub_heading"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:id="@+id/startText"
@@ -176,8 +160,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
-                android:textColor="#1E90FF"
                 android:layout_toLeftOf="@+id/calenderImg"
 
                 android:layout_toRightOf="@+id/startText"
@@ -203,7 +185,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reminder"
-                style="@style/caption_Style"
                 android:layout_below="@+id/auto_scheduleBtn"
                 android:id="@+id/medicineReminderBtn"
                 />

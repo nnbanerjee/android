@@ -12,8 +12,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ABC"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
         android:id="@+id/first_name"
         />
 
@@ -22,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:textColor="@color/white"
             android:id="@+id/checkbox_doctor"
             android:layout_alignParentRight="true"
             android:paddingRight="10dp"/>
@@ -42,7 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="speciality"
-            android:textColor="#ffffff"
             android:paddingLeft="10dp"/>
 
         <TextView
@@ -52,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/specialization"
             android:paddingLeft="5dp"
-            android:textColor="#ffffff"
             android:paddingBottom="10dp"
             android:text="Pune"/>
 

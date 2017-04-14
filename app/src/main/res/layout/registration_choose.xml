@@ -22,7 +22,6 @@
 
             <RadioButton
                 android:id="@+id/search_name"
-                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
@@ -67,7 +66,6 @@
 
             <RadioButton
                 android:id="@+id/search_phone"
-                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Profile Already Exists"
@@ -85,7 +83,6 @@
 
             <TextView
                 android:id="@+id/name_textViewView"
-                style="@style/sub_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -95,7 +92,6 @@
 
             <EditText
                 android:id="@+id/name"
-                style="@style/editTextthemeForNewDesign"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/name_textViewView"
@@ -110,7 +106,6 @@
 
             <Button
                 android:id="@+id/next"
-                style="@style/buttonThemeForNewDesign"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"

@@ -13,8 +13,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:textColor="@color/black"
-            style="@style/sub_heading"
             android:text="Treatment Plan Name"
             android:layout_centerVertical="false"
             android:layout_marginBottom="5dp"

@@ -37,7 +37,6 @@
                 android:layout_toRightOf="@+id/slotNameText"
                 android:layout_toEndOf="@+id/slotNameText"
                 android:layout_width="match_parent"
-                android:textColor="#1E90FF"
                 android:id="@+id/slotName"
                 android:layout_height="wrap_content">
             </EditText>
@@ -57,10 +56,8 @@
                 android:layout_height="wrap_content"
                 android:ems="6"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:text="Slot Number"
                 android:paddingLeft="5dp"
-                android:textColor="@color/black"
                 android:id="@+id/slotNumberText"
                 />
             <Spinner
@@ -74,7 +71,7 @@
                 android:entries="@array/slot_number"
                 android:layout_marginLeft="5dp"
                 android:textColor="#1E90FF"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
+                style="@style/body3"
                 />
              />
 
@@ -92,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Start Timee"
-                style="@style/sub_heading"
                 android:ems="6"
                 android:textColor="@color/black"
                 android:layout_centerVertical="true"
@@ -105,8 +101,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
-                android:textColor="#1E90FF"
                 android:layout_toLeftOf="@+id/starttimestampImg"
 
                 android:layout_toRightOf="@+id/startTimeText"
@@ -132,7 +126,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="End Time"
-                style="@style/sub_heading"
                 android:ems="6"
                 android:textColor="@color/black"
                 android:layout_centerVertical="true"
@@ -145,8 +138,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
-                android:textColor="#1E90FF"
                 android:layout_toLeftOf="@+id/endtimestampImg"
                 android:layout_toRightOf="@+id/endTimeText"
                 />
@@ -307,7 +298,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
+                style="@style/body3"
                 android:id="@+id/visitDuration"
                 android:inputType="phone"
                 android:text="1"
@@ -352,7 +343,7 @@
             android:layout_height="wrap_content"
             android:completionThreshold="1"
             android:inputType="number"
-            style="@style/textViewThemeForNewDesignWithoutMargin"
+            style="@style/body3"
             android:textColor="#1E90FF"
             android:layout_toRightOf="@+id/numberOfPatientsText"
             />
@@ -415,7 +406,6 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/textViewThemeForNewDesignWithoutMargin"
                 android:id="@+id/doctorFeeValue"
                 android:inputType="number"
                 android:text="1"

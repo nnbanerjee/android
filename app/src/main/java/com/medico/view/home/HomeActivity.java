@@ -1,12 +1,10 @@
 package com.medico.view.home;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
@@ -35,26 +33,15 @@ import com.medico.model.Delegation;
 import com.medico.model.Dependent;
 import com.medico.model.DoctorProfile;
 import com.medico.model.PersonProfile;
-import com.medico.util.BackStress;
 import com.medico.util.FileUploadDialog;
 import com.medico.util.PARAM;
 import com.medico.util.ServerConnectionAdapter;
-import com.medico.view.settings.ManagePersonSettings;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.mindnerves.meidcaldiary.BackStress;
-//import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
-//import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
-//import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-//import Adapter.MenuAdapter;
-//import Adapter.ProfileDelegationAdapter;
-//import Adapter.ProfileDependencyAdapter;
-//import Model.DoctorProfile;
-//import Model.PersonProfile;
 
 /**
  * Created by Narendra on 18-01-2017.
@@ -68,14 +55,14 @@ public abstract class HomeActivity extends Activity implements PARAM
     public int profileStatus = UNREGISTERED;
 
     protected SharedPreferences session = null;
-    protected PersonProfile parent = null;
+    public PersonProfile parent = null;
 
     FragmentManager fragmentManger;
     Button drawerButton, logout;
     int flagActionButton = 0;
     ArrayList<String> arrayMenu;
-    DrawerLayout dLayout;
-    ListView dList;
+    public DrawerLayout dLayout;
+    public ListView dList;
     MenuAdapter adapter;
     Fragment fragment;
     Menu mainMenu;
@@ -449,90 +436,90 @@ public abstract class HomeActivity extends Activity implements PARAM
     }
 
 
-    protected void manageProfile()
-    {
-        System.out.println("i am here::::::::::::");
-        Bundle bundle = new Bundle();
-        setSettingParameters(bundle);
-        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.MANAGE_PROFILE_VIEW);
-        Intent intObj = new Intent(this, ManagePersonSettings.class);
-        intObj.putExtras(bundle);
-        startActivity(intObj);
-        onPause();
-        dLayout.closeDrawer(dList);
-    }
-    protected void manageDependents()
-    {
-        Bundle bundle = new Bundle();
-        setSettingParameters(bundle);
-        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DEPENDENT_SETTING_VIEW);
-        Intent intObj = new Intent(this, ManagePersonSettings.class);
-        intObj.putExtras(bundle);
-        startActivity(intObj);
-        onPause();
-        dLayout.closeDrawer(dList);
-    }
-
-    protected void termsAndConditions()
-    {
-//        fragment = new ManageMessageNotification();
-//        fragmentManger = getFragmentManager();
-//        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-//        dList.setSelection(position);
+//    protected void manageProfile()
+//    {
+//        System.out.println("i am here::::::::::::");
+//        Bundle bundle = new Bundle();
+//        setSettingParameters(bundle);
+//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.MANAGE_PROFILE_VIEW);
+//        Intent intObj = new Intent(this, ManagePersonSettings.class);
+//        intObj.putExtras(bundle);
+//        startActivity(intObj);
+//        onPause();
 //        dLayout.closeDrawer(dList);
-    }
-    protected void logout()
-    {
-//        dList.setSelection(position);
-        dLayout.closeDrawer(dList);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
-        alertDialogBuilder.setMessage(R.string.confirm_logout);
-        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                BackStress.staticflag = 0;
-                SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("USER_STATUS",false).commit();
-                finish();
-
-            }
-        });
-
-        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                System.out.println("Do Nothing");
-            }
-        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
+//    }
+//    protected void manageDependents()
+//    {
+//        Bundle bundle = new Bundle();
+//        setSettingParameters(bundle);
+//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DEPENDENT_SETTING_VIEW);
+//        Intent intObj = new Intent(this, ManagePersonSettings.class);
+//        intObj.putExtras(bundle);
+//        startActivity(intObj);
+//        onPause();
+//        dLayout.closeDrawer(dList);
+//    }
+//
+//    protected void termsAndConditions()
+//    {
+////        fragment = new ManageMessageNotification();
+////        fragmentManger = getFragmentManager();
+////        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
+////        dList.setSelection(position);
+////        dLayout.closeDrawer(dList);
+//    }
+//    protected void logout()
+//    {
+////        dList.setSelection(position);
+//        dLayout.closeDrawer(dList);
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this);
+//        alertDialogBuilder.setMessage(R.string.confirm_logout);
+//        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                BackStress.staticflag = 0;
+//                SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putBoolean("USER_STATUS",false).commit();
+//                finish();
+//
+//            }
+//        });
+//
+//        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                System.out.println("Do Nothing");
+//            }
+//        });
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
 
     public static HomeActivity getParentAtivity()
     {
         return parent_activity;
     }
-    protected void setSettingParameters(Bundle bundle)
-    {
-        if(parent != null)
-        {
-            bundle.putInt(PARAM.LOGGED_IN_ID, parent.getPerson().getId());
-            bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, parent.getPerson().getRole());
-            bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, parent.getPerson().getStatus());
-        }
-        else
-        {
-            bundle.putInt(PARAM.LOGGED_IN_ID, profileId);
-            bundle.putInt(PARAM.LOGGED_IN_USER_ROLE,profileRole);
-            bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, profileStatus);
-        }
-        bundle.putInt(PARAM.PROFILE_ID, profileId);
-        bundle.putInt(PARAM.PROFILE_ROLE, profileRole);
-        bundle.putInt(PARAM.PROFILE_STATUS,profileStatus);
-
-    }
+//    protected void setSettingParameters(Bundle bundle)
+//    {
+//        if(parent != null)
+//        {
+//            bundle.putInt(PARAM.LOGGED_IN_ID, parent.getPerson().getId());
+//            bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, parent.getPerson().getRole());
+//            bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, parent.getPerson().getStatus());
+//        }
+//        else
+//        {
+//            bundle.putInt(PARAM.LOGGED_IN_ID, profileId);
+//            bundle.putInt(PARAM.LOGGED_IN_USER_ROLE,profileRole);
+//            bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, profileStatus);
+//        }
+//        bundle.putInt(PARAM.PROFILE_ID, profileId);
+//        bundle.putInt(PARAM.PROFILE_ROLE, profileRole);
+//        bundle.putInt(PARAM.PROFILE_STATUS,profileStatus);
+//
+//    }
 }

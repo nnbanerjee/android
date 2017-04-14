@@ -1,17 +1,12 @@
 package com.medico.view.home;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,21 +19,11 @@ import com.medico.application.R;
 import com.medico.model.PatientId;
 import com.medico.model.PatientProfile;
 import com.medico.util.ImageLoadTask;
-import com.medico.util.PARAM;
-import com.medico.view.settings.ManagePersonSettings;
 
-import retrofit.Callback; 
+import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-//import com.mindnerves.meidcaldiary.Fragments.ManageDelegationPatient;
-//import com.mindnerves.meidcaldiary.Fragments.ManageDendencyFragment;
-//import com.mindnerves.meidcaldiary.Fragments.ManageMessageNotification;
-//import com.mindnerves.meidcaldiary.Fragments.ManageProfilePatient;
-//import com.mindnerves.meidcaldiary.Fragments.ShowClinicSpecialities;
-//import com.mindnerves.meidcaldiary.Fragments.ShowSpeciality;
-//import Adapter.MenuAdapter;
-//import Model.PatientProfile;
 
 /**
  * Created by Narendra on 18-01-2017.
@@ -167,69 +152,69 @@ public class PatientHome extends HomeActivity
                 }
             }
         });
-        logout = (Button) findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PatientHome.this);
-                alertDialogBuilder.setMessage("R.string.confirm_logout");
-                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        finish();
-
-                    }
-                });
-
-                alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.out.println("Do Nothing");
-                    }
-                });
-
-                AlertDialog alertDialog2 = alertDialogBuilder.create();
-                alertDialog2.show();
-            }
-        });
+//        logout = (Button) findViewById(R.id.logout);
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PatientHome.this);
+//                alertDialogBuilder.setMessage("R.string.confirm_logout");
+//                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        finish();
+//
+//                    }
+//                });
+//
+//                alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        System.out.println("Do Nothing");
+//                    }
+//                });
+//
+//                AlertDialog alertDialog2 = alertDialogBuilder.create();
+//                alertDialog2.show();
+//            }
+//        });
         fragment = new PatientMenusManage();
         fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
 
-        dList.setSelector(android.R.color.holo_blue_dark);
-        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> selectedItem, View v, int position, long id) {
-                dLayout.closeDrawers();
-                Bundle args = new Bundle();
-                String switchCaseId = (String) adapter.getItem(position);
-                switch (switchCaseId) {
-                    case "Manage Profile":
-                        manageProfile();
-                        break;
-                    case "Manage Doctors":
-                        manageDoctors();
-                        break;
-                    case "Manage Dependents":
-                        manageDependents();
-                        break;
-                    case "Manage Delegations":
-                        manageDelegations();
-                        break;
-                    case "Terms & Conditions":
-                        termsAndConditions();
-                        break;
-
-                    case "Logout":
-                        logout();
-                        break;
-                }
-            }
-        });
+//        dList.setSelector(android.R.color.holo_blue_dark);
+//        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> selectedItem, View v, int position, long id) {
+//                dLayout.closeDrawers();
+//                Bundle args = new Bundle();
+//                String switchCaseId = (String) adapter.getItem(position);
+//                switch (switchCaseId) {
+//                    case "Manage Profile":
+//                        manageProfile();
+//                        break;
+//                    case "Manage Doctors":
+//                        manageDoctors();
+//                        break;
+//                    case "Manage Dependents":
+//                        manageDependents();
+//                        break;
+//                    case "Manage Delegations":
+//                        manageDelegations();
+//                        break;
+//                    case "Terms & Conditions":
+//                        termsAndConditions();
+//                        break;
+//
+//                    case "Logout":
+//                        logout();
+//                        break;
+//                }
+//            }
+//        });
     }
 
     public void showMenus()
@@ -271,30 +256,30 @@ public class PatientHome extends HomeActivity
     }
 
 
-    protected void manageDoctors()
-    {
-        System.out.println("i am here::::::::::::");
-        Bundle bundle = new Bundle();
-        bundle.putInt(PARAM.PATIENT_ID, profileId);
-        setSettingParameters(bundle);
-        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
-        Intent intObj = new Intent(this, ManagePersonSettings.class);
-        intObj.putExtras(bundle);
-        startActivity(intObj);
-        onPause();
-        dLayout.closeDrawer(dList);
-    }
-    protected void manageDelegations()
-    {
-        Bundle bundle = new Bundle();
-        setSettingParameters(bundle);
-        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DELEGATE_SETTING_VIEW);
-        Intent intObj = new Intent(this, ManagePersonSettings.class);
-        intObj.putExtras(bundle);
-        startActivity(intObj);
-        onPause();
-        dLayout.closeDrawer(dList);
-    }
+//    protected void manageDoctors()
+//    {
+//        System.out.println("i am here::::::::::::");
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(PARAM.PATIENT_ID, profileId);
+//        setSettingParameters(bundle);
+//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
+//        Intent intObj = new Intent(this, ManagePersonSettings.class);
+//        intObj.putExtras(bundle);
+//        startActivity(intObj);
+//        onPause();
+//        dLayout.closeDrawer(dList);
+//    }
+//    protected void manageDelegations()
+//    {
+//        Bundle bundle = new Bundle();
+//        setSettingParameters(bundle);
+//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DELEGATE_SETTING_VIEW);
+//        Intent intObj = new Intent(this, ManagePersonSettings.class);
+//        intObj.putExtras(bundle);
+//        startActivity(intObj);
+//        onPause();
+//        dLayout.closeDrawer(dList);
+//    }
 
     @Override
     protected void showPopup(final Activity context, Point p) {

@@ -30,9 +30,7 @@
             android:id="@+id/patient_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Patient Name"
-            android:textColor="@color/color_blue_default"
-            style="@style/title" />
+            android:text="Patient Name" />
 
         <ImageView
             android:id="@+id/nextBtn"
@@ -48,15 +46,13 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/nextBtn"
             android:text="0"
-            style="@style/body1"
             />
         <TextView
             android:id="@+id/speciality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/patient_name"
-            android:text="Speciality"
-            style="@style/sub_heading" />
+            android:text="Speciality" />
 
         <TextView
             android:id="@+id/address"
@@ -65,15 +61,13 @@
             android:layout_below="@+id/speciality"
             android:text="Address:"
             android:visibility="visible"
-            style="@style/body2"
             />
         <TextView
             android:id="@+id/visited_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address"
-            android:text="Visited : "
-            style="@style/body4"/>
+            android:text="Visited : " />
         <TextView
             android:id="@+id/visited_value"
             android:layout_width="wrap_content"
@@ -81,9 +75,6 @@
             android:layout_below="@+id/address"
             android:layout_toRightOf="@+id/visited_text"
             android:text="12-04-2015"
-            style="@style/body4"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
             />
 
         <TextView
@@ -91,8 +82,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rating:  "
-            android:textColor="#000000"
-            style="@style/body4"
             android:layout_alignBaseline="@+id/rating_value"
             android:layout_alignBottom="@+id/rating_value"
             android:layout_alignParentLeft="true"
@@ -104,8 +93,6 @@
             android:layout_below="@+id/visited_value"
             android:layout_toRightOf="@+id/ratingText"
             android:text=""
-            android:textColor="#1E90FF"
-            style="@style/body4"
             android:id="@+id/rating_value" />
 
         <TextView
@@ -113,35 +100,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ratingText"
-            android:text="Recommendations: "
-            style="@style/body4"/>
+            android:text="Recommendations: " />
 
         <ImageView
             android:id="@+id/recommdation_value"
-            style="@style/body4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ratingText"
             android:layout_toRightOf="@+id/recommdation_text"
-            android:text="YES"
-            android:textColor="@color/black" />
+            android:text="YES" />
         <TextView
             android:id="@+id/reviews_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recommdation_text"
-            android:text="Reviews: "
-            style="@style/body4"/>
+            android:text="Reviews: " />
 
         <TextView
             android:id="@+id/review_value"
-            style="@style/body4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recommdation_text"
             android:layout_toRightOf="@+id/reviews_text"
-            android:text=""
-            android:textColor="@color/black" />
+            android:text="" />
 
 
     </RelativeLayout>

@@ -12,8 +12,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ABC"
-            android:textSize="@dimen/sub_heading"
-            android:fontFamily="sans-serif"
             android:id="@+id/doctor_name"
             />
 
@@ -42,8 +40,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="@dimen/body2"
             android:text="Pune"/>
 
     </RelativeLayout>

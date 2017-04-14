@@ -66,7 +66,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.patient_profile_edit_view,container,false);
+        final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
         setHasOptionsMenu(true);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
@@ -372,27 +372,27 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     @Override
     public void setEditable(boolean editable)
     {
-        name.setEnabled(editable);
-        mobile.setEnabled(editable);
-        email.setEnabled(editable);
+//        name.setEnabled(editable);
+//        mobile.setEnabled(editable);
+//        email.setEnabled(editable);
     }
     public void setEditableAll(boolean editable)
     {
-        mobile.setEnabled(editable);
-        email.setEnabled(editable);
-//        menuItem.setEnabled(editable);
-        profilePicUploadBtn.setEnabled(editable);
-        location_delete_button.setEnabled(editable);
-        current_location_button.setEnabled(editable);
-        name.setEnabled(editable);
-        dob.setEnabled(editable);
-        allergicTo.setEnabled(editable);
-        mobile_country.setEnabled(editable);
-        bloodGroup.setEnabled(editable);
-        gender_spinner.setEnabled(editable);
-        dob_calendar.setEnabled(editable);
-        specialization.setEnabled(editable);
-        mAutocompleteView.setEnabled(editable);
+//        mobile.setEnabled(editable);
+//        email.setEnabled(editable);
+////        menuItem.setEnabled(editable);
+//        profilePicUploadBtn.setEnabled(editable);
+//        location_delete_button.setEnabled(editable);
+//        current_location_button.setEnabled(editable);
+//        name.setEnabled(editable);
+//        dob.setEnabled(editable);
+//        allergicTo.setEnabled(editable);
+//        mobile_country.setEnabled(editable);
+//        bloodGroup.setEnabled(editable);
+//        gender_spinner.setEnabled(editable);
+//        dob_calendar.setEnabled(editable);
+//        specialization.setEnabled(editable);
+//        mAutocompleteView.setEnabled(editable);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)

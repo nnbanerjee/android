@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/date"
         android:text="12-Feb-2015"
-        style="@style/sub_heading_normal_black"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         />
@@ -21,7 +20,6 @@
         android:id="@+id/time"
         android:text="12:43"
         android:layout_marginLeft="30dp"
-        style="@style/sub_heading_normal_grey"
 
         android:layout_toRightOf="@+id/date"
         android:layout_marginTop="5dp"
@@ -32,7 +30,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/visitType"
         android:text="New Visit"
-        style="@style/sub_heading_normal_grey"
         android:layout_toLeftOf="@+id/rightArrow"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"

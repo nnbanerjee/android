@@ -9,7 +9,6 @@
 
     <TextView
         android:id="@+id/doctor"
-        style="@style/sub_heading_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -19,7 +18,6 @@
 
     <TextView
         android:id="@+id/doctorvalue"
-        style="@style/textViewThemeForNewDesignWithoutMargin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -34,7 +32,6 @@
 
     <TextView
         android:id="@+id/date"
-        style="@style/sub_heading_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/doctorvalue"
@@ -46,7 +43,6 @@
 
     <TextView
         android:id="@+id/category"
-        style="@style/sub_heading_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/datevalues"
@@ -63,11 +59,10 @@
         android:layout_below="@+id/datevalues"
         android:layout_toRightOf="@+id/category"
         android:layout_margin="5dp"
-        android:background="@color/grey">
+        android:background="@color/white">
 
         <Spinner
             android:id="@+id/categoryValue"
-            style="@style/body1"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:imeOptions="actionDone"
@@ -80,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/category_spinner_relative"
         android:layout_margin="5dp"
-        android:background="@color/grey">
+        android:background="@color/white">
     <Spinner
         android:id="@+id/medical_report"
         android:layout_width="match_parent"
@@ -96,7 +91,6 @@
 
     <TextView
         android:id="@+id/clinic_text"
-        style="@style/sub_heading_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/category_spinner_relative"
@@ -111,10 +105,9 @@
         android:layout_below="@+id/category_spinner_relative"
         android:layout_toRightOf="@+id/clinic_text"
         android:layout_margin="5dp"
-        android:background="@color/grey">
+        android:background="@color/white">
     <Spinner
         android:id="@+id/clinic"
-        style="@style/body1"
         android:layout_width="match_parent"
         android:layout_height="35dp"
 
@@ -123,7 +116,6 @@
     </RelativeLayout>
     <TextView
         android:id="@+id/type"
-        style="@style/sub_heading_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/clinic_spinner_relative"
@@ -139,10 +131,9 @@
         android:layout_below="@+id/clinic_spinner_relative"
         android:layout_toRightOf="@+id/clinic_text"
         android:layout_margin="5dp"
-        android:background="@color/grey">
+        android:background="@color/white">
     <Spinner
         android:id="@+id/typespinner"
-        style="@style/body1"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:imeOptions="actionDone"
@@ -151,7 +142,6 @@
         </RelativeLayout>
     <TextView
         android:id="@+id/name"
-        style="@style/sub_heading_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/type_spinner_relative"
@@ -162,7 +152,6 @@
 
     <EditText
         android:id="@+id/nameValue"
-        style="@style/editsmallTextthemeForNewDesign"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/type_spinner_relative"
@@ -185,11 +174,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_orange_color"
-        android:text="Capture"
-        android:textColor="@color/white"
-        android:textSize="14dp"
-        android:textStyle="bold" />
+        android:text="Capture" />
 
     <Button
         android:id="@+id/browse_image"
@@ -200,11 +185,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_orange_color"
-        android:text="Browse Picture"
-        android:textColor="@color/white"
-        android:textSize="14dp"
-        android:textStyle="bold"></Button>
+        android:text="Browse Picture"></Button>
 
     <Button
         android:id="@+id/browse_document"
@@ -215,11 +196,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_orange_color"
-        android:text="Browse Document"
-        android:textColor="@color/white"
-        android:textSize="14dp"
-        android:textStyle="bold"></Button>
+        android:text="Browse Document"></Button>
 
 
     <ImageView
@@ -241,15 +218,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/preview_image"
-        android:background="@drawable/rounded_blue_color"
-        android:text="Upload"
-        android:textColor="#ffffff"
-        android:textSize="13dp"
-        android:textStyle="bold" />
+        android:text="Upload" />
 
     <TextView
         android:id="@+id/datevalues"
-        style="@style/textViewThemeForNewDesignWithoutMargin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

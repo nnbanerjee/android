@@ -39,7 +39,6 @@
 
                 <Button
                     android:id="@+id/summaryBtn"
-                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
@@ -51,7 +50,6 @@
 
                 <Button
                     android:id="@+id/documentationBtn"
-                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
@@ -62,7 +60,6 @@
 
                 <Button
                     android:id="@+id/doctorNoteBtn"
-                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
@@ -74,7 +71,6 @@
 
                 <Button
                     android:id="@+id/treatmentBtn"
-                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="2dp"
@@ -86,7 +82,6 @@
 
                 <Button
                     android:id="@+id/invoicesBtn"
-                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_toRightOf="@+id/clinicsBtn"
@@ -96,7 +91,6 @@
                     android:text="Invoices" />
                 <Button
                     android:id="@+id/feedback_btn"
-                    style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_toRightOf="@+id/clinicsBtn"

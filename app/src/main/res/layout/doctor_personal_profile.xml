@@ -13,7 +13,6 @@
             android:text="Awards:"
             android:padding="5dp"
             android:id="@+id/award_text"
-            style="@style/body2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
         />
@@ -21,8 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_toRightOf="@+id/award_text"
-            android:singleLine="true"
-            style="@style/body1"
             android:layout_marginTop="20dp"
             android:id="@+id/award"
             android:imeOptions="actionNext"
@@ -35,7 +32,6 @@
             android:padding="5dp"
             android:layout_below="@+id/award"
             android:id="@+id/brief_description_text"
-            style="@style/body2"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
         />
@@ -43,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_toRightOf="@+id/award_text"
-            style="@style/body1"
             android:id="@+id/brief_description"
             android:layout_below="@+id/award"
             android:layout_marginTop="15dp"
@@ -56,7 +51,6 @@
             android:padding="5dp"
             android:layout_below="@+id/brief_description"
             android:id="@+id/experience_text"
-            style="@style/body2"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             />
@@ -64,7 +58,6 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_toRightOf="@+id/award_text"
-            style="@style/body1"
             android:singleLine="true"
             android:id="@+id/exprience"
             android:layout_below="@+id/brief_description"
@@ -88,7 +81,6 @@
             android:padding="5dp"
             android:layout_below="@+id/exprience"
             android:id="@+id/institution_text"
-            style="@style/body2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             />
@@ -97,7 +89,6 @@
             android:layout_height="30dp"
             android:layout_toRightOf="@+id/award_text"
             android:singleLine="true"
-            style="@style/body1"
             android:id="@+id/institution"
             android:layout_below="@+id/exprience"
             android:imeOptions="actionNext"
@@ -111,7 +102,6 @@
             android:padding="5dp"
             android:layout_below="@+id/institution"
             android:id="@+id/member_text"
-            style="@style/body2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             />
@@ -120,7 +110,6 @@
             android:layout_height="30dp"
             android:layout_toRightOf="@+id/award_text"
             android:singleLine="true"
-            style="@style/body1"
             android:id="@+id/member"
             android:layout_below="@+id/institution"
             android:imeOptions="actionNext"
@@ -134,7 +123,6 @@
             android:padding="5dp"
             android:layout_below="@+id/member"
             android:id="@+id/qualification_text"
-            style="@style/body2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             />
@@ -143,7 +131,6 @@
             android:layout_height="30dp"
             android:layout_toRightOf="@+id/award_text"
             android:singleLine="true"
-            style="@style/body1"
             android:id="@+id/qualification"
             android:layout_below="@+id/member"
             android:imeOptions="actionNext"
@@ -157,7 +144,6 @@
             android:padding="5dp"
             android:layout_below="@+id/qualification"
             android:id="@+id/service_text"
-            style="@style/body2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             />
@@ -166,7 +152,6 @@
             android:layout_height="30dp"
             android:layout_toRightOf="@+id/award_text"
             android:singleLine="true"
-            style="@style/body1"
             android:id="@+id/service"
             android:layout_below="@+id/qualification"
             android:imeOptions="actionNext"
@@ -179,11 +164,7 @@
             android:layout_height="35dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/rounded_blue_color"
-            android:text="Save"
-            android:textColor="#ffffff"
-            android:textSize="13dp"
-            android:textStyle="bold" />
+            android:text="Save" />
     </RelativeLayout>
 
 </ScrollView>

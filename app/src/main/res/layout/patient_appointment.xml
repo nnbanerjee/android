@@ -77,9 +77,7 @@
                 android:id="@+id/patient_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Doctor Name"
-                android:textColor="@color/color_blue_default"
-                style="@style/title" />
+                android:text="Doctor Name" />
 
             <ImageView
                 android:id="@+id/nextBtn"
@@ -95,18 +93,14 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/nextBtn"
                 android:text="0"
-                style="@style/body1"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nextBtn"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="@dimen/body2"
                 android:text="0"
                 android:visibility="gone"
                 android:id="@+id/total_appointment"
-                android:textColor="#1E90FF"
                 android:layout_marginRight="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
@@ -117,8 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/patient_name"
-                android:text="Speciality"
-                style="@style/sub_heading" />
+                android:text="Speciality" />
 
             <TextView
                 android:id="@+id/address"
@@ -127,15 +120,13 @@
                 android:layout_below="@+id/speciality"
                 android:text="Address"
                 android:visibility="visible"
-                style="@style/body2"
                 />
             <TextView
                 android:id="@+id/lastVisited"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/address"
-                android:text="Last Visited. : "
-                style="@style/body1"/>
+                android:text="Last Visited. : " />
             <TextView
                 android:id="@+id/lastVisitedValue"
                 android:layout_width="wrap_content"
@@ -143,9 +134,6 @@
                 android:layout_below="@+id/address"
                 android:layout_toRightOf="@+id/lastVisited"
                 android:text="12-04-2015"
-                style="@style/body1"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/black"
                 />
 
             <TextView
@@ -153,8 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lastVisited"
-                android:text="Upcoming Appt. : "
-                style="@style/body1"/>
+                android:text="Upcoming Appt. : " />
 
             <TextView
                 android:id="@+id/review_value"
@@ -162,9 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lastVisitedValue"
                 android:layout_toRightOf="@+id/appointmentText"
-                android:text="sdfsdf"
-                android:textColor="@color/black"
-                style="@style/body1" />
+                android:text="sdfsdf" />
 
         </RelativeLayout>
     </RelativeLayout>

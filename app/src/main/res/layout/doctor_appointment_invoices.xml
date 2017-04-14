@@ -18,10 +18,7 @@
                 android:id="@+id/share_with_patient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="Share with the patient"
-                android:textColor="#1E90FF"
-                android:textSize="@dimen/body1" />
+                android:text="Share with the patient" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -71,8 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Total : "
-                    android:textSize="@dimen/body2" />
+                    android:text="Total : " />
 
                 <TextView
                     android:layout_width="100dp"
@@ -80,9 +76,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_black_color"
                     android:text="Total : "
-                    android:textSize="14dp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -93,8 +87,7 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="0"
-                    android:textSize="@dimen/body1" />
+                    android:text="0" />
             </LinearLayout>
 
             <LinearLayout
@@ -110,8 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
-                    android:text="(-)Discount(%):"
-                    android:textSize="@dimen/body2" />
+                    android:text="(-)Discount(%):" />
 
                 <EditText
                     android:id="@+id/percentageDiscount"
@@ -124,8 +116,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text="0"
-                    android:textSize="@dimen/body1" />
+                    android:text="0" />
 
                 <EditText
                     android:id="@+id/discountValue"
@@ -136,8 +127,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text=" 0.00 "
-                    android:textSize="@dimen/body1" />
+                    android:text=" 0.00 " />
             </LinearLayout>
 
             <LinearLayout
@@ -153,8 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
-                    android:text="(+) Tax(%)  : "
-                    android:textSize="@dimen/body2" />
+                    android:text="(+) Tax(%)  : " />
 
                 <EditText
                     android:id="@+id/percentageTax"
@@ -168,8 +157,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text="0"
-                    android:textSize="@dimen/body1" />
+                    android:text="0" />
 
                 <EditText
                     android:id="@+id/taxValue"
@@ -180,8 +168,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text="0.00 "
-                    android:textSize="@dimen/body1" />
+                    android:text="0.00 " />
             </LinearLayout>
 
             <LinearLayout
@@ -197,8 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Grand Total : "
-                    android:textSize="@dimen/body2" />
+                    android:text="Grand Total : " />
 
                 <TextView
                     android:layout_width="100dp"
@@ -208,7 +194,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_black_color"
                     android:text="Grand Total : "
-                    android:textSize="14dp"
                     android:visibility="invisible" />
 
                 <EditText
@@ -222,8 +207,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text="0.0"
-                    android:textSize="@dimen/body1" />
+                    android:text="0.0" />
             </LinearLayout>
 
             <View
@@ -248,8 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
-                    android:text=" (-) Advance : "
-                    android:textSize="@dimen/body2" />
+                    android:text=" (-) Advance : " />
 
                 <TextView
                     android:layout_width="100dp"
@@ -259,7 +242,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_black_color"
                     android:text="Grand Total : "
-                    android:textSize="14dp"
                     android:visibility="invisible" />
 
                 <EditText
@@ -271,8 +253,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text="0.00"
-                    android:textSize="@dimen/body1" />
+                    android:text="0.00" />
             </LinearLayout>
 
             <LinearLayout
@@ -288,8 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
-                    android:text=" Total Due : "
-                    android:textSize="@dimen/body2" />
+                    android:text=" Total Due : " />
 
                 <TextView
                     android:layout_width="100dp"
@@ -299,7 +279,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_black_color"
                     android:text="Grand Total : "
-                    android:textSize="14dp"
                     android:visibility="invisible" />
 
                 <EditText
@@ -312,8 +291,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:inputType="number"
-                    android:text="0.0"
-                    android:textSize="@dimen/body1" />
+                    android:text="0.0" />
             </LinearLayout>
 
 

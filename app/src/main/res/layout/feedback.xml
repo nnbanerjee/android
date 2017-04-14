@@ -16,8 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Last Appointment"
-            style="@style/sub_heading2" />
+            android:text="Last Appointment" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -32,7 +31,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/last_appointment_text"
                 android:text="Date: "
-                style="@style/caption_Style"
                 android:id="@+id/date_text_show"
             />
             <TextView
@@ -42,7 +40,6 @@
                 android:layout_below="@+id/last_appointment_text"
                 android:layout_centerHorizontal="true"
                 android:text="24-oct-2015 10:00 AM"
-                style="@style/caption_Style"
                 android:layout_toRightOf="@+id/date_text_show"
                 />
         </RelativeLayout>
@@ -52,7 +49,6 @@
             android:text="Visited"
             android:layout_below="@+id/date_layout"
             android:id="@+id/visited_radio"
-            style="@style/title"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="2dp"
             />
@@ -68,7 +64,6 @@
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                style="@style/body2"
                 android:layout_below="@+id/visited_radio"
                 android:text="Rating"
                 android:padding="10dp"
@@ -129,7 +124,6 @@
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    style="@style/body2"
                     android:text="Recommendations:"
                     android:fontFamily="sans-serif-medium"
                     android:id="@+id/recommdation_text"
@@ -152,7 +146,6 @@
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    style="@style/body2"
                     android:text="Reviews:"
                     android:fontFamily="sans-serif-medium"
                     android:id="@+id/reviews_text"
@@ -167,7 +160,6 @@
                     android:paddingLeft="3dp"
                     android:background="@drawable/rounded_black_color"
                     android:imeOptions="actionDone"
-                    style="@style/body1"
                     android:layout_alignParentTop="true" />
             </RelativeLayout>
 
@@ -178,7 +170,6 @@
             android:layout_below="@+id/visited_layout"
             android:layout_alignStart="@+id/visited_layout"
             android:layout_alignLeft="@+id/visited_layout"
-            style="@style/title"
             android:text="Not Visited"
             android:id="@+id/not_visited_radio"
         />
@@ -188,13 +179,9 @@
             android:id="@+id/save_feedback"
             android:text="ADD SUMMARY"
             android:layout_below="@+id/not_visited_radio"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            android:textStyle="bold"
             android:layout_marginTop= "20dp"
             android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/rounded_orange_color"/>
+            android:layout_alignParentRight="true"></Button>
 
     </RelativeLayout>
 </ScrollView>

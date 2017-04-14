@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:text="Heading"
         android:id="@+id/headingText"
-        android:textSize="20dp"
         android:gravity="center"
         android:padding="5dp"
         />

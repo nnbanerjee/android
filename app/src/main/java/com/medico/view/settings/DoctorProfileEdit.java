@@ -62,7 +62,7 @@ public class DoctorProfileEdit extends ParentFragment {
 		selectedfragment = fragment;
 		activity.fragmentList.add(fragment);
 		FragmentManager fragmentManger = getFragmentManager();
-		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").addToBackStack(null).commit();
+		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").commit();
 	}
 	public void showDoctorPersonal(){
 		ParentFragment fragment = new ManageDoctorDetailedProfile();
@@ -72,7 +72,7 @@ public class DoctorProfileEdit extends ParentFragment {
 		selectedfragment = fragment;
 		activity.fragmentList.add(fragment);
 		FragmentManager fragmentManger = getFragmentManager();
-		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").addToBackStack(null).commit();
+		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").commit();
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)

@@ -14,20 +14,21 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
 import com.medico.model.ServerResponse;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
-import com.medico.application.R;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -54,7 +55,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
     EditText name, email, dob, country, city;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    MultiAutoCompleteTextView specialization;//,location;
+    Spinner specialization;//,location;
     AutoCompleteTextView mAutocompleteView;
     CheckBox auto_login;
     protected GoogleApiClient mGoogleApiClient;
@@ -64,7 +65,9 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
 //    int GPSoff = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.manage_doctor_profile,container,false);
+        final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
+        RelativeLayout autologin = (RelativeLayout)view.findViewById(R.id.layout30);
+        autologin.setVisibility(View.VISIBLE);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
         profileId = (TextView) view.findViewById(R.id.person_id);
@@ -84,30 +87,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country_spinner);
         city = (EditText) view.findViewById(R.id.city);
-
-//        PlaceDetectionApi places = new PlaceDetectionApi() {
-//            @Override
-//            public PendingResult<PlaceLikelihoodBuffer> getCurrentPlace(GoogleApiClient googleApiClient, @Nullable PlaceFilter placeFilter) {
-//                return null;
-//            }
-//
-//            @Override
-//            public PendingResult<Status> reportDeviceAtPlace(GoogleApiClient googleApiClient, PlaceReport placeReport) {
-//                return null;
-//            }
-//        };
-//        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi.getCurrentPlace(mGoogleApiClient, null);
-//        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
-//            @Override
-//            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
-//                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-////                Log.i(TAG, String.format("Place '%s' has likelihood: %g",
-////                        placeLikelihood.getPlace().getName(),
-////                        placeLikelihood.getLikelihood()));
-//                  }
-//                likelyPlaces.release();}});
-
-        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization = (Spinner) view.findViewById(R.id.specialization);
         auto_login = (CheckBox) view.findViewById(R.id.auto_login);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +127,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
                     mAutocompleteView.setText(person.getAddress());
                     country.setText(person.getCountry());
                     city.setText(person.getCity());
-                    specialization.setText(person.getSpeciality());
+                    specialization.setSelection(getSelectionIndex(person.getSpeciality()));
 
 
                     SharedPreferences sharedPref = getActivity().getSharedPreferences(MyPREFERENCES, getActivity().MODE_PRIVATE);
@@ -294,7 +274,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
 //        personModel.setCountry(personModel.isoCountry);
 //        personModel.setIsoCountry(countryName);
         personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-        personModel.setSpeciality(specialization.getText().toString());
+        personModel.setSpeciality(specialization.getSelectedItem().toString());
     }
     @Override
     public boolean save()
@@ -321,6 +301,15 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
 
     }
 
-
+    private int getSelectionIndex(String text)
+    {
+        SpinnerAdapter adapter = specialization.getAdapter();
+        for(int i = 0; i < adapter.getCount(); i++)
+        {
+            if(adapter.getItem(i).toString().equals(text))
+                return i;
+        }
+        return 0;
+    }
 
 }

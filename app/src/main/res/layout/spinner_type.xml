@@ -10,8 +10,6 @@
         android:layout_below="@+id/centerLogo"
         android:id="@+id/visitType"
         android:text="Personal Medical Portfolio"
-        android:textColor="#1E90FF"
-        android:textSize="13dp"
         />
 
 </RelativeLayout>

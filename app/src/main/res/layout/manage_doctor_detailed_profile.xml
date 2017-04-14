@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:background="#ffffff">
 
         <RelativeLayout
@@ -18,7 +18,6 @@
 
             <TextView
                 android:id="@+id/qualification_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -28,13 +27,11 @@
 
             <EditText
                 android:id="@+id/qualification"
-                style="@style/body1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="75dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/qualification_text"
-                android:background="@drawable/black_border"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:editable="false"
@@ -45,7 +42,6 @@
 
             <TextView
                 android:id="@+id/institution_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -56,22 +52,18 @@
 
             <EditText
                 android:id="@+id/institution"
-                style="@style/body1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/qualification"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/institution_text"
                 android:layout_alignStart="@+id/qualification"
-                android:background="@drawable/black_border"
                 android:enabled="false"
                 android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:textColor="#000000" />
+                android:paddingTop="5dp" />
 
             <TextView
                 android:id="@+id/years_of_experience_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -82,20 +74,17 @@
 
             <EditText
                 android:id="@+id/years_of_experience"
-                style="@style/body1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/institution"
                 android:layout_alignStart="@+id/qualification"
                 android:layout_marginTop="15dp"
                 android:layout_toRightOf="@+id/years_of_experience_text"
-                android:background="@drawable/black_border"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/experience_description_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -106,7 +95,6 @@
 
             <EditText
                 android:id="@+id/experience_description"
-                style="@style/body2"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignLeft="@+id/years_of_experience"
@@ -115,7 +103,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/imageButton_calendar"
                 android:layout_toStartOf="@+id/imageButton_calendar"
-                android:background="@drawable/black_border"
                 android:editable="false"
                 android:minLines="5"
                 android:paddingLeft="3dp"
@@ -124,7 +111,6 @@
 
             <TextView
                 android:id="@+id/services_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -135,12 +121,10 @@
 
             <EditText
                 android:id="@+id/services"
-                style="@style/body1"
                 android:layout_width="200dp"
                 android:layout_height="30dp"
                 android:layout_below="@+id/experience_description"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/black_border"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingLeft="3dp"
@@ -153,7 +137,6 @@
 
             <TextView
                 android:id="@+id/awards_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/services"
@@ -163,7 +146,6 @@
 
             <EditText
                 android:id="@+id/awards"
-                style="@style/body1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/services"
@@ -172,13 +154,11 @@
                 android:layout_toRightOf="@+id/awards_text"
                 android:layout_alignLeft="@+id/experience_description"
                 android:layout_alignStart="@+id/experience_description"
-                android:background="@drawable/black_border"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/member_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/awards_text"
@@ -188,13 +168,11 @@
 
             <EditText
                 android:id="@+id/member"
-                style="@style/body1"
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/member_text"
                 android:layout_below="@+id/awards"
-                android:background="@drawable/black_border"
                 android:imeOptions="actionNext"
                 android:layout_alignLeft="@+id/experience_description"
                 android:layout_alignStart="@+id/experience_description"
@@ -206,7 +184,6 @@
 
             <TextView
                 android:id="@+id/speciality_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -219,11 +196,9 @@
                 android:id="@+id/practice"
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
-                android:background="@drawable/black_border"
                 android:imeOptions="actionNext"
                 android:spinnerMode="dropdown"
                 android:entries="@array/practice_name"
-                android:textSize="14dp"
                 android:layout_below="@+id/member"
                 android:layout_alignLeft="@+id/experience_description"
                 android:layout_alignStart="@+id/experience_description"
@@ -231,7 +206,6 @@
                 android:layout_toEndOf="@+id/speciality_text" />
             <TextView
                 android:id="@+id/registration_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/speciality_text"
@@ -241,13 +215,11 @@
 
             <EditText
                 android:id="@+id/registration"
-                style="@style/body1"
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/registration_text"
                 android:layout_below="@+id/practice"
-                android:background="@drawable/black_border"
                 android:imeOptions="actionNext"
                 android:layout_alignLeft="@+id/experience_description"
                 android:layout_alignStart="@+id/experience_description"
@@ -258,7 +230,6 @@
                 android:layout_alignParentEnd="true" />
             <TextView
                 android:id="@+id/regisration_date_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -269,13 +240,11 @@
 
             <EditText
                 android:id="@+id/regisration_date"
-                style="@style/body2"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignStart="@+id/registration"
                 android:layout_below="@+id/registration"
                 android:layout_toRightOf="@+id/regisration_date_text"
-                android:background="@drawable/black_border"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp" />
             <ImageButton
@@ -287,7 +256,6 @@
                 android:layout_alignTop="@+id/regisration_date" />
             <TextView
                 android:id="@+id/regisration_file_text"
-                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -298,11 +266,8 @@
 
             <EditText
                 android:id="@+id/regisration_file"
-                style="@style/body2"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-
-                android:background="@drawable/black_border"
                 android:editable="false"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp"

@@ -66,7 +66,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.patient_profile_edit_view,container,false);
+        final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
         setHasOptionsMenu(true);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);

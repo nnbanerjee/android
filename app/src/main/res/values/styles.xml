@@ -111,8 +111,9 @@
         <item name = "android:textColor">@color/medico_gray</item>
     </style>
     <style name = "body1">
-        <item name = "android:fontFamily">sans-serif-bold</item>
+        <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">14sp</item>
+        <item name="android:typeface">serif</item>
         <item name = "android:textColor">@color/medico_gray</item>
         <item name="android:textColorHint">@color/dim_grey</item>
     </style>
@@ -125,6 +126,7 @@
     <style name = "body3">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">14sp</item>
+        <item name="android:typeface">normal</item>
         <item name = "android:textColor">@color/medico_gray</item>
         <item name="android:textColorHint">@color/dim_grey</item>
     </style>

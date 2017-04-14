@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/patients_profiles"
-                    style="@style/heading2"
+                    android:textAppearance="@style/heading2"
                     android:id="@+id/doctorBtn"
                     />
                 <ImageView
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/total_patients"
                     android:inputType="number"
-                    style="@style/heading4"
+                    android:textAppearance="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_patient_profile"
                     android:text="0"
                 />
@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/manage_appointments"
-                    style="@style/heading2"
+                    android:textAppearance="@style/heading2"
                     android:id="@+id/manage_appointment_text"
                     />
                 <ImageView
@@ -109,8 +109,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/total_appointments"
                     android:inputType="number"
-                    style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_manage_appointments"
+                    android:textAppearance="@style/heading4"
                     android:text="0"
                     />
             </RelativeLayout>
@@ -149,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/manage_finance"
-                    style="@style/heading2"
+                    android:textAppearance="@style/heading2"
                     android:id="@+id/manage_finance_text"
                     />
                 <ImageView
@@ -165,8 +165,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/total_finance"
-                    style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_manage_finance"
+                    android:textAppearance="@style/heading4"
                     android:text="0"
                     />
 
@@ -206,7 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/feedback"
-                    style="@style/heading2"
+                    android:textAppearance="@style/heading2"
                     android:id="@+id/feedback_text"
                     />
                 <ImageView
@@ -222,8 +222,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/total_feedback"
-                   style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_feedback"
+                    android:textAppearance="@style/heading4"
                     android:text="0"
                     />
 

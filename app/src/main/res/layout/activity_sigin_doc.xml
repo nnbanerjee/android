@@ -18,9 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Registration As Doctor"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="18dp"
+        android:textAppearance="@style/heading2_white"
         />
 
     <fragment

@@ -21,9 +21,7 @@
             android:id="@+id/doctor_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doctor Name"
-            android:textColor="@color/color_blue_default"
-            style="@style/title" />
+            android:text="Doctor Name" />
 
         <ImageView
             android:id="@+id/nextBtn"
@@ -31,8 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/right_arrow_grey"
-            android:layout_marginTop="2dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="2dp" />
         <TextView
             android:id="@+id/totalCount"
             android:layout_width="wrap_content"
@@ -40,22 +37,19 @@
             android:layout_toLeftOf="@+id/nextBtn"
             android:visibility="gone"
             android:text="0"
-            style="@style/body1"
             />
         <TextView
             android:id="@+id/speciality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/doctor_name"
-            android:text="Speciality"
-            style="@style/sub_heading" />
+            android:text="Speciality" />
         <TextView
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/speciality"
-            android:text="Address"
-            style="@style/sub_heading" />
+            android:text="Address" />
 
     </RelativeLayout>
 

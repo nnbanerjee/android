@@ -14,8 +14,6 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         android:text="Email ID"
-        android:textSize="13dp"
-        android:textStyle="bold"
         android:visibility="gone" />
 
 
@@ -43,7 +41,6 @@
         android:hint="Email*"
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress"
-        style="@style/editTextthemeForNewDesign"
         android:text="nnbanerjee@yahoo.com"
          />
 
@@ -56,8 +53,6 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         android:text="Password"
-        android:textSize="20dp"
-        android:textStyle="bold"
         android:visibility="gone" />
 
     <EditText
@@ -69,8 +64,7 @@
         android:hint="Password*"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
-        android:text="1234"
-        style="@style/editTextthemeForNewDesign" />
+        android:text="1234" />
 
     <Button
         android:id="@+id/login"
@@ -81,7 +75,6 @@
         android:layout_marginTop="60dp"
         android:text="SIGN IN"
         android:textAlignment="center"
-        style="@style/buttonThemeForNewDesign"
 
 
         />
@@ -94,7 +87,6 @@
         android:layout_marginTop="25dp"
         android:text="REGISTER NOW"
         android:textAlignment="center"
-        style="@style/buttonThemeForNewDesign"
          />
 
     <TextView
@@ -107,9 +99,6 @@
         android:layout_marginTop="25dp"
         android:text="Forgot password? Click here"
         android:layout_centerHorizontal="true"
-        android:textSize="18sp"
-        android:textColor="@color/color_blue_default"
-        style="@style/caption_Style"
           />
 
     <TextView
@@ -121,8 +110,6 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="10dp"
         android:text="Not Register? Please Register Now."
-        android:textSize="10dp"
-        android:textStyle="bold"
         android:visibility="gone" />
 
     <TextView
@@ -133,8 +120,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Register As:"
-        android:textSize="14dp"
-        android:textStyle="bold"
         android:visibility="gone" />
 
     <Button
@@ -147,8 +132,6 @@
         android:background="@drawable/rounded_blue_color"
         android:text="Patient"
         android:textAlignment="center"
-        android:textSize="12dp"
-        android:textStyle="bold"
         android:visibility="gone"
 
         />
@@ -162,11 +145,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/signin"
-        android:background="@drawable/rounded_blue_color"
-
         android:text="Doctor"
-        android:textSize="12dp"
-        android:textStyle="bold"
         android:visibility="gone"
 
         />
@@ -178,9 +157,6 @@
         android:layout_below="@+id/register"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/signindoc"
-        android:background="@drawable/rounded_blue_color"
         android:text="Assistance"
-        android:textSize="12dp"
-        android:textStyle="bold"
         android:visibility="gone" />
 </RelativeLayout>

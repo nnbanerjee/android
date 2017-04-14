@@ -3,60 +3,70 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="AppTheme" parent="@style/_AppTheme">
-    <item name="android:editTextStyle">@style/Medico_EditTextStyle</item>
-    <item name="android:buttonStyle">@style/Medico_ButtonStyle</item>
-    <item name="android:textViewStyle">@style/Medico_TextViewStyle</item>
-    <item name="android:spinnerStyle">@style/Medico_SpinnerTextStyle</item>
-  </style>
+      <style name="AppTheme" parent="@style/_AppTheme">
+            <item name="android:editTextStyle">@style/EditTextStyle</item>
+            <item name="android:buttonStyle">@style/ButtonStyle</item>
+            <item name="android:textViewStyle">@style/TextViewStyle</item>
+            <item name="android:spinnerStyle">@style/SpinnerStyle</item>
+      </style>
 
-  <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+      <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-    <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
-    <item name="android:windowNoTitle">true</item>
-   <!-- <item name="windowActionBar">false</item>-->
-  </style>
+            <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
+            <item name="android:windowNoTitle">true</item>
+           <!-- <item name="windowActionBar">false</item>-->
+      </style>
 
-    <!-- ActionBar styles -->
-    <style name="MyActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-      <item name="android:background">@color/color_blue_default</item>
-      <item name="android:textColor">@color/white</item>
+        <!-- ActionBar styles -->
+        <style name="MyActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+            <item name="android:background">@color/color_blue_default</item>
+            <item name="android:textColor">@color/white</item>
 
-    </style>
-  <style name="Medico_EditTextStyle" parent="@android:style/Widget.EditText">
-    <item name="android:background">@drawable/black_border</item>
-    <item name="android:textColorHint">@color/gray_holo_light</item>
-    <item name="android:textAppearance">@style/body1</item>
-    <item name="android:layout_marginLeft">50dp</item>
-    <item name="android:layout_marginTop">10dp</item>
-    <item name="android:inputType">text</item>
-    <item name="android:paddingLeft">3dp</item>
-  </style>
-  <style name="Medico_TextViewStyle" parent="@android:style/Widget.TextView">
-    <item name="android:textColorHint">@color/gray_holo_light</item>
-    <item name="android:textAppearance">@style/body1</item>
-    <item name="android:layout_marginLeft">50dp</item>
-    <item name="android:layout_marginTop">10dp</item>
-    <item name="android:inputType">text</item>
-    <item name="android:paddingLeft">3dp</item>
-  </style>
-  <style name="Medico_ButtonStyle" parent="android:style/Widget.Button">
-    <item name="android:textAppearance">@style/body1</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginLeft">33dp</item>
-    <item name="android:layout_marginTop">33dp</item>
-    <item name="android:background">@drawable/button_shape</item>
-    <item name="android:textAllCaps">true</item>
-  </style>
-  <style name="Medico_SpinnerTextStyle" parent="@android:style/Widget.Spinner">
-    <item name="android:background">@drawable/black_border</item>
-    <item name="android:textColorHint">@color/gray_holo_light</item>
-    <item name="android:textAppearance">@style/body1</item>
-    <item name="android:layout_marginLeft">50dp</item>
-    <item name="android:layout_marginTop">10dp</item>
-    <item name="android:inputType">text</item>
-    <item name="android:paddingLeft">3dp</item>
-  </style>
-
+        </style>
+      <style name="EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/rounded_white_color</item>
+        <item name="android:textAppearance">@style/body3</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:inputType">text</item>
+          <item name="android:focusable">true</item>
+        <item name="android:paddingLeft">3dp</item>
+      </style>
+      <style name="TextViewStyle" parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">@style/body1</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:focusable">false</item>
+        <item name="android:paddingLeft">3dp</item>
+      </style>
+      <style name="ButtonStyle" parent="android:style/Widget.Button">
+        <item name="android:textAppearance">@style/body1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">33dp</item>
+        <item name="android:layout_marginTop">33dp</item>
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:textAllCaps">true</item>
+      </style>
+      <style name="SpinnerStyle" parent="@android:style/Widget.Spinner">
+          <item name="android:background">@drawable/rounded_white_color</item>
+        <item name="android:textAppearance">@style/body3</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:spinnerMode">dropdown</item>
+          <item name="android:layout_gravity">center</item>
+          <item name="android:spinnerDropDownItemStyle">@style/Widget.AppCompat.Spinner.DropDown</item>
+          <item name="android:focusable">true</item>
+        <item name="android:paddingLeft">3dp</item>
+      </style>
+      <style name="SpinnerItemTextStyle" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textAppearance">@style/body3</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:inputType">text</item>
+          <item name="android:focusable">true</item>
+        <item name="android:paddingLeft">3dp</item>
+      </style>
 </resources>

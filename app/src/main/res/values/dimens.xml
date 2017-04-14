@@ -18,5 +18,5 @@
     <dimen name="button_hight">40dp</dimen>
     <dimen name="edit_top_margin">10dp</dimen>
     <dimen name="edit_height">30dp</dimen>
-    <dimen name="text_top_margin">20dp</dimen>
+    <dimen name="text_top_margin">18dp</dimen>
 </resources>
