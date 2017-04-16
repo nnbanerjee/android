@@ -191,6 +191,13 @@
     <style name = "heading2_white" parent="heading2">
         <item name = "android:textColor">@color/white</item>
     </style>
+    <style name = "heading3_blue" parent="heading3">
+        <item name = "android:textColor">@color/medico_blue</item>
+        <item name="android:textColorHint">@color/medico_blue</item>
+    </style>
+    <style name = "sub_heading3_light_grey" parent="sub_heading3">
+        <item name = "android:textColor">@color/dim_grey</item>
+    </style>
     <style name = "sub_heading5_light_grey" parent="sub_heading5">
         <item name = "android:textColor">@color/dim_grey</item>
     </style>

@@ -68,7 +68,7 @@ public class FinanceSummaryListAdapter extends BaseAdapter implements StickyList
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.report_date_list, parent, false);
-            holder.date = (TextView) convertView.findViewById(R.id.date);
+            holder.date = (TextView) convertView.findViewById(R.id.visit_date);
             holder.revenue = (TextView) convertView.findViewById(R.id.total_revenue);
             holder.rightArrow = (ImageView)convertView.findViewById(R.id.rightArrow);
             holder.summary = financeSummaries.get(position);

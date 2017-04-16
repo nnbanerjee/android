@@ -31,7 +31,7 @@
         />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/visit_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/doctorvalue"
@@ -228,7 +228,7 @@
         android:imeOptions="actionDone"
         android:paddingLeft="15dp"
         android:singleLine="true"
-        android:layout_alignBottom="@+id/date"
+        android:layout_alignBottom="@+id/visit_date"
         android:layout_alignLeft="@+id/doctorvalue"
         android:layout_alignStart="@+id/doctorvalue"
         android:layout_below="@+id/doctorvalue"

@@ -13,9 +13,11 @@ import com.medico.application.R;
 import com.medico.model.PatientVisits;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
@@ -59,17 +61,18 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
 
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.all_patient_appo_item, parent, false);
+            convertView = inflater.inflate(R.layout.sticky_header_visit_dates, parent, false);
             holder.layout = (RelativeLayout) convertView.findViewById(R.id.layout);
-            holder.date = (TextView) convertView.findViewById(R.id.date);
-            holder.visitType = (TextView) convertView.findViewById(R.id.visitType);
-           holder.time = (TextView) convertView.findViewById(R.id.time);
+            holder.date = (TextView) convertView.findViewById(R.id.visit_date1);
+            holder.visitType = (TextView) convertView.findViewById(R.id.visit_type1);
+           holder.time = (TextView) convertView.findViewById(R.id.visit_time1);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         final int pos = position;
-        DateFormat format1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
+//        DateFormat format1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        SimpleDateFormat format1 = new SimpleDateFormat("MMMMMM dd, (EEEEEEEE)", Locale.getDefault());
         DateFormat format2 = DateFormat.getTimeInstance(DateFormat.SHORT);
         holder.date.setText(format1.format(new Date(appointment.get(position).dateTime)) );
         holder.time.setText(format2.format(new Date((appointment.get(position).dateTime)) ));

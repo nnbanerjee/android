@@ -1,38 +1,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_margin="5dp"
-    android:padding="5dp"
     android:id="@+id/layout"
-    android:layout_height="fill_parent">
-
+                android:layout_margin="5dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/date"
+        android:id="@+id/visit_date1"
+        android:textAppearance="@style/sub_heading3"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:text="12-Feb-2015"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/time"
+        android:textAppearance="@style/sub_heading3_light_grey"
+        android:id="@+id/visit_time1"
         android:text="12:43"
         android:layout_marginLeft="30dp"
-
-        android:layout_toRightOf="@+id/date"
-        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/visit_date1"
+        android:layout_marginRight="10dp"
+        android:layout_alignBaseline="@+id/visit_date1"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/visitType"
+        android:id="@+id/visit_type1"
+        android:textAppearance="@style/sub_heading3_light_grey"
         android:text="New Visit"
         android:layout_toLeftOf="@+id/rightArrow"
-        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBaseline="@+id/visit_date1"
         />
 
     <ImageView
@@ -42,6 +49,9 @@
         android:id="@+id/rightArrow"
         android:background="@drawable/arrow_right_light_grey"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="3dp"/>
+        android:layout_marginRight="5dp"
+        android:layout_alignBottom="@+id/visit_date1"
+
+        />
 
 </RelativeLayout>

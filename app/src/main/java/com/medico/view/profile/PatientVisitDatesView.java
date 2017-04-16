@@ -57,7 +57,7 @@ public class PatientVisitDatesView extends ParentFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View view = inflater.inflate(R.layout.all_patient_appointment, container, false);
+        View view = inflater.inflate(R.layout.sticky_header_list_view, container, false);
         final Bundle bun = getArguments();
         allAppointments = (StickyListHeadersListView) view.findViewById(R.id.allAppointments);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
