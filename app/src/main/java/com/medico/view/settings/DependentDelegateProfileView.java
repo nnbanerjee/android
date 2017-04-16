@@ -111,13 +111,13 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                 switch (bundle.getInt(PROFILE_ROLE))
                 {
                     case PATIENT:
-                        profilePic.setImageResource(R.drawable.patient);
+                        profilePic.setImageResource(R.drawable.patient_default);
                         break;
                     case DOCTOR:
-                        profilePic.setImageResource(R.drawable.doctor);
+                        profilePic.setImageResource(R.drawable.doctor_default);
                         break;
                     case ASSISTANT:
-                        profilePic.setImageResource(R.drawable.assistant);
+                        profilePic.setImageResource(R.drawable.assistant_default);
                         break;
                 }
 
@@ -451,7 +451,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.save);
+        menuItem.setTitle("SAVE");
     }
 
     @Override

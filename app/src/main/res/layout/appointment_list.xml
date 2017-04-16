@@ -11,18 +11,19 @@
         android:layout_below="@+id/locationLayout">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/appointment_icon"
+            android:background="@drawable/manage_appointment"
             android:id="@+id/appointmentIcon"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/body6"
             android:text="12-may-2015  8:15PM"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="5dp"
@@ -34,7 +35,7 @@
             android:gravity="center"
             android:id="@+id/feedback_btn"
             android:layout_marginRight="10dp"
-            android:layout_above="@+id/nextChange1"
+            android:textAppearance="@style/body6_blue_button_style"
             android:layout_marginBottom="5dp"
             android:layout_alignParentRight="true"
             android:visibility="gone"
@@ -50,7 +51,8 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/feedback_btn"
             android:layout_alignParentRight="true"
-            android:text="Change"
+            android:textAppearance="@style/body6_blue_button_style"
+            android:text="Reschedule"
             android:visibility="visible"
             />
 
@@ -63,6 +65,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/change_btn"
             android:layout_alignParentRight="true"
+            android:textAppearance="@style/body6_red_button_style"
             android:text="Cancel"
             android:visibility="visible"
             />

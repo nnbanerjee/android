@@ -41,7 +41,7 @@
              android:layout_height="237dp"
              android:layout_gravity="center_horizontal"
              android:layout_marginTop="5dp"
-             android:background="@drawable/clock123"
+             android:background="@drawable/clock_blue"
              android:paddingBottom="5dp" />
 
 
@@ -89,7 +89,7 @@
             android:clickable="true"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/dismiss"
+            android:background="@drawable/cross"
             android:gravity="center"
             android:paddingTop="5dp" />
 
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/snooze"
+            android:background="@drawable/clock_blue"
             android:gravity="center"
             android:paddingTop="5dp" />
 

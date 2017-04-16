@@ -573,7 +573,7 @@ public class PatientMedicinReminder extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.save);
+        menuItem.setTitle("SAVE");
     }
 
     @Override

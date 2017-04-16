@@ -68,7 +68,7 @@ public class PatientVisitDatesView extends ParentFragment
         allAppointments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setHasOptionsMenu(false);
+//                setHasOptionsMenu(false);
                 //appointments
                 //Fragment fragment = new DoctorAppointmentSummary();
                 Bundle bun = getActivity().getIntent().getExtras();
@@ -87,18 +87,6 @@ public class PatientVisitDatesView extends ParentFragment
             }
         });
 
-//        //this button is hidden and moved to menu
-//        addClinic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //appointments
-//                //Fragment fragment = new DoctorAppointmentSummary();
-//                ParentFragment fragment = new DoctorAppointmentInformation();
-//                ((ManagePatientProfile)getActivity()).fragmentList.add(fragment);
-//                FragmentManager fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//
-//        }});
 
         return view;
     }
@@ -111,7 +99,7 @@ public class PatientVisitDatesView extends ParentFragment
         inflater.inflate(R.menu.patient_visit_dates, menu);
         super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.ic_note_add_black_24dp);
+        menuItem.setIcon(R.drawable.add);
     }
 
 

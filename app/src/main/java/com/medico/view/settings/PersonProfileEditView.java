@@ -103,21 +103,21 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         switch (bundle.getInt(PROFILE_TYPE)) {
             case PATIENT:
                 textviewTitle.setText("Patient Profile");
-                profilePic.setImageResource(R.drawable.patient);
+                profilePic.setImageResource(R.drawable.patient_default);
                 String[] patientProfessions = getActivity().getResources().getStringArray(R.array.patient_professions);
                 ArrayAdapter<String> patientArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, patientProfessions);
                 specialization.setAdapter(patientArrayAdapter);
                 break;
             case ASSISTANT:
                 textviewTitle.setText("Assistant Profile");
-                profilePic.setImageResource(R.drawable.assistant);
+                profilePic.setImageResource(R.drawable.assistant_default);
                 String[] assistantProfessions = getActivity().getResources().getStringArray(R.array.assistant_professions);
                 ArrayAdapter<String> assistant_professionsArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, assistantProfessions);
                 specialization.setAdapter(assistant_professionsArrayAdapter);
                 break;
             case DOCTOR:
                 textviewTitle.setText("Doctor Profile");
-                profilePic.setImageResource(R.drawable.doctor);
+                profilePic.setImageResource(R.drawable.doctor_default);
                 Specialization[] options = {};
                 ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, options);
                 specialization.setAdapter(specializationArrayAdapter);
@@ -400,7 +400,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.save);
+        menuItem.setTitle("SAVE");
     }
 
     @Override

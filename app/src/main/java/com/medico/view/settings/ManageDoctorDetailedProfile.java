@@ -145,7 +145,7 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
 //
 //    public void setDate(){
 //
-//        new DatePickerDialog(getActivity(),d,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+//        new DatePickerDialog(getActivity(),d,calendar_grey.get(Calendar.YEAR),calendar_grey.get(Calendar.MONTH),calendar_grey.get(Calendar.DAY_OF_MONTH)).show();
 //    }
 //    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
 //
@@ -154,16 +154,16 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
 //
 //        @Override
 //        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//            calendar.set(Calendar.YEAR,year);
-//            calendar.set(Calendar.MONTH,monthOfYear);
-//            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+//            calendar_grey.set(Calendar.YEAR,year);
+//            calendar_grey.set(Calendar.MONTH,monthOfYear);
+//            calendar_grey.set(Calendar.DAY_OF_MONTH,dayOfMonth);
 //            updatedate();
 //        }
 //
 //    };
 //    public void updatedate()
 //    {
-//        dob.setText(calendar.get(Calendar.YEAR)+"-"+showMonth(calendar.get(Calendar.MONTH))+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+//        dob.setText(calendar_grey.get(Calendar.YEAR)+"-"+showMonth(calendar_grey.get(Calendar.MONTH))+"-"+calendar_grey.get(Calendar.DAY_OF_MONTH));
 //    }
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -247,7 +247,7 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.save);
+        menuItem.setTitle("SAVE");
     }
 
     @Override

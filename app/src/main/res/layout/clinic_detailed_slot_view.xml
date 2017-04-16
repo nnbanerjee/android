@@ -30,7 +30,7 @@
         android:layout_alignStart="@+id/slot_name"
         android:layout_below="@+id/slot_name"
         android:layout_marginTop="23dp"
-        android:background="@drawable/calendar" />
+        android:background="@drawable/calendar_blue" />
 
     <TextView
         android:id="@+id/textView3"
@@ -137,7 +137,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/slot_name"
-        android:background="@drawable/right_arrow_home" />
+        android:background="@drawable/arrow_right" />
 
     <TextView
         android:id="@+id/textView9"

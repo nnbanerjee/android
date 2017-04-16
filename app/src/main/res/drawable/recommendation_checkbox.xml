@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:state_checked="false" android:drawable="@drawable/like_blue" />
-<item android:state_checked="true" android:drawable="@drawable/like_black" />
-<item android:drawable="@drawable/unselected_star" /> <!-- default state -->
+<item android:state_checked="false" android:drawable="@drawable/ic_thumb_up_black_24dp" />
+<item android:state_checked="true" android:drawable="@drawable/rectagle_white" />
+<item android:drawable="@drawable/rectagle_white" /> <!-- default state -->
 </selector>

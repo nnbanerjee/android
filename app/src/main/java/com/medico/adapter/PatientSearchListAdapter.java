@@ -90,7 +90,7 @@ public class PatientSearchListAdapter extends HomeAdapter  {
                 viewImage.setImageResource(R.drawable.doctor);
                 break;
             case PARAM.ASSISTANT:
-                viewImage.setImageResource(R.drawable.assistant);
+                viewImage.setImageResource(R.drawable.assistant_default);
                 break;
         }
 

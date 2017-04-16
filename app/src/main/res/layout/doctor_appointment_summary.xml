@@ -64,7 +64,7 @@
                 android:id="@+id/timeBtn"
                 android:layout_marginTop="13dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/cal"/>
+                android:background="@drawable/calendar_blue"/>
 
         </RelativeLayout>
 
@@ -196,7 +196,7 @@
                 android:layout_alignParentRight="true"
 
                 android:paddingTop="10dp"
-                android:background="@drawable/histry_icon" />
+                android:background="@drawable/ic_history_black_24dp" />
 
         </RelativeLayout>
 
@@ -233,7 +233,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/histry_icon" />
+                android:background="@drawable/ic_history_black_24dp" />
 
         </RelativeLayout>
 
@@ -279,7 +279,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
 
-                    android:background="@drawable/medicine_reminder" />
+                    android:background="@drawable/medicine" />
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
@@ -304,7 +304,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
-                android:background="@drawable/histry_icon"
+                android:background="@drawable/ic_history_black_24dp"
                 android:layout_alignTop="@+id/add_alarm"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
@@ -359,7 +359,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/histry_icon" />
+                android:background="@drawable/ic_history_black_24dp" />
 
         </RelativeLayout>
     </RelativeLayout>

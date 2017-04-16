@@ -42,8 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginLeft="25dp"
-                    android:background="@drawable/doctor_off" />
+                    android:layout_marginLeft="25dp"/>
 
                 <ImageView
                     android:id="@+id/patient"
@@ -51,8 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/doctor"
-                    android:background="@drawable/patient_off" />
+                    android:layout_toRightOf="@+id/doctor"/>
 
                 <ImageView
                     android:id="@+id/assistant"
@@ -60,8 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/patient"
-                    android:background="@drawable/assistant_off" />
+                    android:layout_toRightOf="@+id/patient"/>
             </RelativeLayout>
 
             <RadioButton

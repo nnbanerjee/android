@@ -101,8 +101,6 @@ public class ClinicPatientAdapter extends HomeAdapter {
         TextView clinicName = (TextView)convertView.findViewById(R.id.clinicName);
         TextView clinicLocation = (TextView)convertView.findViewById(R.id.clinicLocation);
         TextView clinicContact = (TextView)convertView.findViewById(R.id.clinicContact);
-//        ListView clinicSlots   = (ListView)convertView.findViewById(R.id.clinicSlots);
-        // access your linear layout
         LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.clinicSlots);
         // load the xml structure of your row
         DoctorClinicDetails details = clinicDetails.get(position);
@@ -111,8 +109,6 @@ public class ClinicPatientAdapter extends HomeAdapter {
         clinicContact.setText(details.clinic.landLineNumber.toString());
         if(details.slots != null && details.slots.size() > 0) {
             layout.removeAllViews();
-//            SlotAppointmentAdapter slotPatientAdapter = new SlotAppointmentAdapter(activity, details, patientAppointments, details.slots);
-//            clinicSlots.setAdapter(slotPatientAdapter);
             for(DoctorClinicDetails.ClinicSlots slot:details.slots) {
                 View child = activity.getLayoutInflater().inflate(R.layout.slot_list, null);
                 addSlots(child,details,slot);
@@ -309,12 +305,6 @@ public class ClinicPatientAdapter extends HomeAdapter {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-//                                RestAdapter restAdapter = new RestAdapter.Builder()
-//                                        .setEndpoint(activity.getString(R.string.base_url))
-//                                        .setClient(new OkClient())
-//                                        .setLogLevel(RestAdapter.LogLevel.FULL)
-//                                        .build();
-//                                MyApi api = restAdapter.create(MyApi.class);
                                 api.cancelAppointment(new AppointmentId1(appointments.appointmentId), new Callback<AppointmentResponse>() {
                                     @Override
                                     public void success(AppointmentResponse result, Response response) {
@@ -347,15 +337,6 @@ public class ClinicPatientAdapter extends HomeAdapter {
     }
 
     public void saveVisitedData(String doctorId, String patientId, String clinicId, String shift, Integer visited) {
-
-//        MyApi api;
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getResources().getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
-
 
         api.saveVisitedPatientAppointment(doctorId, patientId, clinicId, shift, visited, new Callback<String>() {
             @Override

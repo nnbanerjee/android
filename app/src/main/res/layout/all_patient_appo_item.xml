@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:padding="3dp"
         android:id="@+id/rightArrow"
-        android:background="@drawable/right_arrow_grey"
+        android:background="@drawable/arrow_right_light_grey"
         android:layout_alignParentRight="true"
         android:layout_marginTop="3dp"/>
 

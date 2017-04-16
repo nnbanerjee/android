@@ -14,7 +14,7 @@
             android:id="@+id/profile_pic"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:background="@drawable/assistant"
+            android:background="@drawable/assistant_default"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp" />
         <Button
@@ -202,7 +202,7 @@
                       android:layout_width="40dp"
                       android:layout_height="40dp"
                       android:layout_alignParentRight="true"
-                      android:src="@drawable/cal"
+                      android:src="@drawable/calendar_blue"
                       android:layout_alignTop="@+id/dob" />
 
 
@@ -243,7 +243,7 @@
                     android:layout_toLeftOf="@+id/current_location_button"
                     android:layout_alignRight="@+id/location"
                     android:layout_alignBaseline="@+id/location"
-                    android:background="@drawable/delete" />
+                    android:background="@drawable/cross" />
                 <Button
                     android:id="@+id/current_location_button"
                     android:layout_width="25dp"

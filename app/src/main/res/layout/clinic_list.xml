@@ -18,6 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/heading1.1_blue"
             android:text="Clinic Name "
             android:layout_margin="10dp"
             android:id="@+id/clinicName" />
@@ -28,7 +29,7 @@
             android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/right_arrow_black"
+            android:background="@drawable/arrow_right_light_grey"
             android:visibility="invisible"
             android:layout_marginTop="2dp" />
             </RelativeLayout>
@@ -51,6 +52,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body7"
                 android:text="Clinic Location "
                 android:layout_marginLeft="10dp"
                 android:textAlignment="center"
@@ -62,13 +64,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_margin="5dp"
-                android:background="@drawable/calling"
+                android:background="@drawable/phone"
                 android:layout_below="@+id/clinicLocation"
                 android:id="@+id/contacticon"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body7"
                 android:text="Contact : "
                 android:layout_below="@+id/clinicLocation"
                 android:layout_toRightOf="@+id/contacticon"
@@ -78,6 +81,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body7"
                 android:text="Clinic Contact"
                 android:layout_margin="5dp"
                 android:layout_below="@+id/clinicLocation"

@@ -111,22 +111,22 @@ public class MenuAdapter extends ParentAdapter{
             }
             case CLINIC_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.clinic);
+                imageShow.setImageResource(R.drawable.clinic_default);
                 break;
             }
             case ASSISTANT_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.assistant);
+                imageShow.setImageResource(R.drawable.assistant_default);
                 break;
             }
             case DEPENDENT_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.depend);
+                imageShow.setImageResource(R.drawable.settings_dependent);
                 break;
             }
             case LOGOUT_CONFIRMATION:
             {
-                imageShow.setImageResource(R.drawable.logout_menu);
+                imageShow.setImageResource(R.drawable.menu);
                 break;
             }
         }

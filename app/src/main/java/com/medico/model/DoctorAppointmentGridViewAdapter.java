@@ -105,8 +105,8 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
     }
 
     private Integer[] mThumbIds = {
-        R.drawable.booking_available_high, R.drawable.booking_confirmed_high,
-        R.drawable.booking_tentative_high, R.drawable.booking_selected_high};
+        R.drawable.rectagle_white, R.drawable.booking_confirmed,
+        R.drawable.booking_tentative, R.drawable.booking_selected};
 
     private Long[] getTimings()
     {

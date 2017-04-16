@@ -355,14 +355,13 @@ public class FileUploadDialog extends DialogFragment {
                 System.out.println("typedFIle::::::::" + typedFile.toString());
                 String documentType = selectedImagePath.substring(selectedImagePath.lastIndexOf("."));
                 System.out.println("Document TYpe::::::" + documentType);
-                if (documentType.equalsIgnoreCase(".pdf")) {
-                    image.setImageResource(R.drawable.pdf_preview);
-                } else if (documentType.equalsIgnoreCase(".txt")) {
-                    image.setImageResource((R.drawable.text));
-                } else if (documentType.equalsIgnoreCase(".doc") || (documentType.equalsIgnoreCase(".docx"))) {
-                    image.setImageResource(R.drawable.doc_preview);
-                } else if (documentType.equalsIgnoreCase(".xls") || (documentType.equalsIgnoreCase(".xlsx"))) {
-                    image.setImageResource(R.drawable.xlsx);
+                if (documentType.equalsIgnoreCase(".pdf"))
+                {
+                    image.setImageResource(R.drawable.document_pdf);
+                }
+                 else if (documentType.equalsIgnoreCase(".png"))
+                {
+                    image.setImageResource(R.drawable.document_png);
                 }
 
 

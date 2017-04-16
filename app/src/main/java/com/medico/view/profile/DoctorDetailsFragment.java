@@ -64,7 +64,7 @@ public class DoctorDetailsFragment extends ParentFragment {
         viewImage.setBackgroundResource(R.drawable.patient);
 //        visitDates = (ImageView) view.findViewById(R.id.viewAll);
         closeMenu = (ImageView) view.findViewById(R.id.downImg);
-        closeMenu.setImageResource(R.drawable.up_arrow);
+        closeMenu.setImageResource(R.drawable.arrow_up_red);
 
         //------------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ public class DoctorDetailsFragment extends ParentFragment {
 
                 appointmentsBtn.setBackgroundResource(R.drawable.page_selected);
                 profileBtn.setBackgroundResource(R.drawable.page_default);
-                Fragment fragment = new ClinicAllPatientFragment();
+                Fragment fragment = new DoctorPatientClinicAppointmentListView();
                 childfragment = fragment;
                 FragmentManager fragmentManger = getFragmentManager();
 //                fragmentManger.beginTransaction().replace(R.id.content_details, fragment, "Doctor Consultations").addToBackStack(null).commit();

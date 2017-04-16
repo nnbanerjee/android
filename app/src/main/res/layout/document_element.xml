@@ -116,7 +116,7 @@
         android:id="@+id/document_image"
         android:layout_marginRight="45dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/pdf"
+        android:src="@drawable/document_pdf"
         android:layout_toRightOf="@+id/patient_profile"
         android:layout_alignParentRight="true"
     />
@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/remove_document"
         android:layout_marginTop="20dp"
-        android:src="@drawable/delete"
+        android:src="@drawable/cross"
         android:layout_below="@+id/document_image"
         android:layout_toRightOf="@+id/patient_profile"
         android:layout_alignParentRight="true"

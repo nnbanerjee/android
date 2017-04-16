@@ -9,10 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.medico.model.PatientVisits;
 import com.medico.application.R;
+import com.medico.model.PatientVisits;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
             holder = (ViewHolder) convertView.getTag();
         }
         final int pos = position;
-        DateFormat format1 = DateFormat.getDateInstance(DateFormat.SHORT);
+        DateFormat format1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
         DateFormat format2 = DateFormat.getTimeInstance(DateFormat.SHORT);
         holder.date.setText(format1.format(new Date(appointment.get(position).dateTime)) );
         holder.time.setText(format2.format(new Date((appointment.get(position).dateTime)) ));
@@ -89,18 +90,17 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        //set header text as first char in name
-        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
-        String headerText = format.format(new Date(appointment.get(position).dateTime)).toString();
-        holder.text.setText(headerText);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(appointment.get(position).dateTime));
+        holder.text.setText(new Integer(calendar.get(Calendar.YEAR)).toString());
         return convertView;
     }
 
     @Override
     public long getHeaderId(int position) {
-        //return the first character of the country as ID because this is what headers are based upon
-        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
-        return format.format(new Date(appointment.get(position).dateTime)).subSequence(7, 11).charAt(3);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(appointment.get(position).dateTime));
+        return calendar.get(Calendar.YEAR);
     }
 
     class HeaderViewHolder {

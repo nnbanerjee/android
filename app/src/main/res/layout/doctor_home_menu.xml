@@ -17,11 +17,11 @@
             android:layout_marginTop="20dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/doctor_image"
-                android:background="@drawable/patientgirl"
+                android:background="@drawable/doctor"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -32,18 +32,18 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/patients_profiles"
                     android:textAppearance="@style/heading2"
                     android:id="@+id/doctorBtn"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/right_arrow_home"
+                    android:background="@drawable/arrow_right"
                     android:id="@+id/right_arrow_patient_profile"
                 />
                 <TextView
@@ -76,11 +76,11 @@
             android:layout_marginTop="20dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/manage_appointment_image"
-                android:background="@drawable/appointments"
+                android:background="@drawable/manage_appointment"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -90,18 +90,18 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/manage_appointments"
                     android:textAppearance="@style/heading2"
                     android:id="@+id/manage_appointment_text"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/right_arrow_home"
+                    android:background="@drawable/arrow_right"
                     android:id="@+id/right_arrow_manage_appointments"
                     />
                 <TextView
@@ -129,15 +129,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/manage_appointment"
             android:id="@+id/manage_finance"
-
             android:layout_marginTop="20dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/firstAidKitsImg"
-                android:background="@drawable/finance"
+                android:background="@drawable/manage_finance"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -147,18 +146,18 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/manage_finance"
                     android:textAppearance="@style/heading2"
                     android:id="@+id/manage_finance_text"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/right_arrow_home"
+                    android:background="@drawable/arrow_right"
                     android:id="@+id/right_arrow_manage_finance"
                     />
                 <TextView
@@ -190,11 +189,11 @@
 
             android:layout_marginTop="20dp">
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/feedback_icon"
-                android:background="@drawable/selected_star"
+                android:background="@drawable/feedback"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -204,18 +203,18 @@
                 android:layout_toRightOf="@+id/feedback_icon">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/feedback"
                     android:textAppearance="@style/heading2"
                     android:id="@+id/feedback_text"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/right_arrow_home"
+                    android:background="@drawable/arrow_right"
                     android:id="@+id/right_arrow_feedback"
                     />
                 <TextView

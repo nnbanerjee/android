@@ -200,6 +200,22 @@
     <style name = "body4_white" parent="body4">
         <item name = "android:textColor">@color/white</item>
     </style>
+    <style name = "body7_blue" parent="body7">
+        <item name = "android:textColor">@color/medico_blue</item>
+        <item name="android:textColorHint">@color/medico_blue</item>
+    </style>
+    <style name = "body7_red" parent="body7">
+        <item name = "android:textColor">@color/medico_red</item>
+        <item name="android:textColorHint">@color/medico_blue</item>
+    </style>
+    <style name = "body6_blue_button_style" parent="body6">
+        <item name="android:background">@drawable/button_shape_blue</item>
+        <item name = "android:textColor">@color/medico_blue</item>
+    </style>
+    <style name = "body6_red_button_style" parent="body6">
+        <item name="android:background">@drawable/button_shape_red</item>
+        <item name = "android:textColor">@color/medico_red</item>
+    </style>
     <style name = "body12_white" parent="body12">
         <item name = "android:textColor">@color/white</item>
     </style>

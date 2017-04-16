@@ -86,12 +86,11 @@
                 android:layout_height="25dp"
                 android:id="@+id/timeBtn"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/cal"/>
+                android:background="@drawable/calendar_blue"/>
 
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/layout20"
-            android:background="@color/grey"
             android:layout_width="wrap_content"
             android:layout_below="@+id/dateLayout"
             android:layout_height="wrap_content">

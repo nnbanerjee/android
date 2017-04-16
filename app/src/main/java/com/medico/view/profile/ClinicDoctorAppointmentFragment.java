@@ -132,13 +132,13 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
             api.createAppointment(appointment, new Callback<AppointmentResponse>() {
                 @Override
                 public void success(AppointmentResponse s, Response response) {
-                    Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Appointment Created Successful!!", Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -153,7 +153,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), "Appointment update failed!!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Appointment update failed!!", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -196,7 +196,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
     }
 
 //    public void setDate(TextView dateField) {
-//        final Calendar calendar = Calendar.getInstance();
+//        final Calendar calendar_grey = Calendar.getInstance();
 //
 //        Date date = null;
 //        if(dateValue.getText().toString().trim().length() > 0)
@@ -258,12 +258,12 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
             @Override
             public void success(List<DoctorHoliday> holidayList, Response response) {
                 doctorholidayList = holidayList;
-                Toast.makeText(getActivity(), "Holiday Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Holiday Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Holiday Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Holiday Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorholidayList = null;
             }
         });
@@ -276,12 +276,12 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
                     DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList);
                     timeTeableList.setAdapter(adapter);
                 }
-                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorSlotBookings = null;
                 DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList);
                 timeTeableList.setAdapter(adapter);
@@ -297,12 +297,12 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
                 if(appointment != null ) {
                     doctorAppointment = appointment;
                 }
-                Toast.makeText(getActivity(), "Appointment Request Send Successfully !!!" , Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Appointment Request Send Successfully !!!" , Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Appointment Request Send FAILED " , Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Appointment Request Send FAILED " , Toast.LENGTH_LONG).show();
                 doctorAppointment = new DoctorAppointment();
             }
         });
@@ -314,7 +314,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.save);
+        menuItem.setTitle("SAVE");
     }
 
     @Override
@@ -400,12 +400,12 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
                     if (canBeSaved()) {
                         save();
                     } else {
-                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                     }
                 } else if (canBeSaved()) {
-                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                 }
 
             }

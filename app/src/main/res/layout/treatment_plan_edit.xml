@@ -49,7 +49,7 @@
             android:id="@+id/calenderImg"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/cal"/>
+            android:background="@drawable/calendar_blue"/>
     </RelativeLayout>
     <TextView
         android:layout_width="match_parent"

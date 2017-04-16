@@ -98,9 +98,9 @@ public class DocumentAdapter extends HomeAdapter {
 
         if (file.type.intValue() == 0)
         {
-            image.setImageResource(R.drawable.pdf);
+            image.setImageResource(R.drawable.document_pdf);
         } else if (file.type.intValue() == 1   ) {
-            image.setImageResource(R.drawable.doc);
+            image.setImageResource(R.drawable.document_png);
         }
         close.setTag(fileList.get(position));
 

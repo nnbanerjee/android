@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/doctor"/>
+            android:background="@drawable/doctor_default"/>
 
         <ImageView
             android:id="@+id/downImg"
@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/doctor_image"
-            android:background="@drawable/down_arrow"
+            android:background="@drawable/arrow_down_red"
             android:scaleType="center" />
         </LinearLayout>
         <RelativeLayout
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/right_arrow_grey"
+                android:background="@drawable/arrow_right_light_grey"
                 android:layout_marginTop="2dp"
                 android:textStyle="bold" />
             <TextView

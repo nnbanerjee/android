@@ -223,7 +223,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
 //        {
 //            fragment.setEditable(true);
             menuItem.setChecked(true);
-            menuItem.setIcon(R.drawable.save);
+            menuItem.setTitle("SAVE");
 //        }
     }
 

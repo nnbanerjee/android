@@ -472,7 +472,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
         menuItem.setChecked(true);
-        menuItem.setIcon(R.drawable.calendar);
+        menuItem.setIcon(R.drawable.calendar_blue);
     }
 
     @Override
@@ -524,12 +524,12 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
 //    public Date getFirstValidDayOfWeek(Date date)
 //    {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(date);
+//        Calendar calendar_grey = Calendar.getInstance();
+//        calendar_grey.setTime(date);
 //        Date[] weekDays = getFirstDatyOfWeek(date);
 //        for(int i = 0; i < weekDays.length; i++ )
 //        {
-//            if(isValid(calendar.get(Calendar.DAY_OF_WEEK)))
+//            if(isValid(calendar_grey.get(Calendar.DAY_OF_WEEK)))
 //                return date;
 //        }
 //        return null;

@@ -211,7 +211,7 @@
             android:layout_toLeftOf="@+id/current_location_button"
             android:layout_alignRight="@+id/location"
             android:layout_alignBaseline="@+id/location"
-            android:background="@drawable/delete" />
+            android:background="@drawable/cross" />
         <Button
             android:id="@+id/current_location_button"
             android:layout_width="25dp"
@@ -381,7 +381,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
 
-                    android:background="@drawable/medicine_reminder" />
+                    android:background="@drawable/medicine" />
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="100dp"

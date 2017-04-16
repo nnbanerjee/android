@@ -25,7 +25,7 @@
                     android:layout_height="30dp"
                     android:gravity="left"
                     android:layout_alignParentLeft="true"
-                    android:background="@drawable/back"
+                    android:background="@drawable/arrow_left_summary"
                     android:visibility="visible" />
                 <Button
                     android:id="@+id/logout"
@@ -33,7 +33,7 @@
                     android:layout_height="30dp"
 
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/logout"
+                    android:background="@drawable/settings_logout"
                     android:visibility="invisible" />
             </android.support.v7.widget.Toolbar>
             <RelativeLayout
@@ -44,22 +44,21 @@
                 android:background="@color/color_blue_default">
                 <Button
                     android:id="@+id/refresh"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
-
                     android:layout_toLeftOf="@+id/drawar_button"
                     android:visibility="visible"
                     android:background="@drawable/refresh" />
                 <Button
                     android:id="@+id/drawar_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:padding="5dp"
                     android:layout_marginLeft="5dp"
                     android:visibility="visible"
-                    android:background="@drawable/home" />
+                    android:background="@drawable/settings" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/home_layout2"
@@ -69,10 +68,10 @@
                 android:layout_below="@+id/home_layout1">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_picture"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/dr_icon" />
+                    android:src="@drawable/doctor_profile" />
                 <TextView
                     android:id="@+id/account_name"
                     android:layout_width="wrap_content"
@@ -91,7 +90,7 @@
                     android:layout_marginLeft="2dp"
                     android:layout_below="@+id/profile_picture"
                     android:layout_marginTop="17dp"
-                    android:background="@drawable/down_grey_arrow"
+                    android:background="@drawable/arrow_down_white"
                      />
                 <TextView
                     android:id="@+id/status_text"

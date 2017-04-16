@@ -41,9 +41,9 @@ public class RegistrationChooser extends ParentFragment
 
                 Intent intObj = new Intent(getActivity(), SigninActivityAssistance.class);
                 startActivity(intObj);
-                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_on));
-                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_off) );
-                patient.setBackground(getResources().getDrawable(R.drawable.patient_off) );
+//                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_on));
+//                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_off) );
+//                patient.setBackground(getResources().getDrawable(R.drawable.patient_off) );
             }
         });
 
@@ -53,9 +53,9 @@ public class RegistrationChooser extends ParentFragment
                             startActivity(intObj);*/
                 Intent intObj = new Intent(getActivity(), SigninActivityDoctor.class);
                 startActivity(intObj);
-                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_off));
-                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_on) );
-                patient.setBackground(getResources().getDrawable(R.drawable.patient_off));
+//                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_off));
+//                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_on) );
+//                patient.setBackground(getResources().getDrawable(R.drawable.patient_off));
             }
         });
 
@@ -66,9 +66,9 @@ public class RegistrationChooser extends ParentFragment
 
                 Intent intObj = new Intent(getActivity(), SigninActivity.class);
                 startActivity(intObj);
-                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_off));
-                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_off) );
-                patient.setBackground(getResources().getDrawable(R.drawable.patient_on));
+//                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_off));
+//                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_off) );
+//                patient.setBackground(getResources().getDrawable(R.drawable.patient_on));
             }
         });
 
