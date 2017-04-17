@@ -25,7 +25,7 @@ import com.medico.view.home.ParentFragment;
 public class DoctorAppointmentInformation extends ParentFragment {
 
     RelativeLayout replacementFragment;
-    Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn, feedbackBtn;
+    Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn;
     ParentFragment selectedFragment ;
     Menu menu;
 
@@ -41,7 +41,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         doctorNoteBtn = (Button) view.findViewById(R.id.doctorNoteBtn);
         treatmentBtn = (Button) view.findViewById(R.id.treatmentBtn);
         invoicesBtn = (Button) view.findViewById(R.id.invoicesBtn);
-        feedbackBtn = (Button) view.findViewById(R.id.feedback_btn);
+//        feedbackBtn = (Button) view.findViewById(R.id.feedback_btn);
 
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Visit Details");
@@ -63,7 +63,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
             public void onClick(View v) {
                 deselectButtons();
                 documentationBtn.setSelected(true);
-                summaryBtn.setBackgroundResource(R.drawable.tab_selected);
+                documentationBtn.setBackgroundResource(R.drawable.tab_selected);
                 getDocumentationInformation();
             }
         });
@@ -73,7 +73,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
             public void onClick(View v) {
                 deselectButtons();
                 doctorNoteBtn.setSelected(true);
-                summaryBtn.setBackgroundResource(R.drawable.tab_selected);
+                doctorNoteBtn.setBackgroundResource(R.drawable.tab_selected);
                 getDoctorNoteInformation();
             }
         });
@@ -95,14 +95,6 @@ public class DoctorAppointmentInformation extends ParentFragment {
                 invoicesBtn.setSelected(true);
                 invoicesBtn.setBackgroundResource(R.drawable.tab_selected);
                 getInvoicesInformation();
-            }
-        });
-        feedbackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deselectButtons();
-                feedbackBtn.setSelected(true);
-                feedbackBtn.setBackgroundResource(R.drawable.tab_selected);
             }
         });
         return view;
@@ -170,11 +162,17 @@ public class DoctorAppointmentInformation extends ParentFragment {
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
-
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        setHasOptionsMenu(true);
 
 //        getView().setFocusableInTouchMode(true);
 //        getView().requestFocus();
@@ -195,7 +193,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
 
         super.onStart();
-//        summaryBtn.callOnClick();
+        summaryBtn.callOnClick();
     }
 
 
@@ -222,6 +220,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
 //        else
 //        {
 //            fragment.setEditable(true);
+            menuItem.setIcon(null);
             menuItem.setChecked(true);
             menuItem.setTitle("SAVE");
 //        }
@@ -256,12 +255,11 @@ public class DoctorAppointmentInformation extends ParentFragment {
             }
             break;
             case R.id.home: {
-
+                return false;
             }
-            break;
 
         }
-        return true;
+        return false;
     }
 
     private void deselectButtons()
@@ -271,13 +269,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
         doctorNoteBtn.setSelected(false);
         treatmentBtn.setSelected(false);
         invoicesBtn.setSelected(false);
-        feedbackBtn.setSelected(false);
+//        feedbackBtn.setSelected(false);
         summaryBtn.setBackgroundResource(R.drawable.tab_default);
         documentationBtn.setBackgroundResource(R.drawable.tab_default);
         doctorNoteBtn.setBackgroundResource(R.drawable.tab_default);
         treatmentBtn.setBackgroundResource(R.drawable.tab_default);
         invoicesBtn.setBackgroundResource(R.drawable.tab_default);
-        feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+//        feedbackBtn.setBackgroundResource(R.drawable.tab_default);
     }
 
 }

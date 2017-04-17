@@ -48,18 +48,19 @@ public class ParentActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 // User chose the "Settings" item, show the app settings UI...
-                if (fragmentList.size() > 1) {
+//                if (fragmentList.size() > 0) {
                     onBackPressed();
                     return true;
-                }
-                else
-                {
-                    return false;
-                }
-
+//                }
+//                else
+//                {
+//                    return false;
+//                }
+//
 
             default:
                 // If we got here, the user's action was not recognized.
@@ -121,15 +122,15 @@ public class ParentActivity extends AppCompatActivity
 
     public void attachFragment(ParentFragment fragment)
     {
-        if(fragmentList.size()>0)
-            fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
-        fragmentList.add(fragment);
+//        if(fragmentList.size()>0)
+//            fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
+//        fragmentList.add(fragment);
     }
     public void detachFragment(ParentFragment fragment)
     {
-        if(fragmentList.size()>0)
-            fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
-        fragmentList.remove(fragment);
+//        if(fragmentList.size()>0)
+//            fragmentList.get(fragmentList.size()-1).setHasOptionsMenu(false);
+//        fragmentList.remove(fragment);
     }
     public Fragment getParentFragment()
     {

@@ -4,18 +4,19 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
       <style name="AppTheme" parent="@style/_AppTheme">
-            <item name="android:editTextStyle">@style/EditTextStyle</item>
-            <item name="android:buttonStyle">@style/ButtonStyle</item>
-            <item name="android:textViewStyle">@style/TextViewStyle</item>
+          <item name="android:editTextStyle">@style/EditTextStyle</item>
+             <item name="android:buttonStyle">@style/ButtonStyle</item>
+             <item name="android:textViewStyle">@style/TextViewStyle</item>
             <item name="android:spinnerStyle">@style/SpinnerStyle</item>
+            <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewStyle</item>
       </style>
 
-      <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+           <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-            <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
-            <item name="android:windowNoTitle">true</item>
-           <!-- <item name="windowActionBar">false</item>-->
-      </style>
+                 <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
+                 <item name="android:windowNoTitle">true</item>
+                <!-- <item name="windowActionBar">false</item>-->
+             </style>
 
         <!-- ActionBar styles -->
         <style name="MyActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -26,34 +27,24 @@
       <style name="EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/rounded_white_color</item>
         <item name="android:textAppearance">@style/body3</item>
-        <item name="android:layout_marginLeft">50dp</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:inputType">text</item>
           <item name="android:focusable">true</item>
         <item name="android:paddingLeft">3dp</item>
       </style>
       <style name="TextViewStyle" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">@style/body1</item>
-        <item name="android:layout_marginLeft">50dp</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:inputType">text</item>
         <item name="android:focusable">false</item>
         <item name="android:paddingLeft">3dp</item>
       </style>
       <style name="ButtonStyle" parent="android:style/Widget.Button">
         <item name="android:textAppearance">@style/body1</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">33dp</item>
-        <item name="android:layout_marginTop">33dp</item>
         <item name="android:background">@drawable/button_shape_blue</item>
         <item name="android:textAllCaps">true</item>
       </style>
       <style name="SpinnerStyle" parent="@android:style/Widget.Spinner">
           <item name="android:background">@drawable/rounded_white_color</item>
         <item name="android:textAppearance">@style/body3</item>
-        <item name="android:layout_marginLeft">50dp</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:inputType">text</item>
         <item name="android:spinnerMode">dropdown</item>
           <item name="android:layout_gravity">center</item>
@@ -63,10 +54,17 @@
       </style>
       <style name="SpinnerItemTextStyle" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textAppearance">@style/body3</item>
-        <item name="android:layout_marginLeft">50dp</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:inputType">text</item>
           <item name="android:focusable">true</item>
         <item name="android:paddingLeft">3dp</item>
       </style>
+    <style name="AutoCompleteTextViewStyle" parent="@android:style/Widget.AutoCompleteTextView">
+        <item name="android:background">@drawable/rounded_white_color</item>
+        <item name="android:ems">10</item>
+        <item name="android:gravity">top</item>
+        <item name="android:lines">1</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:popupLayout">@android:style/Widget.Holo.PopupMenu</item>
+        <item name="android:textAppearance">@style/body3</item>
+    </style>`
 </resources>

@@ -2,186 +2,128 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
     android:background="#ffffff">
 
    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-
-       <!--    <RelativeLayout
-              android:id="@+id/layout_visit_date"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:visibility="gone"
-              android:layout_margin="5dp">
-
-              <TextView
-                  android:id="@+id/clinic_text"
-                  android:layout_width="120dp"
-                  android:layout_height="wrap_content"
-                  android:paddingTop="5dp"
-                  android:text="Clinic Name"
-                  style="@style/body2"
-                  />
-
-              <TextView
-                  android:id="@+id/clinicName"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_toRightOf="@+id/clinic_text"
-                  android:paddingLeft="5dp"
-                  style="@style/textViewThemeForNewDesign"
-                   />
-
-          </RelativeLayout> -->
-
-        <RelativeLayout
-            android:id="@+id/layout5"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/visit_date"
+            android:layout_marginTop="@dimen/text_top_margin"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Visit Date"
+             />
+        <EditText
+            android:id="@+id/visit_date_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-            <TextView
-                android:id="@+id/emailIdText"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="Visit Date"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:id="@+id/visitedDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/emailIdText"
-                android:paddingLeft="5dp"
-                android:layout_marginTop="10dp" />
-            <Button
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/timeBtn"
-                android:layout_marginTop="13dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/calendar_blue"/>
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/layout6"
+            android:layout_marginTop="@dimen/edit_top_margin"
+            android:layout_toLeftOf="@+id/calendar_button"
+            android:layout_toStartOf="@+id/calendar_button"
+            android:layout_toRightOf="@+id/visit_date"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendar_button"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="@dimen/edit_top_margin"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/calendar_blue"/>
+        <TextView
+            android:id="@+id/visit_type"
+            android:layout_marginTop="@dimen/text_top_margin"
+            android:layout_below="@+id/visit_date"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visit Type"
+            android:layout_centerVertical="true" />
+        <Spinner
+            android:id="@+id/visit_type_value"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="@dimen/edit_top_margin"
+            android:layout_below="@+id/visit_date_value"
+            android:layout_toRightOf="@+id/visit_type"
+            android:layout_alignStart="@+id/visit_date_value"
+            android:layout_alignLeft="@+id/visit_date_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout5"
-            android:layout_margin="5dp">
+            android:entries="@array/visit_type_list"
+            android:spinnerMode="dialog"
+            />
+        <TextView
+            android:id="@+id/referredBy"
+            android:layout_below="@+id/visit_type"
+            android:layout_marginTop="@dimen/text_top_margin"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Referred by"
+            android:layout_centerVertical="true" />
 
-            <TextView
-                android:id="@+id/mobileText"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="Visit Type"
-                android:layout_centerVertical="true" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey"
-                android:layout_toRightOf="@+id/mobileText"
-                 >
-            <Spinner
-                android:id="@+id/visit"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:entries="@array/visit_type_list"
-                android:paddingLeft="5dp"
-                android:prompt="@string/select_visit_type"
-                android:spinnerMode="dialog"
-                />
-            </RelativeLayout>
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/refered_by_value"
+            android:layout_marginTop="@dimen/edit_top_margin"
+            android:layout_below="@+id/visit_type_value"
+            android:layout_toRightOf="@+id/referredBy"
+            android:layout_alignStart="@+id/visit_date_value"
+            android:layout_alignLeft="@+id/visit_date_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <RelativeLayout
-            android:id="@+id/layout7"
+        <TextView
+            android:id="@+id/clinic"
+            android:layout_marginTop="@dimen/text_top_margin"
+            android:layout_below="@+id/referredBy"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clinic"
+            android:layout_centerVertical="true" />
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout6"
-            android:layout_margin="5dp">
+            android:id="@+id/clinic_spinner"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="@dimen/edit_top_margin"
+            android:layout_below="@+id/refered_by_value"
+            android:layout_toRightOf="@+id/clinic"
+            android:layout_alignStart="@+id/visit_date_value"
+            android:layout_alignLeft="@+id/visit_date_value"
+            android:imeOptions="actionDone" />
 
-            <TextView
-                android:id="@+id/genderText"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="Referred by"
-                android:layout_centerVertical="true" />
-
-            <EditText
-                android:id="@+id/referedBy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/genderText"
-                android:paddingLeft="5dp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout7"
-            android:layout_margin="5dp"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:id="@+id/clinic"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="Clinic"
-                android:layout_centerVertical="true" />
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/clinic_spinner"
-                android:backgroundTint="@color/abc_primary_text_material_light"
-                android:layout_toRightOf="@+id/clinic"
-                android:imeOptions="actionDone" />
-      <!--      <MultiAutoCompleteTextView
-                android:id="@+id/clinicValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:textColor="#1E90FF"
-                android:scrollbars="vertical"
-                android:text=""
-                android:visibility="visible"
-                android:layout_toRightOf="@+id/clinic"
-                style="@style/textViewThemeForNewDesignWithoutMargin" /> -->
-
-
-        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/layout8"
+            android:layout_marginTop="@dimen/text_top_margin"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout18"
-            android:layout_margin="10dp"
-            android:paddingBottom="10dp"
+            android:layout_below="@+id/clinic"
             android:orientation="horizontal"
              >
 
             <TextView
                 android:id="@+id/symptomsText"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="2dp"
                 android:text="Symptoms" />
             <MultiAutoCompleteTextView
                 android:id="@+id/symptomsValue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:minLines="2"
-                android:maxLines="4"
+                android:layout_height="80dp"
+                android:minLines="4"
+                android:maxLines="6"
+                android:paddingLeft="2dp"
                 android:text=""
                 android:layout_below="@+id/symptomsText"
                 android:scrollbars="vertical"
@@ -194,8 +136,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-
-                android:paddingTop="10dp"
                 android:background="@drawable/ic_history_black_24dp" />
 
         </RelativeLayout>
@@ -203,10 +143,11 @@
 
         <RelativeLayout
             android:id="@+id/layout9"
+            android:layout_marginTop="@dimen/text_top_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout8"
-            android:layout_margin="5dp">
+            android:layout_alignParentLeft="true">
 
             <TextView
                 android:id="@+id/diagnosisText"
@@ -217,11 +158,12 @@
             <MultiAutoCompleteTextView
                 android:id="@+id/diagnosisValue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_below="@+id/diagnosisText"
                 android:completionThreshold="1"
-                android:minLines="2"
-                android:maxLines="4"
+                android:paddingLeft="2dp"
+                android:minLines="4"
+                android:maxLines="6"
                 android:text=""
                 android:scrollbars="vertical"
                 android:keepScreenOn="true"
@@ -239,11 +181,12 @@
 
         <RelativeLayout
             android:id="@+id/layout10"
+            android:layout_marginTop="@dimen/text_top_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout9"
 
-            android:layout_margin="5dp">
+            android:layout_alignParentLeft="true">
 
             <TextView
                 android:id="@+id/medicinePrescribedText"
@@ -255,35 +198,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/medicinePrescribedText"
                 android:background="@drawable/square_grey_color"
                 android:id="@+id/relativeLayout">
-
-                <MultiAutoCompleteTextView
-                    android:id="@+id/medicineValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:visibility="gone"
-                    android:layout_toLeftOf="@+id/reminderBtn"
-                    android:completionThreshold="1"
-                    android:paddingLeft="5dp" />
-
-                <Button
-                    android:id="@+id/reminderBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:visibility="gone"
-                    android:layout_marginRight="5dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-
-                    android:background="@drawable/medicine" />
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_margin="5dp"
                     android:id="@+id/alarm_list">
                 </ListView>
             </RelativeLayout>
@@ -291,56 +211,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/add_alarm"
-                android:paddingTop="15dp"
                 android:background="@drawable/add"
                 android:clickable="true"
-                android:layout_marginEnd="17dp"
                 android:layout_above="@+id/relativeLayout"
                 android:layout_toLeftOf="@+id/prescribHistryBtn"
-                android:layout_toStartOf="@+id/prescribHistryBtn"
-                android:layout_marginRight="17dp" />
+                android:layout_toStartOf="@+id/prescribHistryBtn"/>
             <ImageView
                 android:id="@+id/prescribHistryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:background="@drawable/ic_history_black_24dp"
                 android:layout_alignTop="@+id/add_alarm"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="23dp" />
+                android:layout_alignParentEnd="true"/>
 
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layout11"
+            android:layout_marginTop="@dimen/text_top_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout10"
-            android:layout_margin="5dp">
+            android:layout_alignParentLeft="true">
 
             <TextView
                 android:id="@+id/testPrescribedText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tests Prescribed" />
-
-            <MultiAutoCompleteTextView
-                android:id="@+id/testPrescribedValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/testPrescribedText"
-                android:completionThreshold="1"
-                android:paddingLeft="5dp"
-                android:visibility="gone"
-                 />
             <ListView
                 android:background="@drawable/square_grey_color"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginTop="10dp"
                 android:layout_below="@+id/testPrescribedText"
 
                 android:id="@+id/test_prescribed_list">
@@ -349,7 +253,6 @@
                 android:id="@+id/addtestsBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="17dp"
                 android:layout_toLeftOf="@+id/testHistryBtn"
 
                 android:background="@drawable/add" />
@@ -357,7 +260,6 @@
                 android:id="@+id/testHistryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/ic_history_black_24dp" />
 

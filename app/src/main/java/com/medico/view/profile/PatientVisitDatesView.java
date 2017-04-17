@@ -68,7 +68,7 @@ public class PatientVisitDatesView extends ParentFragment
         allAppointments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                setHasOptionsMenu(false);
+                setHasOptionsMenu(false);
                 //appointments
                 //Fragment fragment = new DoctorAppointmentSummary();
                 Bundle bun = getActivity().getIntent().getExtras();
@@ -103,11 +103,16 @@ public class PatientVisitDatesView extends ParentFragment
     }
 
 
-
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
     @Override
     public void onResume() {
         super.onResume();
-
+        setHasOptionsMenu(true);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
 
@@ -172,10 +177,7 @@ public class PatientVisitDatesView extends ParentFragment
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
             break;
-            case R.id.home: {
 
-            }
-            break;
 
         }
         return true;
