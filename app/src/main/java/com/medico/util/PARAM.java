@@ -53,6 +53,7 @@ public interface PARAM {
     public static final String CLINIC_ID = "clinicId";
     public static final String APPOINTMENT_DATE = "appointment_date";
     public static final String APPOINTMENT_TIME = "appointment_time";
+    public static final String DAYS_OF_WEEK = "days_of_week";
 
     public static final int APPOINTMENT_CONFIRMED = 0;
     public static final int APPOINTMENT_TENTATIVE = 1;

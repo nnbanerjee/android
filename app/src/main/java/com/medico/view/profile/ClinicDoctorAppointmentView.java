@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -76,6 +77,7 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
         dateValue = (TextView) view.findViewById(R.id.dateValue);
         timeBtn = (Button) view.findViewById(R.id.timeBtn);
         timeTeableList = (GridView) view.findViewById(R.id.timeTeableList);
+
         visitType = (Spinner) view.findViewById(R.id.visitType);
 
         timeBtn.setOnClickListener(new View.OnClickListener() {
@@ -187,15 +189,17 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
             }
 
         }
-
+        String days = getActivity().getIntent().getExtras().getString(DAYS_OF_WEEK);
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
                 .setInitialDate(date)
+                .setMode(SlideDateTimePicker.ONLY_CALENDAR)
+                .setWorkingDays(getWorkingDays(days))
                 .build();
         pickerDialog.show();
     }
 
-    private void setAdapter(Date date)
+    private void setAdapter(final Date date)
     {
         final Activity activity = getActivity();
         Bundle bundle = activity.getIntent().getExtras();
@@ -208,13 +212,13 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
         calendar1.setTime(date);
         calendar1.set(Calendar.HOUR_OF_DAY,0);
         calendar1.set(Calendar.MINUTE,00);
-        calendar1.set(Calendar.SECOND,59);
+        calendar1.set(Calendar.SECOND,00);
         final Date date1 = calendar1.getTime();
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTime(date);
         calendar2.set(Calendar.HOUR_OF_DAY,23);
         calendar2.set(Calendar.MINUTE,59);
-        calendar2.set(Calendar.SECOND,00);
+        calendar2.set(Calendar.SECOND,59);
         final Date date2 = calendar2.getTime();
         Integer doctorId = bundle.getInt(DOCTOR_ID);
         Integer slotId = bundle.getInt(DOCTOR_CLINIC_ID);
@@ -242,7 +246,7 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
             public void success(List<DoctorSlotBookings> slotBookingses, Response response) {
                 if(slotBookingses != null && slotBookingses.size() > 0) {
                     doctorSlotBookings = slotBookingses.get(0);
-                    DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList);
+                    DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList,date);
                     timeTeableList.setAdapter(adapter);
                 }
 //                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
@@ -252,7 +256,9 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
             public void failure(RetrofitError error) {
 //                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorSlotBookings = null;
-                DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList);
+                DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+
+                DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList,date);
                 timeTeableList.setAdapter(adapter);
                 error.printStackTrace();
             }
@@ -284,7 +290,12 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
         menuItem.setIcon(null);
-        menuItem.setTitle("SAVE");
+        Bundle bundle = getActivity().getIntent().getExtras();
+        Integer appointmentId = bundle.getInt(APPOINTMENT_ID);
+        if(appointmentId == null || appointmentId.intValue() > 0 == false)
+            menuItem.setTitle("CREATE");
+        else
+            menuItem.setTitle("UPDATE");
     }
 
     @Override
@@ -387,5 +398,41 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
 
         }
         return true;
+    }
+
+    private int[] getWorkingDays(String days)
+    {
+        StringTokenizer tokenizer = new StringTokenizer(days,",");
+        int workingdays[] = new int[tokenizer.countTokens()];
+        for(int i = 0; i < workingdays.length;i++)
+        {
+            String token = tokenizer.nextToken();
+            switch (token)
+            {
+                case "0":
+                    workingdays[i] = Calendar.MONDAY;
+                    break;
+                case "1":
+                    workingdays[i] = Calendar.TUESDAY;
+                    break;
+                case "2":
+                    workingdays[i] = Calendar.WEDNESDAY;
+                    break;
+                case "3":
+                    workingdays[i] = Calendar.THURSDAY;
+                    break;
+                case "4":
+                    workingdays[i] = Calendar.FRIDAY;
+                    break;
+                case "5":
+                    workingdays[i] = Calendar.SATURDAY;
+                    break;
+                case "6":
+                    workingdays[i] = Calendar.SUNDAY;
+                    break;
+            }
+
+        }
+        return workingdays;
     }
 }

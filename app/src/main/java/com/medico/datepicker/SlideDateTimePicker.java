@@ -4,8 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.Date;
+import com.medico.model.DoctorHoliday;
+import com.medico.model.DoctorSlotBookings;
 
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -22,6 +25,9 @@ public class SlideDateTimePicker
 {
     public static final int HOLO_DARK = 1;
     public static final int HOLO_LIGHT = 2;
+    public static final int ONLY_CALENDAR = 1;
+    public static final int ONLY_TIME = 2;
+    public static final int CALENDAR_TIME = 3;
 
     private FragmentManager mFragmentManager;
     private SlideDateTimeListener mListener;
@@ -32,7 +38,10 @@ public class SlideDateTimePicker
     private boolean mIs24HourTime;
     private int mTheme;
     private int mIndicatorColor;
-
+    private int mode = CALENDAR_TIME;
+    private long[] bookings;
+    private long[] holidays;
+    private int[] days = null;
     /**
      * Creates a new instance of {@code SlideDateTimePicker}.
      *
@@ -181,12 +190,40 @@ public class SlideDateTimePicker
                         mIsClientSpecified24HourTime,
                         mIs24HourTime,
                         mTheme,
-                        mIndicatorColor);
+                        mIndicatorColor,
+                        days,
+                        holidays,
+                        bookings,
+                        mode);
 
         dialogFragment.show(mFragmentManager,
                 SlideDateTimeDialogFragment.TAG_SLIDE_DATE_TIME_DIALOG_FRAGMENT);
     }
-
+    /**
+     * @see SlideDateTimePicker#setIndicatorColor(int)
+     */
+    public void setMode(int mode)
+    {
+        this.mode = mode;
+    }
+    /**
+     * @see SlideDateTimePicker#setIndicatorColor(int)
+     */
+    public void setWorkingDays(int[] days)
+    {
+        this.days = days;
+    }
+    /**
+     * @see SlideDateTimePicker#setIndicatorColor(int)
+     */
+    public void setHolidays(long[] holidays)
+    {
+        this.holidays = holidays;
+    }
+    public void setOccupiedDays(long[] bookings)
+    {
+        this.bookings = bookings;
+    }
     /*
      * The following implements the builder API to simplify
      * creation and display of the dialog.
@@ -205,6 +242,11 @@ public class SlideDateTimePicker
         private boolean is24HourTime;
         private int theme;
         private int indicatorColor;
+        private int mode = CALENDAR_TIME;
+        private long[] bookings;
+        private long[] holidays;
+        private int[] days = null;
+
 
         public Builder(FragmentManager fm)
         {
@@ -276,6 +318,35 @@ public class SlideDateTimePicker
         }
 
         /**
+         * @see SlideDateTimePicker#setIndicatorColor(int)
+         */
+        public Builder setMode(int mode)
+        {
+            this.mode = mode;
+            return this;
+        }
+        /**
+         * @see SlideDateTimePicker#setIndicatorColor(int)
+         */
+        public Builder setWorkingDays(int[] days)
+        {
+            this.days = days;
+            return this;
+        }
+        /**
+         * @see SlideDateTimePicker#setIndicatorColor(int)
+         */
+        public Builder setHolidays(long[] holidays)
+        {
+            this.holidays = holidays;
+            return this;
+        }
+        public Builder setOccupiedDays(long[] bookings)
+        {
+            this.bookings = bookings;
+            return this;
+        }
+        /**
          * <p>Build and return a {@code SlideDateTimePicker} object based on the previously
          * supplied parameters.</p>
          *
@@ -294,7 +365,10 @@ public class SlideDateTimePicker
             picker.setIs24HourTime(is24HourTime);
             picker.setTheme(theme);
             picker.setIndicatorColor(indicatorColor);
-
+            picker.setMode(mode);
+            picker.setHolidays(holidays);
+            picker.setOccupiedDays(bookings);
+            picker.setWorkingDays(days);
             return picker;
         }
     }

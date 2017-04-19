@@ -1,7 +1,6 @@
 package com.medico.model;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
-import com.medico.util.PARAM;
 import com.medico.application.R;
+import com.medico.util.PARAM;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +26,7 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
     DoctorSlotBookings doctorSlotBookings;
     List<DoctorHoliday> doctorSlotHolidays;
     Long [] timings;
+    Date date;
 
     public Integer getSelectedSequenceNumber() {
         return selectedSequenceNumber;
@@ -38,12 +39,13 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
     }
 
     Integer selectedSequenceNumber = 0;
-    public DoctorAppointmentGridViewAdapter(Activity context, DoctorSlotBookings doctorSlotBookings, List<DoctorHoliday> doctorSlotHolidays)
+    public DoctorAppointmentGridViewAdapter(Activity context, DoctorSlotBookings doctorSlotBookings, List<DoctorHoliday> doctorSlotHolidays, Date date)
     {
         activity = context;
         this.doctorSlotBookings = doctorSlotBookings;
         this.doctorSlotHolidays = doctorSlotHolidays;
         timings = getTimings();
+        this.date = date;
     }
     public int getCount() {
         return timings.length;
@@ -63,10 +65,8 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
         Button imageView;
         if (convertView == null) {
          // if it's not recycled, initialize some attributes
-            imageView = new Button(activity);
+            imageView = (Button)activity.getLayoutInflater().inflate(R.layout.appointment_grid_layout, null);
             imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//            imageView.setPadding(8, 8, 8, 8);
         }
         else
             imageView = (Button) convertView;
@@ -89,7 +89,25 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
                 imageView.setBackground(activity.getResources().getDrawable(mThumbIds[3]));
             else
                 imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
-            imageView.setTextColor(Color.GREEN);
+//            imageView.setTextColor(Color.GREEN);
+            imageView.setTextColor(activity.getResources().getColor(R.color.medico_green));
+        }
+        if (imageView.isEnabled() )
+        {
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(date);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(new Date(timings[position]));
+            calendar2.set(Calendar.YEAR,calendar1.get(Calendar.YEAR));
+            calendar2.set(Calendar.MONTH,calendar1.get(Calendar.MONTH));
+            calendar2.set(Calendar.DAY_OF_MONTH,calendar1.get(Calendar.DAY_OF_MONTH));
+
+            if(calendar2.getTime().getTime() < new Date().getTime())
+            {
+                imageView.setTextColor(activity.getResources().getColor(R.color.medico_lightgreen));
+                imageView.setEnabled(false);
+            }
+
         }
         DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
         imageView.setText(format.format(new Date(timings[position])));
@@ -135,7 +153,8 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
                     default:
                         imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
                         imageView.setEnabled(false);
-                        imageView.setTextColor(Color.GRAY);
+//                        imageView.setTextColor(Color.GRAY);
+                        imageView.setTextColor(activity.getResources().getColor(R.color.medico_gray));
                 }
             }
 
@@ -154,7 +173,9 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
                         imageView.setBackground(activity.getResources().getDrawable(mThumbIds[2]));
                     if(sequenceNumber != null && sequenceNumber.intValue() == booking.sequenceNo.intValue())
                     {
-                        imageView.setBackgroundColor(Color.BLUE);
+//                        imageView.setBackgroundColor(Color.BLUE);
+                        imageView.setBackground(activity.getResources().getDrawable(mThumbIds[3]));
+                        imageView.setTextColor(activity.getResources().getColor(R.color.medico_blue));
                     }
 
                     imageView.setEnabled(false);
@@ -162,7 +183,8 @@ public class DoctorAppointmentGridViewAdapter extends BaseAdapter
                 else
                 {
                     imageView.setBackground(activity.getResources().getDrawable(mThumbIds[0]));
-                    imageView.setTextColor(Color.RED);
+                    imageView.setTextColor(activity.getResources().getColor(R.color.medico_red));
+//                    imageView.setTextColor(Color.RED);
                     imageView.setEnabled(false);
                 }
                 break;

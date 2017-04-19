@@ -131,8 +131,8 @@ public class  PatientDetailsView extends ParentFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
+        if(childfragment != null && childfragment.isDetached() == false)
+            childfragment.onStart();
     }
     @Override
     public void onStart()

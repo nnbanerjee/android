@@ -212,7 +212,8 @@ public class ClinicPatientAdapter extends HomeAdapter {
                 Bundle bundle = activity.getIntent().getExtras();
                 DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
                 String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
-
+                bundle.putInt(PARAM.APPOINTMENT_ID,0);
+                bundle.putString(PARAM.DAYS_OF_WEEK,details.daysOfWeek);
                 bundle.putInt(PARAM.CLINIC_ID, clinicDetails.clinic.idClinic);
                 bundle.putString(PARAM.CLINIC_NAME,clinicDetails.clinic.clinicName);
                 bundle.putString(PARAM.SLOT_TIME, shiftDateTime);
@@ -241,6 +242,7 @@ public class ClinicPatientAdapter extends HomeAdapter {
                 DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
                 String shiftDateTime = formatTime.format(details.startTime) +" - " + formatTime.format(details.endTime);
                 bundle.putInt(PARAM.APPOINTMENT_ID,appointments.appointmentId);
+                bundle.putString(PARAM.DAYS_OF_WEEK,details.daysOfWeek);
                 bundle.putLong(PARAM.APPOINTMENT_DATETIME, appointments.dateTime);
                 bundle.putInt(PARAM.APPOINTMENT_SEQUENCE_NUMBER, appointments.sequenceNumber);
                 bundle.putInt(PARAM.CLINIC_ID, clinicDetails.clinic.idClinic);

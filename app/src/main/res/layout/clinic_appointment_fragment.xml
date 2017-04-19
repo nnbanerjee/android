@@ -1,7 +1,6 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="15dp"
     android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -11,14 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/clinicListView"
-        android:paddingTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_margin="3dp"
         android:background="#ffffff">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Clinic Name"
+            android:textAppearance="@style/heading1.1_blue"
             android:layout_centerHorizontal="true"
             android:id="@+id/clinicName"
             android:gravity="center"
@@ -28,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Appointments"
+            android:textAppearance="@style/heading3"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_below="@+id/clinicName"
@@ -86,7 +85,7 @@
                 android:layout_height="25dp"
                 android:id="@+id/timeBtn"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/calendar_blue"/>
+                android:background="@drawable/calendar_grey"/>
 
         </RelativeLayout>
         <RelativeLayout
@@ -127,8 +126,9 @@
 
         <GridView
             android:id="@+id/timeTeableList"
+            android:layout_margin="3dp"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="600dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/layout20"
@@ -138,7 +138,8 @@
             android:columnWidth="100dp"
             android:orientation="horizontal"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
-            android:scrollbars="none"></GridView>
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical"></GridView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -148,7 +149,8 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="30dp"
+                android:textAppearance="@style/body4_white"
                 android:background="@color/green"
                 android:id="@+id/greenColor"
                 android:padding="3dp"
@@ -160,6 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Available"
+                android:textAppearance="@style/body4_white"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/green"
@@ -170,8 +173,9 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="30dp"
                 android:background="@color/orange"
+                android:textAppearance="@style/body4_white"
                 android:id="@+id/orangeColor"
                 android:layout_marginLeft="25dp"
                 android:text="Tentative"
@@ -182,6 +186,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body4_white"
                 android:text="Occupied"
                 android:layout_below="@+id/orangeColor"
                 android:layout_marginLeft="25dp"
@@ -192,6 +197,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12_white"
                 android:text="On Request"
                 android:id="@+id/orangeText"
                 android:visibility="gone"
@@ -201,6 +207,7 @@
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:textAppearance="@style/body4_white"
                 android:background="@color/red"
                 android:id="@+id/redColor"
                 android:layout_marginLeft="5dp"
@@ -211,6 +218,7 @@
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:textAppearance="@style/body4_white"
                 android:background="@color/grey_text"
                 android:id="@+id/greyColor"
                 android:layout_marginTop="10dp"
@@ -220,6 +228,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body4_white"
                 android:text="Not Available"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="35dp"

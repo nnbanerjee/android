@@ -15,6 +15,8 @@
     <color name="orange">#FF9900</color>
     <item name="gray_holo_dark" type="color">#ff464646</item>
     <item name="gray_holo_light" type="color">#ffd0d0d0</item>
+    <item name="medico_green" type="color">#ff33CC00</item>
+    <item name="medico_lightgreen" type="color">#ff99bd88</item>
     <item name="medico_blue" type="color">#ff206799</item>
     <item name="medico_gray" type="color">#ff707070</item>
     <item name="medico_red" type="color">#ffb51408</item>
