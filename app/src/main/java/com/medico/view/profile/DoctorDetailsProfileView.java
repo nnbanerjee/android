@@ -33,7 +33,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class DoctorDetailsFragment extends ParentFragment {
+public class DoctorDetailsProfileView extends ParentFragment {
 
     ProgressDialog progress;
     SharedPreferences session;

@@ -27,13 +27,13 @@
       <style name="EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/rounded_white_color</item>
         <item name="android:textAppearance">@style/body3</item>
-        <item name="android:inputType">text</item>
+          <item name="android:inputType">textNoSuggestions|textMultiLine</item>
           <item name="android:focusable">true</item>
         <item name="android:paddingLeft">3dp</item>
       </style>
       <style name="TextViewStyle" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">@style/body1</item>
-        <item name="android:inputType">text</item>
+        <item name="android:inputType">textNoSuggestions|textMultiLine</item>
         <item name="android:focusable">false</item>
         <item name="android:paddingLeft">3dp</item>
       </style>

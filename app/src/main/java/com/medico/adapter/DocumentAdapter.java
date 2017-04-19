@@ -68,12 +68,6 @@ public class DocumentAdapter extends HomeAdapter {
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.document_element, null);
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
         TextView fileName = (TextView) convertView.findViewById(R.id.document_name);
         TextView category = (TextView)convertView.findViewById(R.id.category_value);
         TextView addedBy = (TextView) convertView.findViewById(R.id.added_by_value);

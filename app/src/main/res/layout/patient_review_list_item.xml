@@ -9,7 +9,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_margin="5dp"
-        android:background="@drawable/patient"/>
+        android:background="@drawable/patient_default"/>
 
     <ImageView
         android:id="@+id/downImg"
@@ -28,6 +28,7 @@
 
         <TextView
             android:id="@+id/patient_name"
+            android:textAppearance="@style/heading1.1_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Patient Name" />
@@ -42,6 +43,7 @@
             android:textStyle="bold" />
         <TextView
             android:id="@+id/totalCount"
+            android:textAppearance="@style/sub_heading3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/nextBtn"
@@ -49,6 +51,7 @@
             />
         <TextView
             android:id="@+id/speciality"
+            android:textAppearance="@style/sub_heading3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/patient_name"
@@ -56,6 +59,7 @@
 
         <TextView
             android:id="@+id/address"
+            android:textAppearance="@style/sub_heading3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/speciality"
@@ -64,12 +68,14 @@
             />
         <TextView
             android:id="@+id/visited_text"
+            android:textAppearance="@style/sub_heading5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address"
             android:text="Visited : " />
         <TextView
             android:id="@+id/visited_value"
+            android:textAppearance="@style/sub_heading5_light_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address"
@@ -79,6 +85,7 @@
 
         <TextView
             android:id="@+id/ratingText"
+            android:textAppearance="@style/sub_heading5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rating:  "
@@ -89,6 +96,7 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:textAppearance="@style/sub_heading5_light_grey"
             android:layout_height="wrap_content"
             android:layout_below="@+id/visited_value"
             android:layout_toRightOf="@+id/ratingText"
@@ -97,6 +105,7 @@
 
         <TextView
             android:id="@+id/recommdation_text"
+            android:textAppearance="@style/sub_heading5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ratingText"
@@ -104,6 +113,7 @@
 
         <ImageView
             android:id="@+id/recommdation_value"
+            android:textAppearance="@style/sub_heading5_light_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ratingText"
@@ -111,6 +121,7 @@
             android:text="YES" />
         <TextView
             android:id="@+id/reviews_text"
+            android:textAppearance="@style/sub_heading5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recommdation_text"
@@ -118,6 +129,7 @@
 
         <TextView
             android:id="@+id/review_value"
+            android:textAppearance="@style/sub_heading5_light_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recommdation_text"

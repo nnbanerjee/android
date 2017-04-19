@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import com.medico.util.PARAM;
 import com.medico.view.appointment.ClinicDetailedView;
 import com.medico.view.appointment.ManageDoctorAppointment;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -69,14 +70,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
-//        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.appointment_clinic_list, null);
@@ -160,12 +153,14 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
         dateRow.removeAllViews();
         appointRow.removeAllViews();
         List<DoctorClinicDetails.AppointmentCounts> counts = details.datecounts;
-        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-
+//        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
         int i = 0;
         for(DoctorClinicDetails.AppointmentCounts count:counts)
         {
             TextView dateView = new TextView(activity);
+            dateView.setBackgroundColor(Color.BLUE);
+            dateView.setTextColor(Color.GRAY);
             TextView countView = new TextView(activity);
             dateView.setText(format.format(new Date(count.date)));
             dateView.setBackgroundResource(R.drawable.medicine_schedule);
@@ -177,6 +172,7 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
             countView.setText(new Integer(count.counts).toString());
             countView.setBackgroundResource(R.drawable.medicine_schedule);
             countView.setLeft(10);
+            countView.setTextColor(activity.getResources().getColor(R.color.medico_blue));
             countView.setTop(10);
             countView.setRight(10);
             countView.setBottom(10);

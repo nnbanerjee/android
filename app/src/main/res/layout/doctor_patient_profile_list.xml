@@ -14,9 +14,9 @@
             android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/doctor_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_width="@dimen/default_profile_image_size"
+            android:layout_height="@dimen/default_profile_image_size"
+            android:layout_margin="@dimen/default_profile_image_margin"
             android:background="@drawable/doctor_default"/>
 
         <ImageView
@@ -47,8 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/arrow_right_light_grey"
-                android:layout_marginTop="2dp"
+                android:background="@drawable/ic_navigate_next_black_24dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="2dp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/totalCount"
@@ -56,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/nextBtn"
                 android:inputType="number"
+                android:layout_marginTop="4dp"
                 android:text="0"
                 android:textAppearance="@style/sub_heading3"
                 />
@@ -105,6 +107,7 @@
                 android:layout_below="@+id/lastAppointmentValue"
                 android:layout_toRightOf="@+id/appointmentText"
                 android:text="sdfsdf"
+                android:layout_marginBottom="2dp"
                 android:textAppearance="@style/sub_heading5_light_grey"/>
 
 

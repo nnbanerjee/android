@@ -15,10 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.R;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.PatientShortProfile;
 import com.medico.util.ImageLoadTask;
-import com.medico.application.R;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -33,13 +34,13 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class PatientDetailsView extends ParentFragment {
+public class  PatientDetailsView extends ParentFragment {
 
     ProgressDialog progress;
     SharedPreferences session;
     TextView patientName,doctorSpeciality, address, lastVisitedValue, nextAppointment, visitCounts;
     Button appointmentsBtn,profileBtn;
-    ImageView viewImage, visitDates,closeMenu;
+    ImageView viewImage, nextBtn, closeMenu;
     Fragment childfragment;
     @Nullable
     @Override
@@ -49,6 +50,7 @@ public class PatientDetailsView extends ParentFragment {
         RelativeLayout detailsLayout = (RelativeLayout)view.findViewById(R.id.layout11);
         detailsLayout.setVisibility(View.VISIBLE);
         patientName = (TextView) view.findViewById(R.id.doctor_name);
+        nextBtn = (ImageView)view.findViewById(R.id.nextBtn);
         doctorSpeciality = (TextView) view.findViewById(R.id.speciality);
         address = (TextView)view.findViewById(R.id.address);
         lastVisitedValue = (TextView) view.findViewById(R.id.lastAppointmentValue);
@@ -61,7 +63,7 @@ public class PatientDetailsView extends ParentFragment {
         profileBtn = (Button) view.findViewById(R.id.profile);
 
         viewImage = (ImageView) view.findViewById(R.id.doctor_image);
-        viewImage.setBackgroundResource(R.drawable.patient);
+        viewImage.setBackgroundResource(R.drawable.patient_default);
         closeMenu = (ImageView) view.findViewById(R.id.downImg);
         closeMenu.setBackgroundResource(R.drawable.arrow_up_red);
 
@@ -102,6 +104,26 @@ public class PatientDetailsView extends ParentFragment {
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
+        visitCounts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParentActivity parentactivity = (ParentActivity)getActivity();
+                Bundle bundle = parentactivity.getIntent().getExtras();
+                ParentFragment fragment = new PatientVisitDatesView();
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParentActivity parentactivity = (ParentActivity)getActivity();
+                Bundle bundle = getActivity().getIntent().getExtras();
+                ParentFragment fragment = new PatientVisitDatesView();
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });
         return view;
     }
 
@@ -126,6 +148,7 @@ public class PatientDetailsView extends ParentFragment {
                 public void success(PatientShortProfile patient, Response response)
                 {
                     if(patient != null) {
+
                         patientName.setText(patient.getName());
 
                         doctorSpeciality.setText(patient.getProfession());
@@ -148,6 +171,8 @@ public class PatientDetailsView extends ParentFragment {
 
                     }
 
+                    appointmentsBtn.callOnClick();
+
                     progress.dismiss();
                 }
 
@@ -160,38 +185,6 @@ public class PatientDetailsView extends ParentFragment {
             });
         if(childfragment != null && childfragment.isDetached() == false)
             childfragment.onStart();
-
-
-//        api.getProfile1(new ProfileId(allPatients.getPatientlist().get(position).getPatientId()), new Callback<Person>() {
-//                    @Override
-//                    public void success(Person patient, Response response)
-//                    {
-//
-//                        Bundle args = new Bundle();
-//                        //Store Selected Patient profile
-//                        progress.dismiss();
-//                        SharedPreferences.Editor editor = session.edit();
-////                        global.setSelectedPatientsProfile(patient);
-//                        Gson gson = new Gson();
-//                        String json = gson.toJson(patient);
-//                        editor.putString("SelectedPatient", json);
-//                        editor.commit();
-//                        editor.putString("patient_Last_Visited", allPatients.getPatientlist().get(position).getLastVisit().toString());
-//                        editor.putString("patient_Upcoming_Appt", allPatients.getPatientlist().get(position).getUpcomingVisit().toString());
-//                        editor.putString("patient_Total_visits", allPatients.getPatientlist().get(position).getNumberOfVisits().toString());
-//                        editor.putString("patientId", allPatients.getPatientlist().get(position).getPatientId().toString());
-//                        editor.putString("patient_Name", allPatients.getPatientlist().get(position).getName());
-//                        editor.commit();
-//
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        progress.dismiss();
-//                        error.printStackTrace();
-//                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
 
     }
 

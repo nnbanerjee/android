@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:id="@+id/patient_profile"
         android:layout_height="match_parent">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/document_name"
-            android:layout_marginLeft="15dp"
+            android:textAppearance="@style/sub_heading1_blue"
             android:text="Document Name"
             android:layout_marginTop="15dp"
             />
@@ -26,13 +29,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:text="Category:"
                 android:id="@+id/category_text"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/category_text"
                 android:id="@+id/category_value"
                 android:text="Prescription"
@@ -41,6 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/category_value"
                 android:id="@+id/added_by_text"
                 android:text="Added By:"
@@ -49,6 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/added_by_text"
                 android:id="@+id/added_by_value"
                 android:text="Dr.Sanjeev Bharti"
@@ -57,14 +63,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:text="Date:"
                 android:id="@+id/date_text"
-                android:layout_marginLeft="15dp"
                 android:layout_below="@+id/category_text"
                 android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/date_text"
                 android:layout_below="@+id/category_value"
                 android:id="@+id/date_value"
@@ -74,6 +81,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/date_value"
                 android:layout_below="@+id/added_by_text"
                 android:id="@+id/type_text"
@@ -83,6 +91,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/type_text"
                 android:layout_below="@+id/added_by_value"
                 android:id="@+id/type_value"
@@ -92,6 +101,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/type_value"
                 android:layout_below="@+id/added_by_value"
                 android:id="@+id/clinic_text"
@@ -101,6 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/body12"
                 android:layout_toRightOf="@+id/clinic_text"
                 android:layout_below="@+id/added_by_value"
                 android:id="@+id/clinic_value"
@@ -124,10 +135,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/remove_document"
-        android:layout_marginTop="20dp"
         android:src="@drawable/cross"
-        android:layout_below="@+id/document_image"
-        android:layout_toRightOf="@+id/patient_profile"
+        android:layout_alignBottom="@+id/document_image"
         android:layout_alignParentRight="true"
-        />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"/>
 </RelativeLayout>

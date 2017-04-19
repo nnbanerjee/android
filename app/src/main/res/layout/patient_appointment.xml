@@ -24,6 +24,7 @@
             android:layout_height="wrap_content" />
         <Spinner
             android:id="@+id/appointment_status"
+            style="@style/Widget.AppCompat.Spinner"
             android:layout_width="wrap_content"
             android:entries="@array/no_appointment_status"
             android:layout_height="wrap_content" />
@@ -33,6 +34,7 @@
 
         <Spinner
             android:id="@+id/appointment_type"
+            style="@style/Widget.AppCompat.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/visit_type_list" />
@@ -43,6 +45,7 @@
 
         <Spinner
             android:id="@+id/appointment_visit_status"
+            style="@style/Widget.AppCompat.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/visit_status" />
@@ -57,7 +60,7 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_margin="5dp"
-            android:background="@drawable/doctor"/>
+            android:background="@drawable/patient_default"/>
         <ImageView
             android:id="@+id/downImg"
             android:layout_width="wrap_content"

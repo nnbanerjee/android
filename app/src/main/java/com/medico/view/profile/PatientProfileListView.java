@@ -1,6 +1,5 @@
 package com.medico.view.profile;
 
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,18 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.PatientListAdapter;
+import com.medico.application.R;
 import com.medico.model.DoctorId;
 import com.medico.model.PatientProfileList;
 import com.medico.model.PatientShortProfile;
 import com.medico.util.PARAM;
-import com.medico.application.R;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.util.List;
@@ -57,21 +54,21 @@ public class PatientProfileListView extends ParentFragment
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText(getActivity().getResources().getString(R.string.patients_profiles));
 
-        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                setHasOptionsMenu(false);
-                Bundle bun = getActivity().getIntent().getExtras();
-                PatientShortProfile profile = (PatientShortProfile)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new PatientVisitDatesView();
-                        ((ParentActivity)getActivity()).attachFragment(fragment);
-                        bun.putInt(PARAM.PATIENT_ID, profile.getPatientId().intValue());
-                        getActivity().getIntent().putExtras(bun);
-                      fragment.setArguments(bun);
-                        FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-            }
-        });
+//        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                setHasOptionsMenu(false);
+//                Bundle bun = getActivity().getIntent().getExtras();
+//                PatientShortProfile profile = (PatientShortProfile)adapterView.getAdapter().getItem(i);
+//                        ParentFragment fragment = new PatientVisitDatesView();
+//                        ((ParentActivity)getActivity()).attachFragment(fragment);
+//                        bun.putInt(PARAM.PATIENT_ID, profile.getPatientId().intValue());
+//                        getActivity().getIntent().putExtras(bun);
+//                      fragment.setArguments(bun);
+//                        FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//            }
+//        });
 
         return view;
     }

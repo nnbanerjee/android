@@ -19,9 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:id="@+id/patient_profile">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +36,8 @@
                 android:layout_height="wrap_content">
                 <Spinner
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_marginTop="@dimen/edit_top_margin"
+                    android:layout_height="@dimen/edit_height"
                     android:id="@+id/file_category_value"
                     android:entries="@array/file_upload_category_list"
 
@@ -68,7 +67,8 @@
                 android:layout_height="wrap_content">
                 <Spinner
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_marginTop="@dimen/edit_top_margin"
+                    android:layout_height="@dimen/edit_height"
                     android:id="@+id/test_type_value"
                     android:entries="@array/upload_document_type"
 
@@ -96,7 +96,8 @@
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_height="@dimen/edit_height"
                 android:layout_toRightOf="@+id/testName"
                 android:ems="6"
                 android:layout_centerVertical="true"
@@ -107,7 +108,8 @@
             <Spinner
                 android:id="@+id/testValueEdit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_height="@dimen/edit_height"
                 android:layout_toRightOf="@+id/testName"
                 android:completionThreshold="1"
                 android:paddingLeft="5dp"
@@ -144,7 +146,8 @@
                 android:layout_height="wrap_content">
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_height="@dimen/edit_height"
                 android:id="@+id/clinicNames"
                 android:imeOptions="actionDone"
                 />
@@ -170,7 +173,8 @@
 
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_height="@dimen/edit_height"
                 android:id="@+id/referredByValue"
                 android:entries="@array/diagnostic_test_referred"
                 android:inputType="phone"
@@ -202,7 +206,8 @@
             <TextView
                 android:id="@+id/start_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_height="@dimen/edit_height"
                 android:completionThreshold="1"
                 android:layout_toLeftOf="@+id/calenderImg"
                 android:layout_toRightOf="@+id/startText"
@@ -250,11 +255,13 @@
             </RadioGroup>
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_toRightOf="@+id/radiogroup"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/image_previw"
+                    android:text="Browse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RelativeLayout>

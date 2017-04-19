@@ -468,11 +468,11 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.doctor_manage_appointment_schedule, menu);
+//        inflater.inflate(R.menu.doctor_manage_appointment_schedule, menu);
         super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
         menuItem.setChecked(true);
-        menuItem.setIcon(R.drawable.calendar_blue);
+        menuItem.setIcon(R.drawable.calendar_white);
     }
 
     @Override

@@ -54,12 +54,6 @@ public class ClinicSlotListAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        MyApi api = restAdapter.create(MyApi.class);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.clinic_detailed_slot_view, null);
@@ -84,24 +78,6 @@ public class ClinicSlotListAdapter extends HomeAdapter  {
         else
             numberOfPatients.setText(new Integer(0).toString());
 
-
-//        rightArrow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DoctorClinicDetails.ClinicSlots slot = ( DoctorClinicDetails.ClinicSlots)v.getTag();
-//                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
-//                Bundle bundle = activity.getIntent().getExtras();
-//                bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
-//                activity.getIntent().putExtras(bundle);
-//                ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
-////                fragment.setModel(slot);
-//                ((ManageDoctorAppointment)activity).attachFragment(fragment);
-//                FragmentManager fragmentManger = activity.getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//            }
-//        });
-
-
         return convertView;
 
     }
@@ -112,7 +88,7 @@ public class ClinicSlotListAdapter extends HomeAdapter  {
                 "1,2,3,4,5,6","1,2,3,4,5","1,2,3,4","1,2,3","1,2","1",
                 "2,3,4,5,6","2,3,4,5","2,3,4","2,3","2",
                 "3,4,5,6","3,4,5","3,4","3",
-                "4,5,6","4,5","3",
+                "4,5,6","4,5","4",
                 "5,6","5",
                 "6"};
         String[] daysWord = {"MON-SUN","MON-SAT","MON-FRI","MON-THU","MON-WED","MON-TUE","MON",

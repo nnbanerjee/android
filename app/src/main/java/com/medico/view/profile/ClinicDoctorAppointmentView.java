@@ -46,7 +46,7 @@ import retrofit.client.Response;
  */
 
 
-public class ClinicDoctorAppointmentFragment extends ParentFragment {
+public class ClinicDoctorAppointmentView extends ParentFragment {
 
     ProgressDialog progress;
 
@@ -195,37 +195,6 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         pickerDialog.show();
     }
 
-//    public void setDate(TextView dateField) {
-//        final Calendar calendar_grey = Calendar.getInstance();
-//
-//        Date date = null;
-//        if(dateValue.getText().toString().trim().length() > 0)
-//        {
-//            DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
-//            try {
-//                date = format.parse(dateValue.getText().toString());
-//            }
-//            catch(ParseException e)
-//            {
-//                date = new Date();
-//            }
-//
-//        }
-//        Calendar newCalendar = Calendar.getInstance();
-//        newCalendar.setTime(date);
-//        DatePickerDialog fromDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-//            {
-//                Calendar newDate = Calendar.getInstance();
-//                newDate.set(year, monthOfYear, dayOfMonth);
-//                DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
-//                dateValue.setText(format.format(newDate.getTime()));
-//                doctorAppointment.setAppointmentDate(newDate.getTimeInMillis());
-//                setAdapter(newDate.getTime());}
-//            },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-//        fromDatePickerDialog.show();
-//    }
-
     private void setAdapter(Date date)
     {
         final Activity activity = getActivity();
@@ -314,6 +283,7 @@ public class ClinicDoctorAppointmentFragment extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(null);
         menuItem.setTitle("SAVE");
     }
 

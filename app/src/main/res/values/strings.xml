@@ -401,18 +401,11 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+    <string name="image_base_url">""</string>
 
-    <!--<string name = "base_url">http://li664-78.members.linode.com:8112</string>-->
-    <!--<string name = "base_url">http://54.84.103.54:9000/</string>-->
-    <!--<string name = "image_base_url">http://54.84.103.54:9000/</string>-->
-    <string name="image_base_url"></string>
-    <!--<string name = "base_url">http://127.0.0.1:9000/</string>-->
-    <string name="base_url">http://192.168.42.11:9000/</string>
-    <!--<string name = "base_url">http://10.0.0.36:9000/</string>-->
-    <!--<string name = "base_url">http://192.168.0.104:9000</string>-->
-    <!--    <string name="base_url">http://192.168.1.9:9000/</string>-->
-    <!--  <string name = "base_url">http://192.168.43.136:9000/</string>-->
+    <!--     <string name="base_url">http://54.84.103.54:9000/</string>-->
 
+     <string name="base_url">http://192.168.42.11:9000/</string>
 
     <string name="listcolor">#CCFFFF</string>
     <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>

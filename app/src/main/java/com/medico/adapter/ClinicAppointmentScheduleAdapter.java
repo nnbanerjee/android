@@ -33,7 +33,7 @@ import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
-import com.medico.view.profile.ClinicDoctorAppointmentFragment;
+import com.medico.view.profile.ClinicDoctorAppointmentView;
 import com.medico.view.profile.DoctorAppointmentInformation;
 import com.medico.view.profile.FeedbackFragmentClinicAppointment;
 import com.medico.view.profile.PatientDetailsView;
@@ -136,7 +136,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         totalAppointment.setVisibility(View.GONE);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
         final RelativeLayout parentLayout = (RelativeLayout)convertView.findViewById(R.id.layout);
-        patient_image.setBackgroundResource(R.drawable.patient);
+        patient_image.setBackgroundResource(R.drawable.patient_default);
         appointment_number.setText(new Integer(holder.sequenceNumber).toString());
         appointment_time.setText(holder.getTime());
 //        appointment_status.setSelection(holder.getAppointmentStatus());
@@ -649,7 +649,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         bundle.putLong(PARAM.SLOT_START_DATETIME,model.startTime);
         bundle.putLong(PARAM.SLOT_END_DATETIME,model.endTime);
         activity.getIntent().putExtras(bundle);
-        ParentFragment fragment = new ClinicDoctorAppointmentFragment();
+        ParentFragment fragment = new ClinicDoctorAppointmentView();
         ((ParentActivity)activity).attachFragment(fragment);
         fragment.setArguments(bundle);
         FragmentManager fragmentManger = activity.getFragmentManager();

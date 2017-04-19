@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -69,8 +70,8 @@ import retrofit.client.Response;
 //add medicine
 public class PatientMedicinReminder extends ParentFragment {
 
-    TextView startDateEdit, timeValue, endDateEdit, daysText, durationText;
-    EditText duration, doctorInstructionValue,numberOfDosesPerSchedule;
+    TextView timeValue,daysText, durationText;
+    EditText duration, doctorInstructionValue,numberOfDosesPerSchedule,startDateEdit,endDateEdit;
     ImageView calenderImg;
     Calendar calendar = Calendar.getInstance();
     Spinner  scheduleDate;
@@ -125,8 +126,8 @@ public class PatientMedicinReminder extends ParentFragment {
             }
         });
         scheduleDate = (Spinner) view.findViewById(R.id.scheduleDate);
-        startDateEdit = (TextView) view.findViewById(R.id.start_date);
-        endDateEdit = (TextView) view.findViewById(R.id.end_date);
+        startDateEdit = (EditText) view.findViewById(R.id.start_date);
+        endDateEdit = (EditText) view.findViewById(R.id.end_date);
         medicineReminderBtn = (CheckBox) view.findViewById(R.id.medicineReminderBtn);
         autoScheduleBtn = (CheckBox) view.findViewById(R.id.auto_scheduleBtn);
         autoScheduleBtn.setEnabled(false);
@@ -418,13 +419,14 @@ public class PatientMedicinReminder extends ParentFragment {
         TableRow row= new TableRow(activity);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row.setLayoutParams(lp);
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM");
         DateFormat dateTimeFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
         for(int i = 0; i < date.length; i++)
         {
             TextView textView = new TextView(activity);
             textView.setText(dateFormat.format(date[i]));
-            textView.setBackgroundResource(R.drawable.medicine_schedule);
+            textView.setBackgroundResource(R.drawable.medicine_schedule_header);
+            textView.setTextColor(Color.WHITE);
             textView.setLeft(10);
             textView.setTop(10);
             textView.setRight(10);
@@ -573,6 +575,7 @@ public class PatientMedicinReminder extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(null);
         menuItem.setTitle("SAVE");
     }
 

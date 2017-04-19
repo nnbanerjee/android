@@ -46,19 +46,18 @@
                     android:id="@+id/refresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:layout_margin="3dp"
                     android:layout_toLeftOf="@+id/drawar_button"
                     android:visibility="visible"
-                    android:background="@drawable/refresh" />
+                    android:background="@drawable/ic_refresh_white_24dp" />
                 <Button
                     android:id="@+id/drawar_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:padding="5dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_margin="3dp"
                     android:visibility="visible"
-                    android:background="@drawable/settings" />
+                    android:background="@drawable/ic_settings_white_24dp" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/home_layout2"
@@ -68,13 +67,14 @@
                 android:layout_below="@+id/home_layout1">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_picture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/doctor_profile" />
                 <TextView
                     android:id="@+id/account_name"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_picture"
                     android:layout_centerHorizontal="true"
@@ -87,9 +87,9 @@
                     android:layout_height="7dp"
                     android:layout_toRightOf="@+id/account_name"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_below="@+id/profile_picture"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/arrow_down_white"
                      />
                 <TextView
@@ -113,7 +113,7 @@
                 android:background="@color/color_blue_default"
                 android:orientation="horizontal"
                 android:paddingBottom="3dp"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 android:weightSum="1">
 
                 <RelativeLayout

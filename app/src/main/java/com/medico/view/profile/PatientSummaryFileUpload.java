@@ -159,11 +159,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
                     Intent intent = new Intent(getActivity(), FileChooser.class);
                     ArrayList<String> extensions = new ArrayList<String>();
                     extensions.add(".pdf");
-//                    extensions.add(".xls");
-//                    extensions.add(".xlsx");
-//                    extensions.add(".txt");
-//                    extensions.add(".doc");
-//                    extensions.add(".docx");
+                    extensions.add(".png");
                     intent.putStringArrayListExtra("filterFileExtension", extensions);
                     startActivityForResult(intent, FILE_CHOOSER);
                 }

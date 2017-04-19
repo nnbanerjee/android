@@ -22,7 +22,7 @@ import com.medico.util.ImageLoadTask;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.ClinicProfileEditView;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -185,7 +185,7 @@ public class ClinicDetailedView extends ParentFragment {
         dateRow.removeAllViews();
         appointRow.removeAllViews();
         List<DoctorClinicDetails.AppointmentCounts> counts = details.datecounts;
-        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
 
         int i = 0;
         for(DoctorClinicDetails.AppointmentCounts count:counts)

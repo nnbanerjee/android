@@ -68,14 +68,15 @@
                 android:layout_below="@+id/home_layout1">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_picture"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/doctor" />
+                    android:src="@drawable/patient_profile" />
                 <TextView
                     android:id="@+id/account_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@+id/profile_picture"
                     android:layout_centerHorizontal="true"
                     android:text="Patient Name"
@@ -86,9 +87,9 @@
                     android:layout_height="7dp"
                     android:layout_toRightOf="@+id/account_name"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="2dp"
-                    android:layout_below="@+id/profile_picture"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignRight="@+id/account_name"
                     android:background="@drawable/arrow_down_white"
                     />
                 <TextView

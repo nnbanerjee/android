@@ -60,12 +60,6 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-//                RestAdapter restAdapter = new RestAdapter.Builder()
-//                        .setEndpoint(activity.getString(R.string.base_url))
-//                        .setClient(new OkClient())
-//                        .setLogLevel(RestAdapter.LogLevel.FULL)
-//                        .build();
-//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.treatment_plan_list, null);
                 setView(convertView,position);

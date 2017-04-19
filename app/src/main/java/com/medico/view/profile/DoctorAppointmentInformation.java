@@ -28,12 +28,14 @@ public class DoctorAppointmentInformation extends ParentFragment {
     Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn;
     ParentFragment selectedFragment ;
     Menu menu;
+    LayoutInflater inflater;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_appointment_information, container, false);
+        this.inflater = inflater;
         replacementFragment = (RelativeLayout) view.findViewById(R.id.replacementFragment);
         setHasOptionsMenu(true);
         summaryBtn = (Button) view.findViewById(R.id.summaryBtn);
@@ -102,6 +104,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
     public void getSummaryInformation()
     {
+        if(menu != null)
+        {
+            MenuItem menuItem = menu.findItem(R.id.add);
+            menuItem.setIcon(null);
+            menuItem.setTitle("SAVE");
+        }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentSummary();
@@ -114,6 +122,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
     public void getDocumentationInformation()
     {
+        if (menu != null)
+        {
+            MenuItem menuItem = menu.findItem(R.id.add);
+            menuItem.setIcon(R.drawable.add);
+            menuItem.setChecked(true);
+        }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentDocument();
@@ -122,13 +136,16 @@ public class DoctorAppointmentInformation extends ParentFragment {
         ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
-
-//        MenuItem add = menu.findItem(R.id.add);
-//        add.setIcon(R.drawable.add);
     }
 
     public void getDoctorNoteInformation()
     {
+        if(menu != null)
+        {
+            MenuItem menuItem = menu.findItem(R.id.add);
+            menuItem.setIcon(null);
+            menuItem.setTitle("SAVE");
+        }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentDoctorNote();
@@ -141,6 +158,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
     public void getTreatmentInformation()
     {
+        if (menu != null)
+        {
+            MenuItem menuItem = menu.findItem(R.id.add);
+            menuItem.setIcon(R.drawable.add);
+            menuItem.setChecked(true);
+        }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentTreatmentPlan();
@@ -153,6 +176,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
     public void getInvoicesInformation()
     {
+        if (menu != null)
+        {
+            MenuItem menuItem = menu.findItem(R.id.add);
+            menuItem.setIcon(R.drawable.add);
+            menuItem.setChecked(true);
+        }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentInvoices();
@@ -173,20 +202,6 @@ public class DoctorAppointmentInformation extends ParentFragment {
     public void onResume() {
         super.onResume();
         setHasOptionsMenu(true);
-
-//        getView().setFocusableInTouchMode(true);
-//        getView().requestFocus();
-//        getView().setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//
-//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-//                    goToBack();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
     }
     @Override
     public void onStart()
@@ -209,48 +224,30 @@ public class DoctorAppointmentInformation extends ParentFragment {
         super.onCreateOptionsMenu(menu,inflater);
         this.menu = menu;
         MenuItem menuItem = menu.findItem(R.id.add);
-//        Bundle bundle = getActivity().getIntent().getExtras();
-//        ManagePatientProfile activity = ((ManagePatientProfile) getActivity());
-//        ParentFragment fragment = activity.fragmentList.get(activity.fragmentList.size()-1);
-//        if(bundle.getInt(APPOINTMENT_ID) > 0) {
-//            menuItem.setChecked(false);
-//            fragment.setEditable(false);
-//            menuItem.setIcon(R.drawable.edit);
-//        }
-//        else
-//        {
-//            fragment.setEditable(true);
-            menuItem.setIcon(null);
-            menuItem.setChecked(true);
-            menuItem.setTitle("SAVE");
-//        }
+        menuItem.setIcon(null);
+        menuItem.setChecked(true);
+        menuItem.setTitle("SAVE");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ParentActivity activity = ((ParentActivity) getActivity());
-        ParentFragment fragment = (ParentFragment)activity.getParentFragment();
+        ParentFragment fragment = selectedFragment;
         int id = item.getItemId();
         switch (id) {
             case R.id.add: {
-//               if(fragment instanceof DoctorAppointmentSummary || fragment instanceof PatientMedicinReminder || fragment instanceof PatientSummaryFileUpload) {
-                   fragment.update();
-                   if (fragment.isChanged()) {
-                       if (fragment.canBeSaved()) {
-                           fragment.save();
-                       } else {
-                           Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
-                       }
-                   } else if (fragment.canBeSaved()) {
-                       Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+               fragment.update();
+               if (fragment.isChanged()) {
+                   if (fragment.canBeSaved()) {
+                       fragment.save();
                    } else {
                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                    }
-//               }
-//               else if (fragment instanceof DoctorAppointmentDocument)
-//               {
-//                    fragment.save();
-//               }
+               } else if (fragment.canBeSaved()) {
+                   Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+               } else {
+                   Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+               }
 
             }
             break;

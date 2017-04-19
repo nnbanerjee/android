@@ -51,6 +51,7 @@
                     android:inputType="number"
                     style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_doctor"
+                    android:layout_marginTop="4dp"
                     android:text="0"
                 />
 
@@ -109,6 +110,7 @@
                     android:inputType="number"
                     style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_clinic"
+                    android:layout_marginTop="4dp"
                     android:text="0"
                     />
             </RelativeLayout>
@@ -165,6 +167,7 @@
                     android:id="@+id/medicalAlertCount"
                     style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_medicineAlarm"
+                    android:layout_marginTop="4dp"
                     android:text="0"
                     />
 
@@ -192,7 +195,7 @@
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
                 android:id="@+id/feedback_icon"
-                android:background="@drawable/ic_star_black_24dp"
+                android:background="@drawable/feedback"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -222,6 +225,7 @@
                     android:id="@+id/feedback_count"
                    style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_feedback"
+                    android:layout_marginTop="4dp"
                     android:text="0"
                     />
 

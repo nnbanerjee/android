@@ -60,7 +60,7 @@ public class Login extends Fragment implements PARAM
         password = (EditText) view.findViewById(R.id.password);
         loginBtn = (Button) view.findViewById(R.id.login);
 
-        view.findViewById(R.id.signin)
+        view.findViewById(R.id.login)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
                         Intent intObj = new Intent(getActivity(), SigninActivity.class);
@@ -80,21 +80,21 @@ public class Login extends Fragment implements PARAM
 
                     }
                 });
-        view.findViewById(R.id.signindoc)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View arg0) {
-                        Intent intObj = new Intent(getActivity(), SigninActivityDoctor.class);
-                        startActivity(intObj);
-                    }
-                });
-
-        view.findViewById(R.id.signinassistance)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View arg0) {
-                        Intent intObj = new Intent(getActivity(), SigninActivityAssistance.class);
-                        startActivity(intObj);
-                    }
-                });
+//        view.findViewById(R.id.signindoc)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View arg0) {
+//                        Intent intObj = new Intent(getActivity(), SigninActivityDoctor.class);
+//                        startActivity(intObj);
+//                    }
+//                });
+//
+//        view.findViewById(R.id.signinassistance)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View arg0) {
+//                        Intent intObj = new Intent(getActivity(), SigninActivityAssistance.class);
+//                        startActivity(intObj);
+//                    }
+//                });
         view.findViewById(R.id.forgot_password)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {

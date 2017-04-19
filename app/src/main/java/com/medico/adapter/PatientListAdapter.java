@@ -145,6 +145,18 @@ public class PatientListAdapter extends HomeAdapter  {
                 fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
             }
         });
+        totalCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParentActivity parentactivity = (ParentActivity)activity;
+                Bundle bundle = activity.getIntent().getExtras();
+                bundle.putInt(PARAM.PATIENT_ID, allPatients.getPatientlist().get(position).getPatientId());
+                parentactivity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new PatientVisitDatesView();
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+            }
+        });
         return convertView;
 
     }
