@@ -113,12 +113,11 @@
                 <Spinner
                     android:layout_width="fill_parent"
                     android:layout_height="35dp"
-                    android:text="Follow up"
-                    android:textColor="#1E90FF"
-                    android:spinnerMode="dialog"
+                    style="@style/Base.Widget.AppCompat.Spinner"
+                    android:textColor="@color/medico_gray"
+                    android:spinnerMode="dropdown"
                     android:prompt="@string/select_visit_type"
                     android:entries="@array/visit_type_list"
-
                     android:id="@+id/visitType"
                     />
             </RelativeLayout>

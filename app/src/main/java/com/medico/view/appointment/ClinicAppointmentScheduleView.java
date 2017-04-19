@@ -162,60 +162,6 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         });
     }
 
-//    private void setWeekDays(DoctorClinicDetails.ClinicSlots slot)
-//    {
-//        if(slot == null ) return;
-//        Activity activity = getActivity();
-//        date_value.setStretchAllColumns(true);
-//        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-//        dateRow = new TableRow(getActivity());
-//        dayRow = new TableRow(getActivity());
-//        dateRow.setLayoutParams(lp);
-//        dateRow.removeAllViews();
-//        dayRow.removeAllViews();
-//        List<DoctorClinicDetails.AppointmentCounts> counts = slot.counts;
-//        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-//
-//        int i = 0;
-//        for(DoctorClinicDetails.AppointmentCounts count:counts)
-//        {
-//            final TextView dateView = new TextView(activity);
-//            dateView.setTag(new Date(count.date));
-//            dateView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    setSelection(dateView);
-//                    DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM);
-//                    Date date = (Date)v.getTag();
-//                    TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-//                    textviewTitle.setText(format.format(date));
-//                    setAdapter(date);
-//                }
-//            });
-//            TextView countView = new TextView(activity);
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(new Date(count.date));
-//            dateView.setText(new Integer(cal.get(Calendar.DAY_OF_MONTH)).toString());
-//            dateView.setBackgroundResource(R.drawable.medicine_schedule);
-//            dateView.setLeft(10);
-//            dateView.setTop(10);
-//            dateView.setRight(10);
-//            dateView.setBottom(10);
-//            dateRow.addView(dateView,i,lp);
-////            dateRow.setTag(new Date(count.date));
-//            countView.setText(getDayString(cal.get(Calendar.DAY_OF_WEEK)));
-//            countView.setBackgroundResource(R.drawable.medicine_schedule);
-//            countView.setLeft(10);
-//            countView.setTop(10);
-//            countView.setRight(10);
-//            countView.setBottom(10);
-//            dayRow.addView(countView,i,lp);
-//            i++;
-//        }
-//        date_value.addView(dayRow);
-//        date_value.addView(dateRow);
-//        date_value.requestLayout();
-//    }
     private void setWeekDays()
     {
         date_value.removeAllViews();
@@ -522,18 +468,6 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return weekDays;
     }
 
-//    public Date getFirstValidDayOfWeek(Date date)
-//    {
-//        Calendar calendar_grey = Calendar.getInstance();
-//        calendar_grey.setTime(date);
-//        Date[] weekDays = getFirstDatyOfWeek(date);
-//        for(int i = 0; i < weekDays.length; i++ )
-//        {
-//            if(isValid(calendar_grey.get(Calendar.DAY_OF_WEEK)))
-//                return date;
-//        }
-//        return null;
-//    }
 
     public void setDateAndDateRange(Date date)
     {
