@@ -70,29 +70,8 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
         View view = inflater.inflate(R.layout.appointment_schedule_list, container, false);
         setHasOptionsMenu(true);
-//        holidayList = (Spinner) view.findViewById(R.id.holidayList);
-//        slot_name = (TextView) view.findViewById(R.id.slot_name_for_clinic);
         date_value = (TableLayout) view.findViewById(R.id.date_value);
         appointment_schedule = (ListView)view.findViewById(R.id.appointment_schedule);
-//        holidayList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if(holidayList.getSelectedItemPosition() == 0) {
-//                    holidayList.setBackgroundColor(Color.GREEN);
-//                    slot_name.setBackgroundColor(Color.GREEN);
-//                }
-//                else {
-//                    holidayList.setBackgroundColor(Color.RED);
-//                    slot_name.setBackgroundColor(Color.RED);
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        } );
-
         date_value.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

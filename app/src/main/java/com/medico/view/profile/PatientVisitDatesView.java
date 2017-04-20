@@ -48,10 +48,7 @@ public class PatientVisitDatesView extends ParentFragment
     public SharedPreferences session;
     ProgressDialog progress;
     StickyListHeadersListView allAppointments;
-    String doctorId;
-//    Global global;
     PatientVisits appointments;
-//    ImageView addClinic;
     String fragmentCall;
     @Nullable
     @Override
@@ -99,7 +96,7 @@ public class PatientVisitDatesView extends ParentFragment
         inflater.inflate(R.menu.patient_visit_dates, menu);
         super.onCreateOptionsMenu(menu,inflater);
         MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.add);
+        menuItem.setIcon(R.drawable.ic_add_white_24dp);
     }
 
 

@@ -72,7 +72,7 @@ public class PatientVisitDatesAdapter extends BaseAdapter implements StickyListH
         }
         final int pos = position;
 //        DateFormat format1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        SimpleDateFormat format1 = new SimpleDateFormat("MMMMMM dd, (EEEEEEEE)", Locale.getDefault());
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM ( EEEE )", Locale.getDefault());
         DateFormat format2 = DateFormat.getTimeInstance(DateFormat.SHORT);
         holder.date.setText(format1.format(new Date(appointment.get(position).dateTime)) );
         holder.time.setText(format2.format(new Date((appointment.get(position).dateTime)) ));

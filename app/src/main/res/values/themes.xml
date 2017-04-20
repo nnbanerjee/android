@@ -8,7 +8,9 @@
              <item name="android:buttonStyle">@style/ButtonStyle</item>
              <item name="android:textViewStyle">@style/TextViewStyle</item>
             <item name="android:spinnerStyle">@style/SpinnerStyle</item>
-            <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewStyle</item>
+          <item name="android:spinnerItemStyle">@style/SpinnerItemTextStyle</item>
+          <item name="autoCompleteTextViewStyle">@style/AutoCompleteTextViewStyle</item>
+
       </style>
 
            <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -42,29 +44,29 @@
         <item name="android:background">@drawable/button_shape_blue</item>
         <item name="android:textAllCaps">true</item>
       </style>
-      <style name="SpinnerStyle" parent="@android:style/Widget.Spinner">
-          <item name="android:background">@drawable/rounded_white_color</item>
-        <item name="android:textAppearance">@style/body3</item>
-        <item name="android:inputType">text</item>
-        <item name="android:spinnerMode">dropdown</item>
-          <item name="android:layout_gravity">center</item>
-          <item name="android:spinnerDropDownItemStyle">@style/Widget.AppCompat.Spinner.DropDown</item>
-          <item name="android:focusable">true</item>
+      <style name="SpinnerStyle" parent="android:Widget.DeviceDefault.Spinner">
+            <item name="android:textAppearance">@style/body3</item>
+            <item name="android:inputType">text</item>
+            <item name="android:spinnerMode">dropdown</item>
+            <item name="android:layout_gravity">center</item>
         <item name="android:paddingLeft">3dp</item>
       </style>
-      <style name="SpinnerItemTextStyle" parent="@android:style/Widget.TextView.SpinnerItem">
+      <style name="SpinnerItemTextStyle" parent="@android:style/Widget.DeviceDefault.Light.DropDownItem.Spinner">
         <item name="android:textAppearance">@style/body3</item>
+          <item name="android:gravity">center_vertical</item>
+          <item name="android:paddingTop">4dp</item>
+          <item name="android:layout_centerVertical">true</item>
         <item name="android:inputType">text</item>
           <item name="android:focusable">true</item>
-        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingLeft">2dp</item>
       </style>
-    <style name="AutoCompleteTextViewStyle" parent="@android:style/Widget.AutoCompleteTextView">
-        <item name="android:background">@drawable/rounded_white_color</item>
+    <style name="AutoCompleteTextViewStyle" parent="@android:style/Widget.DeviceDefault.Light.AutoCompleteTextView">
         <item name="android:ems">10</item>
+        <item name="android:background">@drawable/rounded_white_color</item>
         <item name="android:gravity">top</item>
-        <item name="android:lines">1</item>
+        <item name="android:lines">4</item>
         <item name="android:singleLine">false</item>
-        <item name="android:popupLayout">@android:style/Widget.Holo.PopupMenu</item>
         <item name="android:textAppearance">@style/body3</item>
+        <item name="android:popupMenuStyle">@style/Widget.AppCompat.Light.PopupMenu</item>
     </style>`
 </resources>

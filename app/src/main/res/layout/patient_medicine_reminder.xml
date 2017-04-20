@@ -30,7 +30,7 @@
                 android:id="@+id/medicine_type"
                 />
             <RelativeLayout
-                android:background="@color/grey"
+                android:background="@drawable/rounded_white_color"
                 android:layout_toRightOf="@+id/medicine_type"
                 android:layout_toEndOf="@+id/medicine_type"
                 android:layout_width="match_parent"
@@ -94,17 +94,16 @@
                 android:id="@+id/emailIdText"
                 />
             <RelativeLayout
-                android:background="@color/grey"
+                android:background="@drawable/rounded_white_color"
                 android:layout_toRightOf="@+id/emailIdText"
                 android:layout_toEndOf="@+id/emailIdText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/scheduleDate"
                 android:entries="@array/scheduleDateList"
-
                 />
         </RelativeLayout>
         </RelativeLayout>

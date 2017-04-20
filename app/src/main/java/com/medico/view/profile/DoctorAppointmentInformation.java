@@ -125,7 +125,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         if (menu != null)
         {
             MenuItem menuItem = menu.findItem(R.id.add);
-            menuItem.setIcon(R.drawable.add);
+            menuItem.setIcon(R.drawable.ic_add_white_24dp);
             menuItem.setChecked(true);
         }
         if(selectedFragment != null)
@@ -161,7 +161,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         if (menu != null)
         {
             MenuItem menuItem = menu.findItem(R.id.add);
-            menuItem.setIcon(R.drawable.add);
+            menuItem.setIcon(R.drawable.ic_add_white_24dp);
             menuItem.setChecked(true);
         }
         if(selectedFragment != null)
@@ -179,7 +179,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         if (menu != null)
         {
             MenuItem menuItem = menu.findItem(R.id.add);
-            menuItem.setIcon(R.drawable.add);
+            menuItem.setIcon(R.drawable.ic_add_white_24dp);
             menuItem.setChecked(true);
         }
         if(selectedFragment != null)

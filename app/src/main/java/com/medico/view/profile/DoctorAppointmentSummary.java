@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,9 +93,9 @@ public class DoctorAppointmentSummary extends ParentFragment {
         prescribHistryBtn = (ImageView) view.findViewById(R.id.prescribHistryBtn);
         testHistryBtn = (ImageView) view.findViewById(R.id.testHistryBtn);
         symptomsValue = (MultiAutoCompleteTextView)view.findViewById(R.id.symptomsValue);
-        Symptom[] options = {};
-        ArrayAdapter<Symptom> symptomAdapter = new ArrayAdapter<Symptom>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
-        symptomsValue.setAdapter(symptomAdapter);
+//        Symptom[] options = {};
+//        ArrayAdapter<Symptom> symptomAdapter = new ArrayAdapter<Symptom>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+//        symptomsValue.setAdapter(symptomAdapter);
         symptomsValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         symptomsValue.setThreshold(1);
         symptomsValue.addTextChangedListener(new TextWatcher() {
@@ -117,10 +118,23 @@ public class DoctorAppointmentSummary extends ParentFragment {
                         @Override
                         public void success(List<Symptom> symptomList, Response response)
                         {
-                            ArrayAdapter array = (ArrayAdapter<Symptom>)symptomsValue.getAdapter();
-                            array.clear();
-                            array.addAll(symptomList);
-                            array.notifyDataSetChanged();
+//                            ArrayAdapter array = (ArrayAdapter<Symptom>)symptomsValue.getAdapter();
+//                            array.clear();
+//                            array.addAll(symptomList);
+                            Symptom[] options = new Symptom[symptomList.size()];
+                            symptomList.toArray(options);
+                            ArrayAdapter<Symptom> symptomAdapter = new ArrayAdapter<Symptom>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            symptomAdapter.setNotifyOnChange(true);
+                            symptomsValue.setAdapter(symptomAdapter);
+                            symptomsValue.setOnTouchListener(new View.OnTouchListener() {
+
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event)
+                                {
+                                    symptomsValue.showDropDown();
+                                    return false;
+                                }
+                            });
                         }
 
                         @Override
@@ -130,6 +144,37 @@ public class DoctorAppointmentSummary extends ParentFragment {
                         }
                     });
                 }
+
+            }
+        });
+//        symptomsValue.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                int action = event.getAction();
+//                switch (action) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        // Disallow ScrollView to intercept touch events.
+//                        v.getParent().requestDisallowInterceptTouchEvent(true);
+//                        break;
+//
+//                    case MotionEvent.ACTION_UP:
+//                        // Allow ScrollView to intercept touch events.
+//                        v.getParent().requestDisallowInterceptTouchEvent(false);
+//
+//                        break;
+//                }
+//
+//                // Handle ListView touch events.
+//                v.onTouchEvent(event);
+//                return true;
+//            }
+//        });
+        symptomsValue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "selected", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -160,6 +205,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                         public void success(List<Symptom> symptomList, Response response)
                         {
                             ArrayAdapter array = (ArrayAdapter<Symptom>)diagnosisValue.getAdapter();
+                            array.setNotifyOnChange(true);
                             array.clear();
                             array.addAll(symptomList);
                             array.notifyDataSetChanged();

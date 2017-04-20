@@ -37,8 +37,6 @@ public class MedicineAdapter extends HomeAdapter {
     Activity activity;
     List<MedicinePrescribed> alarms;
     LayoutInflater inflater;
-//    MyApi api;
-//    SharedPreferences session;
     ProgressDialog progress;
     private int loggedInUserId;
 
@@ -47,7 +45,6 @@ public class MedicineAdapter extends HomeAdapter {
         super(activity);
         this.activity = activity;
         this.alarms = alarms;
-//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loggedInUserId = userId;
     }
 
@@ -69,12 +66,6 @@ public class MedicineAdapter extends HomeAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-//                RestAdapter restAdapter = new RestAdapter.Builder()
-//                        .setEndpoint(activity.getString(R.string.base_url))
-//                        .setClient(new OkClient())
-//                        .setLogLevel(RestAdapter.LogLevel.FULL)
-//                        .build();
-//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.medicine, null);
                 setView(convertView,position);

@@ -19,5 +19,6 @@
     <item name="medico_lightgreen" type="color">#ff99bd88</item>
     <item name="medico_blue" type="color">#ff206799</item>
     <item name="medico_gray" type="color">#ff707070</item>
+    <item name="medico_light_gray" type="color">#ffa0a0a0</item>
     <item name="medico_red" type="color">#ffb51408</item>
 </resources>

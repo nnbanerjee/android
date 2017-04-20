@@ -5,8 +5,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/arrow_left_summary"
-        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@+id/summary_scroll"
+        android:background="@drawable/ic_chevron_left_black_18dp"
         android:id="@+id/arrow_left"
         />
     <HorizontalScrollView
@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/arrow_left"
         android:layout_toLeftOf="@+id/arrow_right"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
 
         android:id="@+id/summary_scroll">
 
@@ -71,7 +71,7 @@
                     android:layout_toRightOf="@+id/clinicsBtn"
                     android:background="@drawable/tab_default"
                     android:gravity="center"
-                    android:text="Doctor Notes"
+                    android:text="Doctor's Notes"
                     />
 
                 <Button
@@ -85,7 +85,7 @@
                     android:layout_toRightOf="@+id/clinicsBtn"
                     android:background="@drawable/tab_default"
                     android:gravity="center"
-                    android:text="Treatment" />
+                    android:text="Treatment Plan" />
 
                 <Button
                     android:id="@+id/invoicesBtn"
@@ -97,24 +97,26 @@
                     android:layout_toRightOf="@+id/clinicsBtn"
                     android:background="@drawable/tab_default"
                     android:gravity="center"
-                    android:text="Invoices" />
+                    android:text="Invoice" />
             </LinearLayout>
         </RelativeLayout>
     </HorizontalScrollView>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/arrow_right_summary"
-        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@+id/summary_scroll"
+        android:background="@drawable/ic_chevron_right_black_18dp"
         android:layout_alignParentRight="true"
 
         android:id="@+id/arrow_right"
         />
     <RelativeLayout
         android:id="@+id/replacementFragment"
+        android:layout_below="@+id/summary_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/summary_scroll">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
     </RelativeLayout>
 
