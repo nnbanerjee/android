@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.application.R;
+import com.medico.model.MedicineStatusRequest;
 import com.medico.model.RemoveMedicineRequest;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SummaryResponse;
@@ -77,7 +78,7 @@ public class MedicineAdapter extends HomeAdapter {
             return convertView;
         }
 
-    private void setView(final View convertView, int position)
+    private void setView(final View convertView, final int position)
     {
         final TextView name = (TextView)convertView.findViewById(R.id.medicine_name);
         name.setTag(alarms.get(position));
@@ -143,14 +144,38 @@ public class MedicineAdapter extends HomeAdapter {
             }
         });
         ImageView alarm = (ImageView)convertView.findViewById(R.id.alarm_button);
+        if(alarms.get(position).reminder.byteValue() == 1)
+            alarm.setImageResource(R.drawable.ic_alarm_on_black_24dp);
+        else
+            alarm.setImageResource(R.drawable.ic_alarm_off_black_24dp);
         alarm.setTag(alarms.get(position));
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                System.out.println("alarm buttom clicked");
+            public void onClick(View v)
+            {
+                final MedicinePrescribed prescribed = (MedicinePrescribed)v.getTag();
+                final int currentState = prescribed.reminder.intValue();
+                final int postState = currentState==1?0:1;
+                api.setMedicineAlarm(new MedicineStatusRequest(prescribed.medicineId,postState), new Callback<ResponseCodeVerfication>() {
+                    @Override
+                    public void success(ResponseCodeVerfication result, Response response) {
+//                        progress.dismiss();
+                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
+                            Toast.makeText(activity, "Medicine reminder status updated", Toast.LENGTH_SHORT).show();
+                            alarms.get(position).reminder = new Integer(postState).byteValue();
+                            notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+//                        progress.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(activity, "Medicine reminder status updation failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-        alarm.setVisibility(alarms.get(position).reminder==1?View.VISIBLE:View.INVISIBLE);
     }
 
 

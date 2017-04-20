@@ -17,6 +17,7 @@ import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
 import com.medico.model.DependentDelegatePerson;
 import com.medico.model.DependentDelegatePersonRequest;
+import com.medico.model.DiagnosticStatusRequest;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorAppointment;
 import com.medico.model.DoctorClinicDetails;
@@ -41,6 +42,7 @@ import com.medico.model.LinkedPersonRequest;
 import com.medico.model.Logindata;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
+import com.medico.model.MedicineStatusRequest;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.model.PatientDiagnostic;
 import com.medico.model.PatientId;
@@ -138,7 +140,10 @@ public interface MyApi {
     void getFinanceSummaryDetails(@Body FinanceReportRequest param, Callback<List<FinanceDetails>> cb);
     @POST("/getAllReviews1")
     void getReviewsForDoctor(@Body DoctorId1 param, Callback<List<PatientReview>> cb);
-
+    @POST("/setMedicineAlarm")
+    void setMedicineAlarm(@Body MedicineStatusRequest param, Callback<ResponseCodeVerfication> cb);
+    @POST("/setDiagnosticTestAlarm")
+    void setDiagnosticTestAlarm(@Body DiagnosticStatusRequest param, Callback<ResponseCodeVerfication> cb);
 //    @POST("/registerPatient")
 //    void registerPatient(@Body RegisterUserData param, Callback<String> cb);
 //

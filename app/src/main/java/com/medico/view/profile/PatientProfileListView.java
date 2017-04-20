@@ -1,6 +1,5 @@
 package com.medico.view.profile;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,7 +38,7 @@ public class PatientProfileListView extends ParentFragment
 
     SharedPreferences session;
     ListView patientListView;
-    ProgressDialog progress;
+//    ProgressDialog progress;
 
     @Nullable
     @Override
@@ -50,26 +49,9 @@ public class PatientProfileListView extends ParentFragment
 
         patientListView = (ListView) view.findViewById(R.id.doctorListView);
 
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText(getActivity().getResources().getString(R.string.patients_profiles));
-
-//        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                setHasOptionsMenu(false);
-//                Bundle bun = getActivity().getIntent().getExtras();
-//                PatientShortProfile profile = (PatientShortProfile)adapterView.getAdapter().getItem(i);
-//                        ParentFragment fragment = new PatientVisitDatesView();
-//                        ((ParentActivity)getActivity()).attachFragment(fragment);
-//                        bun.putInt(PARAM.PATIENT_ID, profile.getPatientId().intValue());
-//                        getActivity().getIntent().putExtras(bun);
-//                      fragment.setArguments(bun);
-//                        FragmentManager fragmentManger = getActivity().getFragmentManager();
-//                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//            }
-//        });
-
         return view;
     }
 
@@ -85,14 +67,16 @@ public class PatientProfileListView extends ParentFragment
             public void success(final List<PatientShortProfile> allPatientsProfiles, Response response) {
                 PatientListAdapter adapter = new PatientListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
                 patientListView.setAdapter(adapter);
-                progress.dismiss();
+//                ApplicationProgressManager.getInstance(getActivity()).getAnimation().reset();
+//                progress.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
+//                progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+//                ApplicationProgressManager.getInstance(getActivity()).getAnimation().reset();
             }
         });
     }

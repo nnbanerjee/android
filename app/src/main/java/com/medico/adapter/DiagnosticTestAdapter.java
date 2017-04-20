@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.application.R;
+import com.medico.model.DiagnosticStatusRequest;
 import com.medico.model.RemovePatientTestRequest;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SummaryResponse;
@@ -36,8 +37,6 @@ public class DiagnosticTestAdapter extends HomeAdapter {
     Activity activity;
     List<SummaryResponse.TestPrescribed> alarms;
     LayoutInflater inflater;
-//    MyApi api;
-//    SharedPreferences session;
     ProgressDialog progress;
     private int loggedInUserId;
 
@@ -46,7 +45,6 @@ public class DiagnosticTestAdapter extends HomeAdapter {
         super(activity);
         this.activity = activity;
         this.alarms = alarms;
-//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loggedInUserId = userId;
     }
 
@@ -68,14 +66,8 @@ public class DiagnosticTestAdapter extends HomeAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-//                RestAdapter restAdapter = new RestAdapter.Builder()
-//                        .setEndpoint(activity.getString(R.string.base_url))
-//                        .setClient(new OkClient())
-//                        .setLogLevel(RestAdapter.LogLevel.FULL)
-//                        .build();
-//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.diagnostic_test, null);
+                convertView = inflater.inflate(R.layout.medicine, null);
                 setView(convertView,position);
             }
             else
@@ -85,7 +77,7 @@ public class DiagnosticTestAdapter extends HomeAdapter {
             return convertView;
         }
 
-    private void setView(final View convertView, int position)
+    private void setView(final View convertView, final int position)
     {
         final TextView name = (TextView)convertView.findViewById(R.id.medicine_name);
         name.setTag(alarms.get(position));
@@ -151,15 +143,38 @@ public class DiagnosticTestAdapter extends HomeAdapter {
             }
         });
         ImageView alarm = (ImageView)convertView.findViewById(R.id.alarm_button);
+        if(alarms.get(position).reminder.byteValue() == 1)
+            alarm.setImageResource(R.drawable.ic_alarm_on_black_24dp);
+        else
+            alarm.setImageResource(R.drawable.ic_alarm_off_black_24dp);
         alarm.setTag(alarms.get(position));
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                System.out.println("alarm buttom clicked");
+            public void onClick(View v)
+            {
+                final SummaryResponse.TestPrescribed prescribed = (SummaryResponse.TestPrescribed)v.getTag();
+                final int currentState = prescribed.reminder.intValue();
+                final int postState = currentState==1?0:1;
+                api.setDiagnosticTestAlarm(new DiagnosticStatusRequest(prescribed.testId,postState), new Callback<ResponseCodeVerfication>() {
+                    @Override
+                    public void success(ResponseCodeVerfication result, Response response) {
+//                        progress.dismiss();
+                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
+                            Toast.makeText(activity, "Diagnostic Test reminder status updated", Toast.LENGTH_SHORT).show();
+                            alarms.get(position).reminder = new Integer(postState).byteValue();
+                            notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+//                        progress.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(activity, "Diagnostic Test reminder status updation failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });
-        alarm.setVisibility(alarms.get(position).reminder==1?View.VISIBLE:View.INVISIBLE);
-    }
+        });    }
 
 
 
