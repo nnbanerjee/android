@@ -226,7 +226,7 @@ public class ClinicPatientAdapter extends HomeAdapter {
                 ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service,fragment,ClinicDoctorAppointmentView.class.getName()).addToBackStack(ClinicDoctorAppointmentView.class.getName()).commit();
 
 
             }
@@ -257,7 +257,7 @@ public class ClinicPatientAdapter extends HomeAdapter {
                 ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service,fragment,ClinicDoctorAppointmentView.class.getName()).addToBackStack(ClinicDoctorAppointmentView.class.getName()).commit();
 
 
             }
@@ -288,7 +288,7 @@ public class ClinicPatientAdapter extends HomeAdapter {
                 ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service,fragment,"Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service,fragment,FeedbackFragmentClinicAppointment.class.getName()).addToBackStack(FeedbackFragmentClinicAppointment.class.getName()).commit();
 
 
             }

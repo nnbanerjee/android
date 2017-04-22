@@ -92,7 +92,7 @@ public class DiagnosticTestAdapter extends HomeAdapter {
                 ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDiagnosticTests.class.getName()).addToBackStack(PatientDiagnosticTests.class.getName()).commit();
             }
         });
         name.setText(alarms.get(position).testName);

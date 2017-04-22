@@ -5,7 +5,8 @@ package com.medico.model;
  */
 public class VisitEditLogRequest
 {
-    public VisitEditLogRequest(Integer appointmentId, int typeOfLog) {
+    public VisitEditLogRequest(Integer appointmentId, int typeOfLog)
+    {
         this.appointmentId = appointmentId;
         this.typeOfLog = typeOfLog;
     }

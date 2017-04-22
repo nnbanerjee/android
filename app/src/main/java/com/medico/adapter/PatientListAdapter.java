@@ -128,7 +128,7 @@ public class PatientListAdapter extends HomeAdapter  {
                 ParentFragment fragment = new PatientDetailsView();
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
             }
         });
 
@@ -142,7 +142,7 @@ public class PatientListAdapter extends HomeAdapter  {
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new PatientVisitDatesView();
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         totalCount.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +154,7 @@ public class PatientListAdapter extends HomeAdapter  {
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new PatientVisitDatesView();
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         return convertView;

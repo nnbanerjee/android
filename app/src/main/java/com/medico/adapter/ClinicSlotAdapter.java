@@ -89,7 +89,7 @@ public class ClinicSlotAdapter extends HomeAdapter {
                 ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicSlotEditView.class.getName()).addToBackStack(ClinicSlotEditView.class.getName()).commit();
             }
         });
         name.setText(slots.get(position).slotName + " ( " + slots.get(position).slotNumber + " )");

@@ -84,7 +84,7 @@ public class FinanceSummaryListAdapter extends BaseAdapter implements StickyList
                     context.getIntent().putExtras(bundle);
                     ParentFragment fragment = new ManageFinanceDetailsView();
                     FragmentTransaction ft = context.getFragmentManager().beginTransaction();
-                    ft.add(R.id.service, fragment).addToBackStack(null).commit();
+                    ft.add(R.id.service, fragment,ManageFinanceDetailsView.class.getName()).addToBackStack(ManageFinanceDetailsView.class.getName()).commit();
 
                 }
             });

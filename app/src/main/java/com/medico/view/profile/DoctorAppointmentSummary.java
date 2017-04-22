@@ -31,18 +31,18 @@ import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.AppointmentId1;
 import com.medico.model.Clinic1;
+import com.medico.model.Diagnosis;
 import com.medico.model.PersonID;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
-import com.medico.model.VisitEditLogRequest;
-import com.medico.model.VisitEditLogResponse;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -64,7 +64,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
     ListView testsListView;
     MultiAutoCompleteTextView symptomsValue,diagnosisValue;
     ProgressDialog progress;
-//    TextView clinicName;
     MedicineAdapter adapter;
     DiagnosticTestAdapter testAdapter;
     public SummaryResponse summaryResponse;
@@ -82,7 +81,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         testsListView = (ListView)view.findViewById(R.id.test_prescribed_list);
         addMedicine = (ImageView)view.findViewById(R.id.add_alarm);
         addtestsBtn = (ImageView)view.findViewById(R.id.addtestsBtn);
-//        clinicName = (TextView)view.findViewById(R.id.clinicName);
         visit_date_value = (EditText) view.findViewById(R.id.visit_date_value);
         refered_by_value = (EditText) view.findViewById(R.id.refered_by_value);
         visit_type_value = (Spinner) view.findViewById(R.id.visit_type_value);
@@ -93,9 +91,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         prescribHistryBtn = (ImageView) view.findViewById(R.id.prescribHistryBtn);
         testHistryBtn = (ImageView) view.findViewById(R.id.testHistryBtn);
         symptomsValue = (MultiAutoCompleteTextView)view.findViewById(R.id.symptomsValue);
-//        Symptom[] options = {};
-//        ArrayAdapter<Symptom> symptomAdapter = new ArrayAdapter<Symptom>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
-//        symptomsValue.setAdapter(symptomAdapter);
         symptomsValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         symptomsValue.setThreshold(1);
         symptomsValue.addTextChangedListener(new TextWatcher() {
@@ -111,16 +106,13 @@ public class DoctorAppointmentSummary extends ParentFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1);
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
                 if(searchText.length() > 0 )
                 {
                     api.searchAutoFillSymptom(new SearchParameter(searchText, 1, 1, 10, 1), new Callback<List<Symptom>>() {
                         @Override
                         public void success(List<Symptom> symptomList, Response response)
                         {
-//                            ArrayAdapter array = (ArrayAdapter<Symptom>)symptomsValue.getAdapter();
-//                            array.clear();
-//                            array.addAll(symptomList);
                             Symptom[] options = new Symptom[symptomList.size()];
                             symptomList.toArray(options);
                             ArrayAdapter<Symptom> symptomAdapter = new ArrayAdapter<Symptom>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
@@ -179,9 +171,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
             }
         });
         diagnosisValue = (MultiAutoCompleteTextView)view.findViewById(R.id.diagnosisValue);
-        Symptom[] options1 = {};
-        ArrayAdapter<Symptom> diagnosticAdapter = new ArrayAdapter<Symptom>(getActivity(), android.R.layout.simple_dropdown_item_1line,options1);
-        diagnosisValue.setAdapter(diagnosticAdapter);
         diagnosisValue.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         diagnosisValue.setThreshold(1);
         diagnosisValue.addTextChangedListener(new TextWatcher() {
@@ -197,18 +186,27 @@ public class DoctorAppointmentSummary extends ParentFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1);
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
                 if(searchText.length() > 0 )
                 {
-                    api.searchAutoFillSymptom(new SearchParameter(searchText, 1, 1, 10, 2), new Callback<List<Symptom>>() {
+                    api.searchAutoFillDiagnosis(new SearchParameter(searchText, 1, 1, 10, 2), new Callback<List<Diagnosis>>() {
                         @Override
-                        public void success(List<Symptom> symptomList, Response response)
+                        public void success(List<Diagnosis> diagnosisList, Response response)
                         {
-                            ArrayAdapter array = (ArrayAdapter<Symptom>)diagnosisValue.getAdapter();
-                            array.setNotifyOnChange(true);
-                            array.clear();
-                            array.addAll(symptomList);
-                            array.notifyDataSetChanged();
+                            Diagnosis[] options = new Diagnosis[diagnosisList.size()];
+                            diagnosisList.toArray(options);
+                            ArrayAdapter<Diagnosis> diagnosisAdapter = new ArrayAdapter<Diagnosis>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            diagnosisAdapter.setNotifyOnChange(true);
+                            diagnosisValue.setAdapter(diagnosisAdapter);
+                            diagnosisValue.setOnTouchListener(new View.OnTouchListener() {
+
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event)
+                                {
+                                    diagnosisValue.showDropDown();
+                                    return false;
+                                }
+                            });
                         }
 
                         @Override
@@ -234,7 +232,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         symptomsHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(1);
 
             }
@@ -242,7 +240,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         diagnosisHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(2);
 
             }
@@ -251,7 +249,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         prescribHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(3);
 
             }
@@ -259,7 +257,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         testHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(4);
 
             }
@@ -274,7 +272,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDiagnosticTests.class.getName()).addToBackStack(PatientDiagnosticTests.class.getName()).commit();
 
             }
         });
@@ -288,7 +286,14 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+//                FragmentManager.BackStackEntry entry = fragmentManger.getBackStackEntryAt(fragmentManger.getBackStackEntryCount()-1);
+//                String name = entry.getName();
+//                if(name != null)
+//                {
+//                    Fragment fragment1 = fragmentManger.findFragmentByTag(name);
+//                    fragment1.onPause();
+//                }
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientMedicinReminder.class.getName()).addToBackStack(PatientMedicinReminder.class.getName()).commit();
             }
         });
 
@@ -452,50 +457,17 @@ public class DoctorAppointmentSummary extends ParentFragment {
         pickerDialog.show();
     }
 
-    public void getHistryData(final int histryString)
+    public void getHistryData(int histryType)
     {
+        Bundle bundle = getActivity().getIntent().getExtras();
+        bundle.putInt("history_type", histryType);
+        bundle.putInt(APPOINTMENT_ID,summaryResponse.getAppointmentId());
+        ParentFragment fragment = new HistryDialogView();
+        ((ParentActivity)getActivity()).attachFragment(fragment);
+        getActivity().getIntent().putExtras(bundle);
+        FragmentManager fragmentManger = getActivity().getFragmentManager();
+        fragmentManger.beginTransaction().add(R.id.service, fragment, HistryDialogView.class.getName()).addToBackStack(HistryDialogView.class.getName()).commit();
 
-        VisitEditLogRequest req= new VisitEditLogRequest(summaryResponse.getAppointmentId(),histryString);
-        api.getPatientVisitEditLog(req, new Callback<VisitEditLogResponse>() {
-            @Override
-            public void success(VisitEditLogResponse summaryHistoryVMs, Response response) {
-
-                if (histryString == 1) {
-                    ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Symptoms History";
-                    show.show(getFragmentManager(), "Dialog");
-                    show.State=histryString;
-                }
-                if (histryString == 2) {
-                    ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Diagnosis History";
-                    show.show(getFragmentManager(), "Dialog");
-                    show.State=histryString;
-                }
-                if (histryString == 3) {
-                    ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Prescribed History";
-                    show.show(getFragmentManager(), "Dialog");
-                    show.State=histryString;
-                }
-                if (histryString == 4) {
-                    ShowHistryDialog show = ShowHistryDialog.newInstance();
-                    show.summaryHistoryVMs = summaryHistoryVMs;
-                    show.heading = "Test History";
-                    show.show(getFragmentManager(), "Dialog");
-                    show.State=histryString;
-                }
-                progress.dismiss();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
     }
 
 
@@ -506,10 +478,8 @@ public class DoctorAppointmentSummary extends ParentFragment {
         calendar.setTimeInMillis(summaryResponse.getVisitDate());
         visit_date_value.setText(DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT).format(new Date(summaryResponse.getVisitDate())));
         refered_by_value.setText(summaryResponse.getReferredBy());
-//        clinicValue.setText(summaryResponse.clinicName);
         visit_date_value.setEnabled(false);
         visit_type_value.setEnabled(false);
-//        clinicValue.setEnabled(false);
         calendar_button.setEnabled(false);
 
         symptomsValue.setText(summaryResponse.getSymptoms());
@@ -600,7 +570,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         if(selectionRequired)
         {
            clinicSpinner.setVisibility(View.VISIBLE);
-//            clinicValue.setVisibility(View.GONE);
             Bundle bundle1 = getActivity().getIntent().getExtras();
             Integer doctorId = bundle1.getInt(DOCTOR_ID);
             api.getAllClinics(new PersonID(doctorId), new Callback<List<Clinic1>>() {
@@ -616,9 +585,16 @@ public class DoctorAppointmentSummary extends ParentFragment {
 
                 }
             });
-        }else{
-//            clinicSpinner.setVisibility(View.GONE);
-//            clinicValue.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            Clinic1 clinic = new Clinic1();
+            clinic.clinicName = summaryResponse.clinicName;
+            clinic.idClinic = summaryResponse.clinicId;
+            List<Clinic1> clinicsList = new ArrayList<>();
+            clinicsList.add(clinic);
+            clinicSpinner.setAdapter(new ClinicSpinner(getActivity(), R.layout.customize_spinner, clinicsList));
+            clinicSpinner.setEnabled(false);
         }
     }
     @Override

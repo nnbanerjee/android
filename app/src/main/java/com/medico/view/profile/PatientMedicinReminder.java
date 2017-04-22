@@ -29,6 +29,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.AlarmReminderVM;
@@ -40,7 +41,7 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.util.AlarmService;
 import com.medico.util.PARAM;
-import com.medico.application.R;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -292,9 +293,15 @@ public class PatientMedicinReminder extends ParentFragment {
     }
 
     @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
     public void onResume() {
         super.onResume();
-
+        setHasOptionsMenu(true);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -578,6 +585,34 @@ public class PatientMedicinReminder extends ParentFragment {
         menuItem.setIcon(null);
         menuItem.setTitle("SAVE");
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add: {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            break;
+            case R.id.home: {
+                return false;
+            }
+
+        }
+        return false;
+    }
 
     @Override
     public boolean isChanged()
@@ -592,7 +627,6 @@ public class PatientMedicinReminder extends ParentFragment {
         patientMedicine.setDosesPerSchedule(new Integer(numberOfDosesPerSchedule.getText().toString()));
         patientMedicine.setSchedule(new Integer(scheduleDate.getSelectedItemPosition()).byteValue());
         DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
-//      patientMedicine.setStartDate(format.parse(startDateEdit.getText().toString()).getTime());
         endDateEdit.setText(format.format(patientMedicine.getEndDate()));
         patientMedicine.setDoctorInstruction(doctorInstructionValue.getText().toString());
         patientMedicine.setDurationSchedule(new Integer(duration.getText().toString()));

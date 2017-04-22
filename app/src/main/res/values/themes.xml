@@ -31,13 +31,12 @@
         <item name="android:textAppearance">@style/body3</item>
           <item name="android:inputType">textNoSuggestions|textMultiLine</item>
           <item name="android:focusable">true</item>
-        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingLeft">4dp</item>
       </style>
       <style name="TextViewStyle" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">@style/body1</item>
         <item name="android:inputType">textNoSuggestions|textMultiLine</item>
         <item name="android:focusable">false</item>
-        <item name="android:paddingLeft">3dp</item>
       </style>
       <style name="ButtonStyle" parent="android:style/Widget.Button">
         <item name="android:textAppearance">@style/body1</item>
@@ -49,16 +48,16 @@
             <item name="android:inputType">text</item>
             <item name="android:spinnerMode">dropdown</item>
             <item name="android:layout_gravity">center</item>
-        <item name="android:paddingLeft">3dp</item>
+            <item name="android:paddingLeft">4dp</item>
       </style>
       <style name="SpinnerItemTextStyle" parent="@android:style/Widget.DeviceDefault.Light.DropDownItem.Spinner">
         <item name="android:textAppearance">@style/body3</item>
           <item name="android:gravity">center_vertical</item>
           <item name="android:paddingTop">4dp</item>
+          <item name="android:paddingLeft">4dp</item>
           <item name="android:layout_centerVertical">true</item>
         <item name="android:inputType">text</item>
           <item name="android:focusable">true</item>
-        <item name="android:paddingLeft">2dp</item>
       </style>
     <style name="AutoCompleteTextViewStyle" parent="@android:style/Widget.DeviceDefault.Light.AutoCompleteTextView">
         <item name="android:ems">10</item>

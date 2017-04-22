@@ -23,6 +23,7 @@ public class VisitEditLogResponse {
     private String symptomLogs;
     private String diagnosisLogs;
     private List<String> medicineLogs;
+    private List<String> testLogs;
 
     public List<String> getTestLogs() {
         return testLogs;
@@ -56,7 +57,6 @@ public class VisitEditLogResponse {
         this.medicineLogs = medicineLogs;
     }
 
-    private List<String> testLogs;
 
 
 

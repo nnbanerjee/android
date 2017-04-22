@@ -162,7 +162,7 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
                 ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
             }
 
             @Override

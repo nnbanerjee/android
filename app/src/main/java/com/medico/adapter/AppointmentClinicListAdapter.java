@@ -113,7 +113,7 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
 //                fragment.setModel(model);
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicDetailedView.class.getName()).addToBackStack(ClinicDetailedView.class.getName()).commit();
 
 //                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
 

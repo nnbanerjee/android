@@ -4,33 +4,21 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.medico.application.MyApi;
-import com.medico.application.R;
 import com.medico.util.ServerConnectionAdapter;
 
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by Narendra on 06-04-2017.
  */
 
-public class ParentActivity extends AppCompatActivity
+public class ParentActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener
 {
 
     private List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
@@ -41,7 +29,8 @@ public class ParentActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        document = getDocument();
+//        document = getDocument();
+        getFragmentManager().addOnBackStackChangedListener(this);
         api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
     }
 
@@ -73,7 +62,14 @@ public class ParentActivity extends AppCompatActivity
         if(getFragmentManager().getBackStackEntryCount() > 1 )
         {
             FragmentManager manager = getFragmentManager();
-            manager.popBackStack();
+            manager.popBackStackImmediate();
+//            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1);
+//            String name = entry.getName();
+//            if(name != null)
+//            {
+//                Fragment fragment = manager.findFragmentByTag(name);
+//                fragment.onStart();
+//            }
         }
         else
             super.onBackPressed();
@@ -139,50 +135,78 @@ public class ParentActivity extends AppCompatActivity
         else
             return null;
     }
-    private Document getDocument()
+//    private Document getDocument()
+//    {
+//        Document doc = null;
+//        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//        try
+//        {
+//            InputStream raw = getResources().openRawResource(R.raw.navigation);
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            int i;
+//            try
+//            {
+//                i = raw.read();
+//                while (i != -1)
+//                {
+//                    byteArrayOutputStream.write(i);
+//                    i = raw.read();
+//                }
+//                raw.close();
+//            }
+//            catch (IOException e)
+//            {
+//                // TODO Auto-generated catch block
+//
+//                e.printStackTrace();
+//            }
+//
+//            String string = byteArrayOutputStream.toString();
+//
+//            DocumentBuilder db = dbf.newDocumentBuilder();
+//            InputSource is = new InputSource();
+//            is.setCharacterStream(new StringReader(string));
+//            doc = db.parse(is);
+//
+//        } catch (ParserConfigurationException e) {
+//            Log.e("Error: ", e.getMessage());
+//            return null;
+//        } catch (SAXException e) {
+//            Log.e("Error: ", e.getMessage());
+//            return null;
+//        } catch (IOException e) {
+//            Log.e("Error: ", e.getMessage());
+//            return null;
+//        }
+//        // return DOM
+//        return doc;
+//    }
+
+
+    public void onBackStackChanged()
     {
-        Document doc = null;
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try
+        FragmentManager manager = getFragmentManager();
+        if(manager.getBackStackEntryCount() > 1)
         {
-            InputStream raw = getResources().openRawResource(R.raw.navigation);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            int i;
-            try
+            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 2);
+            String name = entry.getName();
+            if (name != null)
             {
-                i = raw.read();
-                while (i != -1)
-                {
-                    byteArrayOutputStream.write(i);
-                    i = raw.read();
-                }
-                raw.close();
+                Fragment fragment = manager.findFragmentByTag(name);
+                fragment.onPause();
             }
-            catch (IOException e)
-            {
-                // TODO Auto-generated catch block
-
-                e.printStackTrace();
-            }
-
-            String string = byteArrayOutputStream.toString();
-
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(string));
-            doc = db.parse(is);
-
-        } catch (ParserConfigurationException e) {
-            Log.e("Error: ", e.getMessage());
-            return null;
-        } catch (SAXException e) {
-            Log.e("Error: ", e.getMessage());
-            return null;
-        } catch (IOException e) {
-            Log.e("Error: ", e.getMessage());
-            return null;
         }
-        // return DOM
-        return doc;
+        if(manager.getBackStackEntryCount() > 0)
+        {
+            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
+            String name = entry.getName();
+            if (name != null)
+            {
+                Fragment fragment = manager.findFragmentByTag(name);
+                fragment.onResume();
+            }
+        }
+
     }
+
 }

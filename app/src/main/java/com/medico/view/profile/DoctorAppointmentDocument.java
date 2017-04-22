@@ -68,7 +68,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
                 FileUpload1 fileUpload = uploadFiles.get(position);
                 System.out.println("Url:::::::::"+fileUpload.url);
                 if(fileUpload.url != null) {
-                     ShowPreviewDialog adf = ShowPreviewDialog.newInstance();
+                     PreviewDialogView adf = PreviewDialogView.newInstance();
                     adf.setFile(fileUpload);
                     adf.show(getFragmentManager(), "Dialog");
                 }

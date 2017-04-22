@@ -69,7 +69,7 @@ public class ManageClinicListView extends ParentFragment {
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
             }
         });
 
@@ -146,7 +146,7 @@ public class ManageClinicListView extends ParentFragment {
                 ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
 
             }
             break;

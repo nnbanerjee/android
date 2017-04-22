@@ -99,7 +99,7 @@ public class CustomTemplateListAdapter extends HomeAdapter {
                     ((ParentActivity)activity).attachFragment(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = activity.getFragmentManager();
-                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, CustomTemplateSubListView.class.getName()).addToBackStack(CustomTemplateSubListView.class.getName()).commit();
 
 
                 }

@@ -101,7 +101,7 @@ public class  PatientDetailsView extends ParentFragment {
             public void onClick(View v) {
                 Fragment fragment = new PatientProfileListView();
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, PatientProfileListView.class.getName()).addToBackStack(PatientProfileListView.class.getName()).commit();
             }
         });
         visitCounts.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +111,7 @@ public class  PatientDetailsView extends ParentFragment {
                 Bundle bundle = parentactivity.getIntent().getExtras();
                 ParentFragment fragment = new PatientVisitDatesView();
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +121,7 @@ public class  PatientDetailsView extends ParentFragment {
                 Bundle bundle = getActivity().getIntent().getExtras();
                 ParentFragment fragment = new PatientVisitDatesView();
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         return view;

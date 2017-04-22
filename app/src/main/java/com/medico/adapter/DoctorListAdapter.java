@@ -156,7 +156,7 @@ public class DoctorListAdapter extends HomeAdapter{
                 ParentFragment fragment = new DoctorDetailsProfileView();
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, DoctorDetailsProfileView.class.getName()).addToBackStack(DoctorDetailsProfileView.class.getName()).commit();
 
 
 //                api.getProfile(new ProfileId(allDoctors.getDoctorList().get(position).getDoctorId()), new Callback<AllPatients>() {
@@ -221,7 +221,7 @@ public class DoctorListAdapter extends HomeAdapter{
                 fragment.setArguments(bun);
                 ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         return convertView;

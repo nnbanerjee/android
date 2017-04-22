@@ -69,7 +69,7 @@ public class ManageDependentDelegateListView extends ParentFragment {
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().add(R.id.service, fragment, DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
             }
         });
 
@@ -158,7 +158,7 @@ public class ManageDependentDelegateListView extends ParentFragment {
                     ((ManagePersonSettings) getActivity()).fragmentList.add(fragment);
                     fragment.setArguments(bundle);
                     FragmentManager fragmentManger = getActivity().getFragmentManager();
-                    fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment,DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
                 }
                 else
                 {

@@ -111,7 +111,7 @@ public class DoctorDetailsProfileView extends ParentFragment {
             public void onClick(View v) {
                 Fragment fragment = new PatientProfileListView();
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, PatientProfileListView.class.getName()).addToBackStack(PatientProfileListView.class.getName()).commit();
             }
         });
         return view;

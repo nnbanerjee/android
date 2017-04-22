@@ -117,7 +117,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
                 ParentFragment fragment = new PatientDetailsView();
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
 
             }
         });
@@ -129,7 +129,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
                 ParentFragment fragment = new PatientVisitDatesView();
                 ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         return convertView;

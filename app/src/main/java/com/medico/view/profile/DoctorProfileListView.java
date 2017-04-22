@@ -68,7 +68,7 @@ public class DoctorProfileListView extends ParentFragment {
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                        fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
             }
         });
         return view;

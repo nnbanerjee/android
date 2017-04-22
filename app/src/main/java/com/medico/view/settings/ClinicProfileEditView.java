@@ -132,7 +132,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicSlotEditView.class.getName()).addToBackStack(ClinicSlotEditView.class.getName()).commit();
             }
         });
         slotListView.setOnTouchListener(new View.OnTouchListener() {

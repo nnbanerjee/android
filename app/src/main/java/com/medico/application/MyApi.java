@@ -17,6 +17,7 @@ import com.medico.model.CustomTemplateId;
 import com.medico.model.Delegation;
 import com.medico.model.DependentDelegatePerson;
 import com.medico.model.DependentDelegatePersonRequest;
+import com.medico.model.Diagnosis;
 import com.medico.model.DiagnosticStatusRequest;
 import com.medico.model.DiagnosticTest;
 import com.medico.model.DoctorAppointment;
@@ -873,6 +874,8 @@ public interface MyApi {
     void searchAutoFill(@Body SearchParameter parameter, Callback<List<Medicine>> response);
     @POST("/searchAutoFill1")
     void searchAutoFillSymptom(@Body SearchParameter parameter, Callback<List<Symptom>> response);
+    @POST("/searchAutoFill1")
+    void searchAutoFillDiagnosis(@Body SearchParameter parameter, Callback<List<Diagnosis>> response);
     @POST("/searchAutoFill1")
     void searchAutoFillDiagnostic(@Body SearchParameter parameter, Callback<List<DiagnosticTest>> response);
     @POST("/searchAutoFill1")

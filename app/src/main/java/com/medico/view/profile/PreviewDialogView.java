@@ -16,14 +16,14 @@ import com.medico.application.R;
 /**
  * Created by MNT on 27-Mar-15.
  */
-public class ShowPreviewDialog extends DialogFragment {
+public class PreviewDialogView extends DialogFragment {
 
     ImageView viewImage;
     Button ok;
     FileUpload1 fileUpload1;
 
-    public static ShowPreviewDialog newInstance() {
-        return new ShowPreviewDialog();
+    public static PreviewDialogView newInstance() {
+        return new PreviewDialogView();
     }
 
     public void setFile(FileUpload1 fileUpload1)

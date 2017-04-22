@@ -23,6 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/edit_top_margin"
+            android:paddingLeft="4dp"
+            android:enabled="false"
             android:layout_toLeftOf="@+id/calendar_button"
             android:layout_toStartOf="@+id/calendar_button"
             android:layout_toRightOf="@+id/visit_date"/>
@@ -78,6 +80,7 @@
             android:id="@+id/refered_by_value"
             android:layout_marginTop="@dimen/edit_top_margin"
             android:layout_below="@+id/layout30"
+            android:paddingLeft="4dp"
             android:layout_toRightOf="@+id/referredBy"
             android:layout_alignStart="@+id/visit_date_value"
             android:layout_alignLeft="@+id/visit_date_value"
@@ -131,9 +134,10 @@
                 android:id="@+id/symptomsValue"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
                 android:minLines="4"
                 android:maxLines="6"
-                android:paddingLeft="3dp"
                 android:descendantFocusability="blocksDescendants"
                 android:text=""
                 android:layout_below="@+id/symptomsText"
@@ -174,8 +178,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@+id/diagnosisText"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
                 android:completionThreshold="1"
-                android:paddingLeft="3dp"
                 android:minLines="4"
                 android:maxLines="6"
                 android:text=""
@@ -215,11 +220,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/medicinePrescribedText"
-                android:background="@drawable/square_grey_color"
                 android:id="@+id/relativeLayout">
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/rounded_white_color"
                     android:id="@+id/alarm_list">
                 </ListView>
             </RelativeLayout>
@@ -261,11 +266,10 @@
                 android:layout_marginTop="3dp"
                 android:text="Tests Prescribed" />
             <ListView
-                android:background="@drawable/square_grey_color"
+                android:background="@drawable/rounded_white_color"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_below="@+id/testPrescribedText"
-
                 android:id="@+id/test_prescribed_list">
             </ListView>
             <ImageView

@@ -95,7 +95,7 @@ public class ForgetPasswordVerification extends ParentFragment
                                 FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
                                 ft.replace(R.id.lower_content, frag, "Forget_Password_Confirm");
                                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                                ft.addToBackStack(null);
+                                ft.addToBackStack(ForgetPasswordConfirm.class.getName());
                                 ft.commit();
 
 

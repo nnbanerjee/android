@@ -199,10 +199,10 @@
         <item name = "android:textColor">@color/medico_blue</item>
     </style>
     <style name = "sub_heading3_light_grey" parent="sub_heading3">
-        <item name = "android:textColor">@color/secondary_text_color_selector</item>
+        <item name = "android:textColor">@color/medico_light_gray</item>
     </style>
     <style name = "sub_heading5_light_grey" parent="sub_heading5">
-        <item name = "android:textColor">@color/secondary_text_color_selector</item>
+        <item name = "android:textColor">@color/medico_light_gray</item>
     </style>
     <style name = "body4_blue" parent="body4">
         <item name = "android:textColor">@color/medico_blue</item>

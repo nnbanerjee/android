@@ -111,7 +111,7 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
         activity.attachFragment(fragment);
         fragment.setArguments(args);
         FragmentManager fragmentManger = activity.getFragmentManager();
-        fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();
+        fragmentManger.beginTransaction().add(R.id.service, fragment, CustomTemplateListView.class.getName()).addToBackStack(CustomTemplateListView.class.getName()).commit();
         return true;
     }
     @Override

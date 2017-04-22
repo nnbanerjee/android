@@ -81,7 +81,7 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
                 ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, RegistrationFileUpload.class.getName()).addToBackStack(RegistrationFileUpload.class.getName()).commit();
             }
         });
 
