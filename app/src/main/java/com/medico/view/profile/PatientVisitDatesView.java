@@ -92,11 +92,8 @@ public class PatientVisitDatesView extends ParentFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
         inflater.inflate(R.menu.patient_visit_dates, menu);
         super.onCreateOptionsMenu(menu,inflater);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(R.drawable.ic_add_white_24dp);
     }
 
 
@@ -164,7 +161,7 @@ public class PatientVisitDatesView extends ParentFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.add_visit: {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 ParentFragment fragment = new DoctorAppointmentInformation();
@@ -172,11 +169,15 @@ public class PatientVisitDatesView extends ParentFragment
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
+                return true;
             }
-            break;
-
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return false;
+            }
 
         }
-        return true;
+        return false;
     }
 }

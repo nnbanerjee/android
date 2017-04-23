@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/patient_profile"
+            android:id="@+id/document_category"
             android:background="@color/white"
             android:layout_marginTop="20dp">
 
@@ -63,7 +63,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-        android:layout_below="@+id/patient_profile"
+        android:layout_below="@+id/document_category"
             android:background="@color/color_blue_default"
             android:visibility="visible"
             android:id="@+id/view1"
@@ -71,7 +71,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/patient_profile"
+            android:layout_below="@+id/document_category"
             android:id="@+id/manage_appointment"
 
             android:layout_marginTop="20dp">

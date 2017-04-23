@@ -58,19 +58,22 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    public void goHome()
+    {
+        super.onBackPressed();
+    }
     public void onBackPressed() {
         if(getFragmentManager().getBackStackEntryCount() > 1 )
         {
             FragmentManager manager = getFragmentManager();
             manager.popBackStackImmediate();
-//            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1);
-//            String name = entry.getName();
-//            if(name != null)
-//            {
-//                Fragment fragment = manager.findFragmentByTag(name);
-//                fragment.onStart();
-//            }
+            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1);
+            String name = entry.getName();
+            if(name != null)
+            {
+                Fragment fragment = manager.findFragmentByTag(name);
+                fragment.onStart();
+            }
         }
         else
             super.onBackPressed();
@@ -186,28 +189,28 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
 
     public void onBackStackChanged()
     {
-        FragmentManager manager = getFragmentManager();
-        if(manager.getBackStackEntryCount() > 1 && manager.getBackStackEntryCount() > backStakeCount)
-        {
-            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 2);
-            String name = entry.getName();
-            if (name != null)
-            {
-                Fragment fragment = manager.findFragmentByTag(name);
-                fragment.onPause();
-            }
-        }
-        if(manager.getBackStackEntryCount() > 0 && manager.getBackStackEntryCount() < backStakeCount)
-        {
-            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
-            String name = entry.getName();
-            if (name != null)
-            {
-                Fragment fragment = manager.findFragmentByTag(name);
-                fragment.onStart();
-            }
-        }
-        backStakeCount = manager.getBackStackEntryCount();
+//        FragmentManager manager = getFragmentManager();
+//        if(manager.getBackStackEntryCount() > 1 && manager.getBackStackEntryCount() > backStakeCount)
+//        {
+//            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 2);
+//            String name = entry.getName();
+//            if (name != null)
+//            {
+//                Fragment fragment = manager.findFragmentByTag(name);
+//                fragment.onPause();
+//            }
+//        }
+//        if(manager.getBackStackEntryCount() > 0 && manager.getBackStackEntryCount() < backStakeCount)
+//        {
+//            FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
+//            String name = entry.getName();
+//            if (name != null)
+//            {
+//                Fragment fragment = manager.findFragmentByTag(name);
+//                fragment.onStart();
+//            }
+//        }
+//        backStakeCount = manager.getBackStackEntryCount();
     }
 
 }

@@ -2,7 +2,6 @@ package com.medico.view.profile;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -37,7 +36,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
     View convertView;
     ListView allDocumentDoctor;
     List<FileUpload1> uploadFiles;
-    ProgressDialog progress;
+//    ProgressDialog progress;
 
     @Nullable
     @Override
@@ -54,12 +53,6 @@ public class DoctorAppointmentDocument extends ParentFragment {
                 adf.show(getFragmentManager(),"Dialog");
             }
         });
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(getResources().getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
 
          allDocumentDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,7 +76,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         final Activity activity = getActivity();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
@@ -98,7 +91,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
                 uploadFiles = fileUploads;
                 System.out.println("Adapter size= " + adapter.getCount());
                 allDocumentDoctor.setAdapter(adapter);
-                progress.dismiss();
+//                progress.dismiss();
 
             }
 
@@ -106,7 +99,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
             public void failure(RetrofitError error) {
 //                error.printStackTrace();
 //                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
-                progress.dismiss();
+//                progress.dismiss();
             }
         });
 
@@ -135,7 +128,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
         ((ParentActivity)getActivity()).attachFragment(fragment);
         fragment.setArguments(args);
         FragmentManager fragmentManger = getFragmentManager();
-        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").commit();
+        fragmentManger.beginTransaction().add(R.id.service, fragment, PatientSummaryFileUpload.class.getName()).addToBackStack(PatientSummaryFileUpload.class.getName()).commit();
         return true;
     }
 

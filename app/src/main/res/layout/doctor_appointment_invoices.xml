@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
         <RelativeLayout
-            android:id="@+id/patient_profile"
+            android:id="@+id/document_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -24,7 +24,7 @@
         <RelativeLayout
             android:id="@+id/layout21"
             android:layout_width="match_parent"
-            android:layout_below="@+id/patient_profile"
+            android:layout_below="@+id/document_category"
             android:layout_height="fill_parent">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/layout2"
+            android:id="@+id/document_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -57,7 +57,7 @@
             android:paddingTop="10dp">
 
             <LinearLayout
-                android:id="@+id/layout3"
+                android:id="@+id/document_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
@@ -94,7 +94,7 @@
                 android:id="@+id/manage_appointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout3"
+                android:layout_below="@+id/document_name"
                 android:paddingBottom="5dp"
                 android:weightSum="3">
 

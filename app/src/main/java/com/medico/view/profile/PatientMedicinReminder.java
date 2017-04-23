@@ -586,17 +586,23 @@ public class PatientMedicinReminder extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(null);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.medicine_menu, menu);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        Integer medicineId = bundle.getInt(MEDICINE_ID);
+        MenuItem menuItem = menu.findItem(R.id.add_medicine);
+        if(medicineId != null && medicineId.intValue() > 0)
+        {
+            menuItem.setTitle("SAVE");
+        }
+        else
+            menuItem.setTitle("CREATE");
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ParentActivity activity = ((ParentActivity) getActivity());
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.add_medicine: {
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {
@@ -609,11 +615,12 @@ public class PatientMedicinReminder extends ParentFragment {
                 } else {
                     Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                 }
-
+                return true;
             }
-            break;
-            case R.id.home: {
-                return false;
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return true;
             }
 
         }

@@ -50,7 +50,7 @@ public class DoctorMenusManage extends ParentFragment {
         LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
         session = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        RelativeLayout patientsProfilelayout = (RelativeLayout) view.findViewById(R.id.patient_profile);
+        RelativeLayout patientsProfilelayout = (RelativeLayout) view.findViewById(R.id.document_category);
         RelativeLayout manage_finance = (RelativeLayout) view.findViewById(R.id.manage_finance);
         RelativeLayout manageAppointment = (RelativeLayout) view.findViewById(R.id.manage_appointment);
         RelativeLayout manage_feedback = (RelativeLayout) view.findViewById(R.id.manage_feedback);

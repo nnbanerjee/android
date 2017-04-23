@@ -28,6 +28,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
     Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn;
     ParentFragment selectedFragment ;
     Menu menu;
+
     LayoutInflater inflater;
 
     @Nullable
@@ -106,9 +107,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
         if(menu != null)
         {
-            MenuItem menuItem = menu.findItem(R.id.add);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
             menuItem.setIcon(null);
             menuItem.setTitle("SAVE");
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
         }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
@@ -124,9 +129,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
         if (menu != null)
         {
-            MenuItem menuItem = menu.findItem(R.id.add);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
             menuItem.setIcon(R.drawable.ic_add_white_24dp);
             menuItem.setChecked(true);
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
         }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
@@ -142,9 +151,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
         if(menu != null)
         {
-            MenuItem menuItem = menu.findItem(R.id.add);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
             menuItem.setIcon(null);
             menuItem.setTitle("SAVE");
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
         }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
@@ -160,9 +173,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
         if (menu != null)
         {
-            MenuItem menuItem = menu.findItem(R.id.add);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
             menuItem.setIcon(R.drawable.ic_add_white_24dp);
             menuItem.setChecked(true);
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
         }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
@@ -178,9 +195,14 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
         if (menu != null)
         {
-            MenuItem menuItem = menu.findItem(R.id.add);
-            menuItem.setIcon(R.drawable.ic_add_white_24dp);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
+            menuItem.setIcon(null);
+            menuItem.setTitle("SAVE");
             menuItem.setChecked(true);
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(true);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(true);
         }
         if(selectedFragment != null)
             ((ParentActivity)getActivity()).detachFragment(selectedFragment);
@@ -221,16 +243,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {   menu.clear();
+        inflater.inflate(R.menu.patient_visist_summary, menu);
         super.onCreateOptionsMenu(menu,inflater);
         this.menu = menu;
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setIcon(null);
-        menuItem.setChecked(true);
-        menuItem.setTitle("SAVE");
-    }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -238,7 +256,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         ParentFragment fragment = selectedFragment;
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.save_summary: {
                fragment.update();
                if (fragment.isChanged()) {
                    if (fragment.canBeSaved()) {
@@ -251,15 +269,28 @@ public class DoctorAppointmentInformation extends ParentFragment {
                } else {
                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                }
-
+                return true;
             }
-            break;
-            case R.id.home: {
+
+            case R.id.add_invoice:
+            {
+                return true;
+            }
+            case R.id.add_payment:
+            {
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return false;
+            }
+            default:
+            {
                 return false;
             }
 
         }
-        return false;
     }
 
     private void deselectButtons()

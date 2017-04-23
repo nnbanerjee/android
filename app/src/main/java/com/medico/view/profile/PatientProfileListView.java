@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import com.medico.model.DoctorId;
 import com.medico.model.PatientProfileList;
 import com.medico.model.PatientShortProfile;
 import com.medico.util.PARAM;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.util.List;
@@ -112,10 +114,46 @@ public class PatientProfileListView extends ParentFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
         inflater.inflate(R.menu.patient_profile, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add_patient: {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
 
+            }
+            return true;
+            case R.id.sort_patient:
+            {
+                return true;
+            }
+            case R.id.filter_patient:
+            {
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+            }
+            default:
+                return false;
+
+        }
+    }
 
 }

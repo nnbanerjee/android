@@ -1,6 +1,5 @@
 package com.medico.view.profile;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -41,6 +40,7 @@ import com.medico.model.SearchParameter;
 import com.medico.util.FileChooser;
 import com.medico.util.ImageUtil;
 import com.medico.util.PARAM;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.io.File;
@@ -73,7 +73,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
 
     TextView startDateEdit = null;
     EditText testValueEdit1 = null;
-    Button document;
+    Button browse;
     ImageView calenderImg;
     Calendar calendar = Calendar.getInstance();
     ArrayAdapter<String> scheduleAdapter;
@@ -86,7 +86,8 @@ public class PatientSummaryFileUpload extends ParentFragment {
     RadioButton browseDocument,browseImage;
     private static int SELECT_PICTURE = 1;
     private static final int FILE_CHOOSER = 2;
-    FileUpload1 fileupload;
+    DiagnosticTestSpinnerAdapter adapter;
+    FileUpload1 fileupload = new FileUpload1();
     TypedFile typedFile;
     @Nullable
     @Override
@@ -109,27 +110,37 @@ public class PatientSummaryFileUpload extends ParentFragment {
         type = (Spinner)view.findViewById(R.id.test_type_value) ;
         calenderImg = (ImageView) view.findViewById(R.id.calenderImg);
         startDateEdit = (TextView) view.findViewById(R.id.start_date);
+        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+        startDateEdit.setText(format.format(new Date()));
+        fileupload.date = new Date().getTime();
         category = (Spinner) view.findViewById(R.id.file_category_value);
         clinicName = (Spinner) view.findViewById(R.id.clinicNames);
         referredBy = (Spinner)view.findViewById(R.id.referredByValue);
-        document = (Button)view.findViewById(R.id.image_previw) ;
+        browse = (Button)view.findViewById(R.id.image_previw) ;
         browseDocument = (RadioButton)view.findViewById(R.id.document_browse);
 
         browseImage = (RadioButton)view.findViewById(R.id.image_browse);
-
+        calenderImg.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                setDate(startDateEdit);
+            }
+        });
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 if(position == 1)
                 {
-                    ArrayAdapter<String> a =new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.diagnostic_test_type_list));
-                    a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    ArrayAdapter<String> a =new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.diagnostic_test_type_list));
+//                    a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     layout4.setVisibility(View.VISIBLE);
                     layout5.setVisibility(View.VISIBLE);
                     layout6.setVisibility(View.VISIBLE);
-                    type.setAdapter(a);
-                    testValueEdit.setVisibility(View.VISIBLE);
-                    testValueEdit1.setVisibility(View.INVISIBLE);
+                    type.setAdapter(adapter);
+//                    testValueEdit.setVisibility(View.VISIBLE);
+//                    testValueEdit1.setVisibility(View.INVISIBLE);
                 }
                 else {
                     layout4.setVisibility(View.INVISIBLE);
@@ -138,9 +149,9 @@ public class PatientSummaryFileUpload extends ParentFragment {
                     ArrayAdapter<String> a =new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.upload_document_type));
                     a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     type.setAdapter(a);
-                    testValueEdit.setVisibility(View.INVISIBLE);
-
-                    testValueEdit1.setVisibility(View.VISIBLE);
+//                    testValueEdit.setVisibility(View.INVISIBLE);
+//
+//                    testValueEdit1.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -150,7 +161,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
             }
         });
 
-        document.setOnClickListener(new View.OnClickListener()
+        browse.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
@@ -237,9 +248,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
             @Override
             public void success(List<DiagnosticTest> medicineList, Response response)
             {
-                DiagnosticTestSpinnerAdapter adapter = new DiagnosticTestSpinnerAdapter(getActivity(), R.layout.customize_spinner, medicineList);
-                testValueEdit.setAdapter(adapter);
-
+                adapter = new DiagnosticTestSpinnerAdapter(getActivity(), R.layout.customize_spinner, medicineList);
             }
 
             @Override
@@ -293,6 +302,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
             {
                 DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
                 dateField.setText(format.format(date));
+                fileupload.date = date.getTime();
             }
 
         };
@@ -322,7 +332,36 @@ public class PatientSummaryFileUpload extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(null);
         menuItem.setTitle("SAVE");
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add: {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            break;
+            case R.id.home: {
+                return false;
+            }
+
+        }
+        return true;
     }
     @Override
     public boolean isChanged()
@@ -340,16 +379,17 @@ public class PatientSummaryFileUpload extends ParentFragment {
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         fileupload = new FileUpload1();
-        ProgressDialog progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+//        ProgressDialog progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         fileupload.category = new Byte((byte)this.category.getSelectedItemPosition());
         fileupload.appointmentId = bundle.getInt(APPOINTMENT_ID);
         fileupload.personId = bundle.getInt(LOGGED_IN_ID);
         fileupload.patientId = bundle.getInt(PATIENT_ID);
         fileupload.file = this.typedFile;
-        fileupload.subcategory = this.type.getSelectedItemPosition();
+        fileupload.fileName = testValueEdit1.getText().toString();
         fileupload.type = browseImage.isChecked()? new Integer(0).byteValue():new Integer(1).byteValue();
         if(fileupload.category.intValue() == 1)
         {
+            fileupload.subcategory = ((DiagnosticTest)this.type.getSelectedItem()).testId;
             DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
             try {
                 fileupload.date = format.parse(startDateEdit.getText().toString()).getTime();
@@ -357,14 +397,15 @@ public class PatientSummaryFileUpload extends ParentFragment {
             catch(ParseException e) {
                 fileupload.date = null;
             }
-            fileupload.fileName = ((DiagnosticTest)testValueEdit.getSelectedItem()).name;
+//            fileupload.fileName = ((DiagnosticTest)testValueEdit.getSelectedItem()).name;
             fileupload.clinicId = ((Clinic1)clinicName.getSelectedItem()).idClinic;
         }
         else
         {
+            fileupload.subcategory = this.type.getSelectedItemPosition();
             fileupload.clinicId = bundle.getInt(CLINIC_ID);
             fileupload.date = new Date().getTime();
-            fileupload.fileName = testValueEdit1.getText().toString();
+//            fileupload.fileName = testValueEdit1.getText().toString();
         }
     }
     @Override
@@ -427,7 +468,6 @@ public class PatientSummaryFileUpload extends ParentFragment {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
-
 
 
 }
