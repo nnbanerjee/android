@@ -208,7 +208,10 @@ public class DoctorAppointmentInformation extends ParentFragment {
     {
 
         super.onStart();
-        summaryBtn.callOnClick();
+        if(selectedFragment != null)
+            selectedFragment.onStart();
+        else
+            summaryBtn.callOnClick();
     }
 
 

@@ -23,6 +23,7 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
 
     private List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
     private Document document;
+    private int backStakeCount = 0;
     public MyApi api;
 //    public int identifier = 0;
 
@@ -186,7 +187,7 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
     public void onBackStackChanged()
     {
         FragmentManager manager = getFragmentManager();
-        if(manager.getBackStackEntryCount() > 1)
+        if(manager.getBackStackEntryCount() > 1 && manager.getBackStackEntryCount() > backStakeCount)
         {
             FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 2);
             String name = entry.getName();
@@ -196,17 +197,17 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
                 fragment.onPause();
             }
         }
-        if(manager.getBackStackEntryCount() > 0)
+        if(manager.getBackStackEntryCount() > 0 && manager.getBackStackEntryCount() < backStakeCount)
         {
             FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
             String name = entry.getName();
             if (name != null)
             {
                 Fragment fragment = manager.findFragmentByTag(name);
-                fragment.onResume();
+                fragment.onStart();
             }
         }
-
+        backStakeCount = manager.getBackStackEntryCount();
     }
 
 }

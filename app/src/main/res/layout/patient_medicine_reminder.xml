@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
     android:background="#ffffff"
     android:overScrollMode="always"
     android:isScrollContainer="true"
@@ -12,13 +11,13 @@
     android:scrollbars="vertical">
 
     <RelativeLayout
+        android:layout_margin="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:id="@+id/layout0">
 
             <TextView
@@ -51,6 +50,7 @@
             android:id="@+id/patient_profile"
             android:layout_marginTop="@dimen/edit_top_margin"
             android:layout_marginBottom="10dp"
+
             android:layout_below="@+id/layout0"
             android:background="#ffffff">
 
@@ -60,7 +60,6 @@
                 android:ems="6"
                 android:layout_centerVertical="true"
                 android:text="Medicine : "
-                android:paddingLeft="5dp"
                 android:id="@+id/medecineText"
                 />
             <MultiAutoCompleteTextView
@@ -70,8 +69,6 @@
                 android:layout_toRightOf="@+id/medecineText"
                 android:completionThreshold="1"
                 android:paddingLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
                 />
              />
 
@@ -218,10 +215,9 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:id="@+id/calenderImg"
-                android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/calendar_blue"/>
+                android:background="@drawable/calendar_grey"/>
 
         </RelativeLayout>
 
@@ -262,7 +258,6 @@
                 android:id="@+id/preview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
                 android:text="Schedule Time for Medicine :"
                 android:layout_centerVertical="false"
                 android:layout_marginBottom="5dp"
@@ -324,9 +319,8 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:text="Name"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:ems="10"
                 android:id="@+id/editText2"
                 tools:layout_below="@+id/doctorInstructionValue" />

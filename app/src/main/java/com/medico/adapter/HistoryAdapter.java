@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.medico.application.R;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,7 +71,16 @@ public class HistoryAdapter extends HomeAdapter {
         if(historyFragments.length > 2)
         {
             personName.setText(historyFragments[0]);
-            date.setText(historyFragments[1]);
+            try
+            {
+                long time = Long.parseLong(historyFragments[1]);
+                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
+                date.setText(format.format(new Date(time)));
+            }
+            catch(NumberFormatException e)
+            {
+                date.setText("Time not mentioned");
+            }
             changes.setText(historyFragments[2]);
         }
         else if(historyFragments.length > 1)

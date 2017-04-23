@@ -63,4 +63,18 @@ public class DiagnosticTestSpinnerAdapter extends ArrayAdapter
         else
             return 0;
     }
+    public DiagnosticTest getDiagnostic(Integer testId)
+    {
+        int i = 0;
+        for(DiagnosticTest test : strClinic)
+        {
+            if(test.testId.intValue() == testId.intValue())
+            {
+                return test;
+            }
+
+            i++;
+        }
+        return null;
+    }
 }

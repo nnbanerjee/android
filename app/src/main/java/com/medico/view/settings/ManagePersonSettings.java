@@ -202,13 +202,4 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
         super.onStop();
     }
 
-//    public void registerView(ParentFragment fragment)
-//    {
-//        if(fragmentList.size() > 0)
-//        {
-//            ParentFragment previousFragment = fragmentList.get(fragmentList.size()-1);
-//            previousFragment.setHasOptionsMenu(false);
-//            fragmentList.add(fragment);
-//        }
-//    }
 }

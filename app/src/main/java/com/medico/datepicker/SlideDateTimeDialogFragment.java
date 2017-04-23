@@ -348,24 +348,31 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
 
     private void updateDateTab()
     {
-        Calendar calendar = Calendar.getInstance();
-        String comment = "Not Working Day";
-        boolean isWorkingDay = false;
-        for(int i = 0; i < days.length;i++)
+        if(days != null && days.length > 0)
         {
-            if(mCalendar.get(Calendar.DAY_OF_WEEK)== days[i] )
+            Calendar calendar = Calendar.getInstance();
+            String comment = "Not Working Day";
+            boolean isWorkingDay = false;
+            for (int i = 0; i < days.length; i++)
             {
-                comment = "Working Day";
-                isWorkingDay = true;
-                break;
+                if (mCalendar.get(Calendar.DAY_OF_WEEK) == days[i])
+                {
+                    comment = "Working Day";
+                    isWorkingDay = true;
+                    break;
+                }
             }
+            if (isWorkingDay)
+                mOkButton.setEnabled(true);
+            else
+                mOkButton.setEnabled(false);
+
+            mSlidingTabLayout.setTabText(0, DateUtils.formatDateTime(
+                    mContext, mCalendar.getTimeInMillis(), mDateFlags)+ " ( " + comment + " ) ");
         }
-        if(isWorkingDay)
-            mOkButton.setEnabled(true);
         else
-            mOkButton.setEnabled(false);
-        mSlidingTabLayout.setTabText(0, DateUtils.formatDateTime(
-                mContext, mCalendar.getTimeInMillis(), mDateFlags)+ " ( " + comment + " ) ");
+            mSlidingTabLayout.setTabText(0, DateUtils.formatDateTime(
+                mContext, mCalendar.getTimeInMillis(), mDateFlags));
     }
 
     @SuppressLint("SimpleDateFormat")

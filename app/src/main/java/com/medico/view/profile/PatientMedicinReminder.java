@@ -327,7 +327,7 @@ public class PatientMedicinReminder extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         int doctorId = bundle.getInt(DOCTOR_ID);
         int patientId = bundle.getInt(PATIENT_ID);
-        Integer medicineId = bundle.getInt("medicineId");
+        Integer medicineId = bundle.getInt(MEDICINE_ID);
         int appointMentId = bundle.getInt(APPOINTMENT_ID);
         final int logged_in_id = bundle.getInt(LOGGED_IN_ID);
         if(medicineId > 0) {
@@ -434,10 +434,12 @@ public class PatientMedicinReminder extends ParentFragment {
             textView.setText(dateFormat.format(date[i]));
             textView.setBackgroundResource(R.drawable.medicine_schedule_header);
             textView.setTextColor(Color.WHITE);
-            textView.setLeft(10);
-            textView.setTop(10);
-            textView.setRight(10);
-            textView.setBottom(10);
+            textView.setPadding(3,3,3,3);
+            textView.setGravity(1);
+//            textView.setLeft(10);
+//            textView.setTop(10);
+//            textView.setRight(10);
+//            textView.setBottom(10);
             row.addView(textView,i,lp);
         }
         medicineSchedule.addView(row);
@@ -468,6 +470,8 @@ public class PatientMedicinReminder extends ParentFragment {
             for(int i = 0; i < schedule.length; i++)
             {
                 TextView textView = new TextView(activity);
+                textView.setPadding(3,3,3,3);
+                textView.setGravity(1);
                 textView.setText(dateFor.format(schedule[i]));
                 textView.setBackgroundResource(R.drawable.medicine_schedule);
                 medicineSch[StartDayFirstIndex].addView(textView);
@@ -485,6 +489,8 @@ public class PatientMedicinReminder extends ParentFragment {
             for(int i = 0; i < schedule.length; i++)
             {
                 TextView textView = new TextView(activity);
+                textView.setPadding(3,3,3,3);
+                textView.setGravity(1);
                 textView.setText(dateFor.format(schedule[i]));
                 textView.setBackgroundResource(R.drawable.medicine_schedule);
                 medicineSch.addView(textView);

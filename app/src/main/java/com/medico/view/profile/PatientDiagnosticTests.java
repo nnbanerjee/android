@@ -34,7 +34,7 @@ import com.medico.model.PersonID;
 import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.util.AlarmService;
-import com.medico.util.PARAM;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -64,12 +64,12 @@ import retrofit.client.Response;
 public class PatientDiagnosticTests extends ParentFragment {
 
     TextView startDateEdit;
-    EditText doctorInstructionValue;
+    EditText doctorInstructionValue,testName;
     ImageView calenderImg;
     Calendar calendar = Calendar.getInstance();
     CheckBox medicineReminderBtn;
     ArrayAdapter<String> scheduleAdapter;
-    Spinner clinicName,referredBy,testName;
+    Spinner clinicName,referredBy,testType;
     PatientDiagnostic patientMedicine = null;
     @Nullable
     @Override
@@ -79,14 +79,15 @@ public class PatientDiagnosticTests extends ParentFragment {
         setHasOptionsMenu(true);
 
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Diagnostic Test Details");
+        textviewTitle.setText("Test Details");
         // Get current date by calender
         final Calendar c = Calendar.getInstance();
         //Load Ui controls
+        testType = (Spinner)view.findViewById(R.id.test_type_value);
         calenderImg = (ImageView) view.findViewById(R.id.calenderImg);
         startDateEdit = (TextView) view.findViewById(R.id.start_date);
         medicineReminderBtn = (CheckBox) view.findViewById(R.id.medicineReminderBtn);
-        testName = (Spinner) view.findViewById(R.id.testValueEdit);
+        testName = (EditText) view.findViewById(R.id.testValueEdit);
         clinicName = (Spinner) view.findViewById(R.id.clinicNames);
         referredBy = (Spinner)view.findViewById(R.id.referredByValue);
         doctorInstructionValue = (EditText) view.findViewById(R.id.editText2);
@@ -165,11 +166,13 @@ public class PatientDiagnosticTests extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         final int doctorId = bundle.getInt(DOCTOR_ID);
         final int patientId = bundle.getInt(PATIENT_ID);
-        final Integer testId = bundle.getInt(PARAM.DIAGNOSTIC_TEST_ID);
+        final Integer testId = bundle.getInt(DIAGNOSTIC_TEST_ID);
         final Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer clinicId = bundle.getInt(CLINIC_ID);
         final int logged_in_id = bundle.getInt(LOGGED_IN_ID);
         if(testId > 0) {
+            TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+            textviewTitle.setText("Edit Diagnostic Test");
             api.getTestDetails1(new PatientTestId(testId.toString()), new Callback<PatientDiagnostic>() {
                 @Override
                 public void success(PatientDiagnostic testReminder, Response response)
@@ -182,9 +185,8 @@ public class PatientDiagnosticTests extends ParentFragment {
                     medicineReminderBtn.setChecked(testReminder.getReminder().byteValue() ==1);
                     patientMedicine.setLoggedinUserId(new Integer(logged_in_id));
                     patientMedicine.setDoctorId(doctorId);
-//                    patientMedicine.setAppointmentId(appointMentId);
+
                     patientMedicine.setPatientId(patientId);
-//                    patientMedicine.setLoggedinUserId(logged_in_id);
                 }
 
                 @Override
@@ -197,6 +199,8 @@ public class PatientDiagnosticTests extends ParentFragment {
         }
         else
         {
+            TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+            textviewTitle.setText("Add Diagnostic Test");
             patientMedicine = new PatientDiagnostic();
             patientMedicine.setStartDate(new Date().getTime());
             patientMedicine.setPatientId(patientId);
@@ -205,7 +209,6 @@ public class PatientDiagnosticTests extends ParentFragment {
             patientMedicine.setAppointmentId(appointMentId);
             patientMedicine.setLoggedinUserId(logged_in_id);
             patientMedicine.setClinicId(clinicId);
-
             DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
             startDateEdit.setText(format.format(patientMedicine.getStartDate()));
             doctorInstructionValue.setText(patientMedicine.getDoctorInstruction());
@@ -237,11 +240,19 @@ public class PatientDiagnosticTests extends ParentFragment {
             public void success(List<DiagnosticTest> medicineList, Response response)
             {
                 DiagnosticTestSpinnerAdapter adapter = new DiagnosticTestSpinnerAdapter(getActivity(), R.layout.customize_spinner, medicineList);
-                testName.setAdapter(adapter);
-                if(patientMedicine != null && patientMedicine.test != null)
-                    testName.setSelection(adapter.getPositionId(patientMedicine.getDiagnosticTest().testId));
+                testType.setAdapter(adapter);
+                if(patientMedicine != null && patientMedicine.getDiagnosticTest() != null)
+                {
+                    testType.setSelection(adapter.getPositionId(patientMedicine.getDiagnosticTest().testId));
+                }
                 else
-                    testName.setSelection(0);
+                {
+                    testType.setSelection(0);
+                }
+                if (patientMedicine != null && patientMedicine.getTestName() != null && patientMedicine.getTestName().trim().length() == 0)
+                    testName.setText(testType.getSelectedItem().toString());
+                else
+                    testName.setText(testType.getSelectedItem().toString());
             }
 
             @Override
@@ -333,7 +344,36 @@ public class PatientDiagnosticTests extends ParentFragment {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(null);
         menuItem.setTitle("SAVE");
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add: {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            break;
+            case R.id.home: {
+                return false;
+            }
+
+        }
+        return false;
     }
 
     @Override
@@ -345,7 +385,8 @@ public class PatientDiagnosticTests extends ParentFragment {
     public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
-        patientMedicine.setDiagnosticTest((DiagnosticTest)testName.getSelectedItem());
+        patientMedicine.setDiagnosticTest((DiagnosticTest)testType.getSelectedItem());
+        patientMedicine.setTestName(testName.getText().toString());
         patientMedicine.setDoctorInstruction(doctorInstructionValue.getText().toString());
         patientMedicine.setReminder(medicineReminderBtn.isChecked()? new Integer(1).byteValue():new Integer(0).byteValue());
         patientMedicine.setClinicId(((Clinic1)clinicName.getSelectedItem()).idClinic);

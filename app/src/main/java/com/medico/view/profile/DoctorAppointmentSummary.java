@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -266,7 +265,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
             @Override
             public void onClick(View v) {
                 Bundle args = getActivity().getIntent().getExtras();
-                args.remove(DIAGNOSTIC_TEST_ID);
+                args.putInt(DIAGNOSTIC_TEST_ID,0);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientDiagnosticTests();
                 ((ParentActivity)getActivity()).attachFragment(fragment);
@@ -280,7 +279,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
             @Override
             public void onClick(View v) {
                 Bundle args = getActivity().getIntent().getExtras();
-                args.remove(MEDICINE_ID);
+                args.putInt(MEDICINE_ID,0);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
                 ((ParentActivity)getActivity()).attachFragment(fragment);
@@ -405,19 +404,19 @@ public class DoctorAppointmentSummary extends ParentFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-//                    goToBack();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        getView().setFocusableInTouchMode(true);
+//        getView().requestFocus();
+//        getView().setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//
+//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+////                    goToBack();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
 
