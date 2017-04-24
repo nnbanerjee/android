@@ -72,6 +72,7 @@ import com.medico.model.ServerResponse;
 import com.medico.model.Specialization;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
+import com.medico.model.TreatmentId;
 import com.medico.model.TreatmentId1;
 import com.medico.model.TreatmentPlan1;
 import com.medico.model.TreatmentPlanRequest;
@@ -854,9 +855,12 @@ public interface MyApi {
     @POST("/addPatientVisitTreatmentPlan")
     void addPatientVisitTreatmentPlan1(@Body TreatmentPlan1 treatmentPlan, Callback<ResponseAddTemplates1> response);
 
-//    @POST("/removePatientVisitTreatmentPlan")
-//    void removePatientVisitTreatmentPlan(@Body TreatmentId invoiceId, Callback< ResponseCodeVerfication > response);
+    @POST("/removePatientVisitTreatmentPlan")
+    void removePatientVisitTreatmentPlan(@Body TreatmentId invoiceId, Callback< ResponseCodeVerfication > response);
+
+
 //    @POST("/removePatientVisitInvoiceDetails")
+
 //    void removePatientVisitInvoiceDetails(@Body TreatmentId invoiceId, Callback< ResponseCodeVerfication  > response);
 //
 //

@@ -85,13 +85,6 @@ public class PatientProfileListView extends ParentFragment
 
 
     @Override
-    public void onPause()
-    {
-        super.onPause();
-        setHasOptionsMenu(false);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         setHasOptionsMenu(true);

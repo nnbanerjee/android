@@ -1,5 +1,6 @@
 package com.medico.view.profile;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,15 +29,13 @@ public class DoctorAppointmentInformation extends ParentFragment {
     Button summaryBtn, documentationBtn, doctorNoteBtn, treatmentBtn, invoicesBtn;
     ParentFragment selectedFragment ;
     Menu menu;
-
-    LayoutInflater inflater;
+    MenuInflater inflater;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_appointment_information, container, false);
-        this.inflater = inflater;
         replacementFragment = (RelativeLayout) view.findViewById(R.id.replacementFragment);
         setHasOptionsMenu(true);
         summaryBtn = (Button) view.findViewById(R.id.summaryBtn);
@@ -213,12 +212,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        setHasOptionsMenu(false);
-    }
+
 
     @Override
     public void onResume() {
@@ -231,7 +225,10 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
         super.onStart();
         if(selectedFragment != null)
+        {
             selectedFragment.onStart();
+            setMenuBar(selectedFragment);
+        }
         else
             summaryBtn.callOnClick();
     }
@@ -245,6 +242,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {   menu.clear();
+        this.inflater = inflater;
         inflater.inflate(R.menu.patient_visist_summary, menu);
         super.onCreateOptionsMenu(menu,inflater);
         this.menu = menu;
@@ -307,6 +305,66 @@ public class DoctorAppointmentInformation extends ParentFragment {
         treatmentBtn.setBackgroundResource(R.drawable.tab_default);
         invoicesBtn.setBackgroundResource(R.drawable.tab_default);
 //        feedbackBtn.setBackgroundResource(R.drawable.tab_default);
+    }
+
+    private void setMenuBar(Fragment fragment)
+    {
+        if(fragment instanceof  DoctorAppointmentSummary)
+        {
+            inflater.inflate(R.menu.patient_visist_summary, menu);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
+            menuItem.setIcon(null);
+            menuItem.setTitle("SAVE");
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
+        }
+        else if(fragment instanceof DoctorAppointmentDocument)
+        {
+            inflater.inflate(R.menu.patient_visist_summary, menu);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
+            menuItem.setIcon(R.drawable.ic_add_white_24dp);
+            menuItem.setChecked(true);
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
+        }
+        else if(fragment instanceof DoctorAppointmentDoctorNote)
+        {
+            inflater.inflate(R.menu.patient_visist_summary, menu);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
+            menuItem.setIcon(null);
+            menuItem.setTitle("SAVE");
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
+        }
+        else if(fragment instanceof DoctorAppointmentTreatmentPlan)
+        {
+            inflater.inflate(R.menu.patient_visist_summary, menu);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
+            menuItem.setIcon(R.drawable.ic_add_white_24dp);
+            menuItem.setChecked(true);
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(false);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(false);
+        }
+        else if(fragment instanceof DoctorAppointmentTreatmentInvoice)
+        {
+            inflater.inflate(R.menu.patient_visist_summary, menu);
+            MenuItem menuItem = menu.findItem(R.id.save_summary);
+            menuItem.setIcon(null);
+            menuItem.setTitle("SAVE");
+            menuItem.setChecked(true);
+            MenuItem addPayment = menu.findItem(R.id.add_payment);
+            addPayment.setVisible(true);
+            MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+            addInvoice.setVisible(true);
+        }
     }
 
 }

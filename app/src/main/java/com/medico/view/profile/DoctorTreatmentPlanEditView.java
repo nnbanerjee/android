@@ -1,6 +1,8 @@
 package com.medico.view.profile;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +17,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.CustomTemplateId;
 import com.medico.model.ResponseAddTemplates1;
 import com.medico.model.ResponseCodeVerfication;
+import com.medico.model.TreatmentId;
 import com.medico.model.TreatmentId1;
 import com.medico.model.TreatmentPlan1;
-import com.medico.application.R;
+import com.medico.util.PARAM;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
@@ -96,11 +100,12 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                     doctorNotesModel = plan;
                     if (doctorNotesModel != null && doctorNotesModel.getTreatmentId() != null)
                     {
+                        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
                         if(doctorNotesModel.getCategoryId().intValue() == TEMPLATE_CATEGORY_PROCEDURE)
                         {
                             name.setText(doctorNotesModel.getField(PROCEDURE_FIELD_NAME).value);
                             description.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DESCRIPTION).value);
-                            date.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DATE).value);
+                            date.setText(format.format(new Date(Long.parseLong(doctorNotesModel.getField(PROCEDURE_FIELD_DATE).value))));
                             currency.setText(doctorNotesModel.getField(PROCEDURE_FIELD_CURRENCY).value);
                             cost.setText(doctorNotesModel.getField(PROCEDURE_FIELD_COST).value);
                             discount.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DISCOUNT).value);
@@ -111,7 +116,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                         else if(doctorNotesModel.getCategoryId().intValue() == TEMPLATE_CATEGORY_INVOICE) {
                             name.setText(doctorNotesModel.getField(INVOICE_FIELD_COST).value);
                             description.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DESCRIPTION).value);
-                            date.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DATE).value);
+                            date.setText(format.format(new Date(Long.parseLong(doctorNotesModel.getField(PROCEDURE_FIELD_DATE).value))));
                             currency.setText(doctorNotesModel.getField(PROCEDURE_FIELD_CURRENCY).value);
                             cost.setText(doctorNotesModel.getField(PROCEDURE_FIELD_COST).value);
                             discount.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DISCOUNT).value);
@@ -138,12 +143,14 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 public void success(CustomProcedureTemplate1 plan, Response response) {
                     if (plan != null && plan.getTemplateId() != null)
                     {
+                        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
                         doctorNotesModel = new TreatmentPlan1(plan);
                         if(plan.getCategoryId() == TEMPLATE_CATEGORY_PROCEDURE)
                         {
                             name.setText(doctorNotesModel.getField(PROCEDURE_FIELD_NAME).value);
                             description.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DESCRIPTION).value);
-                            date.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DATE).value);
+                            date.setText(format.format(new Date()));
+                            doctorNotesModel.setField(PROCEDURE_FIELD_DATE,new Long(new Date().getTime()).toString());
                             currency.setText(doctorNotesModel.getField(PROCEDURE_FIELD_CURRENCY).value);
                             cost.setText(doctorNotesModel.getField(PROCEDURE_FIELD_COST).value);
                             discount.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DISCOUNT).value);
@@ -155,7 +162,8 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                         {
                             name.setText(doctorNotesModel.getField(INVOICE_FIELD_NAME).value);
                             description.setText(doctorNotesModel.getField(INVOICE_FIELD_DESCRIPTION).value);
-                            date.setText(doctorNotesModel.getField(INVOICE_FIELD_DATE).value);
+                            date.setText(format.format(new Date()));
+                            doctorNotesModel.setField(PROCEDURE_FIELD_DATE,new Long(new Date().getTime()).toString());
                             currency.setText(doctorNotesModel.getField(INVOICE_FIELD_CURRENCY).value);
                             cost.setText(doctorNotesModel.getField(INVOICE_FIELD_COST).value);
                             discount.setText(doctorNotesModel.getField(INVOICE_FIELD_DISCOUNT).value);
@@ -185,18 +193,20 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
 
         if(doctorNotesModel.getTreatmentId() == null || doctorNotesModel.getTreatmentId().intValue() == 0)
         {
+            final ParentActivity activity = (ParentActivity)getActivity();
             progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
             api.addPatientVisitTreatmentPlan1(doctorNotesModel, new Callback<ResponseAddTemplates1>() {
                 @Override
-                public void success(ResponseAddTemplates1 jsonObject, Response response) {
-                    Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                public void success(ResponseAddTemplates1 jsonObject, Response response)
+                {
+                    Toast.makeText(activity, "Save successfully !!!", Toast.LENGTH_LONG).show();
                     progress.dismiss();
-                    ((ParentActivity) getActivity()).onBackPressed();
+                    activity.onBackPressed(DoctorAppointmentInformation.class.getName());
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, error.toString(), Toast.LENGTH_LONG).show();
                     error.printStackTrace();
                     progress.dismiss();
                 }
@@ -234,12 +244,20 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
         Integer treatmentId = bundle.getInt(TREATMENT_ID);
         Integer templateId = bundle.getInt(CUSTOM_TEMPLATE_ID);
         if(treatmentId != null && treatmentId.intValue() > 0) {
+            DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
             if(doctorNotesModel.getCategoryId().intValue() == TEMPLATE_CATEGORY_PROCEDURE)
             {
                 doctorNotesModel.setField(PROCEDURE_FIELD_NAME, name.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_DESCRIPTION, description.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_CURRENCY, currency.getText().toString());
-                doctorNotesModel.setField(PROCEDURE_FIELD_DATE, date.getText().toString());
+//                try
+//                {
+//                    doctorNotesModel.setField(PROCEDURE_FIELD_DATE, new Long(format.parse(date.getText().toString()).getTime()).toString());
+//                }
+//                catch(ParseException e)
+//                {
+//                    doctorNotesModel.setField(PROCEDURE_FIELD_DATE,new Long(new Date().getTime()).toString());
+//                }
                 doctorNotesModel.setField(PROCEDURE_FIELD_COST, cost.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_DISCOUNT, discount.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_TAX, tax.getText().toString());
@@ -250,7 +268,14 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 doctorNotesModel.setField(INVOICE_FIELD_NAME, name.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_DESCRIPTION, description.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_CURRENCY, currency.getText().toString());
-                doctorNotesModel.setField(INVOICE_FIELD_DATE, date.getText().toString());
+//                try
+//                {
+//                    doctorNotesModel.setField(INVOICE_FIELD_DATE, new Long(format.parse(date.getText().toString()).getTime()).toString());
+//                }
+//                catch(ParseException e)
+//                {
+//                    doctorNotesModel.setField(PROCEDURE_FIELD_DATE,new Long(new Date().getTime()).toString());
+//                }
                 doctorNotesModel.setField(INVOICE_FIELD_COST, cost.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_DISCOUNT, discount.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_TAX, tax.getText().toString());
@@ -268,7 +293,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 doctorNotesModel.setField(PROCEDURE_FIELD_NAME, name.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_DESCRIPTION, description.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_CURRENCY, currency.getText().toString());
-                doctorNotesModel.setField(PROCEDURE_FIELD_DATE, date.getText().toString());
+//                doctorNotesModel.setField(PROCEDURE_FIELD_DATE, date.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_COST, cost.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_DISCOUNT, discount.getText().toString());
                 doctorNotesModel.setField(PROCEDURE_FIELD_TAX, tax.getText().toString());
@@ -279,7 +304,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 doctorNotesModel.setField(INVOICE_FIELD_NAME, name.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_DESCRIPTION, description.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_CURRENCY, currency.getText().toString());
-                doctorNotesModel.setField(INVOICE_FIELD_DATE, date.getText().toString());
+//                doctorNotesModel.setField(INVOICE_FIELD_DATE, date.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_COST, cost.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_DISCOUNT, discount.getText().toString());
                 doctorNotesModel.setField(INVOICE_FIELD_TAX, tax.getText().toString());
@@ -316,12 +341,12 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
             @Override
             public void onDateTimeSet(Date date)
             {
-                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
+                DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
                 dateField.setText(format.format(date));
                 if(doctorNotesModel.getCategoryId().intValue() == TEMPLATE_CATEGORY_PROCEDURE)
-                    doctorNotesModel.setField(PROCEDURE_FIELD_DATE, dateField.getText().toString());
+                    doctorNotesModel.setField(PROCEDURE_FIELD_DATE, new Long(date.getTime()).toString());
                 else if(doctorNotesModel.getCategoryId().intValue() == TEMPLATE_CATEGORY_INVOICE)
-                    doctorNotesModel.setField(INVOICE_FIELD_COST, dateField.getText().toString());
+                    doctorNotesModel.setField(INVOICE_FIELD_COST, new Long(date.getTime()).toString());
             }
 
         };
@@ -349,24 +374,21 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.custom_template_edit, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ParentActivity activity = ((ParentActivity) getActivity());
+        final ParentActivity activity = ((ParentActivity) getActivity());
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.save_custom_template: {
                 update();
                 if (isChanged())
                 {
                     if (canBeSaved())
                     {
                         save();
-                        activity.onBackPressed();
                     }
                     else
                     {
@@ -379,14 +401,53 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                 }
 
             }
-            break;
-            case R.id.home: {
+            return true;
 
+            case R.id.remove_custom_template:
+            {
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete Medicine")
+                        .setMessage("Are you sure you want to delete this treatment plan?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                TreatmentId treatmentId = new TreatmentId(doctorNotesModel.treatmentId);
+                                api.removePatientVisitTreatmentPlan(treatmentId, new Callback<ResponseCodeVerfication>() {
+                                    @Override
+                                    public void success(ResponseCodeVerfication result, Response response) {
+                                        progress.dismiss();
+                                        if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
+                                            Toast.makeText(activity, "Treatment Plan Removed!!!!!", Toast.LENGTH_SHORT).show();
+                                            activity.onBackPressed();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        progress.dismiss();
+                                        error.printStackTrace();
+                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
             }
-            break;
+            default:
+            {
+                return false;
+            }
 
         }
-        return true;
     }
 
 

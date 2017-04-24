@@ -62,12 +62,6 @@ public class CustomTemplateListAdapter extends HomeAdapter {
         @Override
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-//                RestAdapter restAdapter = new RestAdapter.Builder()
-//                        .setEndpoint(activity.getString(R.string.base_url))
-//                        .setClient(new OkClient())
-//                        .setLogLevel(RestAdapter.LogLevel.FULL)
-//                        .build();
-//                api = restAdapter.create(MyApi.class);
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.manage_settings, null);
                 setView(convertView,position);
@@ -85,8 +79,10 @@ public class CustomTemplateListAdapter extends HomeAdapter {
             convertView.setTag(template1s);
             CustomProcedureTemplate1 template1 = template1s.get(0);
             TextView name = (TextView) convertView.findViewById(R.id.setting_name);
+            TextView count = (TextView) convertView.findViewById(R.id.count_name);
             name.setText(template1.getTemplateName());
-            ImageButton button = (ImageButton)convertView.findViewById(R.id.details_view);
+            count.setText(new Integer(template1s.size()).toString());
+            ImageButton button = (ImageButton)convertView.findViewById(R.id.nextBtn);
             button.setTag(template1s);
             button.setOnClickListener( new View.OnClickListener() {
                 @Override

@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -14,15 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.CustomTemplateSubListAdapter;
+import com.medico.application.R;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.model.PersonAndCategoryId1;
-import com.medico.application.R;
+import com.medico.util.PARAM;
+import com.medico.view.home.ParentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.medico.util.PARAM;
-import com.medico.view.home.ParentFragment;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -45,8 +42,7 @@ public class CustomTemplateSubListView extends ParentFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
-        View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
+        View view = inflater.inflate(R.layout.list_view,container,false);
 
         customTemplateListView = (ListView) view.findViewById(R.id.doctorListView);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
@@ -99,13 +95,5 @@ public class CustomTemplateSubListView extends ParentFragment {
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.patient_profile, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-    }
 
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,9 @@ import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.DoctorTreatmentPlanEditView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -80,7 +83,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
         name.setText(treatmentPlan1.getTemplateName() + " > " + treatmentPlan1.getTemplateSubName());
         TableLayout tableLayout = (TableLayout)convertView.findViewById(R.id.treatment_table);
         tableLayout.removeAllViews();
-        tableLayout.setStretchAllColumns(true);
+//        tableLayout.setStretchAllColumns(true);
         //create dates
         boolean firstRow = true;
         for(TreatmentPlan1 plan:treatments)
@@ -93,6 +96,11 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
                 row.setLayoutParams(lp);
                 for(TreatmentPlan1.TreatmentField fields: plan.treatmentFields) {
                     TextView textView = new TextView(activity);
+                    textView.setBackgroundResource(R.drawable.medicine_schedule_header);
+                    textView.setTextColor(Color.WHITE);
+                    textView.setTextSize(12);
+                    textView.setPadding(5,5,5,5);
+                    textView.setGravity(1);
                     textView.setText(fields.fieldDisplayName);
                     row.addView(textView);
                 }
@@ -102,9 +110,30 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
             TableRow row = new TableRow(activity);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
-            for(TreatmentPlan1.TreatmentField fields: plan.treatmentFields) {
+            for(TreatmentPlan1.TreatmentField fields: plan.treatmentFields)
+            {
+                String displayText = "";
+                if(fields.fieldId == PARAM.PROCEDURE_FIELD_DATE ||fields.fieldId == PARAM.INVOICE_FIELD_DATE )
+                {
+                    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
+                    displayText = format.format(new Date(Long.parseLong(fields.value)));
+                }
+                else if (fields.fieldId == PARAM.PROCEDURE_FIELD_DISCOUNT || fields.fieldId == PARAM.INVOICE_FIELD_DISCOUNT
+                        || fields.fieldId == PARAM.PROCEDURE_FIELD_TAX || fields.fieldId == PARAM.INVOICE_FIELD_TAX)
+                {
+                    displayText = fields.value + " %";
+                }
+                else
+                    displayText = fields.value;
                 TextView textView = new TextView(activity);
-                textView.setText(fields.value);
+                textView.setPadding(5,5,5,5);
+                textView.setTextSize(12);
+                if(fields.fieldId == PARAM.INVOICE_FIELD_NOTES ||fields.fieldId == PARAM.PROCEDURE_FIELD_NOTES )
+                    textView.setMaxWidth(800);
+                else
+                    textView.setMaxWidth(150);
+                row.setBackgroundResource(R.drawable.medicine_schedule);
+                textView.setText(displayText);
                 row.addView(textView);
 
             }

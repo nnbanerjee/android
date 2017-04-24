@@ -103,6 +103,7 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
         ParentActivity activity = (ParentActivity)getActivity();
         Bundle args = activity.getIntent().getExtras();
         args.remove(TREATMENT_ID);
+        args.putInt(TREATMENT_ID,0);
         args.putInt(CUSTOM_TEMPLATE_CREATE_ACTIONS, CREATE_TREATMENT);
         if(treatmentPlanModel != null && treatmentPlanModel.size() > 0)
             args.putInt(INVOICE_ID, ((TreatmentPlan1)treatmentPlanModel.get(0)).getInvoiceId());

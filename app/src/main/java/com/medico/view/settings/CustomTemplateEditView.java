@@ -39,7 +39,7 @@ import retrofit.client.Response;
 public class CustomTemplateEditView extends ParentFragment {
 
     ProgressDialog progress;
-    CustomProcedureTemplate1 doctorNotesModel = new CustomProcedureTemplate1();
+    CustomProcedureTemplate1 customTemplateModel = new CustomProcedureTemplate1();
     EditText name,description,date,currency,cost,discount,tax,total,notes;
     ImageView calenderImg;
 
@@ -87,32 +87,32 @@ public class CustomTemplateEditView extends ParentFragment {
                 @Override
                 public void success(CustomProcedureTemplate1 plan, Response response) {
                     //Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                    doctorNotesModel = plan;
-                    if (doctorNotesModel != null && doctorNotesModel.getTemplateId() != null)
+                    customTemplateModel = plan;
+                    if (customTemplateModel != null && customTemplateModel.getTemplateId() != null)
                     {
-                        if(doctorNotesModel.getCategoryId() == TEMPLATE_CATEGORY_PROCEDURE)
+                        if(customTemplateModel.getCategoryId() == TEMPLATE_CATEGORY_PROCEDURE)
                         {
-                            name.setText(doctorNotesModel.getField(PROCEDURE_FIELD_NAME).value);
-                            description.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DESCRIPTION).value);
-                            date.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DATE).value);
-                            currency.setText(doctorNotesModel.getField(PROCEDURE_FIELD_CURRENCY).value);
-                            cost.setText(doctorNotesModel.getField(PROCEDURE_FIELD_COST).value);
-                            discount.setText(doctorNotesModel.getField(PROCEDURE_FIELD_DISCOUNT).value);
-                            tax.setText(doctorNotesModel.getField(PROCEDURE_FIELD_TAX).value);
-                            total.setText(doctorNotesModel.getField(PROCEDURE_FIELD_TOTAL).value);
-                            notes.setText(doctorNotesModel.getField(PROCEDURE_FIELD_NOTES).value);
+                            name.setText(customTemplateModel.getField(PROCEDURE_FIELD_NAME).value);
+                            description.setText(customTemplateModel.getField(PROCEDURE_FIELD_DESCRIPTION).value);
+                            date.setText(customTemplateModel.getField(PROCEDURE_FIELD_DATE).value);
+                            currency.setText(customTemplateModel.getField(PROCEDURE_FIELD_CURRENCY).value);
+                            cost.setText(customTemplateModel.getField(PROCEDURE_FIELD_COST).value);
+                            discount.setText(customTemplateModel.getField(PROCEDURE_FIELD_DISCOUNT).value);
+                            tax.setText(customTemplateModel.getField(PROCEDURE_FIELD_TAX).value);
+                            total.setText(customTemplateModel.getField(PROCEDURE_FIELD_TOTAL).value);
+                            notes.setText(customTemplateModel.getField(PROCEDURE_FIELD_NOTES).value);
                         }
-                        else if(doctorNotesModel.getCategoryId() == TEMPLATE_CATEGORY_INVOICE)
+                        else if(customTemplateModel.getCategoryId() == TEMPLATE_CATEGORY_INVOICE)
                         {
-                            name.setText(doctorNotesModel.getField(INVOICE_FIELD_NAME).value);
-                            description.setText(doctorNotesModel.getField(INVOICE_FIELD_DESCRIPTION).value);
-                            date.setText(doctorNotesModel.getField(INVOICE_FIELD_DATE).value);
-                            currency.setText(doctorNotesModel.getField(INVOICE_FIELD_CURRENCY).value);
-                            cost.setText(doctorNotesModel.getField(INVOICE_FIELD_COST).value);
-                            discount.setText(doctorNotesModel.getField(INVOICE_FIELD_DISCOUNT).value);
-                            tax.setText(doctorNotesModel.getField(INVOICE_FIELD_TAX).value);
-                            total.setText(doctorNotesModel.getField(INVOICE_FIELD_TOTAL).value);
-                            notes.setText(doctorNotesModel.getField(INVOICE_FIELD_NOTES).value);
+                            name.setText(customTemplateModel.getField(INVOICE_FIELD_NAME).value);
+                            description.setText(customTemplateModel.getField(INVOICE_FIELD_DESCRIPTION).value);
+                            date.setText(customTemplateModel.getField(INVOICE_FIELD_DATE).value);
+                            currency.setText(customTemplateModel.getField(INVOICE_FIELD_CURRENCY).value);
+                            cost.setText(customTemplateModel.getField(INVOICE_FIELD_COST).value);
+                            discount.setText(customTemplateModel.getField(INVOICE_FIELD_DISCOUNT).value);
+                            tax.setText(customTemplateModel.getField(INVOICE_FIELD_TAX).value);
+                            total.setText(customTemplateModel.getField(INVOICE_FIELD_TOTAL).value);
+                            notes.setText(customTemplateModel.getField(INVOICE_FIELD_NOTES).value);
                         }
                     }
                     progress.dismiss();
@@ -132,10 +132,10 @@ public class CustomTemplateEditView extends ParentFragment {
         }
     }
 
-    public void saveDoctorNotesData(CustomProcedureTemplate1 doctorNotesModel){
+    public void saveDoctorNotesData(CustomProcedureTemplate1 customTemplateModel){
 
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.updateCustomTemplate(doctorNotesModel, new Callback<ResponseVm>() {
+        api.updateCustomTemplate(customTemplateModel, new Callback<ResponseVm>() {
             @Override
             public void success(ResponseVm jsonObject, Response response) {
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
@@ -154,38 +154,38 @@ public class CustomTemplateEditView extends ParentFragment {
     @Override
     public boolean isChanged()
     {
-        return doctorNotesModel.isChanged();
+        return customTemplateModel.isChanged();
     }
     @Override
     public void update()
     {
-        if(doctorNotesModel.getCategoryId() == TEMPLATE_CATEGORY_PROCEDURE)
+        if(customTemplateModel.getCategoryId() == TEMPLATE_CATEGORY_PROCEDURE)
         {
-            doctorNotesModel.setField(PROCEDURE_FIELD_NAME,name.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_DESCRIPTION,description.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_CURRENCY,currency.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_DATE,date.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_COST,cost.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_DISCOUNT,discount.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_TAX,tax.getText().toString());
-            doctorNotesModel.setField(PROCEDURE_FIELD_NOTES,notes.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_NAME,name.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_DESCRIPTION,description.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_CURRENCY,currency.getText().toString());
+//            customTemplateModel.setField(PROCEDURE_FIELD_DATE,date.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_COST,cost.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_DISCOUNT,discount.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_TAX,tax.getText().toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_NOTES,notes.getText().toString());
             Double total = new Double(cost.getText().toString()).doubleValue() *
                     (1 - new Double(discount.getText().toString())/100)*(1+new Double(tax.getText().toString())/100);
-            doctorNotesModel.setField(PROCEDURE_FIELD_TOTAL,total.toString());
+            customTemplateModel.setField(PROCEDURE_FIELD_TOTAL,total.toString());
         }
-        else if(doctorNotesModel.getCategoryId() == TEMPLATE_CATEGORY_INVOICE)
+        else if(customTemplateModel.getCategoryId() == TEMPLATE_CATEGORY_INVOICE)
         {
-            doctorNotesModel.setField(INVOICE_FIELD_NAME,name.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_DESCRIPTION,description.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_CURRENCY,currency.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_DATE,date.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_COST,cost.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_DISCOUNT,discount.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_TAX,tax.getText().toString());
-            doctorNotesModel.setField(INVOICE_FIELD_NOTES,notes.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_NAME,name.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_DESCRIPTION,description.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_CURRENCY,currency.getText().toString());
+//            customTemplateModel.setField(INVOICE_FIELD_DATE,date.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_COST,cost.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_DISCOUNT,discount.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_TAX,tax.getText().toString());
+            customTemplateModel.setField(INVOICE_FIELD_NOTES,notes.getText().toString());
             Double total = new Double(cost.getText().toString()).doubleValue() *
                     (1 - new Double(discount.getText().toString())/100)*(1+new Double(tax.getText().toString())/100);
-            doctorNotesModel.setField(INVOICE_FIELD_TOTAL,total.toString());
+            customTemplateModel.setField(INVOICE_FIELD_TOTAL,total.toString());
         }
         Bundle bundle1 = getActivity().getIntent().getExtras();
 
@@ -194,10 +194,10 @@ public class CustomTemplateEditView extends ParentFragment {
     @Override
     public boolean save()
     {
-        if(doctorNotesModel.canBeSaved())
+        if(customTemplateModel.canBeSaved())
         {
-            saveDoctorNotesData(doctorNotesModel);
-            doctorNotesModel.isChanged = false;
+            saveDoctorNotesData(customTemplateModel);
+            customTemplateModel.isChanged = false;
             return true;
         }
         return false;
@@ -205,7 +205,7 @@ public class CustomTemplateEditView extends ParentFragment {
     @Override
     public boolean canBeSaved()
     {
-        return doctorNotesModel.canBeSaved();
+        return customTemplateModel.canBeSaved();
     }
     @Override
     public void setEditable(boolean editable)
@@ -222,7 +222,7 @@ public class CustomTemplateEditView extends ParentFragment {
             {
                 DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
                 dateField.setText(format.format(date));
-                doctorNotesModel.setField(PROCEDURE_FIELD_DATE, dateField.getText().toString());
+                customTemplateModel.setField(PROCEDURE_FIELD_DATE, new Long(date.getTime()).toString());
             }
 
         };
@@ -250,10 +250,37 @@ public class CustomTemplateEditView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.custom_template_edit, menu);
+        MenuItem menuItem = menu.findItem(R.id.save_custom_template);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save_custom_template: {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return true;
+            }
 
+        }
+        return false;
+    }
 
 }

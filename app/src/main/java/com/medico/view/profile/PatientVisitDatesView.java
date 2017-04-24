@@ -96,13 +96,6 @@ public class PatientVisitDatesView extends ParentFragment
         super.onCreateOptionsMenu(menu,inflater);
     }
 
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        setHasOptionsMenu(false);
-    }
     @Override
     public void onResume() {
         super.onResume();

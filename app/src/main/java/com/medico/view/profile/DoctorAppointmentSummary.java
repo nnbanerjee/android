@@ -65,7 +65,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     ProgressDialog progress;
     MedicineAdapter adapter;
     DiagnosticTestAdapter testAdapter;
-    public SummaryResponse summaryResponse;
+    public SummaryResponse summaryResponse = new SummaryResponse();
     private Spinner clinicSpinner;
     boolean isChanged = false;
 
@@ -362,9 +362,11 @@ public class DoctorAppointmentSummary extends ParentFragment {
             api.getPatientVisitSummary(new AppointmentId1(appointMentId), new Callback<SummaryResponse>() {
                 @Override
                 public void success(SummaryResponse summary, Response response) {
-                    summaryResponse = summary;
-                    if(summary.status == 0)
+
+                    if(summary.status == 0 || summary.errorCode != null)
                     {
+                        summaryResponse = new SummaryResponse();
+                        summaryResponse.status = 0;
                         summaryResponse.setDoctorId(doctorId);
                         summaryResponse.setPatientId(patientId);
                         summaryResponse.setLoggedinUserId(loggedInUserId);
@@ -374,7 +376,9 @@ public class DoctorAppointmentSummary extends ParentFragment {
                         summaryResponse.setVisitType(new Integer(visitType).byteValue());
                         summaryResponse.setVisitDate(date);
                     }
-                    summary.setLoggedinUserId(loggedInUserId);
+                    else
+                        summaryResponse = summary;
+                    summaryResponse.setLoggedinUserId(loggedInUserId);
                     progress.dismiss();
                     setPatientSummary();
                     setClinic(false);
