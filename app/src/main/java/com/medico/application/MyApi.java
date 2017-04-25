@@ -53,6 +53,7 @@ import com.medico.model.PatientReview;
 import com.medico.model.PatientShortProfile;
 import com.medico.model.PatientTestId;
 import com.medico.model.PatientVisits;
+import com.medico.model.Payment;
 import com.medico.model.Person;
 import com.medico.model.PersonAndCategoryId1;
 import com.medico.model.PersonDetailProfile;
@@ -146,6 +147,12 @@ public interface MyApi {
     void setMedicineAlarm(@Body MedicineStatusRequest param, Callback<ResponseCodeVerfication> cb);
     @POST("/setDiagnosticTestAlarm")
     void setDiagnosticTestAlarm(@Body DiagnosticStatusRequest param, Callback<ResponseCodeVerfication> cb);
+
+    @POST("/updatePatientVisitInvoiceDetails")
+    void updatePatientVisitInvoiceDetails(@Body InvoiceDetails1 param, Callback<ResponseCodeVerfication> cb);
+
+    @POST("/addPayment")
+    void addPayment(@Body Payment param, Callback<ResponseCodeVerfication> cb);
 //    @POST("/registerPatient")
 //    void registerPatient(@Body RegisterUserData param, Callback<String> cb);
 //
@@ -845,6 +852,9 @@ public interface MyApi {
 //
     @POST("/getPatientVisitInvoice")
     void getPatientVisitInvoice1(@Body InvoiceId invoiceId, Callback<InvoiceDetails1> response);
+
+    @POST("/getPatientVisitInvoice")
+    void getPatientVisitInvoice1(@Body AppointmentId1 appointmentId, Callback<InvoiceDetails1> response);
 //
 //    @POST("/addPatientVisitInvoice")
 //    void addPatientVisitInvoice(@Body TreatmentPlan treatmentPlan, Callback<ResponseAddTemplates> response);

@@ -73,6 +73,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
@@ -89,6 +90,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);

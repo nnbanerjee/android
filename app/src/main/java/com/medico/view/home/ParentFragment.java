@@ -1,6 +1,10 @@
 package com.medico.view.home;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.medico.application.MyApi;
@@ -30,6 +34,13 @@ public class ParentFragment extends Fragment implements PARAM
     {
         super.onStart();
         fragment = this;
+        getView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideSoftKeyboard(getActivity());
+                return false;
+            }
+        });
         api = api = ServerConnectionAdapter.getServerAdapter(getActivity()).getServerAPI();
         if(countriesList == null)
             loadSupportedCountryList();
@@ -74,6 +85,11 @@ public class ParentFragment extends Fragment implements PARAM
     }
     public void setEditable(boolean editable)
     {
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
 }

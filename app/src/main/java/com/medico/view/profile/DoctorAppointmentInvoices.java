@@ -1,6 +1,9 @@
 package com.medico.view.profile;
 
+import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -13,10 +16,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.model.InvoiceDetails1;
-import com.medico.model.InvoiceId;
 import com.medico.application.R;
+import com.medico.model.AppointmentId1;
+import com.medico.model.InvoiceDetails1;
+import com.medico.model.Payment;
+import com.medico.model.ResponseCodeVerfication;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
+import com.medico.view.settings.CustomTemplateListView;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,11 +39,11 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
 
     CheckBox shareWithPatient;
-    EditText discountValue,taxValue,advanceValue,grandTotal,
+    EditText discountValue,taxValue,advanceValue,grandTotal,other_charges,other_value,
             discountPercent,taxPercent,totalDueValue;
     TextView noDataFound,invoiceTotal;
     ProgressDialog progress;
-
+    DoctorAppointmentTreatmentPlan treatmentPlan,invoice;
     InvoiceDetails1 invoiceDetails;
 
     @Nullable
@@ -45,40 +55,14 @@ public class DoctorAppointmentInvoices extends ParentFragment {
         invoiceTotal = (TextView) view.findViewById(R.id.invoiceTotal);
         discountValue = (EditText) view.findViewById(R.id.discountValue);
         discountPercent = (EditText)view.findViewById(R.id.percentageDiscount);
+        other_charges = (EditText)view.findViewById(R.id.other_charges);
+        other_value = (EditText)view.findViewById(R.id.other_value);
         taxPercent = (EditText)view.findViewById(R.id.percentageTax);
         taxValue = (EditText) view.findViewById(R.id.taxValue);
         advanceValue = (EditText) view.findViewById(R.id.advanceValue);
         totalDueValue = (EditText) view.findViewById(R.id.totalDueValue);
+        invoice = (DoctorAppointmentTreatmentPlan) getActivity().getFragmentManager().findFragmentById(R.id.invoice_list);
         grandTotal = (EditText)view.findViewById(R.id.grandTotal);
-
-//        shareWithPatient.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Boolean check = shareWithPatient.isChecked();
-//                api.saveShareWithPatientTotalInvoice(invoice,new Callback<Response>() {
-//                    @Override
-//                    public void success(Response response, Response response2) {
-//                        int status = response.getStatus();
-//                        if(status == 200)
-//                        {
-//                            if(share == 1) {
-//                                Toast.makeText(getActivity(), "Data Shared With Patient", Toast.LENGTH_SHORT).show();
-//                            }
-//                            else
-//                            {
-//                                Toast.makeText(getActivity(), "Data Not Shared With Patient", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        error.printStackTrace();
-//                    }
-//                });
-//            }
-//        });
-
-
         taxPercent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -87,25 +71,26 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String doubleString = taxPercent.getText().toString();
-                if(doubleString.equals(""))
-                {
-//                    taxValue.setText("0.00");
-//                    grandTotal.setText(""+grandTotalFinal);
-
-
-                }
-                else
-                {
-//                    tax = Double.parseDouble(doubleString);
-//                    double subTotal = ((gTotalValue*tax)/100);
-//                    taxValue.setText(""+subTotal);
-                }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
+            public void afterTextChanged(Editable s)
+            {
+                Double tax;
+                if(s.toString().trim().length() == 0)
+                {
+                    tax = 0.00;
+                    taxPercent.setText(tax.toString());
+                }
+                else if((tax = Double.parseDouble(s.toString())) > 100.00)
+                {
+                   tax = 100.00;
+                    taxPercent.setText(tax.toString());
+                }
+                invoiceDetails.setTax(tax);
+                taxValue.setText(invoiceDetails.calculateTaxValue().toString());
+                grandTotal.setText(invoiceDetails.calculateGrandTotal().toString());
+                totalDueValue.setText(invoiceDetails.calculateDues().toString());
             }
         });
         discountPercent.addTextChangedListener(new TextWatcher() {
@@ -116,29 +101,32 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String doubleString = discountPercent.getText().toString();
-                if(doubleString.equals(""))
-                {
-//                    discountValue.setText("0.00");
-//                    grandTotal.setText(""+grandTotalFinal);
-                }
-                else
-                {
-//                    Double discount = Double.parseDouble(doubleString);
-//                    double subTotal = ((gTotalValue*discount)/100);
-//                    discount = subTotal;
-//                    discountValue.setText(""+subTotal);
-                }
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
+                Double discount;
+                if(s.toString().trim().length() == 0)
+                {
+                    discount = 0.00;
+                    discountPercent.setText(discount.toString());
+                }
+                else if((discount = Double.parseDouble(s.toString())) > 100.00)
+                {
+                    discount = 100.00;
+                    discountPercent.setText(discount.toString());
+                }
+                invoiceDetails.setDiscount(discount);
+                discountValue.setText(invoiceDetails.calculateDiscountValue().toString());
+                taxValue.setText(invoiceDetails.calculateTaxValue().toString());
+                grandTotal.setText(invoiceDetails.calculateGrandTotal().toString());
+                totalDueValue.setText(invoiceDetails.calculateDues().toString());
 
             }
         });
-
-        advanceValue.addTextChangedListener(new TextWatcher() {
+        other_charges.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -146,50 +134,44 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String doubleString = advanceValue.getText().toString();
-//                if(doubleString.equals("")){
-//                    totalDueValue.setText(""+grandTotalFinal);
-//                }else{
-//                    if(doubleString!=null&& ! doubleString.equalsIgnoreCase("") && !doubleString.equalsIgnoreCase("null")) {
-//                        totalDueValue.setText("" + grandTotalFinal);
-//                    }
-//                }
+
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
+            public void afterTextChanged(Editable s)
+            {
+                Double other;
+                if(s.toString().trim().length() == 0)
+                {
+                    other = 0.00;
+                    other_charges.setText(other.toString());
+                }
+                else
+                    other = Double.parseDouble(s.toString());
+                invoiceDetails.setOtherCharges(other);
+                other_value.setText(other.toString());
+                discountValue.setText(invoiceDetails.calculateDiscountValue().toString());
+                taxValue.setText(invoiceDetails.calculateTaxValue().toString());
+                grandTotal.setText(invoiceDetails.calculateGrandTotal().toString());
+                totalDueValue.setText(invoiceDetails.calculateDues().toString());
             }
         });
-
 
         return view;
     }
 
-
-
-    public static Double isNumeric(String str){
-        Double d = null;
-        try{
-            d = Double.parseDouble(str);
-        }
-        catch(NumberFormatException nfe)
-        {
-            return null;
-        }
-        return d;
-    }
-
-
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
+        if(invoice != null)
+            invoice.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
         final Integer invoiceId = bundle.getInt(INVOICE_ID);
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getPatientVisitInvoice1(new InvoiceId(invoiceId), new Callback<InvoiceDetails1>() {
+        api.getPatientVisitInvoice1(new AppointmentId1(appointMentId), new Callback<InvoiceDetails1>() {
             @Override
             public void success(InvoiceDetails1 details, Response response) {
 
@@ -199,11 +181,15 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                         invoiceDetails.getInvoiceId().intValue() > 0)
                 {
                     invoiceTotal.setText(invoiceDetails.getTotal().toString());
-                    discountPercent.setText(invoiceDetails.getDiscount().toString());
+                    other_charges.setText(invoiceDetails.getOtherCharges().toString());
+                    other_value.setText(invoiceDetails.getOtherCharges().toString());
                     taxPercent.setText(invoiceDetails.getTax().toString());
-                    grandTotal.setText(invoiceDetails.getGrandTotal().toString());
+                    taxValue.setText(invoiceDetails.calculateTaxValue().toString());
+                    discountPercent.setText(invoiceDetails.getDiscount().toString());
+                    discountValue.setText(invoiceDetails.calculateDiscountValue().toString());
+                    grandTotal.setText(invoiceDetails.calculateGrandTotal().toString());
                     advanceValue.setText(invoiceDetails.getAdvance().toString());
-                    totalDueValue.setText(new Double(invoiceDetails.getGrandTotal()-invoiceDetails.advance).toString());
+                    totalDueValue.setText(invoiceDetails.calculateDues().toString());
                 }
 
                 progress.dismiss();
@@ -219,6 +205,25 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
     }
 
+    public void saveInvoice(InvoiceDetails1 invoice){
+        final ParentActivity activity = (ParentActivity)getActivity();
+        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        api.updatePatientVisitInvoiceDetails(invoice, new Callback<ResponseCodeVerfication>() {
+            @Override
+            public void success(ResponseCodeVerfication jsonObject, Response response) {
+                Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                progress.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+                progress.dismiss();
+            }
+        });
+    }
+
     @Override
     public boolean isChanged()
     {
@@ -227,23 +232,14 @@ public class DoctorAppointmentInvoices extends ParentFragment {
     @Override
     public void update()
     {
-
+        invoiceDetails.setDiscount(new Double(discountPercent.getText().toString()));
+        invoiceDetails.setTax(new Double(taxPercent.getText().toString()));
+        invoiceDetails.setOtherCharges(new Double(other_charges.getText().toString()));
     }
     @Override
     public boolean save()
     {
-//        ManagePatientProfile activity = (ManagePatientProfile)getActivity();
-//        Bundle args = activity.getIntent().getExtras();
-//        args.remove(TREATMENT_ID);
-//        args.putInt(CUSTOM_TEMPLATE_CREATE_ACTIONS, CREATE_TREATMENT);
-//        if(treatmentPlanModel != null && treatmentPlanModel.size() > 0)
-//            args.putInt(INVOICE_ID, ((TreatmentPlan1)treatmentPlanModel.get(0)).getInvoiceId());
-//        activity.getIntent().putExtras(args);
-//        ParentFragment fragment = new CustomTemplateListView();
-//        activity.fragmentList.add(fragment);
-//        fragment.setArguments(args);
-//        FragmentManager fragmentManger = activity.getFragmentManager();
-//        fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();
+        saveInvoice(invoiceDetails);
         return true;
     }
     @Override
@@ -253,6 +249,91 @@ public class DoctorAppointmentInvoices extends ParentFragment {
     }
     @Override
     public void setEditable(boolean editable) {
+    }
+
+    public void addInvoice()
+    {
+        ParentActivity activity = (ParentActivity)getActivity();
+        Bundle args = activity.getIntent().getExtras();
+        args.remove(TREATMENT_ID);
+        args.putInt(TREATMENT_ID,0);
+        args.putInt(CUSTOM_TEMPLATE_CREATE_ACTIONS, CREATE_INVOICE);
+        if(invoiceDetails != null && invoiceDetails.getInvoiceId().intValue() > 0)
+            args.putInt(INVOICE_ID, invoiceDetails.getInvoiceId());
+        else
+            args.putInt(INVOICE_ID, 0);
+        activity.getIntent().putExtras(args);
+        ParentFragment fragment = new CustomTemplateListView();
+        activity.attachFragment(fragment);
+        fragment.setArguments(args);
+        FragmentManager fragmentManger = activity.getFragmentManager();
+        fragmentManger.beginTransaction().add(R.id.service, fragment, CustomTemplateListView.class.getName()).addToBackStack(CustomTemplateListView.class.getName()).commit();
+    }
+    public void addPayment()
+    {
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View promptsView = li.inflate(R.layout.payment_layout, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
+        final String country = bundle.getString(COUNTRY_NAME);
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                if(userInput.getText().length() > 0)
+                                {
+                                    BigDecimal amount = new BigDecimal(Double.parseDouble(userInput.getText().toString()));
+                                    Payment payment = new Payment(amount, new Date().getTime(), new Integer(1).byteValue(),
+                                            new Integer(1).byteValue(), "Doctor's Visit",country,
+                                            invoiceDetails.invoiceId,invoiceDetails.patientId , invoiceDetails.doctorId, invoiceDetails.patientId);
+
+                                    api.addPayment(payment, new Callback<ResponseCodeVerfication>()
+                                    {
+                                        @Override
+                                        public void success(ResponseCodeVerfication jsonObject, Response response)
+                                        {
+                                            fragment.onStart();
+                                            Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                                            progress.dismiss();
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error)
+                                        {
+                                            Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                                            error.printStackTrace();
+                                            progress.dismiss();
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
     }
 
 }

@@ -272,10 +272,12 @@ public class DoctorAppointmentInformation extends ParentFragment {
 
             case R.id.add_invoice:
             {
+                ((DoctorAppointmentInvoices)fragment).addInvoice();
                 return true;
             }
             case R.id.add_payment:
             {
+                ((DoctorAppointmentInvoices)fragment).addPayment();
                 return true;
             }
             case R.id.exit:

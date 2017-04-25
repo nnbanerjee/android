@@ -36,25 +36,31 @@ public class InvoiceDetails1 {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(Double discount)
+    {
         this.discount = discount;
+        this.grandTotal = calculateGrandTotal();
     }
-
-    public Double getOtherCharges() {
-        return otherCharges;
-    }
-
-    public void setOtherCharges(Double otherCharges) {
+    public void setOtherCharges(Double otherCharges)
+    {
         this.otherCharges = otherCharges;
+        this.grandTotal = calculateGrandTotal();
+    }
+    public void setTax(Double tax)
+    {
+        this.tax = tax;
+        this.grandTotal = calculateGrandTotal();
+    }
+    public Double getOtherCharges()
+    {
+        return otherCharges;
     }
 
     public Double getTax() {
         return tax;
     }
 
-    public void setTax(Double tax) {
-        this.tax = tax;
-    }
+
 
     public Byte getType() {
         return type;
@@ -92,19 +98,37 @@ public class InvoiceDetails1 {
         return total;
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
     public Double getGrandTotal() {
         return grandTotal;
     }
 
-    public void setGrandTotal(Double grandTotal) {
-        this.grandTotal = grandTotal;
+
+
+
+    public Double calculateTotalPlusOtherCharges()
+    {
+        return new Double(total + otherCharges);
     }
 
-
-
+    public Double calculateDiscountValue()
+    {
+        return new Double((total + otherCharges)*discount/100);
+    }
+    public Double calculateTotalPlusOtherChargesAfterDiscount()
+    {
+        return new Double(calculateTotalPlusOtherCharges() - calculateDiscountValue());
+    }
+    public Double calculateTaxValue()
+    {
+        return new Double(calculateTotalPlusOtherChargesAfterDiscount()  * tax/100);
+    }
+    public Double calculateGrandTotal()
+    {
+        return new Double(calculateTotalPlusOtherChargesAfterDiscount()+calculateTaxValue());
+    }
+    public Double calculateDues()
+    {
+        return new Double(calculateGrandTotal() + advance);
+    }
 
 }

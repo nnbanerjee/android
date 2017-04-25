@@ -163,7 +163,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                             name.setText(doctorNotesModel.getField(INVOICE_FIELD_NAME).value);
                             description.setText(doctorNotesModel.getField(INVOICE_FIELD_DESCRIPTION).value);
                             date.setText(format.format(new Date()));
-                            doctorNotesModel.setField(PROCEDURE_FIELD_DATE,new Long(new Date().getTime()).toString());
+                            doctorNotesModel.setField(INVOICE_FIELD_DATE,new Long(new Date().getTime()).toString());
                             currency.setText(doctorNotesModel.getField(INVOICE_FIELD_CURRENCY).value);
                             cost.setText(doctorNotesModel.getField(INVOICE_FIELD_COST).value);
                             discount.setText(doctorNotesModel.getField(INVOICE_FIELD_DISCOUNT).value);

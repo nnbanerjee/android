@@ -1,7 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="5dp"
     android:background="#ffffff">
 
     <RelativeLayout
@@ -11,7 +10,8 @@
             android:id="@+id/document_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="2dp"
+            android:visibility="gone"
             android:layout_marginBottom="20dp">
 
             <CheckBox
@@ -26,32 +26,33 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/document_category"
             android:layout_height="fill_parent">
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentPlan"
+                android:id="@+id/treatment_list"
+                android:tag="treatment"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="10dp">
-                <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentPlan"
-                    android:id="@+id/treatment_list"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"/>
-                <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentInvoice"
-                    android:id="@+id/invoice_list"
-                    android:layout_weight="1"
-                    android:layout_below="@+id/treatment_list"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"/>
-            </RelativeLayout>
+                android:layout_width="match_parent"/>
+            <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentPlan"
+                android:id="@+id/invoice_list"
+                android:tag="invoice"
+                android:layout_weight="1"
+                android:layout_below="@+id/treatment_list"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"/>
         </RelativeLayout>
+        <View
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout21"
+            android:background="@color/medico_blue"></View>
         <RelativeLayout
             android:id="@+id/document_type"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/layout21"
+            android:layout_below="@+id/view11"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp">
@@ -87,14 +88,56 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="0" />
+                    android:text="0.00" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/other_charges_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/document_name"
+                android:paddingBottom="5dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="(+)Other:" />
+
+                <EditText
+                    android:id="@+id/other_charges"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
+                    android:text="0.00" />
+
+                <EditText
+                    android:id="@+id/other_value"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_black_color"
+                    android:fontFamily="sans-serif"
+                    android:editable="false"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
+                    android:text=" 0.00 " />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/manage_appointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/document_name"
+                android:layout_below="@+id/other_charges_layout"
                 android:paddingBottom="5dp"
                 android:weightSum="3">
 
@@ -115,8 +158,9 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:text="0" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:text="0.00" />
 
                 <EditText
                     android:id="@+id/discountValue"
@@ -126,7 +170,8 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
                     android:text=" 0.00 " />
             </LinearLayout>
 
@@ -156,8 +201,9 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:text="0" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:text="0.00" />
 
                 <EditText
                     android:id="@+id/taxValue"
@@ -167,7 +213,8 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
                     android:text="0.00 " />
             </LinearLayout>
 
@@ -206,7 +253,8 @@
                     android:focusable="false"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
                     android:text="0.0" />
             </LinearLayout>
 
@@ -252,7 +300,8 @@
                     android:background="@drawable/rounded_black_color"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
                     android:text="0.00" />
             </LinearLayout>
 
@@ -290,7 +339,8 @@
                     android:editable="false"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
                     android:text="0.0" />
             </LinearLayout>
 

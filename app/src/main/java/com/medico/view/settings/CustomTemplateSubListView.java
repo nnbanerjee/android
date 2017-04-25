@@ -60,8 +60,8 @@ public class CustomTemplateSubListView extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorId = bundle.getInt(PARAM.LOGGED_IN_ID);
         final String name = bundle.getString(CUSTOM_TEMPLATE_NAME);
-
-        api.getAllCustomTemplate1(new PersonAndCategoryId1(doctorId, 1), new Callback<List<CustomProcedureTemplate1>>() {
+        final Integer type = bundle.getInt(CUSTOM_TEMPLATE_CREATE_ACTIONS);
+        api.getAllCustomTemplate1(new PersonAndCategoryId1(doctorId, type == CREATE_TREATMENT?1:2), new Callback<List<CustomProcedureTemplate1>>() {
             @Override
             public void success(final List<CustomProcedureTemplate1> allTemplates, Response response) {
                 customTemplateList = allTemplates;

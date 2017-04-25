@@ -59,8 +59,12 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
+        String tag = getTag();
+        int type = 1;
+        if(tag.equals("invoice"))
+            type = 2;
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-        api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, 1), new Callback<List<TreatmentPlan1>>() {
+        api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, type), new Callback<List<TreatmentPlan1>>() {
             @Override
             public void success(List<TreatmentPlan1> treatments, Response response) {
 
