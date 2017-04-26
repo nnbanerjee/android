@@ -103,12 +103,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.patient_appointment, null);
@@ -120,7 +114,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         final Spinner appointment_status = (Spinner)convertView.findViewById(R.id.appointment_status);
         final Spinner appointment_type = (Spinner)convertView.findViewById(R.id.appointment_type);
         final Spinner appointment_visit_status = (Spinner)convertView.findViewById(R.id.appointment_visit_status);
-//        global = (Global) activity.getApplicationContext();
         TextView patient_name = (TextView) convertView.findViewById(R.id.patient_name);
         TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
         ImageView patient_image = (ImageView) convertView.findViewById(R.id.patient_image);
@@ -139,8 +132,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         patient_image.setBackgroundResource(R.drawable.patient_default);
         appointment_number.setText(new Integer(holder.sequenceNumber).toString());
         appointment_time.setText(holder.getTime());
-//        appointment_status.setSelection(holder.getAppointmentStatus());
-//        appointment_type.setSelection(holder.getVisitType());
         appointment_visit_status.setSelection(holder.getVisitStatus());
         appointment_menu.setTag(holder);
         String[] menuArray = holder.patient != null? filledAppointment: emptyAppointment;
@@ -154,8 +145,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 return view;
             }
         });
-//        appointment_type.setSelection(holder.getVisitType());
-//        appointment_visit_status.setSelection(holder.getVisitStatus());
         appointment_menu.setTag(holder);
 
         appointment_menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -243,7 +232,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     Bundle bun = activity.getIntent().getExtras();
                     bun.putInt(PARAM.APPOINTMENT_ID, holder.patient.appointmentId);
                     bun.putLong(PARAM.APPOINTMENT_DATETIME, holder.date.getTime());
-//                    bun.putString(PARAM.REFERRED_BY, holder.patient.);
                     bun.putString(PARAM.CLINIC_NAME, holder.details.clinic.clinicName);
                     bun.putInt(PARAM.CLINIC_ID, holder.details.clinic.idClinic);
                     activity.getIntent().putExtras(bun);
@@ -254,7 +242,6 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
                 }
             });
-//            appointment_menu.setAdapter(new AppointmentAdapter(activity));
             appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.appointment_status)));
             appointment_status.setSelection(holder.getAppointmentStatus(),false);
             appointment_type.setVisibility(View.VISIBLE);

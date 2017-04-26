@@ -66,7 +66,7 @@ public class ClinicSlotListAdapter extends HomeAdapter  {
         TextView numberOfPatients = (TextView) convertView.findViewById(R.id.numberOfPatients);
         ImageView rightArrow = (ImageView)convertView.findViewById(R.id.imageView7);
         TextView appointment_count = (TextView)convertView.findViewById(R.id.textView9);
-        appointment_count.setText(new Integer(slot.counts.size()).toString());
+        appointment_count.setText(new Integer(slot.getAppointmentCounts()).toString());
         slotName.setText(slot.name + " ( " + slot.slotNumber + " ) Type: " + (slot.slotType==0?"General":"Prime"));
         slotDays.setText(daysOfWeek(slot.daysOfWeek));
         DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);

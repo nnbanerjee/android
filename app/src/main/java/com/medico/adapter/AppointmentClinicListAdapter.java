@@ -92,7 +92,7 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
         clinicName.setText(clinicDetails.get(position).clinic.clinicName);
         speciality.setText(clinicDetails.get(position).clinic.speciality);
         if(clinicDetails.get(position).datecounts != null)
-            totalCount.setText(new Integer(clinicDetails.get(position).datecounts.size()).toString());
+            totalCount.setText(new Integer(clinicDetails.get(position).getAppointmentCounts()).toString());
         else
             totalCount.setText(new Integer(0).toString());
         setAppointmentDates(convertView, clinicDetails.get(position));
@@ -139,6 +139,7 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
                 Bundle bundle = activity.getIntent().getExtras();
                 if(model.slots.size() > 0)
                 {
+                    bundle.putInt(PARAM.CLINIC_ID, model.clinic.idClinic);
                     bundle.putInt(PARAM.DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
                     activity.getIntent().putExtras(bundle);
                     ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
@@ -156,6 +157,7 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
                 Bundle bundle = activity.getIntent().getExtras();
                 if(model.slots.size() > 0)
                 {
+                    bundle.putInt(PARAM.CLINIC_ID, model.clinic.idClinic);
                     bundle.putInt(PARAM.DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
                     activity.getIntent().putExtras(bundle);
                     ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();

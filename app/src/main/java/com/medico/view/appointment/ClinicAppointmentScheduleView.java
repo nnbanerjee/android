@@ -150,6 +150,64 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         dateRow = new TableRow(getActivity());
         dayRow = new TableRow(getActivity());
+        dateRow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()  ) {
+                    case MotionEvent.ACTION_DOWN:
+                        slideActive = event.getX();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        float finalx = event.getX();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(activateDate);
+
+                        if(finalx - slideActive > 0) {
+
+                            calendar.add(Calendar.DATE, -7);
+                        }
+                        else
+                        {
+                            calendar.add(Calendar.DATE, 7);
+
+                        }
+                        setDateAndDateRange(calendar.getTime());
+                        return true;
+                    default:
+                        return false;
+                }
+
+            }
+        });
+        dayRow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()  ) {
+                    case MotionEvent.ACTION_DOWN:
+                        slideActive = event.getX();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        float finalx = event.getX();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(activateDate);
+
+                        if(finalx - slideActive > 0) {
+
+                            calendar.add(Calendar.DATE, -7);
+                        }
+                        else
+                        {
+                            calendar.add(Calendar.DATE, 7);
+
+                        }
+                        setDateAndDateRange(calendar.getTime());
+                        return true;
+                    default:
+                        return false;
+                }
+
+            }
+        });
         dateRow.setLayoutParams(lp);
         dayRow.setLayoutParams(lp);
         DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);

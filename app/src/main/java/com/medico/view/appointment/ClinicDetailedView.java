@@ -139,6 +139,7 @@ public class ClinicDetailedView extends ParentFragment {
                 Bundle bundle = getActivity().getIntent().getExtras();
                 if(model.slots.size() > 0)
                 {
+                    bundle.putInt(CLINIC_ID, model.clinic.idClinic);
                     bundle.putInt(DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
                     activity.getIntent().putExtras(bundle);
                     ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
@@ -156,6 +157,7 @@ public class ClinicDetailedView extends ParentFragment {
                 Bundle bundle = getActivity().getIntent().getExtras();
                 if(model.slots.size() > 0)
                 {
+                    bundle.putInt(CLINIC_ID, model.clinic.idClinic);
                     bundle.putInt(DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
                     activity.getIntent().putExtras(bundle);
                     ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
@@ -198,7 +200,7 @@ public class ClinicDetailedView extends ParentFragment {
                 clinicName.setText(model.clinic.clinicName);
                 speciality.setText(model.clinic.speciality);
                 if(model.datecounts != null)
-                    totalCount.setText(new Integer(model.datecounts.size()).toString());
+                    totalCount.setText(new Integer(model.getAppointmentCounts()).toString());
                 else
                     totalCount.setText(new Integer(0).toString());
                 setAppointmentDates(model);

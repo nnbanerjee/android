@@ -32,6 +32,18 @@ public class DoctorClinicDetails
         //public Integer upComingAppointments;
         //public Integer todaysAppointments;
         public List<AppointmentCounts> counts;
+        public int getAppointmentCounts()
+        {
+            int totalcounts = 0;
+            if(counts != null && !counts.isEmpty())
+            {
+                for (AppointmentCounts count : counts)
+                {
+                    totalcounts = totalcounts + count.counts;
+                }
+            }
+            return totalcounts;
+        }
 
     }
     public class AppointmentCounts
@@ -42,12 +54,27 @@ public class DoctorClinicDetails
 
     public DoctorClinicDetails.ClinicSlots getSlot(Integer doctorClinicId)
     {
-        for(ClinicSlots slot:slots)
+        if(slots != null && !slots.isEmpty())
         {
-            if(slot.doctorClinicId.intValue() == doctorClinicId.intValue())
-                return slot;
+            for (ClinicSlots slot : slots)
+            {
+                if (slot.doctorClinicId.intValue() == doctorClinicId.intValue())
+                    return slot;
+            }
         }
         return null;
+    }
+    public int getAppointmentCounts()
+    {
+        int totalcounts = 0;
+        if(datecounts != null && !datecounts.isEmpty())
+        {
+            for (AppointmentCounts counts : datecounts)
+            {
+                totalcounts = totalcounts + counts.counts;
+            }
+        }
+        return totalcounts;
     }
 
 }
