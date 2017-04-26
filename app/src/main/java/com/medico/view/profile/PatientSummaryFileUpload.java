@@ -133,14 +133,10 @@ public class PatientSummaryFileUpload extends ParentFragment {
                                        int position, long id) {
                 if(position == 1)
                 {
-//                    ArrayAdapter<String> a =new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.diagnostic_test_type_list));
-//                    a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     layout4.setVisibility(View.VISIBLE);
                     layout5.setVisibility(View.VISIBLE);
                     layout6.setVisibility(View.VISIBLE);
                     type.setAdapter(adapter);
-//                    testValueEdit.setVisibility(View.VISIBLE);
-//                    testValueEdit1.setVisibility(View.INVISIBLE);
                 }
                 else {
                     layout4.setVisibility(View.INVISIBLE);
@@ -149,9 +145,6 @@ public class PatientSummaryFileUpload extends ParentFragment {
                     ArrayAdapter<String> a =new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.upload_document_type));
                     a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     type.setAdapter(a);
-//                    testValueEdit.setVisibility(View.INVISIBLE);
-//
-//                    testValueEdit1.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -206,7 +199,6 @@ public class PatientSummaryFileUpload extends ParentFragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-//                    goToBack();
                     return true;
                 }
                 return false;
@@ -221,6 +213,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         final int doctorId = bundle.getInt(DOCTOR_ID);
         final int patientId = bundle.getInt(PATIENT_ID);
@@ -235,12 +228,14 @@ public class PatientSummaryFileUpload extends ParentFragment {
 
                 ClinicSpinnerAdapter adapter = new ClinicSpinnerAdapter(getActivity(), R.layout.customize_spinner, clinicsList);
                 clinicName.setAdapter(adapter);
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+                hideBusy();
 
             }
         });
@@ -260,9 +255,9 @@ public class PatientSummaryFileUpload extends ParentFragment {
 
     }
 
-    public void saveFile(FileUpload1 fileupload) {
-
-            // api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
+    public void saveFile(FileUpload1 fileupload)
+    {
+        showBusy();
         api.addPatientVisitDocument(fileupload.patientId.toString(), fileupload.appointmentId.toString(), fileupload.clinicId.toString(), fileupload.type.toString(), fileupload.personId.toString(), fileupload.fileName, fileupload.file, new Callback<ResponseAddDocuments>() {
 
             @Override
@@ -272,7 +267,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
                     if (responseAddDocuments != null) {
                         // System.out.println("Url::::::::" + responseAddDocuments.getUrl());
                         Toast.makeText(getActivity(), "File Uploaded Successfully!", Toast.LENGTH_SHORT).show();
-//                        progress.dismiss();
+                        hideBusy();
 
                         getActivity().onBackPressed();
                     } else {
@@ -286,7 +281,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                hideBusy();
             }
         });
     }
@@ -379,7 +374,6 @@ public class PatientSummaryFileUpload extends ParentFragment {
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         fileupload = new FileUpload1();
-//        ProgressDialog progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         fileupload.category = new Byte((byte)this.category.getSelectedItemPosition());
         fileupload.appointmentId = bundle.getInt(APPOINTMENT_ID);
         fileupload.personId = bundle.getInt(LOGGED_IN_ID);
@@ -397,7 +391,6 @@ public class PatientSummaryFileUpload extends ParentFragment {
             catch(ParseException e) {
                 fileupload.date = null;
             }
-//            fileupload.fileName = ((DiagnosticTest)testValueEdit.getSelectedItem()).name;
             fileupload.clinicId = ((Clinic1)clinicName.getSelectedItem()).idClinic;
         }
         else
@@ -405,7 +398,6 @@ public class PatientSummaryFileUpload extends ParentFragment {
             fileupload.subcategory = this.type.getSelectedItemPosition();
             fileupload.clinicId = bundle.getInt(CLINIC_ID);
             fileupload.date = new Date().getTime();
-//            fileupload.fileName = testValueEdit1.getText().toString();
         }
     }
     @Override

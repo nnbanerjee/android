@@ -2,6 +2,7 @@ package com.medico.view.home;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
     private Document document;
     private int backStakeCount = 0;
     public MyApi api;
+    private ProgressDialog progress;
 //    public int identifier = 0;
 
     @Override
@@ -33,6 +35,7 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
 //        document = getDocument();
         getFragmentManager().addOnBackStackChangedListener(this);
         api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
+        progress = new ProgressDialog(this);
     }
 
     @Override
@@ -144,4 +147,12 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
 //        backStakeCount = manager.getBackStackEntryCount();
     }
 
+    public void showBusy()
+    {
+        progress.show();
+    }
+    public void hideBusy()
+    {
+        progress.dismiss();
+    }
 }

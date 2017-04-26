@@ -1,7 +1,6 @@
 package com.medico.view.profile;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,9 +11,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.medico.adapter.TreatmentPlanListAdapter;
+import com.medico.application.R;
 import com.medico.model.TreatmentPlan1;
 import com.medico.model.TreatmentPlanRequest;
-import com.medico.application.R;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.CustomTemplateListView;
@@ -33,7 +32,6 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
 
     private CheckBox shareWithPatient;
     private ListView treatmentPlanList;
-    private ProgressDialog progress;
     private List<TreatmentPlan1> treatmentPlanModel = new ArrayList<>();
     @Nullable
     @Override
@@ -54,8 +52,10 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
@@ -63,7 +63,6 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
         int type = 1;
         if(tag.equals("invoice"))
             type = 2;
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, type), new Callback<List<TreatmentPlan1>>() {
             @Override
             public void success(List<TreatmentPlan1> treatments, Response response) {
@@ -78,14 +77,13 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
                     treatmentPlanList.setAdapter(new TreatmentPlanListAdapter(getActivity(), treatmentPlanModel,loggedInUserId));
                 }
 
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                progress.dismiss();
-                error.printStackTrace();
+                hideBusy();
             }
         });
 

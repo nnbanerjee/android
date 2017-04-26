@@ -36,7 +36,6 @@ public class DoctorAppointmentDocument extends ParentFragment {
     View convertView;
     ListView allDocumentDoctor;
     List<FileUpload1> uploadFiles;
-//    ProgressDialog progress;
 
     @Nullable
     @Override
@@ -76,7 +75,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         final Activity activity = getActivity();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
@@ -91,15 +90,12 @@ public class DoctorAppointmentDocument extends ParentFragment {
                 uploadFiles = fileUploads;
                 System.out.println("Adapter size= " + adapter.getCount());
                 allDocumentDoctor.setAdapter(adapter);
-//                progress.dismiss();
-
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-//                error.printStackTrace();
-//                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
-//                progress.dismiss();
+                hideBusy();
             }
         });
 

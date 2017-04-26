@@ -1,7 +1,6 @@
 package com.medico.view.profile;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -62,7 +61,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
     ListView medicineListView;
     ListView testsListView;
     MultiAutoCompleteTextView symptomsValue,diagnosisValue;
-    ProgressDialog progress;
     MedicineAdapter adapter;
     DiagnosticTestAdapter testAdapter;
     public SummaryResponse summaryResponse = new SummaryResponse();
@@ -76,7 +74,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         View view = inflater.inflate(R.layout.doctor_appointment_summary, container,false);
         summaryResponse = new SummaryResponse();
         medicineListView = (ListView)view.findViewById(R.id.alarm_list);
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         testsListView = (ListView)view.findViewById(R.id.test_prescribed_list);
         addMedicine = (ImageView)view.findViewById(R.id.add_alarm);
         addtestsBtn = (ImageView)view.findViewById(R.id.addtestsBtn);
@@ -123,6 +120,8 @@ public class DoctorAppointmentSummary extends ParentFragment {
                                 public boolean onTouch(View v, MotionEvent event)
                                 {
                                     symptomsValue.showDropDown();
+                                    if(symptomsValue.hasFocus()==false)
+                                        symptomsValue.requestFocus();
                                     return false;
                                 }
                             });
@@ -231,7 +230,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         symptomsHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(1);
 
             }
@@ -239,7 +237,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         diagnosisHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(2);
 
             }
@@ -248,7 +245,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         prescribHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(3);
 
             }
@@ -256,7 +252,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
         testHistryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
                 getHistryData(4);
 
             }
@@ -285,13 +280,6 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-//                FragmentManager.BackStackEntry entry = fragmentManger.getBackStackEntryAt(fragmentManger.getBackStackEntryCount()-1);
-//                String name = entry.getName();
-//                if(name != null)
-//                {
-//                    Fragment fragment1 = fragmentManger.findFragmentByTag(name);
-//                    fragment1.onPause();
-//                }
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientMedicinReminder.class.getName()).addToBackStack(PatientMedicinReminder.class.getName()).commit();
             }
         });
@@ -349,6 +337,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        showBusy();
         final Bundle bundle = getActivity().getIntent().getExtras();
         final int doctorId = bundle.getInt(DOCTOR_ID);
         final int patientId = bundle.getInt(PATIENT_ID);
@@ -379,17 +368,16 @@ public class DoctorAppointmentSummary extends ParentFragment {
                     else
                         summaryResponse = summary;
                     summaryResponse.setLoggedinUserId(loggedInUserId);
-                    progress.dismiss();
                     setPatientSummary();
                     setClinic(false);
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
                 }
             });
         }
@@ -400,8 +388,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
             summaryResponse.setPatientId(patientId);
             summaryResponse.setLoggedinUserId(loggedInUserId);
             setClinic(true);
-
-            progress.dismiss();
+            hideBusy();
         }
     }
 
@@ -500,41 +487,40 @@ public class DoctorAppointmentSummary extends ParentFragment {
 
     public void createSummary(final SummaryResponse summaryToCreate)
     {
-
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         api.createPatientVisitSummary(summaryToCreate, new Callback<ResponseCodeVerfication>() {
             @Override
             public void success(ResponseCodeVerfication reminderVM, Response response) {
-                progress.dismiss();
                 summaryResponse = summaryToCreate;
                 if( reminderVM.getAppointmentId() != null && reminderVM.getAppointmentId().intValue() > 0 )
                     summaryResponse.appointmentId = reminderVM.getAppointmentId();
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+                hideBusy();
             }
         });
     }
     public void updateSummary(SummaryResponse summaryToSave)
     {
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         api.updatePatientVisitSummary(summaryToSave, new Callback<ResponseCodeVerfication>() {
             @Override
             public void success(ResponseCodeVerfication reminderVM, Response response) {
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
-                progress.dismiss();
+                hideBusy();
             }
         });
 

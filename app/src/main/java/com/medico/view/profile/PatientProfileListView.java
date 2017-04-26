@@ -47,11 +47,10 @@ public class PatientProfileListView extends ParentFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         setHasOptionsMenu(true);
+        showBusy();
         View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
 
         patientListView = (ListView) view.findViewById(R.id.doctorListView);
-
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText(getActivity().getResources().getString(R.string.patients_profiles));
         return view;
@@ -62,6 +61,7 @@ public class PatientProfileListView extends ParentFragment
     public void onStart()
     {
         super.onStart();
+
         Bundle bundle = getActivity().getIntent().getExtras();
         DoctorId doc= new DoctorId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)).toString());
         api.getPatientProfileList(doc, new Callback<List<PatientShortProfile>>() {
@@ -69,16 +69,14 @@ public class PatientProfileListView extends ParentFragment
             public void success(final List<PatientShortProfile> allPatientsProfiles, Response response) {
                 PatientListAdapter adapter = new PatientListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
                 patientListView.setAdapter(adapter);
-//                ApplicationProgressManager.getInstance(getActivity()).getAnimation().reset();
-//                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-//                progress.dismiss();
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
-//                ApplicationProgressManager.getInstance(getActivity()).getAnimation().reset();
+                hideBusy();
             }
         });
     }
@@ -95,7 +93,6 @@ public class PatientProfileListView extends ParentFragment
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    // handle back button's click listener
                     return true;
                 }
                 return false;

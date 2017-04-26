@@ -43,13 +43,8 @@ public class DoctorAppointmentInformation extends ParentFragment {
         doctorNoteBtn = (Button) view.findViewById(R.id.doctorNoteBtn);
         treatmentBtn = (Button) view.findViewById(R.id.treatmentBtn);
         invoicesBtn = (Button) view.findViewById(R.id.invoicesBtn);
-//        feedbackBtn = (Button) view.findViewById(R.id.feedback_btn);
-
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Visit Details");
-
-
-
         summaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

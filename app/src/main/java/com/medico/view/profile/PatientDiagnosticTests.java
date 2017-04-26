@@ -163,6 +163,7 @@ public class PatientDiagnosticTests extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         final int doctorId = bundle.getInt(DOCTOR_ID);
         final int patientId = bundle.getInt(PATIENT_ID);
@@ -187,12 +188,13 @@ public class PatientDiagnosticTests extends ParentFragment {
                     patientMedicine.setDoctorId(doctorId);
 
                     patientMedicine.setPatientId(patientId);
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
+                    hideBusy();
 
                 }
             });
@@ -214,6 +216,7 @@ public class PatientDiagnosticTests extends ParentFragment {
             doctorInstructionValue.setText(patientMedicine.getDoctorInstruction());
             doctorInstructionValue.setText(patientMedicine.getDoctorInstruction());
             medicineReminderBtn.setChecked(true);
+            hideBusy();
         }
 
         api.getAllClinics(new PersonID(new Integer(doctorId)), new Callback<List<Clinic1>>() {
@@ -265,7 +268,7 @@ public class PatientDiagnosticTests extends ParentFragment {
     }
 
     public void savePatientReminderData(PatientDiagnostic saveReminderVM) {
-
+        showBusy();
         if (saveReminderVM.getPatientTestId() == null || saveReminderVM.getPatientTestId().intValue() == 0 )
         {
             api.addPatientDiagnosticTest1(saveReminderVM, new Callback<ResponseCodeVerfication>() {
@@ -274,12 +277,13 @@ public class PatientDiagnosticTests extends ParentFragment {
                     System.out.println("Response::::::" + response.getStatus());
                     Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
+                    hideBusy();
                 }
             });
         }
@@ -292,12 +296,14 @@ public class PatientDiagnosticTests extends ParentFragment {
                     System.out.println("Response::::::" + response.getStatus());
                     Toast.makeText(getActivity(), "Updated successfully !!!", Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                  }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     error.printStackTrace();
+                    hideBusy();
                 }
             });
         }

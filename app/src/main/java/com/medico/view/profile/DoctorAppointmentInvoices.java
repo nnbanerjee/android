@@ -2,7 +2,6 @@ package com.medico.view.profile;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,9 +41,12 @@ public class DoctorAppointmentInvoices extends ParentFragment {
     EditText discountValue,taxValue,advanceValue,grandTotal,other_charges,other_value,
             discountPercent,taxPercent,totalDueValue;
     TextView noDataFound,invoiceTotal;
-    ProgressDialog progress;
     DoctorAppointmentTreatmentPlan treatmentPlan,invoice;
     InvoiceDetails1 invoiceDetails;
+
+    private final int minDelta = 300;           // threshold in ms
+    private long focusTime = 0;                 // time of last touch
+    private View focusTarget = null;
 
     @Nullable
     @Override
@@ -156,7 +158,29 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                 totalDueValue.setText(invoiceDetails.calculateDues().toString());
             }
         });
-
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus)
+            {
+                long t = System.currentTimeMillis();
+                long delta = t - focusTime;
+                if (hasFocus) {     // gained focus
+                    if (delta > minDelta) {
+                        focusTime = t;
+                        focusTarget = view;
+                    }
+                }
+                else {              // lost focus
+                    if (delta <= minDelta  &&  view == focusTarget) {
+                        focusTarget.post(new Runnable() {   // reset focus to target
+                            public void run() {
+                                focusTarget.requestFocus();
+                            }
+                        });
+                    }
+                }
+            }
+        };
         return view;
     }
 
@@ -164,13 +188,13 @@ public class DoctorAppointmentInvoices extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        showBusy();
         if(invoice != null)
             invoice.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
         final Integer invoiceId = bundle.getInt(INVOICE_ID);
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         api.getPatientVisitInvoice1(new AppointmentId1(appointMentId), new Callback<InvoiceDetails1>() {
             @Override
             public void success(InvoiceDetails1 details, Response response) {
@@ -192,14 +216,13 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                     totalDueValue.setText(invoiceDetails.calculateDues().toString());
                 }
 
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                progress.dismiss();
-                error.printStackTrace();
+                hideBusy();
             }
         });
 
@@ -207,19 +230,19 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
     public void saveInvoice(InvoiceDetails1 invoice){
         final ParentActivity activity = (ParentActivity)getActivity();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         api.updatePatientVisitInvoiceDetails(invoice, new Callback<ResponseCodeVerfication>() {
             @Override
             public void success(ResponseCodeVerfication jsonObject, Response response) {
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
-                progress.dismiss();
+                hideBusy();
             }
         });
     }
@@ -295,6 +318,7 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                                 // edit text
                                 if(userInput.getText().length() > 0)
                                 {
+                                    showBusy();
                                     BigDecimal amount = new BigDecimal(Double.parseDouble(userInput.getText().toString()));
                                     Payment payment = new Payment(amount, new Date().getTime(), new Integer(1).byteValue(),
                                             new Integer(1).byteValue(), "Doctor's Visit",country,
@@ -307,7 +331,7 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                                         {
                                             fragment.onStart();
                                             Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                                            progress.dismiss();
+                                            hideBusy();
                                         }
 
                                         @Override
@@ -315,7 +339,7 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                                         {
                                             Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                                             error.printStackTrace();
-                                            progress.dismiss();
+                                            hideBusy();
                                         }
                                     });
                                 }

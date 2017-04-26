@@ -25,19 +25,11 @@
             android:id="@+id/layout21"
             android:layout_width="match_parent"
             android:layout_below="@+id/document_category"
-            android:layout_height="fill_parent">
-            <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentPlan"
-                android:id="@+id/treatment_list"
-                android:tag="treatment"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"/>
+            android:layout_height="wrap_content">
             <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentPlan"
                 android:id="@+id/invoice_list"
                 android:tag="invoice"
-                android:layout_weight="1"
-                android:layout_below="@+id/treatment_list"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
         </RelativeLayout>
         <View

@@ -46,6 +46,10 @@ public class ParentFragment extends Fragment implements PARAM
             loadSupportedCountryList();
 
     }
+    public void onResume()
+    {
+        super.onResume();
+    }
 
     private void loadSupportedCountryList()
     {
@@ -90,6 +94,22 @@ public class ParentFragment extends Fragment implements PARAM
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public void showBusy()
+    {
+        Activity activity = getActivity();
+        if(activity instanceof ParentActivity)
+            ((ParentActivity)getActivity()).showBusy();
+
+    }
+
+    public void hideBusy()
+    {
+        Activity activity = getActivity();
+        if(activity instanceof ParentActivity)
+        ((ParentActivity)getActivity()).hideBusy();
+
     }
 
 }

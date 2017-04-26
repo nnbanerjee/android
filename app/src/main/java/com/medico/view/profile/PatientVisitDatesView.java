@@ -1,7 +1,6 @@
 package com.medico.view.profile;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,7 +45,7 @@ public class PatientVisitDatesView extends ParentFragment
 
     String doctor_email, patientId;
     public SharedPreferences session;
-    ProgressDialog progress;
+//    ProgressDialog progress;
     StickyListHeadersListView allAppointments;
     PatientVisits appointments;
     String fragmentCall;
@@ -57,17 +56,12 @@ public class PatientVisitDatesView extends ParentFragment
         View view = inflater.inflate(R.layout.sticky_header_list_view, container, false);
         final Bundle bun = getArguments();
         allAppointments = (StickyListHeadersListView) view.findViewById(R.id.allAppointments);
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-//        addClinic = (ImageView) view.findViewById(R.id.add_clinic_appointment);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Visit Dates");
-
         allAppointments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setHasOptionsMenu(false);
-                //appointments
-                //Fragment fragment = new DoctorAppointmentSummary();
                 Bundle bun = getActivity().getIntent().getExtras();
                 PatientVisits visits = (PatientVisits)parent.getAdapter().getItem(position);
                 bun.putInt(PARAM.APPOINTMENT_ID, visits.getAppointmentId());
@@ -108,7 +102,6 @@ public class PatientVisitDatesView extends ParentFragment
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-//                    goToBack();
                     return true;
                 }
                 return false;
@@ -127,16 +120,12 @@ public class PatientVisitDatesView extends ParentFragment
         {
             @Override
             public void success(List<PatientVisits> visits, Response response) {
-//                String json = new String(((TypedByteArray) response.getBody()).getBytes());
-
                     if (visits != null) {
                         PatientVisitDatesAdapter adapter = new PatientVisitDatesAdapter(getActivity().getApplicationContext(), visits);
                         allAppointments.setAdapter(adapter);
                     } else {
                         Toast.makeText(getActivity(), "No Visits found!", Toast.LENGTH_LONG).show();
                     }
-                    progress.dismiss();
-
 
             }
             @Override
