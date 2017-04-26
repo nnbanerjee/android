@@ -3,6 +3,7 @@ package com.medico.view.appointment;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.medico.application.R;
 import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.util.ImageLoadTask;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.ClinicProfileEditView;
 
@@ -78,7 +80,12 @@ public class ClinicDetailedView extends ParentFragment {
                 getActivity().onBackPressed();
              }
         });
-
+        downImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +131,40 @@ public class ClinicDetailedView extends ParentFragment {
 
             }
         });
-
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ParentActivity activity = (ParentActivity)getActivity();
+                Bundle bundle = getActivity().getIntent().getExtras();
+                if(model.slots.size() > 0)
+                {
+                    bundle.putInt(DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
+                    activity.getIntent().putExtras(bundle);
+                    ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+                    activity.attachFragment(fragment);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicDetailedView.class.getName()).addToBackStack(ClinicDetailedView.class.getName()).commit();
+                }
+            }
+        });
+        totalCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ParentActivity activity = (ParentActivity)getActivity();
+                Bundle bundle = getActivity().getIntent().getExtras();
+                if(model.slots.size() > 0)
+                {
+                    bundle.putInt(DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
+                    activity.getIntent().putExtras(bundle);
+                    ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+                    activity.attachFragment(fragment);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicDetailedView.class.getName()).addToBackStack(ClinicDetailedView.class.getName()).commit();
+                }
+            }
+        });
         return view;
     }
 
@@ -191,20 +231,20 @@ public class ClinicDetailedView extends ParentFragment {
         for(DoctorClinicDetails.AppointmentCounts count:counts)
         {
             TextView dateView = new TextView(activity);
+            dateView.setTextSize(10);
+            dateView.setBackgroundResource(R.drawable.medicine_schedule_header);
+            dateView.setTextColor(Color.WHITE);
             TextView countView = new TextView(activity);
             dateView.setText(format.format(new Date(count.date)));
-            dateView.setBackgroundResource(R.drawable.medicine_schedule);
-            dateView.setLeft(10);
-            dateView.setTop(10);
-            dateView.setRight(10);
-            dateView.setBottom(10);
+            dateView.setPadding(3,3,3,3);
+            dateView.setGravity(1);
             dateRow.addView(dateView,i,lp);
             countView.setText(new Integer(count.counts).toString());
             countView.setBackgroundResource(R.drawable.medicine_schedule);
-            countView.setLeft(10);
-            countView.setTop(10);
-            countView.setRight(10);
-            countView.setBottom(10);
+            countView.setTextColor(activity.getResources().getColor(R.color.medico_blue));
+            countView.setPadding(3,3,3,3);
+            countView.setGravity(1);
+            countView.setTextSize(10);
             appointRow.addView(countView,i,lp);
 
         }

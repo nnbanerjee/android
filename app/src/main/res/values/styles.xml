@@ -204,6 +204,9 @@
     <style name = "sub_heading5_light_grey" parent="sub_heading5">
         <item name = "android:textColor">@color/medico_light_gray</item>
     </style>
+    <style name = "body2_blue" parent="body2">
+        <item name = "android:textColor">@color/medico_blue</item>
+    </style>
     <style name = "body4_blue" parent="body4">
         <item name = "android:textColor">@color/medico_blue</item>
     </style>

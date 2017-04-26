@@ -19,8 +19,10 @@ import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
+import com.medico.view.appointment.ClinicAppointmentScheduleView;
 import com.medico.view.appointment.ClinicDetailedView;
 import com.medico.view.appointment.ManageDoctorAppointment;
+import com.medico.view.home.ParentActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,9 +39,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<DoctorClinicDetails> clinicDetails;
-//    MyApi api;
-//    String doctorId;
-//    SharedPreferences session;
     private ProgressDialog progress;
 
     public AppointmentClinicListAdapter(Activity activity, List<DoctorClinicDetails> clinicDetails)
@@ -73,7 +72,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
         View convertView = cv;
         if (convertView == null)
             convertView = inflater.inflate(R.layout.appointment_clinic_list, null);
-//        global = (Global) activity.getApplicationContext();
         TextView clinicName = (TextView) convertView.findViewById(R.id.doctor_name);
         TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
@@ -90,7 +88,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
 
         if(clinicDetails.get(position).clinic.imageUrl != null)
             new ImageLoadTask(clinicDetails.get(position).clinic.imageUrl, viewImage).execute();
-//        totalCount.setText( clinicDetails.get(position).);
         address.setText(clinicDetails.get(position).clinic.address);
         clinicName.setText(clinicDetails.get(position).clinic.clinicName);
         speciality.setText(clinicDetails.get(position).clinic.speciality);
@@ -100,7 +97,9 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
             totalCount.setText(new Integer(0).toString());
         setAppointmentDates(convertView, clinicDetails.get(position));
         viewImage.setTag(clinicDetails.get(position));
-
+        downImage.setTag(clinicDetails.get(position));
+        rightButton.setTag(clinicDetails.get(position));
+        totalCount.setTag(clinicDetails.get(position));
         viewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,32 +109,60 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
                 bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
                 parentactivity.getIntent().putExtras(bundle);
                 ClinicDetailedView fragment = new ClinicDetailedView();
-//                fragment.setModel(model);
                 parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicDetailedView.class.getName()).addToBackStack(ClinicDetailedView.class.getName()).commit();
 
-//                progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
-
             }
         });
 
+        downImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
+                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
+                Bundle bundle = parentactivity.getIntent().getExtras();
+                bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
+                parentactivity.getIntent().putExtras(bundle);
+                ClinicDetailedView fragment = new ClinicDetailedView();
+                parentactivity.attachFragment(fragment);
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicDetailedView.class.getName()).addToBackStack(ClinicDetailedView.class.getName()).commit();
 
+            }
+        });
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               // patientId = session.getString("patientId", null);
-//                SharedPreferences.Editor editor = session.edit();
-////                editor.putString("doctorId", allPatients.get(position).getDoctorId());
-//                editor.putString("patientId", clinicDetails.get(position).getPatientId().toString());
-//                editor.commit();
-//                Bundle bun = new Bundle();
-//                bun.putString("fragment", "doctorPatientListAdapter");
-//                Fragment fragment = new PatientVisitDatesView();
-//                fragment.setArguments(bun);
-//                FragmentManager fragmentManger = activity.getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
+                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
+                Bundle bundle = activity.getIntent().getExtras();
+                if(model.slots.size() > 0)
+                {
+                    bundle.putInt(PARAM.DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
+                    activity.getIntent().putExtras(bundle);
+                    ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+                    ((ParentActivity) activity).attachFragment(fragment);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicAppointmentScheduleView.class.getName()).addToBackStack(ClinicAppointmentScheduleView.class.getName()).commit();
+                }
+            }
+        });
+        totalCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
+                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
+                Bundle bundle = activity.getIntent().getExtras();
+                if(model.slots.size() > 0)
+                {
+                    bundle.putInt(PARAM.DOCTOR_CLINIC_ID, model.slots.get(0).doctorClinicId);
+                    activity.getIntent().putExtras(bundle);
+                    ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
+                    ((ParentActivity) activity).attachFragment(fragment);
+                    FragmentManager fragmentManger = activity.getFragmentManager();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicAppointmentScheduleView.class.getName()).addToBackStack(ClinicAppointmentScheduleView.class.getName()).commit();
+                }
             }
         });
         return convertView;
@@ -153,29 +180,25 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
         dateRow.removeAllViews();
         appointRow.removeAllViews();
         List<DoctorClinicDetails.AppointmentCounts> counts = details.datecounts;
-//        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
         SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
         int i = 0;
         for(DoctorClinicDetails.AppointmentCounts count:counts)
         {
             TextView dateView = new TextView(activity);
-            dateView.setBackgroundColor(Color.BLUE);
-            dateView.setTextColor(Color.GRAY);
+            dateView.setTextSize(10);
+            dateView.setBackgroundResource(R.drawable.medicine_schedule_header);
+            dateView.setTextColor(Color.WHITE);
             TextView countView = new TextView(activity);
             dateView.setText(format.format(new Date(count.date)));
-            dateView.setBackgroundResource(R.drawable.medicine_schedule);
-            dateView.setLeft(10);
-            dateView.setTop(10);
-            dateView.setRight(10);
-            dateView.setBottom(10);
+            dateView.setPadding(3,3,3,3);
+            dateView.setGravity(1);
             dateRow.addView(dateView,i,lp);
             countView.setText(new Integer(count.counts).toString());
             countView.setBackgroundResource(R.drawable.medicine_schedule);
-            countView.setLeft(10);
             countView.setTextColor(activity.getResources().getColor(R.color.medico_blue));
-            countView.setTop(10);
-            countView.setRight(10);
-            countView.setBottom(10);
+            countView.setPadding(3,3,3,3);
+            countView.setGravity(1);
+            countView.setTextSize(10);
             appointRow.addView(countView,i,lp);
 
         }

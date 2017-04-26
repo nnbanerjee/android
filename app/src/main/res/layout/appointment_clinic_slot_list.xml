@@ -24,6 +24,7 @@
 
             <TextView
                 android:id="@+id/doctor_name"
+                android:textAppearance="@style/heading1.1_blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Doctor Name" />
@@ -35,10 +36,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="2dp"
                 android:layout_toLeftOf="@id/nextBtn"
-                android:background="@drawable/arrow_right_light_grey"
+                android:background="@drawable/arrow_right"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/totalCount"
+                android:textAppearance="@style/sub_heading3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/nextBtn"
@@ -47,12 +49,14 @@
                 />
             <TextView
                 android:id="@+id/speciality"
+                android:textAppearance="@style/sub_heading3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/doctor_name"
                 android:text="Speciality" />
             <TextView
                 android:id="@+id/address"
+                android:textAppearance="@style/sub_heading3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/speciality"
@@ -60,6 +64,7 @@
 
             <TextView
                 android:id="@+id/upcoming_appoint"
+                android:textAppearance="@style/body6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/address"
@@ -86,11 +91,13 @@
 
                     <TableRow
                         android:id="@+id/date_row"
+                        android:textAppearance="@style/body11_blue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                     <TableRow
                         android:id="@+id/nr_row"
+                        android:textAppearance="@style/body11_blue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
@@ -107,7 +114,7 @@
             android:layout_below="@+id/relativeLayout2"
             android:layout_marginEnd="21dp"
             android:layout_marginRight="21dp"
-            android:background="@drawable/arrow_down_red" />
+            android:background="@drawable/arrow_up_red" />
 
         <TextView
             android:id="@+id/total_count"
