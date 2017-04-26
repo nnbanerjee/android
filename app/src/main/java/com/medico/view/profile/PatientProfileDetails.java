@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,20 +52,40 @@ public class PatientProfileDetails extends ParentFragment {
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         RelativeLayout profilePic = (RelativeLayout) view.findViewById(R.id.layout20);
         profilePic.setVisibility(View.GONE);
+        RelativeLayout passwordField = (RelativeLayout) view.findViewById(R.id.layout30);
+        profilePic.setVisibility(View.GONE);
         name = (EditText) view.findViewById(R.id.name);
+        name.setEnabled(false);
         email = (EditText) view.findViewById(R.id.email);
+        email.setEnabled(false);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
+        gender_spinner.setEnabled(false);
         dob = (EditText) view.findViewById(R.id.dob);
+        dob.setEnabled(false);
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        ImageButton calendar = (ImageButton)view.findViewById(R.id.dob_calendar);
+        calendar.setEnabled(false);
+        Button locationButton = (Button)view.findViewById(R.id.current_location_button);
+        locationButton.setEnabled(false);
+        Button deleteButton = (Button)view.findViewById(R.id.location_delete_button);
+        deleteButton.setEnabled(false);
+        mAutocompleteView.setEnabled(false);
         country = (EditText) view.findViewById(R.id.country_spinner);
+        country.setEnabled(false);
         city = (EditText) view.findViewById(R.id.city);
+        city.setEnabled(false);
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
+        mobile.setEnabled(false);
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
+        mobile_country.setEnabled(false);
         specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization.setEnabled(false);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
+        allergicTo.setEnabled(false);
         bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
+        bloodGroup.setEnabled(false);
         TextView relationText = (TextView) view.findViewById(R.id.relation_text);
-        Spinner relation = (Spinner) view.findViewById(R.id.relation);
+        RelativeLayout relation = (RelativeLayout) view.findViewById(R.id.layout_relation);
         relationText.setVisibility(View.GONE);
         relation.setVisibility(View.GONE);
         return view;
@@ -75,14 +98,19 @@ public class PatientProfileDetails extends ParentFragment {
         final Activity activity = getActivity();
         progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
         Bundle bundle = activity.getIntent().getExtras();
-        Integer patientId = bundle.getInt(PATIENT_ID);
+        final Integer patientId = bundle.getInt(PATIENT_ID);
         api.getProfile1(new ProfileId(patientId), new Callback<Person>() {
             @Override
             public void success(Person patient, Response response) {
                 progress.dismiss();
+                country.setText(patient.getCountry());
+                city.setText(patient.getCity());
                 email.setText(patient.getEmail());
+                String[] countryCode = {patient.location};
+                ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,countryCode);
+                mobile_country.setAdapter(countryAdapter);
                 mobile.setText(patient.getMobile().toString());
-                mAutocompleteView.setText(patient.getLocation());
+                mAutocompleteView.setText(patient.getAddress());
                 gender_spinner.setSelection(patient.getGender().intValue());
                 bloodGroup.setSelection(getIndex(bloodGroup.getAdapter(),patient.getBloodGroup(),0));
                 allergicTo.setText(patient.getAllergicTo());
@@ -109,4 +137,5 @@ public class PatientProfileDetails extends ParentFragment {
         }
         return 0;
     }
+
 }
