@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,8 +19,8 @@ import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
+import com.medico.view.profile.DoctorAppointmentInformation;
 import com.medico.view.profile.PatientDetailsView;
-import com.medico.view.profile.PatientVisitDatesView;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -72,7 +73,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
         TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
         ImageView patient_image = (ImageView) convertView.findViewById(R.id.patient_image);
-        ImageView recommdation_value = (ImageView)convertView.findViewById(R.id.recommdation_value);
+        ImageButton recommdation_value = (ImageButton)convertView.findViewById(R.id.recommdation_value);
         TextView address = (TextView) convertView.findViewById(R.id.address);
         TextView rating_value = (TextView)convertView.findViewById(R.id.rating_value);
         TextView review_value = (TextView) convertView.findViewById(R.id.review_value);
@@ -80,11 +81,12 @@ public class PatientReviewListAdapter extends ParentAdapter  {
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
-
         patient_name.setText(patientReviews.get(position).patientName);
         speciality.setText(patientReviews.get(position).profession);
         if(patientReviews.get(position).recommendations != null && patientReviews.get(position).recommendations.byteValue() == 1)
-            recommdation_value.setImageResource(R.drawable.recommendation_checkbox);
+            recommdation_value.setSelected(true);
+        else
+            recommdation_value.setSelected(false);
         if(patientReviews.get(position).review != null )
             review_value.setText((patientReviews.get(position).review));
         DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
@@ -124,12 +126,18 @@ public class PatientReviewListAdapter extends ParentAdapter  {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
+                Bundle bundle = activity.getIntent().getExtras();
                 bundle.putInt(PARAM.PATIENT_ID, patientReviews.get(position).patientId);
-                ParentFragment fragment = new PatientVisitDatesView();
+                bundle.putInt(PARAM.APPOINTMENT_ID, patientReviews.get(position).appointmentId);
+                bundle.putInt(PARAM.CLINIC_ID, patientReviews.get(position).clinicId);
+                bundle.putLong(PARAM.APPOINTMENT_DATETIME, patientReviews.get(position).appointmentDate);
+                bundle.putInt(PARAM.VISIT_TYPE, patientReviews.get(position).visitType);
+                bundle.putString(PARAM.CLINIC_NAME, patientReviews.get(position).clinicName);
+                activity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new DoctorAppointmentInformation();
                 ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
-                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
+                fragmentManger.beginTransaction().replace(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
             }
         });
         return convertView;

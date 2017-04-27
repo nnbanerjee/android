@@ -111,14 +111,15 @@
             android:layout_below="@+id/ratingText"
             android:text="Recommendations: " />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/recommdation_value"
             android:textAppearance="@style/sub_heading5_light_grey"
+            android:background="@drawable/recommendation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ratingText"
             android:layout_toRightOf="@+id/recommdation_text"
-            android:text="YES" />
+            android:text="" />
         <TextView
             android:id="@+id/reviews_text"
             android:textAppearance="@style/sub_heading5"

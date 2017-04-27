@@ -222,11 +222,13 @@ public class LocationService extends  Notifier implements LocationListener {
             addresses = gcd.getFromLocation(location.getLatitude(),
                     location.getLongitude(), 1);
             if (addresses.size() > 0)
+            {
                 System.out.println(addresses.get(0).getLocality());
-            cityName = addresses.get(0).getLocality();
-            country = addresses.get(0).getCountryName();
-            region = addresses.get(0).getAdminArea();
-            countryCode=addresses.get(0).getCountryCode();
+                cityName = addresses.get(0).getLocality();
+                country = addresses.get(0).getCountryName();
+                region = addresses.get(0).getAdminArea();
+                countryCode = addresses.get(0).getCountryCode();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -17,4 +17,7 @@ public class PatientReview
     public String review;
     public Byte rating;
     public Byte recommendations;
+    public Byte visitType;
+    public String clinicName;
+    public Integer clinicId;
 }

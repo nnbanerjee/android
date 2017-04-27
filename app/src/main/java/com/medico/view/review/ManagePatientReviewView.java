@@ -17,7 +17,6 @@ import com.medico.view.home.ParentFragment;
 
 public class ManagePatientReviewView extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
-//    public List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +30,7 @@ public class ManagePatientReviewView extends ParentActivity {
             attachView();
 
         }
-
-
         final ActionBar abar = getSupportActionBar();
-//        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
         View viewActionBar = getLayoutInflater().inflate(R.layout.toolbar, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
                 ActionBar.LayoutParams.WRAP_CONTENT,
@@ -48,7 +44,6 @@ public class ManagePatientReviewView extends ParentActivity {
         abar.setDisplayShowCustomEnabled(true);
         abar.setDisplayShowTitleEnabled(false);
         abar.setDisplayHomeAsUpEnabled(true);
-//        abar.setIcon(R.color.transparent);
         abar.setHomeButtonEnabled(true);
         LocationService locationService = LocationService.getLocationManager(this);
     }
