@@ -74,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/patient_image"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="23dp"
             android:background="@drawable/arrow_down_red"
             android:scaleType="fitCenter" />
@@ -86,6 +87,7 @@
 
             <TextView
                 android:id="@+id/patient_name"
+                android:textAppearance="@style/heading1.1_blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Doctor Name" />
@@ -102,6 +104,7 @@
                 android:id="@+id/totalCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading3"
                 android:layout_toLeftOf="@+id/nextBtn"
                 android:text="0"
                 />
@@ -121,6 +124,7 @@
                 android:id="@+id/speciality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading3"
                 android:layout_below="@+id/patient_name"
                 android:text="Speciality" />
 
@@ -128,6 +132,7 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading3"
                 android:layout_below="@+id/speciality"
                 android:text="Address"
                 android:visibility="visible"
@@ -136,12 +141,14 @@
                 android:id="@+id/lastVisited"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading5"
                 android:layout_below="@+id/address"
                 android:text="Last Visited. : " />
             <TextView
                 android:id="@+id/lastVisitedValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading5_light_grey"
                 android:layout_below="@+id/address"
                 android:layout_toRightOf="@+id/lastVisited"
                 android:text="12-04-2015"
@@ -151,6 +158,7 @@
                 android:id="@+id/appointmentText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading5"
                 android:layout_below="@+id/lastVisited"
                 android:text="Upcoming Appt. : " />
 
@@ -158,6 +166,7 @@
                 android:id="@+id/review_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/sub_heading5_light_grey"
                 android:layout_below="@+id/lastVisitedValue"
                 android:layout_toRightOf="@+id/appointmentText"
                 android:text="sdfsdf" />

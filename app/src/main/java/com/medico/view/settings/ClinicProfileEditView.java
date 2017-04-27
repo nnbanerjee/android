@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -56,17 +57,20 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     TextView id;
     EditText name, email, country, city, mobile;
     Spinner mobile_country;
-    EditText landline;
+    EditText landline,services;
     Spinner specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Clinic1 clinicModel;
     ListView slotListView;
+    RelativeLayout profileLayout,slotLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.clinic_profile_edit_view,container,false);
+        final View view = inflater.inflate(R.layout.clinic_profile_view,container,false);
         setHasOptionsMenu(true);
+        profileLayout = (RelativeLayout)view.findViewById(R.id.layout20);
+        slotLayout = (RelativeLayout)view.findViewById(R.id.layout10);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
@@ -75,16 +79,18 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         email = (EditText) view.findViewById(R.id.email);
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
-        landline = (EditText) view.findViewById(R.id.landline_value);
+        landline = (EditText) view.findViewById(R.id.landline);
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
-        country = (EditText) view.findViewById(R.id.country_spinner);
+        country = (EditText) view.findViewById(R.id.country);
         city = (EditText) view.findViewById(R.id.city);
         specialization = (Spinner) view.findViewById(R.id.specialization);
-        addClinicSlot = (ImageView)view.findViewById(R.id.add_alarm);
-        slotListView = (ListView)view.findViewById(R.id.alarm_list);
+        services = (EditText) view.findViewById(R.id.services);
+        addClinicSlot = (ImageView)view.findViewById(R.id.add_slot);
+        slotListView = (ListView)view.findViewById(R.id.slot_list);
         Bundle bundle = getActivity().getIntent().getExtras();
+
         switch (bundle.getInt(CLINIC_TYPE)) {
             case CLINIC:
                 textviewTitle.setText("Clinic Profile");
@@ -157,6 +163,14 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 return true;
             }
         });
+        boolean profileView = bundle.getBoolean("profileview");
+        if(profileView)
+        {
+            slotLayout.setVisibility(View.GONE);
+            profileLayout.setVisibility(View.GONE);
+            location_delete_button.setVisibility(View.GONE);
+            current_location_button.setVisibility(View.GONE);
+        }
         return view;
     }
 
@@ -170,6 +184,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         final Integer clinicId = bundle.getInt(CLINIC_ID);
         final Integer clinicType = bundle.getInt(CLINIC_TYPE);
         final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
+        final boolean isProfileView = bundle.getBoolean("profileview",false);
         SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
         mobile_country.setAdapter(countryListAdapter);
         if(clinicId != null && clinicId.intValue() > 0 && clinicType != null && clinicType.intValue() >= 0) {
@@ -191,7 +206,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                         city.setText(clinic.city);
                         specialization.setSelection(getSpecializationIndex(clinic.speciality,clinicType));
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, clinicModel);
-                        if (clinic.addedBy != null && clinic.addedBy.intValue() == loggedinUserId.intValue())
+                        if (clinic.addedBy != null && clinic.addedBy.intValue() == loggedinUserId.intValue() && !isProfileView)
                         {
                             menuItem.setEnabled(true);
                             setEditableAll(true);
@@ -220,7 +235,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                         });
 
                     }
-                    setEditable(false);
+//                    setEditable(false);
                     progress.dismiss();
 
 
@@ -240,9 +255,13 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
             clinicModel.type = clinicType;
             clinicModel.addedBy = loggedinUserId;
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, clinicModel);
-            setEditable(true);
+            if(isProfileView)
+                setEditableAll(false);
+            else
+                setEditable(true);
             progress.dismiss();
         }
+
     }
 
     @Override
@@ -346,17 +365,16 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     }
     public void setEditableAll(boolean editable)
     {
-        mobile.setEnabled(editable);
         email.setEnabled(editable);
-//        menuItem.setEnabled(editable);
         profilePicUploadBtn.setEnabled(editable);
         location_delete_button.setEnabled(editable);
         current_location_button.setEnabled(editable);
         name.setEnabled(editable);
         mobile_country.setEnabled(editable);
+        mobile.setEnabled(editable);
         landline.setEnabled(editable);
         specialization.setEnabled(editable);
-        mAutocompleteView.setEnabled(editable);
+        services.setEnabled(editable);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)

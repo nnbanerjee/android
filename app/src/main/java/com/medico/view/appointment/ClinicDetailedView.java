@@ -122,7 +122,10 @@ public class ClinicDetailedView extends ParentFragment {
                 activity.detachFragment(appointment);
                 appointmentsBtn.setBackgroundResource(R.drawable.page_default);
                 profileBtn.setBackgroundResource(R.drawable.page_selected);
+                Bundle bundle = getActivity().getIntent().getExtras();
+                bundle.putBoolean("profileview",true);
                 profile = new ClinicProfileEditView();
+                getActivity().getIntent().putExtras(bundle);
                 activity.attachFragment(profile);
                 FragmentManager fragmentManger = getFragmentManager();
 //                fragmentManger.beginTransaction().replace(R.id.content_details1, profile, "Doctor Consultations").addToBackStack(null).commit();

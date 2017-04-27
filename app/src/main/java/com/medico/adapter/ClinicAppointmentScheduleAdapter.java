@@ -265,11 +265,13 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             {
                 appointmentHeader.setBackgroundResource(R.color.medico_absence_heading);
                 parentLayout.setBackgroundResource(R.color.medico_absence);
+                appointment_menu.setEnabled(false);
             }
             else
             {
                 appointmentHeader.setBackgroundResource(R.color.medico_green1);
                 parentLayout.setBackgroundColor(Color.WHITE);
+                appointment_menu.setEnabled(true);
             }
             appointment_status.setAdapter(new ArrayAdapter<String>(activity,R.layout.appointment_spinner_layout,activity.getResources().getStringArray(R.array.no_appointment_status)));
             appointment_status.setSelection(holder.isHoliday?1:0,false);
