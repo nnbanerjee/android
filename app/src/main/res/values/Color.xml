@@ -22,4 +22,7 @@
     <item name="medico_light_gray" type="color">#ffa0a0a0</item>
     <item name="medico_tint_gray" type="color">#fff5f5f5</item>
     <item name="medico_red" type="color">#ffb51408</item>
+    <item name="medico_green1" type="color">#78ff8c</item>
+    <item name="medico_absence" type="color">#f7f7f7</item>
+    <item name="medico_absence_heading" type="color">#ebeceb</item>
 </resources>

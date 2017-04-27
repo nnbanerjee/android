@@ -5,50 +5,58 @@
     android:background="#ffffff">
     <LinearLayout
         android:id="@+id/appointment_header"
-        android:background="@color/gray_holo_light"
+        android:background="@drawable/rectangle_white_color"
         android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/appointment_number"
+            android:textAppearance="@style/body4.6"
+            android:textColor="@color/medico_red"
+            android:textStyle="bold"
+            android:layout_marginLeft="1dp"
             android:textAlignment="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="23" />
         <TextView
             android:id="@+id/appointment_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Spinner
-            android:id="@+id/appointment_status"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_width="wrap_content"
-            android:entries="@array/no_appointment_status"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/appointment_type"
-            style="@style/Widget.AppCompat.Spinner"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/visit_type_list" />
-
-        <ImageView
+            android:textAppearance="@style/body4.6"
+            />
+        <Spinner
+            android:id="@+id/appointment_status"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+             />
+        <Spinner
+            android:id="@+id/appointment_type"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <Spinner
             android:id="@+id/appointment_visit_status"
-            style="@style/Widget.AppCompat.Spinner"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/visit_status" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_below="@+id/appointment_header"

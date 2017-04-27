@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -117,6 +118,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         TextView patient_name = (TextView) convertView.findViewById(R.id.patient_name);
         TextView speciality = (TextView) convertView.findViewById(R.id.speciality);
         ImageView patient_image = (ImageView) convertView.findViewById(R.id.patient_image);
+        LinearLayout appointmentHeader = (LinearLayout) convertView.findViewById(R.id.appointment_header);
         TextView address = (TextView) convertView.findViewById(R.id.address);
         TextView upcomingappointmentDate = (TextView) convertView.findViewById(R.id.review_value);
         final TextView lastVisitedValue = (TextView) convertView.findViewById(R.id.lastVisitedValue);
@@ -242,10 +244,12 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                     fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
                 }
             });
-            appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.appointment_status)));
+            appointment_status.setAdapter(new ArrayAdapter<String>(activity,R.layout.appointment_spinner_layout,activity.getResources().getStringArray(R.array.appointment_status)));
             appointment_status.setSelection(holder.getAppointmentStatus(),false);
             appointment_type.setVisibility(View.VISIBLE);
+            appointment_type.setAdapter(new ArrayAdapter<String>(activity,R.layout.appointment_spinner_layout,activity.getResources().getStringArray(R.array.visit_type_list)));
             appointment_visit_status.setVisibility(View.VISIBLE);
+            appointment_visit_status.setAdapter(new ArrayAdapter<String>(activity,R.layout.appointment_spinner_layout,activity.getResources().getStringArray(R.array.visit_status)));
             appointment_type.setSelection(holder.getVisitType(),false);
             appointment_visit_status.setSelection(holder.getVisitStatus(),false);
             appointment_status.setTag(holder.getAppointmentStatus());
@@ -258,10 +262,16 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             appointment_type.setVisibility(View.GONE);
             appointment_visit_status.setVisibility(View.GONE);
             if(holder.isHoliday)
-                parentLayout.setBackgroundColor(Color.LTGRAY);
+            {
+                appointmentHeader.setBackgroundResource(R.color.medico_absence_heading);
+                parentLayout.setBackgroundResource(R.color.medico_absence);
+            }
             else
+            {
+                appointmentHeader.setBackgroundResource(R.color.medico_green1);
                 parentLayout.setBackgroundColor(Color.WHITE);
-            appointment_status.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item,activity.getResources().getStringArray(R.array.no_appointment_status)));
+            }
+            appointment_status.setAdapter(new ArrayAdapter<String>(activity,R.layout.appointment_spinner_layout,activity.getResources().getStringArray(R.array.no_appointment_status)));
             appointment_status.setSelection(holder.isHoliday?1:0,false);
             appointment_status.setTag(holder.isHoliday?1:0);
 
