@@ -1,137 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/document_category"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/country_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-
-            android:text="Country" />
-
-        <TextView
-            android:id="@+id/country_list"
-            android:entries="@array/countries"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/country_text"
-
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/city_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/country_text"
-            android:layout_centerHorizontal="true"
-            android:text="City" />
-
-        <TextView
-            android:id="@+id/city_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/country_text"
-            android:layout_marginLeft="37dp"
-            android:layout_marginStart="37dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/document_type"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/document_category"
-        android:layout_below="@+id/document_category">
-
-        <TextView
-            android:id="@+id/search_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search" />
-
-        <EditText
-            android:id="@+id/search_parameter"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search Text"
-            android:layout_alignTop="@+id/search_text"
-            android:layout_alignBottom="@+id/search_text" />
-        <ImageView
-            android:id="@+id/search_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@android:drawable/ic_search_category_default"
-            android:layout_alignTop="@+id/search_parameter"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </LinearLayout>
-    <LinearLayout
-    android:id="@+id/document_name"
-    android:layout_alignLeft="@+id/document_category"
-    android:layout_below="@+id/document_type"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_marginTop="20dp"
-    android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/search_by"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/document_category"
-            android:layout_alignLeft="@+id/document_category"
-            android:layout_below="@+id/search_text"
-            android:text="By" />
-        <Spinner
-            android:id="@+id/search_by_criteria"
-            android:entries="@array/search_by"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/manage_appointment"
-        android:layout_alignLeft="@+id/document_category"
-        android:layout_below="@+id/document_name"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/visit_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/document_category"
-            android:layout_alignLeft="@+id/document_category"
-            android:layout_below="@+id/search_text"
-            android:text="Visit Type" />
-        <Spinner
-            android:id="@+id/visit_type_choice"
-            android:entries="@array/visit_type_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <ListView
-        android:id="@+id/search_result"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/manage_appointment"
         android:layout_height="match_parent"
-        android:layout_alignLeft="@+id/document_category"/>
+        android:layout_marginLeft = "5dp"
+        android:layout_marginRight = "5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        >
+        <LinearLayout
+            android:id="@+id/document_category"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/country_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:layout_marginRight="3dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Country" />
+
+            <EditText
+                android:id="@+id/country_list"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_height"
+                android:layout_marginRight="3dp"
+                android:layout_alignTop="@+id/country_text"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/city_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:layout_marginRight="3dp"
+                android:layout_alignTop="@+id/country_text"
+                android:layout_centerHorizontal="true"
+                android:text="City" />
+
+            <EditText
+                android:id="@+id/city_list"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_height"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/country_text"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/document_type"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/document_category"
+            android:layout_below="@+id/document_category">
+
+            <TextView
+                android:id="@+id/search_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="Search" />
+
+            <EditText
+                android:id="@+id/search_parameter"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_height"
+                android:hint="Enter Search Text"
+                android:layout_toRightOf="@+id/search_text"/>
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@android:drawable/ic_search_category_default"
+                android:layout_alignTop="@+id/search_parameter"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+            <TextView
+                android:id="@+id/search_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_top_margin"
+                android:layout_below="@+id/search_text"
+                android:text="By Criteria" />
+            <RelativeLayout
+                android:layout_toRightOf="@id/search_by"
+                android:background="@drawable/rounded_white_color"
+                android:layout_alignStart="@+id/search_parameter"
+                android:layout_alignLeft="@+id/search_parameter"
+                android:layout_below="@+id/search_parameter"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/search_by_criteria"
+                    android:entries="@array/search_by"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_height"/>
+            </RelativeLayout>
+        </RelativeLayout>
+         <GridLayout
+            android:id="@+id/search_criteria"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/document_name"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/document_category"/>
+    </RelativeLayout>
+</ScrollView>

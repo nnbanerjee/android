@@ -137,7 +137,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         appointment_visit_status.setSelection(holder.getVisitStatus());
         appointment_menu.setTag(holder);
         String[] menuArray = holder.patient != null? filledAppointment: emptyAppointment;
-        appointment_menu.setAdapter(new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item, menuArray)
+        appointment_menu.setAdapter(new ArrayAdapter<String>(activity,R.layout.appointment_spinner_layout, menuArray)
         {
             @Override
             public View getView(int position, View convertView, ViewGroup parent)

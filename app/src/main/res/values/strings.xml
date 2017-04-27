@@ -561,8 +561,8 @@
        <item>91</item>
        <item>92</item>
    </string-array>
-
-
+    <string name="patient_search_result">Search Result</string>
+    <string name="patient_search">Patient Search</string>
    <string name="patients_profiles">Patient Profiles</string>
    <string name="patient_profile">Patient Profile</string>
    <string name="doctor_profile">Doctor Profile</string>

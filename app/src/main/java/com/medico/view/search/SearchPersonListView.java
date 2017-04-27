@@ -13,13 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.medico.adapter.HomeAdapter;
 import com.medico.adapter.PatientSearchListAdapter;
 import com.medico.application.R;
 import com.medico.model.Person;
+import com.medico.view.appointment.ClinicAppointmentScheduleView;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
-import com.medico.view.appointment.ManageDoctorAppointment;
 import com.medico.view.settings.PersonProfileEditView;
 
 import java.util.List;
@@ -35,22 +37,16 @@ public class SearchPersonListView extends ParentFragment {
     SharedPreferences session;
     ListView listView;
     List<Person> model;
-//    ProgressDialog progress;
     HomeAdapter adapter;
     Object adapterParameter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.list_view,container,false);
-
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search_result));
         listView = (ListView) view.findViewById(R.id.doctorListView);
-
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-
-//        Bundle bundle = getActivity().getIntent().getExtras();
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,17 +57,7 @@ public class SearchPersonListView extends ParentFragment {
                 bun.putInt("SELECTED_PATIENT_ID",profile.getId());
                 adapter.callBack(profile.getId(),profile, adapterParameter);
                 getActivity().getIntent().putExtras(bun);
-                ((ManageDoctorAppointment)getActivity()).onBackPressed();
-                ((ManageDoctorAppointment)getActivity()).onBackPressed();
-//                getActivity().getFragmentManager().beginTransaction().detach(fragment).commit();
-//                        ParentFragment fragment = new PersonProfileEditView();
-//                        ((Doc)getActivity()).fragmentList.add(fragment);
-//                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());
-//                        bun.putInt(PARAM.PROFILE_ROLE, profile.getId().intValue());
-//                        getActivity().getIntent().putExtras(bun);
-//                      fragment.setArguments(bun);
-//                        FragmentManager fragmentManger = getActivity().getFragmentManager();
-//                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                ((ParentActivity)fragment.getActivity()).onBackPressed(ClinicAppointmentScheduleView.class.getName());
             }
         });
 

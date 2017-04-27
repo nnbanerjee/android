@@ -28,9 +28,6 @@ public class PatientSearchListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<Person> personList;
-//    MyApi api;
-//    String doctorId;
-//    SharedPreferences session;
     private ProgressDialog progress;
 
     public PatientSearchListAdapter(Activity activity, List<Person> personList)
@@ -61,40 +58,35 @@ public class PatientSearchListAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-//
+
         View convertView = cv;
-//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
-//        doctorId = session.getString("id", null);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.person_list_item, null);
+            convertView = inflater.inflate(R.layout.doctor_patient_profile_list, null);
         TextView doctorName = (TextView) convertView.findViewById(R.id.doctor_name);
         TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
         ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
         TextView address = (TextView) convertView.findViewById(R.id.address);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
-
+        rightButton.setVisibility(View.GONE);
+        TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
+        totalCount.setVisibility(View.GONE);
+        ImageView downImg = (ImageView) convertView.findViewById(R.id.downImg);
+        downImg.setVisibility(View.GONE);
+        viewImage.setBackground(null);
         int role = personList.get(position).role;
         switch (role)
         {
             case PARAM.PATIENT:
-                viewImage.setImageResource(R.drawable.patient);
+                viewImage.setImageResource(R.drawable.patient_default);
                 break;
             case PARAM.DOCTOR:
-                viewImage.setImageResource(R.drawable.doctor);
+                viewImage.setImageResource(R.drawable.doctor_default);
                 break;
             case PARAM.ASSISTANT:
                 viewImage.setImageResource(R.drawable.assistant_default);
                 break;
         }
-
-        viewImage.setBackgroundResource(R.drawable.patient);
 
         if (personList.get(position).getAddress() != null) {
             if (personList.get(position).getAddress().equals("")) {

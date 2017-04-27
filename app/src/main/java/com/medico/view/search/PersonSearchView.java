@@ -14,13 +14,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medico.adapter.HomeAdapter;
-import com.medico.adapter.PatientSearchListAdapter;
 import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.model.SearchParameterRequest;
@@ -47,12 +45,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     int LOCATION_REFRESH_DISTANCE = 0;
 
     TextView city_list,country_list;
-    Spinner search_by_criteria,visitType;
+    Spinner search_by_criteria;
     EditText search_parameter;
     ImageView search_icon;
-    ListView search_result;
     boolean isGPSEnabled, isNetworkEnabled;
-//    LocationManager lm;
     SearchParameterRequest model = new SearchParameterRequest();
 
     HomeAdapter adapter;
@@ -63,13 +59,15 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
         country_list = (TextView) view.findViewById(R.id.country_list);
         city_list = (TextView) view.findViewById(R.id.city_list);
         search_parameter = (EditText) view.findViewById(R.id.search_parameter);
         search_icon = (ImageView) view.findViewById(R.id.search_icon);
-        search_result = (ListView) view.findViewById(R.id.search_result);
         search_by_criteria = (Spinner) view.findViewById(R.id.search_by_criteria);
+
         search_by_criteria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -96,7 +94,6 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
             }
         });
-        visitType = (Spinner) view.findViewById(R.id.visit_type_choice);
         search_icon.setOnClickListener(this);
         return view;
     }
@@ -127,9 +124,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.search, menu);
+
     }
 
     @Override
@@ -164,22 +160,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
              }
             break;
         }
-//        radius ;
-//        public String daysOfWeek;
-//        public String gender;
-//        public Long timeToStart;
-//        public Long timeToEnd;
-//        public String speciality;
-//        public String country;
-//        public Integer personId;
-//        public String emailAddr;
-//        public String mobileNum;
 
-
-//        public String city;
-//        public Integer reqId;
-//        public int page = 1;
-//        public int rows = 10;
     }
     @Override
     public boolean save()
@@ -208,7 +189,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         ParentActivity activity = ((ParentActivity) getActivity());
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.filter: {
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {
@@ -222,15 +203,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                     Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                 }
 
+                return true;
             }
-            break;
-            case R.id.home: {
-
-            }
-            break;
+            default:
+                return false;
 
         }
-        return true;
     }
     public void onClick(View view)
     {
@@ -253,7 +231,6 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             public void success(Person s, Response response) {
                                 List<Person> searchList = new ArrayList<Person>();
                                 searchList.add(s);
-                                search_result.setAdapter(new PatientSearchListAdapter(getActivity(),searchList));
                                 Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
                             }
 
@@ -351,26 +328,11 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         country_list.setText(service.country);
     }
 
-//    public void notify(int id, Notifier source, Object parameter)
-//    {
-//        if(source instanceof LocationService) {
-//
-//            LocationService service = (LocationService)source;
-//            model.lattitude = service.latitude;
-//            model.longitude = service.longitude;
-//            model.country = service.countryCode;
-//            model.city = service.city;
-//            city_list.setText(service.city);
-//            country_list.setText(service.country);
-//        }
-//    }
-
     private void showResult(List<Person> result)
     {
         SearchPersonListView personListView = new SearchPersonListView();
         personListView.setModel(result);
         personListView.setAdapter(adapter,adapterParameter);
-//        ((ManageDoctorAppointment)getActivity()).attachFragment(personListView);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
     }
