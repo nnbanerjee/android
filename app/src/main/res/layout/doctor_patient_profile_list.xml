@@ -41,7 +41,27 @@
                 android:layout_height="wrap_content"
                 android:text="Doctor Name"
                 android:textAppearance="@style/heading1.1_blue" />
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_hight"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:id="@+id/bookOnline"
+                android:text="@string/bookappointment"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"
+                android:textAppearance="@style/body5"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/add"
+                android:id="@+id/add_profile"
+                android:text=""
+                android:visibility="gone"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="10dp"
+                android:textAppearance="@style/body5"/>
             <ImageView
                 android:id="@+id/nextBtn"
                 android:layout_width="wrap_content"
@@ -57,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/nextBtn"
                 android:inputType="number"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:text="0"
                 android:textAppearance="@style/sub_heading3"
                 />

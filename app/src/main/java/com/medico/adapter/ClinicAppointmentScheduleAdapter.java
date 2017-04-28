@@ -590,6 +590,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
     private void bookOnline(AppointmentHolder holder)
     {
         Bundle bundle = activity.getIntent().getExtras();
+        bundle.putInt(PARAM.SEARCH_TYPE,PARAM.APPOINTMENT_BOOKING);
+        bundle.putInt(PARAM.SEARCH_ROLE,PARAM.PATIENT);
         activity.getIntent().putExtras(bundle);
         PersonSearchView fragment = new PersonSearchView();
         fragment.setAdapter(this,holder);

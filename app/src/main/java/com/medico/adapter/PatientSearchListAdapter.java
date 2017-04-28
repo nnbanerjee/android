@@ -3,19 +3,30 @@ package com.medico.adapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medico.application.R;
+import com.medico.model.LinkedPersonRequest;
 import com.medico.model.Person;
+import com.medico.model.ResponseCodeVerfication;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
+import com.medico.view.appointment.ClinicAppointmentScheduleView;
+import com.medico.view.home.ParentActivity;
 
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 /**
@@ -29,12 +40,16 @@ public class PatientSearchListAdapter extends HomeAdapter  {
     private LayoutInflater inflater;
     List<Person> personList;
     private ProgressDialog progress;
+    HomeAdapter callBack;
+    Object callbackParameter;
 
-    public PatientSearchListAdapter(Activity activity, List<Person> personList)
+    public PatientSearchListAdapter(Activity activity, List<Person> personList, HomeAdapter callBack,Object callbackParameter)
     {
         super(activity);
         this.activity = activity;
         this.personList = personList;
+        this.callBack = callBack;
+        this.callbackParameter = callbackParameter;
     }
 
     @Override
@@ -68,11 +83,71 @@ public class PatientSearchListAdapter extends HomeAdapter  {
         ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
         TextView address = (TextView) convertView.findViewById(R.id.address);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
-        rightButton.setVisibility(View.GONE);
+        Button bookOnline = (Button)convertView.findViewById(R.id.bookOnline);
+        Button add_profile = (Button)convertView.findViewById(R.id.add_profile);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
-        totalCount.setVisibility(View.GONE);
         ImageView downImg = (ImageView) convertView.findViewById(R.id.downImg);
-        downImg.setVisibility(View.GONE);
+        final Bundle bundle = activity.getIntent().getExtras();
+        int searchType = bundle.getInt(PARAM.SEARCH_TYPE);
+        final int profileId = bundle.getInt(PARAM.PROFILE_ID);
+        int loginrole = bundle.getInt(PARAM.PROFILE_ROLE);
+        int searchRole = bundle.getInt(PARAM.SEARCH_ROLE);
+        final Person person = personList.get(position);
+        if(searchType == PARAM.APPOINTMENT_BOOKING)
+        {
+            rightButton.setVisibility(View.GONE);
+            totalCount.setVisibility(View.GONE);
+            downImg.setVisibility(View.GONE);
+            bookOnline.setVisibility(View.VISIBLE);
+            bookOnline.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    bundle.putInt("SELECTED_PATIENT_ID",personList.get(position).getId());
+                    callBack.callBack(personList.get(position).getId(),personList.get(position), callbackParameter);
+                    activity.getIntent().putExtras(bundle);
+                    ((ParentActivity)activity).onBackPressed(ClinicAppointmentScheduleView.class.getName());
+                }
+            });
+        }
+        else if(searchType == PARAM.SEARCH_GLOBAL )
+        {
+            if(loginrole == PARAM.DOCTOR && searchRole == PARAM.PATIENT && person.role == PARAM.PATIENT)
+            {
+                if(person.linkedWith == 0)
+                {
+                    rightButton.setVisibility(View.GONE);
+                    totalCount.setVisibility(View.GONE);
+                    downImg.setVisibility(View.GONE);
+                    add_profile.setVisibility(View.VISIBLE);
+                    add_profile.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            api.addPersonLinkage(new LinkedPersonRequest(profileId, person.id, PARAM.PATIENT), new Callback<ResponseCodeVerfication>()
+                            {
+                                @Override
+                                public void success(ResponseCodeVerfication persons, Response response)
+                                {
+                                    if(persons.getStatus() == 1)
+                                        Toast.makeText(activity, "Profile is successfully added", Toast.LENGTH_LONG).show();
+                                    else
+                                        Toast.makeText(activity, "Profile could not been added", Toast.LENGTH_LONG).show();
+                                }
+                                @Override
+                                public void failure(RetrofitError error)
+                                {
+                                    Toast.makeText(activity, "Profile could not been added", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+        }
         viewImage.setBackground(null);
         int role = personList.get(position).role;
         switch (role)

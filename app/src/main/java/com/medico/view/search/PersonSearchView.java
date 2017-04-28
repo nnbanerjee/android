@@ -213,6 +213,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void onClick(View view)
     {
         Activity activity = getActivity();
+        hideSoftKeyboard(getActivity());
         Bundle bundle = activity.getIntent().getExtras();
         Integer profileId = bundle.getInt(PROFILE_ID);
         Integer profileRole = bundle.getInt(PROFILE_ROLE);
@@ -231,12 +232,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             public void success(Person s, Response response) {
                                 List<Person> searchList = new ArrayList<Person>();
                                 searchList.add(s);
-                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -245,7 +246,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                         api.searchPerson(model, new Callback<List<Person>>() {
                             @Override
                             public void success(List<Person> s, Response response) {
-                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
                                 showResult(s);
                             }
                             @Override
@@ -259,12 +260,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                         api.searchPerson(model, new Callback<List<Person>>() {
                             @Override
                             public void success(List<Person> s, Response response) {
-                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
                                 showResult(s);
                             }
                             @Override
                             public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -274,7 +275,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                         api.searchPerson(model, new Callback<List<Person>>() {
                             @Override
                             public void success(List<Person> s, Response response) {
-                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
                                 showResult(s);
                             }
                             @Override
@@ -288,12 +289,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                         api.searchPerson(model, new Callback<List<Person>>() {
                             @Override
                             public void success(List<Person> s, Response response) {
-                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
                                 showResult(s);
                             }
                             @Override
                             public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
                             }
                         });
                     }

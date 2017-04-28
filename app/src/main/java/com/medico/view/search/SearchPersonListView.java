@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,8 +18,6 @@ import com.medico.adapter.HomeAdapter;
 import com.medico.adapter.PatientSearchListAdapter;
 import com.medico.application.R;
 import com.medico.model.Person;
-import com.medico.view.appointment.ClinicAppointmentScheduleView;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.PersonProfileEditView;
 
@@ -48,18 +45,18 @@ public class SearchPersonListView extends ParentFragment {
         textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search_result));
         listView = (ListView) view.findViewById(R.id.doctorListView);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                setHasOptionsMenu(false);
-                Bundle bun = getActivity().getIntent().getExtras();
-                Person profile = (Person)adapterView.getAdapter().getItem(i);
-                bun.putInt("SELECTED_PATIENT_ID",profile.getId());
-                adapter.callBack(profile.getId(),profile, adapterParameter);
-                getActivity().getIntent().putExtras(bun);
-                ((ParentActivity)fragment.getActivity()).onBackPressed(ClinicAppointmentScheduleView.class.getName());
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                setHasOptionsMenu(false);
+//                Bundle bun = getActivity().getIntent().getExtras();
+//                Person profile = (Person)adapterView.getAdapter().getItem(i);
+//                bun.putInt("SELECTED_PATIENT_ID",profile.getId());
+//                adapter.callBack(profile.getId(),profile, adapterParameter);
+//                getActivity().getIntent().putExtras(bun);
+//                ((ParentActivity)fragment.getActivity()).onBackPressed(ClinicAppointmentScheduleView.class.getName());
+//            }
+//        });
 
         return view;
     }
@@ -74,7 +71,7 @@ public class SearchPersonListView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        listView.setAdapter(new PatientSearchListAdapter(getActivity(),model));
+        listView.setAdapter(new PatientSearchListAdapter(getActivity(),model,adapter,adapterParameter));
     }
 
     @Override
@@ -108,7 +105,7 @@ public class SearchPersonListView extends ParentFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.filter: {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 bun.putInt(PROFILE_ID,0);
