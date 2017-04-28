@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.medico.adapter.HomeAdapter;
 import com.medico.adapter.PatientSearchListAdapter;
 import com.medico.application.R;
-import com.medico.model.Person;
+import com.medico.model.Person;  
 import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.PersonProfileEditView;
 

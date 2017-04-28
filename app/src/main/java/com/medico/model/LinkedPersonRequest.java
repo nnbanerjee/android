@@ -19,6 +19,6 @@ public class LinkedPersonRequest
     public LinkedPersonRequest(Integer sourcePersonId, Integer requestedPersonRole )
     {
         this.sourcePersonId = sourcePersonId;
-        role = requestedPersonRole;
+        role = requestedPersonRole;  
     }
 }

@@ -582,7 +582,7 @@
 
    <string name="last_visited">Last Visited :</string>
    <string name="upcoming_appointment">Upcoming Appointment :</string>
-    <string name="bookappointment">BOOK</string>
+    <string name="bookappointment">BOOK</string>  
    <string name="appointments">Appointments</string>
    <string name="profile_details">Profile Details</string>
    <string name="no_visit">None</string>

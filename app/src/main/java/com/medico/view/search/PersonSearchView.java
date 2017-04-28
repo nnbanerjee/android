@@ -213,7 +213,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void onClick(View view)
     {
         Activity activity = getActivity();
-        hideSoftKeyboard(getActivity());
+        hideSoftKeyboard(getActivity()); 
         Bundle bundle = activity.getIntent().getExtras();
         Integer profileId = bundle.getInt(PROFILE_ID);
         Integer profileRole = bundle.getInt(PROFILE_ROLE);

@@ -653,7 +653,7 @@ public interface MyApi {
     @POST("/getPersonLinkage")
     void getPersonLinkage(@Body LinkedPersonRequest param, Callback<List<Person>> callback);
 
-    @POST("/addPersonLinkage")
+    @POST("/addPersonLinkage")  
     void addPersonLinkage(@Body LinkedPersonRequest param, Callback<ResponseCodeVerfication> callback);
 
     @POST("/getAllDependentsDelegates")

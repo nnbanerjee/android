@@ -26,7 +26,7 @@ import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.client.Response;  
 
 
 /**
@@ -34,7 +34,8 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class PatientSearchListAdapter extends HomeAdapter  {
+public class PatientSearchListAdapter extends HomeAdapter  
+{
 
     private Activity activity;
     private LayoutInflater inflater;

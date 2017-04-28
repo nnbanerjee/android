@@ -41,7 +41,7 @@ public class ParentFragment extends Fragment implements PARAM
                 return false;
             }
         });
-        api = ServerConnectionAdapter.getServerAdapter(getActivity()).getServerAPI();
+        api =  ServerConnectionAdapter.getServerAdapter(getActivity()).getServerAPI();
         if(countriesList == null)
             loadSupportedCountryList();
 
