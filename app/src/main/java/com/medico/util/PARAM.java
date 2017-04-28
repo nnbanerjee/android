@@ -166,4 +166,10 @@ public interface PARAM {
     public static final int SEARCH_BY_MOBILE_NUMBER = 1;
     public static final int SEARCH_BY_PERSON_EMAIL_ID = 2;
     public static final int SEARCH_BY_PERSON_SPECIALITY = 4;
+
+    public static final String FILE_UPLOAD = "file_upload";
+    public static final int PROFILE_PICTURE = 1;
+    public static final int PROFILE_PICTURE_REG = 2;
+    public static final int REGISTRATION_DOCUMENT = 3;
+
 }

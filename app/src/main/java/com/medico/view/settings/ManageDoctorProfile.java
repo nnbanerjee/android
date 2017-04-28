@@ -1,5 +1,6 @@
 package com.medico.view.settings;
 
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.medico.model.ProfileId;
 import com.medico.model.ServerResponse;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -96,7 +98,20 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
             }
         });
         change_password = (Button) view.findViewById(R.id.change_password);
-
+        profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = getActivity().getIntent().getExtras();
+                bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
+                bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
+                bundle.putInt(PARAM.FILE_UPLOAD, PROFILE_PICTURE);
+                getActivity().getIntent().putExtras(bundle);
+                ParentFragment fileFragment = new FileUploadView();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
+            }
+        });
 
         return view;
     }
@@ -154,29 +169,6 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
     }
 
 
-//
-//    public void setDate(){
-//
-//        new DatePickerDialog(getActivity(),d,calendar_grey.get(Calendar.YEAR),calendar_grey.get(Calendar.MONTH),calendar_grey.get(Calendar.DAY_OF_MONTH)).show();
-//    }
-//    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
-//
-//
-//
-//
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//            calendar_grey.set(Calendar.YEAR,year);
-//            calendar_grey.set(Calendar.MONTH,monthOfYear);
-//            calendar_grey.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-//            updatedate();
-//        }
-//
-//    };
-//    public void updatedate()
-//    {
-//        dob.setText(calendar_grey.get(Calendar.YEAR)+"-"+showMonth(calendar_grey.get(Calendar.MONTH))+"-"+calendar_grey.get(Calendar.DAY_OF_MONTH));
-//    }
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        if (requestCode == SELECT_PICTURE) {

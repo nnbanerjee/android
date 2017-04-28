@@ -4,8 +4,8 @@ package com.medico.model;
  * Created by Narendra on 31-03-2016.
  */
 public class ResponseAddDocuments {
-    private String status;
-
+    public String status;
+    public String errorCode;
     public String getField() {
         return field;
     }

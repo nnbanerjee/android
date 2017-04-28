@@ -405,7 +405,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.save: {
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {
@@ -421,9 +421,9 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
 
 
             }
-            break;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private int getBloodgroupIndex(String bloodgroup)

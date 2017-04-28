@@ -818,6 +818,12 @@ public interface MyApi {
                                  @Part("upload") TypedFile file, Callback<ResponseAddDocuments> response);
 
 
+    @Multipart
+    @POST("/updateProfilePicture")
+    void updateProfilePicture(@Header("x-personId") String personId,
+                                 @Header("x-filename") String filename,
+                                 @Part("profilePicture") TypedFile file, Callback<ResponseAddDocuments> response);
+
     @POST("/getPatientVisitDocuments")
     void getPatientVisitDocuments(@Body AppointmentPatientIds appointmentPatientIds , Callback<List<FileUpload>> cb);
 
