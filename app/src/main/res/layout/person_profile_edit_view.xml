@@ -15,8 +15,8 @@
             android:layout_height="wrap_content">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/default_profile_image_size"
+                android:layout_height="@dimen/default_profile_image_size"
                 android:layout_margin="5dp"
                 android:background="@drawable/patient_default"/>
             <Button
@@ -31,6 +31,7 @@
                 android:id="@+id/person_id"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:gravity="center"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/button_shape_blue"
                 android:layout_alignTop="@+id/upload_pic"
@@ -193,12 +194,11 @@
                   <AutoCompleteTextView
                       android:id="@+id/location"
                       android:textAppearance="@style/body3"
-                      android:layout_width="wrap_content"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_below="@+id/dob"
                       android:layout_marginTop="@dimen/edit_top_margin"
                       android:background="@drawable/rounded_white_color"
-                      android:layout_toLeftOf="@+id/current_location_button"
                       android:paddingLeft="3dp"
                       android:imeOptions="actionNext"
                       android:inputType="textMultiLine"

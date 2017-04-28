@@ -8,8 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:background="#ffffff">
         <LinearLayout
             android:id="@+id/document_name"
@@ -20,20 +18,19 @@
             android:background="#ffffff"
             android:weightSum="2">
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/general_doctor_profile"
-                android:text="General"
+                android:background="@drawable/page_selected"
+                android:text="Basic"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp"
                 />
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Personal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/page_default"
+                android:text="Details"
                 android:layout_weight="1"
-                android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/clinicsBtn"
                 android:id="@+id/personal_doctor_profile"
                 />
@@ -43,8 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/document_category"
-        android:id="@+id/frame_layout"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
+        android:id="@+id/frame_layout">
     </RelativeLayout>
 </RelativeLayout>

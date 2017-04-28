@@ -1,8 +1,10 @@
 package com.medico.adapter;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import com.medico.application.R;
 import com.medico.model.DependentDelegatePerson;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
+import com.medico.view.home.ParentFragment;
+import com.medico.view.settings.DependentDelegateProfileView;
 
 import java.util.List;
 
@@ -28,9 +32,6 @@ public class DependentDelegationSettingListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<DependentDelegatePerson> personList;
-//    MyApi api;
-//    String doctorId;
-//    SharedPreferences session;
     private ProgressDialog progress;
 
     public DependentDelegationSettingListAdapter(Activity activity, List<DependentDelegatePerson> personList)
@@ -61,40 +62,41 @@ public class DependentDelegationSettingListAdapter extends HomeAdapter  {
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-//        session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint(activity.getString(R.string.base_url))
-//                .setClient(new OkClient())
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                .build();
-//        api = restAdapter.create(MyApi.class);
-//        doctorId = session.getString("id", null);
         View convertView = cv;
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.person_list_item, null);
+            convertView = inflater.inflate(R.layout.doctor_patient_profile_list, null);
         TextView doctorName = (TextView) convertView.findViewById(R.id.doctor_name);
         TextView doctorSpeciality = (TextView) convertView.findViewById(R.id.speciality);
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout);
         ImageView viewImage = (ImageView) convertView.findViewById(R.id.doctor_image);
         TextView address = (TextView) convertView.findViewById(R.id.address);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
-
+        TextView lastAppointment = (TextView)convertView.findViewById(R.id.lastAppointment);
+        lastAppointment.setVisibility(View.GONE);
+        TextView lastAppointmentValue = (TextView)convertView.findViewById(R.id.lastAppointmentValue);
+        lastAppointmentValue.setVisibility(View.GONE);
+        TextView appointmentText = (TextView)convertView.findViewById(R.id.appointmentText);
+        appointmentText.setVisibility(View.GONE);
+        TextView review_value = (TextView)convertView.findViewById(R.id.review_value);
+        review_value.setVisibility(View.GONE);
+        TextView  totalCount = (TextView) convertView.findViewById(R.id.totalCount);
+        totalCount.setVisibility(View.GONE);
+        ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
+        downImage.setVisibility(View.GONE);
         int role = personList.get(position).role;
+        viewImage.setBackground(null);
         switch (role)
         {
             case PARAM.PATIENT:
-                viewImage.setImageResource(R.drawable.patient);
+                viewImage.setImageResource(R.drawable.patient_default);
                 break;
             case PARAM.DOCTOR:
-                viewImage.setImageResource(R.drawable.doctor);
+                viewImage.setImageResource(R.drawable.doctor_default);
                 break;
             case PARAM.ASSISTANT:
                 viewImage.setImageResource(R.drawable.assistant_default);
                 break;
         }
-
-        viewImage.setBackgroundResource(R.drawable.patient);
-
         if (personList.get(position).getAddress() != null) {
             if (personList.get(position).getAddress().equals("")) {
                 address.setText("None");
@@ -111,7 +113,18 @@ public class DependentDelegationSettingListAdapter extends HomeAdapter  {
 
         doctorName.setText(personList.get(position).getName());
         doctorSpeciality.setText(personList.get(position).relation);
-
+        totalCount.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = activity.getIntent().getExtras();
+                bundle.putInt(PARAM.PATIENT_ID,personList.get(position).getId());
+                ParentFragment assistantListView = new DependentDelegateProfileView();
+                FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
+                fft1.add(R.id.service, assistantListView,DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
+            }
+        });
         return convertView;
 
     }

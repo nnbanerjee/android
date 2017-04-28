@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medico.adapter.PatientSettingListAdapter;
 import com.medico.application.R;
@@ -97,8 +96,7 @@ public class ManagePersonListView extends ParentFragment {
             @Override
             public void failure(RetrofitError error) { 
                 progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+
             }
         });
 
@@ -140,8 +138,6 @@ public class ManagePersonListView extends ParentFragment {
     {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.patient_profile, menu);
-        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override

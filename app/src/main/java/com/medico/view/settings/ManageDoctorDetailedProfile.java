@@ -61,7 +61,7 @@ public class ManageDoctorDetailedProfile extends ParentFragment {
         services = (EditText) view.findViewById(R.id.services);
         awards = (EditText) view.findViewById(R.id.awards);
         memberOf = (EditText) view.findViewById(R.id.member);
-        practice = (Spinner) view.findViewById(R.id.practice);
+        practice = (Spinner) view.findViewById(R.id.practice1);
         registrationNumber = (EditText) view.findViewById(R.id.registration);
         registrationFile = (EditText) view.findViewById(R.id.regisration_file);
         registrationDate = (EditText) view.findViewById(R.id.regisration_date);

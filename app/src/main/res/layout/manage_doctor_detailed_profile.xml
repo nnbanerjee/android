@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:background="#ffffff">
 
         <RelativeLayout
@@ -21,19 +23,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:text="Qualification" />
 
             <EditText
                 android:id="@+id/qualification"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="75dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_toRightOf="@+id/qualification_text"
                 android:imeOptions="actionNext"
                 android:inputType="text"
+                android:layout_marginLeft="30dp"
                 android:editable="false"
                 android:paddingLeft="3dp"
                 android:singleLine="true"
@@ -46,18 +47,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/qualification"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Institution" />
 
             <EditText
                 android:id="@+id/institution"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_below="@+id/qualification"
-                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/institution_text"
                 android:layout_alignStart="@+id/qualification"
+                android:layout_alignLeft="@+id/qualification"
                 android:enabled="false"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp" />
@@ -68,17 +69,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/institution"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Years of Exprience" />
 
             <EditText
                 android:id="@+id/years_of_experience"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/edit_height"
                 android:layout_below="@+id/institution"
                 android:layout_alignStart="@+id/qualification"
-                android:layout_marginTop="15dp"
+                android:layout_alignLeft="@+id/qualification"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_toRightOf="@+id/years_of_experience_text"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -89,20 +90,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/years_of_experience"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Experience Details" />
 
             <EditText
                 android:id="@+id/experience_description"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/edit_height"
                 android:layout_alignLeft="@+id/years_of_experience"
                 android:layout_alignStart="@+id/years_of_experience"
                 android:layout_below="@+id/years_of_experience"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/imageButton_calendar"
-                android:layout_toStartOf="@+id/imageButton_calendar"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:editable="false"
                 android:minLines="5"
                 android:paddingLeft="3dp"
@@ -115,16 +113,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/experience_description"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Services" />
 
             <EditText
                 android:id="@+id/services"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_height"
                 android:layout_below="@+id/experience_description"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingLeft="3dp"
@@ -140,16 +137,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/services"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Awards" />
 
             <EditText
                 android:id="@+id/awards"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/edit_height"
                 android:layout_below="@+id/services"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:editable="false"
                 android:layout_toRightOf="@+id/awards_text"
                 android:layout_alignLeft="@+id/experience_description"
@@ -162,15 +158,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/awards_text"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Member Of" />
 
             <EditText
                 android:id="@+id/member"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_toRightOf="@+id/member_text"
                 android:layout_below="@+id/awards"
                 android:imeOptions="actionNext"
@@ -188,36 +183,41 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/member_text"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Practice" />
-
-            <Spinner
+            <RelativeLayout
                 android:id="@+id/practice"
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:imeOptions="actionNext"
-                android:spinnerMode="dropdown"
-                android:entries="@array/practice_name"
                 android:layout_below="@+id/member"
                 android:layout_alignLeft="@+id/experience_description"
                 android:layout_alignStart="@+id/experience_description"
                 android:layout_toRightOf="@+id/speciality_text"
-                android:layout_toEndOf="@+id/speciality_text" />
+                android:layout_toEndOf="@+id/speciality_text"
+                android:background="@drawable/rounded_white_color"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/practice1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/edit_height"
+                    android:imeOptions="actionNext"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/practice_name"
+/>
+            </RelativeLayout>
             <TextView
                 android:id="@+id/registration_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/speciality_text"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Registration No." />
 
             <EditText
                 android:id="@+id/registration"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_toRightOf="@+id/registration_text"
                 android:layout_below="@+id/practice"
                 android:imeOptions="actionNext"
@@ -233,16 +233,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_below="@+id/registration"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Registration Date" />
 
             <EditText
                 android:id="@+id/regisration_date"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_height="@dimen/edit_height"
                 android:layout_alignStart="@+id/registration"
+                android:layout_alignLeft="@+id/registration"
                 android:layout_below="@+id/registration"
                 android:layout_toRightOf="@+id/regisration_date_text"
                 android:paddingLeft="3dp"
@@ -252,22 +254,24 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/calendar_blue"
+                android:src="@drawable/calendar_grey"
                 android:layout_alignTop="@+id/regisration_date" />
             <TextView
                 android:id="@+id/regisration_file_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_below="@+id/regisration_date"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/text_top_margin"
                 android:text="Registration File" />
 
             <EditText
                 android:id="@+id/regisration_file"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:minLines="2"
                 android:editable="false"
                 android:paddingLeft="3dp"
                 android:paddingTop="5dp"
@@ -280,7 +284,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/calendar_blue"
+                android:src="@drawable/file_upload"
                 android:layout_alignTop="@+id/regisration_file" />
 
         </RelativeLayout>

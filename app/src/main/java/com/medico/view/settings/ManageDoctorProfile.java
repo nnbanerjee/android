@@ -59,10 +59,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
     AutoCompleteTextView mAutocompleteView;
     CheckBox auto_login;
     protected GoogleApiClient mGoogleApiClient;
-//    LocationService locationService =  LocationService.getLocationManager(getActivity());
     Person personModel;
-//    public static int MY_PERMISSION_ACCESS_COARSE_LOCATION = 1;
-//    int GPSoff = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);

@@ -398,9 +398,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.save,menu);
     }
 
     @Override

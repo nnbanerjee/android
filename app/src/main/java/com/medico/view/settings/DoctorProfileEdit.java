@@ -1,7 +1,6 @@
 package com.medico.view.settings;
 
 import android.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -32,20 +31,16 @@ public class DoctorProfileEdit extends ParentFragment {
 		doctorGeneral.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				doctorGeneral.setBackgroundResource(R.drawable.square_blue_color_appointment);
-				doctorPersonal.setBackgroundResource(R.drawable.square_grey_color_appointment);
-				doctorGeneral.setTextColor(Color.parseColor("#ffffff"));
-				doctorPersonal.setTextColor(Color.parseColor("#000000"));
+				doctorGeneral.setBackgroundResource(R.drawable.page_selected);
+				doctorPersonal.setBackgroundResource(R.drawable.page_default);
 				showDoctorProfileEdit();
 			}
 		});
 		doctorPersonal.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				doctorPersonal.setBackgroundResource(R.drawable.square_blue_color_appointment);
-				doctorGeneral.setBackgroundResource(R.drawable.square_grey_color_appointment);
-				doctorPersonal.setTextColor(Color.parseColor("#ffffff"));
-				doctorGeneral.setTextColor(Color.parseColor("#000000"));
+				doctorPersonal.setBackgroundResource(R.drawable.page_selected);
+				doctorGeneral.setBackgroundResource(R.drawable.page_default);
 				showDoctorPersonal();
 			}
 		});
@@ -78,16 +73,14 @@ public class DoctorProfileEdit extends ParentFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		menu.clear();
-		inflater.inflate(R.menu.menu, menu);
-		MenuItem menuItem = menu.findItem(R.id.add);
-		menuItem.setTitle("SAVE");
+		inflater.inflate(R.menu.settings_profile, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.add: {
+			case R.id.profile_save: {
 				selectedfragment.update();
 				if (selectedfragment.isChanged()) {
 					if (selectedfragment.canBeSaved()) {
@@ -101,11 +94,11 @@ public class DoctorProfileEdit extends ParentFragment {
 					Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
 				}
 
-
+				return true;
 			}
-			break;
+
 		}
-		return true;
+		return false;
 	}
 
 }
