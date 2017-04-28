@@ -1,5 +1,6 @@
 package com.medico.view.profile;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -474,8 +475,11 @@ public class DoctorAppointmentSummary extends ParentFragment {
 
         symptomsValue.setText(summaryResponse.getSymptoms());
         diagnosisValue.setText(summaryResponse.getDiagnosis());
+        Activity activity = getActivity();
+        Bundle bundle = activity.getIntent().getExtras();
+        int profileId = bundle.getInt(PROFILE_ID);
         if(summaryResponse.getTestPrescribed() !=null) {
-            testAdapter = new DiagnosticTestAdapter(getActivity(), summaryResponse.getTestPrescribed(), getActivity().getIntent().getExtras().getInt(LOGGED_IN_ID));
+            testAdapter = new DiagnosticTestAdapter(getActivity(), summaryResponse.getTestPrescribed(),profileId );
             testsListView.setAdapter(testAdapter);
         }
         if(summaryResponse.getMedicinePrescribed() != null) {

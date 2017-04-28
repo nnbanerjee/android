@@ -19,22 +19,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medico.application.R;
 import com.medico.model.FileUpload1;
-import com.medico.model.ResponseAddDocuments;
 import com.medico.util.FileChooser;
 import com.medico.util.ImageUtil;
 import com.medico.view.home.ParentFragment;
 
-import java.io.File; 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 //import Model.ResponseAddDocuments;
@@ -146,32 +141,32 @@ public class RegistrationFileUpload extends ParentFragment {
     public void saveFile(FileUpload1 fileupload) {
 
             // api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
-        api.addPatientVisitDocument(fileupload.patientId.toString(), fileupload.appointmentId.toString(), fileupload.clinicId.toString(), fileupload.type.toString(), fileupload.personId.toString(), fileupload.fileName, fileupload.file, new Callback<ResponseAddDocuments>() {
-
-            @Override
-            public void success(ResponseAddDocuments responseAddDocuments, Response response) {
-                {
-
-                    if (responseAddDocuments != null) {
-                        // System.out.println("Url::::::::" + responseAddDocuments.getUrl());
-                        Toast.makeText(getActivity(), "File Uploaded Successfully!", Toast.LENGTH_SHORT).show();
-//                        progress.dismiss();
-
-                        getActivity().onBackPressed();
-                    } else {
-                        Toast.makeText(getActivity(), "File upload Failed!", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-            }
-
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
+//        api.addPatientVisitDocument(fileupload.patientId.toString(), fileupload.appointmentId.toString(), fileupload.clinicId.toString(), fileupload.type.toString(), fileupload.personId.toString(), fileupload.fileName, fileupload.file, new Callback<ResponseAddDocuments>() {
+//
+//            @Override
+//            public void success(ResponseAddDocuments responseAddDocuments, Response response) {
+//                {
+//
+//                    if (responseAddDocuments != null) {
+//                        // System.out.println("Url::::::::" + responseAddDocuments.getUrl());
+//                        Toast.makeText(getActivity(), "File Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+////                        progress.dismiss();
+//
+//                        getActivity().onBackPressed();
+//                    } else {
+//                        Toast.makeText(getActivity(), "File upload Failed!", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//
+//            }
+//
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                error.printStackTrace();
+//            }
+//        });
     }
 
     @Override

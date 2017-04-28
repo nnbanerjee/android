@@ -258,7 +258,10 @@ public class PatientSummaryFileUpload extends ParentFragment {
     public void saveFile(FileUpload1 fileupload)
     {
         showBusy();
-        api.addPatientVisitDocument(fileupload.patientId.toString(), fileupload.appointmentId.toString(), fileupload.clinicId.toString(), fileupload.type.toString(), fileupload.personId.toString(), fileupload.fileName, fileupload.file, new Callback<ResponseAddDocuments>() {
+        api.addPatientVisitDocument(fileupload.patientId.toString(), fileupload.appointmentId.toString(),
+                fileupload.clinicId.toString(), fileupload.type.toString(), fileupload.personId.toString(),
+                fileupload.fileName, fileupload.category, fileupload.subcategory, fileupload.file, new Callback<ResponseAddDocuments>()
+        {
 
             @Override
             public void success(ResponseAddDocuments responseAddDocuments, Response response) {

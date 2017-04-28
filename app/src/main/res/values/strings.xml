@@ -348,14 +348,15 @@
     </string-array>
     <string-array name="file_upload_category_list">
         <item>Prescription</item>
-        <item>Diagnostic Test</item>
+        <item>Diagnostic Reports</item>
+        <item>Registration</item>
         <item>Invoice</item>
+        <item>History</item>
         <item>Treatment</item>
-        <item>Symptoms</item>
-        <item>Diagnosis</item>
         <item>Physiotherapy</item>
         <item>Other</item>
     </string-array>
+
     <string-array name="upload_document_type">
         <item>Current Visit</item>
         <item>Previous Visits</item>
@@ -403,9 +404,9 @@
     </string-array>
     <string name="image_base_url">""</string>
 
-    <!--    <string name="base_url">http://54.84.103.54:9000/</string>-->
+     <string name="base_url">http://54.84.103.54:9000/</string>
 
-     <string name="base_url">http://192.168.42.11:9000/</string>
+    <!--    <string name="base_url">http://192.168.42.11:9000/</string>-->
 
    <string name="listcolor">#CCFFFF</string>
    <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>

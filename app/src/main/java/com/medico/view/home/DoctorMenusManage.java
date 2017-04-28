@@ -73,6 +73,9 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
                 bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
                 intObj.putExtras(bundle);
@@ -90,6 +93,9 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
                 bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManagePatientProfile.class);
                 intObj.putExtras(bundle);
@@ -110,6 +116,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManageFinanceView.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
@@ -127,6 +134,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManageFinanceView.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
@@ -144,6 +152,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManageDoctorAppointment.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
@@ -162,6 +171,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManageDoctorAppointment.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
@@ -180,6 +190,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManagePatientReviewView.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
@@ -197,6 +208,7 @@ public class DoctorMenusManage extends ParentFragment {
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putString(PARAM.COUNTRY_NAME,HomeActivity.getParentAtivity().personProfile.getPerson().getCountry());
                 Intent intObj = new Intent(getActivity(), ManagePatientReviewView.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);

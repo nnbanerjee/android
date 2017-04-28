@@ -244,7 +244,8 @@ public class FileUploadDialog extends DialogFragment {
                     //restAdapter..setHea
 
                     // api.uploadFile(typedFile, type, doctorId, patientId, assistantId, documentType, nameData, categoryData, appointmentDate, appointmentTime,clinicId,clinicName,new Callback<FileUpload>() {
-                    ((ParentActivity)getActivity()).api.addPatientVisitDocument(patientId, appointMentId, clinicId.toString(), documentType, doctorId, nameData, typedFile, new Callback<ResponseAddDocuments >() {
+                    ((ParentActivity)getActivity()).api.addPatientVisitDocument(patientId, appointMentId, clinicId.toString(), documentType, doctorId, nameData,
+                            new Integer(category.getSelectedItemPosition()).byteValue(), 1, typedFile, new Callback<ResponseAddDocuments >() {
 
                         @Override
                         public void success(ResponseAddDocuments responseAddDocuments, Response response) {

@@ -813,6 +813,8 @@ public interface MyApi {
                                  @Header("x-type") String type,
                                  @Header("x-loggedinUserId") String loggedInUserId,
                                  @Header("x-fileName") String fileName,
+                                 @Header("x-category") Byte category,
+                                 @Header("x-subcategory") Integer subcategory,
                                  @Part("upload") TypedFile file, Callback<ResponseAddDocuments> response);
 
 
