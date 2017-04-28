@@ -14,6 +14,30 @@ import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 */
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.medico.view.home.ParentActivity;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
 /**
  * Created by keithlei on 3/16/15.
  */
@@ -24,17 +48,20 @@ public class ImageUtil {
 
     public static final int SELECT_PICTURE = 1;
 
-    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 350;
-    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 350;
+    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 200;
+    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 200;
 
     public static final int IMAGE_UPLOAD_MAX_WIDTH = 1024;
     public static final int IMAGE_UPLOAD_MAX_HEIGHT = 1024;
+
+    public static final int PROFILE_IMAGE_UPLOAD_MAX_WIDTH = 100;
+    public static final int PROFILE_IMAGE_UPLOAD_MAX_HEIGHT = 100;
 
     public static final int IMAGE_COMPRESS_QUALITY = 85;
 
     public static final String IMAGE_URL = "139.162.31.36:9000"+"/getFile/";
 
-  /*  public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
+  public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
                     cacheOnDisk(true).
@@ -71,7 +98,7 @@ public class ImageUtil {
 
     public static void init() {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                AppController.getInstance().getApplicationContext()).
+                ParentActivity.activity.getApplicationContext()).
                 threadPoolSize(5).
                 threadPriority(Thread.MIN_PRIORITY + 3).
                 denyCacheImageMultipleSizesInMemory().
@@ -137,7 +164,7 @@ public class ImageUtil {
     // Select photo
 
      public static void openPhotoPicker(Activity activity) {
-        openPhotoPicker(activity, activity.getString(R.string.photo_select));
+        openPhotoPicker(activity, "Select Picture");//activity.getString(R.string.photo_select));
     }
 
 
@@ -174,6 +201,10 @@ public class ImageUtil {
 
     public static Bitmap resizeToUpload(String path) {
         return resizeImage(path, IMAGE_UPLOAD_MAX_WIDTH, IMAGE_UPLOAD_MAX_HEIGHT);
+    }
+
+    public static Bitmap resizeProfilePictureToUpload(String path) {
+        return resizeImage(path, PROFILE_IMAGE_UPLOAD_MAX_WIDTH, PROFILE_IMAGE_UPLOAD_MAX_HEIGHT);
     }
 
     public static Bitmap resizeImage(String path, int maxWidth, int maxHeight) {
@@ -262,13 +293,12 @@ public class ImageUtil {
     }
 
 
-  public static Drawable getEmptyDrawable() {
-        LevelListDrawable d = new LevelListDrawable();
-        Drawable empty = AppController.getInstance().getResources().getDrawable(R.drawable.empty);
-        d.addLevel(0, 0, empty);
-        d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
-        return d;
-    }
-*/
+//  public static Drawable getEmptyDrawable() {
+//        LevelListDrawable d = new LevelListDrawable();
+//        Drawable empty = AppController.getInstance().getResources().getDrawable(R.drawable.);
+//        d.addLevel(0, 0, empty);
+//        d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
+//        return d;
+//    }
 }
 

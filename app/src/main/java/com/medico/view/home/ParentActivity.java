@@ -1,5 +1,6 @@
 package com.medico.view.home;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -27,11 +28,14 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
     private int backStakeCount = 0;
     public MyApi api;
     private ProgressDialog progress;
+    public static Activity activity;
 //    public int identifier = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        activity = this;
 //        document = getDocument();
         getFragmentManager().addOnBackStackChangedListener(this);
         api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();

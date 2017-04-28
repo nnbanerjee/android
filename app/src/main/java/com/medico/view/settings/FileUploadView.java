@@ -268,8 +268,9 @@ public class FileUploadView extends ParentFragment
                 File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
                 Uri selectedImageUri = Uri.fromFile(picture);
                 ImageView image = (ImageView) getView().findViewById(R.id.preview_image);
-                image.setImageURI(selectedImageUri);
+//                image.setImageURI(selectedImageUri);
                 String selectedImagePath = picture.getName();
+                image.setImageBitmap(ImageUtil.resizeAsPreviewThumbnail(selectedImageUri.getPath()));
                 typedFile = new TypedFile("application/octet-stream", picture);
                 System.out.println("typedFIle::::::::" + typedFile.toString());
             }
