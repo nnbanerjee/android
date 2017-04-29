@@ -45,19 +45,6 @@ public class SearchPersonListView extends ParentFragment {
         textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search_result));
         listView = (ListView) view.findViewById(R.id.doctorListView);
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                setHasOptionsMenu(false);
-//                Bundle bun = getActivity().getIntent().getExtras();
-//                Person profile = (Person)adapterView.getAdapter().getItem(i);
-//                bun.putInt("SELECTED_PATIENT_ID",profile.getId());
-//                adapter.callBack(profile.getId(),profile, adapterParameter);
-//                getActivity().getIntent().putExtras(bun);
-//                ((ParentActivity)fragment.getActivity()).onBackPressed(ClinicAppointmentScheduleView.class.getName());
-//            }
-//        });
-
         return view;
     }
 

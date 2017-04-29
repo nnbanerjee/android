@@ -1,6 +1,7 @@
 package com.medico.adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 import com.medico.view.appointment.ClinicAppointmentScheduleView;
 import com.medico.view.home.ParentActivity;
+import com.medico.view.home.ParentFragment;
+import com.medico.view.profile.PatientDetailsView;
 
 import java.util.List;
 
@@ -88,6 +91,13 @@ public class PatientSearchListAdapter extends HomeAdapter
         Button add_profile = (Button)convertView.findViewById(R.id.add_profile);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
         ImageView downImg = (ImageView) convertView.findViewById(R.id.downImg);
+        TextView lastAppointmentText = (TextView)convertView.findViewById(R.id.lastAppointment);
+        TextView lastAppointmentValue = (TextView)convertView.findViewById(R.id.lastAppointmentValue);
+        TextView nextappointmentText = (TextView)convertView.findViewById(R.id.appointmentText);
+        TextView nextAppointment = (TextView)convertView.findViewById(R.id.review_value);
+        nextappointmentText.setVisibility(View.GONE);
+        nextAppointment.setVisibility(View.GONE);
+
         final Bundle bundle = activity.getIntent().getExtras();
         int searchType = bundle.getInt(PARAM.SEARCH_TYPE);
         final int profileId = bundle.getInt(PARAM.PROFILE_ID);
@@ -114,13 +124,17 @@ public class PatientSearchListAdapter extends HomeAdapter
         }
         else if(searchType == PARAM.SEARCH_GLOBAL )
         {
+            lastAppointmentText.setText("Profile Id : ");
+            lastAppointmentValue.setText(person.id.toString());
             if(loginrole == PARAM.DOCTOR && searchRole == PARAM.PATIENT && person.role == PARAM.PATIENT)
             {
-                if(person.linkedWith == 0)
+
+                totalCount.setVisibility(View.GONE);
+                downImg.setVisibility(View.GONE);
+                rightButton.setVisibility(View.GONE);
+                if(person.linkedWith.intValue() == 0)
                 {
-                    rightButton.setVisibility(View.GONE);
-                    totalCount.setVisibility(View.GONE);
-                    downImg.setVisibility(View.GONE);
+
                     add_profile.setVisibility(View.VISIBLE);
                     add_profile.setOnClickListener(new View.OnClickListener()
                     {
@@ -133,7 +147,11 @@ public class PatientSearchListAdapter extends HomeAdapter
                                 public void success(ResponseCodeVerfication persons, Response response)
                                 {
                                     if(persons.getStatus() == 1)
+                                    {
+                                        personList.get(position).linkedWith = 1;
+                                        adapter.notifyDataSetInvalidated();
                                         Toast.makeText(activity, "Profile is successfully added", Toast.LENGTH_LONG).show();
+                                    }
                                     else
                                         Toast.makeText(activity, "Profile could not been added", Toast.LENGTH_LONG).show();
                                 }
@@ -146,9 +164,25 @@ public class PatientSearchListAdapter extends HomeAdapter
                         }
                     });
                 }
+                else
+                    add_profile.setVisibility(View.GONE);
             }
 
         }
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ParentActivity parentactivity = (ParentActivity)activity;
+                Bundle bundle = parentactivity.getIntent().getExtras();
+                bundle.putInt(PARAM.PATIENT_ID, person.id);
+                parentactivity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new PatientDetailsView();
+                parentactivity.attachFragment(fragment);
+                FragmentManager fragmentManger = activity.getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
+            }
+        });
         viewImage.setBackground(null);
         int role = personList.get(position).role;
         switch (role)

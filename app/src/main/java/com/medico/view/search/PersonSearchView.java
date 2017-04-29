@@ -136,7 +136,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     @Override
     public void update()
     {
-
+        Bundle bundle = getActivity().getIntent().getExtras();
+        model.loginUserId = bundle.getInt(PROFILE_ID);
         switch (search_by_criteria.getSelectedItemPosition()) {
             case SEARCH_BY_PERSON_ID: {
                 model.personId = new Integer(search_parameter.getText().toString());

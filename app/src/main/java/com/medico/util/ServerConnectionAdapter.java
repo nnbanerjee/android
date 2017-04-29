@@ -8,6 +8,7 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.client.Client;
@@ -28,6 +29,8 @@ public class ServerConnectionAdapter
         CookieManager cookieManager = new CookieManager(null, null);
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(1, TimeUnit.MINUTES);
+        okHttpClient.setConnectTimeout(2, TimeUnit.MINUTES);
         okHttpClient.setCookieHandler(cookieManager);
         Client client = new OkClient(okHttpClient);
         RestAdapter restAdapter = new RestAdapter.Builder()

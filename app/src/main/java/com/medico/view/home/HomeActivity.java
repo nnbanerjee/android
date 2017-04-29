@@ -34,6 +34,7 @@ import com.medico.model.Dependent;
 import com.medico.model.DoctorProfile;
 import com.medico.model.PersonProfile;
 import com.medico.util.FileUploadDialog;
+import com.medico.util.LocationService;
 import com.medico.util.PARAM;
 import com.medico.util.ServerConnectionAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -100,7 +101,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         mainMenu = new Menu();
         arrayMenu = new ArrayList<String>();
         showMenus();
-
+        LocationService locationService = LocationService.getLocationManager(this);
 //        locationService.addNotifyListeber(this);
 
     }
