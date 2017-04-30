@@ -82,8 +82,9 @@ public class PatientListAdapter extends HomeAdapter  {
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         PatientShortProfile profile = allPatients.getPatientlist().get(position);
-        new ImageLoadTask(activity.getString(R.string.image_base_url) + profile.getImageUrl(), viewImage).execute();
         viewImage.setBackgroundResource(R.drawable.patient_default);
+        if(profile.getImageUrl() != null && profile.getImageUrl().length() > 0)
+            new ImageLoadTask(activity.getString(R.string.image_base_url) + profile.getImageUrl(), viewImage).execute();
         totalCount.setText("" + profile.getNumberOfVisits());
 
         if (profile.getAddress() != null) {

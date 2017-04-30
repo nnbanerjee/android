@@ -15,10 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.R;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorShortProfile;
 import com.medico.util.ImageLoadTask;
-import com.medico.application.R;
+import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -33,13 +34,13 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class DoctorDetailsProfileView extends ParentFragment {
+public class DoctorDetailsView extends ParentFragment {
 
     ProgressDialog progress;
     SharedPreferences session;
     TextView patientName,doctorSpeciality, address, lastVisitedValue, nextAppointment, visitCounts;
     Button appointmentsBtn,profileBtn;
-    ImageView viewImage, visitDates,closeMenu;
+    ImageView viewImage, nextBtn, closeMenu;
     Fragment childfragment;
     @Nullable
     @Override
@@ -49,9 +50,10 @@ public class DoctorDetailsProfileView extends ParentFragment {
         RelativeLayout detailsLayout = (RelativeLayout)view.findViewById(R.id.layout11);
         detailsLayout.setVisibility(View.VISIBLE);
         patientName = (TextView) view.findViewById(R.id.doctor_name);
+        nextBtn = (ImageView)view.findViewById(R.id.nextBtn);
         doctorSpeciality = (TextView) view.findViewById(R.id.speciality);
         address = (TextView)view.findViewById(R.id.address);
-        lastVisitedValue = (TextView) view.findViewById(R.id.lastAppointment);
+        lastVisitedValue = (TextView) view.findViewById(R.id.lastAppointmentValue);
         nextAppointment = (TextView) view.findViewById(R.id.review_value);
 
         visitCounts = (TextView) view.findViewById(R.id.totalCount);
@@ -61,14 +63,9 @@ public class DoctorDetailsProfileView extends ParentFragment {
         profileBtn = (Button) view.findViewById(R.id.profile);
 
         viewImage = (ImageView) view.findViewById(R.id.doctor_image);
-        viewImage.setBackgroundResource(R.drawable.patient_default);
-//        visitDates = (ImageView) view.findViewById(R.id.viewAll);
+        viewImage.setBackgroundResource(R.drawable.doctor_default);
         closeMenu = (ImageView) view.findViewById(R.id.downImg);
-        closeMenu.setBackground(null);
-        closeMenu.setImageResource(R.drawable.arrow_up_red);
-
-        //------------------------------------------------------------------------
-
+        closeMenu.setBackgroundResource(R.drawable.arrow_up_red);
 
         appointmentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +85,7 @@ public class DoctorDetailsProfileView extends ParentFragment {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              appointmentsBtn.setBackgroundResource(R.drawable.page_default);
+                  appointmentsBtn.setBackgroundResource(R.drawable.page_default);
                 profileBtn.setBackgroundResource(R.drawable.page_selected);
                 Fragment fragment = new DoctorProfileDetails();
                 childfragment = fragment;
@@ -107,6 +104,26 @@ public class DoctorDetailsProfileView extends ParentFragment {
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, PatientProfileListView.class.getName()).addToBackStack(PatientProfileListView.class.getName()).commit();
             }
         });
+        visitCounts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParentActivity parentactivity = (ParentActivity)getActivity();
+                Bundle bundle = parentactivity.getIntent().getExtras();
+                ParentFragment fragment = new PatientVisitDatesView();
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
+            }
+        });
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParentActivity parentactivity = (ParentActivity)getActivity();
+                Bundle bundle = getActivity().getIntent().getExtras();
+                ParentFragment fragment = new PatientVisitDatesView();
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PatientVisitDatesView.class.getName()).addToBackStack(PatientVisitDatesView.class.getName()).commit();
+            }
+        });
         return view;
     }
 
@@ -114,8 +131,8 @@ public class DoctorDetailsProfileView extends ParentFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
+        if(childfragment != null && childfragment.isDetached() == false)
+            childfragment.onStart();
     }
     @Override
     public void onStart()
@@ -131,6 +148,7 @@ public class DoctorDetailsProfileView extends ParentFragment {
                 public void success(DoctorShortProfile patient, Response response)
                 {
                     if(patient != null) {
+
                         patientName.setText(patient.getName());
 
                         doctorSpeciality.setText(patient.getProfession());
@@ -138,15 +156,22 @@ public class DoctorDetailsProfileView extends ParentFragment {
                         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
                         if(patient.getLastVisit() != null)
                             lastVisitedValue.setText(dateFormat.format(new Date(patient.getLastVisit())));
+                        else
+                            lastVisitedValue.setText(getActivity().getResources().getString(R.string.no_visit));
                         if(patient.getUpcomingVisit() != null)
                             nextAppointment.setText(dateFormat.format(new Date(patient.getUpcomingVisit())));
+                        else
+                            nextAppointment.setText(getActivity().getResources().getString(R.string.no_visit));
                         visitCounts.setText(patient.getNumberOfVisits().toString());
+
                         if(patient.getImageUrl() != null && patient.getImageUrl().trim().length() > 0)
                         {
                             new ImageLoadTask(patient.getImageUrl(),viewImage);
                         }
 
                     }
+
+                    appointmentsBtn.callOnClick();
 
                     progress.dismiss();
                 }
@@ -159,7 +184,7 @@ public class DoctorDetailsProfileView extends ParentFragment {
                 }
             });
         if(childfragment != null && childfragment.isDetached() == false)
-        childfragment.onStart();
+            childfragment.onStart();
 
     }
 

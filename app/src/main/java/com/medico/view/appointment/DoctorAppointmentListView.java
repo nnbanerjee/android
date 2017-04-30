@@ -1,4 +1,4 @@
-package com.medico.view.profile;
+package com.medico.view.appointment;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -14,15 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.medico.adapter.DoctorListAdapter;
+import com.medico.adapter.PatientAppointmentListAdapter;
 import com.medico.application.R;
-import com.medico.model.DoctorProfileList;
-import com.medico.model.DoctorShortProfile;
+import com.medico.model.PatientAppointmentsVM;
 import com.medico.model.PatientId;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentFragment;
-
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -33,7 +30,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class DoctorProfileListView extends ParentFragment {
+public class DoctorAppointmentListView extends ParentFragment {
 
 
     SharedPreferences session;
@@ -48,11 +45,9 @@ public class DoctorProfileListView extends ParentFragment {
         View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
 
         doctorListView = (ListView) view.findViewById(R.id.doctorListView);
-//        doctorListView = (ListView)getActivity().findViewById(R.id.doctorListView);
-
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Doctor Profiles");
+        textviewTitle.setText("Manage Appointments");
         return view;
     }
 
@@ -62,12 +57,16 @@ public class DoctorProfileListView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-        PatientId patient = new PatientId(new Integer(bundle.getInt(PARAM.PATIENT_ID)));
-        api.getDoctorProfileList(patient, new Callback<List<DoctorShortProfile>>() {
+        PatientId patient = new PatientId(new Integer(bundle.getInt(PARAM.PROFILE_ID)));
+        api.getPatientAppointments(patient, new Callback<PatientAppointmentsVM>() {
             @Override
-            public void success(final List<DoctorShortProfile> allDoctorProfiles, Response response) {
-                DoctorListAdapter adapter = new DoctorListAdapter(getActivity(), new DoctorProfileList(allDoctorProfiles));
-                doctorListView.setAdapter(adapter);
+            public void success(PatientAppointmentsVM patientAppointments, Response response)
+            {
+                if(patientAppointments != null && patientAppointments.upcomingAppointments != null && patientAppointments.upcomingAppointments.size() > 0 )
+                {
+                    PatientAppointmentListAdapter adapter = new PatientAppointmentListAdapter(getActivity(), patientAppointments.upcomingAppointments);
+                    doctorListView.setAdapter(adapter);
+                }
                 progress.dismiss();
             }
 

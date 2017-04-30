@@ -114,8 +114,7 @@ public class PatientHome extends HomeActivity
 //                }
             }
         });
-//        backButton = (Button) findViewById(R.id.back_button);
-//        backButton.setVisibility(View.INVISIBLE);
+
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
         int[] colors = {0, 0xFFFF0000, 0}; // red for the example
@@ -152,69 +151,9 @@ public class PatientHome extends HomeActivity
                 }
             }
         });
-//        logout = (Button) findViewById(R.id.logout);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PatientHome.this);
-//                alertDialogBuilder.setMessage("R.string.confirm_logout");
-//                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        finish();
-//
-//                    }
-//                });
-//
-//                alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        System.out.println("Do Nothing");
-//                    }
-//                });
-//
-//                AlertDialog alertDialog2 = alertDialogBuilder.create();
-//                alertDialog2.show();
-//            }
-//        });
         fragment = new PatientMenusManage();
         fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
-
-//        dList.setSelector(android.R.color.holo_blue_dark);
-//        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> selectedItem, View v, int position, long id) {
-//                dLayout.closeDrawers();
-//                Bundle args = new Bundle();
-//                String switchCaseId = (String) adapter.getItem(position);
-//                switch (switchCaseId) {
-//                    case "Manage Profile":
-//                        manageProfile();
-//                        break;
-//                    case "Manage Doctors":
-//                        manageDoctors();
-//                        break;
-//                    case "Manage Dependents":
-//                        manageDependents();
-//                        break;
-//                    case "Manage Delegations":
-//                        manageDelegations();
-//                        break;
-//                    case "Terms & Conditions":
-//                        termsAndConditions();
-//                        break;
-//
-//                    case "Logout":
-//                        logout();
-//                        break;
-//                }
-//            }
-//        });
     }
 
     public void showMenus()
@@ -254,32 +193,6 @@ public class PatientHome extends HomeActivity
             }
         });
     }
-
-
-//    protected void manageDoctors()
-//    {
-//        System.out.println("i am here::::::::::::");
-//        Bundle bundle = new Bundle();
-//        bundle.putInt(PARAM.PATIENT_ID, profileId);
-//        setSettingParameters(bundle);
-//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
-//        Intent intObj = new Intent(this, ManagePersonSettings.class);
-//        intObj.putExtras(bundle);
-//        startActivity(intObj);
-//        onPause();
-//        dLayout.closeDrawer(dList);
-//    }
-//    protected void manageDelegations()
-//    {
-//        Bundle bundle = new Bundle();
-//        setSettingParameters(bundle);
-//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DELEGATE_SETTING_VIEW);
-//        Intent intObj = new Intent(this, ManagePersonSettings.class);
-//        intObj.putExtras(bundle);
-//        startActivity(intObj);
-//        onPause();
-//        dLayout.closeDrawer(dList);
-//    }
 
     @Override
     protected void showPopup(final Activity context, Point p) {

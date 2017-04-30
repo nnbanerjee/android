@@ -23,6 +23,7 @@ public class ClinicSlotDetails
     public Integer clinicId;
     public Integer doctorId;
     public Integer assistantId;
+    public String clinicName;
 
     private boolean isChanged = true;
 

@@ -574,13 +574,14 @@
    <string name="search_patient">Search Patient</string>
 
    <string name="search_clinic_lab">Search Clinic/Lab</string>
-
+    <string name="appointment_status">Appointment Status :</string>
+    <string name="appointment_type">Appointment Type :</string>
    <string name="manage_appointments">Manage Appointments</string>
    <string name="manage_finance">Manage Finance</string>
    <string name="feedback">Feedback</string>
    <string name="doctor_consultations">Doctor Consultations</string>
    <string name="medicine_alarm">Medicine Alarm</string>
-
+    <string name="appointment">Appointment Date :</string>
    <string name="last_visited">Last Visited :</string>
    <string name="upcoming_appointment">Upcoming Appointment :</string>
     <string name="bookappointment">BOOK</string>  

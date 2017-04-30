@@ -55,6 +55,14 @@ public class DoctorHome extends HomeActivity
             }
         });
         arrow = (View) findViewById(R.id.down_arrow);
+        accountName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (p != null)
+                    showPopup(DoctorHome.this, p);
+            }
+        });
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,47 +208,6 @@ public class DoctorHome extends HomeActivity
         });
 
         dList.setSelector(android.R.color.holo_blue_dark);
-//        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> selectedItem, View v, int position, long id) {
-//                dLayout.closeDrawers();
-//                Bundle args = new Bundle();
-//                String switchCaseId = (String) adapter.getItem(position);
-//                switch (switchCaseId) {
-//                    case "Manage Profile":
-//                        manageProfile();
-//                        break;
-//
-//                    case "Manage Patients":
-//                        managePatients();
-//                        break;
-//                    case "Manage Clinics":
-//
-//                        manageClinics();
-//                        break;
-//
-//                    case "Manage Assistants":
-//                        manageAssistants();
-//                        break;
-//
-//                    case "Manage Dependents":
-//                        manageDependents();
-//                        break;
-//
-//                    case "Manage Templates":
-//                        manageTemplates();
-//                        break;
-//
-//                    case "Terms & Conditions":
-//                        termsAndConditions();
-//                        break;
-//
-//                    case "Logout":
-//                        logout();
-//                        break;
-//                }
-//            }
-//        });
     }
     @Override
     protected void setParameters()
@@ -288,52 +255,5 @@ public class DoctorHome extends HomeActivity
         });
     }
 
-//    protected void managePatients()
-//    {
-//        System.out.println("i am here::::::::::::");
-//        Bundle bundle = new Bundle();
-//        setSettingParameters(bundle);
-//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
-//        Intent intObj = new Intent(this, ManagePersonSettings.class);
-//        intObj.putExtras(bundle);
-//        startActivity(intObj);
-//        onPause();
-//        dLayout.closeDrawer(dList);
-//    }
-//    protected void manageClinics()
-//    {
-//
-//        System.out.println("i am here::::::::::::");
-//        Bundle bundle = new Bundle();
-//        setSettingParameters(bundle);
-//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.CLINIC_SETTING_VIEW);
-//        Intent intObj = new Intent(this, ManagePersonSettings.class);
-//        intObj.putExtras(bundle);
-//        startActivity(intObj);
-//        onPause();
-//        dLayout.closeDrawer(dList);
-//    }
-//    protected void manageAssistants()
-//    {
-//        System.out.println("i am here::::::::::::");
-//        Bundle bundle = new Bundle();
-//        setSettingParameters(bundle);
-//        bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.ASSISTANT_SETTING_VIEW);
-//        Intent intObj = new Intent(this, ManagePersonSettings.class);
-//        intObj.putExtras(bundle);
-//        startActivity(intObj);
-//        onPause();
-//        dLayout.closeDrawer(dList);
-//    }
-//
-//    protected void manageTemplates()
-//    {
-////        //fragment = new ManageTemplate();
-////        fragment = new ManageProcedure();
-////        fragmentManger = getFragmentManager();
-////        fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Template").addToBackStack(null).commit();
-////        dList.setSelection(position);
-////        dLayout.closeDrawer(dList);
-//    }
 
 }

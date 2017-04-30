@@ -46,6 +46,7 @@ import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.MedicineStatusRequest;
 import com.medico.model.PatientAppointmentByDoctor;
+import com.medico.model.PatientAppointmentsVM;
 import com.medico.model.PatientDiagnostic;
 import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
@@ -866,6 +867,10 @@ public interface MyApi {
 
     @POST("/getDoctorProfileList")
     void getDoctorProfileList(@Body PatientId patientId, Callback<List<DoctorShortProfile>> callback);
+
+
+    @POST("/getPatientAppointments")
+    void getPatientAppointments(@Body PatientId patientId, Callback<PatientAppointmentsVM> callback);
 
 //    @POST("/getDoctorProfileList")
 //    void getDoctorProfileList1(@Body PatientId patientId, Callback<List<AllPatients>> callback);

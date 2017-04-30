@@ -106,7 +106,8 @@ public class ClinicPatientAdapter extends HomeAdapter {
         DoctorClinicDetails details = clinicDetails.get(position);
         clinicName.setText(details.clinic.clinicName);
         clinicLocation.setText(details.clinic.address);
-        clinicContact.setText(details.clinic.landLineNumber.toString());
+        if(details.clinic.landLineNumber != null)
+            clinicContact.setText(details.clinic.landLineNumber.toString());
         if(details.slots != null && details.slots.size() > 0) {
             layout.removeAllViews();
             for(DoctorClinicDetails.ClinicSlots slot:details.slots) {
