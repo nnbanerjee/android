@@ -33,12 +33,14 @@ import com.medico.view.profile.FeedbackFragmentClinicAppointment;
 import com.medico.view.profile.PatientVisitDatesView;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 
 /**
@@ -46,7 +48,8 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class PatientAppointmentListAdapter extends HomeAdapter{
+public class PatientAppointmentListAdapter extends HomeAdapter implements StickyListHeadersAdapter
+{
 
     private Activity activity;
     private LayoutInflater inflater;
@@ -295,6 +298,34 @@ public class PatientAppointmentListAdapter extends HomeAdapter{
 
             }
         });
+    }
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent)
+    {
+        TextView text;
+        if (convertView == null)
+        {
+            convertView = inflater.inflate(R.layout.header_all_appointment, parent, false);
+            text = (TextView) convertView.findViewById(R.id.slot);
+        }
+        else
+        {
+            text = (TextView) convertView.findViewById(R.id.slot);
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(appointments.get(position).appointmentDate));
+        text.setText(new Integer(calendar.get(Calendar.YEAR)).toString());
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position)
+    {
+        //return the first character of the country as ID because this is what headers are based upon
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(appointments.get(position).appointmentDate));
+        return calendar.get(Calendar.YEAR);
     }
 
 }
