@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.medico.adapter.HomeAdapter;
 import com.medico.application.R;
+import com.medico.model.Clinic1;
 import com.medico.model.Person;
 import com.medico.model.SearchParameterRequest;
 import com.medico.util.LocationService;
@@ -138,6 +139,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         model.loginUserId = bundle.getInt(PROFILE_ID);
+        model.loggedinUserId = bundle.getInt(PROFILE_ID);
         switch (search_by_criteria.getSelectedItemPosition()) {
             case SEARCH_BY_PERSON_ID: {
                 model.personId = new Integer(search_parameter.getText().toString());
@@ -145,6 +147,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
             break;
             case SEARCH_BY_PERSON_NAME: {
                 model.personName = search_parameter.getText().toString();
+                model.clinicName = search_parameter.getText().toString();
             }
             break;
             case SEARCH_BY_MOBILE_NUMBER: {
@@ -220,9 +223,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         Integer profileRole = bundle.getInt(PROFILE_ROLE);
         Integer searchRole = bundle.getInt(SEARCH_ROLE);
         Integer appointmentId = bundle.getInt(APPOINTMENT_ID);
+        Integer search_type = bundle.getInt(SETTING_VIEW_ID);
         update();
-        if(isValid(search_by_criteria.getSelectedItemPosition())) {
-            if (searchRole == PATIENT || searchRole == ASSISTANT) {
+        if(isValid(search_by_criteria.getSelectedItemPosition()))
+        {
+            if ((search_type == PATIENT_SETTING_VIEW ||search_type == ASSISTANT_SETTING_VIEW ) && (searchRole == PATIENT || searchRole == ASSISTANT))
+            {
 
 
                 switch (search_by_criteria.getSelectedItemPosition()) {
@@ -304,9 +310,81 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
 
             }
-            else if (searchRole == DOCTOR)
+            else if (search_type == DOCTOR_SETTING_VIEW && searchRole == DOCTOR)
             {
 
+            }
+            else if (search_type == CLINIC_SETTING_VIEW && searchRole == CLINIC)
+            {
+                switch (search_by_criteria.getSelectedItemPosition()) {
+                    case SEARCH_BY_PERSON_ID: {
+                        model.clinicId = new Integer(search_parameter.getText().toString());
+                        api.searchClinicById(model, new Callback<Clinic1>() {
+                            @Override
+                            public void success(Clinic1 s, Response response) {
+                                List<Clinic1> searchList = new ArrayList<Clinic1>();
+                                searchList.add(s);
+                                showClinicResult(searchList);
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+                    }
+                    break;
+                    case SEARCH_BY_PERSON_NAME: {
+                        api.searchClinic(model, new Callback<List<Clinic1>>() {
+                            @Override
+                            public void success(List<Clinic1> s, Response response) {
+                                showClinicResult(s);
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    break;
+                    case SEARCH_BY_MOBILE_NUMBER: {
+                        api.searchClinic(model, new Callback<List<Clinic1>>() {
+                            @Override
+                            public void success(List<Clinic1> s, Response response) {
+                                showClinicResult(s);
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+                    }
+                    break;
+
+                    case SEARCH_BY_PERSON_EMAIL_ID: {
+                        api.searchClinic(model, new Callback<List<Clinic1>>() {
+                            @Override
+                            public void success(List<Clinic1> s, Response response) {
+                                showClinicResult(s);
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    break;
+                    case SEARCH_BY_PERSON_SPECIALITY: {
+                        api.searchClinic(model, new Callback<List<Clinic1>>() {
+                            @Override
+                            public void success(List<Clinic1> s, Response response) {
+                                showClinicResult(s);
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+                    }
+
+                }
             }
         }
     }
@@ -335,6 +413,13 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         SearchPersonListView personListView = new SearchPersonListView();
         personListView.setModel(result);
         personListView.setAdapter(adapter,adapterParameter);
+        FragmentTransaction fft = getFragmentManager().beginTransaction();
+        fft.add(R.id.service, personListView).addToBackStack(null).commit();
+    }
+    private void showClinicResult(List<Clinic1> result)
+    {
+        SearchClinicListView personListView = new SearchClinicListView();
+        personListView.setModel(result);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
     }

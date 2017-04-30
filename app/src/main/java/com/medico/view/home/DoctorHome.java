@@ -102,11 +102,32 @@ public class DoctorHome extends HomeActivity
                 bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
                 bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
                 bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.PATIENT_SETTING_VIEW);
                 Intent intObj = new Intent(DoctorHome.this, ManageHomeView.class);
                 intObj.putExtras(bundle);
                 startActivity(intObj);
                 onPause();
              }
+        });
+        clinicSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.CLINIC_SETTING_VIEW);
+                Intent intObj = new Intent(DoctorHome.this, ManageHomeView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
+            }
         });
         fragment = new DoctorMenusManage();
         fragmentManger = getFragmentManager();
@@ -128,16 +149,6 @@ public class DoctorHome extends HomeActivity
         dList.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
         dList.setDividerHeight(1);
 
-        clinicSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-
-//                fragment = new ShowClinicSpecialities();
-//                fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-            }
-        });
         drawerButton = (Button) findViewById(R.id.drawar_button);
         drawerButton.setVisibility(View.VISIBLE);
         drawerButton.setOnClickListener(new View.OnClickListener() {

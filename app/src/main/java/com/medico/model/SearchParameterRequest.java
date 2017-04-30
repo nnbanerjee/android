@@ -8,7 +8,7 @@ public class SearchParameterRequest
 {
     public Double lattitude;
     public Double longitude;
-    public Double radius = 10.0;
+    public Double radius;
     public String daysOfWeek;
     public String gender = "M";
     public Long timeToStart;
@@ -16,13 +16,15 @@ public class SearchParameterRequest
     public String speciality;
     public String country;
     public Integer personId;
+    public Integer clinicId;
     public String emailAddr;
     public String mobileNum;
     public String personName;
+    public String clinicName;
     public String city;
-    public Integer reqId;
     public int page = 1;
-    public int rows = 10;
+    public int rows = 100;
     public int role = 0;
     public Integer loginUserId;
+    public Integer loggedinUserId;
 }

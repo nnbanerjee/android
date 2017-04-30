@@ -10,6 +10,7 @@ import com.medico.model.AppointmentStatusRequest;
 import com.medico.model.Clinic1;
 import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.ClinicId;
+import com.medico.model.ClinicPersonRequest;
 import com.medico.model.ClinicSlotDetails;
 import com.medico.model.Country;
 import com.medico.model.CustomProcedureTemplate1;
@@ -104,6 +105,12 @@ public interface MyApi {
 
     @POST("/searchPerson")
     void searchPersonById(@Body SearchParameterRequest param, Callback<Person> cb);
+
+    @POST("/searchClinic")
+    void searchClinic(@Body SearchParameterRequest param, Callback<List<Clinic1>> cb);
+
+    @POST("/searchClinic")
+    void searchClinicById(@Body SearchParameterRequest param, Callback<Clinic1> cb);
 
     @POST("/getSupportedCountryList")
     void getSupportedCountryList(@Body ProfileId param, Callback<List<Country>> cb);
@@ -655,6 +662,11 @@ public interface MyApi {
 
     @POST("/addPersonLinkage")  
     void addPersonLinkage(@Body LinkedPersonRequest param, Callback<ResponseCodeVerfication> callback);
+
+    @POST("/addClinic")
+    void addClinic(@Body ClinicPersonRequest param, Callback<ResponseCodeVerfication> callback);
+    @POST("/removeClinic")
+    void removeClinic(@Body ClinicPersonRequest param, Callback<ResponseCodeVerfication> callback);
 
     @POST("/getAllDependentsDelegates")
     void getAllDependentsDelegates(@Body DependentDelegatePersonRequest param, Callback<List<DependentDelegatePerson>> callback);

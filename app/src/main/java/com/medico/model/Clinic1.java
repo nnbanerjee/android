@@ -33,6 +33,7 @@ public class Clinic1
     public Integer recommendations;
     public Integer numberOfDoctors;
     public Integer numberOfServices;
+    public Byte linkedWith;
 
     private boolean isChanged = true;
 
