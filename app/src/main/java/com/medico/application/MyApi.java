@@ -31,6 +31,7 @@ import com.medico.model.DoctorId1;
 import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
 import com.medico.model.DoctorProfile;
+import com.medico.model.DoctorReview;
 import com.medico.model.DoctorShortProfile;
 import com.medico.model.DoctorSlotBookings;
 import com.medico.model.FileUpload;
@@ -151,8 +152,13 @@ public interface MyApi {
     void getFinanceSummaryDetails(@Body FinanceReportRequest param, Callback<List<FinanceDetails>> cb);
     @POST("/getAllReviews1")
     void getReviewsForDoctor(@Body DoctorId1 param, Callback<List<PatientReview>> cb);
+
+    @POST("/getAllReviewsForPatient")
+    void getAllReviewsForPatient(@Body PatientId param, Callback<List<DoctorReview>> cb);
+
     @POST("/setMedicineAlarm")
     void setMedicineAlarm(@Body MedicineStatusRequest param, Callback<ResponseCodeVerfication> cb);
+
     @POST("/setDiagnosticTestAlarm")
     void setDiagnosticTestAlarm(@Body DiagnosticStatusRequest param, Callback<ResponseCodeVerfication> cb);
 

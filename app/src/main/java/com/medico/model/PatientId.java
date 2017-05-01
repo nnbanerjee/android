@@ -18,4 +18,6 @@ public class PatientId {
     }
 
     private Integer patientId;
+    private Integer page = 1;
+    private Integer rows = 100;
 }

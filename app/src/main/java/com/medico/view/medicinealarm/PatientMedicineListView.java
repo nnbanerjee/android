@@ -142,6 +142,7 @@ public class PatientMedicineListView extends ParentFragment
 //                if (patientAppointments != null && patientAppointments.upcomingAppointments != null && patientAppointments.upcomingAppointments.size() > 0)
                 {
                     patientMedicines = medicines;
+                    upcomingAppointment.callOnClick();
                 }
             }
 
