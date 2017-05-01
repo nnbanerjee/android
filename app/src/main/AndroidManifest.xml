@@ -121,6 +121,10 @@
                   android:label="Manage Appointments"
                   android:parentActivityName="com.medico.view.home.PatientHome" >
         </activity>
+        <activity android:name="com.medico.view.medicinealarm.ManageMedicineAlarm"
+                  android:label="Manage Medicines"
+                  android:parentActivityName="com.medico.view.home.PatientHome" >
+        </activity>
     </application>
 
 </manifest>

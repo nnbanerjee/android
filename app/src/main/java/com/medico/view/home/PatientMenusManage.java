@@ -14,6 +14,7 @@ import com.medico.application.R;
 import com.medico.model.PatientProfile;
 import com.medico.util.PARAM;
 import com.medico.view.appointment.ManagePatientAppointment;
+import com.medico.view.medicinealarm.ManageMedicineAlarm;
 import com.medico.view.profile.DoctorConsultations;
 
 
@@ -72,7 +73,18 @@ public class PatientMenusManage extends Fragment {
         });
         medicineAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.PATIENT_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                Intent intObj = new Intent(getActivity(), ManageMedicineAlarm.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
 
             }
         });

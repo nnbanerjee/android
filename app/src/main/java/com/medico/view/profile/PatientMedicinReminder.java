@@ -390,6 +390,7 @@ public class PatientMedicinReminder extends ParentFragment {
             autoScheduleBtn.setChecked(true);
             List<PatientMedicine.MedicineSchedule> schedule = patientMedicine.getMedicineSchedule();
             setSchedule(patientMedicine);
+            hideBusy();
 
         }
     }

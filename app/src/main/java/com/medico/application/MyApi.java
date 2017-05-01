@@ -740,6 +740,9 @@ public interface MyApi {
     @POST("/updatePatientVisitSummary")
     void updatePatientVisitSummary(@Body SummaryResponse reminderVM, Callback<ResponseCodeVerfication> response);
 
+    @POST("/getAllMedicineDetails")
+    void getAllMedicineDetails(@Body PatientId patientId, Callback<List<PatientMedicine>> response);
+
     @POST("/addPatientMedicine")
     void addPatientMedicine(@Body PatientMedicine addPatientMedicineSummary, Callback<ResponseCodeVerfication> response);
 

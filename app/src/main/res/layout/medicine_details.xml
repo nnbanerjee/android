@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <LinearLayout
+        android:id="@+id/images"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/medicine_icon"
+            android:layout_width="@dimen/default_profile_image_size"
+            android:layout_height="@dimen/default_profile_image_size"
+            android:layout_margin="@dimen/default_profile_image_margin"
+            android:background="@drawable/medicine_allopath"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layout_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/images"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/medicine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medicine Name"
+            android:textAppearance="@style/heading1.1_blue" />
+        <ImageView
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_navigate_next_black_24dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="2dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/medicine_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_name"
+            android:text="Allopathic Medicine"
+            android:textAppearance="@style/sub_heading3" />
+        <TextView
+            android:id="@+id/prescribed_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_type"
+            android:text="@string/prescribedby"
+            android:textAppearance="@style/sub_heading5"/>
+        <TextView
+            android:id="@+id/prescribed_by_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_type"
+            android:layout_toRightOf="@+id/prescribed_by"
+            android:text="Self"
+            android:textAppearance="@style/sub_heading5_light_grey"/>
+
+        <TextView
+            android:id="@+id/medicine_start_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/prescribed_by"
+            android:text="@string/medicine_start_date"
+            android:textAppearance="@style/sub_heading5"/>
+
+        <TextView
+            android:id="@+id/medicine_start_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/prescribed_by"
+            android:layout_toRightOf="@+id/medicine_start_text"
+            android:text=""
+            android:layout_marginBottom="2dp"
+            android:textAppearance="@style/sub_heading5_light_grey"/>
+        <TextView
+            android:id="@+id/medicine_end_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_start_text"
+            android:text="@string/medicine_end_date"
+            android:textAppearance="@style/sub_heading5"/>
+
+        <TextView
+            android:id="@+id/medicine_end_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_start_text"
+            android:layout_toRightOf="@+id/medicine_end_text"
+            android:text=""
+            android:layout_marginBottom="2dp"
+            android:textAppearance="@style/sub_heading5_light_grey"/>
+        <TextView
+            android:id="@+id/medicine_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_end_text"
+            android:text="@string/medicine_status"
+            android:textAppearance="@style/sub_heading5"/>
+
+        <TextView
+            android:id="@+id/medicine_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/medicine_end_text"
+            android:layout_toRightOf="@+id/medicine_status_text"
+            android:text="Active"
+            android:layout_marginBottom="2dp"
+            android:textAppearance="@style/sub_heading5_light_grey"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/slider_on"
+            android:gravity="center"
+            android:id="@+id/change_btn"
+            android:padding="3dp"
+            android:layout_below="@+id/medicine_start_text"
+            android:layout_alignParentRight="true"
+            style="@style/body11_blue_button_style"
+            android:layout_marginRight="10dp"
+            android:text=""
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clock_blue"
+            android:gravity="center"
+            android:id="@+id/alarm_button"
+            android:padding="3dp"
+            android:layout_below="@+id/medicine_start_text"
+            android:layout_toLeftOf="@+id/change_btn"
+            style="@style/body11_blue_button_style"
+            android:layout_marginRight="10dp"
+            android:text=""
+            android:visibility="visible"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

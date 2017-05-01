@@ -1,8 +1,8 @@
 package com.medico.model;
 
-import java.util.List;
-
 import com.medico.util.PARAM;
+
+import java.util.List;
 
 /**
  * Created by Narendra on 05-02-2017.
@@ -304,8 +304,8 @@ public class PatientMedicine
             canBeSaved = false;
         else if(patientId == null || patientId.intValue() > 0 == false)
             canBeSaved = false;
-        else if(doctorId == null || doctorId.intValue() > 0 == false)
-            canBeSaved = false;
+//        else if(doctorId == null || doctorId.intValue() > 0 == false)
+//            canBeSaved = false;
         else if(loggedinUserId == null || loggedinUserId.intValue() > 0 == false)
             canBeSaved = false;
 
