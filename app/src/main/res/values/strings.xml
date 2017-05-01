@@ -562,6 +562,10 @@
        <item>91</item>
        <item>92</item>
    </string-array>
+    <string name="clinic_search_result">Search Result</string>
+    <string name="clinic_search">Clinic Search</string>
+    <string name="doctor_search_result">Search Result</string>
+    <string name="doctor_search">Doctor Search</string>
     <string name="patient_search_result">Search Result</string>
     <string name="patient_search">Patient Search</string>
    <string name="patients_profiles">Patient Profiles</string>

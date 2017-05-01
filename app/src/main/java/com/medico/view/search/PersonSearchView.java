@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.medico.adapter.HomeAdapter;
 import com.medico.application.R;
 import com.medico.model.Clinic1;
+import com.medico.model.DoctorSearch;
+import com.medico.model.DoctorSearchResult;
 import com.medico.model.Person;
 import com.medico.model.SearchParameterRequest;
 import com.medico.util.LocationService;
@@ -61,8 +63,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
         setHasOptionsMenu(true);
+        Bundle bundle = getActivity().getIntent().getExtras();
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
+        if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
+            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
+        else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
+            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
         country_list = (TextView) view.findViewById(R.id.country_list);
         city_list = (TextView) view.findViewById(R.id.city_list);
         search_parameter = (EditText) view.findViewById(R.id.search_parameter);
@@ -312,7 +318,31 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
             }
             else if (search_type == DOCTOR_SETTING_VIEW && searchRole == DOCTOR)
             {
-
+                model.role = 1;
+                switch (search_by_criteria.getSelectedItemPosition())
+                {
+                    case SEARCH_BY_PERSON_ID:
+                    case SEARCH_BY_PERSON_NAME:
+                    case SEARCH_BY_PERSON_EMAIL_ID:
+                    case SEARCH_BY_MOBILE_NUMBER:
+                    case SEARCH_BY_PERSON_SPECIALITY:
+                    {
+                        api.searchDoctor(model, new Callback<List<DoctorSearchResult>>() {
+                            @Override
+                            public void success(List<DoctorSearchResult> s, Response response) {
+//                                Toast.makeText(getActivity(), "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
+                                showDoctorResult(s);
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    break;
+                    default:
+                    //do nothing
+                }
             }
             else if (search_type == CLINIC_SETTING_VIEW && searchRole == CLINIC)
             {
@@ -413,6 +443,21 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         SearchPersonListView personListView = new SearchPersonListView();
         personListView.setModel(result);
         personListView.setAdapter(adapter,adapterParameter);
+        FragmentTransaction fft = getFragmentManager().beginTransaction();
+        fft.add(R.id.service, personListView).addToBackStack(null).commit();
+    }
+    private void showDoctorResult(List<DoctorSearchResult> result)
+    {
+        List<DoctorSearch> doctorSearches = new ArrayList<>();
+        for(DoctorSearchResult re : result)
+        {
+            for(DoctorSearchResult.PersonSlot slot: re.personSlotList)
+            {
+                doctorSearches.add(new DoctorSearch(slot.person,re.clinic,slot.slots));
+            }
+        }
+        SearchDoctorListView personListView = new SearchDoctorListView();
+        personListView.setModel(doctorSearches);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
     }

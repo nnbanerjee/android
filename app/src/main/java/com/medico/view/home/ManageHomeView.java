@@ -75,6 +75,14 @@ public class ManageHomeView extends ParentActivity {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(R.id.service, fragment).addToBackStack(null).commit();
         }
-
+        else if(bundle.getInt(PARAM.SETTING_VIEW_ID)== PARAM.DOCTOR_SETTING_VIEW)
+        {
+            bundle.putInt(PARAM.SEARCH_ROLE, PARAM.DOCTOR);
+            bundle.putInt(PARAM.SEARCH_TYPE, PARAM.SEARCH_GLOBAL);
+            getIntent().putExtras(bundle);
+            ParentFragment fragment = new PersonSearchView();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.service, fragment).addToBackStack(null).commit();
+        }
     }
 }

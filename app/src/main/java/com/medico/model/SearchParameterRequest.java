@@ -8,9 +8,9 @@ public class SearchParameterRequest
 {
     public Double lattitude;
     public Double longitude;
-    public Double radius;
+    public Double radius = 100.0;
     public String daysOfWeek;
-    public String gender = "M";
+    public Integer gender = -1;
     public Long timeToStart;
     public Long timeToEnd;
     public String speciality;

@@ -82,6 +82,7 @@
                 android:background="@drawable/manage_appointment"
                 />
             <RelativeLayout
+                android:id="@+id/appointment_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -140,6 +141,7 @@
                 android:background="@drawable/clock_blue"
                 />
             <RelativeLayout
+                android:id="@+id/alarm_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

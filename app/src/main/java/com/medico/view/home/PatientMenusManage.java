@@ -33,9 +33,9 @@ public class PatientMenusManage extends Fragment {
 
         View view = inflater.inflate(R.layout.patient_home_menu,container,false);
         RelativeLayout doctorConsultation = (RelativeLayout) view.findViewById(R.id.doctorConsultation);
-        RelativeLayout manageAppointment = (RelativeLayout) view.findViewById(R.id.manageAppointment);
-        RelativeLayout medicineAlarm = (RelativeLayout) view.findViewById(R.id.medicineAlarm);
-        RelativeLayout feedback_layout = (RelativeLayout) view.findViewById(R.id.medicineAlarm);
+        RelativeLayout manageAppointment = (RelativeLayout) view.findViewById(R.id.appointment_layout);
+        RelativeLayout medicineAlarm = (RelativeLayout) view.findViewById(R.id.alarm_layout);
+        RelativeLayout feedback_layout = (RelativeLayout) view.findViewById(R.id.manage_feedback);
 
         doctorsCount = (TextView)view.findViewById(R.id.doctor_count) ;
         appointmentCount = (TextView)view.findViewById(R.id.appointment_count) ;
@@ -89,7 +89,7 @@ public class PatientMenusManage extends Fragment {
 
             }
         });
-        feedback.setOnClickListener(new View.OnClickListener() {
+        feedback_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {

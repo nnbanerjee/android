@@ -2,8 +2,10 @@ package com.medico.view.home;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.medico.application.R;
 import com.medico.model.PatientId;
 import com.medico.model.PatientProfile;
 import com.medico.util.ImageLoadTask;
+import com.medico.util.PARAM;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -74,15 +77,6 @@ public class PatientHome extends HomeActivity
 //        patients = (Button) findViewById(R.id.patient_ping);
         clinicSearch = (Button) findViewById(R.id.search_clinic);
         doctorSearch = (Button) findViewById(R.id.search_doctor);
-        doctorSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-//                    fragment = new ShowSpeciality();
-//                    fragmentManger = getFragmentManager();
-//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
-            }
-        });
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,15 +114,44 @@ public class PatientHome extends HomeActivity
         int[] colors = {0, 0xFFFF0000, 0}; // red for the example
         dList.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
         dList.setDividerHeight(1);
-
+        doctorSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.DOCTOR_SETTING_VIEW);
+                Intent intObj = new Intent(PatientHome.this, ManageHomeView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
+            }
+        });
         clinicSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-
-//                fragment = new ShowClinicSpecialities();
-//                fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage_Reminder").addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.CLINIC_SETTING_VIEW);
+                Intent intObj = new Intent(PatientHome.this, ManageHomeView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();
             }
         });
         drawerButton = (Button) findViewById(R.id.drawar_button);

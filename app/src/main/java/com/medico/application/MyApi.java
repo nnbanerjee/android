@@ -32,6 +32,7 @@ import com.medico.model.DoctorIdPatientId;
 import com.medico.model.DoctorNotes;
 import com.medico.model.DoctorProfile;
 import com.medico.model.DoctorReview;
+import com.medico.model.DoctorSearchResult;
 import com.medico.model.DoctorShortProfile;
 import com.medico.model.DoctorSlotBookings;
 import com.medico.model.FileUpload;
@@ -107,6 +108,9 @@ public interface MyApi {
 
     @POST("/searchPerson")
     void searchPersonById(@Body SearchParameterRequest param, Callback<Person> cb);
+
+    @POST("/searchPerson")
+    void searchDoctor(@Body SearchParameterRequest param, Callback<List<DoctorSearchResult>> cb);
 
     @POST("/searchClinic")
     void searchClinic(@Body SearchParameterRequest param, Callback<List<Clinic1>> cb);
