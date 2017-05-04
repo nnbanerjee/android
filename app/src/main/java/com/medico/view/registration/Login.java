@@ -1,7 +1,6 @@
 package com.medico.view.registration;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -60,22 +59,28 @@ public class Login extends Fragment implements PARAM
         password = (EditText) view.findViewById(R.id.password);
         loginBtn = (Button) view.findViewById(R.id.login);
 
-        view.findViewById(R.id.login)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View arg0) {
-                        Intent intObj = new Intent(getActivity(), SigninActivity.class);
-                        startActivity(intObj);
-                    }
-                });
+//        view.findViewById(R.id.login)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View arg0) {
+//                        Intent intObj = new Intent(getActivity(), SigninActivity.class);
+//                        startActivity(intObj);
+//                    }
+//                });
 
         view.findViewById(R.id.registernow)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
 
-                        RegistrationChooser login = new RegistrationChooser();
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.lower_content, login);
-                        ft.commit();
+//                        RegistrationChooser login = new RegistrationChooser();
+//                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                        ft.replace(R.id.lower_content, login);
+//                        ft.commit();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(PROFILE_TYPE,PATIENT);
+                        Intent intObj = new Intent(getActivity(), ManageProfileRegistration.class);
+                        intObj.putExtras(bundle);
+                        startActivity(intObj);
+                        onPause();
 
 
                     }

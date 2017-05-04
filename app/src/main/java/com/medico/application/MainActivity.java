@@ -69,7 +69,8 @@ public class MainActivity extends Activity
         api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
         login = new Login();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(com.medico.application.R.id.lower_content, new Login());
+        ft.add(R.id.lower_content, new Login());
+        ft.addToBackStack(Login.class.getName());
         ft.commit();
     }
 

@@ -243,7 +243,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1"
-                android:layout_toLeftOf="@+id/endDateImg"
                 android:layout_toRightOf="@+id/endText"
                 />
 

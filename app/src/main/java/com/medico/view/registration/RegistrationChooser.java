@@ -1,14 +1,17 @@
 package com.medico.view.registration;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.medico.application.R;
 import com.medico.view.home.ParentFragment;
@@ -21,67 +24,82 @@ public class RegistrationChooser extends ParentFragment
     public static final String MyPREFERENCES = "MyPrefs";
     public SharedPreferences session;
     private EditText email;
-    private EditText password;
+    private EditText profileId;
     ProgressDialog progress;
-    ImageView doctor, assistant, patient;
+    RadioButton doctor, assistant, patient, existing_profile, create_profile;
+    Button next;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.registration_choose,
+                             final Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.registration_choose,
                 container, false);
-        doctor = (ImageView) view.findViewById(R.id.doctor);
-        assistant = (ImageView) view.findViewById(R.id.assistant);
-        patient = (ImageView) view.findViewById(R.id.patient);
-
-      //  getActivity().getActionBar().hide();
-
-        assistant.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-
-                Intent intObj = new Intent(getActivity(), SigninActivityAssistance.class);
-                startActivity(intObj);
-//                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_on));
-//                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_off) );
-//                patient.setBackground(getResources().getDrawable(R.drawable.patient_off) );
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Registration Types");
+        doctor = (RadioButton) view.findViewById(R.id.doctor);
+        assistant = (RadioButton) view.findViewById(R.id.assistant);
+        patient = (RadioButton) view.findViewById(R.id.patient);
+        profileId = (EditText) view.findViewById(R.id.profile_id);
+        existing_profile = (RadioButton) view.findViewById(R.id.existing_profile);
+        create_profile = (RadioButton) view.findViewById(R.id.create_profile);
+        next = (Button) view.findViewById(R.id.next);
+        create_profile.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                doctor.setEnabled(true);
+                assistant.setEnabled(true);
+                patient.setEnabled(true);
+                profileId.setEnabled(false);
             }
         });
-
-        doctor.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                            /*Intent intObj = new Intent(getActivity(), SigninActivity.class);
-                            startActivity(intObj);*/
-                Intent intObj = new Intent(getActivity(), SigninActivityDoctor.class);
-                startActivity(intObj);
-//                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_off));
-//                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_on) );
-//                patient.setBackground(getResources().getDrawable(R.drawable.patient_off));
+        existing_profile.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                doctor.setEnabled(false);
+                assistant.setEnabled(false);
+                patient.setEnabled(false);
+                profileId.setEnabled(true);
             }
         });
-
-        patient.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                            /*Intent intObj = new Intent(getActivity(), SigninActivity.class);
-                            startActivity(intObj);*/
-
-                Intent intObj = new Intent(getActivity(), SigninActivity.class);
-                startActivity(intObj);
-//                assistant.setBackground(getResources().getDrawable(R.drawable.assistant_off));
-//                doctor.setBackground(getResources().getDrawable(R.drawable.doctor_off) );
-//                patient.setBackground(getResources().getDrawable(R.drawable.patient_on));
-            }
-        });
-
-
-        view.findViewById(R.id.next)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View arg0) {
-                            /*Intent intObj = new Intent(getActivity(), SigninActivity.class);
-                            startActivity(intObj);*/
+        next.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(create_profile.isChecked())
+                {
+                    if(patient.isChecked())
+                    {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(PROFILE_ROLE,PATIENT);
+                        getActivity().getIntent().putExtras(bundle);
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        ParentFragment assistantListView = new PersonProfileRegistrationView();
+                        FragmentTransaction fft1 = getFragmentManager().beginTransaction();
+                        fft1.add(R.id.service, assistantListView,PersonProfileRegistrationView.class.getName()).addToBackStack(null).commit();
                     }
-                });
+                    else
+                    {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(PROFILE_ROLE,DOCTOR);
+                        getActivity().getIntent().putExtras(bundle);
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        ParentFragment assistantListView = new DoctorProfileRegistrationView();
+                        FragmentTransaction fft1 = getFragmentManager().beginTransaction();
+                        fft1.replace(R.id.service, assistantListView,DoctorProfileRegistrationView.class.getName()).commit();
+                    }
+                }
+                else
+                {
 
-
+                }
+            }
+        });
         return view;
 
     }

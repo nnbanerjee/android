@@ -404,196 +404,196 @@
     </string-array>
     <string name="image_base_url">""</string>
 
-    <!--    <string name="base_url">http://54.84.103.54:9000/</string>-->
+    <!--   <string name="base_url">http://54.84.103.54:9000/</string>
+    <string name="base_url">http://192.168.42.11:9000/</string>-->
+   <string name="base_url">http://192.168.42.163:9000/</string>
 
-   <string name="base_url">http://192.168.42.11:9000/</string>
+    <string name="listcolor">#CCFFFF</string>
+    <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>
+    <string name="Failed">Request Failed!!</string>
+    <string name="confirm_logout">Are you sure you want to Logout?</string>
+    <string name="Not_Visited">"Not Visited "</string>
+    <string name="enter_mobile_code">Enter Mobile Code</string>
+    <string name="enter_email_code">Enter Email Code</string>
+    <string name="verify_account">Verify Account</string>
+    <string name="failed_to_send_code">Failed to send Verification code.</string>
+    <string name="account_verified_succesfully">Your Account Verified Successfully</string>
+    <string name="doctor_registered_succesfully">Doctor Register Successfully</string>
 
-   <string name="listcolor">#CCFFFF</string>
-   <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>
-   <string name="Failed">Request Failed!!</string>
-   <string name="confirm_logout">Are you sure you want to Logout?</string>
-   <string name="Not_Visited">"Not Visited "</string>
-   <string name="enter_mobile_code">Enter Mobile Code</string>
-   <string name="enter_email_code">Enter Email Code</string>
-   <string name="verify_account">Verify Account</string>
-   <string name="failed_to_send_code">Failed to send Verification code.</string>
-   <string name="account_verified_succesfully">Your Account Verified Successfully</string>
-   <string name="doctor_registered_succesfully">Doctor Register Successfully</string>
+    <string name="email_already_exists">Your Email Id Is Already Exists</string>
+    <string name="mobile_already_exists">Your Mobile No Is Already Exists</string>
+    <string name="mobile_email_already_exists"><![CDATA[Mobile NO & Email ID Already Exists]]></string>
+    <string name="invalid_email">Enter Mobile Number Properly</string>
+    <string name="account_verified_successfully">Your Account Verified Successfully</string>
+    <string name="doctor_registered_success">Doctor Registered Successfully</string>
+    <string name="patient_registered_success">Patient Registered Successfully</string>
+    <string name="assistant_registered_success">Assistant Registered Successfully</string>
+    <string name="verifyCode_invalid">Code is not correct!</string>
+    <string name="header_verify_code">Thank you for online registration of Medico Personal application. To complete the registration, please enter the six digit registration confirmation code sent to your registered mobile number.</string>
+    <string name="resend_code">Please wait for the registration code to arrive over SMS to your mobile, it may take 15 minutes. Not received the registration code SMS yet? Resend the code , click here</string>
+    <string name="request_success">Request Send Successfully !!!</string>
 
-   <string name="email_already_exists">Your Email Id Is Already Exists</string>
-   <string name="mobile_already_exists">Your Mobile No Is Already Exists</string>
-   <string name="mobile_email_already_exists"><![CDATA[Mobile NO & Email ID Already Exists]]></string>
-   <string name="invalid_email">Enter Mobile Number Properly</string>
-   <string name="account_verified_successfully">Your Account Verified Successfully</string>
-   <string name="doctor_registered_success">Doctor Registered Successfully</string>
-   <string name="patient_registered_success">Patient Registered Successfully</string>
-   <string name="assistant_registered_success">Assistant Registered Successfully</string>
-   <string name="verifyCode_invalid">Code is not correct!</string>
-   <string name="header_verify_code">Thank you for online registration of Medico Personal application. To complete the registration, please enter the six digit registration confirmation code sent to your registered mobile number.</string>
-   <string name="resend_code">Please wait for the registration code to arrive over SMS to your mobile, it may take 15 minutes. Not received the registration code SMS yet? Resend the code , click here</string>
-   <string name="request_success">Request Send Successfully !!!</string>
+    <string-array name="minute_list">
+        <item>00</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+    </string-array>
 
-   <string-array name="minute_list">
-       <item>00</item>
-       <item>30</item>
-       <item>45</item>
-       <item>60</item>
-   </string-array>
+    <string-array name="hour_list">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
 
-   <string-array name="hour_list">
-       <item>01</item>
-       <item>02</item>
-       <item>03</item>
-       <item>04</item>
-       <item>05</item>
-       <item>06</item>
-       <item>07</item>
-       <item>08</item>
-       <item>09</item>
-       <item>10</item>
-       <item>11</item>
-       <item>12</item>
-   </string-array>
+    <string-array name="category_data_list">
+        <item>Prescription </item>
+        <item>Payment Receipt</item>
+        <item>Prescription</item>
+        <item>Invoices </item>
+        <item>Store Bill</item>
+        <item>Medical Report</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="medical_report">
 
-   <string-array name="category_data_list">
-       <item>Prescription </item>
-       <item>Payment Receipt</item>
-       <item>Prescription</item>
-       <item>Invoices </item>
-       <item>Store Bill</item>
-       <item>Medical Report</item>
-       <item>Others</item>
-   </string-array>
-   <string-array name="medical_report">
+        <item>Blood Report</item>
+        <item>Urine Report</item>
+        <item>Cancer Report</item>
+        <item>HIV Report</item>
+        <item>X-Ray Report</item>
+        <item>Skin Report</item>
+        <item>Hair Report</item>
+        <item>Eye Report</item>
+        <item>Nose Report</item>
+        <item>MRI Report</item>
+        <item>Simple Report</item>
+        <item>Ultrasound Report </item>
+    </string-array>
+    <string-array name="type_of_docs">
 
-       <item>Blood Report</item>
-       <item>Urine Report</item>
-       <item>Cancer Report</item>
-       <item>HIV Report</item>
-       <item>X-Ray Report</item>
-       <item>Skin Report</item>
-       <item>Hair Report</item>
-       <item>Eye Report</item>
-       <item>Nose Report</item>
-       <item>MRI Report</item>
-       <item>Simple Report</item>
-       <item>Ultrasound Report </item>
-   </string-array>
-   <string-array name="type_of_docs">
+        <item>Blood Report</item>
+        <item>Urine Report</item>
+        <item>Cancer Report</item>
+        <item>HIV Report</item>
+        <item>X-Ray Report</item>
+        <item>Skin Report</item>
+        <item>Hair Report</item>
+        <item>Eye Report</item>
+        <item>Nose Report</item>
+        <item>MRI Report</item>
+        <item>Simple Report</item>
+        <item>Ultrasound Report </item>
+    </string-array>
+    <string-array name="online_appointment">
+        <item>Select</item>
+        <item>Always</item>
+        <item>Always except current slot</item>
+        <item>Always except current day</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="clinic_type_list">
+        <item>Lab</item>
+        <item>Clinic</item>
+        <item>Hospital</item>
+    </string-array>
 
-       <item>Blood Report</item>
-       <item>Urine Report</item>
-       <item>Cancer Report</item>
-       <item>HIV Report</item>
-       <item>X-Ray Report</item>
-       <item>Skin Report</item>
-       <item>Hair Report</item>
-       <item>Eye Report</item>
-       <item>Nose Report</item>
-       <item>MRI Report</item>
-       <item>Simple Report</item>
-       <item>Ultrasound Report </item>
-   </string-array>
-   <string-array name="online_appointment">
-       <item>Select</item>
-       <item>Always</item>
-       <item>Always except current slot</item>
-       <item>Always except current day</item>
-       <item>Never</item>
-   </string-array>
-   <string-array name="clinic_type_list">
-       <item>Lab</item>
-       <item>Clinic</item>
-       <item>Hospital</item>
-   </string-array>
+    <string-array name="am_pm">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+    <string-array name="doctor_availability">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+    <string-array name="practice_name">
+        <item>Allopathic</item>
+        <item>Homeopathic </item>
+        <item>Ayurvedic </item>
+    </string-array>
+    <string-array name="countries">
+        <item>Afghanistan</item>
+        <item>Algeria</item>
+        <item>Angola</item>
+        <item>Argentina</item>
+        <item>Australia</item>
+        <item>Azerbaijan</item>
+        <item>Armenia</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belarus</item>
+        <item>Belize</item>
+        <item>Cambodia</item>
+        <item>Cameroon</item>
+        <item>Cape Verde</item>
+        <item>Chad</item>
+        <item>China</item>
+        <item>Chile</item>
+        <item>Comoros</item>
+        <item>Denmark</item>
+        <item>Djibouti</item>
+        <item>Dominica</item>
+        <item>Dominican Republic</item>
+        <item>Gabon</item>
+        <item>Georgia</item>
+        <item>Germany</item>
+        <item>Grenada</item>
+        <item>Guatemala</item>
+        <item>Guinea</item>
+        <item>Iceland</item>
+        <item>India</item>
+        <item>Iran</item>
+        <item>Indonesia</item>
+        <item>Israel</item>
+        <item>Italy</item>
+        <item>Iran</item>
 
-   <string-array name="am_pm">
-       <item>AM</item>
-       <item>PM</item>
-   </string-array>
-   <string-array name="doctor_availability">
-       <item>AM</item>
-       <item>PM</item>
-   </string-array>
-   <string-array name="practice_name">
-       <item>Allopathic</item>
-       <item>Homeopathic </item>
-       <item>Ayurvedic </item>
-   </string-array>
-   <string-array name="countries">
-       <item>Afghanistan</item>
-       <item>Algeria</item>
-       <item>Angola</item>
-       <item>Argentina</item>
-       <item>Australia</item>
-       <item>Azerbaijan</item>
-       <item>Armenia</item>
-       <item>Bangladesh</item>
-       <item>Barbados</item>
-       <item>Belarus</item>
-       <item>Belize</item>
-       <item>Cambodia</item>
-       <item>Cameroon</item>
-       <item>Cape Verde</item>
-       <item>Chad</item>
-       <item>China</item>
-       <item>Chile</item>
-       <item>Comoros</item>
-       <item>Denmark</item>
-       <item>Djibouti</item>
-       <item>Dominica</item>
-       <item>Dominican Republic</item>
-       <item>Gabon</item>
-       <item>Georgia</item>
-       <item>Germany</item>
-       <item>Grenada</item>
-       <item>Guatemala</item>
-       <item>Guinea</item>
-       <item>Iceland</item>
-       <item>India</item>
-       <item>Iran</item>
-       <item>Indonesia</item>
-       <item>Israel</item>
-       <item>Italy</item>
-       <item>Iran</item>
+    </string-array>
+    <string-array name="STD_CODE">
+        <item>91</item>
+        <item>92</item>
+    </string-array>
+     <string name="clinic_search_result">Search Result</string>
+     <string name="clinic_search">Clinic Search</string>
+     <string name="doctor_search_result">Search Result</string>
+     <string name="doctor_search">Doctor Search</string>
+     <string name="patient_search_result">Search Result</string>
+     <string name="patient_search">Patient Search</string>
+    <string name="patients_profiles">Patient Profiles</string>
+    <string name="patient_profile">Patient Profile</string>
+    <string name="doctor_profile">Doctor Profile</string>
 
-   </string-array>
-   <string-array name="STD_CODE">
-       <item>91</item>
-       <item>92</item>
-   </string-array>
-    <string name="clinic_search_result">Search Result</string>
-    <string name="clinic_search">Clinic Search</string>
-    <string name="doctor_search_result">Search Result</string>
-    <string name="doctor_search">Doctor Search</string>
-    <string name="patient_search_result">Search Result</string>
-    <string name="patient_search">Patient Search</string>
-   <string name="patients_profiles">Patient Profiles</string>
-   <string name="patient_profile">Patient Profile</string>
-   <string name="doctor_profile">Doctor Profile</string>
+    <string name="alarm_notes">Alarm Notes</string>
+    <string name="chat_message">Chat Message</string>
+    <string name="search_doctor">Search Doctor</string>
+    <string name="search_patient">Search Patient</string>
 
-   <string name="alarm_notes">Alarm Notes</string>
-   <string name="chat_message">Chat Message</string>
-   <string name="search_doctor">Search Doctor</string>
-   <string name="search_patient">Search Patient</string>
-
-   <string name="search_clinic_lab">Search Clinic/Lab</string>
-    <string name="appointment_status">Appointment Status : </string>
-    <string name="appointment_type">Appointment Type : </string>
-   <string name="manage_appointments">Manage Appointments</string>
-   <string name="manage_finance">Manage Finance</string>
-   <string name="feedback">Feedback</string>
-   <string name="doctor_consultations">Doctor Consultations</string>
-   <string name="medicine_alarm">Medicine Alarm</string>
-    <string name="appointment">Appointment Date : </string>
-   <string name="last_visited">Last Visited : </string>
-   <string name="upcoming_appointment">Upcoming Appointment : </string>
-    <string name="bookappointment">BOOK</string>  
-   <string name="appointments">Appointments</string>
-   <string name="profile_details">Profile Details</string>
-   <string name="no_visit">None</string>
-    <string name="prescribedby">Prescribed by : </string>
-    <string name="medicine_start_date">Start Date : </string>
-    <string name="medicine_end_date">End Date :</string>
-    <string name="medicine_status">Status : </string>
-</resources>
+    <string name="search_clinic_lab">Search Clinic/Lab</string>
+     <string name="appointment_status">Appointment Status : </string>
+     <string name="appointment_type">Appointment Type : </string>
+    <string name="manage_appointments">Manage Appointments</string>
+    <string name="manage_finance">Manage Finance</string>
+    <string name="feedback">Feedback</string>
+    <string name="doctor_consultations">Doctor Consultations</string>
+    <string name="medicine_alarm">Medicine Alarm</string>
+     <string name="appointment">Appointment Date : </string>
+    <string name="last_visited">Last Visited : </string>
+    <string name="upcoming_appointment">Upcoming Appointment : </string>
+     <string name="bookappointment">BOOK</string>
+    <string name="appointments">Appointments</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="no_visit">None</string>
+     <string name="prescribedby">Prescribed by : </string>
+     <string name="medicine_start_date">Start Date : </string>
+     <string name="medicine_end_date">End Date :</string>
+     <string name="medicine_status">Status : </string>
+ </resources>

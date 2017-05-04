@@ -21,48 +21,54 @@
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/search_name"
+                android:id="@+id/create_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
+                android:checked="true"
                 android:text="Create new Profile"
                />
 
-            <RelativeLayout
-                android:id="@+id/layout_hidden"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@+id/group"
-                android:layout_margin="10dp"
-                android:visibility="visible">
+                <RadioGroup
+                    android:id="@+id/layout_hidden"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/create_profile"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="25dp"/>
+                    <RadioButton
+                        android:id="@+id/doctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doctor"
+                        android:checked="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="25dp"/>
 
-                <ImageView
-                    android:id="@+id/patient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/doctor"/>
+                    <RadioButton
+                        android:id="@+id/patient"
+                        android:text="Patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@+id/doctor"/>
 
-                <ImageView
-                    android:id="@+id/assistant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/patient"/>
-            </RelativeLayout>
+                    <RadioButton
+                        android:id="@+id/assistant"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@+id/patient"/>
+                </RadioGroup>
 
             <RadioButton
-                android:id="@+id/search_phone"
+                android:id="@+id/existing_profile"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Profile Already Exists"
@@ -88,7 +94,7 @@
                 android:text="Profile ID *" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/profile_id"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/name_textViewView"
@@ -103,11 +109,14 @@
 
             <Button
                 android:id="@+id/next"
+                android:background="@drawable/button_shape_blue_fill"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:textColor="@color/white"
+                android:textAppearance="@style/heading2_white"
+                android:layout_below="@+id/profile_id"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="100dp"
                 android:text="NEXT"
                 android:textAlignment="center"
 
