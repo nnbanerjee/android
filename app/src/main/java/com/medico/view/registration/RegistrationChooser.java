@@ -81,7 +81,7 @@ public class RegistrationChooser extends ParentFragment
                         FragmentManager manager = getActivity().getFragmentManager();
                         ParentFragment assistantListView = new PersonProfileRegistrationView();
                         FragmentTransaction fft1 = getFragmentManager().beginTransaction();
-                        fft1.add(R.id.service, assistantListView,PersonProfileRegistrationView.class.getName()).addToBackStack(null).commit();
+                        fft1.add(R.id.service, assistantListView,PersonProfileRegistrationView.class.getName()).addToBackStack(PersonProfileRegistrationView.class.getName()).commit();
                     }
                     else
                     {
@@ -91,7 +91,7 @@ public class RegistrationChooser extends ParentFragment
                         FragmentManager manager = getActivity().getFragmentManager();
                         ParentFragment assistantListView = new DoctorProfileRegistrationView();
                         FragmentTransaction fft1 = getFragmentManager().beginTransaction();
-                        fft1.replace(R.id.service, assistantListView,DoctorProfileRegistrationView.class.getName()).commit();
+                        fft1.add(R.id.service, assistantListView,DoctorProfileRegistrationView.class.getName()).addToBackStack(PersonProfileRegistrationView.class.getName()).commit();
                     }
                 }
                 else

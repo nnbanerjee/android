@@ -51,7 +51,7 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
     public static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(7.798000, 68.14712), new LatLng(37.090000, 97.34466));
 //    LocationService locationService = LocationService.getLocationManager(activity);
 
-    public GeoUtility(final Activity activity, AutoCompleteTextView geoField, final TextView country, TextView city, Button deletebutton, Button currentbutton, final Object profile)
+    public GeoUtility(final Activity activity, AutoCompleteTextView geoField, final TextView country, final TextView city, Button deletebutton, Button currentbutton, final Object profile)
     {
         this.activity = activity;
         mGoogleApiClient = GeoClient.getInstance(activity).getGeoApiClient();
@@ -99,38 +99,40 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
         });
         Button currentButton = (Button) currentbutton;
 
-        currentButton.setOnClickListener(new View.OnClickListener() {
+        currentButton.setOnClickListener(new View.OnClickListener()
+        {
 
             @Override
 
-            public void onClick(View v) {
-//                LocationService locationService = LocationService.getLocationManager(activity);
-//                Toast.makeText(activity, "Longitude " + locationService.longitude + " Latitude " + locationService.latitude, Toast.LENGTH_LONG).show();
-//            }
+            public void onClick(View v)
+            {
+                LocationService location = LocationService.getLocationManager(activity);
+                mAutocompleteView.setText(location.completeAddress);
+                countryView.setText(location.country);
+                cityView.setText(location.city);
 
-//                LocationManager locationManager = (LocationManager)activity.getSystemService(Context.LOCATION_SERVICE);
-//
-//                Criteria locationCritera = new Criteria();
-//                locationCritera.setAccuracy(Criteria.ACCURACY_COARSE);
-//                locationCritera.setAltitudeRequired(false);
-//                locationCritera.setBearingRequired(false);
-//                locationCritera.setCostAllowed(true);
-//                locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
-//
-//                String providerName = locationManager.getBestProvider(locationCritera, true);
-//
-//                if (providerName != null && locationManager.isProviderEnabled(providerName)) {
-//                    // Provider is enabled
-//                    locationManager.requestLocationUpdates(providerName, 20000, 100, new Loca );
-//                } else {
-//                    // Provider not enabled, prompt user to enable it
-//                    Toast.makeText(activity, R.string.please_turn_on_gps, Toast.LENGTH_LONG).show();
-//                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                    activity.startActivity(myIntent);
-//                }
-//
-//                Toast.makeText(activity, "Longitude " + locationService.longitude + " Latitude " + locationService.latitude, Toast.LENGTH_LONG).show();
-//
+                if(profile instanceof Person)
+                {
+                    Person person = (Person)profile;
+                    person.setAddress(location.completeAddress);
+                    person.setRegion(location.region);
+                    person.setLocationLat(location.latitude);
+                    person.setLocationLong(location.longitude);
+                    person.setCity(location.city);
+                    person.setCountry(location.country);
+                    person.setIsoCountry(location.countryCode);
+                }
+                else if(profile instanceof Clinic1)
+                {
+                    Clinic1 person = (Clinic1)profile;
+                    person.address = location.completeAddress;
+                    person.locationLat = location.latitude;
+                    person.locationLong = location.longitude;
+                    person.city = location.city;
+                    person.country = location.country;
+                    person.isoCountry=location.countryCode;
+                }
+
             }
 
         });
@@ -266,8 +268,11 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
                 Person person = (Person)profile;
                 person.setAddress(address);
                 person.setLocationLat(place.getLatLng().latitude);
+                person.setRegion(regionString);
                 person.setLocationLong(place.getLatLng().longitude);
                 person.setCity(cityString);
+                person.setCountry(countryString);
+
             }
             else if(profile instanceof Clinic1)
             {
@@ -276,6 +281,7 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
                 person.locationLat = place.getLatLng().latitude;
                 person.locationLong = place.getLatLng().longitude;
                 person.city = cityString;
+                person.country = countryString;
             }
             places.release();
 //            profile.setCountry(getCode(countryString));

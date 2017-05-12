@@ -16,7 +16,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColorHint">@color/color_blue_default</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
         <item name="android:textSize">18sp</item>
 
         <item name ="android:background">@drawable/apptheme_btn_default_holo_light</item>
@@ -54,56 +54,56 @@
         <item name = "android:fontFamily">sans-serif-bold</item>
         <item name = "android:textSize">19sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "heading1.1">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">19sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "heading2">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">17sp</item>
         <item name = "android:textStyle">normal</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "heading3">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">17sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "heading4">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "sub_heading1">
         <item name = "android:fontFamily">sans-serif-bold</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "sub_heading2">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "sub_heading3">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "sub_heading4">
         <item name = "android:fontFamily">sans-serif-light</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "sub_heading5">
         <item name = "android:fontFamily">sans-serif-medium</item>
@@ -115,86 +115,86 @@
         <item name = "android:textSize">14sp</item>
         <item name="android:typeface">serif</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body2">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body3">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">14sp</item>
         <item name="android:typeface">normal</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body4">
         <item name = "android:fontFamily">sans-serif-light</item>
         <item name = "android:textSize">14sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body4.5">
         <item name = "android:fontFamily">sans-serif-light</item>
         <item name = "android:textSize">13sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body4.6">
         <item name = "android:fontFamily">sans-serif-bold</item>
         <item name = "android:textSize">12sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body5">
         <item name = "android:fontFamily">sans-serif-bold</item>
         <item name = "android:textSize">11sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body6">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">11sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body7">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">11sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body8">
         <item name = "android:fontFamily">sans-serif-thin</item>
         <item name = "android:textSize">11sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body9">
         <item name = "android:fontFamily">sans-serif-bold</item>
         <item name = "android:textSize">10sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body10">
         <item name = "android:fontFamily">sans-serif-medium</item>
         <item name = "android:textSize">10sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body11">
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">10sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
     <style name = "body12">
         <item name = "android:fontFamily">sans-serif-thin</item>
         <item name = "android:textSize">10sp</item>
         <item name = "android:textColor">@color/primary_text_color_selector</item>
-        <item name="android:textColorHint">@color/secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
     </style>
 
     <style name = "heading1.1_blue" parent="heading1.1">

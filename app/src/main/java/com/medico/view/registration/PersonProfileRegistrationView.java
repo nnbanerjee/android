@@ -1,5 +1,6 @@
 package com.medico.view.registration;
 
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -33,6 +36,7 @@ import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.view.home.ParentFragment;
+import com.medico.view.settings.FileUploadView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,7 +59,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
     TextView personId;
-    EditText name, email, dob, country, city,allergicTo, mobile;
+    EditText name, email, dob, country, city,allergicTo, mobile,password;
     Spinner mobile_country,bloodGroup;
     Spinner gender_spinner;
     ImageButton dob_calendar;
@@ -63,6 +67,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
+    FileUploadView fileFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,9 +76,12 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
+        profilePicUploadBtn.setVisibility(View.GONE);
         personId = (TextView) view.findViewById(R.id.person_id);
+        personId.setVisibility(View.GONE);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
+        password = (EditText)view.findViewById(R.id.password);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         dob = (EditText) view.findViewById(R.id.dob);
         dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
@@ -91,12 +99,18 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
         specialization = (Spinner) view.findViewById(R.id.specialization);
-//        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//        specialization.setThreshold(1);
+        RelativeLayout tc = (RelativeLayout)view.findViewById(R.id.layout30);
+        tc.setVisibility(View.VISIBLE);
+        CheckBox tcCheckBox = (CheckBox)view.findViewById(R.id.auto_login);
+        Button nextButton = (Button) view.findViewById(R.id.change_password);
+        tcCheckBox.setText("Agree with T&C");
+        nextButton.setVisibility(View.GONE);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
         bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
         TextView relationText = (TextView) view.findViewById(R.id.relation_text);
         Spinner relation = (Spinner) view.findViewById(R.id.relation);
+        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.layout_relation);
+        relativeLayout.setVisibility(View.GONE);
         relationText.setVisibility(View.GONE);
         relation.setVisibility(View.GONE);
         Bundle bundle = getActivity().getIntent().getExtras();
@@ -121,40 +135,23 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 Specialization[] options = {};
                 ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, options);
                 specialization.setAdapter(specializationArrayAdapter);
-//                specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//                specialization.setThreshold(1);
-//                specialization.addTextChangedListener(new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//                        String searchText = s.toString().substring(s.toString().lastIndexOf(',') + 1);
-//                        if (searchText.length() > 0) {
-//                            api.searchAutoFillSpecialization(new SearchParameter(searchText, 1, 1, 10, 5), new Callback<List<Specialization>>() {
-//                                @Override
-//                                public void success(List<Specialization> symptomList, Response response) {
-//                                    ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptomList);
-//                                    specialization.setAdapter(specializationArrayAdapter);
-//                                }
-//
-//                                @Override
-//                                public void failure(RetrofitError error) {
-//                                    error.printStackTrace();
-//                                }
-//                            });
-//                        }
-//
-//                    }
-//                });
+
         }
+
+        profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = getActivity().getIntent().getExtras();
+                bundle.putInt(PROFILE_TYPE, DEPENDENT);
+                bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
+                bundle.putInt(FILE_UPLOAD, PROFILE_PICTURE);
+                getActivity().getIntent().putExtras(bundle);
+                fileFragment = new FileUploadView();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
+            }
+        });
         return view;
     }
 
@@ -167,8 +164,11 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
 //        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
-        SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
-        mobile_country.setAdapter(countryListAdapter);
+        if(countriesList != null)
+        {
+            SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
+            mobile_country.setAdapter(countryListAdapter);
+        }
         if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
             api.getProfile(new ProfileId(profileId), new Callback<Person>() {
                 @Override
@@ -193,16 +193,6 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                         bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == profileId.intValue())
-                        {
-                            menuItem.setEnabled(true);
-                            setEditableAll(true);
-                        }
-                        else
-                        {
-                            menuItem.setEnabled(false);
-                            setEditableAll(false);
-                        }
                         mobile_country.setSelection(getCountryIndex(person.getLocation()));
 
                     }
@@ -231,6 +221,12 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             setEditable(true);
             progress.dismiss();
         }
+        if(fileFragment != null && fileFragment.fileupload != null )
+        {
+            String url = fileFragment.fileupload.url;
+            if(url != null && url.trim().length() > 0)
+                new ImageLoadTask(url, profilePic).execute();
+        }
     }
 
     @Override
@@ -238,17 +234,17 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         super.onResume();
 
     }
-    private void save(Person person)
+    private void save(final Person person)
     {
+        showBusy();
         if(person.getId() != null) {
             api.updateProfile(person, new Callback<ServerResponse>() {
                 @Override
                 public void success(ServerResponse s, Response response) {
                     if (s.status == 1)
-                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Profile is Successfully Activated", Toast.LENGTH_LONG).show();
                     else
-                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    getActivity().onBackPressed();
+                        Toast.makeText(getActivity(), "Could not activate the Profile", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -259,14 +255,31 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         }
         else
         {
-            api.createProfile(person, new Callback<ServerResponse>() {
+            api.checkMobileEmailAvailability(person, new Callback<ServerResponse>()
+            {
                 @Override
                 public void success(ServerResponse s, Response response) {
-                    if (s.status == 1)
-                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                    if (s.status == 0 && s.errorCode == null )
+                    {
+                        api.createProfile(person, new Callback<ServerResponse>() {
+                            @Override
+                            public void success(ServerResponse s, Response response) {
+                                if (s.status == 1)
+                                {
+                                    Toast.makeText(getActivity(), "Profile is Successfully created", Toast.LENGTH_LONG).show();
+                                    getActivity().finish();
+                                }
+                                else
+                                    Toast.makeText(getActivity(), "Profile Could be created", Toast.LENGTH_LONG).show();}
+
+                            @Override
+                            public void failure(RetrofitError error) {
+//                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                     else
-                        Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    getActivity().onBackPressed();
+                        Toast.makeText(getActivity(), "Email Id or Mobile Number Already Exisits", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -310,6 +323,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
                 .setInitialDate(date)
+                .setMode(SlideDateTimePicker.ONLY_CALENDAR)
+                .setMaxDate(new Date())
                 .build();
         pickerDialog.show();
     }
@@ -322,33 +337,34 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     @Override
     public void update()
     {
-        if(personModel.getId() != null) {
-            Bundle bundle1 = getActivity().getIntent().getExtras();
-            personModel.setAddress(mAutocompleteView.getText().toString());
-            personModel.setCity(city.getText().toString());
-            personModel.setCountry(country.getText().toString().trim());
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(personModel.getId() != null)
+        {
+
+            personModel.role = new Integer(bundle.getInt(PROFILE_ROLE)).byteValue();
+            personModel.status = 1;
+            personModel.prime = 1;
+            personModel.setPassword(password.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getSelectedItem().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
-            personModel.setLocation(mobile_country.getSelectedItem().toString());
         }
         else
         {
-            personModel.setAddress(mAutocompleteView.getText().toString());
-            personModel.setCity(city.getText().toString());
-            personModel.setCountry(country.getText().toString().trim());
-            personModel.setRegion(" ");
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
+            personModel.role = new Integer(bundle.getInt(PROFILE_ROLE)).byteValue();
+            personModel.status = 1;
+            personModel.prime = 1;
+            personModel.setPassword(password.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());
-            personModel.setMobile(new Long(mobile.getText().toString()));
+            if(mobile.getText().length() > 0 && mobile_country.getSelectedItem().toString().length() > 0)
+                personModel.setMobile(new Long(mobile_country.getSelectedItem().toString().concat(mobile.getText().toString())));
             personModel.setEmail(email.getText().toString());
             personModel.setLocation(mobile_country.getSelectedItem().toString());
 
@@ -405,12 +421,15 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.save: {
+            case R.id.save:
+            {
+
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {
                         save();
-                    } else {
+                    } else
+                    {
                         Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                     }
                 } else if (canBeSaved()) {

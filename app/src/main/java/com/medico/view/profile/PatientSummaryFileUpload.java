@@ -3,6 +3,7 @@ package com.medico.view.profile;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -37,16 +38,15 @@ import com.medico.model.FileUpload1;
 import com.medico.model.PersonID;
 import com.medico.model.ResponseAddDocuments;
 import com.medico.model.SearchParameter;
-import com.medico.util.FileChooser;
 import com.medico.util.ImageUtil;
 import com.medico.util.PARAM;
+import com.medico.util.PermissionManager;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -157,24 +157,28 @@ public class PatientSummaryFileUpload extends ParentFragment {
         browse.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
-                if(browseDocument.isChecked()) {
-                    Intent intent = new Intent(getActivity(), FileChooser.class);
-                    ArrayList<String> extensions = new ArrayList<String>();
-                    extensions.add(".pdf");
-                    extensions.add(".png");
-                    intent.putStringArrayListExtra("filterFileExtension", extensions);
-                    startActivityForResult(intent, FILE_CHOOSER);
-                }
-                else if(browseImage.isChecked()) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-                }
-                else
+//                if(browseDocument.isChecked()) {
+//                    Intent intent = new Intent(getActivity(), FileChooser.class);
+//                    ArrayList<String> extensions = new ArrayList<String>();
+//                    extensions.add(".pdf");
+//                    extensions.add(".png");
+//                    intent.putStringArrayListExtra("filterFileExtension", extensions);
+//                    startActivityForResult(intent, FILE_CHOOSER);
+//                }
+//                else if(browseImage.isChecked()) {
+//                    Intent intent = new Intent();
+//                    intent.setType("image/*");
+//                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+//                }
+//                else
                 {
+                    if ( Build.VERSION.SDK_INT >= 23 && !PermissionManager.getInstance((getActivity())).hasPermission(PermissionManager.CAMERA))
+                        return  ;
+
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,
                             Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "temp.jpg")));
@@ -383,7 +387,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
         fileupload.patientId = bundle.getInt(PATIENT_ID);
         fileupload.file = this.typedFile;
         fileupload.fileName = testValueEdit1.getText().toString();
-        fileupload.type = browseImage.isChecked()? new Integer(0).byteValue():new Integer(1).byteValue();
+        fileupload.type = /*browseImage.isChecked()? new Integer(0).byteValue():*/new Integer(1).byteValue();
         if(fileupload.category.intValue() == 1)
         {
             fileupload.subcategory = ((DiagnosticTest)this.type.getSelectedItem()).testId;

@@ -9,13 +9,15 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medico.application.R;
+import com.medico.util.GeoClient;
+import com.medico.util.LocationService;
 import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.PatientProfileListView;
 
 public class ManageProfileRegistration extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
-
+    GeoClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,8 @@ public class ManageProfileRegistration extends ParentActivity {
         abar.setDisplayHomeAsUpEnabled(true);
 //        abar.setIcon(R.color.transparent);
         abar.setHomeButtonEnabled(true);
+        client = GeoClient.getInstance(this);
+        LocationService locationService = LocationService.getLocationManager(this);
 
     }
     protected void attachView()

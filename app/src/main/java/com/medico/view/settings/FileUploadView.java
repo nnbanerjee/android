@@ -62,7 +62,7 @@ public class FileUploadView extends ParentFragment
     EditText documentName;
     private static int SELECT_PICTURE = 1;
     private static final int FILE_CHOOSER = 2;
-    FileUpload1 fileupload = new FileUpload1();
+    public FileUpload1 fileupload = new FileUpload1();
     TypedFile typedFile;
     @Nullable
     @Override

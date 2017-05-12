@@ -62,7 +62,7 @@
                 android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_toRightOf="@+id/name_text"
                 android:imeOptions="actionNext"
-                android:text="Text"
+                android:hint="Enter Full Name"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
             <TextView
@@ -81,6 +81,7 @@
                 android:layout_alignLeft="@+id/name"
                 android:layout_alignStart="@+id/name"
                 android:layout_below="@+id/name"
+                android:hint="Enter email id"
                 android:layout_marginTop="@dimen/edit_top_margin"
                 android:layout_toRightOf="@+id/name_textViewView"
                 android:inputType="textEmailAddress"
@@ -109,7 +110,7 @@
                     android:id="@+id/country_code"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/edit_height"
-                    android:minWidth="50dp" />
+                    android:minWidth="80dp" />
             </RelativeLayout>
             <EditText
                 android:id="@+id/mobile_number"
@@ -122,15 +123,36 @@
                 android:layout_alignRight="@+id/email"
                 android:layout_alignEnd="@+id/email"
                 android:layout_alignParentRight="true"
-                android:text=""
+                android:hint="Enter mobile number"
                 android:inputType="phone"/>
+            <TextView
+                android:id="@+id/password_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/mobile_text"
+                android:layout_marginTop="@dimen/text_top_margin"
+                android:text="Password *" />
 
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_height"
+                android:layout_alignLeft="@+id/name"
+                android:layout_alignStart="@+id/name"
+                android:layout_below="@+id/mobile_number"
+                android:hint="Enter Password"
+                android:layout_marginTop="@dimen/edit_top_margin"
+                android:layout_toRightOf="@+id/password_text"
+                android:inputType="textPassword"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
               <TextView
                   android:id="@+id/gender_text"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_alignParentLeft="true"
-                  android:layout_below="@+id/layout_mobile"
+                  android:layout_below="@+id/password_text"
                   android:layout_marginTop="@dimen/text_top_margin"
                   android:text="Gender *" />
             <RelativeLayout
@@ -140,7 +162,7 @@
                 android:layout_toRightOf="@+id/gender_text"
                 android:layout_alignStart="@+id/layout_mobile"
                 android:layout_alignLeft="@+id/layout_mobile"
-                android:layout_below="@+id/layout_mobile"
+                android:layout_below="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Spinner
@@ -165,8 +187,8 @@
                     android:layout_height="@dimen/edit_height"
                     android:layout_below="@+id/layout_gender"
                     android:layout_marginTop="@dimen/edit_top_margin"
-                    android:text="Date of birth"
-                    android:editable="false"
+                    android:hint="Enter Date of birth"
+                    android:enabled="false"
                     android:inputType="datetime"
                     android:layout_alignLeft="@+id/layout_gender"
                     android:layout_alignStart="@+id/layout_gender"
@@ -200,6 +222,8 @@
                       android:layout_marginTop="@dimen/edit_top_margin"
                       android:background="@drawable/rounded_white_color"
                       android:paddingLeft="3dp"
+                      android:hint="Type your location"
+                      android:textColorHint="@color/gray_hint"
                       android:imeOptions="actionNext"
                       android:inputType="textMultiLine"
                       android:layout_alignLeft="@+id/dob"
@@ -238,6 +262,7 @@
                       android:id="@+id/country_spinner"
                       android:layout_width="match_parent"
                       android:layout_height="@dimen/edit_height"
+                      android:enabled="false"
                       android:layout_below="@+id/location"
                       android:layout_marginTop="@dimen/edit_top_margin"
                       android:layout_toRightOf="@+id/country_text"
@@ -259,6 +284,7 @@
                       android:layout_width="fill_parent"
                       android:layout_height="@dimen/edit_height"
                       android:layout_marginTop="@dimen/edit_top_margin"
+                      android:enabled="false"
                       android:layout_toRightOf="@+id/city_text"
                       android:layout_below="@+id/country_spinner"
                       android:imeOptions="actionNext"
@@ -388,7 +414,7 @@
                 android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/change_password"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"

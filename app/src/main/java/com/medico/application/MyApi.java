@@ -103,6 +103,10 @@ import retrofit.mime.TypedFile;
 
 public interface MyApi {
 
+
+    @POST("/checkMobileEmailAvailability")
+    void checkMobileEmailAvailability(@Body Person param, Callback<ServerResponse> cb);
+
     @POST("/searchPerson")
     void searchPerson(@Body SearchParameterRequest param, Callback<List<Person>> cb);
 

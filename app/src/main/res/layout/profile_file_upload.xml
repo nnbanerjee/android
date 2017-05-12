@@ -59,18 +59,20 @@
                     android:id="@+id/document_browse"
                     android:text="Browse Document"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:enabled="true"
-                    android:checked="true"
+                    android:checked="false"
                     android:layout_height="wrap_content" />
                 <RadioButton
                     android:id="@+id/image_browse"
                     android:text="Browse Picture"
+                    android:visibility="gone"
                     android:checked="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <RadioButton
                     android:text="Capture Picture"
-                    android:checked="false"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RadioGroup>

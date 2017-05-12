@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.medico.util.PermissionManager;
 import com.medico.util.ServerConnectionAdapter;
 import com.medico.view.registration.Login;
 
@@ -72,6 +73,7 @@ public class MainActivity extends Activity
         ft.add(R.id.lower_content, new Login());
         ft.addToBackStack(Login.class.getName());
         ft.commit();
+        PermissionManager.getInstance(this);
     }
 
 

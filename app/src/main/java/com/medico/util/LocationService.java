@@ -1,7 +1,7 @@
 package com.medico.util;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -9,7 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,28 +22,33 @@ public class LocationService extends  Notifier implements LocationListener {
 
     //The minimum distance to change updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
-
     //The minimum time beetwen updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
-
     private final static boolean forceNetwork = false;
-
     private static LocationService instance = null;
 
     private LocationManager locationManager;
+
     public Location location;
+
     public double longitude;
     public double latitude;
     public String city,country,region,countryCode;
+    public Address address;
+    public String completeAddress = "";
+
+
     boolean isGPSEnabled, isNetworkEnabled,locationServiceAvailable;
-    Context context;
+    Activity context;
 
     /**
      * Singleton implementation
      * @return
      */
-    public static LocationService getLocationManager(Context context)     {
-        if (instance == null) {
+    public static LocationService getLocationManager(Activity context)
+    {
+        if (instance == null)
+        {
             instance = new LocationService(context);
         }
         return instance;
@@ -53,7 +57,7 @@ public class LocationService extends  Notifier implements LocationListener {
     /**
      * Local constructor
      */
-    private LocationService( Context context )     {
+    private LocationService( Activity context )     {
         this.context = context;
         initLocationService(context);
     }
@@ -64,17 +68,15 @@ public class LocationService extends  Notifier implements LocationListener {
      * Sets up location service after permissions is granted
      */
 //    @TargetApi(23)
-    private void initLocationService(Context context) {
-
-
-        if ( Build.VERSION.SDK_INT >= 23 &&
-             ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-             ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void initLocationService(Activity context)
+    {
+        if ( Build.VERSION.SDK_INT >= 23 && !PermissionManager.getInstance(context).hasPermission(PermissionManager.LOCATION))
+        {
             return  ;
         }
 
         try
-            {
+        {
             this.longitude = 0.0;
             this.latitude = 0.0;
             this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -94,7 +96,8 @@ public class LocationService extends  Notifier implements LocationListener {
                 {
                     this.locationServiceAvailable = true;
 
-                    if (isNetworkEnabled) {
+                    if (isNetworkEnabled)
+                    {
                         locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this,null);
 //                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
 //                                MIN_TIME_BW_UPDATES,
@@ -116,7 +119,9 @@ public class LocationService extends  Notifier implements LocationListener {
 //                    }
                 }
             }
-        } catch (Exception ex)  {
+        }
+        catch (SecurityException ex)
+        {
 //            LogService.log( "Error creating location service: " + ex.getMessage() );
 
         }
@@ -223,7 +228,10 @@ public class LocationService extends  Notifier implements LocationListener {
                     location.getLongitude(), 1);
             if (addresses.size() > 0)
             {
-                System.out.println(addresses.get(0).getLocality());
+//                System.out.println(addresses.get(0).getLocality());
+                address = addresses.get(0);
+                for(int i = 0; i < address.getMaxAddressLineIndex(); i++)
+                    completeAddress = completeAddress + address.getAddressLine(i) + ", ";
                 cityName = addresses.get(0).getLocality();
                 country = addresses.get(0).getCountryName();
                 region = addresses.get(0).getAdminArea();
@@ -254,6 +262,8 @@ public class LocationService extends  Notifier implements LocationListener {
     {
 
     }
+
+
 
 
 }
