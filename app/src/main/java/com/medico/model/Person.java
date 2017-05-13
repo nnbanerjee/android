@@ -34,7 +34,10 @@ public class Person
     public Integer loyaltyCatId;
     public Integer referredBy;
     public Byte prime;
-    public Integer linkedWith;  
+    public Integer linkedWith;
+
+    public String practiceName;
+    public String registrationNo;
 
     boolean isChanged = true;
 
@@ -286,6 +289,38 @@ public class Person
         else if(address == null )
             canBeSaved = false;
         else if(dateOfBirth == null )
+            canBeSaved = false;
+        else if(gender == null || gender.byteValue() >= 0 == false || gender.byteValue() < 2 == false)
+            canBeSaved = false;
+        else if(role == null || role.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(status == null || status.byteValue() >= 0 == false)
+            canBeSaved = false;
+        else if(speciality == null && speciality.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(city == null || city.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(country == null || country.trim().length() > 0 == false)
+            canBeSaved = false;
+        else if(prime == null || prime.byteValue() >= 0 == false)
+            canBeSaved = false;
+
+        return canBeSaved;
+    }
+    public boolean canBeSavedForDoctor()
+    {
+        boolean canBeSaved = true;
+        if(name == null )
+            canBeSaved = false;
+        else if(mobile == null || mobile.longValue() > 0 == false)
+            canBeSaved = false;
+        else if(locationLat == null || locationLat.doubleValue() > 0 == false)
+            canBeSaved = false;
+        else if(locationLong == null || locationLong.doubleValue() > 0 == false)
+            canBeSaved = false;
+        else if(email == null )
+            canBeSaved = false;
+        else if(address == null )
             canBeSaved = false;
         else if(gender == null || gender.byteValue() >= 0 == false || gender.byteValue() < 2 == false)
             canBeSaved = false;

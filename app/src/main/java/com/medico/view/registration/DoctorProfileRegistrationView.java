@@ -4,6 +4,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -31,6 +34,7 @@ import com.medico.model.Country;
 import com.medico.model.Person;
 import com.medico.model.PersonDetailProfile;
 import com.medico.model.ProfileId;
+import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
 import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
@@ -42,6 +46,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -60,12 +65,13 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     Button profilePicUploadBtn,location_delete_button,current_location_button;
     TextView personId;
     EditText name, email, dob, country, city,registrationNumber, mobile,password;
-    Spinner mobile_country,bloodGroup;
+    Spinner mobile_country,practice;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    Spinner specialization;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
+    CheckBox auto_login;
     Person personModel;
     PersonDetailProfile personDetailProfile;
     FileUploadView fileFragment;
@@ -75,7 +81,9 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
         setHasOptionsMenu(true);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Doctor Registration");
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
+        auto_login = (CheckBox)view.findViewById(R.id.auto_login);
         profilePic.setBackground(null);
         profilePic.setImageResource(R.drawable.doctor_default);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
@@ -101,11 +109,19 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
+        TextView country_text = (TextView) view.findViewById(R.id.city_text);
         country = (EditText) view.findViewById(R.id.country_spinner);
+        TextView city_text = (TextView) view.findViewById(R.id.country_text);
         city = (EditText) view.findViewById(R.id.city);
+        country_text.setVisibility(View.GONE);
+        country.setVisibility(View.GONE);
+        city.setVisibility(View.GONE);
+        city_text.setVisibility(View.GONE);
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
         RelativeLayout tc = (RelativeLayout)view.findViewById(R.id.layout30);
         tc.setVisibility(View.VISIBLE);
         CheckBox tcCheckBox = (CheckBox)view.findViewById(R.id.auto_login);
@@ -116,13 +132,11 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         registration.setText("Registration");
         registrationNumber = (EditText)view.findViewById(R.id.allergic_to);
         registrationNumber.setHint("Enter Medical Registration Number");
-        bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
-        TextView bloodGroup_text = (TextView)view.findViewById(R.id.bloodGroup_text);
-        RelativeLayout bllodgroupLayout = (RelativeLayout) view.findViewById(R.id.layout_bloodgroup);
-        textviewTitle.setVisibility(View.GONE);
-        bloodGroup_text.setVisibility(View.GONE);
-        bllodgroupLayout.setVisibility(View.GONE);
-        bloodGroup.setVisibility(View.GONE);
+        practice = (Spinner) view.findViewById(R.id.bloodGroup);
+        ArrayAdapter<String> practiceAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,getActivity().getResources().getStringArray(R.array.practice_name));
+        TextView practiceType = (TextView)view.findViewById(R.id.bloodGroup_text);
+        practiceType.setText("Practice");
+        practice.setAdapter(practiceAdapter);
         TextView relationText = (TextView) view.findViewById(R.id.relation_text);
         Spinner relation = (Spinner) view.findViewById(R.id.relation);
         RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.layout_relation);
@@ -130,11 +144,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         relationText.setVisibility(View.GONE);
         relation.setVisibility(View.GONE);
         Bundle bundle = getActivity().getIntent().getExtras();
-        textviewTitle.setText("Doctor Registration");
+
         profilePic.setImageResource(R.drawable.doctor_default);
-        Specialization[] options = {};
-        ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, options);
-        specialization.setAdapter(specializationArrayAdapter);
 
         profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +159,43 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                 fileFragment = new FileUploadView();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
+            }
+        });
+        specialization.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 0, 1, 100, 5), new Callback<List<Specialization>>() {
+                        @Override
+                        public void success(List<Specialization> specializationList, Response response)
+                        {
+                            Specialization[] options = new Specialization[specializationList.size()];
+                            specializationList.toArray(options);
+                            ArrayAdapter<Specialization> diagnosisAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            specialization.setAdapter(diagnosisAdapter);
+                            diagnosisAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
             }
         });
         return view;
@@ -187,7 +235,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                         mAutocompleteView.setText(person.getAddress());
                         country.setText(person.getCountry());
                         city.setText(person.getCity());
-                        specialization.setSelection(getSpecializationIndex(person.getSpeciality(),profileRole));
+                        specialization.setText(person.getSpeciality());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
                         mobile_country.setSelection(getCountryIndex(person.getLocation()));
 
@@ -205,10 +253,6 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         else
         {
             personModel = new Person();
-            personModel.setRole(profileRole.byteValue());
-            personModel.setStatus(new Integer(2).byteValue());
-            personModel.setAddedBy(profileId);
-            personModel.setPrime(new Integer(0).byteValue());
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             personDetailProfile = new PersonDetailProfile();
 
@@ -226,7 +270,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         super.onResume();
 
     }
-    private void save(final Person person)
+    private void save(final Person person, final PersonDetailProfile detailedProfile)
     {
         showBusy();
         if(person.getId() != null) {
@@ -253,20 +297,20 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                 public void success(ServerResponse s, Response response) {
                     if (s.status == 0 && s.errorCode == null )
                     {
-                        api.createProfile(person, new Callback<ServerResponse>() {
+                        api.createDoctorProfile(person, new Callback<ServerResponse>() {
                             @Override
                             public void success(ServerResponse s, Response response) {
-                                if (s.status == 1)
+                                if (s.status == 1  && s.profileId != null)
                                 {
                                     Toast.makeText(getActivity(), "Profile is Successfully created", Toast.LENGTH_LONG).show();
                                     getActivity().finish();
                                 }
                                 else
-                                    Toast.makeText(getActivity(), "Profile Could be created", Toast.LENGTH_LONG).show();}
+                                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();}
 
                             @Override
                             public void failure(RetrofitError error) {
-//                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -338,32 +382,33 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
             personModel.prime = 1;
             personModel.setPassword(password.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getSelectedItem().toString());
-            personDetailProfile.registrationNo = registrationNumber.getText().toString();
+            personModel.setSpeciality(specialization.getText().toString());
+            personModel.registrationNo = registrationNumber.getText().toString();
+            personModel.practiceName = (String)practice.getSelectedItem();
         }
         else
         {
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.role = DOCTOR;
             personModel.status = 1;
             personModel.prime = 1;
             personModel.setPassword(password.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getSelectedItem().toString());
+            personModel.setSpeciality(specialization.getText().toString());
             personModel.setName(name.getText().toString());
             if(mobile.getText().length() > 0 && mobile_country.getSelectedItem().toString().length() > 0)
                 personModel.setMobile(new Long(mobile_country.getSelectedItem().toString().concat(mobile.getText().toString())));
             personModel.setEmail(email.getText().toString());
             personModel.setLocation(mobile_country.getSelectedItem().toString());
-            personDetailProfile.registrationNo = registrationNumber.getText().toString();
+            personModel.registrationNo = registrationNumber.getText().toString();
+            personModel.practiceName = (String)practice.getSelectedItem();
         }
     }
     @Override
     public boolean save()
     {
-        if(personModel.canBeSaved())
+        if(canBeSaved())
         {
-            save(personModel);
+            save(personModel, personDetailProfile);
             return true;
         }
         return false;
@@ -371,7 +416,9 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     @Override
     public boolean canBeSaved()
     {
-        return personModel.canBeSaved();
+        if(auto_login.isChecked()==false)
+            return false;
+        return personModel.canBeSavedForDoctor();
     }
 
 
@@ -431,14 +478,5 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         }
         return 0;
     }
-    private int getSpecializationIndex(String specialization, int profile)
-    {
-        String[] relations = getActivity().getResources().getStringArray(profile==PATIENT?R.array.patient_professions:R.array.assistant_professions);
-        for(int i = 0; i < relations.length; i++)
-        {
-            if(relations[i].equalsIgnoreCase(specialization))
-                return i;
-        }
-        return 0;
-    }
+
 }

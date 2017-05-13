@@ -228,14 +228,14 @@ public class LocationService extends  Notifier implements LocationListener {
                     location.getLongitude(), 1);
             if (addresses.size() > 0)
             {
-//                System.out.println(addresses.get(0).getLocality());
-                address = addresses.get(0);
-                for(int i = 0; i < address.getMaxAddressLineIndex(); i++)
-                    completeAddress = completeAddress + address.getAddressLine(i) + ", ";
                 cityName = addresses.get(0).getLocality();
                 country = addresses.get(0).getCountryName();
                 region = addresses.get(0).getAdminArea();
                 countryCode = addresses.get(0).getCountryCode();
+                address = addresses.get(0);
+                for(int i = 0; i < address.getMaxAddressLineIndex(); i++)
+                    completeAddress = completeAddress + address.getAddressLine(i) + ", ";
+                completeAddress = completeAddress + country;
             }
         } catch (IOException e) {
             e.printStackTrace();
