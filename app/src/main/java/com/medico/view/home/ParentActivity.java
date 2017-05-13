@@ -51,6 +51,7 @@ public class ParentActivity extends AppCompatActivity implements FragmentManager
         getFragmentManager().addOnBackStackChangedListener(this);
         api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
         progress = new ProgressDialog(this);
+        progress.setMessage("Loading, please wait....");
         loadTargetSdkVersion();
     }
 

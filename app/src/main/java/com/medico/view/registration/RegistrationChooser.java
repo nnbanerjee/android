@@ -42,6 +42,7 @@ public class RegistrationChooser extends ParentFragment
         patient = (RadioButton) view.findViewById(R.id.patient);
         profileId = (EditText) view.findViewById(R.id.profile_id);
         existing_profile = (RadioButton) view.findViewById(R.id.existing_profile);
+        existing_profile.setEnabled(false);
         create_profile = (RadioButton) view.findViewById(R.id.create_profile);
         next = (Button) view.findViewById(R.id.next);
         create_profile.setOnClickListener(new View.OnClickListener()

@@ -421,7 +421,8 @@
     <string name="failed_to_send_code">Failed to send Verification code.</string>
     <string name="account_verified_succesfully">Your Account Verified Successfully</string>
     <string name="doctor_registered_succesfully">Doctor Register Successfully</string>
-
+    <string name="patient_successful_registration">Thanks for registering to Medico as a Patient.</string>
+    <string name="doctor_successful_registration">Thanks for registering to Medico as a Doctor</string>
     <string name="email_already_exists">Your Email Id Is Already Exists</string>
     <string name="mobile_already_exists">Your Mobile No Is Already Exists</string>
     <string name="mobile_email_already_exists"><![CDATA[Mobile NO & Email ID Already Exists]]></string>

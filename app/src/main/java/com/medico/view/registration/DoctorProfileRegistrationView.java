@@ -1,5 +1,6 @@
 package com.medico.view.registration;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -299,27 +300,48 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                     {
                         api.createDoctorProfile(person, new Callback<ServerResponse>() {
                             @Override
-                            public void success(ServerResponse s, Response response) {
-                                if (s.status == 1  && s.profileId != null)
+                            public void success(ServerResponse s, Response response)
+                            {
+                                if (s.status == 1 && s.profileId != null)
                                 {
-                                    Toast.makeText(getActivity(), "Profile is Successfully created", Toast.LENGTH_LONG).show();
-                                    getActivity().finish();
+                                    Bundle bundle = getActivity().getIntent().getExtras();
+                                    bundle.putString("person_name", personModel.getName());
+                                    bundle.putInt("gender", personModel.getGender().intValue());
+                                    bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
+                                    bundle.putInt(PROFILE_ID, s.profileId);
+                                    getActivity().getIntent().putExtras(bundle);
+                                    ParentFragment fragment = new RegistrationSuccessfulView();
+                                    FragmentManager manager = getActivity().getFragmentManager();
+                                    FragmentTransaction transaction = manager.beginTransaction();
+                                    transaction.add(R.id.service,fragment, RegistrationSuccessfulView.class.getName()).commit();
                                 }
                                 else
-                                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();}
+                                {
+                                    hideBusy();
+                                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
+
+                                }
+                            }
 
                             @Override
-                            public void failure(RetrofitError error) {
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
                                 Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                             }
                         });
                     }
                     else
+                    {
+                        hideBusy();
                         Toast.makeText(getActivity(), "Email Id or Mobile Number Already Exisits", Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
                     Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                 }
             });
