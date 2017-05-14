@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,7 +44,8 @@ public class PatientProfileDetails extends ParentFragment {
     TextView personId;
     EditText name,email,dob,country,city,mobile,allergicTo;
     AutoCompleteTextView mAutocompleteView;
-    Spinner gender_spinner,mobile_country,specialization,bloodGroup;
+    Spinner gender_spinner,mobile_country,bloodGroup;
+    MultiAutoCompleteTextView specialization;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class PatientProfileDetails extends ParentFragment {
         mobile.setEnabled(false);
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
         mobile_country.setEnabled(false);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
         specialization.setEnabled(false);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
         allergicTo.setEnabled(false);
@@ -110,6 +112,7 @@ public class PatientProfileDetails extends ParentFragment {
                 ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,countryCode);
                 mobile_country.setAdapter(countryAdapter);
                 mobile.setText(patient.getMobile().toString());
+                specialization.setText(patient.getSpeciality());
                 mAutocompleteView.setText(patient.getAddress());
                 gender_spinner.setSelection(patient.getGender().intValue());
                 bloodGroup.setSelection(getIndex(bloodGroup.getAdapter(),patient.getBloodGroup(),0));

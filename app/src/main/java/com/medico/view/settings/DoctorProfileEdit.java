@@ -50,7 +50,7 @@ public class DoctorProfileEdit extends ParentFragment {
 
 	public void showDoctorProfileEdit(){
 
-		ParentFragment fragment = new ManageDoctorProfile();
+		ParentFragment fragment = new DoctorProfileManageView();
 		ManagePersonSettings activity = ((ManagePersonSettings)getActivity());
 		if(selectedfragment != null)
 			activity.fragmentList.remove(selectedfragment);
@@ -60,7 +60,7 @@ public class DoctorProfileEdit extends ParentFragment {
 		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").commit();
 	}
 	public void showDoctorPersonal(){
-		ParentFragment fragment = new ManageDoctorDetailedProfile();
+		ParentFragment fragment = new DoctorDetailedProfileManageView();
 		ManagePersonSettings activity = ((ManagePersonSettings)getActivity());
 		if(selectedfragment != null)
 			activity.fragmentList.remove(selectedfragment);

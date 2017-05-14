@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -29,7 +32,9 @@ import com.medico.model.Country;
 import com.medico.model.DependentDelegatePerson;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
+import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
+import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.view.home.ParentFragment;
@@ -38,6 +43,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -59,7 +65,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
     Spinner mobile_country,bloodGroup,relation;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    Spinner specialization;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
@@ -92,7 +98,9 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
         mobile.setEnabled(false);
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
         bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
         relation = (Spinner) view.findViewById(R.id.relation);
@@ -102,9 +110,6 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
             case DEPENDENT:
                 textviewTitle.setText("Dependent Profile");
                 profilePic.setImageResource(R.drawable.patient);
-                String[] patientProfessions = getActivity().getResources().getStringArray(R.array.patient_professions);
-                ArrayAdapter<String> patientArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, patientProfessions);
-                specialization.setAdapter(patientArrayAdapter);
                 break;
             case DELEGATE:
                 textviewTitle.setText("Delagated Profile");
@@ -123,43 +128,43 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
 
                 break;
         }
-//        Specialization[] options = {};
-//        ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
-//        specialization.setAdapter(specializationArrayAdapter);
-//        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//        specialization.setThreshold(1);
-//        specialization.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1);
-//                if(searchText.length() > 0 )
-//                {
-//                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 1, 1, 10, 5), new Callback<List<Specialization>>() {
-//                        @Override
-//                        public void success(List<Specialization> symptomList, Response response) {
-//                            ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,symptomList);
-//                            specialization.setAdapter(specializationArrayAdapter);
-//                        }
-//                        @Override
-//                        public void failure(RetrofitError error)
-//                        {
-//                            error.printStackTrace();
-//                        }
-//                    });
-//                }
-//
-//            }
-//        });
+        specialization.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 11, 1, 100, 5), new Callback<List<Specialization>>() {
+                        @Override
+                        public void success(List<Specialization> specializationList, Response response)
+                        {
+                            Specialization[] options = new Specialization[specializationList.size()];
+                            specializationList.toArray(options);
+                            ArrayAdapter<Specialization> diagnosisAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            specialization.setAdapter(diagnosisAdapter);
+                            diagnosisAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
+            }
+        });
         return view;
     }
 
@@ -196,7 +201,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                         mAutocompleteView.setText(person.getAddress());
                         country.setText(person.getCountry());
                         city.setText(person.getCity());
-                        specialization.setSelection(getSpecializationIndex(person.getSpeciality(),profileRole.intValue()));
+                        specialization.setText(person.getSpeciality());
                         bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
                         relation.setSelection(getRelationIndex( profileRelation));
@@ -376,7 +381,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getSelectedItem().toString());
+            personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setLocation(mobile_country.getSelectedItem().toString());
@@ -391,7 +396,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getSelectedItem().toString());
+            personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());
@@ -509,16 +514,4 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         }
         return 0;
     }
-    private int getSpecializationIndex(String specialization, int profile)
-    {
-        String[] relations = getActivity().getResources().getStringArray(profile==PATIENT?R.array.patient_professions:R.array.assistant_professions);
-        for(int i = 0; i < relations.length; i++)
-        {
-            if(relations[i].equalsIgnoreCase(specialization))
-                return i;
-        }
-        return 0;
-    }
-
-
 }

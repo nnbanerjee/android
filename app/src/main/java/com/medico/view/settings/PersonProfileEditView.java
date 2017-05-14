@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.Country;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
+import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
 import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
@@ -38,6 +42,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -59,7 +64,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     Spinner mobile_country,bloodGroup;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    Spinner specialization;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
@@ -90,9 +95,9 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         city = (EditText) view.findViewById(R.id.city);
         mobile = (EditText) view.findViewById(R.id.mobile_number) ;
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
-//        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//        specialization.setThreshold(1);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
         bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
         TextView relationText = (TextView) view.findViewById(R.id.relation_text);
@@ -118,43 +123,45 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             case DOCTOR:
                 textviewTitle.setText("Doctor Profile");
                 profilePic.setImageResource(R.drawable.doctor_default);
-                Specialization[] options = {};
-                ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, options);
-                specialization.setAdapter(specializationArrayAdapter);
-//                specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//                specialization.setThreshold(1);
-//                specialization.addTextChangedListener(new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//                        String searchText = s.toString().substring(s.toString().lastIndexOf(',') + 1);
-//                        if (searchText.length() > 0) {
-//                            api.searchAutoFillSpecialization(new SearchParameter(searchText, 1, 1, 10, 5), new Callback<List<Specialization>>() {
-//                                @Override
-//                                public void success(List<Specialization> symptomList, Response response) {
-//                                    ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, symptomList);
-//                                    specialization.setAdapter(specializationArrayAdapter);
-//                                }
-//
-//                                @Override
-//                                public void failure(RetrofitError error) {
-//                                    error.printStackTrace();
-//                                }
-//                            });
-//                        }
-//
-//                    }
-//                });
+
         }
+        specialization.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 11, 1, 100, 5), new Callback<List<Specialization>>() {
+                        @Override
+                        public void success(List<Specialization> specializationList, Response response)
+                        {
+                            Specialization[] options = new Specialization[specializationList.size()];
+                            specializationList.toArray(options);
+                            ArrayAdapter<Specialization> diagnosisAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            specialization.setAdapter(diagnosisAdapter);
+                            diagnosisAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
+            }
+        });
         return view;
     }
 
@@ -166,7 +173,6 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
-//        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
         mobile_country.setAdapter(countryListAdapter);
         if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
@@ -330,7 +336,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getSelectedItem().toString());
+            personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setLocation(mobile_country.getSelectedItem().toString());
@@ -344,7 +350,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getSelectedItem().toString());
+            personModel.setSpeciality(specialization.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());

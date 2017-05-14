@@ -136,57 +136,57 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 bundle.putInt(PARAM.PROFILE_TYPE, PATIENT); 
 //                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
-                ParentFragment patientListView = new ManagePersonListView();
+                ParentFragment patientListView = new PersonListView();
                 fragmentList.add(patientListView);
                 FragmentTransaction fft = getFragmentManager().beginTransaction();
-                fft.add(R.id.service, patientListView,ManagePersonListView.class.getName()).addToBackStack(ManagePersonListView.class.getName()).commit();
+                fft.add(R.id.service, patientListView,PersonListView.class.getName()).addToBackStack(PersonListView.class.getName()).commit();
                 break;
             case PARAM.ASSISTANT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, ASSISTANT);
                 bundle.putInt(PARAM.PROFILE_ROLE, ASSISTANT);
                 getIntent().putExtras(bundle);
-                ParentFragment assistantListView = new ManagePersonListView();
+                ParentFragment assistantListView = new PersonListView();
                 fragmentList.add(assistantListView);
                 FragmentTransaction fft1 = getFragmentManager().beginTransaction();
-                fft1.add(R.id.service, assistantListView,ManagePersonListView.class.getName()).addToBackStack(ManagePersonListView.class.getName()).commit();
+                fft1.add(R.id.service, assistantListView,PersonListView.class.getName()).addToBackStack(PersonListView.class.getName()).commit();
                 break;
             case PARAM.CLINIC_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
 //                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
-                ParentFragment clinicListView = new ManageClinicListView();
+                ParentFragment clinicListView = new ClinicListView();
                 fragmentList.add(clinicListView);
                 FragmentTransaction fft33 = getFragmentManager().beginTransaction();
-                fft33.add(R.id.service, clinicListView,ManageClinicListView.class.getName()).addToBackStack(ManageClinicListView.class.getName()).commit();
+                fft33.add(R.id.service, clinicListView,ClinicListView.class.getName()).addToBackStack(ClinicListView.class.getName()).commit();
                 break;
             case PARAM.DEPENDENT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
 //                bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
 //                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
-                ParentFragment dependentListView = new ManageDependentDelegateListView();
+                ParentFragment dependentListView = new DependentDelegateListView();
                 fragmentList.add(dependentListView);
                 FragmentTransaction fft2 = getFragmentManager().beginTransaction();
-                fft2.add(R.id.service, dependentListView,ManageDependentDelegateListView.class.getName()).addToBackStack(ManageDependentDelegateListView.class.getName()).commit();
+                fft2.add(R.id.service, dependentListView,DependentDelegateListView.class.getName()).addToBackStack(DependentDelegateListView.class.getName()).commit();
                 break;
             case PARAM.DELEGATE_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
 //                bundle.putInt(LOGGED_IN_ID,bundle.getInt(PROFILE_ID));
 //                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
-                ParentFragment delegateListView = new ManageDependentDelegateListView();
+                ParentFragment delegateListView = new DependentDelegateListView();
                 fragmentList.add(delegateListView);
                 FragmentTransaction fft3 = getFragmentManager().beginTransaction();
-                fft3.add(R.id.service, delegateListView,ManageDependentDelegateListView.class.getName()).addToBackStack(ManageDependentDelegateListView.class.getName()).commit();
+                fft3.add(R.id.service, delegateListView,DependentDelegateListView.class.getName()).addToBackStack(DependentDelegateListView.class.getName()).commit();
                 break;
             case PARAM.DOCTOR_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DOCTOR);
 //                bundle.putInt(PARAM.PROFILE_ROLE, DOCTOR);
                 getIntent().putExtras(bundle);
-                ParentFragment doctorListView = new ManagePersonListView();
+                ParentFragment doctorListView = new PersonListView();
                 fragmentList.add(doctorListView);
                 FragmentTransaction fft5 = getFragmentManager().beginTransaction();
-                fft5.add(R.id.service, doctorListView,ManagePersonListView.class.getName()).addToBackStack(ManagePersonListView.class.getName()).commit();
+                fft5.add(R.id.service, doctorListView,PersonListView.class.getName()).addToBackStack(PersonListView.class.getName()).commit();
                 break;
         }
     }

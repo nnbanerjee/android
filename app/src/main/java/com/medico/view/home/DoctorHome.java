@@ -77,7 +77,7 @@ public class DoctorHome extends HomeActivity
         //tool bar construction
         LinearLayout layout = (LinearLayout) findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
-        messages = (Button) findViewById(R.id.alarm_notes);
+        messages = (Button) findViewById(R.id.chat);
         patients = (Button) findViewById(R.id.search_patient);
         clinicSearch = (Button) findViewById(R.id.search_clinic);
 
@@ -144,13 +144,21 @@ public class DoctorHome extends HomeActivity
             @Override
             public void onClick(View v)
             {
-//                fragment = new ManageMessageNotification();
-//                fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-            }
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.DOCTOR_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.CHAT_VIEW);
+                Intent intObj = new Intent(DoctorHome.this, ManageHomeView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();            }
         });
-//        backButton = (Button) findViewById(R.id.back_button);
-//        backButton.setVisibility(View.INVISIBLE);
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
         int[] colors = {0, 0xFFFF0000, 0}; // red for the example

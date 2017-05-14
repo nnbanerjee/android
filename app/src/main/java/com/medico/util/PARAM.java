@@ -148,6 +148,8 @@ public interface PARAM {
     public static final int DELEGATE_SETTING_VIEW = 5;
     public static final int CLINIC_SETTING_VIEW = 6;
     public static final int DOCTOR_SETTING_VIEW = 7;
+    public static final int CHAT_VIEW = 11;
+
     public static final int LOGOUT_CONFIRMATION = 20;
 
     public static final String DEPENDENT_DELEGATE_RELATION = "dependent_delegate_relation";

@@ -7,13 +7,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,7 +39,8 @@ public class DoctorProfileDetails extends ParentFragment {
     ProgressDialog progress;
 
     EditText name,email,country,city,mobile;
-    Spinner mobile_country,gender_spinner,specialization;
+    Spinner mobile_country,gender_spinner;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
 
     @Nullable
@@ -80,7 +81,9 @@ public class DoctorProfileDetails extends ParentFragment {
         mobile.setEnabled(false);
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
         mobile_country.setEnabled(false);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
         specialization.setEnabled(false);
         TextView bloodGroup_text = (TextView) view.findViewById(R.id.bloodGroup_text);
         RelativeLayout layout_bloodgroup = (RelativeLayout)view.findViewById(R.id.layout_bloodgroup);
@@ -117,6 +120,7 @@ public class DoctorProfileDetails extends ParentFragment {
                 ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),R.layout.simple_spinner_layout,countryCode);
                 mobile_country.setAdapter(countryAdapter);
                 mobile.setText(patient.getMobile().toString());
+                specialization.setText(patient.getSpeciality());
                 mAutocompleteView.setText(patient.getAddress());
                 gender_spinner.setSelection(patient.getGender().intValue());
 //                dob.setText(DateFormat.getDateInstance().format(new Date(patient.getDateOfBirth())));
@@ -132,13 +136,13 @@ public class DoctorProfileDetails extends ParentFragment {
             }
         });
     }
-    private int getIndex(Adapter adapter, String specialization, int profile)
-    {
-        for(int i = 0; i < adapter.getCount(); i++)
-        {
-            if(adapter.getItem(i).toString().equalsIgnoreCase(specialization))
-                return i;
-        }
-        return 0;
-    }
+//    private int getIndex(Adapter adapter, String specialization, int profile)
+//    {
+//        for(int i = 0; i < adapter.getCount(); i++)
+//        {
+//            if(adapter.getItem(i).toString().equalsIgnoreCase(specialization))
+//                return i;
+//        }
+//        return 0;
+//    }
 }

@@ -7,10 +7,12 @@ package com.medico.model;
 public class ProfileId
 {
     Integer profileId;
+    Integer personId;
 
     public ProfileId(Integer profileId)
     {
         this.profileId = profileId;
+        this.personId = profileId;
     }
 
     public Integer getProfileId()
@@ -18,9 +20,14 @@ public class ProfileId
         return profileId;
     }
 
-    public void setProfileId(Integer profileId) {
+    public void setProfileId(Integer profileId)
+    {
+        this.personId = profileId;
         this.profileId = profileId;
     }
 
-
+    public Integer getPersonId()
+    {
+        return personId;
+    }
 }

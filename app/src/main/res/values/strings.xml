@@ -565,6 +565,7 @@
         <item>91</item>
         <item>92</item>
     </string-array>
+    <string name="chat_person_list">Chat List</string>
      <string name="clinic_search_result">Search Result</string>
      <string name="clinic_search">Clinic Search</string>
      <string name="doctor_search_result">Search Result</string>

@@ -37,7 +37,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class ManageDoctorDetailedProfile extends ParentFragment {
+public class DoctorDetailedProfileManageView extends ParentFragment {
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;

@@ -6,18 +6,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +30,9 @@ import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
+import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
+import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
@@ -37,6 +42,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -45,7 +51,7 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class ManageDoctorProfile extends ParentFragment implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class DoctorProfileManageView extends ParentFragment implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
@@ -57,7 +63,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
     EditText name, email, dob, country, city;
     Spinner gender_spinner;
     ImageButton dob_calendar;
-    Spinner specialization;//,location;
+    MultiAutoCompleteTextView specialization;//,location;
     AutoCompleteTextView mAutocompleteView;
     CheckBox auto_login;
     protected GoogleApiClient mGoogleApiClient;
@@ -86,7 +92,9 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country_spinner);
         city = (EditText) view.findViewById(R.id.city);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
         auto_login = (CheckBox) view.findViewById(R.id.auto_login);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +120,43 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
                 ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
             }
         });
+        specialization.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 0, 1, 100, 5), new Callback<List<Specialization>>() {
+                        @Override
+                        public void success(List<Specialization> specializationList, Response response)
+                        {
+                            Specialization[] options = new Specialization[specializationList.size()];
+                            specializationList.toArray(options);
+                            ArrayAdapter<Specialization> diagnosisAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            specialization.setAdapter(diagnosisAdapter);
+                            diagnosisAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
+            }
+        });
         return view;
     }
 
@@ -139,7 +183,7 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
                     mAutocompleteView.setText(person.getAddress());
                     country.setText(person.getCountry());
                     city.setText(person.getCity());
-                    specialization.setSelection(getSelectionIndex(person.getSpeciality()));
+                    specialization.setText(person.getSpeciality());
 
 
                     SharedPreferences sharedPref = getActivity().getSharedPreferences(MyPREFERENCES, getActivity().MODE_PRIVATE);
@@ -168,28 +212,6 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
 
     }
 
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == SELECT_PICTURE) {
-//            selectedImageUri = data.getData();
-//            profilePic.setImageURI(selectedImageUri);
-//            path = getPath(selectedImageUri);
-//        }else if(requestCode == SELECT_DOCUMENT){
-//            selectdDocumentUri = data.getData();
-//            documentPath = getPath(selectdDocumentUri);
-//            File documentFile = new File(documentPath);
-//            document.setText(documentFile.getName());
-//        }
-//    }
-//    public String getPath(Uri uri) {
-//
-//        String[] projection = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = super.getActivity().managedQuery(uri, projection, null, null, null);
-//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//        cursor.moveToFirst();
-//        return cursor.getString(column_index);
-//    }
     private void save(Person person)
     {
         api.updateProfile(person, new Callback<ServerResponse>() {
@@ -259,11 +281,8 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
         personModel.setAddress(mAutocompleteView.getText().toString());
         personModel.setCity(city.getText().toString());
         personModel.setCountry(country.getText().toString().trim());
-//        String countryName = personModel.getCountry();
-//        personModel.setCountry(personModel.isoCountry);
-//        personModel.setIsoCountry(countryName);
         personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-        personModel.setSpeciality(specialization.getSelectedItem().toString());
+        personModel.setSpeciality(specialization.getText().toString());
     }
     @Override
     public boolean save()
@@ -271,9 +290,6 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
         if(personModel.canBeSaved())
         {
             save(personModel);
-//            String countryName = personModel.getCountry();
-//            personModel.setCountry(personModel.isoCountry);
-//            personModel.setIsoCountry(countryName);
             return true;
         }
         return false;
@@ -288,17 +304,6 @@ public class ManageDoctorProfile extends ParentFragment implements ActivityCompa
     {
 
 
-    }
-
-    private int getSelectionIndex(String text)
-    {
-        SpinnerAdapter adapter = specialization.getAdapter();
-        for(int i = 0; i < adapter.getCount(); i++)
-        {
-            if(adapter.getItem(i).toString().equals(text))
-                return i;
-        }
-        return 0;
     }
 
 }

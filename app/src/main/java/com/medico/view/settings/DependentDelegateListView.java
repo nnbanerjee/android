@@ -15,12 +15,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.medico.adapter.ClinicSettingListAdapter;
+import com.medico.adapter.DependentDelegationSettingListAdapter;
 import com.medico.application.R;
-import com.medico.model.Clinic1;
-import com.medico.model.PersonID;
+import com.medico.model.DependentDelegatePerson;
+import com.medico.model.DependentDelegatePersonRequest;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentFragment;
 
@@ -35,7 +34,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class ManageClinicListView extends ParentFragment {
+public class DependentDelegateListView extends ParentFragment {
 
 
     SharedPreferences session;
@@ -53,7 +52,6 @@ public class ManageClinicListView extends ParentFragment {
 
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
 
-//        Bundle bundle = getActivity().getIntent().getExtras();
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,15 +59,16 @@ public class ManageClinicListView extends ParentFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                Clinic1 profile = (Clinic1)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new ClinicProfileEditView();
+                DependentDelegatePerson profile = (DependentDelegatePerson)adapterView.getAdapter().getItem(i);
+                        ParentFragment fragment = new DependentDelegateProfileView();
                         ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                        bun.putInt(PARAM.CLINIC_ID, profile.idClinic.intValue());
-                        bun.putInt(PARAM.CLINIC_TYPE, profile.type.intValue());
+                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());
+                        bun.putInt(PARAM.PROFILE_ROLE, profile.getRole().intValue());
+                        bun.putString(PARAM.DEPENDENT_DELEGATE_RELATION,profile.relation);
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
+                        fragmentManger.beginTransaction().add(R.id.service, fragment, DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
             }
         });
 
@@ -82,27 +81,33 @@ public class ManageClinicListView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
+        Integer profileId = bundle.getInt(PROFILE_ID);
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
-        PersonID profileId = new PersonID(loggedinUserId);
-        api.getAllClinics(profileId, new Callback<List<Clinic1>>() {
+        DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(profileId, profileType);
+        api.getAllDependentsDelegates(request1, new Callback<List<DependentDelegatePerson>>() {
             @Override
-            public void success(final List<Clinic1> allPatientsProfiles, Response response) {
-                ClinicSettingListAdapter adapter = new ClinicSettingListAdapter(getActivity(), allPatientsProfiles);
+            public void success(final List<DependentDelegatePerson> allPatientsProfiles, Response response) {
+                DependentDelegationSettingListAdapter adapter = new DependentDelegationSettingListAdapter(getActivity(), allPatientsProfiles);
                 listView.setAdapter(adapter);
                 progress.dismiss();
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error) { 
                 progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
             }
         });
-
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Clinic Profiles");
+        switch (bundle.getInt(PROFILE_TYPE))
+        {
+            case DEPENDENT:
+                textviewTitle.setText("Dependent Profiles");
+                break;
+            case DELEGATE:
+                textviewTitle.setText("Delagation Profiles");
+                break;
+        }
     }
 
     @Override
@@ -127,9 +132,7 @@ public class ManageClinicListView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.patient_profile, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.add_document, menu);
     }
 
     @Override
@@ -138,21 +141,28 @@ public class ManageClinicListView extends ParentFragment {
         switch (id) {
             case R.id.add: {
                 setHasOptionsMenu(false);
-                Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(CLINIC_ID,0);
-                bun.putInt(CLINIC_TYPE,0);
-                getActivity().getIntent().putExtras(bun);
-                ParentFragment fragment = new ClinicProfileEditView();
-                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                fragment.setArguments(bun);
-                FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
+                Bundle bundle = getActivity().getIntent().getExtras();
+                Integer profileId = bundle.getInt(PROFILE_ID);
+                Integer profileRole = bundle.getInt(PROFILE_ROLE);
+                Integer profileType = bundle.getInt(PROFILE_TYPE);
+                Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
+                if(profileType.intValue() == DEPENDENT) {
+                    bundle.putInt(PROFILE_ID, 0);
+                    getActivity().getIntent().putExtras(bundle);
+                    ParentFragment fragment = new DependentDelegateProfileView();
+                    ((ManagePersonSettings) getActivity()).fragmentList.add(fragment);
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManger = getActivity().getFragmentManager();
+                    fragmentManger.beginTransaction().add(R.id.service, fragment,DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
+                }
+                else
+                {
+                    //search person
+                }
 
             }
             break;
         }
         return true;
     }
-
-
 }

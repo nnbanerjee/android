@@ -15,11 +15,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.medico.adapter.PatientSettingListAdapter;
+import com.medico.adapter.ClinicSettingListAdapter;
 import com.medico.application.R;
-import com.medico.model.LinkedPersonRequest;
-import com.medico.model.Person;
+import com.medico.model.Clinic1;
+import com.medico.model.PersonID;
 import com.medico.util.PARAM;
 import com.medico.view.home.ParentFragment;
 
@@ -34,7 +35,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class ManagePersonListView extends ParentFragment {
+public class ClinicListView extends ParentFragment {
 
 
     SharedPreferences session;
@@ -60,15 +61,15 @@ public class ManagePersonListView extends ParentFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                Person profile = (Person)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new PersonProfileEditView();
+                Clinic1 profile = (Clinic1)adapterView.getAdapter().getItem(i);
+                        ParentFragment fragment = new ClinicProfileEditView();
                         ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());
-                        bun.putInt(PARAM.PROFILE_ROLE, profile.getId().intValue());
+                        bun.putInt(PARAM.CLINIC_ID, profile.idClinic.intValue());
+                        bun.putInt(PARAM.CLINIC_TYPE, profile.type.intValue());
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
+                        fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
             }
         });
 
@@ -82,37 +83,26 @@ public class ManagePersonListView extends ParentFragment {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
-        Integer profileId = bundle.getInt(PROFILE_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
-        LinkedPersonRequest  request = new LinkedPersonRequest(profileId,profileType);
-        api.getPersonLinkage(request, new Callback<List<Person>>() {
+        PersonID profileId = new PersonID(loggedinUserId);
+        api.getAllClinics(profileId, new Callback<List<Clinic1>>() {
             @Override
-            public void success(final List<Person> allPatientsProfiles, Response response) {
-                PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), allPatientsProfiles);
+            public void success(final List<Clinic1> allPatientsProfiles, Response response) {
+                ClinicSettingListAdapter adapter = new ClinicSettingListAdapter(getActivity(), allPatientsProfiles);
                 listView.setAdapter(adapter);
                 progress.dismiss();
             }
 
             @Override
-            public void failure(RetrofitError error) { 
+            public void failure(RetrofitError error) {
                 progress.dismiss();
-
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
             }
         });
 
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        switch (profileType)
-        {
-            case PATIENT:
-                textviewTitle.setText("Patient Profiles");
-                break;
-            case DOCTOR:
-                textviewTitle.setText("Doctor Profiles");
-                break;
-            case ASSISTANT:
-                textviewTitle.setText("Assistant Profiles");
-                break;
-        }
+        textviewTitle.setText("Clinic Profiles");
     }
 
     @Override
@@ -138,6 +128,8 @@ public class ManagePersonListView extends ParentFragment {
     {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.patient_profile, menu);
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override
@@ -147,17 +139,20 @@ public class ManagePersonListView extends ParentFragment {
             case R.id.add: {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(PROFILE_ID,0);
+                bun.putInt(CLINIC_ID,0);
+                bun.putInt(CLINIC_TYPE,0);
                 getActivity().getIntent().putExtras(bun);
-                ParentFragment fragment = new PersonProfileEditView();
+                ParentFragment fragment = new ClinicProfileEditView();
                 ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
 
             }
             break;
         }
         return true;
     }
+
+
 }

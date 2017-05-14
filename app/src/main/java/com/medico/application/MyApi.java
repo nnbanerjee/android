@@ -103,6 +103,8 @@ import retrofit.mime.TypedFile;
 
 public interface MyApi {
 
+    @POST("/getChatPersonList")
+    void getChatPersonList(@Body ProfileId param, Callback<List<Person>> cb);
 
     @POST("/checkMobileEmailAvailability")
     void checkMobileEmailAvailability(@Body Person param, Callback<ServerResponse> cb);
