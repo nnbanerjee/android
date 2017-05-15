@@ -83,11 +83,12 @@ public class PlaceArrayAdapter extends ArrayAdapter<PlaceArrayAdapter.PlaceAutoc
         + " predictions.");
         Iterator<AutocompletePrediction> iterator = autocompletePredictions.iterator();
         ArrayList resultList = new ArrayList<>(autocompletePredictions.getCount());
-        while (iterator.hasNext()) {
-            AutocompletePrediction prediction = iterator.next();
-            resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
-            prediction.getDescription()));
-        }
+//        while (iterator.hasNext())
+//        {
+//            AutocompletePrediction prediction = iterator.next();
+//            resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
+//            prediction.));
+//        }
         // Buffer release
         autocompletePredictions.release();
         return resultList;
