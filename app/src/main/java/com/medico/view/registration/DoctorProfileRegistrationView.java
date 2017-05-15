@@ -31,7 +31,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
-import com.medico.model.Country;
 import com.medico.model.Person;
 import com.medico.model.PersonDetailProfile;
 import com.medico.model.ProfileId;
@@ -490,15 +489,5 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         return 0;
     }
 
-    private int getCountryIndex(String isdCode)
-    {
-        int i = 0;
-        for(Country country : countriesList)
-        {
-            if(country.toString().equalsIgnoreCase(isdCode))
-                return i;
-        }
-        return 0;
-    }
 
 }

@@ -16,7 +16,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
@@ -28,6 +27,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
+import com.medico.model.Country;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
 import com.medico.model.SearchParameter;
@@ -60,9 +60,8 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button, change_password;
     TextView profileId;
-    EditText name, email, dob, country, city;
-    Spinner gender_spinner;
-    ImageButton dob_calendar;
+    EditText name, email, country, city,mobile_number;
+    Spinner gender_spinner,practice,mobileCountry;
     MultiAutoCompleteTextView specialization;//,location;
     AutoCompleteTextView mAutocompleteView;
     CheckBox auto_login;
@@ -70,31 +69,28 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
     Person personModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
+        final View view = inflater.inflate(R.layout.doctor_profile_edit_view,container,false);
         RelativeLayout autologin = (RelativeLayout)view.findViewById(R.id.layout30);
         autologin.setVisibility(View.VISIBLE);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
+        profilePicUploadBtn.setVisibility(View.VISIBLE);
         profileId = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
+        mobileCountry = (Spinner)view.findViewById(R.id.country_code);
+        mobile_number = (EditText)view.findViewById(R.id.mobile_number);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
-        dob = (EditText) view.findViewById(R.id.dob);
-        dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
-        dob_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDate(dob);
-            }
-        });
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
-        country = (EditText) view.findViewById(R.id.country_spinner);
+        country = (EditText) view.findViewById(R.id.country);
         city = (EditText) view.findViewById(R.id.city);
+        setEditable(false);
         specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
         specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         specialization.setThreshold(1);
+        practice = (Spinner)view.findViewById(R.id.practice);
         auto_login = (CheckBox) view.findViewById(R.id.auto_login);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,14 +174,14 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
                     email.setText(person.getEmail());
                     gender_spinner.setSelection(person.gender.intValue());
                     DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
-                    if(person.getDateOfBirth() != null )
-                        dob.setText(format.format(new Date(person.getDateOfBirth())));
                     mAutocompleteView.setText(person.getAddress());
                     country.setText(person.getCountry());
                     city.setText(person.getCity());
+                    mobile_number.setText(person.getMobile().toString());
+                    ArrayAdapter<Country> mobCountry = new ArrayAdapter<Country>(getActivity(), android.R.layout.simple_dropdown_item_1line, getSupportedCountries());
+                    mobileCountry.setAdapter(mobCountry);
+                    mobileCountry.setSelection(getCountryIndex(person.location));
                     specialization.setText(person.getSpeciality());
-
-
                     SharedPreferences sharedPref = getActivity().getSharedPreferences(MyPREFERENCES, getActivity().MODE_PRIVATE);
                     boolean status = sharedPref.getBoolean("USER_STATUS", true);
                     auto_login.setChecked(status);
@@ -302,8 +298,10 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
     @Override
     public void setEditable(boolean editable)
     {
-
-
+        name.setEnabled(editable);
+        email.setEnabled(editable);
+        mobileCountry.setEnabled(editable);
+        mobile_number.setEnabled(editable);
     }
 
 }

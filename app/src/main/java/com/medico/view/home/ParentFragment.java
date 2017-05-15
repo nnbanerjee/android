@@ -73,6 +73,17 @@ public class ParentFragment extends Fragment implements PARAM
     {
         return countriesList;
     }
+    public Country[] getSupportedCountries()
+    {
+        Country[] countries = {};
+        if(countriesList != null && !countriesList.isEmpty())
+        {
+            countries = new Country[countriesList.size()];
+            countriesList.toArray(countries);
+            return countries;
+        }
+        return countries;
+    }
 
     public boolean isChanged()
     {
@@ -111,6 +122,19 @@ public class ParentFragment extends Fragment implements PARAM
         if(activity instanceof ParentActivity)
         ((ParentActivity)getActivity()).hideBusy();
 
+    }
+
+    public int getCountryIndex(String isdCode)
+    {
+        if(countriesList != null && !countriesList.isEmpty() && isdCode != null && !isdCode.isEmpty())
+        {
+            for (int i = 0; i < countriesList.size(); i++)
+            {
+                if (countriesList.get(i).getIsdCode().equals(isdCode))
+                    return i;
+            }
+        }
+        return 0;
     }
 
 }

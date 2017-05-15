@@ -47,6 +47,8 @@ import com.medico.model.Logindata;
 import com.medico.model.Medicine;
 import com.medico.model.MedicineId;
 import com.medico.model.MedicineStatusRequest;
+import com.medico.model.Message;
+import com.medico.model.MessageRequest;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.model.PatientAppointmentsVM;
 import com.medico.model.PatientDiagnostic;
@@ -105,6 +107,9 @@ public interface MyApi {
 
     @POST("/getChatPersonList")
     void getChatPersonList(@Body ProfileId param, Callback<List<Person>> cb);
+    @POST("/getMessages")
+    void getMessages(@Body MessageRequest request, Callback<List<Message>> cb);
+
 
     @POST("/checkMobileEmailAvailability")
     void checkMobileEmailAvailability(@Body Person param, Callback<ServerResponse> cb);

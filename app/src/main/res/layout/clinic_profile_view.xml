@@ -251,7 +251,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edit_height">
 
-                  <Spinner
+                  <MultiAutoCompleteTextView
                       android:id="@+id/specialization"
                       android:layout_width="fill_parent"
                       android:entries="@array/patient_professions"

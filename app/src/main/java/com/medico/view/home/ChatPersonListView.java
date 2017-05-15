@@ -40,7 +40,7 @@ public class ChatPersonListView extends ParentFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.list_view,container,false);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText(getActivity().getString(R.string.chat_person_list));
@@ -48,17 +48,20 @@ public class ChatPersonListView extends ParentFragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
 //                setHasOptionsMenu(false);
-//                Bundle bun = getActivity().getIntent().getExtras();
-//                Person profile = (Person)adapterView.getAdapter().getItem(i);
-//                        ParentFragment fragment = new PersonProfileEditView();
-//                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());
-//                        bun.putInt(PARAM.PROFILE_ROLE, profile.getId().intValue());
-//                        getActivity().getIntent().putExtras(bun);
-//                      fragment.setArguments(bun);
-//                        FragmentManager fragmentManger = getActivity().getFragmentManager();
-//                        fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
+                Bundle bun = getActivity().getIntent().getExtras();
+                Person profile = (Person)adapterView.getAdapter().getItem(i);
+                ParentFragment fragment = new ChatConversationView();
+                bun.putString(PERSON_NAME, profile.getName());
+                bun.putInt(PERSON_GENDER, profile.getGender().intValue());
+                bun.putString(PERSON_URL, profile.getImageUrl());
+                bun.putInt(PERSON_ROLE, profile.getId().intValue());
+                bun.putInt(PERSON_ID, profile.getId().intValue());
+                getActivity().getIntent().putExtras(bun);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ChatConversationView.class.getName()).addToBackStack(ChatConversationView.class.getName()).commit();
             }
         });
 

@@ -49,9 +49,11 @@ public interface PARAM {
     public static final String SEARCH_ROLE = "searchRole";
     public static final String SEARCH_TYPE = "searchType";
     public static final int APPOINTMENT_BOOKING = 100;
-    public static final int SEARCH_GLOBAL = 101;  
+    public static final int SEARCH_GLOBAL = 101;
 
-
+    public static final String PROFILE_NAME = "profilename";
+    public static final String PROFILE_GENDER = "profilegender";
+    public static final String PROFILE_URL = "profileurl";
     public static final String PROFILE_ID = "profileId";
     public static final String DOCTOR_ID = "dictorId";
     public static final String PATIENT_ID = "patientId";
@@ -173,5 +175,13 @@ public interface PARAM {
     public static final int PROFILE_PICTURE = 1;
     public static final int PROFILE_PICTURE_REG = 2;
     public static final int REGISTRATION_DOCUMENT = 3;
+
+
+    //Messages
+    public static final String PERSON_NAME = "person_name";
+    public static final String PERSON_GENDER = "person_gender";
+    public static final String PERSON_URL = "person_url";
+    public static final String PERSON_ID = "person_Id";
+    public static final String PERSON_ROLE = "person_role";
 
 }

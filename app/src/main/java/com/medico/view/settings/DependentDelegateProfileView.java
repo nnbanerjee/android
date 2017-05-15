@@ -28,7 +28,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
-import com.medico.model.Country;
 import com.medico.model.DependentDelegatePerson;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
@@ -500,16 +499,6 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         for(int i = 0; i < relations.length; i++)
         {
             if(relations[i].equalsIgnoreCase(relation))
-                return i;
-        }
-        return 0;
-    }
-    private int getCountryIndex(String isdCode)
-    {
-        int i = 0;
-        for(Country country : countriesList)
-        {
-            if(country.toString().equalsIgnoreCase(isdCode))
                 return i;
         }
         return 0;

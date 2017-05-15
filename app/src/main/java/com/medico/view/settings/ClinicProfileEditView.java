@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -29,9 +32,10 @@ import com.medico.application.R;
 import com.medico.model.Clinic1;
 import com.medico.model.ClinicId;
 import com.medico.model.ClinicSlotDetails;
-import com.medico.model.Country;
 import com.medico.model.DoctorClinicRequest;
+import com.medico.model.SearchParameter;
 import com.medico.model.ServerResponse;
+import com.medico.model.Specialization;
 import com.medico.util.GeoUtility;
 import com.medico.util.ImageLoadTask;
 import com.medico.view.home.ParentActivity;
@@ -58,7 +62,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     EditText name, email, country, city, mobile;
     Spinner mobile_country;
     EditText landline,services;
-    Spinner specialization;
+    MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Clinic1 clinicModel;
@@ -85,7 +89,9 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country);
         city = (EditText) view.findViewById(R.id.city);
-        specialization = (Spinner) view.findViewById(R.id.specialization);
+        specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
+        specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        specialization.setThreshold(1);
         services = (EditText) view.findViewById(R.id.services);
         addClinicSlot = (ImageView)view.findViewById(R.id.add_slot);
         slotListView = (ListView)view.findViewById(R.id.slot_list);
@@ -171,6 +177,43 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
             location_delete_button.setVisibility(View.GONE);
             current_location_button.setVisibility(View.GONE);
         }
+        specialization.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 10, 1, 100, 5), new Callback<List<Specialization>>() {
+                        @Override
+                        public void success(List<Specialization> specializationList, Response response)
+                        {
+                            Specialization[] options = new Specialization[specializationList.size()];
+                            specializationList.toArray(options);
+                            ArrayAdapter<Specialization> diagnosisAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            specialization.setAdapter(diagnosisAdapter);
+                            diagnosisAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
+            }
+        });
         return view;
     }
 
@@ -204,7 +247,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                         mAutocompleteView.setText(clinic.address);
                         country.setText(clinic.country);
                         city.setText(clinic.city);
-                        specialization.setSelection(getSpecializationIndex(clinic.speciality,clinicType));
+                        specialization.setText(clinic.speciality);
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, clinicModel);
                         if (clinic.addedBy != null && clinic.addedBy.intValue() == loggedinUserId.intValue() && !isProfileView)
                         {
@@ -323,7 +366,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
             clinicModel.address = (mAutocompleteView.getText().toString());
             clinicModel.city = (city.getText().toString());
             clinicModel.country = (country.getText().toString().trim());
-            clinicModel.speciality = (specialization.getSelectedItem().toString());
+            clinicModel.speciality = (specialization.getText().toString());
             clinicModel.location = (mobile_country.getSelectedItem().toString());
         }
         else
@@ -331,9 +374,8 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
             clinicModel.address = (mAutocompleteView.getText().toString());
             clinicModel.city = (city.getText().toString());
             clinicModel.country = (country.getText().toString().trim());
-            clinicModel.speciality = (specialization.getSelectedItem().toString());
+            clinicModel.speciality = (specialization.getText().toString());
             clinicModel.location = (mobile_country.getSelectedItem().toString());
-            clinicModel.speciality = (specialization.getSelectedItem().toString());
             clinicModel.clinicName = (name.getText().toString());
             clinicModel.mobile = (new Long(mobile.getText().toString()));
             clinicModel.email = (email.getText().toString());
@@ -421,24 +463,4 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         return 0;
     }
 
-    private int getCountryIndex(String isdCode)
-    {
-        int i = 0;
-        for(Country country : countriesList)
-        {
-            if(country.toString().equalsIgnoreCase(isdCode))
-                return i;
-        }
-        return 0;
-    }
-    private int getSpecializationIndex(String specialization, int profile)
-    {
-        String[] relations = getActivity().getResources().getStringArray(profile==PATIENT?R.array.patient_professions:R.array.assistant_professions);
-        for(int i = 0; i < relations.length; i++)
-        {
-            if(relations[i].equalsIgnoreCase(specialization))
-                return i;
-        }
-        return 0;
-    }
 }

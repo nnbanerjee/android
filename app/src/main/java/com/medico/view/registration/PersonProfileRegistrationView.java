@@ -32,7 +32,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.medico.application.R;
 import com.medico.datepicker.SlideDateTimeListener;
 import com.medico.datepicker.SlideDateTimePicker;
-import com.medico.model.Country;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
 import com.medico.model.SearchParameter;
@@ -240,7 +239,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                         mAutocompleteView.setText(person.getAddress());
                         country.setText(person.getCountry());
                         city.setText(person.getCity());
-                        specialization.setSelection(getSpecializationIndex(person.getSpeciality(),profileRole));
+                        specialization.setText(person.getSpeciality());
                         bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
@@ -525,24 +524,4 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         return 0;
     }
 
-    private int getCountryIndex(String isdCode)
-    {
-        int i = 0;
-        for(Country country : countriesList)
-        {
-            if(country.toString().equalsIgnoreCase(isdCode))
-                return i;
-        }
-        return 0;
-    }
-    private int getSpecializationIndex(String specialization, int profile)
-    {
-        String[] relations = getActivity().getResources().getStringArray(profile==PATIENT?R.array.patient_professions:R.array.assistant_professions);
-        for(int i = 0; i < relations.length; i++)
-        {
-            if(relations[i].equalsIgnoreCase(specialization))
-                return i;
-        }
-        return 0;
-    }
 }
