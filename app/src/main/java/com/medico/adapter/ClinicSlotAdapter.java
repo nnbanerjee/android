@@ -86,7 +86,7 @@ public class ClinicSlotAdapter extends HomeAdapter {
                 args.putInt(PARAM.DOCTOR_CLINIC_ID, medicinePrescribed.doctorClinicId);
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new ClinicSlotEditView();
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicSlotEditView.class.getName()).addToBackStack(ClinicSlotEditView.class.getName()).commit();

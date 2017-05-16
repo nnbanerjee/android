@@ -176,7 +176,7 @@ public class PatientMedicineListAdapter extends HomeAdapter implements StickyLis
                 args.putInt(PARAM.LOGGED_IN_ID, args.getInt(PARAM.PROFILE_ID));
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = ((ParentActivity) activity).getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientMedicinReminder.class.getName()).addToBackStack( PatientMedicinReminder.class.getName()).commit();

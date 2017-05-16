@@ -19,7 +19,7 @@ public abstract class HomeAdapter extends BaseAdapter
     public HomeAdapter(Activity activity) {
         adapter = this;
         this.activity = activity;
-        api = api = ServerConnectionAdapter.getServerAdapter(activity).getServerAPI();
+        api = ServerConnectionAdapter.getServerAdapter(activity).getServerAPI();
     }
     public void callBack(int id, Object source, Object parameter)
     {

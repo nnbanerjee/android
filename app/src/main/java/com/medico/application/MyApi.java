@@ -110,6 +110,8 @@ public interface MyApi {
     @POST("/getMessages")
     void getMessages(@Body MessageRequest request, Callback<List<Message>> cb);
 
+    @POST("/sendMessage")
+    void sendMessages(@Body Message request, Callback<ServerResponse> cb);
 
     @POST("/checkMobileEmailAvailability")
     void checkMobileEmailAvailability(@Body Person param, Callback<ServerResponse> cb);

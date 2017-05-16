@@ -17,10 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medico.application.R;
 import com.medico.model.AppointmentFeedback;
 import com.medico.model.ResponseCodeVerfication;
-import com.medico.application.R;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import retrofit.Callback;
@@ -159,7 +158,7 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 ParentFragment fragment = new DoctorAppointmentInformation();
-                ((ParentActivity)getActivity()).attachFragment(fragment);
+//                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();

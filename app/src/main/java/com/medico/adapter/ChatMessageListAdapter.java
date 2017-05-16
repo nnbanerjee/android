@@ -15,7 +15,8 @@ import com.medico.model.Message;
 import com.medico.util.PARAM;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -98,7 +99,7 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
         HeaderViewHolder holder;
         if (convertView == null) {
             holder = new HeaderViewHolder();
-            convertView = inflater.inflate(R.layout.header_all_appointment, parent, false);
+            convertView = inflater.inflate(R.layout.header_chat, parent, false);
             holder.text = (TextView) convertView.findViewById(R.id.slot);
             convertView.setTag(holder);
         }
@@ -106,7 +107,8 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
         {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        SimpleDateFormat format = new SimpleDateFormat("DD-MMM");
+        //SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
+        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.LONG);
         holder.text.setText(format.format(messages.get(position).date));
         return convertView;
     }
@@ -114,7 +116,11 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
     @Override
     public long getHeaderId(int position)
     {
-
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(messages.get(position).date));
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.MILLISECOND,0);
         return messages.get(position).date;
     }
 

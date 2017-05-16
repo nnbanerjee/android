@@ -287,7 +287,7 @@ public class DoctorAppointmentInvoices extends ParentFragment {
             args.putInt(INVOICE_ID, 0);
         activity.getIntent().putExtras(args);
         ParentFragment fragment = new CustomTemplateListView();
-        activity.attachFragment(fragment);
+//        activity.attachFragment(fragment);
         fragment.setArguments(args);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, CustomTemplateListView.class.getName()).addToBackStack(CustomTemplateListView.class.getName()).commit();

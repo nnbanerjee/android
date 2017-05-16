@@ -17,7 +17,6 @@ import com.medico.application.R;
 import com.medico.model.AppointmentId1;
 import com.medico.model.FileUpload1;
 import com.medico.util.FileUploadDialog;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.util.List;
@@ -121,7 +120,7 @@ public class DoctorAppointmentDocument extends ParentFragment {
     {
         Bundle args = getActivity().getIntent().getExtras();
         ParentFragment fragment = new PatientSummaryFileUpload();
-        ((ParentActivity)getActivity()).attachFragment(fragment);
+//        ((ParentActivity)getActivity()).attachFragment(fragment);
         fragment.setArguments(args);
         FragmentManager fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, PatientSummaryFileUpload.class.getName()).addToBackStack(PatientSummaryFileUpload.class.getName()).commit();

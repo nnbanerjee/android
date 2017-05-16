@@ -20,7 +20,6 @@ import com.medico.model.PatientAppointmentsVM;
 import com.medico.model.PatientId;
 import com.medico.model.PatientMedicine;
 import com.medico.util.PARAM;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.PatientMedicinReminder;
 
@@ -202,7 +201,7 @@ public class PatientMedicineListView extends ParentFragment
                 args.putInt(MEDICINE_ID,0);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
-                ((ParentActivity)getActivity()).attachFragment(fragment);
+//                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientMedicinReminder.class.getName()).addToBackStack(PatientMedicinReminder.class.getName()).commit();

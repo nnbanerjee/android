@@ -112,7 +112,7 @@ public class PatientSettingListAdapter extends HomeAdapter  {
                 new ImageLoadTask(imageUrl, viewImage).execute();
         }
 
-        doctorName.setText(personList.get(position).getName());
+        doctorName.setText(personList.get(position).getName() + " ( " + personList.get(position).getId().toString() + " )");
         doctorSpeciality.setText(personList.get(position).getSpeciality());
         totalCount.setOnClickListener(new View.OnClickListener()
         {

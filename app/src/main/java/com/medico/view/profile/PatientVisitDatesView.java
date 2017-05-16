@@ -71,7 +71,7 @@ public class PatientVisitDatesView extends ParentFragment
                 bun.putInt(PARAM.CLINIC_ID, visits.getClinicId());
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new DoctorAppointmentInformation();
-                ((ParentActivity)getActivity()).attachFragment(fragment);
+//                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
@@ -147,7 +147,7 @@ public class PatientVisitDatesView extends ParentFragment
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 ParentFragment fragment = new DoctorAppointmentInformation();
-                ((ParentActivity)getActivity()).attachFragment(fragment);
+//                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();

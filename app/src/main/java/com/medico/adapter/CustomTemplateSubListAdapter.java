@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.medico.application.R;
 import com.medico.model.CustomProcedureTemplate1;
 import com.medico.util.PARAM;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.DoctorTreatmentPlanEditView;
 
@@ -90,7 +89,7 @@ public class CustomTemplateSubListAdapter extends HomeAdapter {
                 args.putInt(PARAM.CUSTOM_TEMPLATE_ID,temp.getTemplateId());
                 activity.getIntent().putExtras(args);
                 ParentFragment fragment = new DoctorTreatmentPlanEditView();
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorTreatmentPlanEditView.class.getName()).addToBackStack(DoctorTreatmentPlanEditView.class.getName()).commit();

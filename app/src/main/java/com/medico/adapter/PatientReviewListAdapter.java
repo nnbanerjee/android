@@ -117,7 +117,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
                 bundle.putInt(PARAM.PATIENT_ID, patientReviews.get(position).patientId);
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new PatientDetailsView();
-                parentactivity.attachFragment(fragment);
+//                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
 
@@ -135,7 +135,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
                 bundle.putString(PARAM.CLINIC_NAME, patientReviews.get(position).clinicName);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new DoctorAppointmentInformation();
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, DoctorAppointmentInformation.class.getName()).addToBackStack(DoctorAppointmentInformation.class.getName()).commit();
             }

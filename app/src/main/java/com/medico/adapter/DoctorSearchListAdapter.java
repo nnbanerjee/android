@@ -172,7 +172,7 @@ public class DoctorSearchListAdapter extends HomeAdapter
                 bundle.putInt(PARAM.PATIENT_ID, person.id);
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new PatientDetailsView();
-                parentactivity.attachFragment(fragment);
+//                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
             }
@@ -221,7 +221,7 @@ public class DoctorSearchListAdapter extends HomeAdapter
             bundle.putLong(PARAM.SLOT_END_DATETIME,slot.TimeToStop);
             activity.getIntent().putExtras(bundle);
             ParentFragment fragment = new ClinicDoctorAppointmentView();
-            ((ParentActivity)activity).attachFragment(fragment);
+//            ((ParentActivity)activity).attachFragment(fragment);
             fragment.setArguments(bundle);
             FragmentManager fragmentManger = activity.getFragmentManager();
             fragmentManger.beginTransaction().add(R.id.service,fragment,ClinicDoctorAppointmentView.class.getName()).addToBackStack(ClinicDoctorAppointmentView.class.getName()).commit();

@@ -57,7 +57,7 @@ public class ManageMedicineAlarm extends ParentActivity {
     protected void attachView()
     {
         ParentFragment fragment = new PatientMedicineListView();
-        attachFragment(fragment);
+//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment,DoctorAppointmentListView.class.getName()).addToBackStack(DoctorAppointmentListView.class.getName()).commit();
     }

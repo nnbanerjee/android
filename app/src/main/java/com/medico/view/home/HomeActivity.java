@@ -70,6 +70,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     TextView globalTv;
     Button notes, messages, doctorSearch, clinicSearch, patients;
     public MyApi api;
+    ServerConnectionAdapter serverConnectionAdapter;
     ImageView profilePicture;
     TextView accountName, status;
     ProfileDependencyAdapter dependentAdapter;
@@ -432,8 +433,8 @@ public abstract class HomeActivity extends Activity implements PARAM
     protected void onStart()
     {
         super.onStart();
-
-          api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
+        serverConnectionAdapter = ServerConnectionAdapter.getServerAdapter(this);
+          api = serverConnectionAdapter.getServerAPI();
     }
 
 

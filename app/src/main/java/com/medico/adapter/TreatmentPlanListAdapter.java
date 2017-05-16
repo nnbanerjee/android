@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.medico.application.R;
 import com.medico.model.TreatmentPlan1;
 import com.medico.util.PARAM;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.profile.DoctorTreatmentPlanEditView;
 
@@ -146,7 +145,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
                     args.putInt(PARAM.TREATMENT_ID, plan.getTreatmentId());
                     activity.getIntent().putExtras(args);
                     ParentFragment fragment = new DoctorTreatmentPlanEditView();
-                    ((ParentActivity)activity).attachFragment(fragment);
+//                    ((ParentActivity)activity).attachFragment(fragment);
                     fragment.setArguments(args);
                     FragmentManager fragmentManger = activity.getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment, DoctorTreatmentPlanEditView.class.getName()).addToBackStack(DoctorTreatmentPlanEditView.class.getName()).commit();

@@ -12,5 +12,11 @@ public class Message
     public String message;
     public Integer senderId;
     public Integer recipientId;
-    public String sessionId;
+
+    public Message(String message, Integer senderId, Integer recipientId)
+    {
+        this.message = message;
+        this.senderId = senderId;
+        this.recipientId = recipientId;
+    }
 }

@@ -143,7 +143,7 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
                 bundle.putInt(PARAM.DOCTOR_ID, doctor.id);
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new DoctorDetailsView();
-                parentactivity.attachFragment(fragment);
+//                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, DoctorDetailsView.class.getName()).addToBackStack(DoctorDetailsView.class.getName()).commit();            }
         });
@@ -214,7 +214,7 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
                             bundle.putLong(PARAM.SLOT_END_DATETIME,details.TimeToStop);
                             activity.getIntent().putExtras(bundle);
                             ParentFragment fragment = new ClinicDoctorAppointmentView();
-                            ((ParentActivity)activity).attachFragment(fragment);
+//                            ((ParentActivity)activity).attachFragment(fragment);
                             fragment.setArguments(bundle);
                             FragmentManager fragmentManger = activity.getFragmentManager();
                             fragmentManger.beginTransaction().add(R.id.service,fragment,ClinicDoctorAppointmentView.class.getName()).addToBackStack(ClinicDoctorAppointmentView.class.getName()).commit();
@@ -247,7 +247,7 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
                 bundle.putInt(PARAM.DOCTOR_CLINIC_ID,doctorappointment.doctorClinicId);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new FeedbackFragmentClinicAppointment();
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,FeedbackFragmentClinicAppointment.class.getName()).addToBackStack(FeedbackFragmentClinicAppointment.class.getName()).commit();

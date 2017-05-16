@@ -156,7 +156,7 @@ public class ClinicSearchListAdapter extends HomeAdapter
                 bundle.putInt(PARAM.PATIENT_ID, person.idClinic);
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new PatientDetailsView();
-                parentactivity.attachFragment(fragment);
+//                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
             }

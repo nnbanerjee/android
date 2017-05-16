@@ -21,7 +21,6 @@ import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PersonID;
 import com.medico.util.PARAM;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 /**
@@ -77,7 +76,7 @@ public class ClinicSlotListView extends ParentFragment {
                 activity.getIntent().putExtras(bundle);
                 ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
 //                fragment.setModel(slot);
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicAppointmentScheduleView.class.getName()).addToBackStack(ClinicAppointmentScheduleView.class.getName()).commit();
             }

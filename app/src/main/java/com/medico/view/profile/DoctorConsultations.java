@@ -11,7 +11,7 @@ public class DoctorConsultations extends ManagePatientProfile {
     protected void attachView()
     {
         ParentFragment fragment = new DoctorProfileListView();
-        attachFragment(fragment);
+//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment,DoctorProfileListView.class.getName()).addToBackStack(DoctorProfileListView.class.getName()).commit();
     }

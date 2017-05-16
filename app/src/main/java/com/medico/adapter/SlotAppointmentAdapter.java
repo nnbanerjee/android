@@ -16,9 +16,8 @@ import com.medico.application.R;
 import com.medico.model.DoctorClinicDetails;
 import com.medico.model.PatientAppointmentByDoctor;
 import com.medico.util.PARAM;
-import com.medico.view.profile.ClinicDoctorAppointmentView;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
+import com.medico.view.profile.ClinicDoctorAppointmentView;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -170,7 +169,7 @@ public class SlotAppointmentAdapter extends BaseAdapter
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new ClinicDoctorAppointmentView();
-                ((ParentActivity)activity).attachFragment(fragment);
+//                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,ClinicDoctorAppointmentView.class.getName()).addToBackStack(ClinicDoctorAppointmentView.class.getName()).commit();

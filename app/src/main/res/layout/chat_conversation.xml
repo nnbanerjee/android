@@ -2,14 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="2dp"
-    android:background="#ffffff">
+    android:background="@color/white">
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/chat_messages"
         android:orientation="vertical"
-        android:background="@drawable/chat_wall"
+        android:layout_above="@+id/send_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </se.emilsjolander.stickylistheaders.StickyListHeadersListView>
+        android:layout_height="match_parent"/>
     <RelativeLayout
         android:id="@+id/send_layout"
         android:layout_marginTop="@dimen/edit_height"
@@ -21,6 +20,7 @@
         <EditText
             android:id="@+id/sendtext"
             android:layout_margin="5dp"
+            android:padding="2dp"
             android:background="@drawable/rounded_white_color"
             android:layout_toLeftOf="@+id/sendbutton"
             android:layout_width="match_parent"

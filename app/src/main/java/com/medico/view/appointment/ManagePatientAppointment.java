@@ -56,7 +56,7 @@ public class ManagePatientAppointment extends ParentActivity {
     protected void attachView()
     {
         ParentFragment fragment = new DoctorAppointmentListView();
-        attachFragment(fragment);
+//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment,DoctorAppointmentListView.class.getName()).addToBackStack(DoctorAppointmentListView.class.getName()).commit();
     }

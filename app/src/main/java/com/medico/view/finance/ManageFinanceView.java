@@ -57,7 +57,7 @@ public class ManageFinanceView extends ParentActivity {
     protected void attachView()
     {
         ParentFragment fragment = new FinanceReportListView();
-        attachFragment(fragment);
+//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment,FinanceReportListView.class.getName()).addToBackStack(FinanceReportListView.class.getName()).commit();
     }

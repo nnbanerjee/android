@@ -129,7 +129,7 @@ public class DoctorListAdapter extends HomeAdapter  {
                 bundle.putInt(PARAM.DOCTOR_ID, allPatients.getDoctorList().get(position).getDoctorId());
                 parentactivity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new DoctorDetailsView();
-                parentactivity.attachFragment(fragment);
+//                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().replace(R.id.service, fragment, DoctorDetailsView.class.getName()).addToBackStack(DoctorDetailsView.class.getName()).commit();
             }

@@ -36,7 +36,6 @@ import com.medico.model.ResponseCodeVerfication;
 import com.medico.model.SearchParameter;
 import com.medico.model.SummaryResponse;
 import com.medico.model.Symptom;
-import com.medico.view.home.ParentActivity;
 import com.medico.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -264,7 +263,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 args.putInt(DIAGNOSTIC_TEST_ID,0);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientDiagnosticTests();
-                ((ParentActivity)getActivity()).attachFragment(fragment);
+//                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDiagnosticTests.class.getName()).addToBackStack(PatientDiagnosticTests.class.getName()).commit();
@@ -278,7 +277,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
                 args.putInt(MEDICINE_ID,0);
                 getActivity().getIntent().putExtras(args);
                 ParentFragment fragment = new PatientMedicinReminder();
-                ((ParentActivity)getActivity()).attachFragment(fragment);
+//                ((ParentActivity)getActivity()).attachFragment(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientMedicinReminder.class.getName()).addToBackStack(PatientMedicinReminder.class.getName()).commit();
@@ -454,7 +453,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
         bundle.putInt("history_type", histryType);
         bundle.putInt(APPOINTMENT_ID,summaryResponse.getAppointmentId());
         ParentFragment fragment = new HistryDialogView();
-        ((ParentActivity)getActivity()).attachFragment(fragment);
+//        ((ParentActivity)getActivity()).attachFragment(fragment);
         getActivity().getIntent().putExtras(bundle);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, HistryDialogView.class.getName()).addToBackStack(HistryDialogView.class.getName()).commit();

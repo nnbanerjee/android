@@ -54,7 +54,7 @@ public class ManagePatientProfile extends ParentActivity {
     protected void attachView()
     {
         ParentFragment fragment = new PatientProfileListView();
-        attachFragment(fragment);
+//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.service, fragment,PatientProfileListView.class.getName()).addToBackStack(PatientProfileListView.class.getName()).commit();
     }
