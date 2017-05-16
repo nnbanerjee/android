@@ -106,7 +106,7 @@ public class ChatConversationView extends ParentFragment
         int Id = bundle.getInt(PERSON_ID);
         String url = bundle.getString(PERSON_URL);
         String profileName = bundle.getString(PERSON_NAME);
-        api.getMessages(new MessageRequest(profileId, Id, 1, 10),new Callback<List<Message>>()
+        api.getMessages(new MessageRequest(profileId, Id, 1, 100),new Callback<List<Message>>()
         {
             @Override
             public void success(List<Message> messages, Response response)

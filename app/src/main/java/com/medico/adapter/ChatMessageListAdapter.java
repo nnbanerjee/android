@@ -1,7 +1,6 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.medico.model.Message;
 import com.medico.util.PARAM;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -55,42 +55,61 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
     public View getView(int position, View convertView, ViewGroup parent)
     {
         final ViewHolder holder;
-
+        Bundle bundle = activity.getIntent().getExtras();
+        Integer profileId = bundle.getInt(PARAM.PROFILE_ID);
+        Message message = messages.get(position);
         if (convertView == null)
         {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.chat_message, parent, false);
-            holder.layout = (RelativeLayout)convertView.findViewById(R.id.layout);
-            holder.message = messages.get(position);
-            holder.messageText = (TextView) convertView.findViewById(R.id.text_message);
-            holder.time = (TextView) convertView.findViewById(R.id.time);
-            holder.tick = (ImageView)convertView.findViewById(R.id.message_tick);
+
+            if(message.senderId.intValue() == profileId.intValue())
+            {
+                holder.messageText = (TextView) convertView.findViewById(R.id.text_message);
+                holder.time = (TextView) convertView.findViewById(R.id.time);
+                holder.tick = (ImageView)convertView.findViewById(R.id.message_tick);
+            }
+            else
+            {
+                RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.layout) ;
+                RelativeLayout layout1 = (RelativeLayout)convertView.findViewById(R.id.layout1);
+                layout.setVisibility(View.GONE);
+                layout1.setVisibility(View.VISIBLE);
+                holder.messageText = (TextView) convertView.findViewById(R.id.text_message1);
+                holder.time = (TextView) convertView.findViewById(R.id.time1);
+                holder.tick = (ImageView)convertView.findViewById(R.id.message_tick1);
+            }
             convertView.setTag(holder);
         }
         else
         {
+            RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.layout) ;
+            RelativeLayout layout1 = (RelativeLayout)convertView.findViewById(R.id.layout1);
             holder = (ViewHolder) convertView.getTag();
+            if(message.senderId.intValue() == profileId.intValue())
+            {
+                layout.setVisibility(View.VISIBLE);
+                layout1.setVisibility(View.GONE);
+                holder.messageText = (TextView) convertView.findViewById(R.id.text_message);
+                holder.time = (TextView) convertView.findViewById(R.id.time);
+                holder.tick = (ImageView)convertView.findViewById(R.id.message_tick);
+            }
+            else
+            {
+                layout.setVisibility(View.GONE);
+                layout1.setVisibility(View.VISIBLE);
+                holder.messageText = (TextView) convertView.findViewById(R.id.text_message1);
+                holder.time = (TextView) convertView.findViewById(R.id.time1);
+                holder.tick = (ImageView)convertView.findViewById(R.id.message_tick1);
+            }
         }
-        Bundle bundle = activity.getIntent().getExtras();
-        Integer profileId = bundle.getInt(PARAM.PROFILE_ID);
-        Message message = messages.get(position);
+
+
         DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
         holder.messageText.setText(message.message);
         holder.time.setText(format.format(message.date));
         holder.tick.setVisibility(message.isRead==1?View.VISIBLE:View.INVISIBLE);
-        holder.message = message;
-        if(message.senderId.intValue() == profileId.intValue())
-        {
-            holder.layout.setLeft(50);
-            holder.layout.setRight(0);
-            holder.layout.setBackgroundColor(Color.WHITE);
-        }
-        else
-        {
-            holder.layout.setLeft(0);
-            holder.layout.setRight(50);
-            holder.layout.setBackgroundResource(R.color.medico_green1);
-        }
+
         return convertView;
     }
 
@@ -107,8 +126,8 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
         {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        //SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
-        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.LONG);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMM");
+//        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.LONG);
         holder.text.setText(format.format(messages.get(position).date));
         return convertView;
     }
@@ -120,8 +139,9 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
         calendar.setTime(new Date(messages.get(position).date));
         calendar.set(Calendar.HOUR_OF_DAY,0);
         calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
         calendar.set(Calendar.MILLISECOND,0);
-        return messages.get(position).date;
+        return calendar.getTime().getTime();
     }
 
     class HeaderViewHolder {
@@ -130,8 +150,6 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
 
     class ViewHolder
     {
-        private Message message;
-        private RelativeLayout layout;
         private TextView messageText,time;
         private ImageView tick;
     }
