@@ -1,5 +1,7 @@
 package com.medico.model;
 
+import java.util.Date;
+
 /**
  * Created by Narendra on 15-05-2017.
  */
@@ -18,5 +20,7 @@ public class Message
         this.message = message;
         this.senderId = senderId;
         this.recipientId = recipientId;
+        date = new Date().getTime();
+        isRead = (byte)(0);
     }
 }

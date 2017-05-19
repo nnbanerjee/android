@@ -119,6 +119,9 @@
                   android:label="Registration"
                   android:parentActivityName="com.medico.application.MainActivity" >
         </activity>
+        <service
+            android:name="com.medico.service.ChatServer">
+        </service>
     </application>
 
 </manifest>

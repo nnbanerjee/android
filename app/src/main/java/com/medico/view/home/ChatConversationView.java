@@ -1,6 +1,11 @@
 package com.medico.view.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import com.medico.application.R;
 import com.medico.model.Message;
 import com.medico.model.MessageRequest;
 import com.medico.model.ServerResponse;
+import com.medico.service.Constants;
 
 import java.util.List;
 
@@ -31,6 +37,7 @@ public class ChatConversationView extends ParentFragment
     Button sendbutton;
     StickyListHeadersListView messageList;
     EditText sendText;
+    ChatMessageListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -68,7 +75,9 @@ public class ChatConversationView extends ParentFragment
             @Override
             public void onClick(View v)
             {
-                api.sendMessages(new Message(sendText.getText().toString(),profileId,Id ),new Callback<ServerResponse>()
+                showBusy();
+                final Message message = new Message(sendText.getText().toString(),profileId,Id );
+                api.sendMessages(message,new Callback<ServerResponse>()
                 {
                     @Override
                     public void success(ServerResponse serverResponse, Response response)
@@ -77,7 +86,12 @@ public class ChatConversationView extends ParentFragment
                         {
                             System.out.print("Message is successfully sent");
                             sendText.setText("");
+                            message.messageId = serverResponse.messageId;
+                            adapter.getMessages().add(message);
+                            adapter.notifyDataSetChanged();
+                            messageList.smoothScrollToPosition(adapter.getCount()-1);
                         }
+                        hideBusy();
                     }
 
                     @Override
@@ -85,12 +99,19 @@ public class ChatConversationView extends ParentFragment
                     {
 
                         error.printStackTrace();
+                        hideBusy();
                     }
                 });
             }
         });
-        return view;
+        IntentFilter statusIntentFilter = new IntentFilter();
+        statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
+        // Instantiates a new DownloadStateReceiver
+        MessageStateReceiver mDownloadStateReceiver = new MessageStateReceiver();
+        // Registers the DownloadStateReceiver and its intent filters
+        LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver,statusIntentFilter);
 
+        return view;
     }
 
     @Override
@@ -111,9 +132,10 @@ public class ChatConversationView extends ParentFragment
             @Override
             public void success(List<Message> messages, Response response)
             {
-                ChatMessageListAdapter adapter = new ChatMessageListAdapter(getActivity(), messages);
+                adapter = new ChatMessageListAdapter(getActivity(), messages);
                 messageList.setAdapter(adapter);
-
+                if(adapter.getCount() > 0)
+                messageList.smoothScrollToPosition(adapter.getCount()-1);
             }
 
             @Override
@@ -124,5 +146,42 @@ public class ChatConversationView extends ParentFragment
             }
         });
     }
+    public class MessageStateReceiver extends BroadcastReceiver
+    {
+        // Prevents instantiation
+        public MessageStateReceiver()
+        {
+        }
+        // Called when the BroadcastReceiver gets an Intent it's registered to receive
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            if(adapter != null)
+            {
+                List<Message> messages1 = adapter.getMessages();
+                api.getMessagesAfter(new MessageRequest(101, 1421, messages1.get(messages1.size() - 1).messageId), new Callback<List<Message>>()
+                {
+                    @Override
+                    public void success(List<Message> messages, Response response)
+                    {
+                        if (messages != null && messages.isEmpty() == false)
+                        {
+                            adapter.getMessages().addAll(messages);
+                            adapter.notifyDataSetChanged();
+                            messageList.smoothScrollToPosition(adapter.getCount()-1);
+                        }
 
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+
+                        error.printStackTrace();
+                    }
+                });
+            }
+        }
+
+    }
 }

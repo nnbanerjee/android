@@ -1,8 +1,13 @@
 package com.medico.view.home;
 
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,10 +19,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.medico.adapter.PatientSettingListAdapter;
+import com.medico.adapter.ChatPersonListAdapter;
 import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
+import com.medico.service.Constants;
 import com.medico.view.settings.ManagePersonSettings;
 import com.medico.view.settings.PersonProfileEditView;
 
@@ -35,7 +41,7 @@ import retrofit.client.Response;
 public class ChatPersonListView extends ParentFragment {
 
     ListView listView;
-
+    ChatPersonListAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -64,7 +70,7 @@ public class ChatPersonListView extends ParentFragment {
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ChatConversationView.class.getName()).addToBackStack(ChatConversationView.class.getName()).commit();
             }
         });
-
+        registerChatMessage();
         return view;
     }
 
@@ -82,7 +88,7 @@ public class ChatPersonListView extends ParentFragment {
             @Override
             public void success(final List<Person> chatPersonList, Response response)
             {
-                PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), chatPersonList);
+                adapter = new ChatPersonListAdapter(getActivity(), chatPersonList);
                 listView.setAdapter(adapter);
 
             }
@@ -142,4 +148,45 @@ public class ChatPersonListView extends ParentFragment {
         }
         return true;
     }
+
+    public void registerChatMessage()
+    {
+        IntentFilter statusIntentFilter = new IntentFilter();
+        statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
+        // Instantiates a new DownloadStateReceiver
+        MessageStateReceiver mDownloadStateReceiver = new MessageStateReceiver();
+        // Registers the DownloadStateReceiver and its intent filters
+        LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver,statusIntentFilter);
+
+    }
+    public class MessageStateReceiver extends BroadcastReceiver
+    {
+        // Prevents instantiation
+        public MessageStateReceiver()
+        {
+        }
+        // Called when the BroadcastReceiver gets an Intent it's registered to receive
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+//            Bundle bundle = intent.getExtras();
+//            int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
+//            int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
+//            adapter.notifyDataSetInvalidated();
+//            if(ids != null && ids.length > 0)
+//            {
+//                for(int i = 0; i < ids.length; i++)
+//                {
+//                    if(person.id.intValue() == ids[i])
+//                    {
+//                        totalCount.setVisibility(View.VISIBLE);
+//                        totalCount.setText(new Integer(numberOfMessages[i]).toString());
+//                    }
+//                }
+//            }
+        }
+
+    }
+
+
 }

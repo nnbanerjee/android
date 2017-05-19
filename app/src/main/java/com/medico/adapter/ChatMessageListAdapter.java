@@ -36,6 +36,11 @@ public class ChatMessageListAdapter extends HomeAdapter implements StickyListHea
         this.messages = messages;
     }
 
+    public List<Message> getMessages()
+    {
+        return messages;
+    }
+
     @Override
     public int getCount() {
         return messages.size();

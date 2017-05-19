@@ -9,4 +9,5 @@ public class ServerResponse
     public Integer status;
     public String errorCode;
     public Integer profileId;
+    public Integer messageId;
 }

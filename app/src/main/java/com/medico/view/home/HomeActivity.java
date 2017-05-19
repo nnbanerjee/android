@@ -33,6 +33,7 @@ import com.medico.model.Delegation;
 import com.medico.model.Dependent;
 import com.medico.model.DoctorProfile;
 import com.medico.model.PersonProfile;
+import com.medico.service.ChatServer;
 import com.medico.util.FileUploadDialog;
 import com.medico.util.LocationService;
 import com.medico.util.PARAM;
@@ -42,6 +43,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -104,6 +108,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         showMenus();
         LocationService locationService = LocationService.getLocationManager(this);
 //        locationService.addNotifyListeber(this);
+        startChatServer();
 
     }
 
@@ -441,5 +446,24 @@ public abstract class HomeActivity extends Activity implements PARAM
     public static HomeActivity getParentAtivity()
     {
         return parent_activity;
+    }
+
+
+    public void startChatServer()
+    {
+
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+
+        scheduler.scheduleAtFixedRate
+                (new Runnable()
+                {
+                    public void run()
+                    {
+                        Intent intent = new Intent(parent_activity, ChatServer.class);
+                        intent.putExtra(PROFILE_ID,profileId);
+                        HomeActivity.getParentAtivity().startService(intent);
+                    }
+                }, 0, 10, TimeUnit.SECONDS);
     }
 }

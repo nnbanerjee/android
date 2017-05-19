@@ -7,7 +7,8 @@
         <TextView
             android:id="@+id/slot"
             android:textAppearance="@style/sub_heading1_blue"
-            android:padding="3dp"
+            android:padding="5dp"
+            android:background="@color/medico_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

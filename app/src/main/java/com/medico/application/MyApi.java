@@ -7,6 +7,7 @@ import com.medico.model.AppointmentId1;
 import com.medico.model.AppointmentPatientIds;
 import com.medico.model.AppointmentResponse;
 import com.medico.model.AppointmentStatusRequest;
+import com.medico.model.ChatMessageCounts;
 import com.medico.model.Clinic1;
 import com.medico.model.ClinicByDoctorRequest;
 import com.medico.model.ClinicId;
@@ -109,6 +110,12 @@ public interface MyApi {
     void getChatPersonList(@Body ProfileId param, Callback<List<Person>> cb);
     @POST("/getMessages")
     void getMessages(@Body MessageRequest request, Callback<List<Message>> cb);
+
+    @POST("/getMessagesAfter")
+    void getMessagesAfter(@Body MessageRequest request, Callback<List<Message>> cb);
+
+    @POST("/getNewMessageCountsByRecipient")
+    void getNewMessageCountsByRecipient(@Body MessageRequest request, Callback<List<ChatMessageCounts>> cb);
 
     @POST("/sendMessage")
     void sendMessages(@Body Message request, Callback<ServerResponse> cb);

@@ -130,6 +130,10 @@ public class ChatPersonListAdapter extends HomeAdapter
         return convertView;
 
     }
-
+    class ViewHolder
+    {
+        private TextView messageText,time;
+        private ImageView tick;
+    }
 
 }

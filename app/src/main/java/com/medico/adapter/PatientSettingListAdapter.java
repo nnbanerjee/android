@@ -39,6 +39,7 @@ public class PatientSettingListAdapter extends HomeAdapter  {
         super(activity);
         this.activity = activity;
         this.personList = personList;
+
     }
 
     @Override
