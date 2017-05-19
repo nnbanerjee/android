@@ -2,11 +2,14 @@ package com.medico.view.home;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.medico.adapter.MenuAdapter;
 import com.medico.application.R;
 import com.medico.model.DoctorId;
 import com.medico.model.DoctorProfile;
+import com.medico.service.Constants;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 
@@ -36,7 +40,7 @@ import retrofit.client.Response;
 public class DoctorHome extends HomeActivity
 {
     public int PRACTICE_TYPE = ALLOPATHIC;
-
+    MessageStateReceiver mDownloadStateReceiver;
     @Override
     protected void createView()
     {
@@ -261,7 +265,75 @@ public class DoctorHome extends HomeActivity
                 Toast.makeText(DoctorHome.this, R.string.Failed, Toast.LENGTH_SHORT).show();
             }
         });
+        registerChatMessage();
     }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        registerChatMessage();
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        deregisterChatMessage();
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        deregisterChatMessage();
+    }
+    public void registerChatMessage()
+    {
+        if(mDownloadStateReceiver == null)
+        {
+            IntentFilter statusIntentFilter = new IntentFilter();
+            statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
+            // Instantiates a new DownloadStateReceiver
+            mDownloadStateReceiver = new MessageStateReceiver();
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
+        }
+    }
+    public void deregisterChatMessage()
+    {
+        if(mDownloadStateReceiver != null)
+        {
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).unregisterReceiver(mDownloadStateReceiver);
+            mDownloadStateReceiver = null;
+        }
 
+    }
+    public class MessageStateReceiver extends BroadcastReceiver
+    {
+        // Prevents instantiation
+        public MessageStateReceiver()
+        {
+        }
+        // Called when the BroadcastReceiver gets an Intent it's registered to receive
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            Bundle bundle = intent.getExtras();
+            int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
+            Button numberButton = (Button)findViewById(R.id.numberOfMessages);
+            if(numberOfMessages != null && numberOfMessages.length > 0)
+            {
+                numberButton.setVisibility(View.VISIBLE);
+                int numbers = 0;
+                for(int i = 0; i < numberOfMessages.length; i++)
+                    numbers = numbers + numberOfMessages[i];
+
+                numberButton.setText(new Integer(numbers).toString());
+             }
+             else
+                numberButton.setVisibility(View.GONE);
+
+        }
+
+    }
 
 }

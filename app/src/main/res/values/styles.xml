@@ -261,4 +261,7 @@
     <style name = "body12_white" parent="body12">
         <item name = "android:textColor">@color/white</item>
     </style>
+    <style name = "body9_white" parent="body9">
+        <item name = "android:textColor">@color/white</item>
+    </style>
 </resources>

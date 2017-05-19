@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
@@ -42,6 +43,7 @@ public class ChatPersonListView extends ParentFragment {
 
     ListView listView;
     ChatPersonListAdapter adapter;
+    MessageStateReceiver mDownloadStateReceiver;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -100,7 +102,7 @@ public class ChatPersonListView extends ParentFragment {
             }
         });
 
-
+        registerChatMessage();
     }
 
     @Override
@@ -119,6 +121,15 @@ public class ChatPersonListView extends ParentFragment {
                 return false;
             }
         });
+        registerChatMessage();
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        deregisterChatMessage();
+
     }
 
     @Override
@@ -151,12 +162,24 @@ public class ChatPersonListView extends ParentFragment {
 
     public void registerChatMessage()
     {
-        IntentFilter statusIntentFilter = new IntentFilter();
-        statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
-        // Instantiates a new DownloadStateReceiver
-        MessageStateReceiver mDownloadStateReceiver = new MessageStateReceiver();
-        // Registers the DownloadStateReceiver and its intent filters
-        LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver,statusIntentFilter);
+        if(mDownloadStateReceiver == null)
+        {
+            IntentFilter statusIntentFilter = new IntentFilter();
+            statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
+            // Instantiates a new DownloadStateReceiver
+            mDownloadStateReceiver = new MessageStateReceiver();
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
+        }
+    }
+    public void deregisterChatMessage()
+    {
+        if(mDownloadStateReceiver != null)
+        {
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).unregisterReceiver(mDownloadStateReceiver);
+            mDownloadStateReceiver = null;
+        }
 
     }
     public class MessageStateReceiver extends BroadcastReceiver
@@ -169,21 +192,17 @@ public class ChatPersonListView extends ParentFragment {
         @Override
         public void onReceive(Context context, Intent intent)
         {
-//            Bundle bundle = intent.getExtras();
-//            int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
-//            int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
-//            adapter.notifyDataSetInvalidated();
-//            if(ids != null && ids.length > 0)
-//            {
-//                for(int i = 0; i < ids.length; i++)
-//                {
-//                    if(person.id.intValue() == ids[i])
-//                    {
-//                        totalCount.setVisibility(View.VISIBLE);
-//                        totalCount.setText(new Integer(numberOfMessages[i]).toString());
-//                    }
-//                }
-//            }
+            if(adapter != null)
+            {
+                Bundle bundle = intent.getExtras();
+                int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
+                int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
+                adapter.setNumberOfMessages(ids, numberOfMessages);
+                Parcelable state = listView.onSaveInstanceState();
+                adapter.notifyDataSetInvalidated();
+                listView.onRestoreInstanceState(state);
+            }
+
         }
 
     }

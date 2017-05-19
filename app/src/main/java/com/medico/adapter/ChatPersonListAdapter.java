@@ -35,11 +35,20 @@ public class ChatPersonListAdapter extends HomeAdapter
     List<Person> personList;
     private ProgressDialog progress;
 
+    int[] ids = null;
+    int[] numberOfMessages = null;
+
     public ChatPersonListAdapter(Activity activity, List<Person> personList)
     {
         super(activity);
         this.activity = activity;
         this.personList = personList;
+    }
+
+    public void setNumberOfMessages(int[] ids, int[] numberOfMessages)
+    {
+        this.ids = ids;
+        this.numberOfMessages = numberOfMessages;
     }
 
     @Override
@@ -86,6 +95,21 @@ public class ChatPersonListAdapter extends HomeAdapter
         downImage.setVisibility(View.GONE);
         int role = personList.get(position).role;
         viewImage.setBackground(null);
+        if(ids != null && numberOfMessages != null && ids.length > 0
+                && numberOfMessages.length > 0 && ids.length == numberOfMessages.length)
+        {
+           Person person = personList.get(position);
+            int id = person.id.intValue();
+            for(int i = 0; i < ids.length; i++)
+            {
+                if(ids[i] == id)
+                {
+                    totalCount.setVisibility(View.VISIBLE);
+                    totalCount.setText(new Integer(numberOfMessages[i]).toString());
+                    break;
+                }
+            }
+        }
         switch (role)
         {
             case PARAM.PATIENT:
@@ -129,11 +153,6 @@ public class ChatPersonListAdapter extends HomeAdapter
         });
         return convertView;
 
-    }
-    class ViewHolder
-    {
-        private TextView messageText,time;
-        private ImageView tick;
     }
 
 }

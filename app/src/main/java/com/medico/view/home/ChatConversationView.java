@@ -38,6 +38,7 @@ public class ChatConversationView extends ParentFragment
     StickyListHeadersListView messageList;
     EditText sendText;
     ChatMessageListAdapter adapter;
+    MessageStateReceiver mDownloadStateReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -104,14 +105,7 @@ public class ChatConversationView extends ParentFragment
                 });
             }
         });
-        IntentFilter statusIntentFilter = new IntentFilter();
-        statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
-        // Instantiates a new DownloadStateReceiver
-        MessageStateReceiver mDownloadStateReceiver = new MessageStateReceiver();
-        // Registers the DownloadStateReceiver and its intent filters
-        LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver,statusIntentFilter);
-
-        return view;
+         return view;
     }
 
     @Override
@@ -145,7 +139,39 @@ public class ChatConversationView extends ParentFragment
                 error.printStackTrace();
             }
         });
+        registerChatMessage();
     }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        deregisterChatMessage();
+    }
+
+    public void registerChatMessage()
+    {
+        if(mDownloadStateReceiver == null)
+        {
+            IntentFilter statusIntentFilter = new IntentFilter();
+            statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
+            // Instantiates a new DownloadStateReceiver
+            mDownloadStateReceiver = new MessageStateReceiver();
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
+        }
+    }
+    public void deregisterChatMessage()
+    {
+        if(mDownloadStateReceiver != null)
+        {
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).unregisterReceiver(mDownloadStateReceiver);
+            mDownloadStateReceiver = null;
+        }
+
+    }
+
     public class MessageStateReceiver extends BroadcastReceiver
     {
         // Prevents instantiation
