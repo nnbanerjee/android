@@ -1,5 +1,6 @@
 package com.medico.view.home;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -156,7 +157,7 @@ public class ChatConversationView extends ParentFragment
             IntentFilter statusIntentFilter = new IntentFilter();
             statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
             // Instantiates a new DownloadStateReceiver
-            mDownloadStateReceiver = new MessageStateReceiver();
+            mDownloadStateReceiver = new MessageStateReceiver(getActivity());
             // Registers the DownloadStateReceiver and its intent filters
             LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
         }
@@ -175,8 +176,10 @@ public class ChatConversationView extends ParentFragment
     public class MessageStateReceiver extends BroadcastReceiver
     {
         // Prevents instantiation
-        public MessageStateReceiver()
+        Activity activity;
+        public MessageStateReceiver(Activity activity)
         {
+            this.activity = activity;
         }
         // Called when the BroadcastReceiver gets an Intent it's registered to receive
         @Override
@@ -185,7 +188,10 @@ public class ChatConversationView extends ParentFragment
             if(adapter != null)
             {
                 List<Message> messages1 = adapter.getMessages();
-                api.getMessagesAfter(new MessageRequest(101, 1421, messages1.get(messages1.size() - 1).messageId), new Callback<List<Message>>()
+                Bundle bundle = activity.getIntent().getExtras();
+                int profileId = bundle.getInt(PROFILE_ID);
+                int personId = bundle.getInt(PERSON_ID);
+                api.getMessagesAfter(new MessageRequest(profileId, personId, messages1.get(messages1.size() - 1).messageId), new Callback<List<Message>>()
                 {
                     @Override
                     public void success(List<Message> messages, Response response)

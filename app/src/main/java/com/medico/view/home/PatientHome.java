@@ -1,11 +1,14 @@
 package com.medico.view.home;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.medico.adapter.MenuAdapter;
 import com.medico.application.R;
 import com.medico.model.PatientId;
 import com.medico.model.PatientProfile;
+import com.medico.service.Constants;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
 
@@ -34,9 +38,7 @@ import retrofit.client.Response;
 
 public class PatientHome extends HomeActivity
 {
-
-
-
+    MessageStateReceiver mDownloadStateReceiver;
     protected void createView()
     {
         parent_activity = this;
@@ -94,20 +96,6 @@ public class PatientHome extends HomeActivity
             }
         });
 
-        messages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (profileRole == DOCTOR) {
-//                    fragment = new ManageMessageNotification();
-//                    fragmentManger = getFragmentManager();
-//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-//                } else if (profileRole == PATIENT) {
-//                    fragment = new ManageMessageNotification();
-//                    fragmentManger = getFragmentManager();
-//                    fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Manage Msg").addToBackStack(null).commit();
-//                }
-            }
-        });
 
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
@@ -154,6 +142,24 @@ public class PatientHome extends HomeActivity
                 onPause();
             }
         });
+        messages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM.PATIENT_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.PROFILE_ID, HomeActivity.getParentAtivity().profileId);
+                bundle.putInt(PARAM.PROFILE_ROLE, HomeActivity.getParentAtivity().profileRole);
+                bundle.putInt(PARAM.PROFILE_STATUS, HomeActivity.getParentAtivity().profileStatus);
+                bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.CHAT_VIEW);
+                Intent intObj = new Intent(PatientHome.this, ManageHomeView.class);
+                intObj.putExtras(bundle);
+                startActivity(intObj);
+                onPause();            }
+        });
         drawerButton = (Button) findViewById(R.id.drawar_button);
         drawerButton.setVisibility(View.VISIBLE);
         drawerButton.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +196,7 @@ public class PatientHome extends HomeActivity
     protected void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
+//        progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
         PatientId param = new PatientId(profileId);
         api.getPatientLandingPageDetails(param, new Callback<PatientProfile>() {
             @Override
@@ -205,16 +211,17 @@ public class PatientHome extends HomeActivity
                 System.out.println("Adapter Values " + adapter.getCount());
                 dList.setAdapter(adapter);
                 ((PatientMenusManage) fragment).updateCounts(patient);
-                progress.dismiss();
+//                progress.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
+//                progress.dismiss();
                 error.printStackTrace();
                 Toast.makeText(PatientHome.this, R.string.Failed, Toast.LENGTH_SHORT).show();
             }
         });
+        registerChatMessage();
     }
 
     @Override
@@ -223,4 +230,73 @@ public class PatientHome extends HomeActivity
         super.showPopup(context, p);
 
     }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        registerChatMessage();
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        deregisterChatMessage();
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        deregisterChatMessage();
+    }
+    public void registerChatMessage()
+    {
+        if(mDownloadStateReceiver == null)
+        {
+            IntentFilter statusIntentFilter = new IntentFilter();
+            statusIntentFilter.addAction(Constants.NEW_MESSAGE_ARRIVED);
+            // Instantiates a new DownloadStateReceiver
+            mDownloadStateReceiver = new MessageStateReceiver();
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
+        }
+    }
+    public void deregisterChatMessage()
+    {
+        if(mDownloadStateReceiver != null)
+        {
+            // Registers the DownloadStateReceiver and its intent filters
+            LocalBroadcastManager.getInstance(HomeActivity.getParentAtivity()).unregisterReceiver(mDownloadStateReceiver);
+            mDownloadStateReceiver = null;
+        }
+
+    }
+    public class MessageStateReceiver extends BroadcastReceiver
+    {
+        // Prevents instantiation
+        public MessageStateReceiver()
+        {
+        }
+        // Called when the BroadcastReceiver gets an Intent it's registered to receive
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            Bundle bundle = intent.getExtras();
+            int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
+            Button numberButton = (Button)findViewById(R.id.numberOfMessages);
+            if(numberOfMessages != null && numberOfMessages.length > 0)
+            {
+                numberButton.setVisibility(View.VISIBLE);
+                int numbers = 0;
+                for(int i = 0; i < numberOfMessages.length; i++)
+                    numbers = numbers + numberOfMessages[i];
+
+                numberButton.setText(new Integer(numbers).toString());
+            }
+            else
+                numberButton.setVisibility(View.GONE);
+
+        }
+
+    }
+
 }

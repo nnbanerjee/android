@@ -122,22 +122,24 @@
                     android:layout_height="wrap_content"
                     android:background="@color/color_blue_default"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     android:paddingBottom="3dp"
                     android:paddingTop="20dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="0.25">
+                    android:layout_weight="0.33">
                     <Button
                         android:id="@+id/alarm_notes"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:layout_weight=".18"
                         android:background="@drawable/alarm_notes" />
                     <TextView
                         android:id="@+id/alarm_notes_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_below="@+id/alarm_notes"
                         android:text="@string/alarm_notes"
                         style="@style/body12_white" />
@@ -151,20 +153,32 @@
                     android:paddingBottom="3dp"
                     android:paddingTop="20dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="0.25">
+                    android:layout_weight="0.33">
+                    <Button
+                        android:id="@+id/numberOfMessages"
+                        android:textAppearance="@style/body9_white"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/rounded_red_color"
+                        android:layout_alignTop="@+id/chat"
+                        android:textColor="@color/medico_white"
+                        android:visibility="gone"
+                        android:text="23"
+                        android:layout_centerHorizontal="true"/>
                     <Button
                         android:id="@+id/chat"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
-                        android:layout_weight=".18"
                         android:background="@drawable/chat" />
                     <TextView
                         android:id="@+id/chat_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/chat"
+                        android:layout_centerHorizontal="true"
                         android:text="@string/chat_message"
                         style="@style/body12_white" />
                 </RelativeLayout>
@@ -177,19 +191,20 @@
                     android:paddingBottom="3dp"
                     android:paddingTop="20dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="0.25">
+                    android:layout_weight="0.33">
                     <Button
                         android:id="@+id/search_doctor"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
-                        android:layout_weight=".18"
                         android:background="@drawable/search_doctor" />
                     <TextView
                         android:id="@+id/search_doctor_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_below="@+id/search_doctor"
                         android:text="@string/search_doctor"
                         style="@style/body12_white" />
@@ -203,19 +218,20 @@
                     android:paddingBottom="3dp"
                     android:paddingTop="20dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="0.25">
+                    android:layout_weight="0.33">
                     <Button
                         android:id="@+id/search_clinic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
-                        android:layout_weight=".18"
                         android:background="@drawable/search_clinic" />
                     <TextView
                         android:id="@+id/search_clinic_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_below="@+id/search_clinic"
                         android:text="@string/search_clinic_lab"
                         style="@style/body12_white" />

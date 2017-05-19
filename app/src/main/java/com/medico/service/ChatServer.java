@@ -92,15 +92,8 @@ public class ChatServer extends IntentService implements PARAM
                  * Queries the content provider to see if this URL was read previously, and when.
                  * The content provider throws an exception if the URI is invalid.
                  */
-//                Bundle bundle = activity.getIntent().getExtras();
-                int profileId = 101;
-//                int role = bundle.getInt(PERSON_ROLE);
-//                int gender = bundle.getInt(PERSON_GENDER);
-//                int Id = bundle.getInt(PERSON_ID);
-//                String url = bundle.getString(PERSON_URL);
-//                String profileName = bundle.getString(PERSON_NAME);
-
-
+                Bundle bundle = workIntent.getExtras();
+                int profileId = bundle.getInt(PARAM.PROFILE_ID);
 
                 api.getNewMessageCountsByRecipient(new MessageRequest(profileId),new Callback<List<ChatMessageCounts>>()
                 {

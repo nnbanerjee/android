@@ -1,7 +1,6 @@
 package com.medico.view.home;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -241,7 +240,7 @@ public class DoctorHome extends HomeActivity
     protected void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
+//        progress = ProgressDialog.show(this, "", getResources().getString(R.string.loading_wait));
         DoctorId param = new DoctorId(String.valueOf(profileId));
         api.getDoctorLandingPageDetails(param, new Callback<DoctorProfile>() {
             @Override
@@ -255,12 +254,12 @@ public class DoctorHome extends HomeActivity
                 System.out.println("Adapter Values " + adapter.getCount());
                 dList.setAdapter(adapter);
                 ((DoctorMenusManage) fragment).updateCounts(doc);
-                progress.dismiss();
+//                progress.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
+//                progress.dismiss();
                 error.printStackTrace();
                 Toast.makeText(DoctorHome.this, R.string.Failed, Toast.LENGTH_SHORT).show();
             }

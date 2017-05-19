@@ -3,7 +3,6 @@ package com.medico.view.home;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -87,7 +86,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     View arrow;
     public PersonProfile personProfile;
     Toolbar toolbar;
-    ProgressDialog progress;
+//    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
