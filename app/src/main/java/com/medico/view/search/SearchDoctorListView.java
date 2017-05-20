@@ -15,10 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.medico.adapter.DoctorSearchListAdapter;
-import com.medico.adapter.HomeAdapter;
 import com.medico.application.R;
 import com.medico.model.DoctorSearch;
-import com.medico.model.DoctorSearchResult;
 import com.medico.view.home.ParentFragment;
 import com.medico.view.settings.PersonProfileEditView;
 
@@ -94,7 +92,7 @@ public class SearchDoctorListView extends ParentFragment {
             case R.id.filter: {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(PROFILE_ID,0);
+                bun.putInt(PERSON_ID,0);
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new PersonProfileEditView();
 //                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);

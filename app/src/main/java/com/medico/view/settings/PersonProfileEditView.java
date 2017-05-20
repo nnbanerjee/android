@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     MenuItem menuItem;
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
-    TextView personId;
+    TextView personIdView;
     EditText name, email, dob, country, city,allergicTo, mobile;
     Spinner mobile_country,bloodGroup;
     Spinner gender_spinner;
@@ -67,7 +68,6 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
@@ -75,9 +75,13 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
-        personId = (TextView) view.findViewById(R.id.person_id);
+        personIdView = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
+        TextView password_text = (TextView)view.findViewById(R.id.password_text);
+        EditText password = (EditText)view.findViewById(R.id.password);
+        password_text.setVisibility(View.GONE);
+        password.setVisibility(View.GONE);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         dob = (EditText) view.findViewById(R.id.dob);
         dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
@@ -100,30 +104,43 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         allergicTo = (EditText)view.findViewById(R.id.allergic_to);
         bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
         TextView relationText = (TextView) view.findViewById(R.id.relation_text);
+        RelativeLayout layout_relation = (RelativeLayout) view.findViewById(R.id.layout_relation);
         Spinner relation = (Spinner) view.findViewById(R.id.relation);
         relationText.setVisibility(View.GONE);
+        layout_relation.setVisibility(View.GONE);
         relation.setVisibility(View.GONE);
+        profilePicUploadBtn.setVisibility(View.GONE);
         Bundle bundle = getActivity().getIntent().getExtras();
-        switch (bundle.getInt(PROFILE_TYPE)) {
+        int specializationType = 0;
+        int personId = bundle.getInt(PERSON_ID);
+        int profileType = bundle.getInt(PROFILE_TYPE);
+        switch (profileType) {
             case PATIENT:
-                textviewTitle.setText("Patient Profile");
+                specializationType = PATIENT_SPECIALIZATION;
+                if(personId > 0)
+                    textviewTitle.setText("Patient Profile");
+                else
+                    textviewTitle.setText("Create Patient Profile");
                 profilePic.setImageResource(R.drawable.patient_default);
-                String[] patientProfessions = getActivity().getResources().getStringArray(R.array.patient_professions);
-                ArrayAdapter<String> patientArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, patientProfessions);
-                specialization.setAdapter(patientArrayAdapter);
                 break;
             case ASSISTANT:
-                textviewTitle.setText("Assistant Profile");
+                specializationType = ASSISTANT_SPECIALIZATION;
+                if(personId > 0)
+                    textviewTitle.setText("Assistant Profile");
+                else
+                    textviewTitle.setText("Create Assistant Profile");
                 profilePic.setImageResource(R.drawable.assistant_default);
-                String[] assistantProfessions = getActivity().getResources().getStringArray(R.array.assistant_professions);
-                ArrayAdapter<String> assistant_professionsArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, assistantProfessions);
-                specialization.setAdapter(assistant_professionsArrayAdapter);
                 break;
             case DOCTOR:
-                textviewTitle.setText("Doctor Profile");
+                specializationType = DOCTOR_SPECIALIZATION;
+                if(personId > 0)
+                    textviewTitle.setText("Doctor Profile");
+                else
+                    textviewTitle.setText("Create Doctor Profile");
                 profilePic.setImageResource(R.drawable.doctor_default);
 
         }
+        final int specializationQueryType = specializationType;
         specialization.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -140,7 +157,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                 String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
                 if(searchText.length() > 0 )
                 {
-                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 11, 1, 100, 5), new Callback<List<Specialization>>() {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, specializationQueryType, 1, 100, 5), new Callback<List<Specialization>>() {
                         @Override
                         public void success(List<Specialization> specializationList, Response response)
                         {
@@ -172,18 +189,22 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
-        SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
+        final Integer personId = bundle.getInt(PERSON_ID);
+        final Integer personRole = bundle.getInt(PERSON_ROLE);
+        final SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
         mobile_country.setAdapter(countryListAdapter);
-        if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
-            api.getProfile(new ProfileId(profileId), new Callback<Person>() {
+        if(personId != null && personId.intValue() > 0 && personRole != null && personRole.intValue() >= 0)
+        {
+            api.getProfile(new ProfileId(personId), new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) { 
-                    if (person != null && person.getId() != null) {
+                    if (person != null && person.getId() != null)
+                    {
                         personModel = person;
                         String url = person.getImageUrl();
                         if(url != null && url.trim().length() > 0)
                             new ImageLoadTask(url, profilePic).execute();
-                        personId.setText(person.getId().toString());
+                        personIdView.setText(person.getId().toString());
                         name.setText(person.getName());
                         mobile.setText(person.getMobile().toString());
                         email.setText(person.getEmail());
@@ -198,20 +219,23 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                         bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
                         allergicTo.setText(person.getAllergicTo());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == profileId.intValue())
+                        if (person.getStatus().intValue() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == profileId.intValue())
                         {
-                            menuItem.setEnabled(true);
                             setEditableAll(true);
                         }
                         else
                         {
-                            menuItem.setEnabled(false);
                             setEditableAll(false);
                         }
                         mobile_country.setSelection(getCountryIndex(person.getLocation()));
 
                     }
-                    setEditable(false);
+                    else
+                    {
+
+                    }
+
+
                     progress.dismiss();
 
 
@@ -228,10 +252,33 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         else
         {
             personModel = new Person();
-            personModel.setRole(profileRole.byteValue());
+            personModel.setRole(personRole.byteValue());
             personModel.setStatus(new Integer(2).byteValue());
             personModel.setAddedBy(profileId);
-            personModel.setPrime(new Integer(0).byteValue());
+            personModel.setPrime(new Integer(1).byteValue());
+
+            dob_calendar.setVisibility(View.GONE);
+            dob.setVisibility(View.GONE);
+            getView().findViewById(R.id.dob_text).setVisibility(View.GONE);
+
+            email.setVisibility(View.GONE);
+            getView().findViewById(R.id.email_text).setVisibility(View.GONE);
+
+            country.setVisibility(View.GONE);
+            getView().findViewById(R.id.country_text).setVisibility(View.GONE);
+
+            city.setVisibility(View.GONE);
+            getView().findViewById(R.id.city_text).setVisibility(View.GONE);
+
+            bloodGroup.setVisibility(View.GONE);
+            getView().findViewById(R.id.layout_bloodgroup).setVisibility(View.GONE);
+            getView().findViewById(R.id.bloodGroup_text).setVisibility(View.GONE);
+
+            allergicTo.setVisibility(View.GONE);
+            getView().findViewById(R.id.allergic_to_text).setVisibility(View.GONE);
+
+            personIdView.setVisibility(View.GONE);
+
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             setEditable(true);
             progress.dismiss();
@@ -315,6 +362,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
                 .setInitialDate(date)
+                .setMode(SlideDateTimePicker.ONLY_CALENDAR)
                 .build();
         pickerDialog.show();
     }
@@ -327,42 +375,33 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     @Override
     public void update()
     {
-        if(personModel.getId() != null) {
-            Bundle bundle1 = getActivity().getIntent().getExtras();
-            personModel.setAddress(mAutocompleteView.getText().toString());
-            personModel.setCity(city.getText().toString());
-            personModel.setCountry(country.getText().toString().trim());
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(personModel.getId() != null)
+        {
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
+            personModel.setName(name.getText().toString());
+            if(mobile.getText().length() > 0 && mobile_country.getSelectedItem().toString().length() > 0)
+                personModel.setMobile(new Long(mobile_country.getSelectedItem().toString().concat(mobile.getText().toString())));
+            personModel.setEmail(email.getText().toString());
             personModel.setLocation(mobile_country.getSelectedItem().toString());
         }
         else
         {
-            personModel.setAddress(mAutocompleteView.getText().toString());
-            personModel.setCity(city.getText().toString());
-            personModel.setCountry(country.getText().toString().trim());
-            personModel.setRegion(" ");
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());
-            personModel.setMobile(new Long(mobile.getText().toString()));
-            personModel.setEmail(email.getText().toString());
+            if(mobile.getText().length() > 0 && mobile_country.getSelectedItem().toString().length() > 0)
+                personModel.setMobile(new Long(mobile_country.getSelectedItem().toString().concat(mobile.getText().toString())));
             personModel.setLocation(mobile_country.getSelectedItem().toString());
-
         }
     }
     @Override
     public boolean save()
     {
-        if(personModel.canBeSaved())
+        if(personModel.canBeSavedForUnregisteredPatient())
         {
             save(personModel);
             return true;
@@ -372,38 +411,41 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     @Override
     public boolean canBeSaved()
     {
-        return personModel.canBeSaved();
+        return personModel.canBeSavedForUnregisteredPatient();
     }
     @Override
     public void setEditable(boolean editable)
     {
-//        name.setEnabled(editable);
-//        mobile.setEnabled(editable);
-//        email.setEnabled(editable);
+        name.setEnabled(editable);
+        mobile.setEnabled(editable);
+        mobile_country.setEnabled(editable);
+        email.setEnabled(editable);
     }
     public void setEditableAll(boolean editable)
     {
-//        mobile.setEnabled(editable);
-//        email.setEnabled(editable);
-////        menuItem.setEnabled(editable);
-//        profilePicUploadBtn.setEnabled(editable);
-//        location_delete_button.setEnabled(editable);
-//        current_location_button.setEnabled(editable);
-//        name.setEnabled(editable);
-//        dob.setEnabled(editable);
-//        allergicTo.setEnabled(editable);
-//        mobile_country.setEnabled(editable);
-//        bloodGroup.setEnabled(editable);
-//        gender_spinner.setEnabled(editable);
-//        dob_calendar.setEnabled(editable);
-//        specialization.setEnabled(editable);
-//        mAutocompleteView.setEnabled(editable);
+        mobile.setEnabled(editable);
+        email.setEnabled(editable);
+        if(menuItem != null)
+            menuItem.setEnabled(editable);
+        profilePicUploadBtn.setEnabled(editable);
+        location_delete_button.setEnabled(editable);
+        current_location_button.setEnabled(editable);
+        name.setEnabled(editable);
+        dob.setEnabled(editable);
+        allergicTo.setEnabled(editable);
+        mobile_country.setEnabled(editable);
+        bloodGroup.setEnabled(editable);
+        gender_spinner.setEnabled(editable);
+        dob_calendar.setEnabled(editable);
+        specialization.setEnabled(editable);
+        mAutocompleteView.setEnabled(editable);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
         inflater.inflate(R.menu.save,menu);
+        menuItem = menu.findItem(R.id.save);
     }
 
     @Override

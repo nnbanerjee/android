@@ -95,7 +95,7 @@ public class SearchPersonListView extends ParentFragment {
             case R.id.filter: {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(PROFILE_ID,0);
+                bun.putInt(PERSON_ID,0);
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new PersonProfileEditView();
 //                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);

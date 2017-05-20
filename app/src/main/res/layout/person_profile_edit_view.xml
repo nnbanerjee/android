@@ -233,11 +233,11 @@
                     android:id="@+id/location_delete_button"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/cross"
-                    android:layout_toLeftOf="@+id/current_location_button"
-                    android:layout_alignTop="@+id/current_location_button"/>
+                    android:layout_alignRight="@+id/location"
+                    android:layout_alignTop="@+id/location"/>
                 <Button
                     android:id="@+id/current_location_button"
                     android:layout_width="17dp"
@@ -246,6 +246,7 @@
                     android:gravity="center"
                     android:layout_marginRight="3dp"
                     android:background="@drawable/location"
+                    android:layout_marginBottom="4dp"
                     android:layout_alignBottom="@+id/location"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -310,6 +311,8 @@
                       android:layout_below="@+id/city"
                       android:minLines="2"
                       android:maxLines="4"
+                      android:hint="Enter specialization"
+                      android:textColorHint="@color/gray_hint"
                       android:layout_alignLeft="@+id/dob"
                       android:layout_alignStart="@+id/dob"
                       android:layout_toRightOf="@+id/speciality_text"

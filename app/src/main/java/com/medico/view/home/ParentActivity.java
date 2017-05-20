@@ -67,7 +67,8 @@ public class ParentActivity extends AppCompatActivity //implements FragmentManag
             }
         }
         else
-            super.onBackPressed();
+            finish();
+//            super.onBackPressed();
     }
     public void onBackPressed(String tag)
     {
@@ -84,7 +85,8 @@ public class ParentActivity extends AppCompatActivity //implements FragmentManag
             }
         }
         else
-            super.onBackPressed();
+            finish();
+//            super.onBackPressed();
     }
 
 

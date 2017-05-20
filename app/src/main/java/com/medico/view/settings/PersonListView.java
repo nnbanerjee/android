@@ -63,8 +63,8 @@ public class PersonListView extends ParentFragment {
                 Person profile = (Person)adapterView.getAdapter().getItem(i);
                         ParentFragment fragment = new PersonProfileEditView();
                         ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());
-                        bun.putInt(PARAM.PROFILE_ROLE, profile.getId().intValue());
+                        bun.putInt(PARAM.PERSON_ID, profile.getId().intValue());
+                        bun.putInt(PARAM.PERSON_ROLE, profile.getId().intValue());
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
                         FragmentManager fragmentManger = getActivity().getFragmentManager();
@@ -113,6 +113,7 @@ public class PersonListView extends ParentFragment {
                 textviewTitle.setText("Assistant Profiles");
                 break;
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -131,6 +132,7 @@ public class PersonListView extends ParentFragment {
                 return false;
             }
         });
+
     }
 
     @Override
@@ -147,7 +149,8 @@ public class PersonListView extends ParentFragment {
             case R.id.add: {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(PROFILE_ID,0);
+                bun.putInt(PERSON_ID,0);
+                bun.putInt(PARAM.PERSON_ROLE, bun.getInt(PROFILE_TYPE));
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new PersonProfileEditView();
                 ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);

@@ -31,9 +31,9 @@ public interface PARAM {
     public static final int AYURVEDIC = 3;
 
 
-    public static final int REGISTED = 0;
-    public static final int UNDER_VERIFICATION = 1;
-    public static final int UNREGISTERED = 2;
+    public final int REGISTED = 0;
+    public final int UNDER_VERIFICATION = 1;
+    public final int UNREGISTERED = 2;
 
     public static final String IS_PROFILE_OF_LOGGED_IN_USER = "profileOfLoggedIn";
 
@@ -183,5 +183,9 @@ public interface PARAM {
     public static final String PERSON_URL = "person_url";
     public static final String PERSON_ID = "person_Id";
     public static final String PERSON_ROLE = "person_role";
+
+    public static final int DOCTOR_SPECIALIZATION = 1;
+    public static final int PATIENT_SPECIALIZATION = 11;
+    public static final int ASSISTANT_SPECIALIZATION = 12;
 
 }

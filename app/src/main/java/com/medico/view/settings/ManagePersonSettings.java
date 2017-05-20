@@ -62,40 +62,6 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
         LocationService locationService = LocationService.getLocationManager(this);
     }
 
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu)
-//    {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
-//    @Override
-//    public void onBackPressed() {
-//
-//        if(fragmentList.size() > 1)
-//        {
-//
-//            ParentFragment fragment = fragmentList.get(fragmentList.size() - 1);
-//            if(fragment instanceof ManageDoctorProfile || fragment instanceof ManageDoctorDetailedProfile)
-//            {
-//
-//                super.onBackPressed();
-//            }
-//            else
-//            {
-//                fragmentList.remove(fragment);
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.detach(fragment).commit();
-//            }
-//
-//            fragment.setHasOptionsMenu(false);
-//            fragment = fragmentList.get(fragmentList.size() - 1);
-//            fragment.setHasOptionsMenu(true);
-//            fragment.onStart();
-//
-//        }
-//        else
-//            super.onBackPressed();
-//    }
 
 
     @Override

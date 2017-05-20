@@ -1,10 +1,8 @@
 package com.medico.adapter;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +14,6 @@ import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.util.ImageLoadTask;
 import com.medico.util.PARAM;
-import com.medico.view.home.ParentFragment;
-import com.medico.view.settings.PersonProfileEditView;
 
 import java.util.List;
 
@@ -113,20 +109,20 @@ public class PatientSettingListAdapter extends HomeAdapter  {
                 new ImageLoadTask(imageUrl, viewImage).execute();
         }
 
-        doctorName.setText(personList.get(position).getName() + " ( " + personList.get(position).getId().toString() + " )");
-        doctorSpeciality.setText(personList.get(position).getSpeciality());
-        totalCount.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Bundle bundle = activity.getIntent().getExtras();
-                bundle.putInt(PARAM.PATIENT_ID,personList.get(position).getId());
-                ParentFragment assistantListView = new PersonProfileEditView();
-                FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
-                fft1.add(R.id.service, assistantListView,PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
-            }
-        });
+        doctorName.setText(personList.get(position).getName() );
+        doctorSpeciality.setText(personList.get(position).getSpeciality() + " | Id - " + personList.get(position).getId().toString());
+//        totalCount.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Bundle bundle = activity.getIntent().getExtras();
+//                bundle.putInt(PARAM.PATIENT_ID,personList.get(position).getId());
+//                ParentFragment assistantListView = new PersonProfileEditView();
+//                FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
+//                fft1.add(R.id.service, assistantListView,PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
+//            }
+//        });
         return convertView;
 
     }

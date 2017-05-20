@@ -109,7 +109,8 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
                     memberOf.setText(person.memberOf);
                     registrationNumber.setText(person.registrationNo);
 //                    registrationDate.set);
-                    registrationFile.setText(person.uploadFileUrl);
+                    if(person.uploadFileUrl != null && person.uploadFileUrl.length() > 1)
+                        registrationFile.setText(person.uploadFileUrl.substring(person.uploadFileUrl.lastIndexOf("/")+1));
 
                     String practiceName = person.practiceName;
                     String[] practiceNames = getActivity().getResources().getStringArray(R.array.practice_name);

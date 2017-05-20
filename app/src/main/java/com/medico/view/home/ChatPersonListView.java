@@ -11,9 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,8 +22,6 @@ import com.medico.application.R;
 import com.medico.model.Person;
 import com.medico.model.ProfileId;
 import com.medico.service.Constants;
-import com.medico.view.settings.ManagePersonSettings;
-import com.medico.view.settings.PersonProfileEditView;
 
 import java.util.List;
 
@@ -132,33 +127,33 @@ public class ChatPersonListView extends ParentFragment {
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+//    {
+//        menu.clear();
+//        inflater.inflate(R.menu.menu, menu);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.add: {
-                setHasOptionsMenu(false);
-                Bundle bun = getActivity().getIntent().getExtras();
-                bun.putInt(PROFILE_ID,0);
-                getActivity().getIntent().putExtras(bun);
-                ParentFragment fragment = new PersonProfileEditView();
-                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                fragment.setArguments(bun);
-                FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
-
-            }
-            break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        switch (id) {
+//            case R.id.add: {
+//                setHasOptionsMenu(false);
+//                Bundle bun = getActivity().getIntent().getExtras();
+//                bun.putInt(PROFILE_ID,0);
+//                getActivity().getIntent().putExtras(bun);
+//                ParentFragment fragment = new PersonProfileEditView();
+//                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
+//                fragment.setArguments(bun);
+//                FragmentManager fragmentManger = getActivity().getFragmentManager();
+//                fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
+//
+//            }
+//            break;
+//        }
+//        return true;
+//    }
 
     public void registerChatMessage()
     {
