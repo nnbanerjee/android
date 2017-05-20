@@ -109,12 +109,8 @@ public class DoctorAppointmentInformation extends ParentFragment {
             MenuItem addInvoice = menu.findItem(R.id.add_invoice);
             addInvoice.setVisible(false);
         }
-        if(selectedFragment != null)
-//            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentSummary();
         Bundle bundle = getActivity().getIntent().getExtras();
-//        selectedFragment.setArguments(bundle);
-//        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
@@ -131,12 +127,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
             MenuItem addInvoice = menu.findItem(R.id.add_invoice);
             addInvoice.setVisible(false);
         }
-        if(selectedFragment != null)
-//            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentDocument();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-//        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
@@ -153,12 +146,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
             MenuItem addInvoice = menu.findItem(R.id.add_invoice);
             addInvoice.setVisible(false);
         }
-        if(selectedFragment != null)
-//            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentDoctorNote();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-//        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
@@ -175,12 +165,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
             MenuItem addInvoice = menu.findItem(R.id.add_invoice);
             addInvoice.setVisible(false);
         }
-        if(selectedFragment != null)
-//            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentTreatmentPlan();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-//        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
@@ -198,12 +185,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
             MenuItem addInvoice = menu.findItem(R.id.add_invoice);
             addInvoice.setVisible(true);
         }
-        if(selectedFragment != null)
-//            ((ParentActivity)getActivity()).detachFragment(selectedFragment);
         selectedFragment = new DoctorAppointmentInvoices();
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
-//        ((ParentActivity)getActivity()).attachFragment(selectedFragment);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
