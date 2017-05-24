@@ -103,6 +103,7 @@ public class ClinicListView extends ParentFragment {
 
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Clinic Profiles");
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -121,6 +122,7 @@ public class ClinicListView extends ParentFragment {
                 return false;
             }
         });
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -128,8 +130,6 @@ public class ClinicListView extends ParentFragment {
     {
         menu.clear();
         inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.patient_profile, menu);
-        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override

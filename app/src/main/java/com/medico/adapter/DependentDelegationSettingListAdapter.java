@@ -119,7 +119,8 @@ public class DependentDelegationSettingListAdapter extends HomeAdapter  {
             public void onClick(View v)
             {
                 Bundle bundle = activity.getIntent().getExtras();
-                bundle.putInt(PARAM.PATIENT_ID,personList.get(position).getId());
+                bundle.putInt(PARAM.DEPENDENT_ID,personList.get(position).getId());
+                bundle.putString(PARAM.DEPENDENT_DELEGATE_RELATION,personList.get(position).relation);
                 ParentFragment assistantListView = new DependentDelegateProfileView();
                 FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
                 fft1.add(R.id.service, assistantListView,DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();

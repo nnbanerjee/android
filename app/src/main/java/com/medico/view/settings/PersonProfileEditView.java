@@ -114,6 +114,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         int specializationType = 0;
         int personId = bundle.getInt(PERSON_ID);
         int profileType = bundle.getInt(PROFILE_TYPE);
+        profilePic.setBackground(null);
         switch (profileType) {
             case PATIENT:
                 specializationType = PATIENT_SPECIALIZATION;

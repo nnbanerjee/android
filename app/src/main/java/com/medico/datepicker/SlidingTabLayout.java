@@ -339,5 +339,14 @@ public class SlidingTabLayout extends HorizontalScrollView {
             }
         }
     }
-
+    public void showOnlyTime()
+    {
+        mTabStrip.getChildAt(1).callOnClick();
+        mTabStrip.getChildAt(0).setVisibility(GONE);
+    }
+    public void showOnlyCalendar()
+    {
+        mTabStrip.getChildAt(0).callOnClick();
+        mTabStrip.getChildAt(1).setVisibility(GONE);
+    }
 }

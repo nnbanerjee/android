@@ -136,6 +136,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         addClinicSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setHasOptionsMenu(false);
                 Bundle args = getActivity().getIntent().getExtras();
                 args.putInt(DOCTOR_CLINIC_ID,0);
                 getActivity().getIntent().putExtras(args);
@@ -303,13 +304,26 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 setEditable(true);
             progress.dismiss();
         }
-
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
     }
     private void save(Clinic1 person)
     {
@@ -421,16 +435,15 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.save, menu);
+        menuItem = menu.findItem(R.id.save);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.save: {
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {

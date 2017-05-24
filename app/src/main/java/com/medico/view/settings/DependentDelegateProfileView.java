@@ -59,7 +59,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
     MenuItem menuItem;
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
-    TextView personId;
+    TextView personIdView;
     EditText name, email, dob, country, city,allergicTo, mobile;
     Spinner mobile_country,bloodGroup,relation;
     Spinner gender_spinner;
@@ -76,10 +76,14 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
-        personId = (TextView) view.findViewById(R.id.person_id);
+        personIdView = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
         email.setEnabled(false);
+        TextView password_text = (TextView)view.findViewById(R.id.password_text);
+        EditText password = (EditText)view.findViewById(R.id.password);
+        password_text.setVisibility(View.GONE);
+        password.setVisibility(View.GONE);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         dob = (EditText) view.findViewById(R.id.dob);
         dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
@@ -104,11 +108,12 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         bloodGroup = (Spinner) view.findViewById(R.id.bloodGroup);
         relation = (Spinner) view.findViewById(R.id.relation);
         Bundle bundle = getActivity().getIntent().getExtras();
+        profilePic.setBackground(null);
         switch (bundle.getInt(PROFILE_TYPE))
         {
             case DEPENDENT:
                 textviewTitle.setText("Dependent Profile");
-                profilePic.setImageResource(R.drawable.patient);
+                profilePic.setImageResource(R.drawable.patient_default);
                 break;
             case DELEGATE:
                 textviewTitle.setText("Delagated Profile");
@@ -143,7 +148,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                 String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
                 if(searchText.length() > 0 )
                 {
-                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 11, 1, 100, 5), new Callback<List<Specialization>>() {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, PATIENT_SPECIALIZATION, 1, 100, 5), new Callback<List<Specialization>>() {
                         @Override
                         public void success(List<Specialization> specializationList, Response response)
                         {
@@ -176,12 +181,14 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
         final Integer profileType = bundle.getInt(PROFILE_TYPE);
+        final Integer dependentId = bundle.getInt(DEPENDENT_ID);
         final String profileRelation = bundle.getString(DEPENDENT_DELEGATE_RELATION);
         final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
         mobile_country.setAdapter(countryListAdapter);
-        if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
-            api.getProfile(new ProfileId(profileId), new Callback<Person>() {
+        if(dependentId != null && dependentId.intValue() > 0 )
+        {
+            api.getProfile(new ProfileId(dependentId), new Callback<Person>() {
                 @Override
                 public void success(Person person, Response response) {
                     if (person != null && person.getId() != null) {
@@ -189,7 +196,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                         String url = person.getImageUrl();
                         if(url != null && url.trim().length() > 0)
                             new ImageLoadTask(url, profilePic).execute();
-                        personId.setText(person.getId().toString());
+                        personIdView.setText(person.getId().toString());
                         name.setText(person.getName());
                         mobile.setText(person.getMobile().toString());
                         email.setText(person.getEmail());
@@ -205,17 +212,13 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                         allergicTo.setText(person.getAllergicTo());
                         relation.setSelection(getRelationIndex( profileRelation));
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-//                        if (person.getStatus() == UNREGISTERED && person.addedBy != null && person.addedBy.intValue() == loggedinUserId) {
-//                            menuItem.setEnabled(false);
-//                            setEditableAll(false);
-//                        } else
-//                            menuItem.setEnabled(false);
                         if(profileType.intValue() == DELEGATE || profileType.intValue() == DEPENDENT && profileRelation.equalsIgnoreCase("self")
                                 || person.getStatus() != UNREGISTERED || person.addedBy == null || person.addedBy.intValue() != loggedinUserId) {
                             setEditableAll(false);
                             menuItem.setEnabled(false);
                         }
-                        else {
+                        else
+                        {
                             menuItem.setEnabled(true);
                             setEditable(false);
                         }
@@ -237,7 +240,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         else
         {
             final DependentDelegatePerson personModel = new DependentDelegatePerson();
-            personModel.setRole(profileRole.byteValue());
+            personModel.setRole(new Integer(PATIENT).byteValue());
             personModel.setStatus(new Integer(2).byteValue());
             personModel.setAddedBy(loggedinUserId);
             personModel.setPrime(new Integer(0).byteValue());
@@ -257,7 +260,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                         personModel.setLocationLat(person.getLocationLat());
                         personModel.setLocationLong(person.getLocationLong());
                         personModel.setRegion(person.getRegion());
-
+                        personModel.setLocation(person.getLocation());
                         email.setText(person.getEmail());
                         mobile.setText(person.getMobile().toString());
                         mAutocompleteView.setText(person.getAddress());
@@ -273,6 +276,32 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                     progress.dismiss();
                 }
             });
+
+//            dob_calendar.setVisibility(View.GONE);
+//            dob.setVisibility(View.GONE);
+//            getView().findViewById(R.id.dob_text).setVisibility(View.GONE);
+
+            mobile.setVisibility(View.GONE);
+            getView().findViewById(R.id.mobile_text).setVisibility(View.GONE);
+
+            email.setVisibility(View.GONE);
+            getView().findViewById(R.id.email_text).setVisibility(View.GONE);
+
+            country.setVisibility(View.GONE);
+            getView().findViewById(R.id.country_text).setVisibility(View.GONE);
+
+            city.setVisibility(View.GONE);
+            getView().findViewById(R.id.city_text).setVisibility(View.GONE);
+
+//            bloodGroup.setVisibility(View.GONE);
+//            getView().findViewById(R.id.layout_bloodgroup).setVisibility(View.GONE);
+//            getView().findViewById(R.id.bloodGroup_text).setVisibility(View.GONE);
+
+//            allergicTo.setVisibility(View.GONE);
+//            getView().findViewById(R.id.allergic_to_text).setVisibility(View.GONE);
+
+            personIdView.setVisibility(View.GONE);
+
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
 
             this.personModel = personModel;
@@ -360,6 +389,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
                 .setInitialDate(date)
+                .setMode(SlideDateTimePicker.ONLY_CALENDAR)
                 .build();
         pickerDialog.show();
     }
@@ -372,38 +402,25 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
     @Override
     public void update()
     {
-        if(personModel.getId() != null) {
-            Bundle bundle1 = getActivity().getIntent().getExtras();
-            personModel.setAddress(mAutocompleteView.getText().toString());
-            personModel.setCity(city.getText().toString());
-            personModel.setCountry(country.getText().toString().trim());
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
-            personModel.setSpeciality(specialization.getText().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
-            personModel.setLocation(mobile_country.getSelectedItem().toString());
-        }
-        else
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(personModel.getId() != null)
         {
-            DependentDelegatePerson personModel = (DependentDelegatePerson)this.personModel;
-            personModel.setAddress(mAutocompleteView.getText().toString());
-            personModel.setCity(city.getText().toString());
-            personModel.setCountry(country.getText().toString().trim());
-            personModel.setRegion(" ");
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
             personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
             personModel.setSpeciality(specialization.getText().toString());
-            personModel.setAllergicTo(allergicTo.getText().toString());
-            personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.setName(name.getText().toString());
-            personModel.setMobile(new Long(mobile.getText().toString()));
-            personModel.setEmail(email.getText().toString());
-            personModel.setLocation(mobile_country.getSelectedItem().toString());
-            personModel.relation = relation.getSelectedItem().toString();
-
+        }
+        else if(personModel instanceof DependentDelegatePerson)
+        {
+            DependentDelegatePerson person = (DependentDelegatePerson)personModel;
+            person.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
+            person.setSpeciality(specialization.getText().toString());
+            person.setName(name.getText().toString());
+            person.setBloodGroup(bloodGroup.getSelectedItem().toString());
+            person.setAllergicTo(allergicTo.getText().toString());
+            person.setName(name.getText().toString());
+            person.relation = relation.getSelectedItem().toString();
         }
     }
     @Override
@@ -433,7 +450,7 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
     {
         mobile.setEnabled(editable);
         email.setEnabled(editable);
-//        menuItem.setEnabled(editable);
+        menuItem.setEnabled(editable);
         profilePicUploadBtn.setEnabled(editable);
         location_delete_button.setEnabled(editable);
         current_location_button.setEnabled(editable);
@@ -453,21 +470,25 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.save, menu);
+        menuItem = menu.findItem(R.id.save);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.save:
+            {
                 update();
-                if (isChanged()) {
-                    if (canBeSaved()) {
+                if (isChanged())
+                {
+                    if (canBeSaved())
+                    {
                         save();
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                     }
                 } else if (canBeSaved()) {

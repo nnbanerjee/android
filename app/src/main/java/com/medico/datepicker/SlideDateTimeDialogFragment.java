@@ -183,7 +183,12 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
         initViewPager();
         initTabs();
         initButtons();
-
+        if(mode == SlideDateTimePicker.ONLY_TIME)
+            mSlidingTabLayout.showOnlyTime();
+        else if(mode == SlideDateTimePicker.ONLY_CALENDAR)
+        {
+            mSlidingTabLayout.showOnlyTime();
+        }
         return view;
     }
 
@@ -267,11 +272,10 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
 
     private void initTabs()
     {
-        // Set intial date on date tab
-        updateDateTab();
+            updateDateTab();
 
-        // Set initial time on time tab
-        updateTimeTab();
+            // Set initial time on time tab
+            updateTimeTab();
     }
 
     private void initButtons()
@@ -436,29 +440,15 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
             switch (position)
             {
             case 0:
-                if(displaymode == SlideDateTimePicker.ONLY_TIME)
-                {
-                    TimeFragment timeFragment = TimeFragment.newInstance(
-                            mTheme,
-                            mCalendar.get(Calendar.HOUR_OF_DAY),
-                            mCalendar.get(Calendar.MINUTE),
-                            mIsClientSpecified24HourTime,
-                            mIs24HourTime);
-                    timeFragment.setTargetFragment(SlideDateTimeDialogFragment.this, 200);
-                    return timeFragment;
-                }
-                else
-                {
-                    DateFragment dateFragment = DateFragment.newInstance(
-                            mTheme,
-                            mCalendar.get(Calendar.YEAR),
-                            mCalendar.get(Calendar.MONTH),
-                            mCalendar.get(Calendar.DAY_OF_MONTH),
-                            mMinDate,
-                            mMaxDate);
-                    dateFragment.setTargetFragment(SlideDateTimeDialogFragment.this, 100);
-                    return dateFragment;
-                }
+                DateFragment dateFragment = DateFragment.newInstance(
+                        mTheme,
+                        mCalendar.get(Calendar.YEAR),
+                        mCalendar.get(Calendar.MONTH),
+                        mCalendar.get(Calendar.DAY_OF_MONTH),
+                        mMinDate,
+                        mMaxDate);
+                dateFragment.setTargetFragment(SlideDateTimeDialogFragment.this, 100);
+                return dateFragment;
 
             case 1:
                 TimeFragment timeFragment = TimeFragment.newInstance(
@@ -477,15 +467,8 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
         @Override
         public int getCount()
         {
-            switch (mode)
-            {
-                case SlideDateTimePicker.ONLY_CALENDAR:
-                case SlideDateTimePicker.ONLY_TIME:
-                    return 1;
-                default:
-                    return 2;
-            }
 
+            return 2;
         }
     }
 }

@@ -14,12 +14,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        >
+        android:layout_margin="5dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_height="@dimen/edit_height"
             android:id="@+id/layout0">
 
             <TextView
@@ -27,27 +25,23 @@
                 android:layout_height="wrap_content"
                 android:text="Slot Name"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:id="@+id/slotNameText"
                 />
             <EditText
-                android:background="@color/grey"
                 android:layout_toRightOf="@+id/slotNameText"
                 android:layout_toEndOf="@+id/slotNameText"
                 android:layout_width="match_parent"
                 android:id="@+id/slotName"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/edit_height">
             </EditText>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_height"
             android:id="@+id/document_category"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:layout_below="@+id/layout0"
             android:background="#ffffff">
 
@@ -57,32 +51,35 @@
                 android:ems="6"
                 android:layout_centerVertical="true"
                 android:text="Slot Number"
-                android:paddingLeft="5dp"
                 android:id="@+id/slotNumberText"
                 />
-            <Spinner
-                android:id="@+id/slotNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/slotNumberText"
-                android:completionThreshold="1"
-                android:paddingLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:entries="@array/slot_number"
-                android:layout_marginLeft="5dp"
-                android:textColor="#1E90FF"
-                style="@style/body3"
-                />
-             />
+            <RelativeLayout
 
+                android:background="@drawable/rounded_white_color"
+                android:layout_toRightOf="@+id/slotNumberText"
+                android:layout_alignStart="@+id/layout_mobile"
+                android:layout_alignLeft="@+id/layout_mobile"
+                android:layout_below="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_height">
+                <Spinner
+                    android:id="@+id/slotNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_height"
+                    android:completionThreshold="1"
+                    android:paddingLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:entries="@array/slot_number"
+                    android:layout_marginLeft="5dp"/>
+            </RelativeLayout>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_height="@dimen/edit_height"
             android:layout_below="@+id/document_category"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/document_type">
 
             <TextView
@@ -90,9 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="Start Timee"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="5dp"
                 android:id="@+id/startTimeText"
                 />
 
@@ -100,26 +95,25 @@
                 android:id="@+id/startTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:completionThreshold="1"
                 android:layout_toLeftOf="@+id/starttimestampImg"
-
                 android:layout_toRightOf="@+id/startTimeText"
                 />
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:id="@+id/starttimestampImg"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/clock_blue"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_height"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/document_name"
-            android:layout_margin="5dp"
-
             android:layout_below="@+id/document_type">
 
             <TextView
@@ -127,7 +121,6 @@
                 android:layout_height="wrap_content"
                 android:text="End Time"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:id="@+id/endTimeText"
@@ -137,15 +130,16 @@
                 android:id="@+id/endTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:completionThreshold="1"
                 android:layout_toLeftOf="@+id/endtimestampImg"
                 android:layout_toRightOf="@+id/endTimeText"
                 />
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:id="@+id/endtimestampImg"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/clock_blue"/>
 
@@ -155,14 +149,13 @@
             android:orientation="horizontal"
             android:layout_below="@+id/document_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/edit_top_margin">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Days of Week"
-                style="@style/sub_heading"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:id="@+id/daysOfWeek"
@@ -280,9 +273,9 @@
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_height"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/manage_appointment"
-            android:layout_margin="5dp"
             android:layout_below="@+id/weekOfDays">
 
             <TextView
@@ -290,28 +283,23 @@
                 android:layout_height="wrap_content"
                 android:text="Visit Duration"
                 android:ems="6"
-                android:textColor="@color/black"
                 android:layout_centerVertical="true"
-                style="@style/sub_heading"
                 android:id="@+id/visitDurationText"
                 />
             <EditText
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/body3"
+                android:layout_height="@dimen/edit_height"
                 android:id="@+id/visitDuration"
-                android:inputType="phone"
-                android:text="1"
+                android:inputType="number"
                 android:maxLength="2"
                 android:completionThreshold="1"
-                android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:layout_toLeftOf="@+id/time_unit"
                 android:layout_toRightOf="@+id/visitDurationText"/>
             <Spinner
                 android:id="@+id/time_unit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/edit_height"
                 android:entries="@array/visit_duration_unit"
                 android:layout_alignTop="@+id/duration_days"
                 android:layout_alignParentRight="true"
@@ -320,18 +308,16 @@
 
         <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/edit_height"
+        android:layout_marginTop="@dimen/edit_top_margin"
         android:id="@+id/layout5"
-        android:layout_margin="5dp"
         android:layout_below="@+id/manage_appointment">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number of Patients"
-            style="@style/sub_heading"
+            android:text="Patient Count"
             android:ems="6"
-            android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:layout_marginTop="5dp"
             android:id="@+id/numberOfPatientsText"
@@ -343,8 +329,6 @@
             android:layout_height="wrap_content"
             android:completionThreshold="1"
             android:inputType="number"
-            style="@style/body3"
-            android:textColor="#1E90FF"
             android:layout_toRightOf="@+id/numberOfPatientsText"
             />
 
@@ -352,9 +336,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_height"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/layout6"
-            android:layout_margin="5dp"
             android:layout_below="@+id/layout5">
 
             <TextView
@@ -362,8 +346,6 @@
                 android:layout_height="wrap_content"
                 android:text="Slot Type"
                 android:ems="6"
-                android:textColor="@color/black"
-                style="@style/sub_heading"
                 android:layout_centerVertical="true"
                 android:id="@+id/slotType"
                 />
@@ -388,18 +370,16 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_height"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/layout7"
-            android:layout_margin="5dp"
             android:layout_below="@+id/layout6">
             <TextView
                 android:id="@+id/doctorFee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:textColor="@color/black"
-                style="@style/sub_heading"
                 android:text="Doctor's Fee"
+                android:ems="6"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 />
@@ -408,13 +388,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/doctorFeeValue"
                 android:inputType="number"
-                android:text="1"
-                android:maxLength="4"
+
                 android:completionThreshold="1"
-                android:textColor="#1E90FF"
                 android:paddingLeft="5dp"
                 android:layout_toLeftOf="@+id/currency_value"
-                android:layout_toRightOf="@+id/preview"/>
+                android:layout_toRightOf="@+id/doctorFee"/>
             <Spinner
                 android:id="@+id/currency_value"
                 android:layout_width="wrap_content"
@@ -427,28 +405,30 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_height"
+            android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/layout8"
-            android:layout_margin="5dp"
             android:layout_below="@+id/layout7">
             <TextView
                 android:id="@+id/assistantText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:textColor="@color/black"
-                style="@style/sub_heading"
                 android:text="Assistant"
+                android:ems="6"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="5dp"
                 />
-            <Spinner
-                android:id="@+id/assistant_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+            <RelativeLayout
+                android:id="@+id/slotNumber1"
+                android:background="@drawable/rounded_white_color"
                 android:layout_toRightOf="@+id/assistantText"
-                 />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_height">
+                <Spinner
+                    android:id="@+id/assistant_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_height"
+                     />
+            </RelativeLayout>
         </RelativeLayout>
 
         <TextView
@@ -456,12 +436,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout8"
-            android:paddingLeft="5dp"
-            android:textColor="@color/black"
-            style="@style/sub_heading"
             android:text="Appointment Booking Auto Confirm Policy:"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="5dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -494,6 +470,5 @@
                     android:layout_height="wrap_content" />
             </RadioGroup>
         </LinearLayout>
-
     </RelativeLayout>
 </ScrollView>

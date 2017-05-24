@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.medico.application.R;
@@ -82,11 +83,12 @@ public class MenuAdapter extends ParentAdapter{
         id = session.getString("sessionID",null);
         imageShow = (ImageView)convertView.findViewById(R.id.image_show);
         TextView showTv = (TextView)convertView.findViewById(R.id.text_show);
+        RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.setting_menu);
         showTv.setText("" + menus.get(pos));
         Bundle bundle = new Bundle();
         setSettingParameters(bundle);
         final int loggedInProfileRole = bundle.getInt(LOGGED_IN_USER_ROLE);
-        showTv.setOnClickListener(new View.OnClickListener()
+        layout.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -94,6 +96,7 @@ public class MenuAdapter extends ParentAdapter{
                 showSetting(position, loggedInProfileRole);
             }
         });
+
 
         int settingViewId = getViewId (position, loggedInProfileRole);
         switch (settingViewId)
@@ -167,7 +170,7 @@ public class MenuAdapter extends ParentAdapter{
         }
 
     }
-    protected void showSetting(int position,int role)
+    public void showSetting(int position,int role)
     {
         int settingViewId = getViewId (position, role);
         if(settingViewId == LOGOUT_CONFIRMATION)

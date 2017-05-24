@@ -64,7 +64,7 @@ public class ClinicSlotAdapter extends HomeAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.medicine, null);
+                convertView = inflater.inflate(R.layout.clinic_slot, null);
                 setView(convertView,position);
             }
             else
@@ -108,11 +108,11 @@ public class ClinicSlotAdapter extends HomeAdapter {
                     public void success(ResponseCodeVerfication result, Response response) {
                         progress.dismiss();
                         if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
-                            Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Slot Disabled successfully", Toast.LENGTH_SHORT).show();
                             notifyDataSetChanged();
                         }
                         else if (result.getStatus().intValue() == PARAM.STATUS_WARNING) {
-                            Toast.makeText(activity, "Medicine Removed however there are future appointments", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Slot Disabled, however there are future appointments", Toast.LENGTH_SHORT).show();
                             notifyDataSetChanged();
                         }
                     }
@@ -121,19 +121,11 @@ public class ClinicSlotAdapter extends HomeAdapter {
                     public void failure(RetrofitError error) {
                         progress.dismiss();
                         error.printStackTrace();
-                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Slot could not be disabled", Toast.LENGTH_SHORT).show();
                     }
                 });
 
 
-            }
-        });
-        ImageView alarm = (ImageView)convertView.findViewById(R.id.alarm_button);
-        alarm.setTag(slots.get(position));
-        alarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("alarm buttom clicked");
             }
         });
     }

@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -114,7 +115,20 @@ public class ClinicSlotEditView extends ParentFragment {
                 setTime(startTime);
             }
         });
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(startTime);
+            }
+        });
         endtimestampImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(endTime);
+
+            }
+        });
+        endTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setTime(endTime);
@@ -220,6 +234,8 @@ public class ClinicSlotEditView extends ParentFragment {
             slotModel.availability = 1;
 
         }
+        String[] currency = {getDefaultCountry().currencyCode};
+        currency_value.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.simple_spinner_layout, currency));
     }
 
     public void save(ClinicSlotDetails clinicSlotDetails) {
@@ -296,7 +312,7 @@ public class ClinicSlotEditView extends ParentFragment {
 
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
-                .setInitialDate(date)
+                .setMode(SlideDateTimePicker.ONLY_TIME)
                 .build();
         pickerDialog.show();
     }
@@ -305,15 +321,14 @@ public class ClinicSlotEditView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setTitle("SAVE");
+        inflater.inflate(R.menu.save, menu);
+        MenuItem menuItem = menu.findItem(R.id.save);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.save: {
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {

@@ -117,8 +117,8 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 fft1.add(R.id.service, assistantListView,PersonListView.class.getName()).addToBackStack(PersonListView.class.getName()).commit();
                 break;
             case PARAM.CLINIC_SETTING_VIEW:
-                bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
-//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+                bundle.putInt(PARAM.PROFILE_TYPE, CLINIC);
+                bundle.putInt(PARAM.DOCTOR_ID, bundle.getInt(LOGGED_IN_ID));
                 getIntent().putExtras(bundle);
                 ParentFragment clinicListView = new ClinicListView();
                 fragmentList.add(clinicListView);

@@ -62,8 +62,8 @@ public class DependentDelegateListView extends ParentFragment {
                 DependentDelegatePerson profile = (DependentDelegatePerson)adapterView.getAdapter().getItem(i);
                         ParentFragment fragment = new DependentDelegateProfileView();
                         ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                        bun.putInt(PARAM.PROFILE_ID, profile.getId().intValue());
-                        bun.putInt(PARAM.PROFILE_ROLE, profile.getRole().intValue());
+                        bun.putInt(PARAM.DEPENDENT_ID, profile.getId().intValue());
+                        bun.putInt(PARAM.DEPENDENT_ROLE, profile.getRole().intValue());
                         bun.putString(PARAM.DEPENDENT_DELEGATE_RELATION,profile.relation);
                         getActivity().getIntent().putExtras(bun);
                       fragment.setArguments(bun);
@@ -108,6 +108,7 @@ public class DependentDelegateListView extends ParentFragment {
                 textviewTitle.setText("Delagation Profiles");
                 break;
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -126,13 +127,14 @@ public class DependentDelegateListView extends ParentFragment {
                 return false;
             }
         });
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.add_document, menu);
+        inflater.inflate(R.menu.menu, menu);
     }
 
     @Override
@@ -142,12 +144,13 @@ public class DependentDelegateListView extends ParentFragment {
             case R.id.add: {
                 setHasOptionsMenu(false);
                 Bundle bundle = getActivity().getIntent().getExtras();
-                Integer profileId = bundle.getInt(PROFILE_ID);
-                Integer profileRole = bundle.getInt(PROFILE_ROLE);
+                Integer profileId = bundle.getInt(PERSON_ID);
+                Integer profileRole = bundle.getInt(PERSON_ROLE);
                 Integer profileType = bundle.getInt(PROFILE_TYPE);
                 Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
                 if(profileType.intValue() == DEPENDENT) {
-                    bundle.putInt(PROFILE_ID, 0);
+                    bundle.putInt(PERSON_ID, 0);
+                    bundle.putInt(PERSON_ROLE,PATIENT);
                     getActivity().getIntent().putExtras(bundle);
                     ParentFragment fragment = new DependentDelegateProfileView();
                     ((ManagePersonSettings) getActivity()).fragmentList.add(fragment);

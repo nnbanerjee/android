@@ -85,6 +85,17 @@ public class ParentFragment extends Fragment implements PARAM
         return countries;
     }
 
+    public Country getDefaultCountry()
+    {
+        String countriIso = HomeActivity.parent_activity.personProfile.getPerson().getIsoCountry();
+        for(Country country : countriesList)
+        {
+            if(country.getIso2().equalsIgnoreCase(countriIso))
+                return country;
+        }
+        return countriesList.get(0);
+    }
+
     public boolean isChanged()
     {
         return false;

@@ -254,6 +254,7 @@ public class DoctorHome extends HomeActivity
                 adapter = new MenuAdapter(DoctorHome.this, arrayMenu, profileRole, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
                 System.out.println("Adapter Values " + adapter.getCount());
                 dList.setAdapter(adapter);
+
                 ((DoctorMenusManage) fragment).updateCounts(doc);
                 progress.dismiss();
             }
