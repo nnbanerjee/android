@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.medico.application">
+    package="com.medicohealthcare.application">
 
     <permission
         android:name="com.javapapers.currentlocationinmap.permission.MAPS_RECEIVE"
@@ -25,14 +25,14 @@
 
 
     <application
-        android:name=".Global"
+        android:name="com.medicohealthcare.application.Global"
         android:allowBackup="true"
         android:icon="@drawable/logo_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.medicohealthcare.application.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>Theme.AppCompat.NoActionBar
                 <action android:name="android.intent.action.MAIN" />
@@ -42,26 +42,26 @@
 
 
         <activity
-            android:name="com.medico.util.DisplayAlarm"
+            android:name="com.medicohealthcare.util.DisplayAlarm"
             android:configChanges="keyboardHidden|orientation"
             android:label="User SignIn"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.medico.view.registration.ForgotPasswordActivity"
+            android:name="com.medicohealthcare.view.registration.ForgotPasswordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
-            android:name="com.medico.view.home.PatientHome"
+            android:name="com.medicohealthcare.view.home.PatientHome"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.medico.view.home.DoctorHome"
+            android:name="com.medicohealthcare.view.home.DoctorHome"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -73,54 +73,54 @@
             android:value="AIzaSyDVnTfS1ryjF0Nex1tmMjcDih-AgrOeWo0" />
 
         <!-- <receiver android:name=".MyReceiver"/> -->
-        <receiver android:name="com.medico.util.AlarmService" />
+        <receiver android:name="com.medicohealthcare.util.AlarmService" />
 
-        <activity android:name="com.medico.view.profile.ManagePatientProfile"
+        <activity android:name="com.medicohealthcare.view.profile.ManagePatientProfile"
             android:label="@string/ManagePatientProfileTitle"
-            android:parentActivityName="com.medico.view.home.DoctorHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.profile.DoctorConsultations"
+        <activity android:name="com.medicohealthcare.view.profile.DoctorConsultations"
             android:label="@string/ManageDoctorConsultationTitle"
-            android:parentActivityName="com.medico.view.home.PatientHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.PatientHome" >
         </activity>
-        <activity android:name="com.medico.view.settings.ManagePersonSettings"
+        <activity android:name="com.medicohealthcare.view.settings.ManagePersonSettings"
             android:label="Personal Settings"
-            android:parentActivityName="com.medico.view.home.DoctorHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.appointment.ManageDoctorAppointment"
+        <activity android:name="com.medicohealthcare.view.appointment.ManageDoctorAppointment"
             android:label="Manage Appointments"
-            android:parentActivityName="com.medico.view.home.DoctorHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.finance.ManageFinanceView"
+        <activity android:name="com.medicohealthcare.view.finance.ManageFinanceView"
             android:label="Manage Finance"
-            android:parentActivityName="com.medico.view.home.DoctorHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.review.ManagePatientReviewView"
+        <activity android:name="com.medicohealthcare.view.review.ManagePatientReviewView"
             android:label="Patient Reviews"
-            android:parentActivityName="com.medico.view.home.DoctorHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.home.ManageHomeView"
+        <activity android:name="com.medicohealthcare.view.home.ManageHomeView"
             android:label="Search Patient"
-            android:parentActivityName="com.medico.view.home.DoctorHome" >
+            android:parentActivityName="com.medicohealthcare.view.home.DoctorHome" >
         </activity>
-        <activity android:name="com.medico.view.appointment.ManagePatientAppointment"
+        <activity android:name="com.medicohealthcare.view.appointment.ManagePatientAppointment"
                   android:label="Manage Appointments"
-                  android:parentActivityName="com.medico.view.home.PatientHome" >
+                  android:parentActivityName="com.medicohealthcare.view.home.PatientHome" >
         </activity>
-        <activity android:name="com.medico.view.medicinealarm.ManageMedicineAlarm"
+        <activity android:name="com.medicohealthcare.view.medicinealarm.ManageMedicineAlarm"
                   android:label="Manage Medicines"
-                  android:parentActivityName="com.medico.view.home.PatientHome" >
+                  android:parentActivityName="com.medicohealthcare.view.home.PatientHome" >
         </activity>
-        <activity android:name="com.medico.view.review.ManageDoctorReview"
+        <activity android:name="com.medicohealthcare.view.review.ManageDoctorReview"
                   android:label="Manage Medicines"
-                  android:parentActivityName="com.medico.view.home.PatientHome" >
+                  android:parentActivityName="com.medicohealthcare.view.home.PatientHome" >
         </activity>
-        <activity android:name="com.medico.view.registration.ManageProfileRegistration"
+        <activity android:name="com.medicohealthcare.view.registration.ManageProfileRegistration"
                   android:label="Registration"
-                  android:parentActivityName="com.medico.application.MainActivity" >
+                  android:parentActivityName="com.medicohealthcare.application.MainActivity" >
         </activity>
         <service
-            android:name="com.medico.service.ChatServer">
+            android:name="com.medicohealthcare.service.ChatServer">
         </service>
     </application>
 

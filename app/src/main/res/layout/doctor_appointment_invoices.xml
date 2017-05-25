@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/document_category"
             android:layout_height="wrap_content">
-            <fragment android:name="com.medico.view.profile.DoctorAppointmentTreatmentPlan"
+            <fragment android:name="com.medicohealthcare.view.profile.DoctorAppointmentTreatmentPlan"
                 android:id="@+id/invoice_list"
                 android:tag="invoice"
                 android:layout_height="wrap_content"
