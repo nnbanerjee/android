@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -64,21 +63,21 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
 
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                // User chose the "Settings" item, show the app settings UI...
-                    onBackPressed();
-                    return true;
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item)
+//    {
+//        switch (item.getItemId())
+//        {
+//            case android.R.id.home:
+//                // User chose the "Settings" item, show the app settings UI...
+//                    onBackPressed();
+//                    return true;
+//            default:
+//                // If we got here, the user's action was not recognized.
+//                // Invoke the superclass to handle it.
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     protected void attachView()
     {
@@ -96,6 +95,11 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 else if(bundle.getInt(LOGGED_IN_USER_ROLE) == PATIENT)
                 {
                     //open patient profile
+                    ParentFragment fragment = new PatientProfileManageView();
+                    fragmentList.add(fragment);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.service, fragment,PatientProfileManageView.class.getName()).addToBackStack(PatientProfileManageView.class.getName()).commit();
+
                 }
                 break;
             case PARAM.PATIENT_SETTING_VIEW:

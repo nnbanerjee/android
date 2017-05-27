@@ -82,6 +82,7 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
         mobile_number = (EditText)view.findViewById(R.id.mobile_number);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country);
@@ -102,7 +103,8 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
             }
         });
         change_password = (Button) view.findViewById(R.id.change_password);
-        profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
+        change_password.setBackground(null);
+        profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {

@@ -21,7 +21,7 @@ android {
             jniDebuggable false
         }
         debug {
-            debuggable false
+            debuggable true
             jniDebuggable false
         }
     }

@@ -36,7 +36,7 @@ public class LocationService extends  Notifier implements LocationListener {
     public String city,country,region,countryCode;
     public Address address;
     public String completeAddress = "";
-
+    public String partialAddress = "";
 
     boolean isGPSEnabled, isNetworkEnabled,locationServiceAvailable;
     Activity context;
@@ -86,37 +86,27 @@ public class LocationService extends  Notifier implements LocationListener {
                 this.isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
                 this.isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-                if (forceNetwork) isGPSEnabled = false;
+//                if (forceNetwork) isGPSEnabled = false;
 
-                if (!isNetworkEnabled && !isGPSEnabled)    {
+                if (!isNetworkEnabled && !isGPSEnabled)
+                {
                     // cannot get location
                     this.locationServiceAvailable = false;
                 }
                 else
                 {
                     this.locationServiceAvailable = true;
+                    if (isGPSEnabled)
+                    {
 
+                        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this,null);
+
+                    }
                     if (isNetworkEnabled)
                     {
                         locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this,null);
-//                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-//                                MIN_TIME_BW_UPDATES,
-//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-//                        if (locationManager != null) {
-//                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                        }
                     }//end if
 
-//                    else if (isGPSEnabled) {
-//                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                                MIN_TIME_BW_UPDATES,
-//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-//
-//                        if (locationManager != null) {
-//                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-////                            updateCoordinates();
-//                        }
-//                    }
                 }
             }
         }
@@ -126,97 +116,10 @@ public class LocationService extends  Notifier implements LocationListener {
 
         }
     }
-//    private void initLocationServiceAPI16(final Context context)
-//    {
-//        int GPSoff = 0;
-//        if ( Build.VERSION.SDK_INT >= 23 &&
-//                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-//                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            return  ;
-//        }
-//        else
-//        {
-//            try
-//            {
-//                GPSoff = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
-//            }
-//            catch (Settings.SettingNotFoundException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            if (GPSoff == 0)
-//            {
-//                new AlertDialog.Builder(context)
-//                        .setTitle("Timeout connessione")
-//                        .setMessage("Connessione lenta o non funzionante")
-//                        .setNegativeButton(android.R.string.cancel, null) // dismisses by default
-//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                            @Override public void onClick(DialogInterface dialog, int which) {
-//                                Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                                context.startActivity(onGPS);
-//                            }
-//                        })
-//                        .create()
-//                        .show();
-//            }
-//        }
-//
-//        try
-//        {
-//            this.longitude = 0.0;
-//            this.latitude = 0.0;
-//            this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-//            if(this.locationManager != null)
-//            {
-//                // Get GPS and network status
-//                this.isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-//                this.isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-//
-//                if (forceNetwork) isGPSEnabled = false;
-//
-//                if (!isNetworkEnabled && !isGPSEnabled)    {
-//                    // cannot get location
-//                    this.locationServiceAvailable = false;
-//                }
-//                //else
-//                {
-//                    this.locationServiceAvailable = true;
-//
-//                    if (isNetworkEnabled) {
-//                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-//                                MIN_TIME_BW_UPDATES,
-//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-//                        if (locationManager != null) {
-//                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                            updateCoordinates();
-//                        }
-//                    }//end if
-//
-//                    if (isGPSEnabled) {
-//                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                                MIN_TIME_BW_UPDATES,
-//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-//
-//                        if (locationManager != null) {
-//                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                            updateCoordinates();
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (Exception ex)  {
-////            LogService.log( "Error creating location service: " + ex.getMessage() );
-//
-//        }
-//    }
-//    private void updateCoordinates()
-//    {
-//        latitude = location.getLatitude();
-//        longitude = location.getLongitude();
-//    }
 
     @Override
-    public void onLocationChanged(Location location)     {
+    public void onLocationChanged(Location location)
+    {
         // do stuff here with location object
         latitude = location.getLatitude();
         longitude = location.getLongitude();
@@ -234,7 +137,11 @@ public class LocationService extends  Notifier implements LocationListener {
                 countryCode = addresses.get(0).getCountryCode();
                 address = addresses.get(0);
                 for(int i = 0; i < address.getMaxAddressLineIndex(); i++)
+                {
                     completeAddress = completeAddress + address.getAddressLine(i) + ", ";
+                    if(i > 0 )
+                        partialAddress = partialAddress + address.getAddressLine(i) + ", ";
+                }
                 completeAddress = completeAddress + country;
             }
         } catch (IOException e) {
@@ -242,9 +149,6 @@ public class LocationService extends  Notifier implements LocationListener {
         }
 
          city =  cityName;
-//        Toast.makeText(context, "New GPS location:" + cityName + " " + region + " " + country
-//                + String.format("%9.6f", location.getLatitude()) + ", "
-//                + String.format("%9.6f", location.getLongitude()) + "\n" , Toast.LENGTH_LONG).show();
         notifyListeners(PARAM.LOCATION_UPDATED,this, city);
     }
 

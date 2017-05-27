@@ -39,6 +39,11 @@ import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.Notifier;
+import com.medicohealthcare.util.NotifyListener;
+import com.medicohealthcare.util.PARAM;
+import com.medicohealthcare.util.PermissionManager;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.settings.FileUploadView;
 
@@ -55,7 +60,8 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class PersonProfileRegistrationView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class PersonProfileRegistrationView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback, NotifyListener
+{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
@@ -87,6 +93,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText)view.findViewById(R.id.password);
+        password.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.password_text).setVisibility(View.VISIBLE);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         dob = (EditText) view.findViewById(R.id.dob);
         dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
@@ -97,6 +105,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             }
         });
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         TextView country_text = (TextView) view.findViewById(R.id.city_text);
@@ -202,6 +211,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
 
             }
         });
+        PermissionManager.getInstance(getActivity()).hasPermission(PermissionManager.LOCATION);
         return view;
     }
 
@@ -209,6 +219,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     public void onStart()
     {
         super.onStart();
+        LocationService.getLocationManager(getActivity()).addNotifyListeber(this);
         Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         final Integer profileId = bundle.getInt(PROFILE_ID);
@@ -284,6 +295,17 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         super.onResume();
 
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocationService.getLocationManager(getActivity()).removeNotifyListeber(this);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocationService.getLocationManager(getActivity()).removeNotifyListeber(this);
+    }
+
     private void save(final Person person)
     {
         showBusy();
@@ -523,5 +545,20 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         }
         return 0;
     }
-
+    public void notify(int id, Notifier source, Object parameter)
+    {
+        if(id == PARAM.LOCATION_UPDATED)
+        {
+            LocationService manager = LocationService.getLocationManager(getActivity());
+            mAutocompleteView.setText(manager.partialAddress );
+            personModel.setAddress(manager.completeAddress);
+            personModel.setRegion(manager.region);
+            personModel.setLocationLat(manager.latitude);
+            personModel.setLocationLong(manager.longitude);
+            personModel.setCity(manager.city);
+            personModel.setCountry(manager.country);
+            personModel.setIsoCountry(manager.countryCode);
+            manager.removeNotifyListeber(this);
+        }
+    }
 }

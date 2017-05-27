@@ -141,7 +141,7 @@ public class FileUploadView extends ParentFragment
     public void onStart()
     {
         super.onStart();
-        showBusy();
+//        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         final int doctorId = bundle.getInt(DOCTOR_ID);
         final int patientId = bundle.getInt(PATIENT_ID);

@@ -107,7 +107,7 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
             public void onClick(View v)
             {
                 LocationService location = LocationService.getLocationManager(activity);
-                mAutocompleteView.setText(location.completeAddress);
+                mAutocompleteView.setText(location.partialAddress);
                 countryView.setText(location.country);
                 cityView.setText(location.city);
 

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
@@ -25,6 +26,9 @@ public class DoctorProfileEdit extends ParentFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.doctor_profile,container,false);
+		View viewActionBar = getActivity().getLayoutInflater().inflate(R.layout.toolbar, null);
+		TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+		textviewTitle.setText("Doctor Profile");
 		setHasOptionsMenu(true);
 		doctorGeneral = (Button)view.findViewById(R.id.general_doctor_profile);
 		doctorPersonal = (Button)view.findViewById(R.id.personal_doctor_profile);

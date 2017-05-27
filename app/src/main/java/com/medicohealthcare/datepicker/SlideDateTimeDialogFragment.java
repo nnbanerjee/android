@@ -187,7 +187,7 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
             mSlidingTabLayout.showOnlyTime();
         else if(mode == SlideDateTimePicker.ONLY_CALENDAR)
         {
-            mSlidingTabLayout.showOnlyTime();
+            mSlidingTabLayout.showOnlyCalendar();
         }
         return view;
     }

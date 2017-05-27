@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +64,8 @@ public class PatientProfileManageView extends ParentFragment implements Activity
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button, change_password;
     TextView profileId;
-    EditText name, email, dob, country, city;
-    Spinner gender_spinner;
+    EditText name, email, dob, country, city,mobile_number,allergic;
+    Spinner gender_spinner,mobileCountry,bloodgroup;;
     ImageButton dob_calendar;
     MultiAutoCompleteTextView specialization;//,location;
     AutoCompleteTextView mAutocompleteView;
@@ -69,15 +73,23 @@ public class PatientProfileManageView extends ParentFragment implements Activity
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
+        setHasOptionsMenu(true);
         RelativeLayout autologin = (RelativeLayout)view.findViewById(R.id.layout30);
         autologin.setVisibility(View.VISIBLE);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
         profileId = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
+        name.setEnabled(false);
         email = (EditText) view.findViewById(R.id.email);
+        mobile_number = (EditText)view.findViewById(R.id.mobile_number);
+        email.setEnabled(false);
+        mobile_number.setEnabled(false);
+        mobileCountry = (Spinner)view.findViewById(R.id.country_code);
+        bloodgroup = (Spinner) view.findViewById(R.id.bloodGroup);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
         dob = (EditText) view.findViewById(R.id.dob);
         dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
@@ -88,6 +100,7 @@ public class PatientProfileManageView extends ParentFragment implements Activity
             }
         });
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country_spinner);
@@ -95,6 +108,11 @@ public class PatientProfileManageView extends ParentFragment implements Activity
         specialization = (MultiAutoCompleteTextView) view.findViewById(R.id.specialization);
         specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         specialization.setThreshold(1);
+        allergic = (EditText)view.findViewById(R.id.allergic_to);
+        view.findViewById(R.id.password).setVisibility(View.GONE);
+        view.findViewById(R.id.password_text).setVisibility(View.GONE);
+        view.findViewById(R.id.layout_relation).setVisibility(View.GONE);
+        view.findViewById(R.id.relation_text).setVisibility(View.GONE);
         auto_login = (CheckBox) view.findViewById(R.id.auto_login);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +124,12 @@ public class PatientProfileManageView extends ParentFragment implements Activity
             }
         });
         change_password = (Button) view.findViewById(R.id.change_password);
-        profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
+        change_password.setBackground(null);
+        profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
+                setHasOptionsMenu(false);
                 Bundle bundle = getActivity().getIntent().getExtras();
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
                 bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
@@ -164,6 +184,9 @@ public class PatientProfileManageView extends ParentFragment implements Activity
     public void onStart()
     {
         super.onStart();
+        View viewActionBar = getActivity().getLayoutInflater().inflate(R.layout.toolbar, null);
+        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Patient Profile");
         Bundle bundle = getActivity().getIntent().getExtras();
         progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         api.getProfile(new ProfileId(bundle.getInt(LOGGED_IN_ID)),new Callback<Person>() {
@@ -175,6 +198,12 @@ public class PatientProfileManageView extends ParentFragment implements Activity
                     new ImageLoadTask(person.imageUrl,profilePic).execute();
                     profileId.setText(person.getId().toString());
                     name.setText(person.getName());
+
+                    mobile_number.setText(person.getMobile().toString());
+                    SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
+                    mobileCountry.setAdapter(countryListAdapter);
+                    mobileCountry.setEnabled(false);
+                    mobileCountry.setSelection(getCountryIndex(person.getLocation()));
                     email.setText(person.getEmail());
                     gender_spinner.setSelection(person.gender.intValue());
                     DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
@@ -184,8 +213,10 @@ public class PatientProfileManageView extends ParentFragment implements Activity
                     country.setText(person.getCountry());
                     city.setText(person.getCity());
                     specialization.setText(person.getSpeciality());
-
-
+                    if(person.getBloodGroup()!=null)
+                        bloodgroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
+                    specialization.setText(person.speciality);
+                    allergic.setText(person.getAllergicTo());
                     SharedPreferences sharedPref = getActivity().getSharedPreferences(MyPREFERENCES, getActivity().MODE_PRIVATE);
                     boolean status = sharedPref.getBoolean("USER_STATUS", true);
                     auto_login.setChecked(status);
@@ -204,12 +235,29 @@ public class PatientProfileManageView extends ParentFragment implements Activity
                 progress.dismiss();
             }
         });
+        setHasOptionsMenu(true);
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
-
+        setHasOptionsMenu(true);
+        View viewActionBar = getActivity().getLayoutInflater().inflate(R.layout.toolbar, null);
+        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Patient Profile");
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
     }
 
     private void save(Person person)
@@ -264,6 +312,7 @@ public class PatientProfileManageView extends ParentFragment implements Activity
         SlideDateTimePicker pickerDialog = new SlideDateTimePicker.Builder(((AppCompatActivity)getActivity()).getSupportFragmentManager())
                 .setListener(listener)
                 .setInitialDate(date)
+                .setMode(SlideDateTimePicker.ONLY_CALENDAR)
                 .build();
         pickerDialog.show();
     }
@@ -277,12 +326,10 @@ public class PatientProfileManageView extends ParentFragment implements Activity
     public void update()
     {
         Bundle bundle1 = getActivity().getIntent().getExtras();
-        personModel.role = new Integer(bundle1.getInt(LOGGED_IN_USER_ROLE)).byteValue();
-        personModel.setAddress(mAutocompleteView.getText().toString());
-        personModel.setCity(city.getText().toString());
-        personModel.setCountry(country.getText().toString().trim());
         personModel.setGender(new Integer(gender_spinner.getSelectedItemPosition()).byteValue());
         personModel.setSpeciality(specialization.getText().toString());
+        personModel.setBloodGroup(bloodgroup.getSelectedItem().toString());
+        personModel.setAllergicTo(allergic.getText().toString());
     }
     @Override
     public boolean save()
@@ -305,5 +352,60 @@ public class PatientProfileManageView extends ParentFragment implements Activity
 
 
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
+        inflater.inflate(R.menu.save,menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save:
+            {
+
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else
+                    {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+            return true;
+        }
+        return false;
+    }
+    private int getBloodgroupIndex(String bloodgroup)
+    {
+        String[] bloodgroups = getActivity().getResources().getStringArray(R.array.bloodgroup_list);
+        for(int i = 0; i < bloodgroups.length; i++)
+        {
+            if(bloodgroups[i].equalsIgnoreCase(bloodgroup))
+                return i;
+        }
+        return 0;
+    }
+    public int getCountryIndex(String isdCode)
+    {
+        if(countriesList != null && !countriesList.isEmpty() && isdCode != null && !isdCode.isEmpty())
+        {
+            for (int i = 0; i < countriesList.size(); i++)
+            {
+                if (countriesList.get(i).getIsdCode().equals(isdCode))
+                    return i;
+            }
+        }
+        return 0;
+    }
 }

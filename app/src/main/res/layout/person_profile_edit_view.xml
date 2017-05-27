@@ -23,6 +23,7 @@
                 android:id="@+id/upload_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_hight"
+                android:visibility="gone"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_toRightOf="@+id/profile_pic"
@@ -211,51 +212,61 @@
                       android:layout_alignParentLeft="true"
                       android:layout_below="@+id/dob"
                       android:layout_marginTop="@dimen/text_top_margin"
-                      android:text="Address *" />
+                      android:text="Location *" />
 
-                  <AutoCompleteTextView
-                      android:id="@+id/location"
-                      android:textAppearance="@style/body3"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_below="@+id/dob"
-                      android:layout_marginTop="@dimen/edit_top_margin"
-                      android:background="@drawable/rounded_white_color"
-                      android:paddingLeft="3dp"
-                      android:hint="Type your location"
-                      android:textColorHint="@color/gray_hint"
-                      android:imeOptions="actionNext"
-                      android:inputType="textMultiLine"
-                      android:layout_alignLeft="@+id/dob"
-                      android:layout_alignStart="@+id/dob" />
+                <RelativeLayout
+                    android:id="@+id/location_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_white_color"
+                    android:layout_below="@+id/dob"
+                    android:layout_marginTop="@dimen/edit_top_margin"
+                    android:layout_toRightOf="@+id/location_text"
+                    android:layout_alignLeft="@+id/layout_gender"
+                    android:layout_alignStart="@+id/layout_gender"
+                    >
+                    <AutoCompleteTextView
+                        android:id="@+id/location"
+                        android:textAppearance="@style/body3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/current_location_button"
+                        android:paddingLeft="3dp"
+                        android:textColorHint="@color/gray_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        />
 
-                <Button
-                    android:id="@+id/location_delete_button"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginRight="7dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/cross"
-                    android:layout_alignRight="@+id/location"
-                    android:layout_alignTop="@+id/location"/>
-                <Button
-                    android:id="@+id/current_location_button"
-                    android:layout_width="17dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="3dp"
-                    android:gravity="center"
-                    android:layout_marginRight="3dp"
-                    android:background="@drawable/location"
-                    android:layout_marginBottom="4dp"
-                    android:layout_alignBottom="@+id/location"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    <Button
+                        android:id="@+id/location_delete_button"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/cross"
+                        android:layout_alignTop="@+id/location"/>
+                    <Button
+                        android:id="@+id/current_location_button"
+                        android:layout_width="17dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/location"
+                        android:layout_marginBottom="4dp"
+                        android:layout_alignBottom="@+id/location"
+                        />
+                </RelativeLayout>
 
                   <TextView
                       android:id="@+id/country_text"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_below="@+id/location"
+                      android:layout_below="@+id/location_layout"
                       android:layout_marginTop="@dimen/text_top_margin"
                       android:text="Country *" />
 
@@ -264,7 +275,7 @@
                       android:layout_width="match_parent"
                       android:layout_height="@dimen/edit_height"
                       android:enabled="false"
-                      android:layout_below="@+id/location"
+                      android:layout_below="@+id/location_layout"
                       android:layout_marginTop="@dimen/edit_top_margin"
                       android:layout_toRightOf="@+id/country_text"
                       android:layout_alignLeft="@+id/dob"
@@ -301,7 +312,7 @@
                       android:layout_alignParentLeft="true"
                       android:layout_below="@+id/city"
                       android:layout_marginTop="@dimen/text_top_margin"
-                      android:text="Speciality" />
+                      android:text="Profession" />
 
                   <MultiAutoCompleteTextView
                       android:id="@+id/specialization"
@@ -415,6 +426,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="55dp"
                 android:layout_marginTop="15dp"

@@ -207,7 +207,11 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                             new ImageLoadTask(url, profilePic).execute();
                         personIdView.setText(person.getId().toString());
                         name.setText(person.getName());
-                        mobile.setText(person.getMobile().toString());
+                        if(person.getLocation() != null && person.getLocation().length() > 0)
+                            mobile.setText(person.getMobile().toString().substring(person.getMobile().toString().
+                                    indexOf(person.getLocation())+1));
+                        else
+                            mobile.setText(person.getMobile().toString());
                         email.setText(person.getEmail());
                         gender_spinner.setSelection(person.gender.intValue());
                         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);

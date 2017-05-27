@@ -18,7 +18,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
@@ -39,6 +38,11 @@ import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.Notifier;
+import com.medicohealthcare.util.NotifyListener;
+import com.medicohealthcare.util.PARAM;
+import com.medicohealthcare.util.PermissionManager;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.settings.FileUploadView;
 
@@ -55,7 +59,8 @@ import retrofit.client.Response;
 /**
  * Created by User on 8/7/15.
  */
-public class DoctorProfileRegistrationView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class DoctorProfileRegistrationView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback, NotifyListener
+{
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
@@ -64,10 +69,10 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
     TextView personId;
-    EditText name, email, dob, country, city,registrationNumber, mobile,password;
+    EditText name, email, country, city,registrationNumber, mobile,password;
     Spinner mobile_country,practice;
     Spinner gender_spinner;
-    ImageButton dob_calendar;
+//    ImageButton dob_calendar;
     MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
@@ -77,8 +82,9 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     FileUploadView fileFragment;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        final View view = inflater.inflate(R.layout.doctor_profile_edit_view,container,false);
         setHasOptionsMenu(true);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Doctor Registration");
@@ -93,24 +99,15 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText)view.findViewById(R.id.password);
+        password.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.password_text).setVisibility(View.VISIBLE);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
-        dob = (EditText) view.findViewById(R.id.dob);
-        TextView dob_text = (TextView)view.findViewById(R.id.dob_text);
-        dob.setVisibility(View.GONE);
-        dob_text.setVisibility(View.GONE);
-        dob_calendar = (ImageButton) view.findViewById(R.id.dob_calendar);
-        dob_calendar.setVisibility(View.GONE);
-        dob_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDate(dob);
-            }
-        });
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         TextView country_text = (TextView) view.findViewById(R.id.city_text);
-        country = (EditText) view.findViewById(R.id.country_spinner);
+        country = (EditText) view.findViewById(R.id.country);
         TextView city_text = (TextView) view.findViewById(R.id.country_text);
         city = (EditText) view.findViewById(R.id.city);
         country_text.setVisibility(View.GONE);
@@ -128,21 +125,20 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         Button nextButton = (Button) view.findViewById(R.id.change_password);
         tcCheckBox.setText("Agree with T&C");
         nextButton.setVisibility(View.GONE);
-        TextView registration = (TextView)view.findViewById(R.id.allergic_to_text);
+        TextView registration = (TextView)view.findViewById(R.id.registration_text);
         registration.setText("Registration");
-        registrationNumber = (EditText)view.findViewById(R.id.allergic_to);
+        registrationNumber = (EditText)view.findViewById(R.id.registration);
         registrationNumber.setHint("Enter Medical Registration Number");
-        practice = (Spinner) view.findViewById(R.id.bloodGroup);
+        registration.setVisibility(View.VISIBLE);
+        registrationNumber.setVisibility(View.VISIBLE);
+        RelativeLayout practice_layout = (RelativeLayout)view.findViewById(R.id.practice_layout);
+        practice = (Spinner) view.findViewById(R.id.practice);
         ArrayAdapter<String> practiceAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,getActivity().getResources().getStringArray(R.array.practice_name));
-        TextView practiceType = (TextView)view.findViewById(R.id.bloodGroup_text);
-        practiceType.setText("Practice");
+        TextView practiceType = (TextView)view.findViewById(R.id.practice_text);
         practice.setAdapter(practiceAdapter);
-        TextView relationText = (TextView) view.findViewById(R.id.relation_text);
-        Spinner relation = (Spinner) view.findViewById(R.id.relation);
-        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.layout_relation);
-        relativeLayout.setVisibility(View.GONE);
-        relationText.setVisibility(View.GONE);
-        relation.setVisibility(View.GONE);
+        practice_layout.setVisibility(View.VISIBLE);
+        practice.setVisibility(View.VISIBLE);
+        practiceType.setVisibility(View.VISIBLE);
         Bundle bundle = getActivity().getIntent().getExtras();
 
         profilePic.setImageResource(R.drawable.doctor_default);
@@ -198,6 +194,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
 
             }
         });
+        PermissionManager.getInstance(getActivity()).hasPermission(PermissionManager.LOCATION);
         return view;
     }
 
@@ -205,6 +202,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     public void onStart()
     {
         super.onStart();
+        LocationService.getLocationManager(getActivity()).addNotifyListeber(this);
         Bundle bundle = getActivity().getIntent().getExtras();
 //        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         final Integer profileId = bundle.getInt(PROFILE_ID);
@@ -230,8 +228,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                         email.setText(person.getEmail());
                         gender_spinner.setSelection(person.gender.intValue());
                         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
-                        if (person.getDateOfBirth() != null)
-                            dob.setText(format.format(new Date(person.getDateOfBirth())));
+//                        if (person.getDateOfBirth() != null)
+//                            dob.setText(format.format(new Date(person.getDateOfBirth())));
                         mAutocompleteView.setText(person.getAddress());
                         country.setText(person.getCountry());
                         city.setText(person.getCity());
@@ -266,8 +264,23 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
+
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        LocationService.getLocationManager(getActivity()).removeNotifyListeber(this);
+
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        LocationService.getLocationManager(getActivity()).removeNotifyListeber(this);
 
     }
     private void save(final Person person, final PersonDetailProfile detailedProfile)
@@ -489,5 +502,20 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         return 0;
     }
 
-
+    public void notify(int id, Notifier source, Object parameter)
+    {
+        if(id == PARAM.LOCATION_UPDATED)
+        {
+            LocationService manager = LocationService.getLocationManager(getActivity());
+            mAutocompleteView.setText(manager.partialAddress );
+            personModel.setAddress(manager.completeAddress);
+            personModel.setRegion(manager.region);
+            personModel.setLocationLat(manager.latitude);
+            personModel.setLocationLong(manager.longitude);
+            personModel.setCity(manager.city);
+            personModel.setCountry(manager.country);
+            personModel.setIsoCountry(manager.countryCode);
+            manager.removeNotifyListeber(this);
+        }
+    }
 }
