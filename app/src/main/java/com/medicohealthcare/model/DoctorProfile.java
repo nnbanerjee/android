@@ -140,7 +140,7 @@ public class DoctorProfile implements PersonProfile
         this.feebackCount = feebackCount;
     }
 
-    public boolean getDependentProfile()
+    public boolean isDependentProfile()
     {
         return false;
     }

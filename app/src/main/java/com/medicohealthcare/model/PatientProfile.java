@@ -141,7 +141,7 @@ public class PatientProfile implements PersonProfile
         this.medicineCount = medicineCount;
     }
 
-    public boolean getDependentProfile()
+    public boolean isDependentProfile()
     {
         return dependentProfile;
     }

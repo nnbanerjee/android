@@ -31,8 +31,10 @@ import com.medicohealthcare.application.MyApi;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Delegation;
 import com.medicohealthcare.model.Dependent;
+import com.medicohealthcare.model.DependentDelegatePerson;
 import com.medicohealthcare.model.DoctorProfile;
 import com.medicohealthcare.model.PersonProfile;
+import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.service.ChatServer;
 import com.medicohealthcare.util.FileUploadDialog;
 import com.medicohealthcare.util.LocationService;
@@ -46,6 +48,10 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 /**
@@ -122,7 +128,8 @@ public abstract class HomeActivity extends Activity implements PARAM
         LayoutInflater layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
-
+        profileName = (TextView) layout.findViewById(R.id.profile_name);
+        profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
         dependentList = (ListView) layout.findViewById(R.id.profile_dependent_list);
         delegationList = (ListView) layout.findViewById(R.id.profile_delegation_list);
 
@@ -143,11 +150,12 @@ public abstract class HomeActivity extends Activity implements PARAM
         List<Dependent> depends = null;
         List<Delegation> delegates = null;
         boolean selfDependentProfile = false;
+
         if(parent != null) {
             if(parent.getPerson().getRole() == PATIENT)
             {
-                profileName = (TextView) layout.findViewById(R.id.profile_name);
-                profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
+
+
                 profileNamedependent.setVisibility(View.GONE);
                 profileName.setText(parent.getPerson().getName() + " (Patient)");
                 depends = parent.getDependents();
@@ -155,8 +163,6 @@ public abstract class HomeActivity extends Activity implements PARAM
             }
             else
             {
-                profileName = (TextView) layout.findViewById(R.id.profile_name);
-                profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
                 profileName.setText(parent.getPerson().getName() + " (Doctor)");
                 profileNamedependent.setText(parent.getPerson().getName() + " (Patient)");
                 depends = parent.getDependents();
@@ -171,14 +177,12 @@ public abstract class HomeActivity extends Activity implements PARAM
 
                 profileName.setText(personProfile.getPerson().getName() + " (Patient)");
                 profileNamedependent.setVisibility(View.GONE);
-                profileNamedependent = null;
+//                profileNamedependent = null;
                 depends = personProfile.getDependents();
                 delegates = personProfile.getDelegates();
             }
             else
             {
-                profileName = (TextView) layout.findViewById(R.id.profile_name);
-                profileNamedependent = (TextView) layout.findViewById(R.id.profile_name_dependent);
                 profileName.setText(personProfile.getPerson().getName() + " (Doctor)");
                 profileNamedependent.setText(personProfile.getPerson().getName() + " (Patient)");
                 depends = personProfile.getDependents();
@@ -202,7 +206,7 @@ public abstract class HomeActivity extends Activity implements PARAM
             public void onClick(View v)
             {
                 popup.dismiss();
-                if(personProfile.getDependentProfile())
+                if(personProfile.isDependentProfile())
                 {
                     saveToSession(parent.getPerson().getId(), parent.getPerson().getRole(), parent.getPerson().getStatus());
                     finish();
@@ -217,44 +221,44 @@ public abstract class HomeActivity extends Activity implements PARAM
             {
                 popup.dismiss();
                 int selfDependentId = -1;
-                if(personProfile.getDependentProfile())
+                if(personProfile.isDependentProfile())
                 {
                     List<Dependent> dependents = parent.getDependents();
-                    for(Dependent dep: dependents)
+                    if(dependents != null && dependents.size() > 0)
                     {
-                        if(dep.getRelation().equalsIgnoreCase("self")) {
-                            selfDependentId = dep.getId();
-                            break;
+                        for (Dependent dep : dependents)
+                        {
+                            if (dep.getRelation().equalsIgnoreCase("self"))
+                            {
+                                selfDependentId = dep.getId();
+                                break;
+                            }
                         }
                     }
                 }
                 else
                 {
                     List<Dependent> dependents = personProfile.getDependents();
-                    for(Dependent dep: dependents)
+                    if(dependents != null && dependents.size() > 0)
                     {
-                        if(dep.getRelation().equalsIgnoreCase("self")) {
-                            selfDependentId = dep.getId();
-                            break;
+                        for (Dependent dep : dependents)
+                        {
+                            if (dep.getRelation().equalsIgnoreCase("self"))
+                            {
+                                selfDependentId = dep.getId();
+                                break;
+                            }
                         }
                     }
 
                 }
                 if(selfDependentId == -1)
                 {
-                    selfDependentId = 102;
-                }
-                saveToSession(selfDependentId, PATIENT, UNREGISTERED);
-                Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
-                startActivity(intObj);
-                if(personProfile.getDependentProfile())
-                {
-                    finish();
+                    DependentDelegatePerson dependent = new DependentDelegatePerson(personProfile.getPerson()) ;
+                    create(dependent);
                 }
                 else
-                {
-                    onPause();
-                }
+                    launchDependentProfile(selfDependentId);
 
             }
         });
@@ -466,4 +470,56 @@ public abstract class HomeActivity extends Activity implements PARAM
                     }
                 }, 0, 10, TimeUnit.SECONDS);
     }
+
+    private void create(final DependentDelegatePerson person)
+    {
+         api.createDependentProfile(person, new Callback<ServerResponse>()
+         {
+            @Override
+            public void success(ServerResponse s, Response response)
+            {
+                if (s.status == 1)
+                {
+                    int selfDependentId = s.profileId;
+                    if(personProfile.isDependentProfile())
+                    {
+                        List<Dependent> dependents = parent.getDependents();
+                        if(dependents == null )
+                            parent.setDependents(new ArrayList<Dependent>());
+                        Dependent dependent1 = new Dependent(selfDependentId,person.getName(),person.relation,person.getStatus());
+                        parent.getDependents().add(dependent1);
+                    }
+                    else
+                    {
+                        List<Dependent> dependents = personProfile.getDependents();
+                        if(dependents == null )
+                            personProfile.setDependents(new ArrayList<Dependent>());
+                        Dependent dependent1 = new Dependent(selfDependentId,person.getName(),person.relation,person.getStatus());
+                        personProfile.getDependents().add(dependent1);
+                    }
+                    launchDependentProfile(selfDependentId);
+                }
+            }
+            @Override
+            public void failure(RetrofitError error)
+            {
+                System.out.println("Could not create self dependent");
+             }
+        });
+     }
+
+     public void launchDependentProfile(int selfDependentId)
+     {
+         saveToSession(selfDependentId, PATIENT, UNREGISTERED);
+         Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
+         startActivity(intObj);
+         if(personProfile.isDependentProfile())
+         {
+             finish();
+         }
+         else
+         {
+             onPause();
+         }
+     }
 }

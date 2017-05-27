@@ -48,7 +48,7 @@ public interface PersonProfile
      */
     public void setDelegates(List<Delegation> delegates);
 
-    public boolean getDependentProfile();
+    public boolean isDependentProfile();
 
     public void setDependentProfile(boolean dependentProfile);
 

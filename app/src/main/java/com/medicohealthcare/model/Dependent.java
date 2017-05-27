@@ -8,6 +8,20 @@ public class Dependent {
 
     private int status;
 
+
+    public Dependent()
+    {
+
+    }
+
+    public Dependent(int id, String name, String relation, int status)
+    {
+        this.id = id;
+        this.name = name;
+        this.relation = relation;
+        this.status = status;
+    }
+
     /**
      *
      * @return

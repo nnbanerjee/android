@@ -88,8 +88,8 @@
                     android:layout_toRightOf="@+id/account_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="4dp"
+                    android:layout_below="@+id/profile_picture"
                     android:layout_marginTop="20dp"
-                    android:layout_alignRight="@+id/account_name"
                     android:background="@drawable/arrow_down_white"
                     />
                 <TextView

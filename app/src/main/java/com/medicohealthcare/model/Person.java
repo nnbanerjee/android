@@ -369,4 +369,41 @@ public class Person
 
         return canBeSaved;
     }
+    public Person()
+    {
+    }
+
+    public Person(Person person)
+    {
+        id = person.getId();
+        name = person.getName();
+        mobile = person.getMobile();
+        location = person.getLocation();
+        locationLat = person.getLocationLat();
+        locationLong = person.getLocationLong();
+        email = person.getEmail();
+        address = person.getAddress();
+        allergicTo = person.getAllergicTo();
+        bloodGroup = getBloodGroup();
+        dateOfBirth = person.getDateOfBirth();
+        gender = person.getGender();
+        imageUrl = person.getImageUrl();
+        loyaltyPoints = person.getLoyaltyPoints();
+        role = person.getRole();
+        status = person.getStatus();
+        speciality = person.getSpeciality();
+        validaity = person.getValidaity();
+        region = person.getRegion();
+        city = person.getCity();
+        registrationDate = person.getRegistrationDate();
+        addedBy = person.getAddedBy();
+        country = person.getCountry();
+        isoCountry = person.getIsoCountry();
+        loyaltyCatId = person.getLoyaltyCatId();
+        referredBy = person.getReferredBy();
+        prime = person.getPrime();
+        practiceName = person.practiceName;
+        registrationNo = person.registrationNo;
+    }
+
 }
