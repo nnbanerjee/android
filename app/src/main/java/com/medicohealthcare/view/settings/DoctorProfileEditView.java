@@ -1,5 +1,6 @@
 package com.medicohealthcare.view.settings;
 
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -35,6 +36,7 @@ import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -151,6 +153,21 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
                     });
                 }
 
+            }
+        });
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                setHasOptionsMenu(false);
+                Bundle bundle = getActivity().getIntent().getExtras();
+                bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
+                bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
+                bundle.putInt(PARAM.FILE_UPLOAD, PROFILE_PICTURE);
+                getActivity().getIntent().putExtras(bundle);
+                ParentFragment fileFragment = new FileUploadView();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
             }
         });
         return view;

@@ -51,7 +51,21 @@ public class Menu {
         arrayMenuList.add("Logout");
         return arrayMenuList;
     }
-
+    public ArrayList<String> getDependentMenus()
+    {
+        arrayMenuList = new ArrayList<String>();
+        arrayMenuList.add("Manage Doctors");
+        arrayMenuList.add("Manage Delegations");
+        arrayMenuList.add("Logout");
+        return arrayMenuList;
+    }
+    public ArrayList<String> getDelegateMenus()
+    {
+        arrayMenuList = new ArrayList<String>();
+        arrayMenuList.add("Manage Doctors");
+        arrayMenuList.add("Logout");
+        return arrayMenuList;
+    }
     public ArrayList<String> getDoctorMenus()
     {
         arrayMenuList = new ArrayList<String>();

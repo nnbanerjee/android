@@ -76,18 +76,23 @@ public class MenuAdapter extends ParentAdapter{
         showTv.setText("" + menus.get(pos));
         Bundle bundle = new Bundle();
         setSettingParameters(bundle);
+        final int loggedInId = bundle.getInt(LOGGED_IN_ID);
+        final int profileId = bundle.getInt(PROFILE_ID);
         final int loggedInProfileRole = bundle.getInt(LOGGED_IN_USER_ROLE);
+        final int profileRole = bundle.getInt(PROFILE_ROLE);
+        final boolean isDependent = bundle.getBoolean(IS_DEPENDENT);
+        final boolean isDelegate = bundle.getBoolean(IS_DEPENDENT)==false && loggedInId !=profileId?true:false ;
         layout.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                showSetting(position, loggedInProfileRole);
+                showSetting(position, profileRole,isDependent,isDelegate);
             }
         });
 
 
-        int settingViewId = getViewId (position, loggedInProfileRole);
+        int settingViewId = getViewId (position, profileRole,isDependent,isDelegate);
         switch (settingViewId)
         {
             case MANAGE_PROFILE_VIEW:
@@ -143,9 +148,9 @@ public class MenuAdapter extends ParentAdapter{
         return convertView;
     }
 
-    public void showSetting(int position,int role)
+    public void showSetting(int position,int role, boolean isDependent, boolean isDelegate)
     {
-        int settingViewId = getViewId (position, role);
+        int settingViewId = getViewId (position, role, isDependent, isDelegate);
         if(settingViewId == LOGOUT_CONFIRMATION)
         {
             logout();
@@ -169,12 +174,14 @@ public class MenuAdapter extends ParentAdapter{
             bundle.putInt(PARAM.LOGGED_IN_ID, ((HomeActivity)activity).parent.getPerson().getId());
             bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, ((HomeActivity)activity).parent.getPerson().getRole());
             bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, ((HomeActivity)activity).parent.getPerson().getStatus());
+            bundle.putBoolean(PARAM.IS_DEPENDENT, ((HomeActivity)activity).isDependent);
         }
         else
         {
             bundle.putInt(PARAM.LOGGED_IN_ID, ((HomeActivity)activity).profileId);
             bundle.putInt(PARAM.LOGGED_IN_USER_ROLE,((HomeActivity)activity).profileRole);
             bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, ((HomeActivity)activity).profileStatus);
+            bundle.putBoolean(PARAM.IS_DEPENDENT, false);
         }
         bundle.putInt(PARAM.PROFILE_ID, ((HomeActivity)activity).profileId);
         bundle.putInt(PARAM.PROFILE_ROLE, ((HomeActivity)activity).profileRole);
@@ -213,7 +220,7 @@ public class MenuAdapter extends ParentAdapter{
         alertDialog.show();
     }
 
-    private int getViewId(int position, int role)
+    private int getViewId(int position, int role, boolean isDependent, boolean isDelegation)
     {
         if(role == DOCTOR)
         {
@@ -235,18 +242,45 @@ public class MenuAdapter extends ParentAdapter{
         }
         else
         {
-            switch (position)
+            if(isDependent)
             {
-                case 0:
-                    return MANAGE_PROFILE_VIEW;
-                case 1:
-                    return DOCTOR_SETTING_VIEW;
-                case 2:
-                    return DEPENDENT_SETTING_VIEW;
-                case 3:
-                    return DELEGATE_SETTING_VIEW;
-                case 4:
-                    return LOGOUT_CONFIRMATION;
+                switch (position)
+                {
+                    case 0:
+                        return DOCTOR_SETTING_VIEW;
+                    case 1:
+                        return DELEGATE_SETTING_VIEW;
+                    case 2:
+                        return LOGOUT_CONFIRMATION;
+                }
+
+            }
+            else if(isDelegation)
+            {
+                switch (position)
+                {
+                    case 0:
+                        return DOCTOR_SETTING_VIEW;
+                    case 1:
+                        return LOGOUT_CONFIRMATION;
+                }
+
+            }
+            else
+            {
+                switch (position)
+                {
+                    case 0:
+                        return MANAGE_PROFILE_VIEW;
+                    case 1:
+                        return DOCTOR_SETTING_VIEW;
+                    case 2:
+                        return DEPENDENT_SETTING_VIEW;
+                    case 3:
+                        return DELEGATE_SETTING_VIEW;
+                    case 4:
+                        return LOGOUT_CONFIRMATION;
+                }
             }
 
         }

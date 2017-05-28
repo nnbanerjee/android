@@ -170,6 +170,15 @@ public class PatientHome extends HomeActivity
                 }
             }
         });
+        profilePicture.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(parent == null)
+                    dList.getChildAt(0).callOnClick();
+            }
+        });
         fragment = new PatientMenusManage();
         fragmentManger = getFragmentManager();
         fragmentManger.beginTransaction().replace(R.id.content_frame, fragment, "Patients Information").addToBackStack(null).commit();
@@ -177,9 +186,19 @@ public class PatientHome extends HomeActivity
 
     public void showMenus()
     {
-
-        arrayMenu = mainMenu.getPatientMenus();
-
+        if(parent == null )
+            arrayMenu = mainMenu.getPatientMenus();
+        else
+        {
+            if(isDependent)
+            {
+                arrayMenu = mainMenu.getDependentMenus();
+            }
+            else
+            {
+                arrayMenu = mainMenu.getDelegateMenus();
+            }
+        }
     }
 
     @Override
@@ -197,7 +216,7 @@ public class PatientHome extends HomeActivity
                 if (patient != null && patient.getPerson() != null && patient.getPerson().getImageUrl() != null)
                     new ImageLoadTask(patient.getPerson().getImageUrl(), profilePicture).execute();
                 accountName.setText(patient.getPerson().getName());
-                adapter = new MenuAdapter(PatientHome.this, arrayMenu, profileRole, patient.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
+                adapter = new MenuAdapter(PatientHome.this, arrayMenu, profileRole, (parent != null?parent.getPerson().getImageUrl():patient.getPerson().getImageUrl()));//(new MenuAdapter(this,arrayMenu))
                 System.out.println("Adapter Values " + adapter.getCount());
                 dList.setAdapter(adapter);
                 ((PatientMenusManage) fragment).updateCounts(patient);

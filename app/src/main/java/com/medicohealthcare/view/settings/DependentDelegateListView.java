@@ -60,15 +60,38 @@ public class DependentDelegateListView extends ParentFragment {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 DependentDelegatePerson profile = (DependentDelegatePerson)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new DependentDelegateProfileView();
-                        ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
-                        bun.putInt(PARAM.DEPENDENT_ID, profile.getId().intValue());
-                        bun.putInt(PARAM.DEPENDENT_ROLE, profile.getRole().intValue());
-                        bun.putString(PARAM.DEPENDENT_DELEGATE_RELATION,profile.relation);
-                        getActivity().getIntent().putExtras(bun);
-                      fragment.setArguments(bun);
-                        FragmentManager fragmentManger = getActivity().getFragmentManager();
-                        fragmentManger.beginTransaction().add(R.id.service, fragment, DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
+                ParentFragment fragment;
+                if(bun.getInt(PROFILE_TYPE) == DEPENDENT)
+                {
+                    fragment = new DependentDelegateProfileView();
+                    bun.putInt(PARAM.DEPENDENT_ID, profile.getId().intValue());
+                    bun.putInt(PARAM.DEPENDENT_ROLE, profile.getRole().intValue());
+                    bun.putString(PARAM.DEPENDENT_DELEGATE_RELATION, profile.relation);
+                    getActivity().getIntent().putExtras(bun);
+                    fragment.setArguments(bun);
+                }
+                else
+                {
+                    int role = profile.getRole().intValue();
+                    switch(role)
+                    {
+                        case DOCTOR:
+                        {
+                            fragment = new DoctorProfileEditView();
+                            break;
+                        }
+                        default:
+                        {
+                            fragment = new PersonProfileEditView();
+                        }
+                    }
+                    bun.putInt(PARAM.PERSON_ID, profile.getId().intValue());
+                    bun.putInt(PARAM.PERSON_ID, profile.getRole().intValue());
+                    getActivity().getIntent().putExtras(bun);
+                    fragment.setArguments(bun);
+                }
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
             }
         });
 
@@ -80,33 +103,53 @@ public class DependentDelegateListView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer profileId = bundle.getInt(PROFILE_ID);
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
-        DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(profileId, profileType);
-        api.getAllDependentsDelegates(request1, new Callback<List<DependentDelegatePerson>>() {
-            @Override
-            public void success(final List<DependentDelegatePerson> allPatientsProfiles, Response response) {
-                DependentDelegationSettingListAdapter adapter = new DependentDelegationSettingListAdapter(getActivity(), allPatientsProfiles);
-                listView.setAdapter(adapter);
-                progress.dismiss();
-            }
-
-            @Override
-            public void failure(RetrofitError error) { 
-                progress.dismiss();
-            }
-        });
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        switch (bundle.getInt(PROFILE_TYPE))
+        if(profileType.intValue() == PARAM.DEPENDENT)
         {
-            case DEPENDENT:
-                textviewTitle.setText("Dependent Profiles");
-                break;
-            case DELEGATE:
-                textviewTitle.setText("Delagation Profiles");
-                break;
+            DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(loggedinUserId, profileType);
+            api.getAllDependentsDelegates(request1, new Callback<List<DependentDelegatePerson>>()
+            {
+                @Override
+                public void success(final List<DependentDelegatePerson> allPatientsProfiles, Response response)
+                {
+                    DependentDelegationSettingListAdapter adapter = new DependentDelegationSettingListAdapter(getActivity(), allPatientsProfiles);
+                    listView.setAdapter(adapter);
+                    progress.dismiss();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    progress.dismiss();
+                }
+            });
+
+            textviewTitle.setText("Dependent Profiles");
+        }
+        else
+        {
+            DependentDelegatePersonRequest request1 = new DependentDelegatePersonRequest(profileId, profileType);
+            api.getAllDependentsDelegates(request1, new Callback<List<DependentDelegatePerson>>()
+            {
+                @Override
+                public void success(final List<DependentDelegatePerson> allPatientsProfiles, Response response)
+                {
+                    DependentDelegationSettingListAdapter adapter = new DependentDelegationSettingListAdapter(getActivity(), allPatientsProfiles);
+                    listView.setAdapter(adapter);
+                    progress.dismiss();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    progress.dismiss();
+                }
+            });
+            textviewTitle.setText("Delagation Profiles");
         }
         setHasOptionsMenu(true);
     }
@@ -148,7 +191,8 @@ public class DependentDelegateListView extends ParentFragment {
                 Integer profileRole = bundle.getInt(PERSON_ROLE);
                 Integer profileType = bundle.getInt(PROFILE_TYPE);
                 Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
-                if(profileType.intValue() == DEPENDENT) {
+                if(profileType.intValue() == DEPENDENT)
+                {
                     bundle.putInt(DEPENDENT_ID, 0);
                     bundle.putInt(PERSON_ROLE,PATIENT);
                     getActivity().getIntent().putExtras(bundle);

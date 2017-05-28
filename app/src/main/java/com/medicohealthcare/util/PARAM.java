@@ -85,6 +85,7 @@ public interface PARAM {
     public static final String DEPENDENT_ID = "dependentId";
     public static final String DEPENDENT_ROLE = "dependent_role";
     public static final String DEPENDENT_STATUS = "dependent_status";
+    public static final String IS_DEPENDENT = "is_dependent";
     public static final String PARENT = "parent_activity";
 
     public static final int PROCEDURE_FIELD_NAME = 101;

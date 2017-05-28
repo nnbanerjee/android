@@ -86,6 +86,14 @@ public class DoctorHome extends HomeActivity
         patients = (Button) findViewById(R.id.search_patient);
         clinicSearch = (Button) findViewById(R.id.search_clinic);
 
+        profilePicture.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dList.getChildAt(0).callOnClick();
+            }
+        });
         patients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
