@@ -149,7 +149,7 @@ public class DependentDelegateListView extends ParentFragment {
                 Integer profileType = bundle.getInt(PROFILE_TYPE);
                 Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
                 if(profileType.intValue() == DEPENDENT) {
-                    bundle.putInt(PERSON_ID, 0);
+                    bundle.putInt(DEPENDENT_ID, 0);
                     bundle.putInt(PERSON_ROLE,PATIENT);
                     getActivity().getIntent().putExtras(bundle);
                     ParentFragment fragment = new DependentDelegateProfileView();

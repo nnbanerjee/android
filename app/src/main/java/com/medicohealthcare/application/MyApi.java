@@ -493,7 +493,7 @@ public interface MyApi {
     @POST("/createProfile")
     void createProfile(@Body Person person, Callback<ServerResponse> cb);
 
-    @POST("/createProfile")
+    @POST("/createProfile1")
     void createDependentProfile(@Body DependentDelegatePerson person, Callback<ServerResponse> cb);
 
     @POST("/createDetailedProfile")

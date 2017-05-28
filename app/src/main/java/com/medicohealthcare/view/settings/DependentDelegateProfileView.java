@@ -343,10 +343,13 @@ public class DependentDelegateProfileView extends ParentFragment  implements Act
                 @Override
                 public void success(ServerResponse s, Response response) {
                     if (s.status == 1)
+                    {
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                        getActivity().onBackPressed();
+                    }
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    getActivity().onBackPressed();
+
                 }
 
                 @Override

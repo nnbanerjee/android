@@ -1,10 +1,8 @@
 package com.medicohealthcare.adapter;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +14,6 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DependentDelegatePerson;
 import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.PARAM;
-import com.medicohealthcare.view.home.ParentFragment;
-import com.medicohealthcare.view.settings.DependentDelegateProfileView;
 
 import java.util.List;
 
@@ -112,20 +108,7 @@ public class DependentDelegationSettingListAdapter extends HomeAdapter  {
         }
 
         doctorName.setText(personList.get(position).getName());
-        doctorSpeciality.setText(personList.get(position).relation);
-        totalCount.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Bundle bundle = activity.getIntent().getExtras();
-                bundle.putInt(PARAM.DEPENDENT_ID,personList.get(position).getId());
-                bundle.putString(PARAM.DEPENDENT_DELEGATE_RELATION,personList.get(position).relation);
-                ParentFragment assistantListView = new DependentDelegateProfileView();
-                FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
-                fft1.add(R.id.service, assistantListView,DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();
-            }
-        });
+        doctorSpeciality.setText(personList.get(position).relation  + " | Id - " + personList.get(position).getId().toString());
         return convertView;
 
     }
