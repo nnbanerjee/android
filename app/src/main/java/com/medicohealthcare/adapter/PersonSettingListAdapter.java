@@ -3,6 +3,7 @@ package com.medicohealthcare.adapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,14 @@ import java.util.List;
  */
 
 //Doctor Login
-public class PatientSettingListAdapter extends HomeAdapter  {
+public class PersonSettingListAdapter extends HomeAdapter  {
 
     private Activity activity;
     private LayoutInflater inflater;
     List<Person> personList;
     private ProgressDialog progress;
 
-    public PatientSettingListAdapter(Activity activity, List<Person> personList)
+    public PersonSettingListAdapter(Activity activity, List<Person> personList)
     {
         super(activity);
         this.activity = activity;
@@ -80,9 +81,11 @@ public class PatientSettingListAdapter extends HomeAdapter  {
         totalCount.setVisibility(View.GONE);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         downImage.setVisibility(View.GONE);
-        int role = personList.get(position).role;
+        Person person = personList.get(position);
+        Bundle bundle = activity.getIntent().getExtras();
+        int profileType = bundle.getInt(PARAM.PROFILE_TYPE);
         viewImage.setBackground(null);
-        switch (role)
+        switch (profileType)
         {
             case PARAM.PATIENT:
                 viewImage.setImageResource(R.drawable.patient_default);
@@ -111,18 +114,6 @@ public class PatientSettingListAdapter extends HomeAdapter  {
 
         doctorName.setText(personList.get(position).getName() );
         doctorSpeciality.setText(personList.get(position).getSpeciality() + " | Id - " + personList.get(position).getId().toString());
-//        totalCount.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Bundle bundle = activity.getIntent().getExtras();
-//                bundle.putInt(PARAM.PATIENT_ID,personList.get(position).getId());
-//                ParentFragment assistantListView = new PersonProfileEditView();
-//                FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
-//                fft1.add(R.id.service, assistantListView,PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
-//            }
-//        });
         return convertView;
 
     }

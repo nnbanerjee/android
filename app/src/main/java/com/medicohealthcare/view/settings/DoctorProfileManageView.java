@@ -74,7 +74,7 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
         autologin.setVisibility(View.VISIBLE);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
-        profilePicUploadBtn.setVisibility(View.VISIBLE);
+        profilePicUploadBtn.setVisibility(View.GONE);
         profileId = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
         email = (EditText) view.findViewById(R.id.email);

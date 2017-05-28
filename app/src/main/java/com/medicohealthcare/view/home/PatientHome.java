@@ -48,6 +48,12 @@ public class PatientHome extends HomeActivity
         //profile layout
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
         accountName = (TextView) findViewById(R.id.account_name);
+        status = (TextView) findViewById(R.id.status_text);
+
+        if(parent != null)
+            status.setText("Dependent Profile");
+        else
+            status.setText("Patient Profile");
         accountName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +71,14 @@ public class PatientHome extends HomeActivity
                     showPopup(PatientHome.this, p);
             }
         });
-        status = (TextView) findViewById(R.id.status_text);
+        status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        if(parent != null)
-            status.setText("Dependent Profile");
-        else
-            status.setText("Patient Profile");
-
+                if (p != null)
+                    showPopup(PatientHome.this, p);
+            }
+        });
         //tool bar construction
         LinearLayout layout = (LinearLayout) findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
@@ -80,24 +87,6 @@ public class PatientHome extends HomeActivity
 //        patients = (Button) findViewById(R.id.patient_ping);
         clinicSearch = (Button) findViewById(R.id.search_clinic);
         doctorSearch = (Button) findViewById(R.id.search_doctor);
-        arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (p != null)
-                    showPopup(PatientHome.this, p);
-            }
-        });
-        accountName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (p != null)
-                    showPopup(PatientHome.this, p);
-            }
-        });
-
-
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
         int[] colors = {0, 0xFFFF0000, 0}; // red for the example

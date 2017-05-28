@@ -282,7 +282,7 @@
               android:layout_alignParentLeft="true"
               android:layout_below="@+id/city"
               android:layout_marginTop="@dimen/text_top_margin"
-              android:text="Specialization" />
+              android:text="Speciality" />
 
             <MultiAutoCompleteTextView
               android:id="@+id/specialization"

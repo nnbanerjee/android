@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +16,11 @@ import android.widget.TextView;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.util.BackStress;
+import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.HomeActivity;
 import com.medicohealthcare.view.settings.ManagePersonSettings;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -35,12 +30,8 @@ public class MenuAdapter extends ParentAdapter{
     private Activity activity;
     private ArrayList<String> menus;
     private LayoutInflater inflater;
-    private ImageView imageShow;
-
     private int type;
     private String imageUrl;
-    SharedPreferences session;
-    String id;
 
     public MenuAdapter(Activity activity,ArrayList<String> menus,int type,String imageUrl)
     {
@@ -79,9 +70,7 @@ public class MenuAdapter extends ParentAdapter{
             convertView = inflater.inflate(R.layout.main_menu, null);
 
         int pos = position;
-        SharedPreferences session = activity.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        id = session.getString("sessionID",null);
-        imageShow = (ImageView)convertView.findViewById(R.id.image_show);
+        ImageView person_image = (ImageView)convertView.findViewById(R.id.person_image);
         TextView showTv = (TextView)convertView.findViewById(R.id.text_show);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.setting_menu);
         showTv.setText("" + menus.get(pos));
@@ -103,73 +92,57 @@ public class MenuAdapter extends ParentAdapter{
         {
             case MANAGE_PROFILE_VIEW:
             {
+                if(loggedInProfileRole == PATIENT)
+                    person_image.setImageResource(R.drawable.patient_default);
+                else if(loggedInProfileRole == DOCTOR)
+                    person_image.setImageResource(R.drawable.doctor_default);
+                else
+                    person_image.setImageResource(R.drawable.assistant_default);
+
                 if (imageUrl != null)
-                    new ImageLoadTask(this.activity.getResources().getString(R.string.image_base_url) + imageUrl, imageShow).execute();
+                    new ImageLoadTask( imageUrl, person_image).execute();
+
                 break;
             }
             case PATIENT_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.patient);
+                person_image.setImageResource(R.drawable.patient_default);
                 break;
             }
             case CLINIC_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.clinic_default);
+                person_image.setImageResource(R.drawable.clinic_default);
                 break;
             }
             case ASSISTANT_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.assistant_default);
+                person_image.setImageResource(R.drawable.assistant_default);
                 break;
             }
             case DEPENDENT_SETTING_VIEW:
             {
-                imageShow.setImageResource(R.drawable.settings_dependent);
+                person_image.setImageResource(R.drawable.patient_default);
+                break;
+            }
+            case DELEGATE_SETTING_VIEW:
+            {
+                person_image.setImageResource(R.drawable.patient_default);
+                break;
+            }
+            case DOCTOR_SETTING_VIEW:
+            {
+                person_image.setImageResource(R.drawable.doctor_default);
                 break;
             }
             case LOGOUT_CONFIRMATION:
             {
-                imageShow.setImageResource(R.drawable.menu);
+                person_image.setImageResource(R.drawable.settings_logout);
                 break;
             }
         }
         return convertView;
     }
 
-    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
-
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-            imageView.setImageBitmap(result);
-        }
-
-    }
     public void showSetting(int position,int role)
     {
         int settingViewId = getViewId (position, role);
@@ -271,6 +244,8 @@ public class MenuAdapter extends ParentAdapter{
                 case 2:
                     return DEPENDENT_SETTING_VIEW;
                 case 3:
+                    return DELEGATE_SETTING_VIEW;
+                case 4:
                     return LOGOUT_CONFIRMATION;
             }
 

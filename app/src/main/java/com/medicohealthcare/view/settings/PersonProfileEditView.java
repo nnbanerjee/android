@@ -92,6 +92,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
             }
         });
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country_spinner);
@@ -133,13 +134,16 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                 profilePic.setImageResource(R.drawable.assistant_default);
                 break;
             case DOCTOR:
+            {
                 specializationType = DOCTOR_SPECIALIZATION;
-                if(personId > 0)
+                if (personId > 0)
                     textviewTitle.setText("Doctor Profile");
                 else
                     textviewTitle.setText("Create Doctor Profile");
                 profilePic.setImageResource(R.drawable.doctor_default);
+                ((TextView)view.findViewById(R.id.speciality_text)).setText("Specialization");
 
+            }
         }
         final int specializationQueryType = specializationType;
         specialization.addTextChangedListener(new TextWatcher() {

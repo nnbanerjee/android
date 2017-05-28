@@ -62,28 +62,12 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
     }
 
 
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item)
-//    {
-//        switch (item.getItemId())
-//        {
-//            case android.R.id.home:
-//                // User chose the "Settings" item, show the app settings UI...
-//                    onBackPressed();
-//                    return true;
-//            default:
-//                // If we got here, the user's action was not recognized.
-//                // Invoke the superclass to handle it.
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
     protected void attachView()
     {
         Bundle bundle = getIntent().getExtras();
         int viewId = bundle.getInt(PARAM.SETTING_VIEW_ID);
-        switch (viewId) {
+        switch (viewId)
+        {
             case PARAM.MANAGE_PROFILE_VIEW:
                 if(bundle.getInt(LOGGED_IN_USER_ROLE) == DOCTOR)
                 {
@@ -103,8 +87,7 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 }
                 break;
             case PARAM.PATIENT_SETTING_VIEW:
-                bundle.putInt(PARAM.PROFILE_TYPE, PATIENT); 
-//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
+                bundle.putInt(PARAM.PROFILE_TYPE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment patientListView = new PersonListView();
                 fragmentList.add(patientListView);
@@ -113,7 +96,6 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 break;
             case PARAM.ASSISTANT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, ASSISTANT);
-                bundle.putInt(PARAM.PROFILE_ROLE, ASSISTANT);
                 getIntent().putExtras(bundle);
                 ParentFragment assistantListView = new PersonListView();
                 fragmentList.add(assistantListView);
@@ -131,8 +113,6 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 break;
             case PARAM.DEPENDENT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
-//                bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
-//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment dependentListView = new DependentDelegateListView();
                 fragmentList.add(dependentListView);
@@ -141,8 +121,6 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 break;
             case PARAM.DELEGATE_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DELEGATE);
-//                bundle.putInt(LOGGED_IN_ID,bundle.getInt(PROFILE_ID));
-//                bundle.putInt(PARAM.PROFILE_ROLE, PATIENT);
                 getIntent().putExtras(bundle);
                 ParentFragment delegateListView = new DependentDelegateListView();
                 fragmentList.add(delegateListView);
@@ -151,7 +129,6 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                 break;
             case PARAM.DOCTOR_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, DOCTOR);
-//                bundle.putInt(PARAM.PROFILE_ROLE, DOCTOR);
                 getIntent().putExtras(bundle);
                 ParentFragment doctorListView = new PersonListView();
                 fragmentList.add(doctorListView);

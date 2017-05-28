@@ -50,6 +50,8 @@ public class DoctorHome extends HomeActivity
         //profile layout
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
         accountName = (TextView) findViewById(R.id.account_name);
+        status = (TextView) findViewById(R.id.status_text);
+        status.setText("Doctor Profile");
         accountName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,14 +61,7 @@ public class DoctorHome extends HomeActivity
             }
         });
         arrow = (View) findViewById(R.id.down_arrow);
-        accountName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if (p != null)
-                    showPopup(DoctorHome.this, p);
-            }
-        });
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +70,15 @@ public class DoctorHome extends HomeActivity
                     showPopup(DoctorHome.this, p);
             }
         });
-        status = (TextView) findViewById(R.id.status_text);
-        status.setText("Doctor Profile");
 
+        status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (p != null)
+                    showPopup(DoctorHome.this, p);
+            }
+        });
         //tool bar construction
         LinearLayout layout = (LinearLayout) findViewById(R.id.notification_layout);
         layout.setVisibility(View.VISIBLE);
@@ -85,22 +86,6 @@ public class DoctorHome extends HomeActivity
         patients = (Button) findViewById(R.id.search_patient);
         clinicSearch = (Button) findViewById(R.id.search_clinic);
 
-         arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (p != null)
-                    showPopup(DoctorHome.this, p);
-            }
-        });
-        accountName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (p != null)
-                    showPopup(DoctorHome.this, p);
-            }
-        });
         patients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

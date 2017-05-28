@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_margin="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         android:background="#ffffff">>
         <RelativeLayout
             android:id="@+id/layout20"
@@ -410,6 +410,7 @@
             android:id="@+id/layout30"
             android:layout_below="@+id/document_category"
             android:visibility="gone"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <CheckBox
@@ -422,15 +423,15 @@
                 android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/change_password"
+                android:textColor="@color/medico_blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="5dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="55dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/auto_login"
                 android:text="Change Password"
                 />
         </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.settings;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.medicohealthcare.adapter.PatientSettingListAdapter;
+import com.medicohealthcare.adapter.PersonSettingListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.LinkedPersonRequest;
 import com.medicohealthcare.model.Person;
@@ -39,8 +38,6 @@ public class PersonListView extends ParentFragment {
 
     SharedPreferences session;
     ListView listView;
-    ProgressDialog progress;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,19 +46,17 @@ public class PersonListView extends ParentFragment {
         View view = inflater.inflate(R.layout.list_view,container,false);
 
         listView = (ListView) view.findViewById(R.id.doctorListView);
-
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-
-//        Bundle bundle = getActivity().getIntent().getExtras();
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 Person profile = (Person)adapterView.getAdapter().getItem(i);
-                        ParentFragment fragment = new PersonProfileEditView();
+                ParentFragment fragment = null;
+                if(profile.role == DOCTOR)
+                    fragment = new DoctorProfileEditView();
+                else
+                    fragment = new PersonProfileEditView();
                         ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                         bun.putInt(PARAM.PERSON_ID, profile.getId().intValue());
                         bun.putInt(PARAM.PERSON_ROLE, profile.getId().intValue());
@@ -88,14 +83,12 @@ public class PersonListView extends ParentFragment {
         api.getPersonLinkage(request, new Callback<List<Person>>() {
             @Override
             public void success(final List<Person> allPatientsProfiles, Response response) {
-                PatientSettingListAdapter adapter = new PatientSettingListAdapter(getActivity(), allPatientsProfiles);
+                PersonSettingListAdapter adapter = new PersonSettingListAdapter(getActivity(), allPatientsProfiles);
                 listView.setAdapter(adapter);
-                progress.dismiss();
             }
 
             @Override
-            public void failure(RetrofitError error) { 
-                progress.dismiss();
+            public void failure(RetrofitError error) {
 
             }
         });
@@ -134,7 +127,18 @@ public class PersonListView extends ParentFragment {
         });
 
     }
-
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
@@ -151,16 +155,21 @@ public class PersonListView extends ParentFragment {
                 Bundle bun = getActivity().getIntent().getExtras();
                 bun.putInt(PERSON_ID,0);
                 bun.putInt(PARAM.PERSON_ROLE, bun.getInt(PROFILE_TYPE));
+                int profiletype = bun.getInt(PARAM.PROFILE_TYPE);
                 getActivity().getIntent().putExtras(bun);
-                ParentFragment fragment = new PersonProfileEditView();
+                ParentFragment fragment = null;
+                if(profiletype == DOCTOR)
+                    fragment = new DoctorProfileEditView();
+                else
+                    fragment = new PersonProfileEditView();
                 ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
-
+                return true;
             }
-            break;
+
         }
-        return true;
+        return false;
     }
 }
