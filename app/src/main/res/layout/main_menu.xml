@@ -35,7 +35,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/image_show"
+        android:layout_below="@+id/image_layout"
         android:background="@color/white"
         android:id="@+id/view_bar1"
         android:layout_marginLeft="5dp"

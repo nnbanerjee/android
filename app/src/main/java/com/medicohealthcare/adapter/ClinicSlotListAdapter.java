@@ -34,8 +34,9 @@ public class ClinicSlotListAdapter extends HomeAdapter  {
     }
 
     @Override
-    public int getCount() {
-        return details.slots.size();
+    public int getCount()
+    {
+        return details.slots == null? 0:details.slots.size();
     }
 
     @Override

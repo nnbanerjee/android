@@ -93,22 +93,11 @@ public class ClinicSlotListView extends ParentFragment {
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
         PersonID profileId = new PersonID(loggedinUserId);
-//        api.getAllClinics(profileId, new Callback<List<Clinic1>>() {
-//            @Override
-//            public void success(final List<Clinic1> allPatientsProfiles, Response response) {
-                ClinicSlotListAdapter adapter = new ClinicSlotListAdapter(getActivity(), model);
-                listView.setAdapter(adapter);
-//                progress.dismiss();
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                progress.dismiss();
-//                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-//                error.printStackTrace();
-//            }
-//        });
-
+        if(model.slots != null && model.slots.size() > 0 )
+        {
+            ClinicSlotListAdapter adapter = new ClinicSlotListAdapter(getActivity(), model);
+            listView.setAdapter(adapter);
+        }
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Manage Appointments");
     }
