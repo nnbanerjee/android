@@ -98,10 +98,9 @@ public class SearchPersonListView extends ParentFragment {
                 bun.putInt(PERSON_ID,0);
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new PersonProfileEditView();
-//                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
-                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
 
             }
             break;

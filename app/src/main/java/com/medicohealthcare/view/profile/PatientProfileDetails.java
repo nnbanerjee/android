@@ -115,9 +115,13 @@ public class PatientProfileDetails extends ParentFragment {
                 specialization.setText(patient.getSpeciality());
                 mAutocompleteView.setText(patient.getAddress());
                 gender_spinner.setSelection(patient.getGender().intValue());
-                bloodGroup.setSelection(getIndex(bloodGroup.getAdapter(),patient.getBloodGroup(),0));
+                if(bloodGroup != null)
+                    bloodGroup.setSelection(getIndex(bloodGroup.getAdapter(),patient.getBloodGroup(),0));
                 allergicTo.setText(patient.getAllergicTo());
-                dob.setText(DateFormat.getDateInstance().format(new Date(patient.getDateOfBirth())));
+                if(patient.getDateOfBirth() != null)
+                    dob.setText(DateFormat.getDateInstance().format(new Date(patient.getDateOfBirth())));
+                else
+                    dob.setText("");
                 name.setText(patient.getName());
 
             }

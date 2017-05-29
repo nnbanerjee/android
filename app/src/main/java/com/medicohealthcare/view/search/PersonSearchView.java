@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -25,7 +27,11 @@ import com.medicohealthcare.model.DoctorSearch;
 import com.medicohealthcare.model.DoctorSearchResult;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.SearchParameterRequest;
+import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.Notifier;
+import com.medicohealthcare.util.NotifyListener;
+import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -41,19 +47,15 @@ import retrofit.client.Response;
  */
 
 
-public class PersonSearchView extends ParentFragment implements View.OnClickListener {
-
-//    ProgressDialog progress;
-    int LOCATION_REFRESH_TIME = 5000;
-    int LOCATION_REFRESH_DISTANCE = 0;
-
-    TextView city_list,country_list;
+public class PersonSearchView extends ParentFragment implements View.OnClickListener, NotifyListener
+{
+    AutoCompleteTextView location;
     Spinner search_by_criteria;
     EditText search_parameter;
     ImageView search_icon;
     boolean isGPSEnabled, isNetworkEnabled;
     SearchParameterRequest model = new SearchParameterRequest();
-
+    Button location_delete_button, current_location_button;
     HomeAdapter adapter;
     Object adapterParameter;
 
@@ -62,15 +64,15 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
-        setHasOptionsMenu(true);
         Bundle bundle = getActivity().getIntent().getExtras();
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
             textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
         else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
-        country_list = (TextView) view.findViewById(R.id.country_list);
-        city_list = (TextView) view.findViewById(R.id.city_list);
+            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+        location = (AutoCompleteTextView) view.findViewById(R.id.location);
+        location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
+        current_location_button = (Button) view.findViewById(R.id.current_location_button);
         search_parameter = (EditText) view.findViewById(R.id.search_parameter);
         search_icon = (ImageView) view.findViewById(R.id.search_icon);
         search_by_criteria = (Spinner) view.findViewById(R.id.search_by_criteria);
@@ -109,7 +111,19 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     public void onStart()
     {
         super.onStart();
+        LocationService.getLocationManager(getActivity()).addNotifyListeber(this);
+        new GeoUtility(getActivity(), location, null, null, location_delete_button, current_location_button, model);
         getCurrentLocation();
+        Bundle bundle = getActivity().getIntent().getExtras();
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
+            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
+        else if( bundle.getInt(SETTING_VIEW_ID)==DOCTOR_SETTING_VIEW)
+            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+        else if( bundle.getInt(SETTING_VIEW_ID)== ASSISTANT_SETTING_VIEW)
+            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+        else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
+            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
     }
 
     @Override
@@ -175,18 +189,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     @Override
     public boolean save()
     {
-//        if(doctorAppointment.canBeSaved())
-//        {
-//            saveAppointment(doctorAppointment);
-//            return true;
-//        }
+
         return false;
     }
     @Override
     public boolean canBeSaved()
     {
-//        if(((DoctorAppointmentGridViewAdapter)timeTeableList.getAdapter()).getSelectedAppointmentTime() == null)
-//            return false;
         return false;
     }
     @Override
@@ -421,7 +429,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
     private boolean isValid(int searchType)
     {
-        if(city_list.getText().length() > 0 && search_parameter.getText().length() > 0)
+        if(location.getText().length() > 0 && search_parameter.getText().length() > 0)
             return true;
         else
             return false;
@@ -434,8 +442,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         model.longitude = service.longitude;
         model.country = service.countryCode;
         model.city = service.city;
-        city_list.setText(service.city);
-        country_list.setText(service.country);
+        location.setText(service.partialAddress);
     }
 
     private void showResult(List<Person> result)
@@ -472,6 +479,16 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     {
         this.adapter = adapter;
         this.adapterParameter = parameter;
+    }
+
+    public void notify(int id, Notifier source, Object parameter)
+    {
+        if(id == PARAM.LOCATION_UPDATED)
+        {
+            LocationService manager = LocationService.getLocationManager(getActivity());
+            getCurrentLocation();
+            manager.removeNotifyListeber(this);
+        }
     }
 }
 

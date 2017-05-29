@@ -97,19 +97,20 @@ public class PatientListAdapter extends HomeAdapter  {
             }
         }
         DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
-        if (profile.getUpcomingVisit() != null) {
-            if (profile.getUpcomingVisit().equals("")) {
+        if (profile.getUpcomingVisit() == null || profile.getUpcomingVisit().equals(""))
+        {
                 appointmentDate.setText("None");
-
-            } else {
-                appointmentDate.setText(format.format(new Date(profile.getUpcomingVisit())));
-
-            }
         }
-        if (profile.getLastVisit() == null || profile.getLastVisit().equals("")) {
+        else
+            appointmentDate.setText(format.format(new Date(profile.getUpcomingVisit())));
+
+        if (profile.getLastVisit() == null || profile.getLastVisit().equals(""))
+        {
             lastAppointment.setText("None");
 
-        } else {
+        }
+        else
+        {
 
             lastAppointment.setText(format.format(new Date(profile.getLastVisit())));
         }

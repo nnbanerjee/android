@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/phone"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="8dp"
                 android:layout_below="@+id/clinicLocation"
                 android:id="@+id/contacticon"
                 />

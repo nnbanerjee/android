@@ -121,6 +121,8 @@ public class LocationService extends  Notifier implements LocationListener {
     public void onLocationChanged(Location location)
     {
         // do stuff here with location object
+        completeAddress = "";
+        partialAddress = "";
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         String cityName = null;
@@ -143,6 +145,7 @@ public class LocationService extends  Notifier implements LocationListener {
                         partialAddress = partialAddress + address.getAddressLine(i) + ", ";
                 }
                 completeAddress = completeAddress + country;
+                partialAddress = partialAddress + country;
             }
         } catch (IOException e) {
             e.printStackTrace();

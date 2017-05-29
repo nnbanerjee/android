@@ -122,7 +122,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                 if(personId > 0)
                     textviewTitle.setText("Patient Profile");
                 else
-                    textviewTitle.setText("Create Patient Profile");
+                    textviewTitle.setText("Create Patient");
                 profilePic.setImageResource(R.drawable.patient_default);
                 break;
             case ASSISTANT:
@@ -130,7 +130,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                 if(personId > 0)
                     textviewTitle.setText("Assistant Profile");
                 else
-                    textviewTitle.setText("Create Assistant Profile");
+                    textviewTitle.setText("Create Assistant");
                 profilePic.setImageResource(R.drawable.assistant_default);
                 break;
             case DOCTOR:
@@ -139,7 +139,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                 if (personId > 0)
                     textviewTitle.setText("Doctor Profile");
                 else
-                    textviewTitle.setText("Create Doctor Profile");
+                    textviewTitle.setText("Create Doctor");
                 profilePic.setImageResource(R.drawable.doctor_default);
                 ((TextView)view.findViewById(R.id.speciality_text)).setText("Specialization");
 

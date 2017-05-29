@@ -143,7 +143,7 @@ public class PersonListView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.add_search_home, menu);
     }
 
     @Override
@@ -162,7 +162,6 @@ public class PersonListView extends ParentFragment {
                     fragment = new DoctorProfileEditView();
                 else
                     fragment = new PersonProfileEditView();
-                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();

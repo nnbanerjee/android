@@ -1,5 +1,7 @@
 package com.medicohealthcare.view.profile;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +24,8 @@ import com.medicohealthcare.model.PatientShortProfile;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
+import com.medicohealthcare.view.search.PersonSearchView;
+import com.medicohealthcare.view.settings.PersonProfileEditView;
 
 import java.util.List;
 
@@ -79,6 +83,7 @@ public class PatientProfileListView extends ParentFragment
                 hideBusy();
             }
         });
+        setHasOptionsMenu(true);
     }
 
 
@@ -98,13 +103,27 @@ public class PatientProfileListView extends ParentFragment
                 return false;
             }
         });
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.patient_profile, menu);
+        inflater.inflate(R.menu.add_search_home, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
     @Override
@@ -112,31 +131,35 @@ public class PatientProfileListView extends ParentFragment
         ParentActivity activity = ((ParentActivity) getActivity());
         int id = item.getItemId();
         switch (id) {
-            case R.id.add_patient: {
-                update();
-                if (isChanged()) {
-                    if (canBeSaved()) {
-                        save();
-                    } else {
-                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
-                    }
-                } else if (canBeSaved()) {
-                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
-                }
-
-            }
-            return true;
-            case R.id.sort_patient:
+            case R.id.add:
             {
+                setHasOptionsMenu(false);
+                Bundle bun = getActivity().getIntent().getExtras();
+                bun.putInt(PERSON_ID,0);
+                bun.putInt(PARAM.PERSON_ROLE, PATIENT);
+                int profiletype = PATIENT;
+                getActivity().getIntent().putExtras(bun);
+                ParentFragment fragment = null;
+                fragment = new PersonProfileEditView();
+                fragment.setArguments(bun);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
                 return true;
             }
-            case R.id.filter_patient:
+            case R.id.search:
             {
-                return true;
+                setHasOptionsMenu(false);
+                Bundle bundle = getActivity().getIntent().getExtras();
+                bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.PATIENT_SETTING_VIEW);
+                bundle.putInt(PARAM.SEARCH_ROLE, PARAM.PATIENT);
+                bundle.putInt(PARAM.SEARCH_TYPE, PARAM.SEARCH_GLOBAL);
+                getActivity().getIntent().putExtras(bundle);
+                ParentFragment fragment = new PersonSearchView();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fragment,PersonSearchView.class.getName()).addToBackStack(PersonSearchView.class.getName()).commit();
+                  return true;
             }
-            case R.id.exit:
+            case R.id.home:
             {
                 ((ParentActivity)getActivity()).goHome();
             }

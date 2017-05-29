@@ -11,11 +11,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.GeoClient;
 import com.medicohealthcare.util.LocationService;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.search.PersonSearchView;
 
 public class ManageHomeView extends ParentActivity {
+    GeoClient client;
     private static final int CONTENT_VIEW_ID = 10101010;
 //    public List<ParentFragment> fragmentList = new ArrayList<ParentFragment>();
     @Override
@@ -50,6 +52,7 @@ public class ManageHomeView extends ParentActivity {
         abar.setDisplayHomeAsUpEnabled(true);
 //        abar.setIcon(R.color.transparent);
         abar.setHomeButtonEnabled(true);
+        client = GeoClient.getInstance(this);
         LocationService locationService = LocationService.getLocationManager(this);
     }
 
@@ -91,5 +94,16 @@ public class ManageHomeView extends ParentActivity {
             ft.add(R.id.service, fragment).addToBackStack(null).commit();
         }
 
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        client.getGeoApiClient().connect();
+    }
+
+    @Override
+    public void onStop() {
+        client.getGeoApiClient().disconnect();
+        super.onStop();
     }
 }

@@ -177,7 +177,7 @@ public class DoctorSearchListAdapter extends HomeAdapter
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientDetailsView.class.getName()).addToBackStack(PatientDetailsView.class.getName()).commit();
             }
         });
-        viewImage.setBackground(null);
+//        viewImage.setBackground(null);
 
         String imageUrl = person.getImageUrl();
         if (imageUrl != null && imageUrl.trim().length() > 0) {

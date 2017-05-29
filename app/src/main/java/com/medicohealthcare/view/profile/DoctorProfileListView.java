@@ -1,5 +1,7 @@
 package com.medicohealthcare.view.profile;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -20,7 +23,11 @@ import com.medicohealthcare.model.DoctorProfileList;
 import com.medicohealthcare.model.DoctorShortProfile;
 import com.medicohealthcare.model.PatientId;
 import com.medicohealthcare.util.PARAM;
+import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
+import com.medicohealthcare.view.search.PersonSearchView;
+import com.medicohealthcare.view.settings.DoctorProfileEditView;
+import com.medicohealthcare.view.settings.PersonProfileEditView;
 
 import java.util.List;
 
@@ -78,6 +85,7 @@ public class DoctorProfileListView extends ParentFragment {
                 error.printStackTrace();
             }
         });
+        setHasOptionsMenu(true);
     }
     @Override
     public void onPause()
@@ -85,7 +93,12 @@ public class DoctorProfileListView extends ParentFragment {
         super.onPause();
         setHasOptionsMenu(false);
     }
-
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
 
 
 
@@ -114,10 +127,49 @@ public class DoctorProfileListView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.doctor_profile, menu);
+        inflater.inflate(R.menu.add_search_home, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
-//
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add:
+            {
+                setHasOptionsMenu(false);
+                Bundle bun = getActivity().getIntent().getExtras();
+                bun.putInt(PERSON_ID,0);
+                bun.putInt(PARAM.PERSON_ROLE, DOCTOR);
+                getActivity().getIntent().putExtras(bun);
+                ParentFragment fragment = null;
+                fragment = new DoctorProfileEditView();
+                fragment.setArguments(bun);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
+                return true;
+            }
+            case R.id.search:
+            {
+                setHasOptionsMenu(false);
+                Bundle bundle = getActivity().getIntent().getExtras();
+                bundle.putInt(PARAM.SETTING_VIEW_ID, PARAM.DOCTOR_SETTING_VIEW);
+                bundle.putInt(PARAM.SEARCH_ROLE, PARAM.DOCTOR);
+                bundle.putInt(PARAM.SEARCH_TYPE, PARAM.SEARCH_GLOBAL);
+                getActivity().getIntent().putExtras(bundle);
+                ParentFragment fragment = new PersonSearchView();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fragment,PersonSearchView.class.getName()).addToBackStack(PersonSearchView.class.getName()).commit();
+                return true;
+            }
+            case R.id.home:
+            {
+                ((ParentActivity)getActivity()).goHome();
+            }
+            default:
+                return false;
+
+        }
+    }
 
 }

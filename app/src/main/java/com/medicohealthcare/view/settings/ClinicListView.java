@@ -23,6 +23,7 @@ import com.medicohealthcare.model.Clinic1;
 import com.medicohealthcare.model.PersonID;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
+import com.medicohealthcare.view.search.PersonSearchView;
 
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class ClinicListView extends ParentFragment {
         });
 
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Clinic Profiles");
+        textviewTitle.setText("Clinics");
         setHasOptionsMenu(true);
     }
 
@@ -129,14 +130,15 @@ public class ClinicListView extends ParentFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.add_search_home, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add: {
+            case R.id.add:
+            {
                 setHasOptionsMenu(false);
                 Bundle bun = getActivity().getIntent().getExtras();
                 bun.putInt(CLINIC_ID,0);
@@ -147,11 +149,29 @@ public class ClinicListView extends ParentFragment {
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();
-
+                return true;
             }
-            break;
+            case R.id.search:
+            {
+                setHasOptionsMenu(false);
+                Bundle bun = getActivity().getIntent().getExtras();
+                bun.putInt(CLINIC_ID,0);
+                bun.putInt(CLINIC_TYPE,0);
+                bun.putInt(SETTING_VIEW_ID,CLINIC_SETTING_VIEW);
+                getActivity().getIntent().putExtras(bun);
+                ParentFragment fragment = new PersonSearchView();
+                fragment.setArguments(bun);
+                FragmentManager fragmentManger = getActivity().getFragmentManager();
+                fragmentManger.beginTransaction().add(R.id.service, fragment, ParentFragment.class.getName()).addToBackStack(ParentFragment.class.getName()).commit();
+                return true;
+            }
+            case R.id.home:
+            {
+                getActivity().onBackPressed();
+            }
+
         }
-        return true;
+        return false;
     }
 
 

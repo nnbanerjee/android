@@ -402,9 +402,9 @@
     </string-array>
     <string name="image_base_url">""</string>
 
-         <string name="base_url">http://52.91.113.204:9000/</string>
-    <!--    <string name="base_url">http://192.168.42.163:9000/</string>
-     <string name="base_url">http://192.168.42.11:9000/</string>-->
+    <!--    <string name="base_url">http://52.91.113.204:9000/</string>
+       <string name="base_url">http://192.168.42.163:9000/</string>-->
+    <string name="base_url">http://192.168.42.11:9000/</string>
 
     <string name="listcolor">#CCFFFF</string>
     <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>
