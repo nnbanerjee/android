@@ -20,6 +20,7 @@
         <TextView
             android:id="@+id/doctor_name"
             android:layout_width="wrap_content"
+            android:textAppearance="@style/heading1.1_blue"
             android:layout_height="wrap_content"
             android:text="Doctor Name" />
 
@@ -35,17 +36,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/nextBtn"
+            android:textAppearance="@style/sub_heading3"
             android:visibility="gone"
             android:text="0"
             />
         <TextView
             android:id="@+id/speciality"
+            android:textAppearance="@style/sub_heading3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/doctor_name"
             android:text="Speciality" />
         <TextView
             android:id="@+id/address"
+            android:textAppearance="@style/sub_heading3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/speciality"

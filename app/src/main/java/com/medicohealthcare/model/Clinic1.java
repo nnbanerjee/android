@@ -54,17 +54,17 @@ public class Clinic1
     public boolean canBeSaved()
     {
         boolean canBeSaved = true;
-        if(clinicName == null )
+        if(clinicName == null || clinicName.length() > 0 == false)
             canBeSaved = false;
-        else if(mobile == null || mobile.longValue() > 0 == false)
+        else if(landLineNumber == null || landLineNumber.longValue() > 0 == false)
             canBeSaved = false;
         else if(locationLat == null || locationLat.doubleValue() > 0 == false)
             canBeSaved = false;
         else if(locationLong == null || locationLong.doubleValue() > 0 == false)
             canBeSaved = false;
-        else if(email == null )
+        else if(email == null || email.length() > 0 == false)
             canBeSaved = false;
-        else if(address == null )
+        else if(address == null || address.length() > 0 == false)
             canBeSaved = false;
         else if(type == null || type.byteValue() >= 0 == false)
             canBeSaved = false;
@@ -74,7 +74,8 @@ public class Clinic1
             canBeSaved = false;
         else if(country == null || country.trim().length() > 0 == false)
             canBeSaved = false;
-
+        else if(timing == null || timing.trim().length() > 0 == false)
+            canBeSaved = false;
         return canBeSaved;
     }
 }

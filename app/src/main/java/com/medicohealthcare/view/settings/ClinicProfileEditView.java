@@ -60,7 +60,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     TextView id;
     EditText name, email, country, city, mobile;
     Spinner mobile_country;
-    EditText landline,services;
+    EditText landline,services, timings;
     MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
@@ -84,6 +84,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         mobile_country = (Spinner) view.findViewById(R.id.country_code);
         landline = (EditText) view.findViewById(R.id.landline);
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
         country = (EditText) view.findViewById(R.id.country);
@@ -92,6 +93,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         specialization.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         specialization.setThreshold(1);
         services = (EditText) view.findViewById(R.id.services);
+        timings = (EditText)view.findViewById(R.id.timings);
         addClinicSlot = (ImageView)view.findViewById(R.id.add_slot);
         slotListView = (ListView)view.findViewById(R.id.slot_list);
         Bundle bundle = getActivity().getIntent().getExtras();
@@ -248,6 +250,8 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                         country.setText(clinic.country);
                         city.setText(clinic.city);
                         specialization.setText(clinic.speciality);
+                        services.setText(clinic.service);
+                        timings.setText(clinic.timing);
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, clinicModel);
                         if (clinic.addedBy != null && clinic.addedBy.intValue() == loggedinUserId.intValue() && !isProfileView)
                         {
@@ -297,6 +301,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
             clinicModel = new Clinic1();
             clinicModel.type = clinicType;
             clinicModel.addedBy = loggedinUserId;
+            id.setVisibility(View.GONE);
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, clinicModel);
             if(isProfileView)
                 setEditableAll(false);
@@ -346,14 +351,19 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
         }
         else
         {
-            api.addClinic(person, new Callback<ServerResponse>() {
+            api.createClinic(person, new Callback<ServerResponse>() {
                 @Override
                 public void success(ServerResponse s, Response response) {
                     if (s.status == 1)
+                    {
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                        getActivity().onBackPressed();
+                    }
                     else
+                    {
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    getActivity().onBackPressed();
+                    }
+
                 }
 
                 @Override
@@ -379,21 +389,39 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
             clinicModel.address = (mAutocompleteView.getText().toString());
             clinicModel.city = (city.getText().toString());
             clinicModel.country = (country.getText().toString().trim());
-            clinicModel.speciality = (specialization.getText().toString());
+            if(specialization.getText()!=null)
+                clinicModel.speciality = (specialization.getText().toString());
             clinicModel.location = (mobile_country.getSelectedItem().toString());
+            if(landline.getText()!=null && landline.getText().length() > 0)
+                clinicModel.landLineNumber = new Long(landline.getText().toString());
+            if(mobile.getText()!=null && mobile.getText().length() > 0)
+                clinicModel.mobile = (new Long(mobile.getText().toString()));
+            clinicModel.email = (email.getText().toString());
+            clinicModel.location = (mobile_country.getSelectedItem().toString());
+            if(services.getText()!=null)
+                clinicModel.service = services.getText().toString();
+            if(timings.getText() != null && timings.getText().length() > 0)
+                clinicModel.timing = timings.getText().toString();
         }
         else
         {
             clinicModel.address = (mAutocompleteView.getText().toString());
             clinicModel.city = (city.getText().toString());
             clinicModel.country = (country.getText().toString().trim());
-            clinicModel.speciality = (specialization.getText().toString());
+            if(specialization.getText()!=null)
+                clinicModel.speciality = (specialization.getText().toString());
             clinicModel.location = (mobile_country.getSelectedItem().toString());
             clinicModel.clinicName = (name.getText().toString());
-            clinicModel.mobile = (new Long(mobile.getText().toString()));
+            if(landline.getText()!=null && landline.getText().length() > 0)
+                clinicModel.landLineNumber = new Long(landline.getText().toString());
+            if(mobile.getText()!=null && mobile.getText().length() > 0)
+                clinicModel.mobile = (new Long(mobile.getText().toString()));
             clinicModel.email = (email.getText().toString());
             clinicModel.location = (mobile_country.getSelectedItem().toString());
-
+            if(services.getText()!=null)
+                clinicModel.service = services.getText().toString();
+            if(timings.getText() != null && timings.getText().length() > 0)
+                clinicModel.timing = timings.getText().toString();
         }
     }
     @Override

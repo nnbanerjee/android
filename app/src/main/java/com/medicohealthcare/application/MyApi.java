@@ -233,6 +233,9 @@ public interface MyApi {
     @POST("/addClinic")
     void addClinic(@Body Clinic1 clinicDetails, Callback<ServerResponse> callback);
 
+    @POST("/createClinic")
+    void createClinic(@Body Clinic1 clinicDetails, Callback<ServerResponse> callback);
+
     @POST("/createSlot")
     void createSlot(@Body ClinicSlotDetails request, Callback<ResponseCodeVerfication> callback);
 
