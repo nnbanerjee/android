@@ -51,6 +51,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 {
     AutoCompleteTextView location;
     Spinner search_by_criteria;
+    EditText city_list,country_list;
     EditText search_parameter;
     ImageView search_icon;
     boolean isGPSEnabled, isNetworkEnabled;
@@ -63,6 +64,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
         Bundle bundle = getActivity().getIntent().getExtras();
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
@@ -70,6 +72,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
             textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
         else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
             textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+        country_list = (EditText) view.findViewById(R.id.country_list);
+        city_list = (EditText) view.findViewById(R.id.city_list);
         location = (AutoCompleteTextView) view.findViewById(R.id.location);
         location_delete_button = (Button) view.findViewById(R.id.location_delete_button);
         current_location_button = (Button) view.findViewById(R.id.current_location_button);
@@ -112,7 +116,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     {
         super.onStart();
         LocationService.getLocationManager(getActivity()).addNotifyListeber(this);
-        new GeoUtility(getActivity(), location, null, null, location_delete_button, current_location_button, model);
+        new GeoUtility(getActivity(), location, country_list, city_list, location_delete_button, current_location_button, model);
         getCurrentLocation();
         Bundle bundle = getActivity().getIntent().getExtras();
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
@@ -442,7 +446,9 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         model.longitude = service.longitude;
         model.country = service.countryCode;
         model.city = service.city;
-        location.setText(service.partialAddress);
+        city_list.setText(service.city);
+        country_list.setText(service.country);
+//        location.setText(service.partialAddress);
     }
 
     private void showResult(List<Person> result)
