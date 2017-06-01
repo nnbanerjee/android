@@ -2,6 +2,8 @@ package com.medicohealthcare.util;
 
 import android.app.Activity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.medicohealthcare.application.MyApi;
 import com.medicohealthcare.application.R;
 import com.squareup.okhttp.OkHttpClient;
@@ -33,8 +35,10 @@ public class ServerConnectionAdapter
         okHttpClient.setConnectTimeout(2, TimeUnit.MINUTES);
         okHttpClient.setCookieHandler(cookieManager);
         Client client = new OkClient(okHttpClient);
+        Gson gson = new GsonBuilder().create();
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(activity.getResources().getString(R.string.base_url))
+                .setConverter(new MedicoGsonConverter(activity,gson))
                 .setClient(client).build();
 
         api = restAdapter.create(MyApi.class);
@@ -49,4 +53,5 @@ public class ServerConnectionAdapter
     {
         return api;
     }
+
 }

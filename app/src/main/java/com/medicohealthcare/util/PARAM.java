@@ -7,6 +7,9 @@ package com.medicohealthcare.util;
 public interface PARAM {
     public static final String MyPREFERENCES = "MyPrefs";
 
+    public static String DATA_NOT_FOUND = "201";
+    public static String SESSION_EXPIRED = "401";
+    public static String UNFORMATTED_REQUEST = "400";
 
     public static int LOCATION_UPDATED = 1;
 

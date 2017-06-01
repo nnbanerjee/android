@@ -19,6 +19,7 @@ import com.medicohealthcare.adapter.PatientVisitDatesAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DoctorIdPatientId;
 import com.medicohealthcare.model.PatientVisits;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -131,8 +132,7 @@ public class PatientVisitDatesView extends ParentFragment
             @Override
             public void failure(RetrofitError error)
             {
-                Toast.makeText(getActivity(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
 
         });
