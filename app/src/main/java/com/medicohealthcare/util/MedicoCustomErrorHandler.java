@@ -52,7 +52,7 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
                     Toast.makeText(ctx, errorDescription, Toast.LENGTH_LONG).show();
                     ctx.finish();
                     if(HomeActivity.getParentAtivity() != null)
-                        HomeActivity.getParentAtivity().finish();
+                         HomeActivity.getParentAtivity().finish();
 
                 }
                 else if(response.errorCode.equalsIgnoreCase(UNFORMATTED_REQUEST))

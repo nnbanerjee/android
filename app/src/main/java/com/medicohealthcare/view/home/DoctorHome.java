@@ -265,7 +265,7 @@ public class DoctorHome extends HomeActivity
     {
         super.onResume();
         registerChatMessage();
-        parent_activity = this;
+        parent_activity =  this;
     }
     @Override
     public void onStop()
