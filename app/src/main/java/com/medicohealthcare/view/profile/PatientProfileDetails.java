@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.profile;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,11 +16,11 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ProfileId;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -37,9 +36,6 @@ import retrofit.client.Response;
 
 //Doctor Login
 public class PatientProfileDetails extends ParentFragment {
-
-
-    ProgressDialog progress;
 
     TextView personId;
     EditText name,email,dob,country,city,mobile,allergicTo;
@@ -98,13 +94,13 @@ public class PatientProfileDetails extends ParentFragment {
     {
         super.onStart();
         final Activity activity = getActivity();
-        progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = activity.getIntent().getExtras();
         final Integer patientId = bundle.getInt(PATIENT_ID);
         api.getProfile1(new ProfileId(patientId), new Callback<Person>() {
             @Override
             public void success(Person patient, Response response) {
-                progress.dismiss();
+
                 country.setText(patient.getCountry());
                 city.setText(patient.getCity());
                 email.setText(patient.getEmail());
@@ -123,14 +119,13 @@ public class PatientProfileDetails extends ParentFragment {
                 else
                     dob.setText("");
                 name.setText(patient.getName());
-
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
-                error.printStackTrace();
-                Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

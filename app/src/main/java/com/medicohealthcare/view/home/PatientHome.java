@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.MenuAdapter;
 import com.medicohealthcare.application.R;
@@ -26,6 +25,7 @@ import com.medicohealthcare.model.PatientId;
 import com.medicohealthcare.model.PatientProfile;
 import com.medicohealthcare.service.Constants;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 
 import retrofit.Callback;
@@ -224,10 +224,10 @@ public class PatientHome extends HomeActivity
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error)
+            {
                 progress.dismiss();
-                error.printStackTrace();
-                Toast.makeText(PatientHome.this, R.string.Failed, Toast.LENGTH_SHORT).show();
+                new MedicoCustomErrorHandler(PatientHome.this).handleError(error);
             }
         });
         registerChatMessage();

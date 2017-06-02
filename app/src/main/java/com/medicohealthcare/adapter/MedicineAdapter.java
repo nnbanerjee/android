@@ -3,7 +3,6 @@ package com.medicohealthcare.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import com.medicohealthcare.model.RemoveMedicineRequest;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SummaryResponse;
 import com.medicohealthcare.model.SummaryResponse.MedicinePrescribed;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -38,7 +38,6 @@ public class MedicineAdapter extends HomeAdapter {
     Activity activity;
     List<MedicinePrescribed> alarms;
     LayoutInflater inflater;
-    ProgressDialog progress;
     private int loggedInUserId;
 
     public MedicineAdapter(Activity activity, List<MedicinePrescribed> alarms, int userId)
@@ -111,12 +110,12 @@ public class MedicineAdapter extends HomeAdapter {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                showBusy();
                                 RemoveMedicineRequest removeMedicineRequest = new RemoveMedicineRequest(medicine.medicineId, loggedInUserId);
                                 api.removePatientMedicine(removeMedicineRequest, new Callback<ResponseCodeVerfication>() {
                                     @Override
                                     public void success(ResponseCodeVerfication result, Response response) {
-                                        progress.dismiss();
+                                        hideBusy();
                                         if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
                                             Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
                                             alarms.remove(medicine);
@@ -126,9 +125,8 @@ public class MedicineAdapter extends HomeAdapter {
 
                                     @Override
                                     public void failure(RetrofitError error) {
-                                        progress.dismiss();
-                                        error.printStackTrace();
-                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                        hideBusy();
+                                        new MedicoCustomErrorHandler(activity).handleError(error);
                                     }
                                 });
                             }
@@ -169,9 +167,8 @@ public class MedicineAdapter extends HomeAdapter {
 
                     @Override
                     public void failure(RetrofitError error) {
-//                        progress.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Medicine reminder status updation failed", Toast.LENGTH_SHORT).show();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(activity).handleError(error);
                     }
                 });
             }

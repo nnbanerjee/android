@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.settings;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +19,7 @@ import com.medicohealthcare.adapter.DependentDelegationSettingListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DependentDelegatePerson;
 import com.medicohealthcare.model.DependentDelegatePersonRequest;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -39,7 +39,7 @@ public class DependentDelegateListView extends ParentFragment {
 
     SharedPreferences session;
     ListView listView;
-    ProgressDialog progress;
+
 
     @Nullable
     @Override
@@ -49,10 +49,6 @@ public class DependentDelegateListView extends ParentFragment {
         View view = inflater.inflate(R.layout.list_view,container,false);
 
         listView = (ListView) view.findViewById(R.id.doctorListView);
-
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +99,7 @@ public class DependentDelegateListView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
+        showBusy();
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer profileId = bundle.getInt(PROFILE_ID);
@@ -118,13 +115,14 @@ public class DependentDelegateListView extends ParentFragment {
                 {
                     DependentDelegationSettingListAdapter adapter = new DependentDelegationSettingListAdapter(getActivity(), allPatientsProfiles);
                     listView.setAdapter(adapter);
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error)
                 {
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
 
@@ -140,13 +138,14 @@ public class DependentDelegateListView extends ParentFragment {
                 {
                     DependentDelegationSettingListAdapter adapter = new DependentDelegationSettingListAdapter(getActivity(), allPatientsProfiles);
                     listView.setAdapter(adapter);
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error)
                 {
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
             textviewTitle.setText("Delagation Profiles");

@@ -1,7 +1,6 @@
 package com.medicohealthcare.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ public class ChatPersonListAdapter extends HomeAdapter
     private Activity activity;
     private LayoutInflater inflater;
     List<Person> personList;
-    private ProgressDialog progress;
 
     int[] ids = null;
     int[] numberOfMessages = null;

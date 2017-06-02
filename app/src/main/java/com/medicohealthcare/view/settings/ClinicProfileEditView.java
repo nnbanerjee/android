@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.settings;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
@@ -38,6 +37,7 @@ import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -53,7 +53,6 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
-    ProgressDialog progress;
     MenuItem menuItem;
     ImageView profilePic,addClinicSlot;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
@@ -209,7 +208,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                         @Override
                         public void failure(RetrofitError error)
                         {
-                            error.printStackTrace();
+//                            error.printStackTrace();
                         }
                     });
                 }
@@ -224,7 +223,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         final Integer doctorId = bundle.getInt(PROFILE_ID);
         final Integer clinicId = bundle.getInt(CLINIC_ID);
         final Integer clinicType = bundle.getInt(CLINIC_TYPE);
@@ -275,24 +274,21 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
 
                             @Override
                             public void failure(RetrofitError error) {
-                                error.printStackTrace();
-                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                                progress.dismiss();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
 
                     }
-//                    setEditable(false);
-                    progress.dismiss();
+                    hideBusy();
 
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -307,7 +303,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                 setEditableAll(false);
             else
                 setEditable(true);
-            progress.dismiss();
+            hideBusy();
         }
         setHasOptionsMenu(true);
     }
@@ -332,6 +328,7 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
     }
     private void save(Clinic1 person)
     {
+        showBusy();
         if(person.idClinic != null) {
             api.updateClinic(person, new Callback<ServerResponse>() {
                 @Override
@@ -341,11 +338,14 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -363,12 +363,14 @@ public class ClinicProfileEditView extends ParentFragment  implements ActivityCo
                     {
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                     }
-
+                    hideBusy();
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
 

@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +35,6 @@ public class DoctorReviewListAdapter extends ParentAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<DoctorReview> patientReviews;
-    private ProgressDialog progress;
 
     public DoctorReviewListAdapter(Activity activity, List<DoctorReview> patientReviews)
     {

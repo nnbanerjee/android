@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import com.medicohealthcare.model.LinkedPersonRequest;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.appointment.ClinicAppointmentScheduleView;
 import com.medicohealthcare.view.home.ParentActivity;
@@ -43,7 +43,6 @@ public class PatientSearchListAdapter extends HomeAdapter
     private Activity activity;
     private LayoutInflater inflater;
     List<Person> personList;
-    private ProgressDialog progress;
     HomeAdapter callBack;
     Object callbackParameter;
 
@@ -158,7 +157,8 @@ public class PatientSearchListAdapter extends HomeAdapter
                                 @Override
                                 public void failure(RetrofitError error)
                                 {
-                                    Toast.makeText(activity, "Profile could not been added", Toast.LENGTH_LONG).show();
+                                    hideBusy();
+                                    new MedicoCustomErrorHandler(activity).handleError(error);
                                 }
                             });
                         }

@@ -34,6 +34,7 @@ import com.medicohealthcare.model.PersonID;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.util.AlarmService;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -193,8 +194,8 @@ public class PatientDiagnosticTests extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
 
                 }
             });
@@ -232,9 +233,10 @@ public class PatientDiagnosticTests extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
 
             }
         });
@@ -281,9 +283,10 @@ public class PatientDiagnosticTests extends ParentFragment {
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                public void failure(RetrofitError error)
+                {
                     hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -301,9 +304,8 @@ public class PatientDiagnosticTests extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
                     hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }

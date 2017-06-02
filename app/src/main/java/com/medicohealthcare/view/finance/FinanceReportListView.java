@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.finance;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -15,6 +14,7 @@ import com.medicohealthcare.adapter.FinanceSummaryListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.FinanceReportRequest;
 import com.medicohealthcare.model.FinanceSummary;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -40,7 +40,6 @@ public class FinanceReportListView extends ParentFragment
     public static int DAILY = 1;
     public static int WEEKLY = 2;
     public static int MONTHLY = 3;
-    ProgressDialog progress;
     Button daily,weekly,monthly;
     StickyListHeadersListView reportDates;
 
@@ -121,13 +120,13 @@ public class FinanceReportListView extends ParentFragment
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         FinanceReportRequest doc = new FinanceReportRequest(bundle.getInt(DOCTOR_ID), type);
-
+        showBusy();
         api.getFinanceSummary(doc, new Callback<List<FinanceSummary>>()
         {
             @Override
             public void success(List<FinanceSummary> reports, Response response)
             {
-//                String json = new String(((TypedByteArray) response.getBody()).getBytes());
+                hideBusy();
 
                 if (reports != null && !reports.isEmpty())
                 {
@@ -144,8 +143,8 @@ public class FinanceReportListView extends ParentFragment
             @Override
             public void failure(RetrofitError error)
             {
-                Toast.makeText(getActivity(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
 
         });

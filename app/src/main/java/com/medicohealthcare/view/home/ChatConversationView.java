@@ -20,6 +20,7 @@ import com.medicohealthcare.model.Message;
 import com.medicohealthcare.model.MessageRequest;
 import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.service.Constants;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 
 import java.util.List;
 
@@ -99,9 +100,8 @@ public class ChatConversationView extends ParentFragment
                     @Override
                     public void failure(RetrofitError error)
                     {
-
-                        error.printStackTrace();
                         hideBusy();
+                        new MedicoCustomErrorHandler(getActivity()).handleError(error);
                     }
                 });
             }
@@ -136,8 +136,8 @@ public class ChatConversationView extends ParentFragment
             @Override
             public void failure(RetrofitError error)
             {
-
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
         registerChatMessage();
@@ -208,8 +208,8 @@ public class ChatConversationView extends ParentFragment
                     @Override
                     public void failure(RetrofitError error)
                     {
-
-                        error.printStackTrace();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(getActivity(),false).handleError(error);
                     }
                 });
             }

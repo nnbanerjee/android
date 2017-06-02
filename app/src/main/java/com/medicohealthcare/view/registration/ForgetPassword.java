@@ -2,17 +2,16 @@ package com.medicohealthcare.view.registration;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.ResponseVm;
 import com.medicohealthcare.model.forgotPassword;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import retrofit.Callback;
@@ -33,7 +32,6 @@ public class ForgetPassword extends ParentFragment
 //    public SharedPreferences session;
     private EditText email;
     private EditText mobileNo;
-    private ProgressDialog progress;
     private String emailtxt;
     private String passwordtxt;
 
@@ -56,13 +54,7 @@ public class ForgetPassword extends ParentFragment
                         emailtxt = email.getText().toString();
                         passwordtxt = mobileNo.getText().toString();
                         //Retrofit Initialization
-//                        RestAdapter restAdapter = new RestAdapter.Builder()
-//                                .setEndpoint(getResources().getString(R.string.base_url))
-//                                .setClient(new OkClient())
-//                                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                                .build();
-//                        api = restAdapter.create(MyApi.class);
-                        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                        showBusy();
                         forgotPassword fObj = null;
                         if (emailtxt != null && emailtxt.toString().length() > 0) {
                             fObj = new forgotPassword("email", emailtxt);
@@ -74,11 +66,7 @@ public class ForgetPassword extends ParentFragment
                             @Override
                             public void success(ResponseVm responseVm, Response response) {
                                 System.out.println(response);
-                                progress.dismiss();
-                               /* if (responseVm.getId().equalsIgnoreCase("0")) {
-                                    Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
-                                } else {*/
-                                //saveToSession(responseVm);
+                                hideBusy();
                                 mobileNo.setText("");
                                 Fragment frag = new ForgetPasswordVerification();
                                 Bundle args = new Bundle();
@@ -90,15 +78,12 @@ public class ForgetPassword extends ParentFragment
                                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                 ft.addToBackStack(ForgetPasswordVerification.class.getName());
                                 ft.commit();
-
-                                // }
                             }
 
                             @Override
                             public void failure(RetrofitError error) {
-                                error.printStackTrace();
-                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
-                                progress.dismiss();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
 

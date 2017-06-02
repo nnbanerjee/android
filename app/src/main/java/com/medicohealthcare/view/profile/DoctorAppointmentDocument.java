@@ -17,6 +17,7 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.AppointmentId1;
 import com.medicohealthcare.model.FileUpload1;
 import com.medicohealthcare.util.FileUploadDialog;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -93,8 +94,10 @@ public class DoctorAppointmentDocument extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error)
+            {
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

@@ -19,6 +19,7 @@ import com.medicohealthcare.adapter.PersonSettingListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.LinkedPersonRequest;
 import com.medicohealthcare.model.Person;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -88,8 +89,10 @@ public class PersonListView extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
-
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

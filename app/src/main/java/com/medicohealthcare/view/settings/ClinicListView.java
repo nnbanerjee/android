@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.settings;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.ClinicSettingListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Clinic1;
 import com.medicohealthcare.model.PersonID;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.search.PersonSearchView;
@@ -41,7 +40,6 @@ public class ClinicListView extends ParentFragment {
 
     SharedPreferences session;
     ListView listView;
-    ProgressDialog progress;
 
     @Nullable
     @Override
@@ -52,9 +50,8 @@ public class ClinicListView extends ParentFragment {
 
         listView = (ListView) view.findViewById(R.id.doctorListView);
 
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
 
-//        Bundle bundle = getActivity().getIntent().getExtras();
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,14 +88,13 @@ public class ClinicListView extends ParentFragment {
             public void success(final List<Clinic1> allPatientsProfiles, Response response) {
                 ClinicSettingListAdapter adapter = new ClinicSettingListAdapter(getActivity(), allPatientsProfiles);
                 listView.setAdapter(adapter);
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

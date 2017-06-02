@@ -1,7 +1,6 @@
 package com.medicohealthcare.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,6 @@ public class DependentDelegationSettingListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<DependentDelegatePerson> personList;
-    private ProgressDialog progress;
 
     public DependentDelegationSettingListAdapter(Activity activity, List<DependentDelegatePerson> personList)
     {

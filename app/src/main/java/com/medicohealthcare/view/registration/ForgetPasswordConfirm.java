@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.registration;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import com.medicohealthcare.application.MainActivity;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.ResetPassword;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import retrofit.Callback;
@@ -29,13 +29,9 @@ import retrofit.client.Response;
 public class ForgetPasswordConfirm extends ParentFragment
 {
 
-//    MyApi api;
-//    public static final String MyPREFERENCES = "MyPrefs";
-//    public SharedPreferences session;
     private EditText etOldPass;
     private EditText etNewPass;
     private EditText etRetypePass;
-    ProgressDialog progress;
     private String email;
 
     @Override
@@ -45,7 +41,6 @@ public class ForgetPasswordConfirm extends ParentFragment
                 container, false);
 
         getActivity().getActionBar().hide();
-       // etOldPass = (EditText) view.findViewById(R.id.et_old_pass);
         etNewPass = (EditText) view.findViewById(R.id.et_new_pass);
         etRetypePass = (EditText) view.findViewById(R.id.et_retype_password);
         Bundle args = getArguments();
@@ -60,37 +55,24 @@ public class ForgetPasswordConfirm extends ParentFragment
                       //  final String oldPass = etOldPass.getText().toString();
                         final String newPass = etNewPass.getText().toString();
                         final String reTypePass = etRetypePass.getText().toString();
-                        //Retrofit Initialization
-//                        RestAdapter restAdapter = new RestAdapter.Builder()
-//                                .setEndpoint(getResources().getString(R.string.base_url))
-//                                .setClient(new OkClient())
-//                                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                                .build();
-//                        api = restAdapter.create(MyApi.class);
-                        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+                        showBusy();
                         ResetPassword param = new ResetPassword(email, "", newPass);
                         api.changePassword(param, new Callback<ResponseCodeVerfication>() {
                             @Override
                             public void success(ResponseCodeVerfication responseVm, Response response) {
                                 System.out.println(response);
-                                progress.dismiss();
                                 Toast.makeText(getActivity().getApplicationContext(), "Successfully updated!!", Toast.LENGTH_LONG).show();
-                             /*  Login login = new Login();
-                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.add(R.id.lower_content, new Login());
 
-                                ft.commit();*/
                                 Intent intent1 = new Intent(getActivity(),MainActivity.class);
                                 intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent1);
-
+                                hideBusy();
                             }
 
                             @Override
                             public void failure(RetrofitError error) {
-                                error.printStackTrace();
-                                Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
-                                progress.dismiss();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
 

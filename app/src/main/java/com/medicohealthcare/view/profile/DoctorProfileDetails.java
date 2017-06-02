@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.profile;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,11 +16,11 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ProfileId;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import retrofit.Callback;
@@ -34,9 +33,6 @@ import retrofit.client.Response;
 
 //Doctor Login
 public class DoctorProfileDetails extends ParentFragment {
-
-
-    ProgressDialog progress;
 
     EditText name,email,country,city,mobile;
     Spinner mobile_country,gender_spinner;
@@ -105,14 +101,12 @@ public class DoctorProfileDetails extends ParentFragment {
     {
         super.onStart();
         final Activity activity = getActivity();
-        progress = ProgressDialog.show(activity, "", activity.getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = activity.getIntent().getExtras();
         Integer patientId = bundle.getInt(DOCTOR_ID);
         api.getProfile1(new ProfileId(patientId), new Callback<Person>() {
             @Override
             public void success(Person patient, Response response) {
-                progress.dismiss();
-                progress.dismiss();
                 country.setText(patient.getCountry());
                 city.setText(patient.getCity());
                 email.setText(patient.getEmail());
@@ -125,24 +119,15 @@ public class DoctorProfileDetails extends ParentFragment {
                 gender_spinner.setSelection(patient.getGender().intValue());
 //                dob.setText(DateFormat.getDateInstance().format(new Date(patient.getDateOfBirth())));
                 name.setText(patient.getName());
-
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
-                error.printStackTrace();
-                Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }
-//    private int getIndex(Adapter adapter, String specialization, int profile)
-//    {
-//        for(int i = 0; i < adapter.getCount(); i++)
-//        {
-//            if(adapter.getItem(i).toString().equalsIgnoreCase(specialization))
-//                return i;
-//        }
-//        return 0;
-//    }
+
 }

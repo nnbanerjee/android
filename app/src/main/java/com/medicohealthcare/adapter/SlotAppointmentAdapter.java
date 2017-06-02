@@ -3,7 +3,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ public class SlotAppointmentAdapter extends BaseAdapter
 {
 
     Activity activity;
-    ProgressDialog progress;
     DoctorClinicDetails clinicDetails;
     PatientAppointmentByDoctor patientAppointments;
     List<DoctorClinicDetails.ClinicSlots> slots;

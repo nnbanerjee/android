@@ -14,9 +14,7 @@ import com.medicohealthcare.application.R;
 
 public class ApplicationProgressManager
 {
-//    int index = 0,x=300,y=300;
-//    long expandDuration = 10000;
-//    Animation animation;
+
     ProgressDialog progress;
     Context context;
 

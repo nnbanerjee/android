@@ -1,20 +1,19 @@
 package com.medicohealthcare.view.profile;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.ClinicPatientAdapter;
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DoctorClinicDetails;
 import com.medicohealthcare.model.DoctorId;
 import com.medicohealthcare.model.DoctorIdPatientId;
 import com.medicohealthcare.model.PatientAppointmentByDoctor;
-import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -31,7 +30,6 @@ import retrofit.client.Response;
 public class DoctorPatientClinicAppointmentListView extends ParentFragment {
 
     ListView clinicListView;
-    ProgressDialog progress;
     List<DoctorClinicDetails> clinicDetails;
     PatientAppointmentByDoctor clinicPatientAppointmentsObj;
 
@@ -50,7 +48,7 @@ public class DoctorPatientClinicAppointmentListView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorId = bundle.getInt(DOCTOR_ID);
         final Integer patientId = bundle.getInt(PATIENT_ID);
@@ -75,25 +73,22 @@ public class DoctorPatientClinicAppointmentListView extends ParentFragment {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        progress.dismiss();
                         if(clinicDetails != null && clinicDetails.size() > 0) {
                             ClinicPatientAdapter clinicListItemAdapter = new ClinicPatientAdapter(getActivity(), clinicDetails, null);
                             clinicListView.setAdapter(clinicListItemAdapter);
                         }
+                        hideBusy();
+                        new MedicoCustomErrorHandler(getActivity()).handleError(error);
                     }
                 });
 
-
-                //[{"clinicId":2,"clinicName":"demo2","slots":[{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5},{"slotNumber":1,"name":"shift1","daysOfWeek":"0,1,2,3,4,5,6","startTime":-62072762400000,"endTime":-62072748000000,"numberOfAppointmentsForToday":5}],"upcomingAppointment":null,"lastAppointmentl":null}]
-
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

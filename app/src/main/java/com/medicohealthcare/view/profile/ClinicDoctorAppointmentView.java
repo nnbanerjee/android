@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.profile;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.datepicker.SlideDateTimeListener;
 import com.medicohealthcare.datepicker.SlideDateTimePicker;
 import com.medicohealthcare.model.AppointmentId1;
@@ -27,7 +27,7 @@ import com.medicohealthcare.model.DoctorAppointmentGridViewAdapter;
 import com.medicohealthcare.model.DoctorClinicId;
 import com.medicohealthcare.model.DoctorHoliday;
 import com.medicohealthcare.model.DoctorSlotBookings;
-import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -48,8 +48,6 @@ import retrofit.client.Response;
 
 
 public class ClinicDoctorAppointmentView extends ParentFragment {
-
-    ProgressDialog progress;
 
     GridView timeTeableList;
     TextView slotTime,slotName,clinicName,dateValue;
@@ -103,7 +101,7 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         Activity activity = getActivity();
         Bundle bundle = activity.getIntent().getExtras();
         clinicName.setText(bundle.getString(CLINIC_NAME));
@@ -123,12 +121,10 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
 
         setAdapter(date);
 
-        progress.dismiss();
-
     }
 
     public void saveAppointment( DoctorAppointment appointment) {
-
+        showBusy();
         if(appointment.appointmentId == null || appointment.appointmentId.intValue() == 0) {
 
             api.createAppointment(appointment, new Callback<AppointmentResponse>() {
@@ -136,11 +132,14 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
                 public void success(AppointmentResponse s, Response response) {
                     Toast.makeText(getActivity(), "Appointment Created Successful!!", Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-//                    Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -151,11 +150,13 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
                 public void success(AppointmentResponse s, Response response) {
                     Toast.makeText(getActivity(), "Appointment update Successful!!", Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-//                    Toast.makeText(getActivity(), "Appointment update failed!!", Toast.LENGTH_LONG).show();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -231,12 +232,14 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
             @Override
             public void success(List<DoctorHoliday> holidayList, Response response) {
                 doctorholidayList = holidayList;
-//                Toast.makeText(getActivity(), "Holiday Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
+                hideBusy();
             }
 
             @Override
-            public void failure(RetrofitError error) {
-//                Toast.makeText(getActivity(), "Holiday Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity(),false).handleError(error);
                 doctorholidayList = null;
             }
         });
@@ -249,12 +252,14 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
                     DoctorAppointmentGridViewAdapter adapter = new DoctorAppointmentGridViewAdapter(activity, doctorSlotBookings, doctorholidayList,date);
                     timeTeableList.setAdapter(adapter);
                 }
-//                Toast.makeText(getActivity(), "Request Send Successfully !!!" + format.format(date1)+" "+ format.format(date2), Toast.LENGTH_SHORT).show();
+                hideBusy();
             }
 
             @Override
-            public void failure(RetrofitError error) {
-//                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 doctorSlotBookings = null;
                 DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
 
@@ -272,12 +277,13 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
                 if(appointment != null ) {
                     doctorAppointment = appointment;
                 }
-//                Toast.makeText(getActivity(), "Appointment Request Send Successfully !!!" , Toast.LENGTH_SHORT).show();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-//                Toast.makeText(getActivity(), "Appointment Request Send FAILED " , Toast.LENGTH_LONG).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 doctorAppointment = new DoctorAppointment();
             }
         });

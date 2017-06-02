@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.settings;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +35,7 @@ import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -55,7 +55,6 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
-    ProgressDialog progress;
     MenuItem menuItem;
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
@@ -176,7 +175,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                         @Override
                         public void failure(RetrofitError error)
                         {
-                            error.printStackTrace();
+//                            error.printStackTrace();
                         }
                     });
                 }
@@ -191,7 +190,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
         final Integer personId = bundle.getInt(PERSON_ID);
@@ -245,16 +244,15 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                     }
 
 
-                    progress.dismiss();
+                    hideBusy();
 
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -290,7 +288,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
 
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             setEditable(true);
-            progress.dismiss();
+            hideBusy();
         }
     }
 
@@ -301,6 +299,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     }
     private void save(Person person)
     {
+        showBusy();
         if(person.getId() != null) {
             api.updateProfile(person, new Callback<ServerResponse>() {
                 @Override
@@ -310,11 +309,13 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -328,11 +329,13 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                     else
                         Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
                     getActivity().onBackPressed();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
 

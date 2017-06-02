@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.AppointmentFeedback;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import retrofit.Callback;
@@ -142,8 +143,8 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 
@@ -165,9 +166,10 @@ public class FeedbackFragmentClinicAppointment extends ParentFragment
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_SHORT).show();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

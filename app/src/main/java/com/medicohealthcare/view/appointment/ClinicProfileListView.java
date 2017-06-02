@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.appointment;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.AppointmentClinicListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DoctorClinicDetails;
 import com.medicohealthcare.model.DoctorId;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -39,7 +38,6 @@ public class ClinicProfileListView extends ParentFragment {
     SharedPreferences session;
     ListView patientListView;
     List<DoctorClinicDetails> clinicDetails;
-    ProgressDialog progress;
 
     @Nullable
     @Override
@@ -104,20 +102,21 @@ public class ClinicProfileListView extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorId = bundle.getInt(DOCTOR_ID);
         final Integer patientId = bundle.getInt(PATIENT_ID);
+        showBusy();
         api.getClinicsByDoctor1(new DoctorId(doctorId.toString()), new Callback<List<DoctorClinicDetails>>() {
             @Override
             public void success(List<DoctorClinicDetails> clinicDetailsreturn, Response response) {
                 clinicDetails = clinicDetailsreturn;
                 AppointmentClinicListAdapter adapter = new AppointmentClinicListAdapter(getActivity(), clinicDetailsreturn);
                 patientListView.setAdapter(adapter);
-//                 progress.dismiss();
+                hideBusy();
             }
 
             @Override
-            public void failure(RetrofitError error) {
-//                progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

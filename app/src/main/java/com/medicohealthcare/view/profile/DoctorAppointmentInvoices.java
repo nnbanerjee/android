@@ -20,6 +20,7 @@ import com.medicohealthcare.model.AppointmentId1;
 import com.medicohealthcare.model.InvoiceDetails1;
 import com.medicohealthcare.model.Payment;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.settings.CustomTemplateListView;
@@ -220,9 +221,10 @@ public class DoctorAppointmentInvoices extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+            public void failure(RetrofitError error)
+            {
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 
@@ -240,9 +242,8 @@ public class DoctorAppointmentInvoices extends ParentFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }
@@ -337,9 +338,8 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                                         @Override
                                         public void failure(RetrofitError error)
                                         {
-                                            Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                                            error.printStackTrace();
                                             hideBusy();
+                                            new MedicoCustomErrorHandler(getActivity()).handleError(error);
                                         }
                                     });
                                 }

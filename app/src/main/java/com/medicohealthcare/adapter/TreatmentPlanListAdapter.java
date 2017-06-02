@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -32,9 +31,6 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
     Activity activity;
     List<List<TreatmentPlan1>> treatmentGroups;
     LayoutInflater inflater;
-//    MyApi api;
-//    SharedPreferences session;
-    ProgressDialog progress;
     private Integer loggedInUserId;
 
     public TreatmentPlanListAdapter(Activity activity, List<TreatmentPlan1> treatments, Integer userId) {

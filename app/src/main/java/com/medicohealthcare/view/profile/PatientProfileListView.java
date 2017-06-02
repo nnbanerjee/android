@@ -14,13 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.PatientListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DoctorId;
 import com.medicohealthcare.model.PatientProfileList;
 import com.medicohealthcare.model.PatientShortProfile;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -78,9 +78,8 @@ public class PatientProfileListView extends ParentFragment
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
         setHasOptionsMenu(true);

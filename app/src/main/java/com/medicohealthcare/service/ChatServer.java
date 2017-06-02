@@ -119,7 +119,7 @@ public class ChatServer extends IntentService implements PARAM
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        error.printStackTrace();
+//                        error.printStackTrace();
                     }
                 });
 

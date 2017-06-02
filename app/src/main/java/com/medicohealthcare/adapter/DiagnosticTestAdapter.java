@@ -3,7 +3,6 @@ package com.medicohealthcare.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import com.medicohealthcare.model.DiagnosticStatusRequest;
 import com.medicohealthcare.model.RemovePatientTestRequest;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SummaryResponse;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -37,7 +37,6 @@ public class DiagnosticTestAdapter extends HomeAdapter {
     Activity activity;
     List<SummaryResponse.TestPrescribed> alarms;
     LayoutInflater inflater;
-    ProgressDialog progress;
     private int loggedInUserId;
 
     public DiagnosticTestAdapter(Activity activity, List<SummaryResponse.TestPrescribed> alarms, int userId)
@@ -110,12 +109,12 @@ public class DiagnosticTestAdapter extends HomeAdapter {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                showBusy();
                                 RemovePatientTestRequest removeMedicineRequest = new RemovePatientTestRequest(testPrescribed.testId, loggedInUserId);
                                 api.removePatientDiagnosticTest(removeMedicineRequest, new Callback<ResponseCodeVerfication>() {
                                     @Override
                                     public void success(ResponseCodeVerfication result, Response response) {
-                                        progress.dismiss();
+                                        hideBusy();
                                         if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
                                             Toast.makeText(activity, "Diagnostic Test Removed!!!!!", Toast.LENGTH_SHORT).show();
                                             alarms.remove(testPrescribed);
@@ -125,9 +124,8 @@ public class DiagnosticTestAdapter extends HomeAdapter {
 
                                     @Override
                                     public void failure(RetrofitError error) {
-                                        progress.dismiss();
-                                        error.printStackTrace();
-                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                        hideBusy();
+                                        new MedicoCustomErrorHandler(activity).handleError(error);
                                     }
                                 });
                             }
@@ -168,9 +166,8 @@ public class DiagnosticTestAdapter extends HomeAdapter {
 
                     @Override
                     public void failure(RetrofitError error) {
-//                        progress.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Diagnostic Test reminder status updation failed", Toast.LENGTH_SHORT).show();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(activity).handleError(error);
                     }
                 });
             }

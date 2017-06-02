@@ -13,6 +13,7 @@ import com.medicohealthcare.adapter.HistoryAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.VisitEditLogRequest;
 import com.medicohealthcare.model.VisitEditLogResponse;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.ArrayList;
@@ -161,8 +162,10 @@ public class HistryDialogView extends ParentFragment
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

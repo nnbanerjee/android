@@ -141,8 +141,7 @@ public class FileUploadDialog extends DialogFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
 
             }
         });
@@ -268,7 +267,8 @@ public class FileUploadDialog extends DialogFragment {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            error.printStackTrace();
+                            progress.dismiss();
+                            new MedicoCustomErrorHandler(getActivity()).handleError(error);
                         }
                     });
 
@@ -301,7 +301,8 @@ public class FileUploadDialog extends DialogFragment {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            error.printStackTrace();
+                            progress.dismiss();
+                            new MedicoCustomErrorHandler(getActivity()).handleError(error);
                         }
                     });
 

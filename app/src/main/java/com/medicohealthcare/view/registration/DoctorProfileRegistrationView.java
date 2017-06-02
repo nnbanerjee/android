@@ -39,6 +39,7 @@ import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.Notifier;
 import com.medicohealthcare.util.NotifyListener;
 import com.medicohealthcare.util.PARAM;
@@ -187,7 +188,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                         @Override
                         public void failure(RetrofitError error)
                         {
-                            error.printStackTrace();
+//                            error.printStackTrace();
                         }
                     });
                 }
@@ -242,9 +243,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
 
                 @Override
                 public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-//                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -298,7 +298,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -339,7 +340,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                             public void failure(RetrofitError error)
                             {
                                 hideBusy();
-                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -354,7 +355,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                 public void failure(RetrofitError error)
                 {
                     hideBusy();
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
 

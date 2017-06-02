@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.MedicineStatusRequest;
 import com.medicohealthcare.model.PatientMedicine;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -43,7 +43,6 @@ public class PatientMedicineListAdapter extends HomeAdapter implements StickyLis
     private Activity activity;
     private LayoutInflater inflater;
     List<PatientMedicine> appointments;
-    private ProgressDialog progress;
 
     public PatientMedicineListAdapter(Activity activity, List<PatientMedicine> appointments)
     {
@@ -155,9 +154,8 @@ public class PatientMedicineListAdapter extends HomeAdapter implements StickyLis
 
                     @Override
                     public void failure(RetrofitError error) {
-//                        progress.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Medicine reminder status updation failed", Toast.LENGTH_SHORT).show();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(activity).handleError(error);
                     }
                 });
             }

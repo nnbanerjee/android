@@ -5,12 +5,11 @@ import android.app.Fragment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.medicohealthcare.application.MyApi;
-import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Country;
 import com.medicohealthcare.model.ProfileId;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.util.ServerConnectionAdapter;
 
@@ -63,8 +62,8 @@ public class ParentFragment extends Fragment implements PARAM
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

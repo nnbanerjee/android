@@ -2,9 +2,7 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +25,6 @@ public class CustomTemplateSubListAdapter extends HomeAdapter {
     Activity activity;
     List<CustomProcedureTemplate1> templates;
     LayoutInflater inflater;
-//    MyApi api;
-    SharedPreferences session;
-    ProgressDialog progress;
     private Integer loggedInUserId;
 
     public CustomTemplateSubListAdapter(Activity activity, List<CustomProcedureTemplate1> templates, Integer userId)

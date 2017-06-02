@@ -2,7 +2,6 @@ package com.medicohealthcare.view.registration;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ public class RegistrationChooser extends ParentFragment
     public SharedPreferences session;
     private EditText email;
     private EditText profileId;
-    ProgressDialog progress;
     RadioButton doctor, assistant, patient, existing_profile, create_profile;
     Button next;
 

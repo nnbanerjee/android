@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<DoctorClinicDetails> clinicDetails;
-    private ProgressDialog progress;
 
     public AppointmentClinicListAdapter(Activity activity, List<DoctorClinicDetails> clinicDetails)
     {

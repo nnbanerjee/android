@@ -39,6 +39,7 @@ import com.medicohealthcare.model.PersonID;
 import com.medicohealthcare.model.ResponseAddDocuments;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.util.ImageUtil;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.util.PermissionManager;
 import com.medicohealthcare.view.home.ParentActivity;
@@ -237,9 +238,8 @@ public class PatientSummaryFileUpload extends ParentFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
 
             }
         });
@@ -289,6 +289,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
             @Override
             public void failure(RetrofitError error) {
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

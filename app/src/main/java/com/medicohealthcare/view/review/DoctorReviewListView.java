@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.DoctorReviewListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DoctorReview;
 import com.medicohealthcare.model.PatientId;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -63,7 +63,8 @@ public class DoctorReviewListView extends ParentFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Communication issue with the server", Toast.LENGTH_LONG).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

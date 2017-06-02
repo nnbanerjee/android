@@ -3,7 +3,6 @@ package com.medicohealthcare.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -31,6 +30,7 @@ import com.medicohealthcare.model.DoctorSlotBookings;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -294,8 +294,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            error.printStackTrace();
-                            Toast.makeText(activity, "Appointment Status update is Failed!!", Toast.LENGTH_LONG).show();
+                            hideBusy();
+                            new MedicoCustomErrorHandler(activity).handleError(error);
                         }
                     });
                 }
@@ -315,8 +315,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
                                 @Override
                                 public void failure(RetrofitError error) {
-                                    error.printStackTrace();
-                                    Toast.makeText(activity, "Add doctor holiday is Failed!!", Toast.LENGTH_LONG).show();
+                                    hideBusy();
+                                    new MedicoCustomErrorHandler(activity).handleError(error);
                                 }
                             });
                         }
@@ -337,9 +337,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                                 }
 
                                 @Override
-                                public void failure(RetrofitError error) {
-                                    error.printStackTrace();
-                                    Toast.makeText(activity, "Remove doctor holiday is Failed!!", Toast.LENGTH_LONG).show();
+                                public void failure(RetrofitError error)
+                                {
+                                    hideBusy();
+                                    new MedicoCustomErrorHandler(activity).handleError(error);
                                 }
                             });
                         }
@@ -367,9 +368,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
-                            error.printStackTrace();
-                            Toast.makeText(activity, "Set Appointment Visit Type is Failed!!", Toast.LENGTH_LONG).show();
+                        public void failure(RetrofitError error)
+                        {
+                            hideBusy();
+                            new MedicoCustomErrorHandler(activity).handleError(error);
                         }
                     });
                 }
@@ -396,8 +398,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            error.printStackTrace();
-                            Toast.makeText(activity, "Set Appointment Visit Status is Failed!!", Toast.LENGTH_LONG).show();
+                            hideBusy();
+                            new MedicoCustomErrorHandler(activity).handleError(error);
                         }
                     });
                 }
@@ -625,8 +627,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
             }
             @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(activity, "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(activity).handleError(error);
             }
         });
 
@@ -691,25 +695,18 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
     }
     private void cancelAppointment(final AppointmentHolder holder)
     {
+        showBusy();
         new AlertDialog.Builder(activity)
                 .setTitle("Delete Appointment")
                 .setMessage("Are you sure you want to delete this appointment?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        final ProgressDialog progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
-//                        RestAdapter restAdapter = new RestAdapter.Builder()
-//                                .setEndpoint(activity.getString(R.string.base_url))
-//                                .setClient(new OkClient())
-//                                .setLogLevel(RestAdapter.LogLevel.FULL)
-//                                .build();
-//                        MyApi api = restAdapter.create(MyApi.class);
                         api.cancelAppointment(new AppointmentId1(holder.patient.appointmentId), new Callback<AppointmentResponse>() {
                             @Override
                             public void success(AppointmentResponse result, Response response) {
-                                progress.dismiss();
-//                                        if (result.getStatus().equalsIgnoreCase("1")) {
-                                Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
+                                hideBusy();
+                                Toast.makeText(activity, "Medicine Removed!", Toast.LENGTH_SHORT).show();
                                 holder.patient = null;
                                 adapter.notifyDataSetChanged();
 //                                        }
@@ -717,9 +714,8 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
 
                             @Override
                             public void failure(RetrofitError error) {
-                                progress.dismiss();
-                                error.printStackTrace();
-                                Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(activity).handleError(error);
                             }
                         });
                     }

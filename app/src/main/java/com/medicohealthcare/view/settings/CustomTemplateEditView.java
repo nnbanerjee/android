@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.settings;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.datepicker.SlideDateTimeListener;
 import com.medicohealthcare.datepicker.SlideDateTimePicker;
 import com.medicohealthcare.model.CustomProcedureTemplate1;
 import com.medicohealthcare.model.CustomTemplateId;
 import com.medicohealthcare.model.ResponseVm;
-import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -38,7 +38,6 @@ import retrofit.client.Response;
  */
 public class CustomTemplateEditView extends ParentFragment {
 
-    ProgressDialog progress;
     CustomProcedureTemplate1 customTemplateModel = new CustomProcedureTemplate1();
     EditText name,description,date,currency,cost,discount,tax,total,notes;
     ImageView calenderImg;
@@ -78,7 +77,7 @@ public class CustomTemplateEditView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer templateId = bundle.getInt(CUSTOM_TEMPLATE_ID);
         if(templateId != null && templateId.intValue() > 0) {
@@ -115,14 +114,13 @@ public class CustomTemplateEditView extends ParentFragment {
                             notes.setText(customTemplateModel.getField(INVOICE_FIELD_NOTES).value);
                         }
                     }
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -134,20 +132,20 @@ public class CustomTemplateEditView extends ParentFragment {
 
     public void saveDoctorNotesData(CustomProcedureTemplate1 customTemplateModel){
 
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         api.updateCustomTemplate(customTemplateModel, new Callback<ResponseVm>() {
             @Override
             public void success(ResponseVm jsonObject, Response response) {
                 Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                progress.dismiss();
+                hideBusy();
                 ((ParentActivity)getActivity()).onBackPressed();
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-                progress.dismiss();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

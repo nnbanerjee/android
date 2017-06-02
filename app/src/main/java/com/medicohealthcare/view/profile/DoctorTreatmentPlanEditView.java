@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.profile;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +26,7 @@ import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.TreatmentId;
 import com.medicohealthcare.model.TreatmentId1;
 import com.medicohealthcare.model.TreatmentPlan1;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -45,7 +45,6 @@ import retrofit.client.Response;
  */
 public class DoctorTreatmentPlanEditView extends ParentFragment {
 
-    ProgressDialog progress;
     TreatmentPlan1 doctorNotesModel = new TreatmentPlan1();
     EditText name,description,date,currency,cost,discount,tax,total,notes;
     ImageView calenderImg;
@@ -85,7 +84,7 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer treatmentId = bundle.getInt(TREATMENT_ID);
         Integer templateId = bundle.getInt(CUSTOM_TEMPLATE_ID);
@@ -125,14 +124,13 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                             notes.setText(doctorNotesModel.getField(PROCEDURE_FIELD_NOTES).value);
                         }
                     }
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -172,14 +170,13 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                             notes.setText(doctorNotesModel.getField(INVOICE_FIELD_NOTES).value);
                         }
                     }
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -190,44 +187,42 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
     }
 
     public void saveDoctorNotesData(TreatmentPlan1 doctorNotesModel){
-
+        showBusy();
         if(doctorNotesModel.getTreatmentId() == null || doctorNotesModel.getTreatmentId().intValue() == 0)
         {
             final ParentActivity activity = (ParentActivity)getActivity();
-            progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+
             api.addPatientVisitTreatmentPlan1(doctorNotesModel, new Callback<ResponseAddTemplates1>() {
                 @Override
                 public void success(ResponseAddTemplates1 jsonObject, Response response)
                 {
                     Toast.makeText(activity, "Save successfully !!!", Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                   hideBusy();
                     activity.onBackPressed(DoctorAppointmentInformation.class.getName());
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(activity, error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
         else {
 
-            progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
             api.updatePatientVisitTreatmentPlan1(doctorNotesModel, new Callback<ResponseCodeVerfication>() {
                 @Override
                 public void success(ResponseCodeVerfication jsonObject, Response response) {
                     Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    hideBusy();
                     ((ParentActivity) getActivity()).onBackPressed();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                    hideBusy();
                 }
             });
         }
@@ -412,23 +407,23 @@ public class DoctorTreatmentPlanEditView extends ParentFragment {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                showBusy();
                                 TreatmentId treatmentId = new TreatmentId(doctorNotesModel.treatmentId);
                                 api.removePatientVisitTreatmentPlan(treatmentId, new Callback<ResponseCodeVerfication>() {
                                     @Override
                                     public void success(ResponseCodeVerfication result, Response response) {
-                                        progress.dismiss();
+
                                         if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
                                             Toast.makeText(activity, "Treatment Plan Removed!!!!!", Toast.LENGTH_SHORT).show();
                                             activity.onBackPressed();
                                         }
+                                        hideBusy();
                                     }
 
                                     @Override
                                     public void failure(RetrofitError error) {
-                                        progress.dismiss();
-                                        error.printStackTrace();
-                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                        hideBusy();
+                                        new MedicoCustomErrorHandler(getActivity()).handleError(error);
                                     }
                                 });
                             }

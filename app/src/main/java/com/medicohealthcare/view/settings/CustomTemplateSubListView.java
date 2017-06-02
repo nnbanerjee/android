@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.settings;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.CustomTemplateSubListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.CustomProcedureTemplate1;
 import com.medicohealthcare.model.PersonAndCategoryId1;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -35,7 +34,6 @@ public class CustomTemplateSubListView extends ParentFragment {
 
     SharedPreferences session;
     ListView customTemplateListView;
-    ProgressDialog progress;
     List<CustomProcedureTemplate1> customTemplateList = new ArrayList<>();
 
     @Nullable
@@ -56,7 +54,7 @@ public class CustomTemplateSubListView extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorId = bundle.getInt(PARAM.LOGGED_IN_ID);
         final String name = bundle.getString(CUSTOM_TEMPLATE_NAME);
@@ -76,14 +74,13 @@ public class CustomTemplateSubListView extends ParentFragment {
                     CustomTemplateSubListAdapter adapter = new CustomTemplateSubListAdapter(getActivity(), sublist, doctorId);
                     customTemplateListView.setAdapter(adapter);
                 }
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

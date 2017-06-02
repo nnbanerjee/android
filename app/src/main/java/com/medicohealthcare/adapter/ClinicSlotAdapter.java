@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.ClinicSlotDetails;
 import com.medicohealthcare.model.DoctorClinicId;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -34,7 +34,6 @@ public class ClinicSlotAdapter extends HomeAdapter {
     Activity activity;
     List<ClinicSlotDetails> slots;
     LayoutInflater inflater;
-    ProgressDialog progress;
     private int loggedInUserId;
 
     public ClinicSlotAdapter(Activity activity, List<ClinicSlotDetails> slotDetailses, int userId)
@@ -101,12 +100,12 @@ public class ClinicSlotAdapter extends HomeAdapter {
             public void onClick(View v) {
                 System.out.println("Close buttom clicked");
                 final ClinicSlotDetails medicine = (ClinicSlotDetails)v.getTag();
-                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                showBusy();
                 DoctorClinicId removeSlotRequest = new DoctorClinicId(medicine.doctorClinicId,0);
                 api.setSlotAvailability(removeSlotRequest, new Callback<ResponseCodeVerfication>() {
                     @Override
                     public void success(ResponseCodeVerfication result, Response response) {
-                        progress.dismiss();
+                        hideBusy();
                         if (result.getStatus().intValue() == PARAM.STATUS_SUCCESS) {
                             Toast.makeText(activity, "Slot Disabled successfully", Toast.LENGTH_SHORT).show();
                             notifyDataSetChanged();
@@ -119,9 +118,8 @@ public class ClinicSlotAdapter extends HomeAdapter {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        progress.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Slot could not be disabled", Toast.LENGTH_SHORT).show();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(activity).handleError(error);
                     }
                 });
 

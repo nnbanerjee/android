@@ -30,6 +30,7 @@ import com.medicohealthcare.model.DoctorClinicDetails;
 import com.medicohealthcare.model.DoctorClinicId;
 import com.medicohealthcare.model.DoctorHoliday;
 import com.medicohealthcare.model.DoctorSlotBookings;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -133,10 +134,10 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
-//                progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }
@@ -276,8 +277,10 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -291,8 +294,10 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), "Appointment update failed!!", Toast.LENGTH_LONG).show();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -349,8 +354,10 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
-//                Toast.makeText(getActivity(), "Holiday Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity(),false).handleError(error);
                 doctorholidayList = null;
             }
         });
@@ -368,11 +375,11 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
             @Override
             public void failure(RetrofitError error) {
-//                Toast.makeText(getActivity(), "Request Send FAILED " + format.format(date1)+ " "+ format.format(date2), Toast.LENGTH_LONG).show();
                 doctorSlotBookings = null;
                 ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorClinicDetails,doctorSlotBookings, doctorholidayList, date1);
                 appointment_schedule.setAdapter(adapter);
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

@@ -26,6 +26,7 @@ import com.medicohealthcare.model.FileUpload1;
 import com.medicohealthcare.model.ResponseAddDocuments;
 import com.medicohealthcare.util.FileChooser;
 import com.medicohealthcare.util.ImageUtil;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -179,8 +180,10 @@ public class FileUploadView extends ParentFragment
 
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error)
+            {
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

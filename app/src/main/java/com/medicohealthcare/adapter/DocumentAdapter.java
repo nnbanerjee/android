@@ -15,6 +15,7 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.FileUpload1;
 import com.medicohealthcare.model.RemoveVisitDocument1;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 
 import java.text.DateFormat;
@@ -115,8 +116,8 @@ public class DocumentAdapter extends HomeAdapter {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(activity).handleError(error);
                     }
                 });
             }

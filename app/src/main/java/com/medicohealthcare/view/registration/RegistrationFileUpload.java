@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.registration;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -193,7 +192,6 @@ public class RegistrationFileUpload extends ParentFragment {
     {
         Bundle bundle = getActivity().getIntent().getExtras();
         fileupload = new FileUpload1();
-        ProgressDialog progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         fileupload.appointmentId = bundle.getInt(APPOINTMENT_ID);
         fileupload.personId = bundle.getInt(LOGGED_IN_ID);
         fileupload.patientId = bundle.getInt(PATIENT_ID);

@@ -38,6 +38,7 @@ import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.service.ChatServer;
 import com.medicohealthcare.util.FileUploadDialog;
 import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.util.ServerConnectionAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -502,7 +503,8 @@ public abstract class HomeActivity extends Activity implements PARAM
             @Override
             public void failure(RetrofitError error)
             {
-                System.out.println("Could not create self dependent");
+
+                new MedicoCustomErrorHandler(HomeActivity.this).handleError(error);
              }
         });
      }

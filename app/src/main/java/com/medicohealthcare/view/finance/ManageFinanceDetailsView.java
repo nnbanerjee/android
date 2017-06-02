@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.finance;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -12,12 +11,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.FinanceProcedureListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.FinanceDetails;
 import com.medicohealthcare.model.FinanceReportRequest;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.NumberFormat;
@@ -37,7 +36,6 @@ public class ManageFinanceDetailsView extends ParentFragment {
     EditText discountValue,taxValue,advanceValue,grandTotal,
             discountPercent,taxPercent,totalDueValue;
     TextView noDataFound,invoiceTotal;
-    ProgressDialog progress;
     ListView procedure_name;
     FinanceDetails invoiceDetails;
 
@@ -168,7 +166,7 @@ public class ManageFinanceDetailsView extends ParentFragment {
         final Long date = bundle.getLong("report_date");
         final Integer type = bundle.getInt("report_type");
 
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         FinanceReportRequest doc = new FinanceReportRequest(bundle.getInt(DOCTOR_ID),date, type);
         api.getFinanceSummaryDetails(doc, new Callback<List<FinanceDetails>>() {
             @Override
@@ -197,14 +195,13 @@ public class ManageFinanceDetailsView extends ParentFragment {
                     }
                 }
 
-//                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-//                progress.dismiss();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

@@ -2,7 +2,6 @@ package com.medicohealthcare.view.registration;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +39,7 @@ import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.Notifier;
 import com.medicohealthcare.util.NotifyListener;
 import com.medicohealthcare.util.PARAM;
@@ -65,7 +65,6 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
-    ProgressDialog progress;
     MenuItem menuItem;
     ImageView profilePic;
     Button profilePicUploadBtn,location_delete_button,current_location_button;
@@ -204,7 +203,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                         @Override
                         public void failure(RetrofitError error)
                         {
-                            error.printStackTrace();
+//                            error.printStackTrace();
                         }
                     });
                 }
@@ -221,7 +220,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         super.onStart();
         LocationService.getLocationManager(getActivity()).addNotifyListeber(this);
         Bundle bundle = getActivity().getIntent().getExtras();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
 //        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
@@ -258,16 +257,15 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
 
                     }
                     setEditable(false);
-                    progress.dismiss();
+                    hideBusy();
 
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -280,7 +278,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             personModel.setPrime(new Integer(0).byteValue());
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             setEditable(true);
-            progress.dismiss();
+            hideBusy();
         }
         if(fileFragment != null && fileFragment.fileupload != null )
         {
@@ -288,6 +286,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             if(url != null && url.trim().length() > 0)
                 new ImageLoadTask(url, profilePic).execute();
         }
+
     }
 
     @Override
@@ -321,7 +320,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -360,7 +360,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                             public void failure(RetrofitError error)
                             {
                                 hideBusy();
-                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -375,7 +375,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 public void failure(RetrofitError error)
                 {
                     hideBusy();
-                    Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
 

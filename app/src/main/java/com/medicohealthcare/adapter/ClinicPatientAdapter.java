@@ -3,7 +3,6 @@ package com.medicohealthcare.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +17,7 @@ import com.medicohealthcare.model.AppointmentId1;
 import com.medicohealthcare.model.AppointmentResponse;
 import com.medicohealthcare.model.DoctorClinicDetails;
 import com.medicohealthcare.model.PatientAppointmentByDoctor;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.profile.ClinicDoctorAppointmentView;
@@ -40,7 +40,6 @@ import retrofit.client.Response;
 public class ClinicPatientAdapter extends HomeAdapter {
 
     Activity activity;
-    ProgressDialog progress;
     List<DoctorClinicDetails> clinicDetails;
     PatientAppointmentByDoctor patientAppointments;
 
@@ -306,11 +305,11 @@ public class ClinicPatientAdapter extends HomeAdapter {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                showBusy();
                                 api.cancelAppointment(new AppointmentId1(appointments.appointmentId), new Callback<AppointmentResponse>() {
                                     @Override
                                     public void success(AppointmentResponse result, Response response) {
-                                        progress.dismiss();
+                                        hideBusy();
 //                                        if (result.getStatus().equalsIgnoreCase("1")) {
                                             Toast.makeText(activity, "Medicine Removed!!!!!", Toast.LENGTH_SHORT).show();
                                             adapter.notifyDataSetChanged();
@@ -319,9 +318,8 @@ public class ClinicPatientAdapter extends HomeAdapter {
 
                                     @Override
                                     public void failure(RetrofitError error) {
-                                        progress.dismiss();
-                                        error.printStackTrace();
-                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                        hideBusy();
+                                        new MedicoCustomErrorHandler(activity).handleError(error);
                                     }
                                 });
                             }
@@ -339,19 +337,18 @@ public class ClinicPatientAdapter extends HomeAdapter {
     }
 
     public void saveVisitedData(String doctorId, String patientId, String clinicId, String shift, Integer visited) {
-
+        showBusy();
         api.saveVisitedPatientAppointment(doctorId, patientId, clinicId, shift, visited, new Callback<String>() {
             @Override
             public void success(String str, Response response) {
-                progress.dismiss();
+                hideBusy();
                 Toast.makeText(activity, "Saved Successfully !!!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progress.dismiss();
-                Toast.makeText(activity, error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(activity).handleError(error);
             }
         });
     }

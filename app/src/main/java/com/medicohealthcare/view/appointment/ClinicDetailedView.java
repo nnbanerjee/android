@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.ClinicByDoctorRequest;
 import com.medicohealthcare.model.DoctorClinicDetails;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.settings.ClinicProfileEditView;
@@ -211,10 +211,10 @@ public class ClinicDetailedView extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) {
-//                progress.dismiss();
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

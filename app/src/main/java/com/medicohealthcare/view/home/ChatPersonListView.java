@@ -22,6 +22,7 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ProfileId;
 import com.medicohealthcare.service.Constants;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 
 import java.util.List;
 
@@ -91,9 +92,11 @@ public class ChatPersonListView extends ParentFragment {
             }
 
             @Override
-            public void failure(RetrofitError error) { 
+            public void failure(RetrofitError error)
+            {
 
-
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

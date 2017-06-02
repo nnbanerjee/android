@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.PatientAppointmentListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.PatientAppointmentsVM;
 import com.medicohealthcare.model.PatientId;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -119,8 +119,8 @@ public class DoctorAppointmentListView extends ParentFragment
             @Override
             public void failure(RetrofitError error)
             {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

@@ -1,9 +1,7 @@
 package com.medicohealthcare.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +26,6 @@ public class ClinicSettingListAdapter extends HomeAdapter  {
     private Activity activity;
     private LayoutInflater inflater;
     List<Clinic1> personList;
-//    MyApi api;
-//    String doctorId;
-    SharedPreferences session;
-    private ProgressDialog progress;
-
     public ClinicSettingListAdapter(Activity activity, List<Clinic1> personList)
     {
         super(activity);

@@ -40,6 +40,7 @@ import com.medicohealthcare.model.ReminderDate;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.util.AlarmService;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -357,8 +358,8 @@ public class PatientMedicinReminder extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
 
                 }
             });
@@ -520,8 +521,8 @@ public class PatientMedicinReminder extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -539,8 +540,8 @@ public class PatientMedicinReminder extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }

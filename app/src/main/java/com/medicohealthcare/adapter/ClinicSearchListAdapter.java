@@ -2,7 +2,6 @@ package com.medicohealthcare.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import com.medicohealthcare.model.Clinic1;
 import com.medicohealthcare.model.ClinicPersonRequest;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -42,7 +42,6 @@ public class ClinicSearchListAdapter extends HomeAdapter
     private Activity activity;
     private LayoutInflater inflater;
     List<Clinic1> personList;
-    private ProgressDialog progress;
     HomeAdapter callBack;
     Object callbackParameter;
 
@@ -137,7 +136,8 @@ public class ClinicSearchListAdapter extends HomeAdapter
                             @Override
                             public void failure(RetrofitError error)
                             {
-                                Toast.makeText(activity, "Clinic could not been added", Toast.LENGTH_LONG).show();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(activity).handleError(error);
                             }
                         });
                     }

@@ -17,6 +17,7 @@ import com.medicohealthcare.application.MainActivity;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Logindata;
 import com.medicohealthcare.model.ResponseVm;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.DoctorHome;
 import com.medicohealthcare.view.home.PatientHome;
@@ -173,9 +174,9 @@ public class Login extends Fragment implements PARAM
                                 }
 
                                 @Override
-                                public void failure(RetrofitError error) {
-                                    error.printStackTrace();
-                                    Toast.makeText(getActivity().getApplicationContext(), R.string.Failed, Toast.LENGTH_LONG).show();
+                                public void failure(RetrofitError error)
+                                {
+                                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                                     progress.dismiss();
                                 }
                             });

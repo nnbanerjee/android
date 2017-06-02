@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.settings;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -16,12 +15,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.datepicker.SlideDateTimeListener;
 import com.medicohealthcare.datepicker.SlideDateTimePicker;
 import com.medicohealthcare.model.PersonDetailProfile;
 import com.medicohealthcare.model.ProfileId;
 import com.medicohealthcare.model.ServerResponse;
-import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.registration.RegistrationFileUpload;
 
@@ -41,7 +41,6 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
 
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
-    ProgressDialog progress;
 
     EditText qualification, institution, yearOfExprience, experienceDetails,services,awards,memberOf,registrationNumber,registrationFile, registrationDate;
     Spinner practice;
@@ -93,7 +92,7 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
-        progress = ProgressDialog.show(getActivity(), "", "getResources().getString(R.string.loading_wait)");
+        showBusy();
         api.getDetailedProfile(new ProfileId(bundle.getInt(LOGGED_IN_ID)),new Callback<PersonDetailProfile>() {
             @Override
             public void success(PersonDetailProfile person, Response response) {
@@ -123,15 +122,14 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
                         }
                     }
                 }
-                progress.dismiss();
+                hideBusy();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-                progress.dismiss();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }
@@ -143,52 +141,9 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
     }
 
 
-//
-//    public void setDate(){
-//
-//        new DatePickerDialog(getActivity(),d,calendar_grey.get(Calendar.YEAR),calendar_grey.get(Calendar.MONTH),calendar_grey.get(Calendar.DAY_OF_MONTH)).show();
-//    }
-//    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
-//
-//
-//
-//
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//            calendar_grey.set(Calendar.YEAR,year);
-//            calendar_grey.set(Calendar.MONTH,monthOfYear);
-//            calendar_grey.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-//            updatedate();
-//        }
-//
-//    };
-//    public void updatedate()
-//    {
-//        dob.setText(calendar_grey.get(Calendar.YEAR)+"-"+showMonth(calendar_grey.get(Calendar.MONTH))+"-"+calendar_grey.get(Calendar.DAY_OF_MONTH));
-//    }
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == SELECT_PICTURE) {
-//            selectedImageUri = data.getData();
-//            profilePic.setImageURI(selectedImageUri);
-//            path = getPath(selectedImageUri);
-//        }else if(requestCode == SELECT_DOCUMENT){
-//            selectdDocumentUri = data.getData();
-//            documentPath = getPath(selectdDocumentUri);
-//            File documentFile = new File(documentPath);
-//            document.setText(documentFile.getName());
-//        }
-//    }
-//    public String getPath(Uri uri) {
-//
-//        String[] projection = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = super.getActivity().managedQuery(uri, projection, null, null, null);
-//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//        cursor.moveToFirst();
-//        return cursor.getString(column_index);
-//    }
     private void save(PersonDetailProfile person)
     {
+        showBusy();
         api.updateDetailedProfile(person, new Callback<ServerResponse>() {
             @Override
             public void success(ServerResponse s, Response response)
@@ -197,12 +152,13 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
                     Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
-
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }

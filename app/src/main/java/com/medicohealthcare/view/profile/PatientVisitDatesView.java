@@ -115,6 +115,7 @@ public class PatientVisitDatesView extends ParentFragment
     public void onStart()// getAllPatientAppointment()
      {
         super.onStart();
+         showBusy();
          Bundle bundle = getActivity().getIntent().getExtras();
         DoctorIdPatientId doc = new DoctorIdPatientId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)), new Integer(bundle.getInt(PARAM.PATIENT_ID)));
         api.getPatientVisitDatesByDoctor1(doc, new Callback<List<PatientVisits>>()
@@ -127,11 +128,12 @@ public class PatientVisitDatesView extends ParentFragment
                     } else {
                         Toast.makeText(getActivity(), "No Visits found!", Toast.LENGTH_LONG).show();
                     }
-
+                hideBusy();
             }
             @Override
             public void failure(RetrofitError error)
             {
+                hideBusy();
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
 

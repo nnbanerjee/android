@@ -3,7 +3,6 @@ package com.medicohealthcare.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -24,6 +23,7 @@ import com.medicohealthcare.model.DoctorClinicId;
 import com.medicohealthcare.model.PatientAppointmentsVM;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -54,7 +54,6 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
     private Activity activity;
     private LayoutInflater inflater;
     List<PatientAppointmentsVM.Appointments> appointments;
-    private ProgressDialog progress;
 
     public PatientAppointmentListAdapter(Activity activity, List<PatientAppointmentsVM.Appointments> appointments)
     {
@@ -224,7 +223,8 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
                     @Override
                     public void failure(RetrofitError error)
                     {
-                         error.printStackTrace();
+                        hideBusy();
+                        new MedicoCustomErrorHandler(activity).handleError(error);
                     }
                 });
 
@@ -268,11 +268,11 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                progress = ProgressDialog.show(activity, "", "getResources().getString(R.string.loading_wait)");
+                                showBusy();
                                 api.cancelAppointment(new AppointmentId1(doctorappointment.appointmentId), new Callback<AppointmentResponse>() {
                                     @Override
                                     public void success(AppointmentResponse result, Response response) {
-                                        progress.dismiss();
+                                        hideBusy();
 //                                        if (result.getStatus().equalsIgnoreCase("1")) {
                                         Toast.makeText(activity, "Appointment is Cancelled!", Toast.LENGTH_SHORT).show();
                                         adapter.notifyDataSetInvalidated();
@@ -280,10 +280,10 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
                                     }
 
                                     @Override
-                                    public void failure(RetrofitError error) {
-                                        progress.dismiss();
-                                        error.printStackTrace();
-                                        Toast.makeText(activity, "Failed to remove medicine", Toast.LENGTH_SHORT).show();
+                                    public void failure(RetrofitError error)
+                                    {
+                                        hideBusy();
+                                        new MedicoCustomErrorHandler(activity).handleError(error);
                                     }
                                 });
                             }

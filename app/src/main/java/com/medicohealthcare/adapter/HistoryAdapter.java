@@ -1,7 +1,6 @@
 package com.medicohealthcare.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ public class HistoryAdapter extends HomeAdapter {
     Activity activity;
     List<String> histories;
     LayoutInflater inflater;
-    ProgressDialog progress;
     private int loggedInUserId;
 
     public HistoryAdapter(Activity activity, List<String> histories)

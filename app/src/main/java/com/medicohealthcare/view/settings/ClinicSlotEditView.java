@@ -29,6 +29,7 @@ import com.medicohealthcare.model.ClinicSlotDetails;
 import com.medicohealthcare.model.DoctorClinicId;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ResponseCodeVerfication;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -222,8 +223,8 @@ public class ClinicSlotEditView extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
 
                 }
             });
@@ -252,8 +253,8 @@ public class ClinicSlotEditView extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
@@ -270,8 +271,8 @@ public class ClinicSlotEditView extends ParentFragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }

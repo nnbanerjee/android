@@ -2,8 +2,6 @@ package com.medicohealthcare.view.profile;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,12 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DoctorIdPatientId;
 import com.medicohealthcare.model.DoctorShortProfile;
 import com.medicohealthcare.util.ImageLoadTask;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -36,8 +34,6 @@ import retrofit.client.Response;
 //Doctor Login
 public class DoctorDetailsView extends ParentFragment {
 
-    ProgressDialog progress;
-    SharedPreferences session;
     TextView patientName,doctorSpeciality, address, lastVisitedValue, nextAppointment, visitCounts;
     Button appointmentsBtn,profileBtn;
     ImageView viewImage, nextBtn, closeMenu;
@@ -139,7 +135,7 @@ public class DoctorDetailsView extends ParentFragment {
     {
         super.onStart();
 
-        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer patientId = bundle.getInt(PATIENT_ID);
         DoctorIdPatientId doc = new DoctorIdPatientId(new Integer(bundle.getInt(DOCTOR_ID)), new Integer(bundle.getInt(PATIENT_ID)));
@@ -173,14 +169,14 @@ public class DoctorDetailsView extends ParentFragment {
 
                     appointmentsBtn.callOnClick();
 
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    progress.dismiss();
-                    error.printStackTrace();
-                    Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         if(childfragment != null && childfragment.isDetached() == false)

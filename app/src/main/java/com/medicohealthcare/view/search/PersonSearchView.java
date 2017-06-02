@@ -29,6 +29,7 @@ import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.SearchParameterRequest;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.LocationService;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.Notifier;
 import com.medicohealthcare.util.NotifyListener;
 import com.medicohealthcare.util.PARAM;
@@ -261,8 +262,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
 
                             @Override
-                            public void failure(RetrofitError error) {
-//                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -276,7 +279,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
                             @Override
                             public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -290,7 +294,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
                             @Override
                             public void failure(RetrofitError error) {
-//                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -305,7 +310,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
                             @Override
                             public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -318,8 +324,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                                 showResult(s);
                             }
                             @Override
-                            public void failure(RetrofitError error) {
-//                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -347,7 +355,8 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
                             @Override
                             public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -370,7 +379,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                             }
 
                             @Override
-                            public void failure(RetrofitError error) {
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -382,8 +394,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                                 showClinicResult(s);
                             }
                             @Override
-                            public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -395,7 +409,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                                 showClinicResult(s);
                             }
                             @Override
-                            public void failure(RetrofitError error) {
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -408,8 +425,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                                 showClinicResult(s);
                             }
                             @Override
-                            public void failure(RetrofitError error) {
-                                Toast.makeText(getActivity(), "Appointment Create failed!!", Toast.LENGTH_LONG).show();
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }
@@ -421,7 +440,10 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                                 showClinicResult(s);
                             }
                             @Override
-                            public void failure(RetrofitError error) {
+                            public void failure(RetrofitError error)
+                            {
+                                hideBusy();
+                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
                             }
                         });
                     }

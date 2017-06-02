@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.TreatmentPlanListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.TreatmentPlan1;
 import com.medicohealthcare.model.TreatmentPlanRequest;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.settings.CustomTemplateListView;
@@ -82,8 +82,8 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                 hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

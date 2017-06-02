@@ -1,7 +1,6 @@
 package com.medicohealthcare.view.profile;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.medicohealthcare.adapter.TreatmentPlanListAdapter;
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.TreatmentPlan1;
 import com.medicohealthcare.model.TreatmentPlanRequest;
-import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 import com.medicohealthcare.view.settings.CustomTemplateListView;
@@ -33,7 +32,6 @@ public class DoctorAppointmentTreatmentInvoice extends ParentFragment {
 
     private CheckBox shareWithPatient;
     private ListView treatmentPlanList;
-    private ProgressDialog progress;
     private List<TreatmentPlan1> treatmentPlanModel = new ArrayList<>();
     @Nullable
     @Override
@@ -42,28 +40,6 @@ public class DoctorAppointmentTreatmentInvoice extends ParentFragment {
         View view = inflater.inflate(R.layout.doctor_appointment_treatment_plan, container,false);
         shareWithPatient = (CheckBox) view.findViewById(R.id.share_with_patient);
         treatmentPlanList = (ListView) view.findViewById(R.id.treatmentPlanList);
-//        treatmentPlanList.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction();
-//                switch (action) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        // Disallow ScrollView to intercept touch events.
-//                        v.getParent().requestDisallowInterceptTouchEvent(true);
-//                        break;
-//
-//                    case MotionEvent.ACTION_UP:
-//                        // Allow ScrollView to intercept touch events.
-//                        v.getParent().requestDisallowInterceptTouchEvent(false);
-//
-//                        break;
-//                }
-//
-//                // Handle ListView touch events.
-//                v.onTouchEvent(event);
-//                return true;
-//            }
-//        });
         return view;
     }
 
@@ -80,7 +56,7 @@ public class DoctorAppointmentTreatmentInvoice extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, 2), new Callback<List<TreatmentPlan1>>() {
             @Override
             public void success(List<TreatmentPlan1> treatments, Response response) {
@@ -95,14 +71,13 @@ public class DoctorAppointmentTreatmentInvoice extends ParentFragment {
                     treatmentPlanList.setAdapter(new TreatmentPlanListAdapter(getActivity(), treatmentPlanModel,loggedInUserId));
                 }
 
-                progress.dismiss();
+                hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                progress.dismiss();
-                error.printStackTrace();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
 

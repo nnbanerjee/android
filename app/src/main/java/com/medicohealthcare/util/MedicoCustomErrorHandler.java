@@ -13,6 +13,7 @@ import retrofit.RetrofitError;
 public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
 {
     private Context ctx;
+    private boolean messageRequired = true;
 
     public static String DATA_NOT_FOUND = "201";
     public static String SESSION_EXPIRED = "401";
@@ -21,6 +22,11 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
     public MedicoCustomErrorHandler(Context ctx)
     {
         this.ctx = ctx;
+    }
+    public MedicoCustomErrorHandler(Context ctx, boolean messageRequired)
+    {
+        this.ctx = ctx;
+        this.messageRequired = messageRequired;
     }
 
     @Override

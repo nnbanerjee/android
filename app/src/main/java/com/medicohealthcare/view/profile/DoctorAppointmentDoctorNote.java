@@ -1,6 +1,5 @@
 package com.medicohealthcare.view.profile;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -13,12 +12,13 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.AppointmentId1;
 import com.medicohealthcare.model.DoctorNotes;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.Symptom;
-import com.medicohealthcare.application.R;
+import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -34,7 +34,6 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
 
     MultiAutoCompleteTextView symptomsValue,diagnosisValue;
     EditText doctorNotes;
-    ProgressDialog progress;
     DoctorNotes doctorNotesModel = new DoctorNotes();
 
     @Nullable
@@ -80,7 +79,8 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
                         @Override
                         public void failure(RetrofitError error)
                         {
-//                            error.printStackTrace();
+                            hideBusy();
+//                            new MedicoCustomErrorHandler(getActivity(),false).handleError(error);
                         }
                     });
                 }
@@ -122,7 +122,8 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
                         @Override
                         public void failure(RetrofitError error)
                         {
-//                            error.printStackTrace();
+//                                            hideBusy();
+//                            new MedicoCustomErrorHandler(getActivity()).handleError(error);
                         }
                     });
                 }
@@ -143,7 +144,7 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
     public void onStart()
     {
         super.onStart();
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointmentId = bundle.getInt(APPOINTMENT_ID);
 
@@ -161,34 +162,33 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
                         doctorNotes.setText(doctorNotesResponse.doctorNotes);
                     }
 
-                    progress.dismiss();
+                    hideBusy();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-                progress.dismiss();
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
     }
 
     public void saveDoctorNotesData(DoctorNotes doctorNotesModel){
 
-        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
+        showBusy();
         if(doctorNotesModel.getIdNotes() == null){
             api.addPatientVisitDoctorNotes(doctorNotesModel, new Callback<ResponseCodeVerfication>() {
                 @Override
                 public void success(ResponseCodeVerfication jsonObject, Response response) {
                     Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }else{
@@ -196,14 +196,13 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
                 @Override
                 public void success(ResponseCodeVerfication jsonObject, Response response) {
                     Toast.makeText(getActivity(), "Update successfully !!!", Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    hideBusy();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                    progress.dismiss();
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
         }
