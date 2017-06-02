@@ -1,9 +1,10 @@
 package com.medicohealthcare.util;
 
-import android.content.Context;
+import android.app.Activity;
 import android.widget.Toast;
 
 import com.medicohealthcare.model.ServerResponse;
+import com.medicohealthcare.view.home.HomeActivity;
 
 import retrofit.RetrofitError;
 
@@ -12,18 +13,18 @@ import retrofit.RetrofitError;
  */
 public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
 {
-    private Context ctx;
+    private Activity ctx;
     private boolean messageRequired = true;
 
     public static String DATA_NOT_FOUND = "201";
     public static String SESSION_EXPIRED = "401";
     public static String UNFORMATTED_REQUEST = "400";
 
-    public MedicoCustomErrorHandler(Context ctx)
+    public MedicoCustomErrorHandler(Activity ctx)
     {
         this.ctx = ctx;
     }
-    public MedicoCustomErrorHandler(Context ctx, boolean messageRequired)
+    public MedicoCustomErrorHandler(Activity ctx, boolean messageRequired)
     {
         this.ctx = ctx;
         this.messageRequired = messageRequired;
@@ -46,7 +47,14 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
                 if( response.errorCode.equalsIgnoreCase(DATA_NOT_FOUND))
                     errorDescription = "No data available";
                 else if(response.errorCode.equalsIgnoreCase(SESSION_EXPIRED))
-                    errorDescription = "Session expired, please relogin";
+                {
+                    errorDescription = "Session expired";
+                    Toast.makeText(ctx, errorDescription, Toast.LENGTH_LONG).show();
+                    ctx.finish();
+                    if(HomeActivity.getParentAtivity() != null)
+                        HomeActivity.getParentAtivity().finish();
+
+                }
                 else if(response.errorCode.equalsIgnoreCase(UNFORMATTED_REQUEST))
                     errorDescription = "Invalid request, kindly check";
                 else
