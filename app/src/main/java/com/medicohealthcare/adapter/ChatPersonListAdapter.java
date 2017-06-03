@@ -133,18 +133,7 @@ public class ChatPersonListAdapter extends HomeAdapter
 
         doctorName.setText(personList.get(position).getName());
         doctorSpeciality.setText(personList.get(position).getSpeciality());
-//        totalCount.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Bundle bundle = activity.getIntent().getExtras();
-//                bundle.putInt(PARAM.PATIENT_ID,personList.get(position).getId());
-//                ParentFragment assistantListView = new PersonProfileEditView();
-//                FragmentTransaction fft1 = activity.getFragmentManager().beginTransaction();
-//                fft1.add(R.id.service, assistantListView,PersonProfileEditView.class.getName()).addToBackStack(PersonProfileEditView.class.getName()).commit();
-//            }
-//        });
+
         return convertView;
 
     }

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
@@ -78,6 +77,7 @@ public class ChatPersonListView extends ParentFragment {
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
+        showBusy();
         Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         Integer profileId = bundle.getInt(PROFILE_ID);
         Integer profileType = bundle.getInt(PROFILE_TYPE);
@@ -88,7 +88,7 @@ public class ChatPersonListView extends ParentFragment {
             {
                 adapter = new ChatPersonListAdapter(getActivity(), chatPersonList);
                 listView.setAdapter(adapter);
-
+                hideBusy();
             }
 
             @Override
@@ -99,7 +99,8 @@ public class ChatPersonListView extends ParentFragment {
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
-
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText(getActivity().getString(R.string.chat_person_list));
         registerChatMessage();
     }
 
@@ -120,6 +121,8 @@ public class ChatPersonListView extends ParentFragment {
             }
         });
         registerChatMessage();
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText(getActivity().getString(R.string.chat_person_list));
     }
 
     @Override
@@ -192,13 +195,13 @@ public class ChatPersonListView extends ParentFragment {
         {
             if(adapter != null)
             {
-                Bundle bundle = intent.getExtras();
-                int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
-                int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
-                adapter.setNumberOfMessages(ids, numberOfMessages);
-                Parcelable state = listView.onSaveInstanceState();
-                adapter.notifyDataSetInvalidated();
-                listView.onRestoreInstanceState(state);
+//                Bundle bundle = intent.getExtras();
+//                int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
+//                int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
+//                adapter.setNumberOfMessages(ids, numberOfMessages);
+//                Parcelable state = listView.onSaveInstanceState();
+//                adapter.notifyDataSetInvalidated();
+//                listView.onRestoreInstanceState(state);
             }
 
         }

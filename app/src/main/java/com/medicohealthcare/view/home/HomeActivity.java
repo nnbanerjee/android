@@ -37,6 +37,7 @@ import com.medicohealthcare.model.PersonProfile;
 import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.service.ChatServer;
 import com.medicohealthcare.util.FileUploadDialog;
+import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.LocationService;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
@@ -90,7 +91,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     ListView dependentList, delegationList;
     TextView profileName;
     TextView profileNamedependent;
-
+    ImageLoadTask imageLoader;
     Point p;
     View arrow;
     public PersonProfile personProfile;
@@ -117,7 +118,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         LocationService locationService = LocationService.getLocationManager(this);
 //        locationService.addNotifyListeber(this);
         startChatServer();
-
+        imageLoader = new ImageLoadTask();
     }
 
     // The method that displays the popup.

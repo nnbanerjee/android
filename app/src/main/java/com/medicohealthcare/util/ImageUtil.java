@@ -48,8 +48,8 @@ public class ImageUtil {
 
     public static final int SELECT_PICTURE = 1;
 
-    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 200;
-    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 200;
+    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 100;
+    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 100;
 
     public static final int IMAGE_UPLOAD_MAX_WIDTH = 1024;
     public static final int IMAGE_UPLOAD_MAX_HEIGHT = 1024;

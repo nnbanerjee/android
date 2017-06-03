@@ -455,7 +455,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
     private boolean isValid(int searchType)
     {
-        if(location.getText().length() > 0 && search_parameter.getText().length() > 0)
+        if(model.isValid() && search_parameter.getText().length() > 0)
             return true;
         else
             return false;

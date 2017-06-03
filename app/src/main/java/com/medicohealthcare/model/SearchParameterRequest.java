@@ -27,4 +27,14 @@ public class SearchParameterRequest
     public int role = 0;
     public Integer loginUserId;
     public Integer loggedinUserId;
+
+    public boolean isValid()
+    {
+        boolean canBeSaved = true;
+        if(lattitude == null || lattitude.intValue() >= 0 == false)
+            canBeSaved = false;
+        else if(longitude == null || longitude.intValue() > 0 == false)
+            canBeSaved = false;
+        return canBeSaved;
+    }
 }
