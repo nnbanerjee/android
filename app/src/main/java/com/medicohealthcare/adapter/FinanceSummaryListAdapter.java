@@ -1,8 +1,6 @@
 package com.medicohealthcare.adapter;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +10,11 @@ import android.widget.TextView;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.FinanceSummary;
-import com.medicohealthcare.view.home.ParentFragment;
-import com.medicohealthcare.view.finance.ManageFinanceDetailsView;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -38,12 +35,14 @@ public class FinanceSummaryListAdapter extends BaseAdapter implements StickyList
     List<FinanceSummary> financeSummaries;
     int type;
     Activity context;
+    Currency currency;
 
-    public FinanceSummaryListAdapter(Activity context, List<FinanceSummary> financeSummaries, int type) {
+    public FinanceSummaryListAdapter(Activity context, List<FinanceSummary> financeSummaries, Currency currency, int type) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.financeSummaries = financeSummaries;
         this.type = type;
+        this.currency = currency;
     }
 
     @Override
@@ -73,21 +72,21 @@ public class FinanceSummaryListAdapter extends BaseAdapter implements StickyList
             holder.rightArrow = (ImageView)convertView.findViewById(R.id.rightArrow);
             holder.summary = financeSummaries.get(position);
             convertView.setTag(holder);
-            holder.rightArrow.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Bundle bundle = context.getIntent().getExtras();
-                    bundle.putLong("report_date",holder.summary.date);
-                    bundle.putInt("report_type", type);
-                    context.getIntent().putExtras(bundle);
-                    ParentFragment fragment = new ManageFinanceDetailsView();
-                    FragmentTransaction ft = context.getFragmentManager().beginTransaction();
-                    ft.add(R.id.service, fragment,ManageFinanceDetailsView.class.getName()).addToBackStack(ManageFinanceDetailsView.class.getName()).commit();
-
-                }
-            });
+//            holder.rightArrow.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Bundle bundle = context.getIntent().getExtras();
+//                    bundle.putLong("report_date",holder.summary.date);
+//                    bundle.putInt("report_type", type);
+//                    context.getIntent().putExtras(bundle);
+//                    ParentFragment fragment = new ManageFinanceDetailsView();
+//                    FragmentTransaction ft = context.getFragmentManager().beginTransaction();
+//                    ft.add(R.id.service, fragment,ManageFinanceDetailsView.class.getName()).addToBackStack(ManageFinanceDetailsView.class.getName()).commit();
+//
+//                }
+//            });
         }
         else
         {
@@ -117,6 +116,7 @@ public class FinanceSummaryListAdapter extends BaseAdapter implements StickyList
         }
 //        SimpleDateFormat format = new SimpleDateFormat("dd-MMMMMMMMM", Locale.getDefault());
         NumberFormat nf = NumberFormat.getCurrencyInstance();
+        nf.setCurrency(currency);
         nf.setMaximumFractionDigits(2);
         holder.revenue.setText(nf.format(financeSummaries.get(position).totalCost));
 

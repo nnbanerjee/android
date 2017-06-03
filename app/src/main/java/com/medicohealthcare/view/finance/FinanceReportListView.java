@@ -1,11 +1,14 @@
 package com.medicohealthcare.view.finance;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.medicohealthcare.model.FinanceSummary;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
+import java.util.Currency;
 import java.util.List;
 
 import retrofit.Callback;
@@ -43,6 +47,8 @@ public class FinanceReportListView extends ParentFragment
     Button daily,weekly,monthly;
     StickyListHeadersListView reportDates;
 
+    int type = DAILY;
+
     List<FinanceSummary> model;
 
     @Nullable
@@ -64,6 +70,7 @@ public class FinanceReportListView extends ParentFragment
                 weekly.setBackground(getActivity().getResources().getDrawable(R.drawable.page_default));
                 monthly.setBackground(getActivity().getResources().getDrawable(R.drawable.page_default));
                 loadFinanceReports(DAILY);
+                type = DAILY;
             }
         });
         weekly.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +81,7 @@ public class FinanceReportListView extends ParentFragment
                 weekly.setBackground(getActivity().getResources().getDrawable(R.drawable.page_selected));
                 monthly.setBackground(getActivity().getResources().getDrawable(R.drawable.page_default));
                 loadFinanceReports(WEEKLY);
+                type = WEEKLY;
             }
         });
         monthly.setOnClickListener(new View.OnClickListener() {
@@ -84,9 +92,29 @@ public class FinanceReportListView extends ParentFragment
                 weekly.setBackground(getActivity().getResources().getDrawable(R.drawable.page_default));
                 monthly.setBackground(getActivity().getResources().getDrawable(R.drawable.page_selected));
                 loadFinanceReports(MONTHLY);
+                type = MONTHLY;
             }
         });
-        return view;
+
+        reportDates.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Activity activity = getActivity();
+                Bundle bundle = activity.getIntent().getExtras();
+                FinanceSummary summary = (FinanceSummary)reportDates.getItemAtPosition(position);
+                bundle.putLong("report_date",summary.date);
+                bundle.putInt("report_type", type);
+                activity.getIntent().putExtras(bundle);
+                ParentFragment fragment = new ManageFinanceDetailsView();
+                FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fragment,ManageFinanceDetailsView.class.getName()).addToBackStack(ManageFinanceDetailsView.class.getName()).commit();
+
+            }
+        });
+
+        return  view;
     }
 
     @Override
@@ -130,9 +158,9 @@ public class FinanceReportListView extends ParentFragment
 
                 if (reports != null && !reports.isEmpty())
                 {
+                    Currency currency = Currency.getInstance(getDefaultCountry().getCurrencyCode());
                     model = reports;
-                    reportDates.setAdapter(new FinanceSummaryListAdapter(getActivity(),model,type));
-                    Toast.makeText(getActivity(), "Reports found!", Toast.LENGTH_LONG).show();
+                    reportDates.setAdapter(new FinanceSummaryListAdapter(getActivity(),model,currency,type));
                 }
                 else
                 {

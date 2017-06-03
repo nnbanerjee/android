@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
@@ -195,13 +196,13 @@ public class ChatPersonListView extends ParentFragment {
         {
             if(adapter != null)
             {
-//                Bundle bundle = intent.getExtras();
-//                int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
-//                int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
-//                adapter.setNumberOfMessages(ids, numberOfMessages);
-//                Parcelable state = listView.onSaveInstanceState();
-//                adapter.notifyDataSetInvalidated();
-//                listView.onRestoreInstanceState(state);
+                Bundle bundle = intent.getExtras();
+                int[] ids = bundle.getIntArray(Constants.NEW_MESSAGE_IDS);
+                int[] numberOfMessages = bundle.getIntArray(Constants.NEW_MESSAGE_NUMBERS);
+                adapter.setNumberOfMessages(ids, numberOfMessages);
+                Parcelable state = listView.onSaveInstanceState();
+                adapter.notifyDataSetInvalidated();
+                listView.onRestoreInstanceState(state);
             }
 
         }

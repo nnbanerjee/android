@@ -2,8 +2,6 @@ package com.medicohealthcare.view.finance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,7 @@ import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
 
 import retrofit.Callback;
@@ -53,91 +52,6 @@ public class ManageFinanceDetailsView extends ParentFragment {
         advanceValue = (EditText) view.findViewById(R.id.advanceValue);
         totalDueValue = (EditText) view.findViewById(R.id.totalDueValue);
         grandTotal = (EditText)view.findViewById(R.id.grandTotal);
-
-        taxPercent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String doubleString = taxPercent.getText().toString();
-                if(doubleString.equals(""))
-                {
-//                    taxValue.setText("0.00");
-//                    grandTotal.setText(""+grandTotalFinal);
-
-
-                }
-                else
-                {
-//                    tax = Double.parseDouble(doubleString);
-//                    double subTotal = ((gTotalValue*tax)/100);
-//                    taxValue.setText(""+subTotal);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        discountPercent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String doubleString = discountPercent.getText().toString();
-                if(doubleString.equals(""))
-                {
-//                    discountValue.setText("0.00");
-//                    grandTotal.setText(""+grandTotalFinal);
-                }
-                else
-                {
-//                    Double discount = Double.parseDouble(doubleString);
-//                    double subTotal = ((gTotalValue*discount)/100);
-//                    discount = subTotal;
-//                    discountValue.setText(""+subTotal);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        advanceValue.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String doubleString = advanceValue.getText().toString();
-//                if(doubleString.equals("")){
-//                    totalDueValue.setText(""+grandTotalFinal);
-//                }else{
-//                    if(doubleString!=null&& ! doubleString.equalsIgnoreCase("") && !doubleString.equalsIgnoreCase("null")) {
-//                        totalDueValue.setText("" + grandTotalFinal);
-//                    }
-//                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
         return view;
     }
 
@@ -157,7 +71,8 @@ public class ManageFinanceDetailsView extends ParentFragment {
 
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
         Integer appointMentId = bundle.getInt(APPOINTMENT_ID);
@@ -177,7 +92,8 @@ public class ManageFinanceDetailsView extends ParentFragment {
 
                     if (invoiceDetails != null)
                     {
-                        procedure_name.setAdapter(new FinanceProcedureListAdapter(getActivity(), invoiceDetails.procedureSummary, type));
+                        Currency currency = Currency.getInstance(getDefaultCountry().getCurrencyCode());
+                        procedure_name.setAdapter(new FinanceProcedureListAdapter(getActivity(), invoiceDetails.procedureSummary,currency, type));
                         double total = 0.0;
                         for (FinanceDetails.ProcedureSummary summary : invoiceDetails.procedureSummary)
                         {
@@ -185,6 +101,7 @@ public class ManageFinanceDetailsView extends ParentFragment {
                         }
                         NumberFormat nf = NumberFormat.getCurrencyInstance();
                         nf.setMaximumFractionDigits(2);
+                        nf.setCurrency(currency);
                         invoiceTotal.setText(nf.format(total));
                         discountPercent.setText(nf.format(invoiceDetails.discount));
                         taxPercent.setText(nf.format(invoiceDetails.tax));
@@ -207,40 +124,5 @@ public class ManageFinanceDetailsView extends ParentFragment {
 
     }
 
-    @Override
-    public boolean isChanged()
-    {
-        return true;
-    }
-    @Override
-    public void update()
-    {
-
-    }
-    @Override
-    public boolean save()
-    {
-//        ManagePatientProfile activity = (ManagePatientProfile)getActivity();
-//        Bundle args = activity.getIntent().getExtras();
-//        args.remove(TREATMENT_ID);
-//        args.putInt(CUSTOM_TEMPLATE_CREATE_ACTIONS, CREATE_TREATMENT);
-//        if(treatmentPlanModel != null && treatmentPlanModel.size() > 0)
-//            args.putInt(INVOICE_ID, ((TreatmentPlan1)treatmentPlanModel.get(0)).getInvoiceId());
-//        activity.getIntent().putExtras(args);
-//        ParentFragment fragment = new CustomTemplateListView();
-//        activity.fragmentList.add(fragment);
-//        fragment.setArguments(args);
-//        FragmentManager fragmentManger = activity.getFragmentManager();
-//        fragmentManger.beginTransaction().add(R.id.service, fragment, "Treatment Plan").addToBackStack(null).commit();
-        return true;
-    }
-    @Override
-    public boolean canBeSaved()
-    {
-        return true;
-    }
-    @Override
-    public void setEditable(boolean editable) {
-    }
 
 }

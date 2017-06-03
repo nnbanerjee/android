@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.ClinicByDoctorRequest;
 import com.medicohealthcare.model.DoctorClinicDetails;
-import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -197,8 +196,8 @@ public class ClinicDetailedView extends ParentFragment {
             @Override
             public void success(DoctorClinicDetails clinicDetailsreturn, Response response) {
                 model = clinicDetailsreturn;
-                if(model != null)
-                    new ImageLoadTask(model.clinic.imageUrl, viewImage).execute();
+//                if(model != null && model.clinic != null && model.clinic.imageUrl != null)
+//                    new ImageLoadTask(model.clinic.imageUrl, viewImage).execute();
                 address.setText(model.clinic.address);
                 clinicName.setText(model.clinic.clinicName);
                 speciality.setText(model.clinic.speciality);

@@ -11,6 +11,7 @@ import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.FinanceDetails;
 
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
 
 /**
@@ -27,12 +28,14 @@ public class FinanceProcedureListAdapter extends BaseAdapter  {
     List<FinanceDetails.ProcedureSummary> financeSummaries;
     int type;
     Context context;
+    Currency currency;
 
-    public FinanceProcedureListAdapter(Context context, List<FinanceDetails.ProcedureSummary> financeSummaries, int type) {
+    public FinanceProcedureListAdapter(Context context, List<FinanceDetails.ProcedureSummary> financeSummaries, Currency currency, int type) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.financeSummaries = financeSummaries;
         this.type = type;
+        this.currency = currency;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class FinanceProcedureListAdapter extends BaseAdapter  {
         }
         NumberFormat nf = NumberFormat.getCurrencyInstance();
         nf.setMaximumFractionDigits(2);
+        nf.setCurrency(currency);
         holder.procedureName.setText(financeSummaries.get(position).procedureName.toString());
         holder.revenue.setText(nf.format(financeSummaries.get(position).totalCost));
         holder.totalCost.setText(nf.format(financeSummaries.get(position).totalCost.doubleValue()-financeSummaries.get(position).totalDiscount.doubleValue()+financeSummaries.get(position).totalTax.doubleValue()));

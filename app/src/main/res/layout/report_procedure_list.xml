@@ -38,6 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/body11_blue"
             android:text="(Cost:"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
@@ -45,6 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/body11_blue"
             android:id="@+id/cost_value"
             android:text="value"
             android:layout_marginRight="10dp"
@@ -53,6 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/body11_blue"
             android:text="Discount:"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -61,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/discount_value"
+            android:textAppearance="@style/body11_blue"
             android:text="value"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -68,6 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/body11_blue"
             android:text="Tax:"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -75,6 +80,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/body11_blue"
             android:id="@+id/tax_value"
             android:text="Value)"
             android:layout_marginTop="5dp"

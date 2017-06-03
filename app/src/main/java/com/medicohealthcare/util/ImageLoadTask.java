@@ -32,21 +32,6 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
             drawableMap = new HashMap<String, Bitmap>();
     }
 
-
-    public Bitmap getImage(String url)
-    {
-        return this.drawableMap.get(url);
-    }
-    public void addImage(String url, Bitmap bitmap)
-    {
-        this.drawableMap.put(url,bitmap);
-    }
-
-    public void remove(String url)
-    {
-        this.drawableMap.remove(url);
-    }
-
     public void execute()
     {
         if(this.drawableMap.get(url) != null)
@@ -58,6 +43,12 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
             super.execute();
         }
     }
+
+    public static synchronized void addImage(String url, Bitmap bitmap)
+    {
+        drawableMap.put(url, bitmap);
+    }
+
     @Override
     protected Bitmap doInBackground(Void... params) {
         try {
@@ -78,9 +69,17 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
     @Override
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
-        Bitmap bitmap = Bitmap.createScaledBitmap(result,100,100,true);
-        imageView.setImageBitmap(bitmap);
-        drawableMap.put(url,bitmap);
+        if(result.getWidth() > 100 || result.getHeight() > 0)
+        {
+            Bitmap bitmap = Bitmap.createScaledBitmap(result, 100, 100, true);
+            imageView.setImageBitmap(bitmap);
+            addImage(url,bitmap);
+        }
+        else
+        {
+            imageView.setImageBitmap(result);
+            addImage(url, result);
+        }
     }
 
 }

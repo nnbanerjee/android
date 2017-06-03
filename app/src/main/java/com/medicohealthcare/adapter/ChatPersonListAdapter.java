@@ -61,7 +61,7 @@ public class ChatPersonListAdapter extends HomeAdapter
     }
 
     @Override
-    public View getView(final int position, View cv, ViewGroup parent) {
+    public View getView(int position, View cv, ViewGroup parent) {
 
         if (inflater == null) {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -87,12 +87,12 @@ public class ChatPersonListAdapter extends HomeAdapter
         totalCount.setVisibility(View.GONE);
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         downImage.setVisibility(View.GONE);
+        Person person = personList.get(position);
         int role = personList.get(position).role;
         viewImage.setBackground(null);
         if(ids != null && numberOfMessages != null && ids.length > 0
                 && numberOfMessages.length > 0 && ids.length == numberOfMessages.length)
         {
-           Person person = personList.get(position);
             int id = person.id.intValue();
             for(int i = 0; i < ids.length; i++)
             {
@@ -104,6 +104,7 @@ public class ChatPersonListAdapter extends HomeAdapter
                 }
             }
         }
+        viewImage.setImageBitmap(null);
         switch (role)
         {
             case PARAM.PATIENT:
@@ -117,22 +118,22 @@ public class ChatPersonListAdapter extends HomeAdapter
                 break;
         }
 
-        if (personList.get(position).getAddress() != null) {
-            if (personList.get(position).getAddress().equals("")) {
+        if (person.getAddress() != null) {
+            if (person.getAddress().equals("")) {
                 address.setText("None");
 
             } else {
-                address.setText(personList.get(position).getAddress());
+                address.setText(person.getAddress());
 
             }
         }
-        String imageUrl = personList.get(position).getImageUrl();
+        String imageUrl = person.getImageUrl();
         if (imageUrl != null && imageUrl.trim().length() > 0) {
                 new ImageLoadTask(imageUrl, viewImage).execute();
         }
 
-        doctorName.setText(personList.get(position).getName());
-        doctorSpeciality.setText(personList.get(position).getSpeciality());
+        doctorName.setText(person.getName());
+        doctorSpeciality.setText(person.getSpeciality());
 
         return convertView;
 

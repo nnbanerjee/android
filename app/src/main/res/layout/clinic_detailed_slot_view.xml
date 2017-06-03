@@ -147,13 +147,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/slot_name"
-        android:background="@drawable/arrow_right" />
+        android:background="@drawable/ic_navigate_next_black_24dp" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:textAppearance="@style/body7"
         android:layout_alignTop="@+id/imageView7"
         android:layout_toLeftOf="@+id/imageView7"

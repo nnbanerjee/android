@@ -81,6 +81,7 @@ public class PatientReviewListAdapter extends ParentAdapter  {
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         patient_name.setText(patientReviews.get(position).patientName);
         speciality.setText(patientReviews.get(position).profession);
+        totalCount.setVisibility(View.GONE);
         if(patientReviews.get(position).recommendations != null && patientReviews.get(position).recommendations.byteValue() == 1)
             recommdation_value.setSelected(true);
         else

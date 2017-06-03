@@ -36,7 +36,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="2dp"
                 android:layout_toLeftOf="@id/nextBtn"
-                android:background="@drawable/arrow_right"
+                android:background="@drawable/ic_navigate_next_black_24dp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/totalCount"
@@ -109,6 +109,7 @@
             android:id="@+id/down_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_alignEnd="@+id/doctor_image"
             android:layout_alignRight="@+id/doctor_image"
             android:layout_below="@+id/relativeLayout2"
