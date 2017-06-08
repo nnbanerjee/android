@@ -48,6 +48,10 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
     {
         drawableMap.put(url, bitmap);
     }
+    public static synchronized void removeImage(String url)
+    {
+        drawableMap.remove(url);
+    }
 
     @Override
     protected Bitmap doInBackground(Void... params) {
@@ -69,17 +73,8 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
     @Override
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
-        if(result.getWidth() > 100 || result.getHeight() > 0)
-        {
-            Bitmap bitmap = Bitmap.createScaledBitmap(result, 100, 100, true);
-            imageView.setImageBitmap(bitmap);
-            addImage(url,bitmap);
-        }
-        else
-        {
-            imageView.setImageBitmap(result);
-            addImage(url, result);
-        }
+        imageView.setImageBitmap(result);
+        addImage(url, result);
     }
 
 }

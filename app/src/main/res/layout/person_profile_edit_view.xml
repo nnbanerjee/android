@@ -181,7 +181,7 @@
                       android:layout_alignParentLeft="true"
                       android:layout_below="@+id/layout_gender"
                       android:layout_marginTop="@dimen/text_top_margin"
-                      android:text="Date Of Birth" />
+                      android:text="Date Of Birth*" />
                 <EditText
                     android:id="@+id/dob"
                     android:layout_width="wrap_content"
@@ -312,7 +312,7 @@
                       android:layout_alignParentLeft="true"
                       android:layout_below="@+id/city"
                       android:layout_marginTop="@dimen/text_top_margin"
-                      android:text="Profession" />
+                      android:text="Profession*" />
 
                   <MultiAutoCompleteTextView
                       android:id="@+id/specialization"

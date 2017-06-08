@@ -132,10 +132,11 @@ public class PatientProfileManageView extends ParentFragment implements Activity
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
                 bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
                 bundle.putInt(PARAM.FILE_UPLOAD, PROFILE_PICTURE);
+                bundle.putString(PARAM.PROFILE_NAME, personModel.getName());
                 getActivity().getIntent().putExtras(bundle);
-                ParentFragment fileFragment = new FileUploadView();
+                ParentFragment fileFragment = new ProfilePictureSelectionView();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
+                ft.add(R.id.service, fileFragment,ProfilePictureSelectionView.class.getName()).addToBackStack(ProfilePictureSelectionView.class.getName()).commit();
             }
         });
         specialization.addTextChangedListener(new TextWatcher() {
@@ -196,12 +197,14 @@ public class PatientProfileManageView extends ParentFragment implements Activity
                     new ImageLoadTask(person.imageUrl,profilePic).execute();
                     profileId.setText(person.getId().toString());
                     name.setText(person.getName());
-
                     mobile_number.setText(person.getMobile().toString());
-                    SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
-                    mobileCountry.setAdapter(countryListAdapter);
-                    mobileCountry.setEnabled(false);
-                    mobileCountry.setSelection(getCountryIndex(person.getLocation()));
+                    if(countriesList != null)
+                    {
+                        SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
+                        mobileCountry.setAdapter(countryListAdapter);
+                        mobileCountry.setEnabled(false);
+                        mobileCountry.setSelection(getCountryIndex(person.getLocation()));
+                    }
                     email.setText(person.getEmail());
                     gender_spinner.setSelection(person.gender.intValue());
                     DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);

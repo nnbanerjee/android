@@ -71,7 +71,7 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.doctor_profile_edit_view,container,false);
         setHasOptionsMenu(true);
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        setTitle();
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
         personIdView = (TextView) view.findViewById(R.id.person_id);
@@ -103,14 +103,7 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
         practice_layout.setVisibility(View.VISIBLE);
         practice.setVisibility(View.VISIBLE);
         practiceType.setVisibility(View.VISIBLE);
-        Bundle bundle = getActivity().getIntent().getExtras();
         int specializationType = DOCTOR_SPECIALIZATION;
-        int personId = bundle.getInt(PERSON_ID);
-        int profileType = bundle.getInt(PROFILE_TYPE);
-        if (personId > 0)
-            textviewTitle.setText("Doctor Profile");
-        else
-            textviewTitle.setText("Create Doctor Profile");
         ((TextView)view.findViewById(R.id.speciality_text)).setText("Specialization");
         final int specializationQueryType = specializationType;
         specialization.addTextChangedListener(new TextWatcher()
@@ -163,10 +156,11 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
                 bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
                 bundle.putInt(PARAM.FILE_UPLOAD, PROFILE_PICTURE);
+                bundle.putString(PARAM.PROFILE_NAME, personModel.getName());
                 getActivity().getIntent().putExtras(bundle);
-                ParentFragment fileFragment = new FileUploadView();
+                ParentFragment fileFragment = new ProfilePictureSelectionView();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
+                ft.add(R.id.service, fileFragment,ProfilePictureSelectionView.class.getName()).addToBackStack(ProfilePictureSelectionView.class.getName()).commit();
             }
         });
         return view;
@@ -263,12 +257,13 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
             setEditable(true);
             hideBusy();
         }
+        setTitle();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        setTitle();
     }
     private void save(Person person)
     {
@@ -426,7 +421,7 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
-        inflater.inflate(R.menu.save,menu);
+        inflater.inflate(R.menu.upload,menu);
         menuItem = menu.findItem(R.id.save);
     }
 
@@ -434,7 +429,7 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.save: {
+            case R.id.upload: {
                 update();
                 if (isChanged()) {
                     if (canBeSaved()) {
@@ -464,6 +459,18 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
                 return i;
         }
         return 0;
+    }
+
+    private void setTitle()
+    {
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        int personId = bundle.getInt(PERSON_ID);
+        int profileType = bundle.getInt(PROFILE_TYPE);
+        if (personId > 0)
+            textviewTitle.setText("Doctor Profile");
+        else
+            textviewTitle.setText("Create Doctor Profile");
     }
 
 }

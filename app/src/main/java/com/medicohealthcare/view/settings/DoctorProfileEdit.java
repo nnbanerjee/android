@@ -105,4 +105,12 @@ public class DoctorProfileEdit extends ParentFragment {
 		return false;
 	}
 
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		if(selectedfragment != null)
+			selectedfragment.onStart();
+	}
+
 }

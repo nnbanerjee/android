@@ -1,5 +1,6 @@
 package com.medicohealthcare.view.settings;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
+import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -180,6 +182,20 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
                     });
                 }
 
+            }
+        });
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                setHasOptionsMenu(false);
+                Bundle bundle = getActivity().getIntent().getExtras();;
+                bundle.putInt(PARAM.FILE_UPLOAD, PROFILE_PICTURE);
+                bundle.putString(PARAM.PROFILE_NAME, personModel.getName());
+                getActivity().getIntent().putExtras(bundle);
+                ParentFragment fileFragment = new ProfilePictureSelectionView();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.service, fileFragment,ProfilePictureSelectionView.class.getName()).addToBackStack(ProfilePictureSelectionView.class.getName()).commit();
             }
         });
         return view;

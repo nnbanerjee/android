@@ -110,10 +110,12 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
                 bundle.putInt(PARAM.PROFILE_TYPE, DEPENDENT);
                 bundle.putInt(PROFILE_ID,bundle.getInt(LOGGED_IN_ID));
                 bundle.putInt(PARAM.FILE_UPLOAD, PROFILE_PICTURE);
+                bundle.putString(PARAM.PROFILE_NAME, personModel.getName());
+                bundle.putString(PARAM.PROFILE_URL, personModel.getImageUrl());
                 getActivity().getIntent().putExtras(bundle);
-                ParentFragment fileFragment = new FileUploadView();
+                ParentFragment fileFragment = new ProfilePictureSelectionView();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.service, fileFragment,FileUploadView.class.getName()).addToBackStack(FileUploadView.class.getName()).commit();
+                ft.add(R.id.service, fileFragment,ProfilePictureSelectionView.class.getName()).addToBackStack(ProfilePictureSelectionView.class.getName()).commit();
             }
         });
         specialization.addTextChangedListener(new TextWatcher() {
@@ -199,12 +201,13 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
+        setTitle();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        setTitle();
     }
 
     private void save(Person person)
@@ -305,5 +308,10 @@ public class DoctorProfileManageView extends ParentFragment implements ActivityC
         mobileCountry.setEnabled(editable);
         mobile_number.setEnabled(editable);
     }
+    private void setTitle()
+    {
+        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+        textviewTitle.setText("Doctor Profile");
 
+    }
 }

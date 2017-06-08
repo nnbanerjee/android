@@ -1,4 +1,4 @@
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,35 +17,7 @@
         >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/edit_top_margin"
-            android:id="@+id/document_name"
-            android:layout_below="@+id/document_type"
-            android:background="#ffffff">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="6"
-                android:layout_centerVertical="true"
-                android:text="Name"
-                android:id="@+id/documentName"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_height"
-                android:layout_toRightOf="@+id/documentName"
-                android:ems="6"
-                android:layout_centerVertical="true"
-                android:text=""
-                android:paddingLeft="5dp"
-                android:id="@+id/documentValue"
-                />
-        </RelativeLayout>
-        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_below="@+id/document_name"
             android:layout_marginTop="@dimen/edit_top_margin"
             android:id="@+id/layout7"
             android:layout_height="wrap_content">
@@ -55,11 +27,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/document_browse"
-                    android:text="Browse Document"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
                 <RadioButton
                     android:id="@+id/image_browse"
                     android:text="Browse Picture"
@@ -79,24 +46,53 @@
 
                 <Button
                     android:id="@+id/image_previw"
-                    android:text="Browse"
+                    android:text="Capture"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_hight" />
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout8"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_below="@+id/layout7"
-            android:layout_height="match_parent">
-            <ImageView
-                android:gravity="center"
+            android:layout_below="@+id/layout7">
+            <ImageView
+                android:id="@+id/preview_image_final"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:id="@+id/preview_image"
-                android:layout_height="wrap_content" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+            android:src="@drawable/clinic_default"/>   
 
-        </RelativeLayout>
+            </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="600dp"
+            android:layout_below="@id/layout8"
+            android:id="@+id/frm">
+            <ImageView android:id="@+id/preview_image"
+               android:layout_width="match_parent"
+               android:layout_height="600dp"
+               android:scaleType="matrix"/>
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_height="600dp"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layout7">
+            <ImageView
+                android:id="@+id/preview_image_selection"
+                android:background="@drawable/rectangle_blue"
+                android:padding="2dp"
+                android:cropToPadding="true"
+                android:layout_width="150dp"
+                android:layout_height="150dp"/>   
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>

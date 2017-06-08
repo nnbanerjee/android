@@ -48,8 +48,8 @@ public class ImageUtil {
 
     public static final int SELECT_PICTURE = 1;
 
-    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 100;
-    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 100;
+    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 300;
+    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 300;
 
     public static final int IMAGE_UPLOAD_MAX_WIDTH = 1024;
     public static final int IMAGE_UPLOAD_MAX_HEIGHT = 1024;
@@ -242,11 +242,65 @@ public class ImageUtil {
         return bp;
     }
 
+    public static File resizeAsPNG(File image) {
+        return resizeAsFormat(Bitmap.CompressFormat.PNG, image);
+    }
+
     public static File resizeAsJPG(File image) {
         return resizeAsFormat(Bitmap.CompressFormat.JPEG, image);
     }
 
-    public static File resizeAsFormat(Bitmap.CompressFormat format, File image) {
+    public static File resizeAsFormatAndSize(Bitmap.CompressFormat format, File image, int width, int height)
+    {
+        if (tempDir == null) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: tempDir is null!!!");
+            return image;
+        }
+
+        File resizedImage = new File(tempDir, image.getName());
+        if (!tempDir.canWrite()) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: "+tempDir.getAbsolutePath()+" cannot be written!!!");
+            return image;
+        }
+
+        try {
+            FileOutputStream out = new FileOutputStream(resizedImage);
+            Bitmap resizedBitmap = ImageUtil.resizeImage(image.getAbsolutePath(),width,height);
+            resizedBitmap.compress(format, IMAGE_COMPRESS_QUALITY, out);
+            Log.d(ImageUtil.class.getSimpleName(), "resizeAsFormat: successfully resized to path=" + resizedImage.getAbsolutePath());
+            if (out != null) {
+                out.close();
+                out = null;
+            }
+        } catch (Exception e) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: " + e.getMessage(), e);
+        }
+
+        return resizedImage;
+    }
+
+    public static File cropAndResizeAsFormatAndSize(Bitmap.CompressFormat format, String imagepath, int width, int height)
+    {
+        File picture = new File(Environment.getExternalStorageDirectory()+"/");
+        Bitmap b= BitmapFactory.decodeFile(imagepath);
+        Bitmap out = cropToSquare(b);
+        out = Bitmap.createScaledBitmap(b, width, width, false);
+        File file = new File(picture, "resize.png");
+        FileOutputStream fOut;
+        try {
+            fOut = new FileOutputStream(file);
+            out.compress(format, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            b.recycle();
+            out.recycle();
+        } catch (Exception e) {}
+
+        return file;
+    }
+
+    public static File resizeAsFormat(Bitmap.CompressFormat format, File image)
+    {
         if (tempDir == null) {
             Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: tempDir is null!!!");
             return image;
@@ -278,6 +332,17 @@ public class ImageUtil {
         return cropToSquare(bitmap, -1);
     }
 
+    public static Bitmap getProfilePicture(String path)
+    {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        Bitmap bp = BitmapFactory.decodeFile(path, opts);
+        Bitmap bitmap = cropToSquare(bp);
+        Bitmap bitmap1 = bitmap.createScaledBitmap(bitmap,100,100,true);
+
+        return bitmap1;
+    }
+
     public static Bitmap cropToSquare(Bitmap bitmap, int dimension) {
         int width  = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -300,5 +365,40 @@ public class ImageUtil {
 //        d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
 //        return d;
 //    }
+
+    public static Bitmap cropAndResizeImage(String path, int maxWidth, int maxHeight) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        Bitmap bp = BitmapFactory.decodeFile(path, opts);
+
+        int originalHeight = opts.outHeight;
+        int originalWidth = opts.outWidth;
+        int resizeScale = 1;
+
+        Log.d(ImageUtil.class.getSimpleName(), "resizeImage: outWidth="+originalWidth+" outHeight="+originalHeight);
+        if ( originalWidth > maxWidth || originalHeight > maxHeight ) {
+            final int widthRatio = Math.round((float) originalWidth / (float) maxWidth);
+            final int heightRatio = Math.round((float) originalHeight / (float) maxHeight);
+            resizeScale = heightRatio < widthRatio ? heightRatio : widthRatio;
+            Log.d(ImageUtil.class.getSimpleName(), "resizeImage: resizeScale="+resizeScale);
+        }
+
+        // put the scale instruction (1 -> scale to (1/1); 8-> scale to 1/8)
+        opts.inSampleSize = resizeScale;
+        opts.inJustDecodeBounds = false;
+
+
+        int bmSize = (originalWidth / resizeScale) * (originalHeight / resizeScale) * 4;
+        if ( Runtime.getRuntime().freeMemory() > bmSize ) {
+            bp = BitmapFactory.decodeFile(path, opts);
+        } else {
+            return null;
+        }
+
+
+
+        bp = BitmapFactory.decodeFile(path, opts);
+        return cropToSquare(bp);
+    }
 }
 
