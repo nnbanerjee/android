@@ -64,6 +64,7 @@ public class DoctorAppointmentInvoices extends ParentFragment {
         taxValue = (EditText) view.findViewById(R.id.taxValue);
         advanceValue = (EditText) view.findViewById(R.id.advanceValue);
         totalDueValue = (EditText) view.findViewById(R.id.totalDueValue);
+        treatmentPlan = (DoctorAppointmentTreatmentPlan) getActivity().getFragmentManager().findFragmentById(R.id.treatment_list);
         invoice = (DoctorAppointmentTreatmentPlan) getActivity().getFragmentManager().findFragmentById(R.id.invoice_list);
         grandTotal = (EditText)view.findViewById(R.id.grandTotal);
         taxPercent.addTextChangedListener(new TextWatcher() {

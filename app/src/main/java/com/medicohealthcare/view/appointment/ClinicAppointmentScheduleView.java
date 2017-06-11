@@ -106,13 +106,6 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-    }
     @Override
     public void onStart() {
         super.onStart();
@@ -140,6 +133,8 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
+        setHasOptionsMenu(true);
+        setTitle("Appointment");
     }
 
     private void setWeekDays()
@@ -357,7 +352,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             public void failure(RetrofitError error)
             {
                 hideBusy();
-                new MedicoCustomErrorHandler(getActivity(),false).handleError(error);
+                new MedicoCustomErrorHandler(activity,false).handleError(error);
                 doctorholidayList = null;
             }
         });
@@ -379,7 +374,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorClinicDetails,doctorSlotBookings, doctorholidayList, date1);
                 appointment_schedule.setAdapter(adapter);
                 hideBusy();
-                new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                new MedicoCustomErrorHandler(activity).handleError(error);
             }
         });
     }
@@ -550,5 +545,25 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
             setWeekDays();
             setSelection();
         }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        setHasOptionsMenu(false);
+        setTitle("Appointment");
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
     }
 }

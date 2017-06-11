@@ -33,8 +33,10 @@ import com.medicohealthcare.datepicker.SlideDateTimeListener;
 import com.medicohealthcare.datepicker.SlideDateTimePicker;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.ProfileId;
+import com.medicohealthcare.model.RegistrationVerificationRequest;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.ServerResponse;
+import com.medicohealthcare.model.ServerResponseStatus;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
@@ -78,6 +80,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
     FileUploadView fileFragment;
+
+    RegistrationVerificationView verification = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -269,7 +273,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 }
             });
         }
-        else
+        else if(personModel == null)
         {
             personModel = new Person();
             personModel.setRole(profileRole.byteValue());
@@ -286,13 +290,15 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             if(url != null && url.trim().length() > 0)
                 new ImageLoadTask(url, profilePic).execute();
         }
-
+        setHasOptionsMenu(true);
+//        if(verification != null && verification.isCodeverified())
+//            createProfile();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        setHasOptionsMenu(true);
     }
     @Override
     public void onPause() {
@@ -316,6 +322,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                         Toast.makeText(getActivity(), "Profile is Successfully Activated", Toast.LENGTH_LONG).show();
                     else
                         Toast.makeText(getActivity(), "Could not activate the Profile", Toast.LENGTH_LONG).show();
+                    hideBusy();
                 }
 
                 @Override
@@ -330,45 +337,19 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             api.checkMobileEmailAvailability(person, new Callback<ServerResponse>()
             {
                 @Override
-                public void success(ServerResponse s, Response response) {
+                public void success(ServerResponse s, Response response)
+                {
                     if (s.status == 0 && s.errorCode == null )
                     {
-                        api.createProfile(person, new Callback<ServerResponse>() {
-                            @Override
-                            public void success(ServerResponse s, Response response) {
-                                if (s.status == 1)
-                                {
-                                    Bundle bundle = getActivity().getIntent().getExtras();
-                                    bundle.putString("person_name", personModel.getName());
-                                    bundle.putInt("gender", personModel.getGender().intValue());
-                                    bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
-                                    bundle.putInt(PROFILE_ID, s.profileId);
-                                    getActivity().getIntent().putExtras(bundle);
-                                    ParentFragment fragment = new RegistrationSuccessfulView();
-                                    FragmentManager manager = getActivity().getFragmentManager();
-                                    FragmentTransaction transaction = manager.beginTransaction();
-                                    transaction.add(R.id.service,fragment,RegistrationSuccessfulView.class.getName()).commit();
-                                }
-                                else
-                                {
-                                    hideBusy();
-                                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error)
-                            {
-                                hideBusy();
-                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
-                            }
-                        });
+//                        sendVerificationCode(true,true);
+                        createProfile();
                     }
                     else
                     {
                         hideBusy();
                         Toast.makeText(getActivity(), "Email or Mobile number already exisit", Toast.LENGTH_LONG).show();
                     }
+
                 }
 
                 @Override
@@ -560,5 +541,152 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             personModel.setIsoCountry(manager.countryCode);
             manager.removeNotifyListeber(this);
         }
+    }
+
+
+    public void createProfile()
+    {
+        showBusy();
+
+        verification = null;
+        api.createProfile(personModel, new Callback<ServerResponse>() {
+            @Override
+            public void success(ServerResponse s, Response response) {
+                if (s.status == 1)
+                {
+                    setHasOptionsMenu(false);
+                    Bundle bundle = getActivity().getIntent().getExtras();
+                    bundle.putString("person_name", personModel.getName());
+                    bundle.putInt("gender", personModel.getGender().intValue());
+                    bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
+                    bundle.putInt(PROFILE_ID, s.profileId);
+                    getActivity().getIntent().putExtras(bundle);
+                    ParentFragment fragment = new RegistrationSuccessfulView();
+                    FragmentManager manager = getActivity().getFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.add(R.id.service,fragment,RegistrationSuccessfulView.class.getName()).commit();
+                }
+                else
+                {
+                    hideBusy();
+                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
+            }
+        });
+    }
+
+    private void sendVerificationCode(boolean email, boolean mobile)
+    {
+        if(email && mobile)
+        {
+            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(personModel.getEmail(), personModel.getMobile()), new Callback<ServerResponseStatus>()
+            {
+                @Override
+                public void success(ServerResponseStatus s, Response response)
+                {
+                    switch (s.status)
+                    {
+                        case 0:
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG);
+                            showVerification();
+                            break;
+                        case 2:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            break;
+                        case 3:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            break;
+                    }
+                    hideBusy();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+        else if(email)
+        {
+            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(personModel.getEmail()), new Callback<ServerResponseStatus>()
+            {
+                @Override
+                public void success(ServerResponseStatus s, Response response)
+                {
+                    switch (s.status)
+                    {
+                        case 0:
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            break;
+                    }
+                    hideBusy();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+        else if(mobile)
+        {
+            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(personModel.getMobile()), new Callback<ServerResponseStatus>()
+            {
+                @Override
+                public void success(ServerResponseStatus s, Response response)
+                {
+                    switch (s.status)
+                    {
+                        case 0:
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            break;
+                    }
+                    hideBusy();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+    }
+
+    private void showVerification()
+    {
+        setHasOptionsMenu(false);
+        Bundle bundle = getActivity().getIntent().getExtras();;
+        bundle.putString(PERSON_EMAIL, personModel.getEmail());
+        bundle.putLong(PERSON_MOBILE, personModel.getMobile());
+        bundle.putBoolean("MOBILE_VERIFICATION_REQUIRED",personModel.getLocation().equals("91")?true:false);
+        bundle.putString("PARENT_FRAGMENT_TAG", PersonProfileRegistrationView.class.getName());
+        getActivity().getIntent().putExtras(bundle);
+        verification = new RegistrationVerificationView();
+        FragmentManager manager = getActivity().getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.service,verification,RegistrationVerificationView.class.getName()).addToBackStack(RegistrationVerificationView.class.getName()).commit();
+
     }
 }

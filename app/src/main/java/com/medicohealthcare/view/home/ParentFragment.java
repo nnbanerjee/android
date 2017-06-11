@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.medicohealthcare.application.MyApi;
+import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.Country;
 import com.medicohealthcare.model.ProfileId;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
@@ -28,6 +30,7 @@ public class ParentFragment extends Fragment implements PARAM
     public MyApi api;
     public static List<Country> countriesList = null;
     public Fragment fragment;
+    TextView textviewTitle;
     @Override
     public void onStart()
     {
@@ -43,7 +46,7 @@ public class ParentFragment extends Fragment implements PARAM
         api =  ServerConnectionAdapter.getServerAdapter(getActivity()).getServerAPI();
         if(countriesList == null)
             loadSupportedCountryList();
-
+        textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
     }
     public void onResume()
     {
@@ -147,4 +150,12 @@ public class ParentFragment extends Fragment implements PARAM
         return 0;
     }
 
+    public void notifyParentFragment()
+    {
+
+    }
+    public void setTitle(String title)
+    {
+        textviewTitle.setText(title);
+    }
 }

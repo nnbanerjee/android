@@ -66,6 +66,7 @@ import com.medicohealthcare.model.PersonAndCategoryId1;
 import com.medicohealthcare.model.PersonDetailProfile;
 import com.medicohealthcare.model.PersonID;
 import com.medicohealthcare.model.ProfileId;
+import com.medicohealthcare.model.RegistrationVerificationRequest;
 import com.medicohealthcare.model.RemoveMedicineRequest;
 import com.medicohealthcare.model.RemovePatientTestRequest;
 import com.medicohealthcare.model.RemoveVisitDocument1;
@@ -77,6 +78,7 @@ import com.medicohealthcare.model.ResponseVm;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.SearchParameterRequest;
 import com.medicohealthcare.model.ServerResponse;
+import com.medicohealthcare.model.ServerResponseStatus;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.model.SummaryResponse;
 import com.medicohealthcare.model.Symptom;
@@ -105,6 +107,11 @@ import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 public interface MyApi {
+
+    @POST("/verifyCodeForNewRegistration1")
+    void verifyCodeForNewRegistration(@Body RegistrationVerificationRequest param, Callback<ServerResponseStatus> cb);
+    @POST("/getVerificationCodeForNewRegistration1")
+    void getVerificationCodeForNewRegistration(@Body RegistrationVerificationRequest param, Callback<ServerResponseStatus> cb);
 
     @POST("/getChatPersonList")
     void getChatPersonList(@Body ProfileId param, Callback<List<Person>> cb);
@@ -493,8 +500,11 @@ public interface MyApi {
     @POST("/createProfile1")
     void createDoctorProfile(@Body Person person, Callback<ServerResponse> cb);
 
-    @POST("/createProfile")
+    @POST("/createProfile1")
     void createProfile(@Body Person person, Callback<ServerResponse> cb);
+
+    @POST("/registerProfile")
+    void createProfileWithVerification(@Body Person person, Callback<ServerResponse> cb);
 
     @POST("/createProfile1")
     void createDependentProfile(@Body DependentDelegatePerson person, Callback<ServerResponse> cb);

@@ -47,7 +47,6 @@ public class PatientProfileDetails extends ParentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.person_profile_edit_view, container,false);
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         RelativeLayout profilePic = (RelativeLayout) view.findViewById(R.id.layout20);
         profilePic.setVisibility(View.GONE);
         RelativeLayout passwordField = (RelativeLayout) view.findViewById(R.id.layout30);
@@ -128,6 +127,7 @@ public class PatientProfileDetails extends ParentFragment {
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
+        setTitle("Profile Details");
     }
 
     private int getIndex(Adapter adapter, String specialization, int profile)
@@ -138,6 +138,18 @@ public class PatientProfileDetails extends ParentFragment {
                 return i;
         }
         return 0;
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
     }
 
 }

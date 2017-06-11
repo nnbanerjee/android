@@ -75,7 +75,7 @@ public class TreatmentPlanListAdapter extends BaseAdapter {
         convertView.setTag(treatments);
         TreatmentPlan1 treatmentPlan1 = treatments.get(0);
         final TextView name = (TextView)convertView.findViewById(R.id.title);
-        name.setText(treatmentPlan1.getTemplateName() + " > " + treatmentPlan1.getTemplateSubName());
+        name.setText(treatmentPlan1.getTemplateName() );
         TableLayout tableLayout = (TableLayout)convertView.findViewById(R.id.treatment_table);
         tableLayout.removeAllViews();
 //        tableLayout.setStretchAllColumns(true);

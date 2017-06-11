@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medicohealthcare.application.R;
@@ -43,8 +42,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         doctorNoteBtn = (Button) view.findViewById(R.id.doctorNoteBtn);
         treatmentBtn = (Button) view.findViewById(R.id.treatmentBtn);
         invoicesBtn = (Button) view.findViewById(R.id.invoicesBtn);
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Visit Details");
+        
         summaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,16 +190,28 @@ public class DoctorAppointmentInformation extends ParentFragment {
         fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
     }
 
-
     @Override
-    public void onResume() {
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onResume()
+    {
         super.onResume();
         setHasOptionsMenu(true);
+        setTitle("Visit Details");
     }
     @Override
     public void onStart()
     {
-
         super.onStart();
         if(selectedFragment != null)
         {
@@ -210,6 +220,9 @@ public class DoctorAppointmentInformation extends ParentFragment {
         }
         else
             summaryBtn.callOnClick();
+
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
     }
 
 

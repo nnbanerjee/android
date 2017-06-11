@@ -27,7 +27,13 @@
             android:layout_below="@+id/document_category"
             android:layout_height="wrap_content">
             <fragment android:name="com.medicohealthcare.view.profile.DoctorAppointmentTreatmentPlan"
+                      android:id="@+id/treatment_list"
+                      android:tag="treatment"
+                      android:layout_height="wrap_content"
+                      android:layout_width="match_parent"/>
+            <fragment android:name="com.medicohealthcare.view.profile.DoctorAppointmentTreatmentPlan"
                 android:id="@+id/invoice_list"
+                android:layout_below="@+id/treatment_list"
                 android:tag="invoice"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>

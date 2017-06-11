@@ -43,6 +43,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     // compile files('libs/protobuf-java-2.2.0.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
+    compile files('libs/sun.misc.BASE64Decoder.jar')
     //  compile files('libs/achartengine-1.1.0.jar')
     //    compile 'com.google.android.gms:play-services-appindexing:10.2.1'
     compile 'com.google.firebase:firebase-appindexing:10.0.1'

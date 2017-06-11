@@ -131,6 +131,7 @@ public class  PatientDetailsView extends ParentFragment {
         super.onResume();
         if(childfragment != null && childfragment.isDetached() == false)
             childfragment.onStart();
+        setHasOptionsMenu(false);
     }
     @Override
     public void onStart()
@@ -182,7 +183,19 @@ public class  PatientDetailsView extends ParentFragment {
             });
         if(childfragment != null && childfragment.isDetached() == false)
             childfragment.onStart();
-
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
     }
 
 }

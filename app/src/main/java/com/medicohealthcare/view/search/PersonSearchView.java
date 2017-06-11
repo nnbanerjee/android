@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medicohealthcare.adapter.HomeAdapter;
@@ -68,11 +67,11 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
         Bundle bundle = getActivity().getIntent().getExtras();
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
-        else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+//        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
+//        if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
+//            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
+//        else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
+//            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
         country_list = (EditText) view.findViewById(R.id.country_list);
         city_list = (EditText) view.findViewById(R.id.city_list);
         location = (AutoCompleteTextView) view.findViewById(R.id.location);
@@ -120,15 +119,15 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         new GeoUtility(getActivity(), location, country_list, city_list, location_delete_button, current_location_button, model);
         getCurrentLocation();
         Bundle bundle = getActivity().getIntent().getExtras();
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
+            setTitle(getActivity().getResources().getString(R.string.patient_search));
         else if( bundle.getInt(SETTING_VIEW_ID)==DOCTOR_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+            setTitle(getActivity().getResources().getString(R.string.clinic_search));
         else if( bundle.getInt(SETTING_VIEW_ID)== ASSISTANT_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+            setTitle(getActivity().getResources().getString(R.string.clinic_search));
         else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
-            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
+            setTitle(getActivity().getResources().getString(R.string.clinic_search));
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -235,6 +234,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     }
     public void onClick(View view)
     {
+        showBusy();
         Activity activity = getActivity();
         hideSoftKeyboard(getActivity()); 
         Bundle bundle = activity.getIntent().getExtras();
@@ -246,7 +246,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         update();
         if(isValid(search_by_criteria.getSelectedItemPosition()))
         {
-            if ((search_type == PATIENT_SETTING_VIEW ||search_type == ASSISTANT_SETTING_VIEW ) && (searchRole == PATIENT || searchRole == ASSISTANT))
+            if (search_type == PATIENT_SETTING_VIEW ||search_type == ASSISTANT_SETTING_VIEW )
             {
 
 
@@ -480,6 +480,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         personListView.setAdapter(adapter,adapterParameter);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
+        hideBusy();
     }
     private void showDoctorResult(List<DoctorSearchResult> result)
     {
@@ -495,6 +496,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         personListView.setModel(doctorSearches);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
+        hideBusy();
     }
     private void showClinicResult(List<Clinic1> result)
     {
@@ -502,6 +504,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         personListView.setModel(result);
         FragmentTransaction fft = getFragmentManager().beginTransaction();
         fft.add(R.id.service, personListView).addToBackStack(null).commit();
+        hideBusy();
     }
     public void setAdapter(HomeAdapter adapter, Object parameter)
     {

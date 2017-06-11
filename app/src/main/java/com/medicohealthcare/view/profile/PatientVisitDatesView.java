@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.medicohealthcare.adapter.PatientVisitDatesAdapter;
@@ -57,8 +56,6 @@ public class PatientVisitDatesView extends ParentFragment
         View view = inflater.inflate(R.layout.sticky_header_list_view, container, false);
         final Bundle bun = getArguments();
         allAppointments = (StickyListHeadersListView) view.findViewById(R.id.allAppointments);
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Visit Dates");
         allAppointments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,8 +106,22 @@ public class PatientVisitDatesView extends ParentFragment
             }
         });
 
+        setTitle("Visit Dates");
+        setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
     @Override
     public void onStart()// getAllPatientAppointment()
      {
@@ -138,6 +149,8 @@ public class PatientVisitDatesView extends ParentFragment
             }
 
         });
+         setTitle("Visit Dates");
+         setHasOptionsMenu(true);
      }
 
 

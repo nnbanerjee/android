@@ -13,7 +13,6 @@ import com.medicohealthcare.util.GeoClient;
 import com.medicohealthcare.util.LocationService;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
-import com.medicohealthcare.view.profile.PatientProfileListView;
 
 public class ManageProfileRegistration extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
@@ -56,12 +55,25 @@ public class ManageProfileRegistration extends ParentActivity {
         LocationService locationService = LocationService.getLocationManager(this);
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        attachView();
+        client.getGeoApiClient().connect();
+    }
+
+    @Override
+    public void onStop() {
+        client.getGeoApiClient().disconnect();
+        super.onStop();
+    }
+
     protected void attachView()
     {
         ParentFragment fragment = new RegistrationChooser();
-//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.service, fragment,PatientProfileListView.class.getName()).addToBackStack(PatientProfileListView.class.getName()).commit();
+        ft.add(R.id.service, fragment,RegistrationChooser.class.getName()).addToBackStack(RegistrationChooser.class.getName()).commit();
     }
 
 }

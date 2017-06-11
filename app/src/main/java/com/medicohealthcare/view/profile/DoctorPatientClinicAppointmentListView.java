@@ -92,7 +92,8 @@ public class DoctorPatientClinicAppointmentListView extends ParentFragment {
             }
         });
 
-
+        setHasOptionsMenu(false);
+        setTitle("Appointment Details");
     }
 
 

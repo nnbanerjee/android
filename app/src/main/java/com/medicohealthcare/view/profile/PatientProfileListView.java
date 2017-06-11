@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.medicohealthcare.adapter.PatientListAdapter;
 import com.medicohealthcare.application.R;
@@ -55,8 +54,6 @@ public class PatientProfileListView extends ParentFragment
         View view = inflater.inflate(R.layout.patient_doctors_list,container,false);
 
         patientListView = (ListView) view.findViewById(R.id.doctorListView);
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText(getActivity().getResources().getString(R.string.patients_profiles));
         return view;
     }
 
@@ -83,6 +80,7 @@ public class PatientProfileListView extends ParentFragment
             }
         });
         setHasOptionsMenu(true);
+        setTitle("Patient List");
     }
 
 
@@ -103,6 +101,7 @@ public class PatientProfileListView extends ParentFragment
             }
         });
         setHasOptionsMenu(true);
+        setTitle("Patient List");
     }
 
     @Override

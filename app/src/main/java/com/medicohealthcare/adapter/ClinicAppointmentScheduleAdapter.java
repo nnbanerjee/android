@@ -125,6 +125,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
+        totalCount.setVisibility(View.GONE);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
         final Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
@@ -182,7 +183,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             layout.setVisibility(View.VISIBLE);
             DoctorSlotBookings.PersonBooking booking = holder.patient;
             final Person patient = booking.patient;
-
+            if(patient.getStatus()==PARAM.VISIT_STATUS_VISITED)
+                rightButton.setVisibility(View.VISIBLE);
+            else
+                rightButton.setVisibility(View.GONE);
             if(patient.getImageUrl() != null)
                 new ImageLoadTask( patient.getImageUrl(), patient_image).execute();
 
@@ -592,6 +596,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
     private void bookOnline(AppointmentHolder holder)
     {
         Bundle bundle = activity.getIntent().getExtras(); 
+        bundle.putInt(PARAM.SETTING_VIEW_ID,PARAM.PATIENT_SETTING_VIEW);
         bundle.putInt(PARAM.SEARCH_TYPE,PARAM.APPOINTMENT_BOOKING);
         bundle.putInt(PARAM.SEARCH_ROLE,PARAM.PATIENT);
         activity.getIntent().putExtras(bundle);

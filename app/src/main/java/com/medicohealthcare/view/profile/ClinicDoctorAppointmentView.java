@@ -120,7 +120,7 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
             date = new Date(datetime);
 
         setAdapter(date);
-
+        setHasOptionsMenu(true);
     }
 
     public void saveAppointment( DoctorAppointment appointment) {
@@ -440,5 +440,24 @@ public class ClinicDoctorAppointmentView extends ParentFragment {
 
         }
         return workingdays;
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        setHasOptionsMenu(true);
+        setTitle("Appointment");
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
     }
 }
