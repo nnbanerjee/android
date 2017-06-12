@@ -82,6 +82,6 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
             Toast.makeText(ctx, errorDescription, Toast.LENGTH_LONG).show();
             return new Exception(errorDescription);
         }
-        return cause;
+        return null;
     }
 }

@@ -187,6 +187,8 @@ public interface PARAM {
     public static final String PERSON_URL = "person_url";
     public static final String PERSON_ID = "person_Id";
     public static final String PERSON_ROLE = "person_role";
+    public static final String PERSON_MOBILE = "PERSON_MOBILE";
+    public static final String PERSON_EMAIL = "PERSON_EMAIL";
 
     public static final int DOCTOR_SPECIALIZATION = 1;
     public static final int PATIENT_SPECIALIZATION = 11;

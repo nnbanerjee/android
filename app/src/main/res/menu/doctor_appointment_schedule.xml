@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item android:id="@+id/exit"
+                android:title="HOME"
+            app:showAsAction="collapseActionView"
+                 />
+        <item android:id="@+id/set_holiday"
+              android:title="SET HOLIDAY"
+              app:showAsAction="collapseActionView"
+            />
+        <item android:id="@+id/remove_holiday"
+              android:title="REMOVE HOLIDAY"
+              app:showAsAction="collapseActionView"
+            />
+        <item android:id="@+id/apply_filter"
+              android:title="FILTER"
+              app:showAsAction="collapseActionView"
+            />
+        <item android:id="@+id/calendar"
+            android:title="Add"
+            android:checkable="true"
+            android:icon= "@drawable/calendar_white"
+            app:showAsAction="ifRoom"
+            />
+</menu>
+
+

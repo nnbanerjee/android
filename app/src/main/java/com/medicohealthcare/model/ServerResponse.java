@@ -12,6 +12,7 @@ public class ServerResponse
     public String errorCode;
     public Integer profileId;
     public Integer messageId;
+    public Integer idDoctorHoliday;
 
 
     public String getErrorMessage()

@@ -450,27 +450,38 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         return isValid;
     }
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
         menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-//        inflater.inflate(R.menu.doctor_manage_appointment_schedule, menu);
+        inflater.inflate(R.menu.doctor_appointment_schedule, menu);
         super.onCreateOptionsMenu(menu,inflater);
-        MenuItem menuItem = menu.findItem(R.id.add);
-        menuItem.setChecked(true);
-        menuItem.setIcon(R.drawable.calendar_white);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.add:
+            case R.id.calendar:
             {
                 setDate();
 
             }
-            break;
-            case R.id.addFilter:
+            return true;
+            case R.id.set_holiday:
+            {
+                ClinicAppointmentScheduleAdapter adapter = (ClinicAppointmentScheduleAdapter)appointment_schedule.getAdapter();
+                adapter.setSlotHoliday();
+
+            }
+            return true;
+            case R.id.remove_holiday:
+            {
+                ClinicAppointmentScheduleAdapter adapter = (ClinicAppointmentScheduleAdapter)appointment_schedule.getAdapter();
+                adapter.removeSlotHoliday();
+
+            }
+            return true;
+            case R.id.apply_filter:
             {
                 if(item.isChecked())
                 {
@@ -485,9 +496,9 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
 
 
             }
-            break;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Date[] daysOfTheWeek(Date date)
@@ -551,7 +562,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
     public void onResume()
     {
         super.onResume();
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
         setTitle("Appointment");
     }
     @Override

@@ -24,6 +24,18 @@ public class DoctorHoliday
         this.endDate = endDate;
         this.type = type;
     }
+    public DoctorHoliday(Integer doctorHolidayId, Integer doctorId, Long startDate, Long endDate, Byte type, Integer sequenceNo,Integer clinicId, Integer doctorClinicId)
+    {
+        this.doctorHolidayId = doctorHolidayId;
+        this.doctorId = doctorId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.type = type;
+        this.sequenceNo = sequenceNo;
+        this.clinicId = clinicId;
+        this.doctorClinicId = doctorClinicId;
+        this.status = 1;
+    }
     public DoctorHoliday(Integer doctorId, Long startDate, Long endDate, Byte type, Integer sequenceNo,Integer clinicId, Integer doctorClinicId)
     {
         this.doctorId = doctorId;

@@ -56,7 +56,8 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
+public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements StickyListHeadersAdapter
+{
 
 
     private Activity activity;
@@ -183,7 +184,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
             layout.setVisibility(View.VISIBLE);
             DoctorSlotBookings.PersonBooking booking = holder.patient;
             final Person patient = booking.patient;
-            if(patient.getStatus()==PARAM.VISIT_STATUS_VISITED)
+            if(holder.getVisitStatus()==PARAM.VISIT_STATUS_VISITED)
                 rightButton.setVisibility(View.VISIBLE);
             else
                 rightButton.setVisibility(View.GONE);
@@ -734,5 +735,143 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  {
                 .show();
     }
 
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent)
+    {
+        final HeaderViewHolder holder;
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = inflater.inflate(R.layout.header_appointment_schedule, parent, false);
+            holder.slot = (TextView) convertView.findViewById(R.id.slot_text);
+            holder.available = (Spinner)convertView.findViewById(R.id.iavailability);
+            holder.available.setTag(holder.layout);
+            holder.layout = (LinearLayout) convertView.findViewById(R.id.document_category);
+            DoctorHoliday holiday = getSlotAvailability();
+            holder.available.setSelection(holiday==null?0:1);
+            holder.available.setTag(holiday);
+            holder.available.setEnabled(false);
+//            holder.available.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+//            {
+//                @Override
+//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+//                {
+//                    LinearLayout layout = holder.layout;
+//                    switch (position)
+//                    {
+//                        case 0:
+//                            layout.setBackgroundColor(Color.GREEN);
+//                            removeSlotHoliday();
+//                            break;
+//                        case 1:
+//                            layout.setBackgroundColor(Color.RED);
+//                            setSlotHoliday();
+//                            break;
+//                    }
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> parent)
+//                {
+//
+//                }
+//            });
+            convertView.setTag(holder);
+        }
+        else
+        {
 
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        holder.slot.setText(daysOfWeek(model.daysOfWeek));
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        return model.doctorClinicId;
+    }
+
+    class HeaderViewHolder
+    {
+        LinearLayout layout;
+        TextView slot;
+        Spinner available;
+    }
+
+    public void setSlotHoliday()
+    {
+        showBusy();
+        final Bundle bundle = activity.getIntent().getExtras();
+        api.addDoctorHoliday(new DoctorHoliday(bundle.getInt(PARAM.DOCTOR_ID), date.getTime(), date.getTime(), new Integer(1).byteValue(), null, details.clinic.idClinic, model.doctorClinicId), new Callback<ServerResponse>()
+        {
+            @Override
+            public void success(ServerResponse responseCodeVerfication, Response response)
+            {
+                if(responseCodeVerfication.status.intValue() == 1)
+                {
+                    if(holidayList == null)
+                        holidayList = new ArrayList<DoctorHoliday>();
+                    holidayList.add(new DoctorHoliday(responseCodeVerfication.idDoctorHoliday,bundle.getInt(PARAM.DOCTOR_ID), date.getTime(), date.getTime(), new Integer(1).byteValue(), null, details.clinic.idClinic, model.doctorClinicId));
+                    Toast.makeText(activity, "Add doctor holiday is Successful!!", Toast.LENGTH_LONG).show();
+                    //                appointment_status.setTag(1);
+                    //                holder.setHoliday(true);
+                    notifyDataSetInvalidated();
+                }
+                else
+                    Toast.makeText(activity, "Add doctor holiday is failed!!", Toast.LENGTH_LONG).show();
+                hideBusy();
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(activity).handleError(error);
+            }
+        });
+    }
+     public void removeSlotHoliday()
+     {
+         final DoctorHoliday holiday = getSlotAvailability();
+         if(holiday != null)
+         {
+             api.removeDoctorHoliday(holiday, new Callback<ServerResponse>()
+             {
+                 @Override
+                 public void success(ServerResponse responseCodeVerfication, Response response)
+                 {
+                     if(responseCodeVerfication.status.intValue() == 1)
+                     {
+                         holidayList.remove(holiday);
+                         Toast.makeText(activity, "Remove doctor holiday is Successful!!", Toast.LENGTH_LONG).show();
+                         notifyDataSetInvalidated();
+                     }
+                 }
+
+                 @Override
+                 public void failure(RetrofitError error)
+                 {
+                     hideBusy();
+                     new MedicoCustomErrorHandler(activity).handleError(error);
+                 }
+             });
+         }
+      }
+
+     public DoctorHoliday getSlotAvailability()
+     {
+         DoctorHoliday slotholiday = null;
+         if(holidayList != null && holidayList.size() > 0)
+         {
+             for (DoctorHoliday holiday : holidayList)
+             {
+                 if (holiday.doctorClinicId.intValue() == model.doctorClinicId.intValue())
+                 {
+                     if(holiday.type == 1)
+                         slotholiday = holiday;
+                 }
+             }
+         }
+         return slotholiday;
+     }
 }
