@@ -82,6 +82,16 @@ public class RegistrationChooser extends ParentFragment
                         FragmentTransaction fft1 = getFragmentManager().beginTransaction();
                         fft1.add(R.id.service, assistantListView,PersonProfileRegistrationView.class.getName()).addToBackStack(PersonProfileRegistrationView.class.getName()).commit();
                     }
+                    else if(assistant.isChecked())
+                    {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(PROFILE_ROLE,ASSISTANT);
+                        getActivity().getIntent().putExtras(bundle);
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        ParentFragment assistantListView = new PersonProfileRegistrationView();
+                        FragmentTransaction fft1 = getFragmentManager().beginTransaction();
+                        fft1.add(R.id.service, assistantListView,PersonProfileRegistrationView.class.getName()).addToBackStack(PersonProfileRegistrationView.class.getName()).commit();
+                    }
                     else
                     {
                         Bundle bundle = new Bundle();

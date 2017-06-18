@@ -67,11 +67,6 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
 
         View view = inflater.inflate(R.layout.patient_appointment_booking, container,false);
         Bundle bundle = getActivity().getIntent().getExtras();
-//        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-//        if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
-//            textviewTitle.setText(getActivity().getResources().getString(R.string.patient_search));
-//        else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
-//            textviewTitle.setText(getActivity().getResources().getString(R.string.clinic_search));
         country_list = (EditText) view.findViewById(R.id.country_list);
         city_list = (EditText) view.findViewById(R.id.city_list);
         location = (AutoCompleteTextView) view.findViewById(R.id.location);
@@ -122,9 +117,9 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         if(bundle.getInt(SETTING_VIEW_ID)== PATIENT_SETTING_VIEW)
             setTitle(getActivity().getResources().getString(R.string.patient_search));
         else if( bundle.getInt(SETTING_VIEW_ID)==DOCTOR_SETTING_VIEW)
-            setTitle(getActivity().getResources().getString(R.string.clinic_search));
+            setTitle(getActivity().getResources().getString(R.string.doctor_search));
         else if( bundle.getInt(SETTING_VIEW_ID)== ASSISTANT_SETTING_VIEW)
-            setTitle(getActivity().getResources().getString(R.string.clinic_search));
+            setTitle(getActivity().getResources().getString(R.string.assistant_search));
         else if( bundle.getInt(SETTING_VIEW_ID)== CLINIC_SETTING_VIEW)
             setTitle(getActivity().getResources().getString(R.string.clinic_search));
         setHasOptionsMenu(true);
@@ -133,15 +128,11 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
-//        LocationService locationService = LocationService.getLocationManager(getActivity());
-//        locationService.addNotifyListeber(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        lm.removeUpdates(networkLocationListener);
-//        lm.removeUpdates(gpsLocationListener);
     }
 
 

@@ -72,6 +72,8 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         View view = inflater.inflate(R.layout.appointment_schedule_list, container, false);
         setHasOptionsMenu(true);
         date_value = (TableLayout) view.findViewById(R.id.date_value);
+        if( getActivity().getIntent().getExtras().getInt(SETTING_VIEW_ID)== ASSISTANT_QUEUE_VIEW)
+            date_value.setVisibility(View.GONE);
         appointment_schedule = (ListView)view.findViewById(R.id.appointment_schedule);
         date_value.setOnTouchListener(new View.OnTouchListener() {
             @Override

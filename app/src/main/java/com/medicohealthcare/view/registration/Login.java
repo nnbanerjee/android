@@ -19,6 +19,7 @@ import com.medicohealthcare.model.Logindata;
 import com.medicohealthcare.model.ResponseVm;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
+import com.medicohealthcare.view.home.AssistantHome;
 import com.medicohealthcare.view.home.DoctorHome;
 import com.medicohealthcare.view.home.PatientHome;
 
@@ -163,6 +164,10 @@ public class Login extends Fragment implements PARAM
                                         password.setText("");
                                         if(responseVm.getType() == PARAM.DOCTOR) {
                                             Intent intObj = new Intent(getActivity(), DoctorHome.class);
+                                            startActivity(intObj);
+                                        }
+                                        else if(responseVm.getType() == PARAM.ASSISTANT) {
+                                            Intent intObj = new Intent(getActivity(), AssistantHome.class);
                                             startActivity(intObj);
                                         }
                                         else

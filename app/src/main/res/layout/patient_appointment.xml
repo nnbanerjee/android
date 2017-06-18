@@ -127,7 +127,16 @@
                 android:textAppearance="@style/sub_heading3"
                 android:layout_below="@+id/patient_name"
                 android:text="Speciality" />
-
+            <ImageView
+                android:id="@+id/fullscreenImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/speciality"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="23dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/ic_fullscreen_black_24dp"
+                android:scaleType="fitCenter" />
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"

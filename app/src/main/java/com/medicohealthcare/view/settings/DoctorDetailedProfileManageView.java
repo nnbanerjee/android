@@ -77,7 +77,6 @@ public class DoctorDetailedProfileManageView extends ParentFragment {
             public void onClick(View v) {
                 Bundle args = getActivity().getIntent().getExtras();
                 ParentFragment fragment = new RegistrationFileUpload();
-                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, RegistrationFileUpload.class.getName()).addToBackStack(RegistrationFileUpload.class.getName()).commit();

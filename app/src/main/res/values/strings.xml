@@ -405,10 +405,10 @@
     </string-array>
     <string name="image_base_url">""</string>
 
-    <string name="base_url">http://52.91.86.104:9000/</string>
     <!--<string name="base_url">http://34.192.89.143:9000/</string>
-       <string name="base_url">http://192.168.42.163:9000/</string>
-        <string name="base_url">http://192.168.42.11:9000/</string>-->
+ <string name="base_url">http://52.91.86.104:9000/</string>
+       <string name="base_url">http://192.168.42.163:9000/</string>-->
+    <string name="base_url">http://192.168.42.11:9000/</string>
 
     <string name="listcolor">#CCFFFF</string>
     <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>
@@ -565,6 +565,7 @@
         <item>91</item>
         <item>92</item>
     </string-array>
+    <string name="assistant_search">Assistant Search</string>
     <string name="chat_person_list">Chat List</string>
      <string name="clinic_search_result">Search Result</string>
      <string name="clinic_search">Clinic Search</string>
@@ -573,6 +574,7 @@
      <string name="patient_search_result">Search Result</string>
      <string name="patient_search">Patient Search</string>
     <string name="patients_profiles">Patient Profiles</string>
+    <string name="manage_queue">Manage Queue</string>
     <string name="patient_profile">Patient Profile</string>
     <string name="doctor_profile">Doctor Profile</string>
 

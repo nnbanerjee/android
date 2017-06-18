@@ -61,7 +61,6 @@ public class ClinicListView extends ParentFragment {
                 Bundle bun = getActivity().getIntent().getExtras();
                 Clinic1 profile = (Clinic1)adapterView.getAdapter().getItem(i);
                         ParentFragment fragment = new ClinicProfileEditView();
-                        ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                         bun.putInt(PARAM.CLINIC_ID, profile.idClinic.intValue());
                         bun.putInt(PARAM.CLINIC_TYPE, profile.type.intValue());
                         getActivity().getIntent().putExtras(bun);
@@ -141,7 +140,6 @@ public class ClinicListView extends ParentFragment {
                 bun.putInt(CLINIC_TYPE,0);
                 getActivity().getIntent().putExtras(bun);
                 ParentFragment fragment = new ClinicProfileEditView();
-                ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                 fragment.setArguments(bun);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicProfileEditView.class.getName()).addToBackStack(ClinicProfileEditView.class.getName()).commit();

@@ -98,16 +98,12 @@ public class ClinicDetailedView extends ParentFragment {
             @Override
             public void onClick(View v) {
 
-                ManageDoctorAppointment activity = (ManageDoctorAppointment)getActivity();
-                if(profile != null)
-//                    activity.detachFragment(profile);
+                Activity activity = getActivity();
                 appointmentsBtn.setBackgroundResource(R.drawable.page_selected);
                 profileBtn.setBackgroundResource(R.drawable.page_default);
                 appointment = new ClinicSlotListView();
-//                activity.attachFragment(appointment);
                 appointment.setModel(model);
                 FragmentManager fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_details1, appointment, "Doctor Consultations").addToBackStack(null).commit();
                 fragmentManger.beginTransaction().replace(R.id.content_details1, appointment, "Doctor Consultations").commit();
 
             }
@@ -116,19 +112,15 @@ public class ClinicDetailedView extends ParentFragment {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ManageDoctorAppointment activity = (ManageDoctorAppointment)getActivity();
-                if(appointment != null)
-//                activity.detachFragment(appointment);
+                Activity activity = getActivity();
                 appointmentsBtn.setBackgroundResource(R.drawable.page_default);
                 profileBtn.setBackgroundResource(R.drawable.page_selected);
                 Bundle bundle = getActivity().getIntent().getExtras();
                 bundle.putBoolean("profileview",true);
                 profile = new ClinicProfileEditView();
                 getActivity().getIntent().putExtras(bundle);
-//                activity.attachFragment(profile);
                 FragmentManager fragmentManger = getFragmentManager();
-//                fragmentManger.beginTransaction().replace(R.id.content_details1, profile, "Doctor Consultations").addToBackStack(null).commit();
-                fragmentManger.beginTransaction().replace(R.id.content_details1, profile, "Doctor Consultations").commit();
+               fragmentManger.beginTransaction().replace(R.id.content_details1, profile, "Doctor Consultations").commit();
 
 
             }

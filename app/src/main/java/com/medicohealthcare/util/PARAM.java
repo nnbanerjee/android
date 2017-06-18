@@ -154,6 +154,8 @@ public interface PARAM {
     public static final int DELEGATE_SETTING_VIEW = 5;
     public static final int CLINIC_SETTING_VIEW = 6;
     public static final int DOCTOR_SETTING_VIEW = 7;
+    public static final int ASSISTANT_APPOINTMENT_VIEW = 8;
+    public static final int ASSISTANT_QUEUE_VIEW = 9;
     public static final int CHAT_VIEW = 11;
 
     public static final int LOGOUT_CONFIRMATION = 20;

@@ -138,30 +138,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         relativeLayout.setVisibility(View.GONE);
         relationText.setVisibility(View.GONE);
         relation.setVisibility(View.GONE);
-        Bundle bundle = getActivity().getIntent().getExtras();
-        switch (bundle.getInt(PROFILE_TYPE)) {
-            case PATIENT:
-                textviewTitle.setText("Patient Registration");
-                profilePic.setImageResource(R.drawable.patient_default);
-                String[] patientProfessions = getActivity().getResources().getStringArray(R.array.patient_professions);
-                ArrayAdapter<String> patientArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, patientProfessions);
-                specialization.setAdapter(patientArrayAdapter);
-                break;
-            case ASSISTANT:
-                textviewTitle.setText("Assistant Registration");
-                profilePic.setImageResource(R.drawable.assistant_default);
-                String[] assistantProfessions = getActivity().getResources().getStringArray(R.array.assistant_professions);
-                ArrayAdapter<String> assistant_professionsArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, assistantProfessions);
-                specialization.setAdapter(assistant_professionsArrayAdapter);
-                break;
-            case DOCTOR:
-                textviewTitle.setText("Doctor Registration");
-                profilePic.setImageResource(R.drawable.doctor_default);
-                Specialization[] options = {};
-                ArrayAdapter<Specialization> specializationArrayAdapter = new ArrayAdapter<Specialization>(getActivity(), android.R.layout.simple_dropdown_item_1line, options);
-                specialization.setAdapter(specializationArrayAdapter);
 
-        }
 
         profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,7 +254,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         {
             personModel = new Person();
             personModel.setRole(profileRole.byteValue());
-            personModel.setStatus(new Integer(2).byteValue());
+            personModel.setStatus(new Integer(0).byteValue());
             personModel.setAddedBy(profileId);
             personModel.setPrime(new Integer(0).byteValue());
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
@@ -291,6 +268,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 new ImageLoadTask(url, profilePic).execute();
         }
         setHasOptionsMenu(true);
+        setProfile();
 //        if(verification != null && verification.isCodeverified())
 //            createProfile();
     }
@@ -299,6 +277,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     public void onResume() {
         super.onResume();
         setHasOptionsMenu(true);
+        setProfile();
     }
     @Override
     public void onPause() {
@@ -414,7 +393,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         {
 
             personModel.role = new Integer(bundle.getInt(PROFILE_ROLE)).byteValue();
-            personModel.status = 1;
+            personModel.status = 0;
             personModel.prime = 1;
             personModel.setPassword(password.getText().toString());
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
@@ -454,32 +433,24 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     @Override
     public boolean canBeSaved()
     {
+        Bundle bundle = getActivity().getIntent().getExtras();
+        switch (bundle.getInt(PROFILE_ROLE))
+        {
+            case PATIENT:
+                return personModel.canBeSaved();
+            case ASSISTANT:
+                return personModel.canBeSavedForAssistantRegistration();
+        }
         return personModel.canBeSaved();
     }
     @Override
     public void setEditable(boolean editable)
     {
-//        name.setEnabled(editable);
-//        mobile.setEnabled(editable);
-//        email.setEnabled(editable);
+
     }
     public void setEditableAll(boolean editable)
     {
-//        mobile.setEnabled(editable);
-//        email.setEnabled(editable);
-////        menuItem.setEnabled(editable);
-//        profilePicUploadBtn.setEnabled(editable);
-//        location_delete_button.setEnabled(editable);
-//        current_location_button.setEnabled(editable);
-//        name.setEnabled(editable);
-//        dob.setEnabled(editable);
-//        allergicTo.setEnabled(editable);
-//        mobile_country.setEnabled(editable);
-//        bloodGroup.setEnabled(editable);
-//        gender_spinner.setEnabled(editable);
-//        dob_calendar.setEnabled(editable);
-//        specialization.setEnabled(editable);
-//        mAutocompleteView.setEnabled(editable);
+
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
@@ -689,4 +660,28 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         transaction.add(R.id.service,verification,RegistrationVerificationView.class.getName()).addToBackStack(RegistrationVerificationView.class.getName()).commit();
 
     }
+
+    private void setProfile()
+    {
+        profilePic.setBackground(null);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        switch (bundle.getInt(PROFILE_ROLE)) {
+            case PATIENT:
+                setTitle("Patient Registration");
+                profilePic.setImageResource(R.drawable.patient_default);
+                break;
+            case ASSISTANT:
+                setTitle("Assistant Registration");
+                profilePic.setImageResource(R.drawable.assistant_default);
+                bloodGroup.setVisibility(View.GONE);
+                getView().findViewById(R.id.bloodGroup_text).setVisibility(View.GONE);
+                allergicTo.setVisibility(View.GONE);
+                getView().findViewById(R.id.allergic_to_text).setVisibility(View.GONE);
+                break;
+            case DOCTOR:
+                setTitle("Doctor Registration");
+                profilePic.setImageResource(R.drawable.doctor_default);
+        }
+    }
+
 }

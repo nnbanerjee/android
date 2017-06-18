@@ -81,9 +81,13 @@ public class Menu {
         return arrayMenuList;
     }
 
-    public ArrayList<String> getAssistantMenus(){
+    public ArrayList<String> getAssistantMenus()
+    {
         arrayMenuList = new ArrayList<String>();
-        arrayMenuList.add("Manage Delegation");
+        arrayMenuList.add("Manage Profile");
+        arrayMenuList.add("Manage Dependents");
+        arrayMenuList.add("Manage Delegations");
+        arrayMenuList.add("Logout");
         return arrayMenuList;
     }
 

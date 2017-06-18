@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,50 +30,23 @@ public class ClinicSlotListView extends ParentFragment {
 
     SharedPreferences session;
     ListView listView;
-//    ProgressDialog progress;
     DoctorClinicDetails model;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-//        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.list_view,container,false);
 
         listView = (ListView) view.findViewById(R.id.doctorListView);
-
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
-
-//        Bundle bundle = getActivity().getIntent().getExtras();
-
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                setHasOptionsMenu(false);
-//                Bundle bun = getActivity().getIntent().getExtras();
-//                Clinic1 profile = (Clinic1)adapterView.getAdapter().getItem(i);
-//                        ParentFragment fragment = new ClinicProfileEditView();
-//                        ((ManageDoctorAppointment)getActivity()).fragmentList.add(fragment);
-//                        bun.putInt(PARAM.CLINIC_ID, profile.idClinic.intValue());
-//                        bun.putInt(PARAM.CLINIC_TYPE, profile.type.intValue());
-//                        getActivity().getIntent().putExtras(bun);
-//                      fragment.setArguments(bun);
-//                        FragmentManager fragmentManger = getActivity().getFragmentManager();
-//                        fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-//            }
-//        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Activity activity = getActivity();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
                 Bundle bundle = activity.getIntent().getExtras();
                 DoctorClinicDetails.ClinicSlots slot = (DoctorClinicDetails.ClinicSlots)listView.getAdapter().getItem(position);
                 bundle.putInt(PARAM.DOCTOR_CLINIC_ID,slot.doctorClinicId);
                 activity.getIntent().putExtras(bundle);
                 ClinicAppointmentScheduleView fragment = new ClinicAppointmentScheduleView();
-//                fragment.setModel(slot);
-//                ((ParentActivity)activity).attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, ClinicAppointmentScheduleView.class.getName()).addToBackStack(ClinicAppointmentScheduleView.class.getName()).commit();
             }
@@ -120,36 +90,6 @@ public class ClinicSlotListView extends ParentFragment {
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        menu.clear();
-        inflater.inflate(R.menu.menu, menu);
-        inflater.inflate(R.menu.patient_profile, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.add: {
-//                setHasOptionsMenu(false);
-//                Bundle bun = getActivity().getIntent().getExtras();
-//                bun.putInt(CLINIC_ID,0);
-//                bun.putInt(CLINIC_TYPE,0);
-//                getActivity().getIntent().putExtras(bun);
-//                ParentFragment fragment = new ClinicProfileEditView();
-//                ((ManageDoctorAppointment)getActivity()).fragmentList.add(fragment);
-//                fragment.setArguments(bun);
-//                FragmentManager fragmentManger = getActivity().getFragmentManager();
-//                fragmentManger.beginTransaction().add(R.id.service, fragment, "Doctor Consultations").addToBackStack(null).commit();
-
-            }
-            break;
-        }
-        return true;
-    }
     public void setModel(DoctorClinicDetails model)
     {
         this.model = model;

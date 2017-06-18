@@ -7,6 +7,8 @@ import com.medicohealthcare.model.AppointmentId1;
 import com.medicohealthcare.model.AppointmentPatientIds;
 import com.medicohealthcare.model.AppointmentResponse;
 import com.medicohealthcare.model.AppointmentStatusRequest;
+import com.medicohealthcare.model.AssistantId;
+import com.medicohealthcare.model.AssistantProfile;
 import com.medicohealthcare.model.ChatMessageCounts;
 import com.medicohealthcare.model.Clinic1;
 import com.medicohealthcare.model.ClinicByDoctorRequest;
@@ -25,6 +27,8 @@ import com.medicohealthcare.model.DiagnosticTest;
 import com.medicohealthcare.model.DoctorAppointment;
 import com.medicohealthcare.model.DoctorClinicDetails;
 import com.medicohealthcare.model.DoctorClinicId;
+import com.medicohealthcare.model.DoctorClinicQueue;
+import com.medicohealthcare.model.DoctorClinicQueueStatus;
 import com.medicohealthcare.model.DoctorClinicRequest;
 import com.medicohealthcare.model.DoctorHoliday;
 import com.medicohealthcare.model.DoctorId;
@@ -107,6 +111,19 @@ import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 public interface MyApi {
+
+
+    @POST("/setAppointmentQueueStatus")
+    void setAppointmentQueueStatus(@Body AppointmentId1 param, Callback<ServerResponseStatus> cb);
+    @POST("/setDoctorClinicQueueStatus")
+    void setDoctorClinicQueueStatus(@Body DoctorClinicId param, Callback<ServerResponseStatus> cb);
+
+    @POST("/getClinicQueueStatusDetails")
+    void getClinicQueueStatusDetails(@Body DoctorClinicId param, Callback<DoctorClinicQueueStatus> cb);
+    @POST("/getClinicQueueDetails")
+    void getClinicQueueDetails(@Body DoctorClinicId param, Callback<DoctorClinicQueue> cb);
+    @POST("/getAssistantDoctorQueue")
+    void getAssistantDoctorQueue(@Body AssistantId param, Callback<List<DoctorClinicQueue>> cb);
 
     @POST("/verifyCodeForNewRegistration1")
     void verifyCodeForNewRegistration(@Body RegistrationVerificationRequest param, Callback<ServerResponseStatus> cb);
@@ -673,6 +690,9 @@ public interface MyApi {
 //
     @POST("/getDoctorLandingPageDetails")
     void getDoctorLandingPageDetails(@Body DoctorId param, Callback<DoctorProfile> cb);
+
+    @POST("/getAssistantLandingPageDetails")
+    void getAssistantLandingPageDetails(@Body AssistantId param, Callback<AssistantProfile> cb);
 //
 //    @POST("/getPatientList")
 //    void getPatientList(@Body DoctorId param, Callback<List<AllPatients>> callback);

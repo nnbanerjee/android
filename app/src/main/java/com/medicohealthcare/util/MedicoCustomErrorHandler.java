@@ -11,7 +11,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Narendra on 26-02-2016.
  */
-public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
+public  class MedicoCustomErrorHandler
 {
     private Activity ctx;
     private boolean messageRequired = true;
@@ -30,8 +30,8 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
         this.messageRequired = messageRequired;
     }
 
-    @Override
-    public Throwable handleError(RetrofitError cause)
+
+    public void handleError(RetrofitError cause)
     {
 
         String errorDescription = null;
@@ -49,7 +49,7 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
                     if(messageRequired)
                         errorDescription = "No data available";
                     else
-                        return cause;
+                        return ;
                 else if(response.errorCode.equalsIgnoreCase(SESSION_EXPIRED))
                 {
                     errorDescription = "Session expired";
@@ -77,11 +77,9 @@ public  class MedicoCustomErrorHandler implements retrofit.ErrorHandler
         {
             Toast.makeText(ctx, "Unexpected error, please try later", Toast.LENGTH_LONG).show();
         }
-        if(errorDescription != null)
+        if(errorDescription != null && ctx != null)
         {
             Toast.makeText(ctx, errorDescription, Toast.LENGTH_LONG).show();
-            return new Exception(errorDescription);
         }
-        return null;
     }
 }

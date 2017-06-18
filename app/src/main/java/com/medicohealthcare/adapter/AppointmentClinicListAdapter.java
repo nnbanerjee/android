@@ -20,7 +20,6 @@ import com.medicohealthcare.util.ImageLoadTask;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.appointment.ClinicAppointmentScheduleView;
 import com.medicohealthcare.view.appointment.ClinicDetailedView;
-import com.medicohealthcare.view.appointment.ManageDoctorAppointment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +31,8 @@ import java.util.List;
  */
 
 //Doctor Login
-public class AppointmentClinicListAdapter extends HomeAdapter  {
+public class AppointmentClinicListAdapter extends HomeAdapter
+{
 
     private Activity activity;
     private LayoutInflater inflater;
@@ -101,10 +101,9 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
             @Override
             public void onClick(View v) {
                 DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
-                Bundle bundle = parentactivity.getIntent().getExtras();
+                Bundle bundle = activity.getIntent().getExtras();
                 bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
-                parentactivity.getIntent().putExtras(bundle);
+                activity.getIntent().putExtras(bundle);
                 ClinicDetailedView fragment = new ClinicDetailedView();
 //                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
@@ -117,10 +116,9 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
             @Override
             public void onClick(View v) {
                 DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
-                Bundle bundle = parentactivity.getIntent().getExtras();
+                Bundle bundle = activity.getIntent().getExtras();
                 bundle.putInt(PARAM.CLINIC_ID,model.clinic.idClinic);
-                parentactivity.getIntent().putExtras(bundle);
+                activity.getIntent().putExtras(bundle);
                 ClinicDetailedView fragment = new ClinicDetailedView();
 //                parentactivity.attachFragment(fragment);
                 FragmentManager fragmentManger = activity.getFragmentManager();
@@ -132,7 +130,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
             @Override
             public void onClick(View v) {
                 DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
                 Bundle bundle = activity.getIntent().getExtras();
                 if(model.slots.size() > 0)
                 {
@@ -150,7 +147,6 @@ public class AppointmentClinicListAdapter extends HomeAdapter  {
             @Override
             public void onClick(View v) {
                 DoctorClinicDetails model = (DoctorClinicDetails)v.getTag();
-                ManageDoctorAppointment parentactivity = (ManageDoctorAppointment)activity;
                 Bundle bundle = activity.getIntent().getExtras();
                 if(model.slots.size() > 0)
                 {

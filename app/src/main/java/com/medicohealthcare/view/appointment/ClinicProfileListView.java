@@ -71,29 +71,6 @@ public class ClinicProfileListView extends ParentFragment {
         return view;
     }
 
-    //This will show all patients list for logged in doctor
-//    @Override
-//    public void onStart()
-//    {
-//        super.onStart();
-//        Bundle bundle = getActivity().getIntent().getExtras();
-//        DoctorId doc= new DoctorId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)).toString());
-//        api.getPatientProfileList(doc, new Callback<List<PatientShortProfile>>() {
-//            @Override
-//            public void success(final List<PatientShortProfile> allPatientsProfiles, Response response) {
-//                AppointmentClinicListAdapter adapter = new AppointmentClinicListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
-//                patientListView.setAdapter(adapter);
-//                progress.dismiss();
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                progress.dismiss();
-//                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-//                error.printStackTrace();
-//            }
-//        });
-//    }
     @Override
     public void onStart()
     {
@@ -101,7 +78,6 @@ public class ClinicProfileListView extends ParentFragment {
 //        progress = ProgressDialog.show(getActivity(), "", getActivity().getResources().getString(R.string.loading_wait));
         Bundle bundle = getActivity().getIntent().getExtras();
         final Integer doctorId = bundle.getInt(DOCTOR_ID);
-        final Integer patientId = bundle.getInt(PATIENT_ID);
         showBusy();
         api.getClinicsByDoctor1(new DoctorId(doctorId.toString()), new Callback<List<DoctorClinicDetails>>() {
             @Override
@@ -120,7 +96,7 @@ public class ClinicProfileListView extends ParentFragment {
             }
         });
 
-
+        setTitle("Manage Appointments");
     }
 
     @Override

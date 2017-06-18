@@ -56,20 +56,14 @@ public class DoctorProfileEdit extends ParentFragment {
 
 		ParentFragment fragment = new DoctorProfileManageView();
 		ManagePersonSettings activity = ((ManagePersonSettings)getActivity());
-		if(selectedfragment != null)
-			activity.fragmentList.remove(selectedfragment);
 		selectedfragment = fragment;
-		activity.fragmentList.add(fragment);
 		FragmentManager fragmentManger = getFragmentManager();
 		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").commit();
 	}
 	public void showDoctorPersonal(){
 		ParentFragment fragment = new DoctorDetailedProfileManageView();
 		ManagePersonSettings activity = ((ManagePersonSettings)getActivity());
-		if(selectedfragment != null)
-			activity.fragmentList.remove(selectedfragment);
 		selectedfragment = fragment;
-		activity.fragmentList.add(fragment);
 		FragmentManager fragmentManger = getFragmentManager();
 		fragmentManger.beginTransaction().add(R.id.frame_layout,fragment,"Doctor Consultations").commit();
 	}

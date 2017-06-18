@@ -45,7 +45,10 @@ public class ParentFragment extends Fragment implements PARAM
         });
         api =  ServerConnectionAdapter.getServerAdapter(getActivity()).getServerAPI();
         if(countriesList == null)
+        {
             loadSupportedCountryList();
+        }
+
         textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
     }
     public void onResume()

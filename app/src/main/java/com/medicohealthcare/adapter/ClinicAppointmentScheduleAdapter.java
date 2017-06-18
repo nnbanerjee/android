@@ -56,7 +56,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements StickyListHeadersAdapter
+public class ClinicAppointmentScheduleAdapter extends HomeAdapter
 {
 
 
@@ -126,11 +126,13 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements St
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
         final TextView lastAppointment = (TextView) convertView.findViewById(R.id.lastAppointmentValue);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
-        totalCount.setVisibility(View.GONE);
+//        totalCount.setVisibility(View.GONE);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
         TextView totalAppointment = (TextView) convertView.findViewById(R.id.total_appointment);
         final Spinner appointment_menu = (Spinner)convertView.findViewById(R.id.appointment_menu);
-        totalAppointment.setVisibility(View.GONE);
+        ImageView fullscreenImg = (ImageView)convertView.findViewById(R.id.fullscreenImg);
+        if( activity.getIntent().getExtras().getInt(PARAM.SETTING_VIEW_ID)== PARAM.ASSISTANT_QUEUE_VIEW)
+            fullscreenImg.setVisibility(View.GONE);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.profile);
         final RelativeLayout parentLayout = (RelativeLayout)convertView.findViewById(R.id.layout);
         patient_image.setBackgroundResource(R.drawable.patient_default);
@@ -184,10 +186,10 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements St
             layout.setVisibility(View.VISIBLE);
             DoctorSlotBookings.PersonBooking booking = holder.patient;
             final Person patient = booking.patient;
-            if(holder.getVisitStatus()==PARAM.VISIT_STATUS_VISITED)
-                rightButton.setVisibility(View.VISIBLE);
-            else
-                rightButton.setVisibility(View.GONE);
+//            if(holder.getVisitStatus()==PARAM.VISIT_STATUS_VISITED)
+//                rightButton.setVisibility(View.VISIBLE);
+//            else
+//                rightButton.setVisibility(View.GONE);
             if(patient.getImageUrl() != null)
                 new ImageLoadTask( patient.getImageUrl(), patient_image).execute();
 
@@ -613,7 +615,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements St
         Bundle bundle = activity.getIntent().getExtras();
         final AppointmentHolder holder = (AppointmentHolder)parameter;
         final DoctorAppointment request = new DoctorAppointment();
-        request.doctorId = bundle.getInt(PARAM.PROFILE_ID);
+        request.doctorId = bundle.getInt(PARAM.DOCTOR_ID);
         request.patientId = id;
         request.clinicId = holder.details.clinic.idClinic;
         request.appointmentDate = holder.date.getTime();
@@ -735,7 +737,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements St
                 .show();
     }
 
-    @Override
+//    @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent)
     {
         final HeaderViewHolder holder;
@@ -786,7 +788,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter  implements St
         return convertView;
     }
 
-    @Override
+//    @Override
     public long getHeaderId(int position) {
         return model.doctorClinicId;
     }

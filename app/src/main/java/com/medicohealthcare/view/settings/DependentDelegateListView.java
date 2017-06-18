@@ -196,7 +196,6 @@ public class DependentDelegateListView extends ParentFragment {
                     bundle.putInt(PERSON_ROLE,PATIENT);
                     getActivity().getIntent().putExtras(bundle);
                     ParentFragment fragment = new DependentDelegateProfileView();
-                    ((ManagePersonSettings) getActivity()).fragmentList.add(fragment);
                     fragment.setArguments(bundle);
                     FragmentManager fragmentManger = getActivity().getFragmentManager();
                     fragmentManger.beginTransaction().add(R.id.service, fragment,DependentDelegateProfileView.class.getName()).addToBackStack(DependentDelegateProfileView.class.getName()).commit();

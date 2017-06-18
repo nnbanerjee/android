@@ -9,6 +9,7 @@ public class DoctorClinicId
     Integer doctorClinicId;
     Integer availability;
     Long fromDate, toDate;
+    Integer queueStatus;
     public DoctorClinicId(Integer doctorClinicId, Long fromDate, Long toDate)
     {
         this.doctorClinicId = doctorClinicId;
@@ -23,6 +24,12 @@ public class DoctorClinicId
     {
         this.doctorClinicId = doctorClinicId;
         this.availability = availability;
+    }
+    public DoctorClinicId(Integer doctorClinicId, Integer queueStatus,Integer availability )
+    {
+        this.doctorClinicId = doctorClinicId;
+        this.availability = availability;
+        this.queueStatus = queueStatus;
     }
     public DoctorClinicId()
     {

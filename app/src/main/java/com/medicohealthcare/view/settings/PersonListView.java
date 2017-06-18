@@ -58,7 +58,6 @@ public class PersonListView extends ParentFragment {
                     fragment = new DoctorProfileEditView();
                 else
                     fragment = new PersonProfileEditView();
-                        ((ManagePersonSettings)getActivity()).fragmentList.add(fragment);
                         bun.putInt(PARAM.PERSON_ID, profile.getId().intValue());
                         bun.putInt(PARAM.PERSON_ROLE, profile.getId().intValue());
                         getActivity().getIntent().putExtras(bun);
