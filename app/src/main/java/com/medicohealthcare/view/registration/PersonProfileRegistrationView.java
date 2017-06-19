@@ -2,6 +2,7 @@ package com.medicohealthcare.view.registration;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -65,6 +66,7 @@ import retrofit.client.Response;
 public class PersonProfileRegistrationView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback, NotifyListener
 {
 
+    public static int CALLBACK_REQUEST = 400;
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
     MenuItem menuItem;
@@ -81,7 +83,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     Person personModel;
     FileUploadView fileFragment;
 
-    RegistrationVerificationView verification = null;
+//    RegistrationVerificationView verification = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,7 +140,6 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         relativeLayout.setVisibility(View.GONE);
         relationText.setVisibility(View.GONE);
         relation.setVisibility(View.GONE);
-
 
         profilePicUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,8 +321,9 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 {
                     if (s.status == 0 && s.errorCode == null )
                     {
-//                        sendVerificationCode(true,true);
-                        createProfile();
+                        showBusy();
+                        boolean mobilerequired = personModel.location.equals("91")?true:false;
+                        sendVerificationCode(true,mobilerequired);
                     }
                     else
                     {
@@ -405,7 +407,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         {
             personModel.setBloodGroup(bloodGroup.getSelectedItem().toString());
             personModel.role = new Integer(bundle.getInt(PROFILE_ROLE)).byteValue();
-            personModel.status = 1;
+            personModel.status = 0;
             personModel.prime = 1;
             personModel.setPassword(password.getText().toString());
             personModel.setAllergicTo(allergicTo.getText().toString());
@@ -457,6 +459,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     {
         menu.clear();
         inflater.inflate(R.menu.save,menu);
+        MenuItem menuitem = menu.findItem(R.id.save);
+        menuitem.setTitle("NEXT");
     }
 
     @Override
@@ -467,10 +471,13 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             {
 
                 update();
-                if (isChanged()) {
-                    if (canBeSaved()) {
+                if (isChanged())
+                {
+                    if (canBeSaved())
+                    {
                         save();
-                    } else
+                    }
+                    else
                     {
                         Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
                     }
@@ -518,8 +525,6 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     public void createProfile()
     {
         showBusy();
-
-        verification = null;
         api.createProfile(personModel, new Callback<ServerResponse>() {
             @Override
             public void success(ServerResponse s, Response response) {
@@ -648,17 +653,12 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     private void showVerification()
     {
         setHasOptionsMenu(false);
-        Bundle bundle = getActivity().getIntent().getExtras();;
-        bundle.putString(PERSON_EMAIL, personModel.getEmail());
-        bundle.putLong(PERSON_MOBILE, personModel.getMobile());
-        bundle.putBoolean("MOBILE_VERIFICATION_REQUIRED",personModel.getLocation().equals("91")?true:false);
-        bundle.putString("PARENT_FRAGMENT_TAG", PersonProfileRegistrationView.class.getName());
-        getActivity().getIntent().putExtras(bundle);
-        verification = new RegistrationVerificationView();
-        FragmentManager manager = getActivity().getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.service,verification,RegistrationVerificationView.class.getName()).addToBackStack(RegistrationVerificationView.class.getName()).commit();
-
+        Intent intent = new Intent(getActivity(), ProfileRegistrationVerificationActivity.class);
+        intent.putExtra(PARAM.PERSON_EMAIL, personModel.email);
+        intent.putExtra(PARAM.PERSON_MOBILE, personModel.mobile);
+        intent.putExtra("MOBILE_VERIFICATION_REQUIRED",(personModel.location.equals("91")?true:false));
+        startActivityForResult(intent, CALLBACK_REQUEST);
+        onPause();
     }
 
     private void setProfile()
@@ -673,6 +673,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             case ASSISTANT:
                 setTitle("Assistant Registration");
                 profilePic.setImageResource(R.drawable.assistant_default);
+
+                getView().findViewById(R.id.layout_bloodgroup).setVisibility(View.GONE);
                 bloodGroup.setVisibility(View.GONE);
                 getView().findViewById(R.id.bloodGroup_text).setVisibility(View.GONE);
                 allergicTo.setVisibility(View.GONE);
@@ -681,6 +683,16 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             case DOCTOR:
                 setTitle("Doctor Registration");
                 profilePic.setImageResource(R.drawable.doctor_default);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // Check which request we're responding to
+        if (requestCode == CALLBACK_REQUEST && resultCode == 1)
+        {
+            createProfile();
         }
     }
 

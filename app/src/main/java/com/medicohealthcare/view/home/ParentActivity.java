@@ -31,6 +31,7 @@ public class ParentActivity extends AppCompatActivity //implements FragmentManag
         activity = this;
         api = ServerConnectionAdapter.getServerAdapter(this).getServerAPI();
         progress = new ProgressDialog(this);
+        progress.setCanceledOnTouchOutside(false);
         progress.setMessage("Loading, please wait....");
     }
 

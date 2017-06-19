@@ -2,7 +2,6 @@ package com.medicohealthcare.view.registration;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,7 +23,7 @@ public class RegistrationSuccessfulView extends ParentFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
         View view = inflater.inflate(R.layout.registration_successful,
                 container, false);
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
@@ -43,6 +42,8 @@ public class RegistrationSuccessfulView extends ParentFragment
             message.setText(getActivity().getString(R.string.patient_successful_registration));
         else if(role == DOCTOR)
             message.setText(getActivity().getString(R.string.doctor_successful_registration));
+        else if(role == ASSISTANT)
+            message.setText(getActivity().getString(R.string.assistant_successful_registration));
         Button login = (Button)view.findViewById(R.id.login);
         hideBusy();
         login.setOnClickListener(new View.OnClickListener()
@@ -57,20 +58,5 @@ public class RegistrationSuccessfulView extends ParentFragment
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                getActivity().finish();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 }

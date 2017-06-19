@@ -30,7 +30,6 @@ public class RegistrationVerificationView extends ParentFragment
     Boolean mobileVerificationRequired;
     String emailId;
     Long mobileNumber;
-    String parentFragmentTag;
 
     boolean codeverified = false;
 
@@ -50,8 +49,6 @@ public class RegistrationVerificationView extends ParentFragment
         emailId = bundle.getString(PERSON_EMAIL);
         mobileNumber = bundle.getLong(PERSON_MOBILE);
         mobileVerificationRequired = bundle.getBoolean("MOBILE_VERIFICATION_REQUIRED");
-        mobileNumber = bundle.getLong(PERSON_MOBILE);
-        parentFragmentTag = bundle.getString("PARENT_FRAGMENT_TAG");
 
         if(!mobileVerificationRequired)
         {
@@ -85,6 +82,7 @@ public class RegistrationVerificationView extends ParentFragment
                 verifyCode(true,mobileVerificationRequired);
             }
         });
+
 
         return view;
     }
@@ -206,8 +204,8 @@ public class RegistrationVerificationView extends ParentFragment
                             break;
                         case 1:
                             Toast.makeText(getActivity(), "Congratulations! Your both the codes are successfully verified", Toast.LENGTH_LONG);
-                            codeverified = true;
-                            getActivity().onBackPressed();
+                            getActivity().setResult(1);
+                            getActivity().finish();
                             break;
                         case 2:
                             Toast.makeText(getActivity(), "Successfully verified for your Email but not for Mobile", Toast.LENGTH_LONG);
@@ -241,6 +239,8 @@ public class RegistrationVerificationView extends ParentFragment
                             break;
                         case 1:
                             Toast.makeText(getActivity(), "Congratulations! Your code is successfully verified", Toast.LENGTH_LONG);
+                            getActivity().setResult(1);
+                            getActivity().finish();
                             break;
                     }
                     hideBusy();

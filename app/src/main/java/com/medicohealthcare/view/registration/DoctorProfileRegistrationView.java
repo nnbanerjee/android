@@ -2,6 +2,7 @@ package com.medicohealthcare.view.registration;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +34,10 @@ import com.medicohealthcare.datepicker.SlideDateTimePicker;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.PersonDetailProfile;
 import com.medicohealthcare.model.ProfileId;
+import com.medicohealthcare.model.RegistrationVerificationRequest;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.ServerResponse;
+import com.medicohealthcare.model.ServerResponseStatus;
 import com.medicohealthcare.model.Specialization;
 import com.medicohealthcare.util.GeoUtility;
 import com.medicohealthcare.util.ImageLoadTask;
@@ -62,7 +65,7 @@ import retrofit.client.Response;
  */
 public class DoctorProfileRegistrationView extends ParentFragment  implements ActivityCompat.OnRequestPermissionsResultCallback, NotifyListener
 {
-
+    public static int CALLBACK_REQUEST = 400;
     public static int SELECT_PICTURE = 1;
     public static int SELECT_DOCUMENT = 2;
 //    ProgressDialog progress;
@@ -205,10 +208,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         super.onStart();
         LocationService.getLocationManager(getActivity()).addNotifyListeber(this);
         Bundle bundle = getActivity().getIntent().getExtras();
-//        progress = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.loading_wait));
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
-//        final Integer loggedinUserId = bundle.getInt(LOGGED_IN_ID);
         if(countriesList != null)
         {
             SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
@@ -237,7 +238,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                         specialization.setText(person.getSpeciality());
                         new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
                         mobile_country.setSelection(getCountryIndex(person.getLocation()));
-
+                        hideBusy();
                     }
                 }
 
@@ -253,7 +254,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
             personModel = new Person();
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             personDetailProfile = new PersonDetailProfile();
-
+            hideBusy();
         }
         if(fileFragment != null && fileFragment.fileupload != null )
         {
@@ -261,13 +262,14 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
             if(url != null && url.trim().length() > 0)
                 new ImageLoadTask(url, profilePic).execute();
         }
+        setTitle("Doctor Registration");
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-
+        setTitle("Doctor Registration");
     }
     @Override
     public void onPause()
@@ -311,38 +313,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                 public void success(ServerResponse s, Response response) {
                     if (s.status == 0 && s.errorCode == null )
                     {
-                        api.createDoctorProfile(person, new Callback<ServerResponse>() {
-                            @Override
-                            public void success(ServerResponse s, Response response)
-                            {
-                                if (s.status == 1 && s.profileId != null)
-                                {
-                                    Bundle bundle = getActivity().getIntent().getExtras();
-                                    bundle.putString("person_name", personModel.getName());
-                                    bundle.putInt("gender", personModel.getGender().intValue());
-                                    bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
-                                    bundle.putInt(PROFILE_ID, s.profileId);
-                                    getActivity().getIntent().putExtras(bundle);
-                                    ParentFragment fragment = new RegistrationSuccessfulView();
-                                    FragmentManager manager = getActivity().getFragmentManager();
-                                    FragmentTransaction transaction = manager.beginTransaction();
-                                    transaction.add(R.id.service,fragment, RegistrationSuccessfulView.class.getName()).commit();
-                                }
-                                else
-                                {
-                                    hideBusy();
-                                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
-
-                                }
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error)
-                            {
-                                hideBusy();
-                                new MedicoCustomErrorHandler(getActivity()).handleError(error);
-                            }
-                        });
+                        boolean mobilerequired = personModel.location.equals("91")?true:false;
+                        sendVerificationCode(true,mobilerequired);
                     }
                     else
                     {
@@ -462,6 +434,8 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     {
         menu.clear();
         inflater.inflate(R.menu.save,menu);
+        MenuItem menuitem = menu.findItem(R.id.save);
+        menuitem.setTitle("NEXT");
     }
 
     @Override
@@ -502,7 +476,108 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         }
         return 0;
     }
+    private void sendVerificationCode(boolean email, boolean mobile)
+    {
+        if(email && mobile)
+        {
+            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(personModel.getEmail(), personModel.getMobile()), new Callback<ServerResponseStatus>()
+            {
+                @Override
+                public void success(ServerResponseStatus s, Response response)
+                {
+                    switch (s.status)
+                    {
+                        case 0:
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG);
+                            showVerification();
+                            break;
+                        case 2:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            break;
+                        case 3:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            break;
+                    }
+                    hideBusy();
+                }
 
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+        else if(email)
+        {
+            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(personModel.getEmail()), new Callback<ServerResponseStatus>()
+            {
+                @Override
+                public void success(ServerResponseStatus s, Response response)
+                {
+                    switch (s.status)
+                    {
+                        case 0:
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            break;
+                    }
+                    hideBusy();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+        else if(mobile)
+        {
+            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(personModel.getMobile()), new Callback<ServerResponseStatus>()
+            {
+                @Override
+                public void success(ServerResponseStatus s, Response response)
+                {
+                    switch (s.status)
+                    {
+                        case 0:
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            break;
+                    }
+                    hideBusy();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+    }
+
+    private void showVerification()
+    {
+        setHasOptionsMenu(false);
+        Intent intent = new Intent(getActivity(), ProfileRegistrationVerificationActivity.class);
+        intent.putExtra(PARAM.PERSON_EMAIL, personModel.email);
+        intent.putExtra(PARAM.PERSON_MOBILE, personModel.mobile);
+        intent.putExtra("MOBILE_VERIFICATION_REQUIRED",(personModel.location.equals("91")?true:false));
+        startActivityForResult(intent, CALLBACK_REQUEST);
+        onPause();
+    }
     public void notify(int id, Notifier source, Object parameter)
     {
         if(id == PARAM.LOCATION_UPDATED)
@@ -517,6 +592,50 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
             personModel.setCountry(manager.country);
             personModel.setIsoCountry(manager.countryCode);
             manager.removeNotifyListeber(this);
+        }
+    }
+    public void createProfile(final Person person)
+    {
+        showBusy();
+        api.createDoctorProfile(person, new Callback<ServerResponse>() {
+            @Override
+            public void success(ServerResponse s, Response response) {
+                if (s.status == 1)
+                {
+                    setHasOptionsMenu(false);
+                    Bundle bundle = getActivity().getIntent().getExtras();
+                    bundle.putString("person_name", person.getName());
+                    bundle.putInt("gender", person.getGender().intValue());
+                    bundle.putInt(PROFILE_ROLE, person.getRole().intValue());
+                    bundle.putInt(PROFILE_ID, s.profileId);
+                    getActivity().getIntent().putExtras(bundle);
+                    ParentFragment fragment = new RegistrationSuccessfulView();
+                    FragmentManager manager = getActivity().getFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.add(R.id.service,fragment,RegistrationSuccessfulView.class.getName()).commit();
+                }
+                else
+                {
+                    hideBusy();
+                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                hideBusy();
+                new MedicoCustomErrorHandler(getActivity()).handleError(error);
+            }
+        });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // Check which request we're responding to
+        if (requestCode == CALLBACK_REQUEST && resultCode == 1)
+        {
+            createProfile(personModel);
         }
     }
 }

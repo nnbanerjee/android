@@ -11,15 +11,15 @@ public class Notifier
 {
     private List<NotifyListener> listeners = new ArrayList<>();
 
-    public void addNotifyListeber(NotifyListener listener)
+    public synchronized void addNotifyListeber(NotifyListener listener)
     {
         listeners.add(listener);
     }
-    public void removeNotifyListeber(NotifyListener listener)
+    public synchronized void removeNotifyListeber(NotifyListener listener)
     {
         listeners.remove(listener);
     }
-    public void notifyListeners(int id, Notifier source, Object parameter)
+    public synchronized void notifyListeners(int id, Notifier source, Object parameter)
     {
         for(NotifyListener listener : listeners)
             listener.notify(id, source, parameter);

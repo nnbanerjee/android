@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -27,14 +26,15 @@ public class RegistrationChooser extends ParentFragment
     RadioButton doctor, assistant, patient, existing_profile, create_profile;
     Button next;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.registration_choose,
                 container, false);
-        TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Registration Types");
+
+
         doctor = (RadioButton) view.findViewById(R.id.doctor);
         assistant = (RadioButton) view.findViewById(R.id.assistant);
         patient = (RadioButton) view.findViewById(R.id.patient);
@@ -70,6 +70,7 @@ public class RegistrationChooser extends ParentFragment
             @Override
             public void onClick(View v)
             {
+                showBusy();
                 if(create_profile.isChecked())
                 {
                     if(patient.isChecked())
@@ -111,6 +112,12 @@ public class RegistrationChooser extends ParentFragment
         });
         return view;
 
+    }
+
+    public void onStart()
+    {
+        super.onStart();
+        setTitle("Registration");
     }
 
 

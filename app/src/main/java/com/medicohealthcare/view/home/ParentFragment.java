@@ -49,6 +49,7 @@ public class ParentFragment extends Fragment implements PARAM
             loadSupportedCountryList();
         }
 
+
         textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
     }
     public void onResume()
@@ -129,7 +130,6 @@ public class ParentFragment extends Fragment implements PARAM
         Activity activity = getActivity();
         if(activity instanceof ParentActivity)
             ((ParentActivity)getActivity()).showBusy();
-
     }
 
     public void hideBusy()
@@ -137,7 +137,6 @@ public class ParentFragment extends Fragment implements PARAM
         Activity activity = getActivity();
         if(activity instanceof ParentActivity)
         ((ParentActivity)getActivity()).hideBusy();
-
     }
 
     public int getCountryIndex(String isdCode)

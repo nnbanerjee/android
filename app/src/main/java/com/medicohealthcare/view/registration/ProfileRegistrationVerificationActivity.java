@@ -9,14 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.medicohealthcare.application.R;
-import com.medicohealthcare.util.GeoClient;
-import com.medicohealthcare.util.LocationService;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
-public class ManageProfileRegistration extends ParentActivity {
+public class ProfileRegistrationVerificationActivity extends ParentActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
-    GeoClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +23,8 @@ public class ManageProfileRegistration extends ParentActivity {
         setContentView(frame, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-        if (savedInstanceState == null) {
-
-            attachView();
-
-        }
-
 
         final ActionBar abar = getSupportActionBar();
-//        abar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));//line under the action bar
         View viewActionBar = getLayoutInflater().inflate(R.layout.toolbar, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
                 ActionBar.LayoutParams.WRAP_CONTENT,
@@ -43,7 +33,6 @@ public class ManageProfileRegistration extends ParentActivity {
         viewActionBar.setBackgroundColor(0xFF206799);
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
         textviewTitle.setText(getResources().getString(R.string.patients_profiles));
-//        abar.setBackgroundDrawable((new ColorDrawable(Color.parseColor("#FF206799"))));
         abar.setCustomView(viewActionBar, params);
         abar.setBackgroundDrawable(getResources().getDrawable(R.color.medico_blue));
         abar.setDisplayShowCustomEnabled(true);
@@ -51,28 +40,24 @@ public class ManageProfileRegistration extends ParentActivity {
         abar.setDisplayHomeAsUpEnabled(true);
 //        abar.setIcon(R.color.transparent);
         abar.setHomeButtonEnabled(true);
-        client = GeoClient.getInstance(this);
-        LocationService locationService = LocationService.getLocationManager(this);
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        client.getGeoApiClient().connect();
+        attachView();
     }
 
     @Override
     public void onStop() {
-        client.getGeoApiClient().disconnect();
         super.onStop();
     }
 
     protected void attachView()
     {
-        ParentFragment fragment = new RegistrationChooser();
+        ParentFragment fragment = new RegistrationVerificationView();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.service, fragment,RegistrationChooser.class.getName()).addToBackStack(RegistrationChooser.class.getName()).commit();
+        ft.add(R.id.service, fragment,RegistrationVerificationView.class.getName()).addToBackStack(RegistrationVerificationView.class.getName()).commit();
     }
 
 }

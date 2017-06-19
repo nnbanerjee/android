@@ -127,6 +127,10 @@
                   android:label="Registration"
                   android:parentActivityName="com.medicohealthcare.application.MainActivity" >
         </activity>
+        <activity android:name="com.medicohealthcare.view.registration.ProfileRegistrationVerificationActivity"
+                  android:label="Verification"
+                  android:parentActivityName="com.medicohealthcare.application.MainActivity" >
+        </activity>
         <service
             android:name="com.medicohealthcare.service.ChatServer">
         </service>
