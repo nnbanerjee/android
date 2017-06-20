@@ -4,7 +4,7 @@ package com.medicohealthcare.model;
  * Created by Narendra on 20-01-2017.
  */
 
-public class Person
+public class Person implements ServerResponseInterface
 {
     public Integer id;
     public String name;
@@ -38,6 +38,8 @@ public class Person
 
     public String practiceName;
     public String registrationNo;
+
+    public Integer errorCode = -1;
 
     boolean isChanged = true;
 

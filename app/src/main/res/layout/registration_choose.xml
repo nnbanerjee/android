@@ -98,12 +98,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/name_textViewView"
-
+                android:inputType="number"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:enabled="false"
                 android:imeOptions="actionNext"
-                android:inputType="text"
                 android:paddingLeft="3dp"
                 android:singleLine="true" />
 

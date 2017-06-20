@@ -214,30 +214,40 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         if(profileId != null && profileId.intValue() > 0 && profileRole != null && profileRole.intValue() >= 0) {
             api.getProfile(new ProfileId(profileId), new Callback<Person>() {
                 @Override
-                public void success(Person person, Response response) { 
-                    if (person != null && person.getId() != null) {
-                        personModel = person;
-                        String url = person.getImageUrl();
-                        if(url != null && url.trim().length() > 0)
-                            new ImageLoadTask(url, profilePic).execute();
-                        personId.setText(person.getId().toString());
-                        name.setText(person.getName());
-                        mobile.setText(person.getMobile().toString());
-                        email.setText(person.getEmail());
-                        gender_spinner.setSelection(person.gender.intValue());
-                        DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
-                        if (person.getDateOfBirth() != null)
-                            dob.setText(format.format(new Date(person.getDateOfBirth())));
-                        mAutocompleteView.setText(person.getAddress());
-                        country.setText(person.getCountry());
-                        city.setText(person.getCity());
-                        specialization.setText(person.getSpeciality());
-                        bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
-                        allergicTo.setText(person.getAllergicTo());
-                        new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
-                        mobile_country.setSelection(getCountryIndex(person.getLocation()));
+                public void success(Person person, Response response)
+                {
+                    if(person.errorCode == -1 )
+                    {
+                        if (person != null && person.getId() != null && person.getStatus().intValue() == 2)
+                        {
+                            personModel = person;
+                            String url = person.getImageUrl();
+                            if (url != null && url.trim().length() > 0)
+                                new ImageLoadTask(url, profilePic).execute();
+                            personId.setText(person.getId().toString());
+                            personId.setVisibility(View.VISIBLE);
+                            name.setText(person.getName());
+                            mobile.setText(person.getMobile().toString().substring(person.location.trim().length()));
+                            email.setText(person.getEmail());
+                            gender_spinner.setSelection(person.gender.intValue());
+                            DateFormat format = DateFormat.getDateInstance(DateFormat.LONG);
+                            if (person.getDateOfBirth() != null)
+                                dob.setText(format.format(new Date(person.getDateOfBirth())));
+                            mAutocompleteView.setText(person.getAddress());
+                            country.setText(person.getCountry());
+                            city.setText(person.getCity());
+                            specialization.setText(person.getSpeciality());
+                            bloodGroup.setSelection(getBloodgroupIndex(person.getBloodGroup()));
+                            allergicTo.setText(person.getAllergicTo());
+                            new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
+                            mobile_country.setSelection(getCountryIndex(person.getLocation()));
 
+                        }
+                        else
+                            Toast.makeText(getActivity(), "Profile already registered", Toast.LENGTH_LONG).show();
                     }
+                    else if(person.errorCode == 201)
+                        Toast.makeText(getActivity(), "Profile does not exist", Toast.LENGTH_LONG).show();
                     setEditable(false);
                     hideBusy();
 
@@ -245,7 +255,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void failure(RetrofitError error)
+                {
                     hideBusy();
                     new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
@@ -270,8 +281,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         }
         setHasOptionsMenu(true);
         setProfile();
-//        if(verification != null && verification.isCodeverified())
-//            createProfile();
+
     }
 
     @Override
@@ -294,23 +304,11 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     private void save(final Person person)
     {
         showBusy();
-        if(person.getId() != null) {
-            api.updateProfile(person, new Callback<ServerResponse>() {
-                @Override
-                public void success(ServerResponse s, Response response) {
-                    if (s.status == 1)
-                        Toast.makeText(getActivity(), "Profile is Successfully Activated", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(getActivity(), "Could not activate the Profile", Toast.LENGTH_LONG).show();
-                    hideBusy();
-                }
+        if(person.getId() != null)
+        {
+            boolean mobilerequired = personModel.location.equals("91")?true:false;
+            sendVerificationCode(true,mobilerequired);
 
-                @Override
-                public void failure(RetrofitError error) {
-                    hideBusy();
-                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
-                }
-            });
         }
         else
         {
@@ -321,7 +319,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                 {
                     if (s.status == 0 && s.errorCode == null )
                     {
-                        showBusy();
+
                         boolean mobilerequired = personModel.location.equals("91")?true:false;
                         sendVerificationCode(true,mobilerequired);
                     }
@@ -509,15 +507,18 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         if(id == PARAM.LOCATION_UPDATED)
         {
             LocationService manager = LocationService.getLocationManager(getActivity());
-            mAutocompleteView.setText(manager.partialAddress );
-            personModel.setAddress(manager.completeAddress);
-            personModel.setRegion(manager.region);
-            personModel.setLocationLat(manager.latitude);
-            personModel.setLocationLong(manager.longitude);
-            personModel.setCity(manager.city);
-            personModel.setCountry(manager.country);
-            personModel.setIsoCountry(manager.countryCode);
-            manager.removeNotifyListeber(this);
+            if(personModel != null)
+            {
+                mAutocompleteView.setText(manager.partialAddress);
+                personModel.setAddress(manager.completeAddress);
+                personModel.setRegion(manager.region);
+                personModel.setLocationLat(manager.latitude);
+                personModel.setLocationLong(manager.longitude);
+                personModel.setCity(manager.city);
+                personModel.setCountry(manager.country);
+                personModel.setIsoCountry(manager.countryCode);
+                manager.removeNotifyListeber(this);
+            }
         }
     }
 
@@ -525,37 +526,75 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     public void createProfile()
     {
         showBusy();
-        api.createProfile(personModel, new Callback<ServerResponse>() {
-            @Override
-            public void success(ServerResponse s, Response response) {
-                if (s.status == 1)
-                {
-                    setHasOptionsMenu(false);
-                    Bundle bundle = getActivity().getIntent().getExtras();
-                    bundle.putString("person_name", personModel.getName());
-                    bundle.putInt("gender", personModel.getGender().intValue());
-                    bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
-                    bundle.putInt(PROFILE_ID, s.profileId);
-                    getActivity().getIntent().putExtras(bundle);
-                    ParentFragment fragment = new RegistrationSuccessfulView();
-                    FragmentManager manager = getActivity().getFragmentManager();
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.add(R.id.service,fragment,RegistrationSuccessfulView.class.getName()).commit();
+        if(personModel.getId() != null && personModel.getId().intValue() > 0)
+        {
+            api.updateProfile(personModel, new Callback<ServerResponse>() {
+                @Override
+                public void success(ServerResponse s, Response response) {
+                    if (s.status == 1)
+                    {
+                        setHasOptionsMenu(false);
+                        Bundle bundle = getActivity().getIntent().getExtras();
+                        bundle.putString("person_name", personModel.getName());
+                        bundle.putInt("gender", personModel.getGender().intValue());
+                        bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
+                        bundle.putInt(PROFILE_ID, personModel.getId());
+                        getActivity().getIntent().putExtras(bundle);
+                        ParentFragment fragment = new RegistrationSuccessfulView();
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.add(R.id.service, fragment, RegistrationSuccessfulView.class.getName()).commit();
+                    }
+                    else
+                    {
+                        hideBusy();
+                        Toast.makeText(getActivity(), "Profile Could not be updated", Toast.LENGTH_LONG).show();
+                    }
+                    hideBusy();
                 }
-                else
+
+                @Override
+                public void failure(RetrofitError error) {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+        else
+        {
+            api.createProfile(personModel, new Callback<ServerResponse>()
+            {
+                @Override
+                public void success(ServerResponse s, Response response)
+                {
+                    if (s.status == 1)
+                    {
+                        setHasOptionsMenu(false);
+                        Bundle bundle = getActivity().getIntent().getExtras();
+                        bundle.putString("person_name", personModel.getName());
+                        bundle.putInt("gender", personModel.getGender().intValue());
+                        bundle.putInt(PROFILE_ROLE, personModel.getRole().intValue());
+                        bundle.putInt(PROFILE_ID, s.profileId);
+                        getActivity().getIntent().putExtras(bundle);
+                        ParentFragment fragment = new RegistrationSuccessfulView();
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.add(R.id.service, fragment, RegistrationSuccessfulView.class.getName()).commit();
+                    } else
+                    {
+                        hideBusy();
+                        Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error)
                 {
                     hideBusy();
-                    Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                hideBusy();
-                new MedicoCustomErrorHandler(getActivity()).handleError(error);
-            }
-        });
+            });
+        }
     }
 
     private void sendVerificationCode(boolean email, boolean mobile)
