@@ -7,5 +7,5 @@ package com.medicohealthcare.model;
 public class ServerResponseStatus implements ServerResponseInterface
 {
     public Integer status = 1;
-    public Integer errorCode = null;
+    public Integer errorCode = -1;
 }

@@ -25,6 +25,7 @@ import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +43,8 @@ public class AppointmentQueueDetailedView extends ParentFragment {
 
 //    ProgressDialog progress;
     SharedPreferences session;
-    TextView doctorName,doctorSpeciality, address,totalCount,doctorId,clinicName,location,clinicContact;
+    TextView doctorName,doctorSpeciality, address,totalCount,doctorId,clinicName,location,clinicContact,shiftName,
+            shiftDays,shiftTime;
     Button appointmentsBtn,profileBtn,bookOnline;
     ImageView rightButton,viewImage,downImg;
     TableLayout tableLayout;
@@ -70,6 +72,10 @@ public class AppointmentQueueDetailedView extends ParentFragment {
         clinicName = (TextView)view.findViewById(R.id.clinicName);
         location = (TextView)view.findViewById(R.id.clinicLocation);
         clinicContact = (TextView)view.findViewById(R.id.clinicContact);
+        shiftName = (TextView)view.findViewById(R.id.shift_name);
+        shiftDays = (TextView)view.findViewById(R.id.shiftDays);
+        shiftTime = (TextView)view.findViewById(R.id.shiftTime);
+
 
         view.findViewById(R.id.document_type).setVisibility(View.VISIBLE);
         Activity activity = getActivity();
@@ -79,10 +85,11 @@ public class AppointmentQueueDetailedView extends ParentFragment {
         int loginrole = bundle.getInt(PROFILE_ROLE);
         int searchRole = bundle.getInt(SEARCH_ROLE);
 
-        rightButton.setOnClickListener(new View.OnClickListener() {
+        downImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v)
+            {
+                getActivity().onBackPressed();
             }
         });
 
@@ -218,6 +225,11 @@ public class AppointmentQueueDetailedView extends ParentFragment {
                     {
                         new ImageLoadTask(imageUrl, viewImage).execute();
                     }
+                    shiftName.setText("Slot " + model.slotNumber + " : ");
+                    shiftDays.setText(daysOfWeek(model.daysOfWeek));
+                    DateFormat formatTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+                    String shiftDateTime = formatTime.format(model.timeToStart) +" - " + formatTime.format(model.timeToStop);
+                    shiftTime.setText(shiftDateTime);
                     appointmentsBtn.callOnClick();
 
                 }
@@ -267,5 +279,29 @@ public class AppointmentQueueDetailedView extends ParentFragment {
         }
         tableLayout.requestLayout();
     }
+    private String daysOfWeek(String days)
+    {
+        String[] daysNumber = {"0,1,2,3,4,5,6","0,1,2,3,4,5","0,1,2,3,4","0,1,2,3","0,1,2","0,1","0",
+                "1,2,3,4,5,6","1,2,3,4,5","1,2,3,4","1,2,3","1,2","1",
+                "2,3,4,5,6","2,3,4,5","2,3,4","2,3","2",
+                "3,4,5,6","3,4,5","3,4","3",
+                "4,5,6","4,5","3",
+                "5,6","5",
+                "6"};
+        String[] daysWord = {"MON-SUN","MON-SAT","MON-FRI","MON-THU","MON-WED","MON-TUE","MON",
+                "TUE-SUN","TUE-SAT","TUE-FRI","TUE-THU","TUE-WED","TUE",
+                "WED-SUN","WED-SAT","WED-FRI","WED-THU","WED",
+                "THU-SUN","THU-SAT","THU-FRI","THU",
+                "FRI-SUN","FRI-SAT","FRI",
+                "SAT-SUN","SAT",
+                "SUN"};
 
+        for(int i = 0; i < daysNumber.length;i++)
+        {
+            days = days.replace(daysNumber[i],daysWord[i]);
+        }
+
+        return days;
+
+    }
 }

@@ -12,9 +12,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/document_category"
+            android:id="@+id/manage_appointment"
             android:background="@color/white"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="21dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +64,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-        android:layout_below="@+id/document_category"
+            android:layout_below="@+id/manage_appointment"
             android:background="@color/color_blue_default"
             android:visibility="visible"
             android:id="@+id/view1"
@@ -69,8 +72,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/document_category"
-            android:id="@+id/manage_appointment"
+            android:layout_below="@+id/manage_appointment"
+            android:id="@+id/manage_queue"
 
             android:layout_marginTop="20dp">
             <ImageButton
@@ -121,7 +124,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/manage_appointment"
+            android:layout_below="@+id/manage_queue"
             android:background="@color/color_blue_default"
             android:visibility="visible"
             android:id="@+id/view33"
@@ -129,8 +132,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/manage_appointment"
+            android:layout_below="@+id/manage_queue"
             android:id="@+id/manage_finance"
+            android:visibility="gone"
             android:layout_marginTop="20dp">
 
             <ImageButton
@@ -189,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/manage_finance"
             android:id="@+id/feedback_layout"
-
+            android:visibility="gone"
             android:layout_marginTop="20dp">
             <ImageButton
                 android:layout_width="wrap_content"

@@ -83,8 +83,6 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     Person personModel;
     FileUploadView fileFragment;
 
-//    RegistrationVerificationView verification = null;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.person_profile_edit_view,container,false);
@@ -423,7 +421,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     @Override
     public boolean save()
     {
-        if(personModel.canBeSaved())
+        if(canBeSaved())
         {
             save(personModel);
             return true;

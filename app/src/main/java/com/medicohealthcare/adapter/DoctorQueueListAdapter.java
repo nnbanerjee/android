@@ -174,7 +174,7 @@ public class DoctorQueueListAdapter extends HomeAdapter
             @Override
             public void onClick(View v)
             {
-                final int queuestatus = slot.queueStatus.intValue()==0?1:0;
+                final int queuestatus = slot.queueStatus.intValue()==1?2:1;
                 api.setDoctorClinicQueueStatus(new DoctorClinicId(slot.doctorClinicId,queuestatus,null), new Callback<ServerResponseStatus>()
                 {
                     @Override
@@ -183,7 +183,7 @@ public class DoctorQueueListAdapter extends HomeAdapter
                         if(queue != null && queue.status.intValue() == 1)
                         {
                             slot.queueStatus =queuestatus;
-                            bookonline.setText(slot.queueStatus.intValue()==0?"START":"Stop");
+                            bookonline.setText(slot.queueStatus.intValue()==1?"STOP":"START");
                         }
 
                     }

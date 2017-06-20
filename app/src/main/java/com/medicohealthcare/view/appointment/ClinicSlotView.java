@@ -41,8 +41,9 @@ public class ClinicSlotView extends ParentFragment {
         slotDuration = (TextView) view.findViewById(R.id.slotDuration);
         numberOfPatients = (TextView) view.findViewById(R.id.numberOfPatients);
         rightArrow = (ImageView)view.findViewById(R.id.imageView7);
+        rightArrow.setVisibility(View.GONE);
         appointment_count = (TextView)view.findViewById(R.id.textView9);
-
+        appointment_count.setVisibility(View.GONE);
         return view;
     }
 
