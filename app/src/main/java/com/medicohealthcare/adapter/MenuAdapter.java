@@ -240,7 +240,7 @@ public class MenuAdapter extends ParentAdapter{
                     return LOGOUT_CONFIRMATION;
             }
         }
-        else
+        else if(role == PATIENT)
         {
             if(isDependent)
             {
@@ -283,6 +283,20 @@ public class MenuAdapter extends ParentAdapter{
                 }
             }
 
+        }
+        else if(role == ASSISTANT)
+        {
+            switch (position)
+            {
+                case 0:
+                    return MANAGE_PROFILE_VIEW;
+                case 1:
+                    return DEPENDENT_SETTING_VIEW;
+                case 2:
+                    return DELEGATE_SETTING_VIEW;
+                case 3:
+                    return LOGOUT_CONFIRMATION;
+            }
         }
         return 0;
     }

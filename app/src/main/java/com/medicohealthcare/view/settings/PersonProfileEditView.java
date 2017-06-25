@@ -117,33 +117,18 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         int personId = bundle.getInt(PERSON_ID);
         int profileType = bundle.getInt(PROFILE_TYPE);
         profilePic.setBackground(null);
-        switch (profileType) {
+        switch (profileType)
+        {
             case PATIENT:
                 specializationType = PATIENT_SPECIALIZATION;
-                if(personId > 0)
-                    textviewTitle.setText("Patient Profile");
-                else
-                    textviewTitle.setText("Create Patient");
-                profilePic.setImageResource(R.drawable.patient_default);
                 break;
             case ASSISTANT:
                 specializationType = ASSISTANT_SPECIALIZATION;
-                if(personId > 0)
-                    textviewTitle.setText("Assistant Profile");
-                else
-                    textviewTitle.setText("Create Assistant");
-                profilePic.setImageResource(R.drawable.assistant_default);
                 break;
             case DOCTOR:
             {
                 specializationType = DOCTOR_SPECIALIZATION;
-                if (personId > 0)
-                    textviewTitle.setText("Doctor Profile");
-                else
-                    textviewTitle.setText("Create Doctor");
-                profilePic.setImageResource(R.drawable.doctor_default);
-                ((TextView)view.findViewById(R.id.speciality_text)).setText("Specialization");
-
+                ((TextView) getView().findViewById(R.id.speciality_text)).setText("Specialization");
             }
         }
         final int specializationQueryType = specializationType;
@@ -206,6 +191,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     {
         super.onStart();
         Bundle bundle = getActivity().getIntent().getExtras();
+        setProfileType();
         showBusy();
         final Integer profileId = bundle.getInt(PROFILE_ID);
         final Integer profileRole = bundle.getInt(PROFILE_ROLE);
@@ -311,7 +297,7 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
     @Override
     public void onResume() {
         super.onResume();
-
+        setProfileType();
     }
     private void save(Person person)
     {
@@ -511,5 +497,37 @@ public class PersonProfileEditView extends ParentFragment  implements ActivityCo
         }
         return 0;
     }
+    private void setProfileType()
+    {
+        Bundle bundle = getActivity().getIntent().getExtras();
+        int personId = bundle.getInt(PERSON_ID);
+        int profileType = bundle.getInt(PROFILE_TYPE);
+        profilePic.setBackground(null);
+        switch (profileType) {
+            case PATIENT:
+                if(personId > 0)
+                    setTitle("Patient Profile");
+                else
+                    setTitle("Create Patient");
+                profilePic.setImageResource(R.drawable.patient_default);
+                break;
+            case ASSISTANT:
+                if(personId > 0)
+                    setTitle("Assistant Profile");
+                else
+                    setTitle("Create Assistant");
+                profilePic.setImageResource(R.drawable.assistant_default);
+                break;
+            case DOCTOR:
+            {
+                if (personId > 0)
+                    setTitle("Doctor Profile");
+                else
+                    setTitle("Create Doctor");
+                profilePic.setImageResource(R.drawable.doctor_default);
+                ((TextView)getView().findViewById(R.id.speciality_text)).setText("Specialization");
 
+            }
+        }
+    }
 }

@@ -181,6 +181,7 @@ public class Login extends Fragment implements PARAM
                                 @Override
                                 public void failure(RetrofitError error)
                                 {
+                                    error.printStackTrace();
                                     new MedicoCustomErrorHandler(getActivity()).handleError(error);
                                     progress.dismiss();
                                 }

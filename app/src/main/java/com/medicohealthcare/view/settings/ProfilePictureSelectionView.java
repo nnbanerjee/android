@@ -392,7 +392,7 @@ public class ProfilePictureSelectionView extends ParentFragment
             preview_image.draw(canvas);
             preview_image_selection.setImageBitmap(null);
 
-            Bitmap bitmap = Bitmap.createBitmap(bmap,2,2,220,220,matrix,true);
+            Bitmap bitmap = Bitmap.createBitmap(bmap,2,2,222,222,matrix,true);
             bitmap = Bitmap.createScaledBitmap(bitmap,150,150, false);
             bitmap.setHasAlpha(false);
             bitmapimage = bitmap;

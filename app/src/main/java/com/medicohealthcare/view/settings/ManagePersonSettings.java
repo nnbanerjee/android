@@ -79,6 +79,14 @@ public class ManagePersonSettings extends ParentActivity implements PARAM{
                     ft.add(R.id.service, fragment,PatientProfileManageView.class.getName()).addToBackStack(PatientProfileManageView.class.getName()).commit();
 
                 }
+                else if(bundle.getInt(LOGGED_IN_USER_ROLE) == ASSISTANT)
+                {
+                    //open patient profile
+                    ParentFragment fragment = new PatientProfileManageView();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.service, fragment,PatientProfileManageView.class.getName()).addToBackStack(PatientProfileManageView.class.getName()).commit();
+
+                }
                 break;
             case PARAM.PATIENT_SETTING_VIEW:
                 bundle.putInt(PARAM.PROFILE_TYPE, PATIENT);

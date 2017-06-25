@@ -78,6 +78,7 @@ public class PatientProfileManageView extends ParentFragment implements Activity
         RelativeLayout autologin = (RelativeLayout)view.findViewById(R.id.layout30);
         autologin.setVisibility(View.VISIBLE);
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
+        profilePic.setBackground(null);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
         profileId = (TextView) view.findViewById(R.id.person_id);
         name = (EditText) view.findViewById(R.id.name);
@@ -184,9 +185,8 @@ public class PatientProfileManageView extends ParentFragment implements Activity
     {
         super.onStart();
         View viewActionBar = getActivity().getLayoutInflater().inflate(R.layout.toolbar, null);
-        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Patient Profile");
         Bundle bundle = getActivity().getIntent().getExtras();
+        setProfile(bundle.getInt(LOGGED_IN_USER_ROLE));
         showBusy();
         api.getProfile(new ProfileId(bundle.getInt(LOGGED_IN_ID)),new Callback<Person>() {
             @Override
@@ -194,10 +194,11 @@ public class PatientProfileManageView extends ParentFragment implements Activity
                 if(person != null && person.getId() != null)
                 {
                     personModel = person;
+                    if(personModel.getImageUrl() != null && personModel.getImageUrl().trim().length() > 0)
                     new ImageLoadTask(person.imageUrl,profilePic).execute();
                     profileId.setText(person.getId().toString());
                     name.setText(person.getName());
-                    mobile_number.setText(person.getMobile().toString());
+                    mobile_number.setText(person.getMobile().toString().substring(person.location.trim().length()));
                     if(countriesList != null)
                     {
                         SpinnerAdapter countryListAdapter = new ArrayAdapter(getActivity(), R.layout.simple_spinner_layout, countriesList);
@@ -244,8 +245,8 @@ public class PatientProfileManageView extends ParentFragment implements Activity
         super.onResume();
         setHasOptionsMenu(true);
         View viewActionBar = getActivity().getLayoutInflater().inflate(R.layout.toolbar, null);
-        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Patient Profile");
+        Bundle bundle = getActivity().getIntent().getExtras();
+        setProfile(bundle.getInt(LOGGED_IN_USER_ROLE));
     }
     @Override
     public void onStop()
@@ -409,5 +410,25 @@ public class PatientProfileManageView extends ParentFragment implements Activity
             }
         }
         return 0;
+    }
+
+    public void setProfile(int role)
+    {
+        switch(role)
+        {
+            case PATIENT:
+                setTitle("Patient Profile");
+                profilePic.setImageResource(R.drawable.patient_default);
+                break;
+            case ASSISTANT:
+                setTitle("Assistant Profile");
+                profilePic.setImageResource(R.drawable.assistant_default);
+                getView().findViewById(R.id.bloodGroup_text).setVisibility(View.GONE);
+                getView().findViewById(R.id.allergic_to_text).setVisibility(View.GONE);
+                getView().findViewById(R.id.allergic_to).setVisibility(View.GONE);
+                getView().findViewById(R.id.layout_bloodgroup).setVisibility(View.GONE);
+                break;
+        }
+
     }
 }

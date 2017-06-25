@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/doctor_image"
-                android:background="@drawable/queue"
+                android:background="@drawable/manage_queue"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"

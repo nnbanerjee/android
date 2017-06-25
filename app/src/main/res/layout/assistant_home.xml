@@ -214,7 +214,7 @@
                        android:textStyle="normal" />
                    </RelativeLayout>
                 <RelativeLayout
-                    android:id="@+id/notification_layout4"
+                    android:id="@+id/notification_layout5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/color_blue_default"
@@ -241,7 +241,7 @@
                         style="@style/body12_white" />
                 </RelativeLayout>
                <RelativeLayout
-                   android:id="@+id/notification_layout5"
+                   android:id="@+id/notification_layout6"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:background="@color/color_blue_default"

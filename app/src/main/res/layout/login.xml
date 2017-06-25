@@ -35,7 +35,6 @@
             android:textColorHint="@color/gray_hint"
             android:imeOptions="actionDone"
             android:inputType="textEmailAddress"
-            android:text="nnb1345@yahoo.com"
             android:layout_below="@+id/email_textViewView"/>
         <TextView
             android:id="@+id/password_textViewView"
@@ -59,7 +58,6 @@
             android:layout_marginTop="20dp"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
-            android:text="1234"
             android:layout_below="@+id/password_textViewView"/>
 
         <Button
