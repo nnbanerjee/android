@@ -80,7 +80,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     MultiAutoCompleteTextView specialization;
     AutoCompleteTextView mAutocompleteView;
     protected GoogleApiClient mGoogleApiClient;
-    CheckBox auto_login;
+    CheckBox tcCheckBox;
     Person personModel;
     PersonDetailProfile personDetailProfile;
     FileUploadView fileFragment;
@@ -93,7 +93,6 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
         textviewTitle.setText("Doctor Registration");
         profilePic = (ImageView) view.findViewById(R.id.profile_pic);
-        auto_login = (CheckBox)view.findViewById(R.id.auto_login);
         profilePic.setBackground(null);
         profilePic.setImageResource(R.drawable.doctor_default);
         profilePicUploadBtn = (Button) view.findViewById(R.id.upload_pic);
@@ -125,7 +124,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
         specialization.setThreshold(1);
         RelativeLayout tc = (RelativeLayout)view.findViewById(R.id.layout30);
         tc.setVisibility(View.VISIBLE);
-        CheckBox tcCheckBox = (CheckBox)view.findViewById(R.id.auto_login);
+        tcCheckBox = (CheckBox)view.findViewById(R.id.auto_login);
         Button nextButton = (Button) view.findViewById(R.id.change_password);
         tcCheckBox.setText("Agree with T&C");
         nextButton.setVisibility(View.GONE);
@@ -248,13 +247,15 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                 }
             });
         }
-        else
+        else if (personModel == null)
         {
             personModel = new Person();
             new GeoUtility(getActivity(), mAutocompleteView, country, city, location_delete_button, current_location_button, personModel);
             personDetailProfile = new PersonDetailProfile();
             hideBusy();
         }
+        else
+            hideBusy();
         if(fileFragment != null && fileFragment.fileupload != null )
         {
             String url = fileFragment.fileupload.url;
@@ -410,7 +411,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     @Override
     public boolean canBeSaved()
     {
-        if(auto_login.isChecked()==false)
+        if(tcCheckBox.isChecked()==false)
             return false;
         return personModel.canBeSavedForDoctor();
     }
@@ -475,17 +476,17 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG).show();
                             showVerification();
                             break;
                         case 2:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG).show();
                             break;
                         case 3:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -509,10 +510,10 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -536,10 +537,10 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();

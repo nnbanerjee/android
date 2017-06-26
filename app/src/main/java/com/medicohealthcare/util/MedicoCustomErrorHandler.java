@@ -38,7 +38,7 @@ public  class MedicoCustomErrorHandler
 
         if (cause.getKind() == RetrofitError.Kind.NETWORK)
         {
-            errorDescription = "Communication Problem, please check connection";
+            errorDescription = "Communication Problem";
         }
         else if (cause.getKind() == RetrofitError.Kind.CONVERSION)
         {
@@ -60,7 +60,7 @@ public  class MedicoCustomErrorHandler
 
                 }
                 else if(response.errorCode.equalsIgnoreCase(UNFORMATTED_REQUEST))
-                    errorDescription = "Invalid request, kindly check";
+                    errorDescription = "Invalid request, please try after sometime";
                 else
                     errorDescription = "Unknown Error occured, please try after sometime";
             }

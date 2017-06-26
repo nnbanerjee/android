@@ -31,10 +31,12 @@ public class ParentFragment extends Fragment implements PARAM
     public static List<Country> countriesList = null;
     public Fragment fragment;
     TextView textviewTitle;
+    protected Activity activity;
     @Override
     public void onStart()
     {
         super.onStart();
+        activity = getActivity();
         fragment = this;
         getView().setOnTouchListener(new View.OnTouchListener() {
             @Override

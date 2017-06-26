@@ -82,6 +82,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     protected GoogleApiClient mGoogleApiClient;
     Person personModel;
     FileUploadView fileFragment;
+    CheckBox tcCheckBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,7 +127,7 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
         specialization.setThreshold(1);
         RelativeLayout tc = (RelativeLayout)view.findViewById(R.id.layout30);
         tc.setVisibility(View.VISIBLE);
-        CheckBox tcCheckBox = (CheckBox)view.findViewById(R.id.auto_login);
+        tcCheckBox = (CheckBox)view.findViewById(R.id.auto_login);
         Button nextButton = (Button) view.findViewById(R.id.change_password);
         tcCheckBox.setText("Agree with T&C");
         nextButton.setVisibility(View.GONE);
@@ -271,6 +272,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             setEditable(true);
             hideBusy();
         }
+        else
+            hideBusy();
         if(fileFragment != null && fileFragment.fileupload != null )
         {
             String url = fileFragment.fileupload.url;
@@ -432,6 +435,8 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
     public boolean canBeSaved()
     {
         Bundle bundle = getActivity().getIntent().getExtras();
+        if(tcCheckBox.isChecked()==false)
+            return false;
         switch (bundle.getInt(PROFILE_ROLE))
         {
             case PATIENT:
@@ -545,7 +550,6 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                     }
                     else
                     {
-                        hideBusy();
                         Toast.makeText(getActivity(), "Profile Could not be updated", Toast.LENGTH_LONG).show();
                     }
                     hideBusy();
@@ -580,9 +584,10 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                         transaction.add(R.id.service, fragment, RegistrationSuccessfulView.class.getName()).commit();
                     } else
                     {
-                        hideBusy();
+
                         Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
                     }
+                    hideBusy();
                 }
 
                 @Override
@@ -607,17 +612,17 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG).show();
                             showVerification();
                             break;
                         case 2:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG).show();
                             break;
                         case 3:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -641,10 +646,10 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -668,10 +673,10 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -689,12 +694,14 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
 
     private void showVerification()
     {
+
         setHasOptionsMenu(false);
         Intent intent = new Intent(getActivity(), ProfileRegistrationVerificationActivity.class);
         intent.putExtra(PARAM.PERSON_EMAIL, personModel.email);
         intent.putExtra(PARAM.PERSON_MOBILE, personModel.mobile);
         intent.putExtra("MOBILE_VERIFICATION_REQUIRED",(personModel.location.equals("91")?true:false));
         startActivityForResult(intent, CALLBACK_REQUEST);
+        hideBusy();
         onPause();
     }
 

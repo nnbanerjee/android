@@ -31,8 +31,6 @@ public class RegistrationVerificationView extends ParentFragment
     String emailId;
     Long mobileNumber;
 
-    boolean codeverified = false;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState)
@@ -99,41 +97,41 @@ public class RegistrationVerificationView extends ParentFragment
         showBusy();
         if(email && mobile)
         {
-            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(emailId, mobileNumber), new Callback<ServerResponseStatus>()
-            {
-                @Override
-                public void success(ServerResponseStatus s, Response response)
+                api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(emailId, mobileNumber), new Callback<ServerResponseStatus>()
                 {
-                    switch (s.status)
+                    @Override
+                    public void success(ServerResponseStatus s, Response response)
                     {
-                        case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
-                            break;
-                        case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG);
+                        switch (s.status)
+                        {
+                            case 0:
+                                Toast.makeText(activity, "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
+                                break;
+                            case 1:
+                                Toast.makeText(activity, "Verification Code has been sent successfully to your Email and Mobile", Toast.LENGTH_LONG).show();
 
-                            break;
-                        case 2:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
-                            break;
-                        case 3:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
-                            break;
+                                break;
+                            case 2:
+                                Toast.makeText(activity, "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3:
+                                Toast.makeText(activity, "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                        hideBusy();
                     }
-                    hideBusy();
-                }
 
-                @Override
-                public void failure(RetrofitError error)
-                {
-                    hideBusy();
-                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
-                }
-            });
-        }
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        hideBusy();
+                        new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                    }
+                });
+         }
         else if(email)
         {
-            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(emailId), new Callback<ServerResponseStatus>()
+             api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(emailId), new Callback<ServerResponseStatus>()
             {
                 @Override
                 public void success(ServerResponseStatus s, Response response)
@@ -141,10 +139,10 @@ public class RegistrationVerificationView extends ParentFragment
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(activity, "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG);
+                            Toast.makeText(activity, "Verification Code has been resent successfully to your Email", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -157,10 +155,10 @@ public class RegistrationVerificationView extends ParentFragment
                     new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
-        }
+         }
         else if(mobile)
         {
-            api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(mobileNumber), new Callback<ServerResponseStatus>()
+             api.getVerificationCodeForNewRegistration(new RegistrationVerificationRequest(mobileNumber), new Callback<ServerResponseStatus>()
             {
                 @Override
                 public void success(ServerResponseStatus s, Response response)
@@ -168,10 +166,10 @@ public class RegistrationVerificationView extends ParentFragment
                     switch (s.status)
                     {
                         case 0:
-                            Toast.makeText(getActivity(), "Verification Code could not be sent, try later", Toast.LENGTH_LONG);
+                            Toast.makeText(activity, "Verification Code could not be sent, try later", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG);
+                            Toast.makeText(activity, "Verification Code has been resent successfully to your Mobile", Toast.LENGTH_LONG).show();
                             break;
                     }
                     hideBusy();
@@ -184,80 +182,96 @@ public class RegistrationVerificationView extends ParentFragment
                     new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
+
         }
     }
     private void verifyCode(boolean email, boolean mobile)
     {
-        showBusy();
         if(email && mobile)
         {
-            api.verifyCodeForNewRegistration(new RegistrationVerificationRequest(emailId,emailverification.getText().toString(),
-                    mobileNumber, mobileverification.getText().toString()), new Callback<ServerResponseStatus>()
+            if(emailverification.getText().toString().length() > 0 && mobileverification.getText().toString().length() > 0)
             {
-                @Override
-                public void success(ServerResponseStatus s, Response response)
-                {
-                    switch (s.status)
-                    {
-                        case 0:
-                            Toast.makeText(getActivity(), "Verification Code did not match for Email and Mobile", Toast.LENGTH_LONG);
-                            break;
-                        case 1:
-                            Toast.makeText(getActivity(), "Congratulations! Your both the codes are successfully verified", Toast.LENGTH_LONG);
-                            getActivity().setResult(1);
-                            getActivity().finish();
-                            break;
-                        case 2:
-                            Toast.makeText(getActivity(), "Successfully verified for your Email but not for Mobile", Toast.LENGTH_LONG);
-                            break;
-                        case 3:
-                            Toast.makeText(getActivity(), "Successfully verified for your Mobile but not for Email", Toast.LENGTH_LONG);
-                            break;
-                    }
-                    hideBusy();
-                }
+                showBusy();
 
-                @Override
-                public void failure(RetrofitError error)
+                api.verifyCodeForNewRegistration(new RegistrationVerificationRequest(emailId,emailverification.getText().toString(),
+                    mobileNumber, mobileverification.getText().toString()), new Callback<ServerResponseStatus>()
                 {
-                    hideBusy();
-                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
-                }
-            });
+                    @Override
+                    public void success(ServerResponseStatus s, Response response)
+                    {
+                        switch (s.status)
+                        {
+                            case 0:
+                                hideBusy();
+                                Toast.makeText(activity, "Code did not be verified for Email and Mobile", Toast.LENGTH_LONG).show();
+                                break;
+                            case 1:
+                                hideBusy();
+                                Toast.makeText(activity, "Code verification successful!", Toast.LENGTH_LONG).show();
+                                getActivity().setResult(1);
+                                getActivity().finish();
+                                break;
+                            case 2:
+                                hideBusy();
+                                Toast.makeText(activity, "Code could not be verified for Mobile", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3:
+                                hideBusy();
+                                Toast.makeText(activity, "Code could not be verified for Email", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                        hideBusy();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        hideBusy();
+                        new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                    }
+                });
+            }
+            else
+                Toast.makeText(activity, "Please enter Email and Mobile verification code", Toast.LENGTH_LONG).show();
+
         }
         else if(email)
         {
-            api.verifyCodeForNewRegistration(new RegistrationVerificationRequest(emailId,emailverification.getText().toString()), new Callback<ServerResponseStatus>()
+            if(emailverification.getText().toString().length() > 0 )
             {
-                @Override
-                public void success(ServerResponseStatus s, Response response)
+                showBusy();
+                api.verifyCodeForNewRegistration(new RegistrationVerificationRequest(emailId,emailverification.getText().toString()), new Callback<ServerResponseStatus>()
                 {
-                    switch (s.status)
+                    @Override
+                    public void success(ServerResponseStatus s, Response response)
                     {
-                        case 0:
-                            Toast.makeText(getActivity(), "Verification Code did not match for Email", Toast.LENGTH_LONG);
-                            break;
-                        case 1:
-                            Toast.makeText(getActivity(), "Congratulations! Your code is successfully verified", Toast.LENGTH_LONG);
-                            getActivity().setResult(1);
-                            getActivity().finish();
-                            break;
+                        switch (s.status)
+                        {
+                            case 0:
+                                hideBusy();
+                                Toast.makeText(activity, "Verification Code did not match for Email", Toast.LENGTH_LONG).show();
+                                break;
+                            case 1:
+                                hideBusy();
+                                Toast.makeText(activity, "Congratulations! Your code is successfully verified", Toast.LENGTH_LONG).show();
+                                getActivity().setResult(1);
+                                getActivity().finish();
+                                break;
+                        }
+                        hideBusy();
                     }
-                    hideBusy();
-                }
 
-                @Override
-                public void failure(RetrofitError error)
-                {
-                    hideBusy();
-                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
-                }
-            });
+                    @Override
+                    public void failure(RetrofitError error)
+                    {
+                        hideBusy();
+                        new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                    }
+                });
+            }
+            else
+                Toast.makeText(activity, "Please enter Email verification code", Toast.LENGTH_LONG).show();
+
         }
     }
-    public boolean isCodeverified()
-    {
-        return codeverified;
-    }
-
 }
