@@ -105,7 +105,8 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
         practiceType.setVisibility(View.VISIBLE);
         int specializationType = DOCTOR_SPECIALIZATION;
         ((TextView)view.findViewById(R.id.speciality_text)).setText("Specialization");
-        final int specializationQueryType = specializationType;
+        Bundle bundle = getActivity().getIntent().getExtras();
+        final int specializationQueryType = bundle.getInt(PROFILE_ROLE);
         specialization.addTextChangedListener(new TextWatcher()
         {
             @Override
@@ -126,7 +127,7 @@ public class DoctorProfileEditView extends ParentFragment  implements ActivityCo
                 String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
                 if(searchText.length() > 0 )
                 {
-                    api.searchAutoFillSpecialization(new SearchParameter(searchText, specializationQueryType, 1, 100, 5), new Callback<List<Specialization>>() {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 0, 1, 100, 5), new Callback<List<Specialization>>() {
                         @Override
                         public void success(List<Specialization> specializationList, Response response)
                         {

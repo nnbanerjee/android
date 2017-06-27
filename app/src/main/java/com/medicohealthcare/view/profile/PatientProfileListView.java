@@ -67,7 +67,8 @@ public class PatientProfileListView extends ParentFragment
         DoctorId doc= new DoctorId(new Integer(bundle.getInt(PARAM.DOCTOR_ID)).toString());
         api.getPatientProfileList(doc, new Callback<List<PatientShortProfile>>() {
             @Override
-            public void success(final List<PatientShortProfile> allPatientsProfiles, Response response) {
+            public void success(final List<PatientShortProfile> allPatientsProfiles, Response response)
+            {
                 PatientListAdapter adapter = new PatientListAdapter(getActivity(), new PatientProfileList(allPatientsProfiles));
                 patientListView.setAdapter(adapter);
                 hideBusy();

@@ -168,9 +168,11 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
             @Override
             public void afterTextChanged(Editable s) {
                 String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                Bundle bundle = getActivity().getIntent().getExtras();
+                int role = bundle.getInt(PROFILE_ROLE);
                 if(searchText.length() > 0 )
                 {
-                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 11, 1, 100, 5), new Callback<List<Specialization>>() {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, role==PATIENT?11:12,1, 100, 5), new Callback<List<Specialization>>() {
                         @Override
                         public void success(List<Specialization> specializationList, Response response)
                         {

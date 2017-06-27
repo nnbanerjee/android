@@ -84,6 +84,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
     Person personModel;
     PersonDetailProfile personDetailProfile;
     FileUploadView fileFragment;
+    int Speciality = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -176,7 +177,7 @@ public class DoctorProfileRegistrationView extends ParentFragment  implements Ac
                 String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
                 if(searchText.length() > 0 )
                 {
-                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 0, 1, 100, 5), new Callback<List<Specialization>>() {
+                    api.searchAutoFillSpecialization(new SearchParameter(searchText, 0, practice.getSelectedItemPosition(), 100, 5), new Callback<List<Specialization>>() {
                         @Override
                         public void success(List<Specialization> specializationList, Response response)
                         {
