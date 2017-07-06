@@ -260,14 +260,16 @@ public class AssistantHome extends HomeActivity
             public void success(AssistantProfile doc, Response response)
             {
                 personProfile = doc;
-                if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
-                    new ImageLoadTask(doc.getPerson().getImageUrl(), profilePicture).execute();
-                accountName.setText(doc.getPerson().getName());
-                adapter = new MenuAdapter(AssistantHome.this, arrayMenu, profileRole, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
-                System.out.println("Adapter Values " + adapter.getCount());
-                dList.setAdapter(adapter);
-
-                ((AssistantMenusManage) fragment).updateCounts(doc);
+                if (doc != null && doc.getPerson() != null )
+                {
+                    if (doc.getPerson().getImageUrl() != null)
+                        new ImageLoadTask(doc.getPerson().getImageUrl(), profilePicture).execute();
+                    accountName.setText(doc.getPerson().getName());
+                    adapter = new MenuAdapter(AssistantHome.this, arrayMenu, profileRole, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
+                    System.out.println("Adapter Values " + adapter.getCount());
+                    dList.setAdapter(adapter);
+                    ((AssistantMenusManage) fragment).updateCounts(doc);
+                }
                 progress.dismiss();
             }
 

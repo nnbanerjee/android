@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -43,6 +42,7 @@ import java.util.StringTokenizer;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by MNT on 07-Apr-15.
@@ -60,7 +60,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
     Spinner holidayList;
     TableLayout date_value;
     TableRow dateRow, dayRow;
-    ListView appointment_schedule;
+    StickyListHeadersListView appointment_schedule;
     DoctorClinicDetails doctorClinicDetails;
     DoctorClinicDetails.ClinicSlots model;
     List<DoctorHoliday> doctorholidayList;
@@ -74,7 +74,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
         date_value = (TableLayout) view.findViewById(R.id.date_value);
         if( getActivity().getIntent().getExtras().getInt(SETTING_VIEW_ID)== ASSISTANT_QUEUE_VIEW)
             date_value.setVisibility(View.GONE);
-        appointment_schedule = (ListView)view.findViewById(R.id.appointment_schedule);
+        appointment_schedule = (StickyListHeadersListView)view.findViewById(R.id.appointment_schedule);
         date_value.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -376,7 +376,7 @@ public class ClinicAppointmentScheduleView extends ParentFragment {
                 ClinicAppointmentScheduleAdapter adapter = new ClinicAppointmentScheduleAdapter(activity, model, doctorClinicDetails,doctorSlotBookings, doctorholidayList, date1);
                 appointment_schedule.setAdapter(adapter);
                 hideBusy();
-                new MedicoCustomErrorHandler(activity).handleError(error);
+                new MedicoCustomErrorHandler(activity,false).handleError(error);
             }
         });
     }

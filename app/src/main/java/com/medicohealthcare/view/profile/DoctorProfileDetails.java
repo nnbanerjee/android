@@ -106,7 +106,8 @@ public class DoctorProfileDetails extends ParentFragment {
         Integer patientId = bundle.getInt(DOCTOR_ID);
         api.getProfile1(new ProfileId(patientId), new Callback<Person>() {
             @Override
-            public void success(Person patient, Response response) {
+            public void success(Person patient, Response response)
+            {
                 country.setText(patient.getCountry());
                 city.setText(patient.getCity());
                 email.setText(patient.getEmail());

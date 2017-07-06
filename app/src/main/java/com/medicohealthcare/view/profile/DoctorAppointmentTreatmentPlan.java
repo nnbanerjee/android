@@ -4,10 +4,14 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.medicohealthcare.adapter.TreatmentPlanListAdapter;
 import com.medicohealthcare.application.R;
@@ -46,12 +50,6 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public void onStart()
     {
         super.onStart();
@@ -61,7 +59,7 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
         final Integer loggedInUserId = bundle.getInt(LOGGED_IN_ID);
         String tag = getTag();
         int type = 1;
-        if(tag.equals("invoice"))
+        if(tag != null && tag.equals("invoice"))
             type = 2;
         api.getPatientVisitTreatmentPlan1(new TreatmentPlanRequest(appointMentId, type), new Callback<List<TreatmentPlan1>>() {
             @Override
@@ -86,7 +84,11 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
-
+        setTitle("Visit Details");
+        if(getTag() == null )
+            setHasOptionsMenu(true);
+        else
+            setHasOptionsMenu(false);
     }
 
     @Override
@@ -111,7 +113,7 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
             args.putInt(INVOICE_ID, ((TreatmentPlan1)treatmentPlanModel.get(0)).getInvoiceId());
         activity.getIntent().putExtras(args);
         ParentFragment fragment = new CustomTemplateListView();
-//        activity.attachFragment(fragment);
+        setHasOptionsMenu(false);
         fragment.setArguments(args);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, CustomTemplateListView.class.getName()).addToBackStack(CustomTemplateListView.class.getName()).commit();
@@ -125,5 +127,79 @@ public class DoctorAppointmentTreatmentPlan extends ParentFragment {
     @Override
     public void setEditable(boolean editable) {
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTitle("Visit Details");
+        if(getTag() == null)
+            setHasOptionsMenu(true);
+        else
+            setHasOptionsMenu(false);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
+        inflater.inflate(R.menu.patient_visist_summary, menu);
+        MenuItem menuItem = menu.findItem(R.id.save_summary);
+        menuItem.setIcon(R.drawable.ic_add_white_24dp);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save_summary:
+            {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+
+            case R.id.add_invoice:
+            {
+                ((DoctorAppointmentInvoices)fragment).addInvoice();
+                return true;
+            }
+            case R.id.add_payment:
+            {
+                ((DoctorAppointmentInvoices)fragment).addPayment();
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return false;
+            }
+            default:
+            {
+                return false;
+            }
+
+        }
+    }
 }

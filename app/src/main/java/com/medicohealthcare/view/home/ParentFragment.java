@@ -160,6 +160,7 @@ public class ParentFragment extends Fragment implements PARAM
     }
     public void setTitle(String title)
     {
-        textviewTitle.setText(title);
+        if(textviewTitle != null)
+            textviewTitle.setText(title);
     }
 }

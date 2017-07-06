@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -52,7 +55,7 @@ public class DoctorAppointmentInvoices extends ParentFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.doctor_appointment_invoices, container,false);
         shareWithPatient = (CheckBox)view.findViewById(R.id.share_with_patient);
         invoiceTotal = (TextView) view.findViewById(R.id.invoiceTotal);
@@ -228,7 +231,8 @@ public class DoctorAppointmentInvoices extends ParentFragment {
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
-
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
     }
 
     public void saveInvoice(InvoiceDetails1 invoice){
@@ -288,8 +292,8 @@ public class DoctorAppointmentInvoices extends ParentFragment {
         else
             args.putInt(INVOICE_ID, 0);
         activity.getIntent().putExtras(args);
+        setHasOptionsMenu(false);
         ParentFragment fragment = new CustomTemplateListView();
-//        activity.attachFragment(fragment);
         fragment.setArguments(args);
         FragmentManager fragmentManger = activity.getFragmentManager();
         fragmentManger.beginTransaction().add(R.id.service, fragment, CustomTemplateListView.class.getName()).addToBackStack(CustomTemplateListView.class.getName()).commit();
@@ -360,5 +364,78 @@ public class DoctorAppointmentInvoices extends ParentFragment {
         alertDialog.show();
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {   menu.clear();
+        inflater.inflate(R.menu.patient_visist_summary, menu);
+        MenuItem menuItem = menu.findItem(R.id.save_summary);
+        MenuItem addPayment = menu.findItem(R.id.add_payment);
+        addPayment.setVisible(true);
+        MenuItem addInvoice = menu.findItem(R.id.add_invoice);
+        addInvoice.setVisible(true);
+        super.onCreateOptionsMenu(menu,inflater);
+    };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save_summary:
+            {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+
+            case R.id.add_invoice:
+            {
+                ((DoctorAppointmentInvoices)fragment).addInvoice();
+                return true;
+            }
+            case R.id.add_payment:
+            {
+                ((DoctorAppointmentInvoices)fragment).addPayment();
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return false;
+            }
+            default:
+            {
+                return false;
+            }
+
+        }
+    }
 }

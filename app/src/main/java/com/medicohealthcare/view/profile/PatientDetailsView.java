@@ -181,7 +181,7 @@ public class  PatientDetailsView extends ParentFragment {
                     new MedicoCustomErrorHandler(getActivity()).handleError(error);
                 }
             });
-        if(childfragment != null && childfragment.isDetached() == false)
+        if(childfragment != null && childfragment.isDetached() == false && childfragment.getActivity() != null)
             childfragment.onStart();
         setHasOptionsMenu(false);
     }

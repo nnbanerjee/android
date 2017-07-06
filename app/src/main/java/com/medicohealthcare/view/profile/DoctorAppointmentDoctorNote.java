@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,6 +22,7 @@ import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.Symptom;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
+import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.util.List;
@@ -41,6 +45,7 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_appointment_doctor_note, container,false);
+        setHasOptionsMenu(true);
         symptomsValue = (MultiAutoCompleteTextView)view.findViewById(R.id.symptomsValue);
         diagnosisValue = (MultiAutoCompleteTextView)view.findViewById(R.id.diagnosisValue);
         doctorNotes = (EditText) view.findViewById(R.id.doctorNotes);
@@ -136,11 +141,6 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-    @Override
     public void onStart()
     {
         super.onStart();
@@ -171,6 +171,8 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
                 new MedicoCustomErrorHandler(getActivity()).handleError(error);
             }
         });
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
     }
 
     public void saveDoctorNotesData(DoctorNotes doctorNotesModel){
@@ -242,6 +244,76 @@ public class DoctorAppointmentDoctorNote extends ParentFragment {
     public void setEditable(boolean editable)
     {
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {   menu.clear();
+        inflater.inflate(R.menu.patient_visist_summary, menu);
+        MenuItem menuItem = menu.findItem(R.id.save_summary);
+//        menuItem.setIcon(R.drawable.ic_add_white_24dp);
+        super.onCreateOptionsMenu(menu,inflater);
+    };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save_summary:
+            {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+
+            case R.id.add_invoice:
+            {
+                ((DoctorAppointmentInvoices)fragment).addInvoice();
+                return true;
+            }
+            case R.id.add_payment:
+            {
+                ((DoctorAppointmentInvoices)fragment).addPayment();
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return false;
+            }
+            default:
+            {
+                return false;
+            }
+
+        }
+    }
 
 }

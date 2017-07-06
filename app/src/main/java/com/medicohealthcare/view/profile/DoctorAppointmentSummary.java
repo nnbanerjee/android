@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,7 @@ import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.SummaryResponse;
 import com.medicohealthcare.model.Symptom;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
+import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
 import java.text.DateFormat;
@@ -73,6 +77,7 @@ public class DoctorAppointmentSummary extends ParentFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.doctor_appointment_summary, container,false);
+        setHasOptionsMenu(true);
         summaryResponse = new SummaryResponse();
         medicineListView = (ListView)view.findViewById(R.id.alarm_list);
         testsListView = (ListView)view.findViewById(R.id.test_prescribed_list);
@@ -390,26 +395,79 @@ public class DoctorAppointmentSummary extends ParentFragment {
             setClinic(true);
             hideBusy();
         }
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        getView().setFocusableInTouchMode(true);
-//        getView().requestFocus();
-//        getView().setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//
-//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-////                    goToBack();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        setTitle("Visit Details");
+        setHasOptionsMenu(true);
     }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        setHasOptionsMenu(false);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {   menu.clear();
+        inflater.inflate(R.menu.patient_visist_summary, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParentActivity activity = ((ParentActivity) getActivity());
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save_summary:
+            {
+                update();
+                if (isChanged()) {
+                    if (canBeSaved()) {
+                        save();
+                    } else {
+                        Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                    }
+                } else if (canBeSaved()) {
+                    Toast.makeText(getActivity(), "Nothing has changed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please fill-in all the mandatory fields", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+
+            case R.id.add_invoice:
+            {
+                ((DoctorAppointmentInvoices)fragment).addInvoice();
+                return true;
+            }
+            case R.id.add_payment:
+            {
+                ((DoctorAppointmentInvoices)fragment).addPayment();
+                return true;
+            }
+            case R.id.exit:
+            {
+                ((ParentActivity)getActivity()).goHome();
+                return false;
+            }
+            default:
+            {
+                return false;
+            }
+
+        }
+    }
 
     public void setDate() {
         final Calendar calendar = Calendar.getInstance();

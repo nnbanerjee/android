@@ -49,6 +49,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 
 /**
@@ -56,7 +57,7 @@ import retrofit.client.Response;
  */
 
 //Doctor Login
-public class ClinicAppointmentScheduleAdapter extends HomeAdapter
+public class ClinicAppointmentScheduleAdapter extends HomeAdapter implements StickyListHeadersAdapter
 {
 
 
@@ -612,6 +613,7 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter
     }
     public void callBack(int id, final Object source, Object parameter)
     {
+        showBusy();
         Bundle bundle = activity.getIntent().getExtras();
         final AppointmentHolder holder = (AppointmentHolder)parameter;
         final DoctorAppointment request = new DoctorAppointment();
@@ -628,11 +630,20 @@ public class ClinicAppointmentScheduleAdapter extends HomeAdapter
 
         api.createAppointment(request, new Callback<AppointmentResponse>() {
             @Override
-            public void success(AppointmentResponse s, Response response) {
-                Toast.makeText(activity, "Appointment Create Successful!!", Toast.LENGTH_LONG).show();
-                request.appointmentId = s.appointmentId;
-//                holder.update(request, source);
-
+            public void success(AppointmentResponse s, Response response)
+            {
+                if(s.status.intValue() == 1)
+                {
+                    Toast.makeText(activity, "Appointment created", Toast.LENGTH_LONG).show();
+                    request.appointmentId = s.appointmentId;
+                    //                holder.update(request, source);
+                    adapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    Toast.makeText(activity, "Appointment is not available", Toast.LENGTH_LONG).show();
+                }
+                hideBusy();
             }
             @Override
             public void failure(RetrofitError error)

@@ -91,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/registernow"
             android:layout_marginTop="25dp"
+            android:visibility="gone"
             android:text="Forgot password? Click here"
             android:layout_centerHorizontal="true"
               />

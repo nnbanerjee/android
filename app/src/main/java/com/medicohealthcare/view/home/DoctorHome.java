@@ -241,14 +241,17 @@ public class DoctorHome extends HomeActivity
             public void success(DoctorProfile doc, Response response)
             {
                 personProfile = doc;
-                if (doc != null && doc.getPerson() != null && doc.getPerson().getImageUrl() != null)
-                    new ImageLoadTask(doc.getPerson().getImageUrl(), profilePicture).execute();
-                accountName.setText(doc.getPerson().getName());
-                adapter = new MenuAdapter(DoctorHome.this, arrayMenu, profileRole, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
-                System.out.println("Adapter Values " + adapter.getCount());
-                dList.setAdapter(adapter);
+                if (doc != null && doc.getPerson() != null)
+                {
+                    if(doc.getPerson().getImageUrl() != null)
+                        new ImageLoadTask(doc.getPerson().getImageUrl(), profilePicture).execute();
+                    accountName.setText(doc.getPerson().getName());
+                    adapter = new MenuAdapter(DoctorHome.this, arrayMenu, profileRole, doc.getPerson().getImageUrl());//(new MenuAdapter(this,arrayMenu))
+                    System.out.println("Adapter Values " + adapter.getCount());
+                    dList.setAdapter(adapter);
 
-                ((DoctorMenusManage) fragment).updateCounts(doc);
+                    ((DoctorMenusManage) fragment).updateCounts(doc);
+                }
                 progress.dismiss();
             }
 

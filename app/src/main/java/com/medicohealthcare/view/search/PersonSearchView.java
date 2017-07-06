@@ -442,6 +442,12 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
                 }
             }
         }
+        else
+        {
+            hideBusy();
+            Toast.makeText(getActivity(), "Search parameter is empty", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private boolean isValid(int searchType)

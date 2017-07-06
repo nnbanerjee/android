@@ -209,6 +209,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
                 return false;
             }
         });
+        setTitle("Document Upload");
     }
 
 
@@ -256,7 +257,7 @@ public class PatientSummaryFileUpload extends ParentFragment {
         });
 
 
-
+        setTitle("Document Upload");
     }
 
     public void saveFile(FileUpload1 fileupload)

@@ -213,13 +213,16 @@ public class PatientHome extends HomeActivity
             {
                 personProfile = patient;
                 if(parent != null ) personProfile.setDependentProfile(true);
-                if (patient != null && patient.getPerson() != null && patient.getPerson().getImageUrl() != null)
-                    new ImageLoadTask(patient.getPerson().getImageUrl(), profilePicture).execute();
-                accountName.setText(patient.getPerson().getName());
-                adapter = new MenuAdapter(PatientHome.this, arrayMenu, profileRole, (parent != null?parent.getPerson().getImageUrl():patient.getPerson().getImageUrl()));//(new MenuAdapter(this,arrayMenu))
-                System.out.println("Adapter Values " + adapter.getCount());
-                dList.setAdapter(adapter);
-                ((PatientMenusManage) fragment).updateCounts(patient);
+                if (patient != null && patient.getPerson() != null )
+                {
+                    if(patient.getPerson().getImageUrl() != null)
+                        new ImageLoadTask(patient.getPerson().getImageUrl(), profilePicture).execute();
+                    accountName.setText(patient.getPerson().getName());
+                    adapter = new MenuAdapter(PatientHome.this, arrayMenu, profileRole, (parent != null ? parent.getPerson().getImageUrl() : patient.getPerson().getImageUrl()));//(new MenuAdapter(this,arrayMenu))
+                    System.out.println("Adapter Values " + adapter.getCount());
+                    dList.setAdapter(adapter);
+                    ((PatientMenusManage) fragment).updateCounts(patient);
+                }
                 progress.dismiss();
             }
 

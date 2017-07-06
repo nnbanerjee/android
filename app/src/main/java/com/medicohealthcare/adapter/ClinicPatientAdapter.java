@@ -284,7 +284,6 @@ public class ClinicPatientAdapter extends HomeAdapter {
                 bundle.putLong(PARAM.SLOT_END_DATETIME,details.endTime);
                 activity.getIntent().putExtras(bundle);
                 ParentFragment fragment = new FeedbackFragmentClinicAppointment();
-//                ((ParentActivity)activity).attachFragment(fragment);
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManger = activity.getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service,fragment,FeedbackFragmentClinicAppointment.class.getName()).addToBackStack(FeedbackFragmentClinicAppointment.class.getName()).commit();

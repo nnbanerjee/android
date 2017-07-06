@@ -67,7 +67,7 @@
             android:layout_alignParentTop="true"/>
     </RelativeLayout> -->
 
-    <ListView
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/appointment_schedule"
         android:layout_below="@+id/date_value"
         android:layout_width="match_parent"

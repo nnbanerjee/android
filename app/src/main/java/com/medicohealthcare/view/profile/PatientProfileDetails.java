@@ -60,6 +60,7 @@ public class PatientProfileDetails extends ParentFragment {
         dob = (EditText) view.findViewById(R.id.dob);
         dob.setEnabled(false);
         mAutocompleteView = (AutoCompleteTextView) view.findViewById(R.id.location);
+        mAutocompleteView.setBackground(null);
         ImageButton calendar = (ImageButton)view.findViewById(R.id.dob_calendar);
         calendar.setEnabled(false);
         Button locationButton = (Button)view.findViewById(R.id.current_location_button);
