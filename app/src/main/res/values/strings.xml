@@ -135,8 +135,8 @@
     </string-array>
     <string-array name="search_by">
         <item>Name</item>
-        <item>Mobile Number</item>
-        <item>Email Id Date</item>
+        <item>Mobile</item>
+        <item>Email</item>
         <item>Registration Id</item>
         <item>Speciality</item>
     </string-array>
@@ -405,10 +405,14 @@
     </string-array>
     <string name="image_base_url">""</string>
 
-    <!--<string name="base_url">http://34.192.89.143:9000/</string>
- <string name="base_url">http://52.91.86.104:9000/</string>
-       <string name="base_url">http://192.168.42.163:9000/</string>-->
     <string name="base_url">http://192.168.42.11:9000/</string>
+    <!--
+    <string name="base_url">http://52.91.86.104:9000/</string>
+    <string name="base_url">https://www.medicohealthcareservices.com/production/server</string>
+<string name="base_url">http://34.192.89.143:9000/</string>
+
+       <string name="base_url">http://192.168.42.163:9000/</string>-->
+
 
     <string name="listcolor">#CCFFFF</string>
     <string name="No_Data_for_Appointments">No Current Data Available of Appointment</string>
@@ -422,6 +426,7 @@
     <string name="account_verified_succesfully">Your Account Verified Successfully</string>
     <string name="doctor_registered_succesfully">Doctor Register Successfully</string>
     <string name="patient_successful_registration">Thanks for registering to Medico as a Patient.</string>
+    <string name="assistant_successful_registration">Thanks for registering to Medico as a Assistant</string>
     <string name="doctor_successful_registration">Thanks for registering to Medico as a Doctor</string>
     <string name="email_already_exists">Your Email Id Is Already Exists</string>
     <string name="mobile_already_exists">Your Mobile No Is Already Exists</string>

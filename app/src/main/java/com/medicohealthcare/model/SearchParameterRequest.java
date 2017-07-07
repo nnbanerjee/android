@@ -21,6 +21,7 @@ public class SearchParameterRequest
     public String mobileNum;
     public String personName;
     public String clinicName;
+    public String countryName;
     public String city;
     public int page = 1;
     public int rows = 100;

@@ -464,6 +464,7 @@ public class PersonSearchView extends ParentFragment implements View.OnClickList
         model.lattitude = service.latitude;
         model.longitude = service.longitude;
         model.country = service.countryCode;
+        model.countryName = service.country;
         model.city = service.city;
         city_list.setText(service.city);
         country_list.setText(service.country);

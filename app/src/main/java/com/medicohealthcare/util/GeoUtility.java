@@ -2,6 +2,8 @@ package com.medicohealthcare.util;
 
 
 import android.app.Activity;
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -23,6 +25,9 @@ import com.medicohealthcare.model.Clinic1;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.SearchParameterRequest;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 /**
@@ -141,7 +146,8 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
                 {
                     SearchParameterRequest model = (SearchParameterRequest)profile;
                     model.city =  location.city;
-                    model.country = location.country;
+                    model.country = location.countryCode;
+                    model.countryName = location.country;
                     model.lattitude = location.latitude;
                     model.longitude = location.longitude;
                 }
@@ -267,6 +273,9 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
             String regionString = "";
             String cityString = "";
 
+            String countryCode = getCountryCode(place.getLatLng().latitude,place.getLatLng().longitude );
+
+
             StringTokenizer tokenizer = new StringTokenizer(address,",");
             for (;tokenizer.hasMoreTokens();)
             {
@@ -285,6 +294,7 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
                 person.setLocationLong(place.getLatLng().longitude);
                 person.setCity(cityString);
                 person.setCountry(countryString);
+                person.setIsoCountry(countryCode);
 
             }
             else if(profile instanceof Clinic1)
@@ -295,14 +305,16 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
                 person.locationLong = place.getLatLng().longitude;
                 person.city = cityString;
                 person.country = countryString;
+                person.isoCountry = countryCode;
             }
             else if(profile instanceof SearchParameterRequest)
             {
                 SearchParameterRequest model = (SearchParameterRequest)profile;
                 model.city =  cityString;
-                model.country = countryString;
+                model.country = countryCode;
                 model.lattitude = place.getLatLng().latitude;
                 model.longitude = place.getLatLng().longitude;
+                model.countryName = countryString;
             }
             places.release();
 //            profile.setCountry(getCode(countryString));
@@ -361,6 +373,22 @@ public class GeoUtility implements GoogleApiClient.OnConnectionFailedListener
 //                "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
 //
 //                Toast.LENGTH_SHORT).show();
+
+    }
+
+    private String getCountryCode(double lat, double lng)
+    {
+        try
+        {
+            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(lat, lng,1); // Only retrieve 1 address
+            Address address = addresses.get(0);
+            return address.getCountryCode();
+        }
+        catch (IOException e)
+        {
+            return "IN";
+        }
 
     }
 }
