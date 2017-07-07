@@ -69,6 +69,7 @@ public class DoctorProfileDetails extends ParentFragment {
         Button deleteButton = (Button)view.findViewById(R.id.location_delete_button);
         deleteButton.setEnabled(false);
         mAutocompleteView.setEnabled(false);
+        mAutocompleteView.setBackground(null);
         country = (EditText) view.findViewById(R.id.country_spinner);
         country.setEnabled(false);
         city = (EditText) view.findViewById(R.id.city);
@@ -114,7 +115,7 @@ public class DoctorProfileDetails extends ParentFragment {
                 String[] countryCode = {patient.location};
                 ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),R.layout.simple_spinner_layout,countryCode);
                 mobile_country.setAdapter(countryAdapter);
-                mobile.setText(patient.getMobile().toString());
+                mobile.setText(patient.getMobile().toString().substring(patient.location.trim().length()));
                 specialization.setText(patient.getSpeciality());
                 mAutocompleteView.setText(patient.getAddress());
                 gender_spinner.setSelection(patient.getGender().intValue());

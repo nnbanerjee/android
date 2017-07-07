@@ -107,7 +107,7 @@ public class PatientProfileDetails extends ParentFragment {
                 String[] countryCode = {patient.location};
                 ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,countryCode);
                 mobile_country.setAdapter(countryAdapter);
-                mobile.setText(patient.getMobile().toString());
+                mobile.setText(patient.getMobile().toString().substring(patient.location.trim().length()));
                 specialization.setText(patient.getSpeciality());
                 mAutocompleteView.setText(patient.getAddress());
                 gender_spinner.setSelection(patient.getGender().intValue());
