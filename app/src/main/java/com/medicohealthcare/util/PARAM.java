@@ -52,6 +52,7 @@ public interface PARAM {
     public static final String SEARCH_ROLE = "searchRole";
     public static final String SEARCH_TYPE = "searchType";
     public static final int APPOINTMENT_BOOKING = 100;
+    public static final int DELEGATION_SEARCH = 102;
     public static final int SEARCH_GLOBAL = 101;
 
     public static final String PROFILE_NAME = "profilename";

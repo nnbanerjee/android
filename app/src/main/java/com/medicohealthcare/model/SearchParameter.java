@@ -10,6 +10,8 @@ public class SearchParameter
     int requestType;
     int treatmentType;
     int practiceType;
+    int role;
+    int loginUserId;
     int page;
     int rows;
     public SearchParameter(String name, int treatmentType, int page, int rows, int type)
@@ -17,6 +19,15 @@ public class SearchParameter
         this.name = name;
         this.treatmentType = treatmentType;
         practiceType = treatmentType;
+        this.page = page;
+        this.rows = rows;
+        this.requestType = type;
+    }
+    public SearchParameter(String name, int role, int loginUserId, int page, int rows, int type)
+    {
+        this.name = name;
+        this.role = role;
+        this.loginUserId = loginUserId;
         this.page = page;
         this.rows = rows;
         this.requestType = type;

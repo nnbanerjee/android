@@ -74,25 +74,25 @@ public class MenuAdapter extends ParentAdapter{
         TextView showTv = (TextView)convertView.findViewById(R.id.text_show);
         RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.setting_menu);
         showTv.setText("" + menus.get(pos));
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         setSettingParameters(bundle);
         final int loggedInId = bundle.getInt(LOGGED_IN_ID);
         final int profileId = bundle.getInt(PROFILE_ID);
         final int loggedInProfileRole = bundle.getInt(LOGGED_IN_USER_ROLE);
         final int profileRole = bundle.getInt(PROFILE_ROLE);
-        final boolean isDependent = bundle.getBoolean(IS_DEPENDENT);
-        final boolean isDelegate = bundle.getBoolean(IS_DEPENDENT)==false && loggedInId !=profileId?true:false ;
+//        final boolean isDependent = bundle.getBoolean(IS_DEPENDENT);
+//        final boolean isDelegate = bundle.getBoolean(IS_DEPENDENT)==false && loggedInId !=profileId?true:false ;
         layout.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                showSetting(position, profileRole,isDependent,isDelegate);
+                showSetting(position, profileRole,bundle.getInt(IS_DEPENDENT));
             }
         });
 
 
-        int settingViewId = getViewId (position, profileRole,isDependent,isDelegate);
+        int settingViewId = getViewId (position, profileRole,bundle.getInt(IS_DEPENDENT));
         switch (settingViewId)
         {
             case MANAGE_PROFILE_VIEW:
@@ -148,9 +148,9 @@ public class MenuAdapter extends ParentAdapter{
         return convertView;
     }
 
-    public void showSetting(int position,int role, boolean isDependent, boolean isDelegate)
+    public void showSetting(int position,int role, int type)
     {
-        int settingViewId = getViewId (position, role, isDependent, isDelegate);
+        int settingViewId = getViewId (position, role, type);
         if(settingViewId == LOGOUT_CONFIRMATION)
         {
             logout();
@@ -174,14 +174,14 @@ public class MenuAdapter extends ParentAdapter{
             bundle.putInt(PARAM.LOGGED_IN_ID, ((HomeActivity)activity).parent.getPerson().getId());
             bundle.putInt(PARAM.LOGGED_IN_USER_ROLE, ((HomeActivity)activity).parent.getPerson().getRole());
             bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, ((HomeActivity)activity).parent.getPerson().getStatus());
-            bundle.putBoolean(PARAM.IS_DEPENDENT, ((HomeActivity)activity).isDependent);
+            bundle.putInt(PARAM.IS_DEPENDENT, ((HomeActivity)activity).isDependent);
         }
         else
         {
             bundle.putInt(PARAM.LOGGED_IN_ID, ((HomeActivity)activity).profileId);
             bundle.putInt(PARAM.LOGGED_IN_USER_ROLE,((HomeActivity)activity).profileRole);
             bundle.putInt(PARAM.LOGGED_IN_USER_STATUS, ((HomeActivity)activity).profileStatus);
-            bundle.putBoolean(PARAM.IS_DEPENDENT, false);
+            bundle.putInt(PARAM.IS_DEPENDENT, 2);
         }
         bundle.putInt(PARAM.PROFILE_ID, ((HomeActivity)activity).profileId);
         bundle.putInt(PARAM.PROFILE_ROLE, ((HomeActivity)activity).profileRole);
@@ -220,29 +220,46 @@ public class MenuAdapter extends ParentAdapter{
         alertDialog.show();
     }
 
-    private int getViewId(int position, int role, boolean isDependent, boolean isDelegation)
+    private int getViewId(int position, int role, int type)
     {
         if(role == DOCTOR)
         {
-            switch (position)
+            if(type == DELEGATE)
             {
-                case 0:
-                    return MANAGE_PROFILE_VIEW;
-                case 1:
-                    return PATIENT_SETTING_VIEW;
-                case 2:
-                    return CLINIC_SETTING_VIEW;
-                case 3:
-                    return ASSISTANT_SETTING_VIEW;
-                case 4:
-                    return DEPENDENT_SETTING_VIEW;
-                case 5:
-                    return LOGOUT_CONFIRMATION;
+                switch (position)
+                {
+                    case 0:
+                        return PATIENT_SETTING_VIEW;
+                    case 1:
+                        return CLINIC_SETTING_VIEW;
+                    case 2:
+                        return LOGOUT_CONFIRMATION;
+                }
+            }
+            else
+            {
+                switch (position)
+                {
+                    case 0:
+                        return MANAGE_PROFILE_VIEW;
+                    case 1:
+                        return PATIENT_SETTING_VIEW;
+                    case 2:
+                        return CLINIC_SETTING_VIEW;
+                    case 3:
+                        return ASSISTANT_SETTING_VIEW;
+                    case 4:
+                        return DEPENDENT_SETTING_VIEW;
+                    case 5:
+                        return DELEGATE_SETTING_VIEW;
+                    case 6:
+                        return LOGOUT_CONFIRMATION;
+                }
             }
         }
         else if(role == PATIENT)
         {
-            if(isDependent)
+            if(type == DEPENDENT)
             {
                 switch (position)
                 {
@@ -255,7 +272,7 @@ public class MenuAdapter extends ParentAdapter{
                 }
 
             }
-            else if(isDelegation)
+            else if(type == DELEGATE)
             {
                 switch (position)
                 {

@@ -67,6 +67,7 @@ import com.medicohealthcare.model.PatientVisits;
 import com.medicohealthcare.model.Payment;
 import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.PersonAndCategoryId1;
+import com.medicohealthcare.model.PersonDelegation;
 import com.medicohealthcare.model.PersonDetailProfile;
 import com.medicohealthcare.model.PersonID;
 import com.medicohealthcare.model.ProfileId;
@@ -525,6 +526,8 @@ public interface MyApi {
 
     @POST("/createProfile1")
     void createDependentProfile(@Body DependentDelegatePerson person, Callback<ServerResponse> cb);
+    @POST("/addDelegation")
+    void addDelegation(@Body PersonDelegation person, Callback<ServerResponse> cb);
 
     @POST("/createDetailedProfile")
     void createDetailedProfile(@Body PersonDetailProfile person, Callback<ServerResponse> cb);
@@ -994,5 +997,6 @@ public interface MyApi {
     void searchAutoFillDiagnostic(@Body SearchParameter parameter, Callback<List<DiagnosticTest>> response);
     @POST("/searchAutoFill1")
     void searchAutoFillSpecialization(@Body SearchParameter parameter, Callback<List<Specialization>> response);
-
+    @POST("/searchAutoFill1")
+    void searchAutoFillPerson(@Body SearchParameter parameter, Callback<List<Person>> response);
 }

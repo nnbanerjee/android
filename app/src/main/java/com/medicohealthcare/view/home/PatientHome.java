@@ -190,7 +190,7 @@ public class PatientHome extends HomeActivity
             arrayMenu = mainMenu.getPatientMenus();
         else
         {
-            if(isDependent)
+            if(isDependent == DEPENDENT)
             {
                 arrayMenu = mainMenu.getDependentMenus();
             }

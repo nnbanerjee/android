@@ -66,7 +66,7 @@ public abstract class HomeActivity extends Activity implements PARAM
     public int profileRole = PATIENT;
     public int profileId = 0;
     public int profileStatus = UNREGISTERED;
-    public boolean isDependent = false;
+    public int isDependent = 2;
 
     protected SharedPreferences session = null;
     public PersonProfile parent = null;
@@ -211,7 +211,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                 popup.dismiss();
                 if(personProfile.isDependentProfile())
                 {
-                    saveToSession(parent.getPerson().getId(), parent.getPerson().getRole(), parent.getPerson().getStatus(),false);
+                    saveToSession(parent.getPerson().getId(), parent.getPerson().getRole(), parent.getPerson().getStatus(),2);
                     finish();
                 }
 
@@ -283,7 +283,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                      final Dependent del = (Dependent) dependentAdapter.getItem(position);
 
                      if(!(del.getName().equalsIgnoreCase("No Delegation Found")) &&
-                             saveToSession(del.getId(), PATIENT, del.getStatus(),true)) {
+                             saveToSession(del.getId(), PATIENT, del.getStatus(),DEPENDENT)) {
                          Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
                          startActivity(intObj);
                          onPause();
@@ -298,7 +298,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                 popup.dismiss();
                 final Delegation del = (Delegation) delegationAdapter.getItem(position);
                 if (!(del.getName().equalsIgnoreCase("No Delegation Found")) &&
-                        saveToSession(del.getId(), PATIENT, del.getStatus(),false))
+                        saveToSession(del.getId(), PATIENT, del.getStatus(),DELEGATE))
                 {
                     Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
                     startActivity(intObj);
@@ -336,7 +336,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         p.y = location[1];
     }
 
-    public boolean saveToSession(int id, int type, int status, boolean isDependent )
+    public boolean saveToSession(int id, int type, int status, int isDependent )
     {
         int loggedInUserId = session.getInt(LOGGED_IN_ID, -1);
              if (loggedInUserId == id)
@@ -354,7 +354,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                  session.edit().putInt(DEPENDENT_ID, id).apply();
                  session.edit().putInt(DEPENDENT_ROLE, type).apply();
                  session.edit().putInt(DEPENDENT_STATUS, status).apply();
-                session.edit().putBoolean(IS_DEPENDENT, isDependent).apply();
+                session.edit().putInt(IS_DEPENDENT, isDependent).apply();
                  Gson gson = new Gson();
                  String json = gson.toJson(personProfile);
                  session.edit().putString(PARENT, json).apply();
@@ -365,7 +365,7 @@ public abstract class HomeActivity extends Activity implements PARAM
                 session.edit().putInt(DEPENDENT_ID, id).apply();
                 session.edit().putInt(DEPENDENT_ROLE, type).apply();
                 session.edit().putInt(DEPENDENT_STATUS, status).apply();
-                 session.edit().putBoolean(IS_DEPENDENT, isDependent).apply();
+                 session.edit().putInt(IS_DEPENDENT, isDependent).apply();
                 Gson gson = new Gson();
                 String json = gson.toJson(parent);
                 session.edit().putString(PARENT, json).apply();
@@ -430,7 +430,7 @@ public abstract class HomeActivity extends Activity implements PARAM
             profileId = session.getInt(DEPENDENT_ID, PATIENT);
             profileRole = session.getInt(DEPENDENT_ROLE, PATIENT);
             profileStatus = session.getInt(DEPENDENT_STATUS, UNREGISTERED);
-            isDependent = session.getBoolean(IS_DEPENDENT, false);
+            isDependent = session.getInt(IS_DEPENDENT, 2);
             String parent_string = session.getString(PARENT, null);
             Gson gson = new Gson();
             parent = gson.fromJson(parent_string, DoctorProfile.class);
@@ -512,7 +512,7 @@ public abstract class HomeActivity extends Activity implements PARAM
 
      public void launchDependentProfile(int selfDependentId)
      {
-         saveToSession(selfDependentId, PATIENT, UNREGISTERED,true);
+         saveToSession(selfDependentId, PATIENT, UNREGISTERED,DEPENDENT);
          Intent intObj = new Intent(HomeActivity.this, PatientHome.class);
          startActivity(intObj);
          if(personProfile.isDependentProfile())

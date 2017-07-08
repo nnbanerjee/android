@@ -405,11 +405,12 @@
     </string-array>
     <string name="image_base_url">""</string>
 
-    <string name="base_url">https://www.medicohealthcareservices.com/production/server</string>
 
-    <!--
-    <string name="base_url">http://52.91.86.104:9000/</string>
     <string name="base_url">http://192.168.42.11:9000/</string>
+    <!--
+    <string name="base_url">https://www.medicohealthcareservices.com/production/server</string>
+    <string name="base_url">http://52.91.86.104:9000/</string>
+
     <string name="base_url">http://34.192.89.143:9000/</string>
      <string name="base_url">http://192.168.42.163:9000/</string>-->
 

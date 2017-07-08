@@ -77,8 +77,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDVnTfS1ryjF0Nex1tmMjcDih-AgrOeWo0" />
 
-        <!-- <receiver android:name=".MyReceiver"/> -->
-        <receiver android:name="com.medicohealthcare.util.AlarmService" />
+        <!-- <receiver android:name=".MyReceiver"/>
+        <receiver android:name="com.medicohealthcare.util.AlarmService" />-->
 
         <activity android:name="com.medicohealthcare.view.profile.ManagePatientProfile"
             android:label="@string/ManagePatientProfileTitle"

@@ -225,9 +225,12 @@ public class DoctorHome extends HomeActivity
 
     public void showMenus()
     {
-
-        arrayMenu = mainMenu.getDoctorMenus();
-
+        if(parent == null )
+            arrayMenu = mainMenu.getDoctorMenus();
+        else if(isDependent == DELEGATE)
+        {
+            arrayMenu = mainMenu.getDoctorDelegateMenus();
+        }
     }
 
     @Override

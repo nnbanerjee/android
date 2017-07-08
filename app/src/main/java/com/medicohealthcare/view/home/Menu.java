@@ -66,6 +66,14 @@ public class Menu {
         arrayMenuList.add("Logout");
         return arrayMenuList;
     }
+    public ArrayList<String> getDoctorDelegateMenus()
+    {
+        arrayMenuList = new ArrayList<String>();
+        arrayMenuList.add("Manage Patients");
+        arrayMenuList.add("Manage Clinics");
+        arrayMenuList.add("Logout");
+        return arrayMenuList;
+    }
     public ArrayList<String> getDoctorMenus()
     {
         arrayMenuList = new ArrayList<String>();
@@ -74,7 +82,7 @@ public class Menu {
         arrayMenuList.add("Manage Clinics");
         arrayMenuList.add("Manage Assistants");
         arrayMenuList.add("Manage Dependents");
-//        arrayMenuList.add("Manage Delegations");
+        arrayMenuList.add("Manage Delegations");
 //        arrayMenuList.add("Manage Templates");
 //        arrayMenuList.add("Terms & Conditions");
         arrayMenuList.add("Logout");

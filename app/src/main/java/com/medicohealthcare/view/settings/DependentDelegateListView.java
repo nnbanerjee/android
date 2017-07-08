@@ -1,9 +1,13 @@
 package com.medicohealthcare.view.settings;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,17 +16,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.medicohealthcare.adapter.DependentDelegationSettingListAdapter;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.model.DependentDelegatePerson;
 import com.medicohealthcare.model.DependentDelegatePersonRequest;
+import com.medicohealthcare.model.Person;
+import com.medicohealthcare.model.PersonDelegation;
+import com.medicohealthcare.model.SearchParameter;
+import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentFragment;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import retrofit.Callback;
@@ -202,12 +214,113 @@ public class DependentDelegateListView extends ParentFragment {
                 }
                 else
                 {
-                    //search person
+
                 }
 
             }
             break;
         }
         return true;
+    }
+    public void addDelegate()
+    {
+        final Bundle bundle = getActivity().getIntent().getExtras();
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View promptsView = li.inflate(R.layout.person_autofill, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final AutoCompleteTextView userInput = (AutoCompleteTextView) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+        userInput.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().substring(s.toString().lastIndexOf(',')+1).trim();
+                if(searchText.length() > 0 )
+                {
+                    api.searchAutoFillPerson(new SearchParameter(searchText,2,bundle.getInt(PROFILE_ID), 1, 100, 5), new Callback<List<Person>>() {
+                        @Override
+                        public void success(List<Person> specializationList, Response response)
+                        {
+                            Person[] options = new Person[specializationList.size()];
+                            specializationList.toArray(options);
+                            ArrayAdapter<Person> diagnosisAdapter = new ArrayAdapter<Person>(getActivity(), android.R.layout.simple_dropdown_item_1line,options);
+                            userInput.setAdapter(diagnosisAdapter);
+                            diagnosisAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error)
+                        {
+//                            error.printStackTrace();
+                        }
+                    });
+                }
+
+            }
+        });
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                if(userInput.getText().length() > 0)
+                                {
+                                    showBusy();
+                                    BigDecimal amount = new BigDecimal(Double.parseDouble(userInput.getText().toString()));
+                                    PersonDelegation person = new PersonDelegation(101, bundle.getInt(PROFILE_ID), 1, "Assistant", 1);
+                                    api.addDelegation(person, new Callback<ServerResponse>() {
+                                        @Override
+                                        public void success(ServerResponse s, Response response) {
+                                            if (s.status == 1)
+                                            {
+                                                Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                                                getActivity().onBackPressed();
+                                            }
+                                            else
+                                                Toast.makeText(getActivity(), R.string.Failed, Toast.LENGTH_LONG).show();
+
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+                                            hideBusy();
+                                            new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
     }
 }
