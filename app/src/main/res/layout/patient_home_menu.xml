@@ -16,8 +16,8 @@
             android:layout_marginTop="20dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/doctor_image"
                 android:background="@drawable/doctor"
@@ -30,14 +30,16 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/doctor_consultations"
                     style="@style/heading2"
                     android:id="@+id/doctorBtn"
-                    />
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
@@ -51,7 +53,7 @@
                     android:inputType="number"
                     style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_doctor"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
                     android:text="0"
                 />
 
@@ -75,8 +77,8 @@
             android:layout_marginTop="20dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/diagnosticImg"
                 android:background="@drawable/manage_appointment"
@@ -90,14 +92,14 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/manage_appointments"
                     style="@style/heading2"
                     android:id="@+id/manage_appointment"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
@@ -111,7 +113,7 @@
                     android:inputType="number"
                     style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_clinic"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
                     android:text="0"
                     />
             </RelativeLayout>
@@ -134,12 +136,11 @@
             android:layout_marginTop="20dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/firstAidKitsImg"
-                android:background="@drawable/clock_blue"
-                />
+                android:background="@drawable/medicine"
+                android:layout_margin="10dp"/>
             <RelativeLayout
                 android:id="@+id/alarm_layout"
                 android:layout_width="match_parent"
@@ -149,14 +150,14 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/medicine_alarm"
                     style="@style/heading2"
                     android:id="@+id/manage_finance"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
@@ -169,7 +170,7 @@
                     android:id="@+id/medicalAlertCount"
                     style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_medicineAlarm"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
                     android:text="0"
                     />
 
@@ -193,8 +194,8 @@
 
             android:layout_marginTop="20dp">
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:id="@+id/feedback_icon"
                 android:background="@drawable/feedback"
@@ -207,14 +208,14 @@
                 android:layout_toRightOf="@+id/feedback_icon">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/feedback"
                     style="@style/heading2"
                     android:id="@+id/feedback_text"
                     />
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
@@ -227,7 +228,7 @@
                     android:id="@+id/feedback_count"
                    style="@style/heading4"
                     android:layout_toLeftOf="@+id/right_arrow_feedback"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
                     android:text="0"
                     />
 

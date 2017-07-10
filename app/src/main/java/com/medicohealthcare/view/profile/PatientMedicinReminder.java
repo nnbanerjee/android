@@ -76,7 +76,7 @@ public class PatientMedicinReminder extends ParentFragment {
     EditText duration, doctorInstructionValue,numberOfDosesPerSchedule,startDateEdit,endDateEdit;
     ImageView calenderImg;
     Calendar calendar = Calendar.getInstance();
-    Spinner  scheduleDate;
+    Spinner  scheduleDate, medicineType;
 
     TableLayout medicineSchedule;
 
@@ -101,6 +101,7 @@ public class PatientMedicinReminder extends ParentFragment {
         // Get current date by calender
         final Calendar c = Calendar.getInstance();
         //Load Ui controls
+        medicineType = (Spinner)view.findViewById(R.id.medicine_type_value);
         calenderImg = (ImageView) view.findViewById(R.id.calenderImg);
         numberOfDosesPerSchedule = (EditText) view.findViewById(R.id.no_of_doses_edit_box);
         numberOfDosesPerSchedule.addTextChangedListener(new TextWatcher() {
@@ -337,21 +338,25 @@ public class PatientMedicinReminder extends ParentFragment {
                 @Override
                 public void success(PatientMedicine medicine, Response response)
                 {
-                    patientMedicine = medicine;
-                    medicineName.setText(medicine.getMedicinName());
-                    numberOfDosesPerSchedule.setText("" + medicine.getDosesPerSchedule());
-                    scheduleDate.setSelection(medicine.getSchedule());
-                    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT);
-                    startDateEdit.setText(format.format(medicine.getStartDate()));
-                    endDateEdit.setText(format.format(medicine.getEndDate()));
-                    doctorInstructionValue.setText(medicine.getDoctorInstruction());
-                    duration.setText("" + medicine.getDurationSchedule());
-                    doctorInstructionValue.setText(medicine.getDoctorInstruction());
-                    medicineReminderBtn.setChecked(medicine.getReminder().byteValue() ==1);
-                    autoScheduleBtn.setChecked(medicine.getAutoSchedule().byteValue()==1);
-                    List<PatientMedicine.MedicineSchedule> schedule = medicine.getMedicineSchedule();
-                    patientMedicine.setLoggedinUserId(new Integer(logged_in_id));
-                    setSchedule(patientMedicine);
+                    if(medicine != null && medicine.status != 0)
+                    {
+                        patientMedicine = medicine;
+                        medicineType.setSelection(medicine.getType());
+                        medicineName.setText(medicine.getMedicinName());
+                        numberOfDosesPerSchedule.setText("" + medicine.getDosesPerSchedule());
+                        scheduleDate.setSelection(medicine.getSchedule());
+                        DateFormat format = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+                        startDateEdit.setText(format.format(medicine.getStartDate()));
+                        endDateEdit.setText(format.format(medicine.getEndDate()));
+                        doctorInstructionValue.setText(medicine.getDoctorInstruction());
+                        duration.setText("" + medicine.getDurationSchedule());
+                        doctorInstructionValue.setText(medicine.getDoctorInstruction());
+                        medicineReminderBtn.setChecked(medicine.getReminder().byteValue() == 1);
+                        autoScheduleBtn.setChecked(medicine.getAutoSchedule().byteValue() == 1);
+                        List<PatientMedicine.MedicineSchedule> schedule = medicine.getMedicineSchedule();
+                        patientMedicine.setLoggedinUserId(new Integer(logged_in_id));
+                        setSchedule(patientMedicine);
+                    }
                     hideBusy();
 
                 }
@@ -512,11 +517,21 @@ public class PatientMedicinReminder extends ParentFragment {
         {
             api.addPatientMedicine(saveReminderVM, new Callback<ResponseCodeVerfication>() {
                 @Override
-                public void success(ResponseCodeVerfication jsonObject, Response response) {
-                    System.out.println("Response::::::" + response.getStatus());
-                    Toast.makeText(getActivity(), "Save successfully !!!", Toast.LENGTH_LONG).show();
-                    getActivity().onBackPressed();
-                    hideBusy();
+                public void success(ResponseCodeVerfication jsonObject, Response response)
+                {
+                    if(jsonObject.getStatus().intValue() == 1)
+                    {
+                        System.out.println("Response::::::" + response.getStatus());
+                        Toast.makeText(getActivity(), "Added successfully", Toast.LENGTH_LONG).show();
+                        hideBusy();
+                        getActivity().onBackPressed();
+                    }
+                    else
+                    {
+                        hideBusy();
+                        Toast.makeText(getActivity(), "Could not add medicine.", Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
                 @Override
@@ -531,11 +546,20 @@ public class PatientMedicinReminder extends ParentFragment {
             System.out.println("I am Update Conidtion::::::::::::::::::::");
             api.updatePatientMedicine(saveReminderVM, new Callback<ResponseCodeVerfication>() {
                 @Override
-                public void success(ResponseCodeVerfication reminderVM, Response response) {
-                    System.out.println("Response::::::" + response.getStatus());
-                    Toast.makeText(getActivity(), "Updated successfully !!!", Toast.LENGTH_LONG).show();
-                    getActivity().onBackPressed();
-                    hideBusy();
+                public void success(ResponseCodeVerfication reminderVM, Response response)
+                {
+                    if(reminderVM.getStatus().intValue() == 1)
+                    {
+                        System.out.println("Response::::::" + response.getStatus());
+                        Toast.makeText(getActivity(), "Updated successfully", Toast.LENGTH_LONG).show();
+                        hideBusy();
+                        getActivity().onBackPressed();
+                    }
+                    else
+                    {
+                        hideBusy();
+                        Toast.makeText(getActivity(), "Could not update the medicine.", Toast.LENGTH_LONG).show();
+                    }
                  }
 
                 @Override
@@ -648,7 +672,7 @@ public class PatientMedicinReminder extends ParentFragment {
         patientMedicine.setDurationSchedule(new Integer(duration.getText().toString()));
         patientMedicine.setReminder(medicineReminderBtn.isChecked()? new Integer(1).byteValue():new Integer(0).byteValue());
         patientMedicine.setAutoSchedule(autoScheduleBtn.isChecked()?new Integer(1).byteValue():new Integer(0).byteValue());
-        patientMedicine.setType(1);
+        patientMedicine.setType(medicineType.getSelectedItemPosition());
         long[] schedule = patientMedicine.getAlarmSchedule();
         List<PatientMedicine.MedicineSchedule> scheduleList = new ArrayList<>();
         for(int i = 0; i < schedule.length; i++)

@@ -13,6 +13,7 @@ public class PatientProfile implements PersonProfile
     private int clinicsCount;
     private int appointmentsCount;
     private int medicineCount;
+    public int feedbackCount;
     private boolean dependentProfile = false;
 
     /**

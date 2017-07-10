@@ -128,7 +128,18 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
 
             }
         }
-
+        if(doctorappointment.appointmentDate < new Date().getTime())
+        {
+            feedback.setVisibility(View.VISIBLE);
+            cancel.setVisibility(View.GONE);
+            reshedule.setVisibility(View.GONE);
+        }
+        else
+        {
+            feedback.setVisibility(View.GONE);
+            cancel.setVisibility(View.VISIBLE);
+            reshedule.setVisibility(View.VISIBLE);
+        }
         DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
         appointmentDate.setText(format.format(new Date(doctorappointment.appointmentDate)));
         appointmentStatus.setText(activity.getResources().getStringArray(R.array.appointment_status)[doctorappointment.appointmentStatus]);

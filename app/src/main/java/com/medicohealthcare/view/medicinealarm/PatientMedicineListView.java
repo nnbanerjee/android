@@ -55,7 +55,7 @@ public class PatientMedicineListView extends ParentFragment
         View view = inflater.inflate(R.layout.patient_appointment_list_view, container, false);
         final Bundle bun = getArguments();
         TextView textviewTitle = (TextView) getActivity().findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Manage Finance");
+        textviewTitle.setText("Manage Medicine");
         upcomingAppointment = (Button) view.findViewById(R.id.upcoming_appointment);
         pastAppointment = (Button) view.findViewById(R.id.past_appointment);
         allAppointment = (Button) view.findViewById(R.id.all_appointment);
@@ -122,7 +122,7 @@ public class PatientMedicineListView extends ParentFragment
                 }
             }
         });
-        textviewTitle.setText("Manage Appointments");
+        textviewTitle.setText("Manage Medicines");
         return view;
     }
 
@@ -138,7 +138,7 @@ public class PatientMedicineListView extends ParentFragment
             @Override
             public void success(List<PatientMedicine> medicines, Response response)
             {
-//                if (patientAppointments != null && patientAppointments.upcomingAppointments != null && patientAppointments.upcomingAppointments.size() > 0)
+//                if (medicines != null && medicines.medicines)
                 {
                     patientMedicines = medicines;
                     upcomingAppointment.callOnClick();
@@ -200,8 +200,7 @@ public class PatientMedicineListView extends ParentFragment
                 Bundle args = getActivity().getIntent().getExtras();
                 args.putInt(MEDICINE_ID,0);
                 getActivity().getIntent().putExtras(args);
-                ParentFragment fragment = new PatientMedicinReminder();
-//                ((ParentActivity)getActivity()).attachFragment(fragment);
+                PatientMedicinReminder fragment = new PatientMedicinReminder();
                 fragment.setArguments(args);
                 FragmentManager fragmentManger = getActivity().getFragmentManager();
                 fragmentManger.beginTransaction().add(R.id.service, fragment, PatientMedicinReminder.class.getName()).addToBackStack(PatientMedicinReminder.class.getName()).commit();

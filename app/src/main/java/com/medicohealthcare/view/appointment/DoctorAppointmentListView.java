@@ -110,9 +110,11 @@ public class DoctorAppointmentListView extends ParentFragment
             @Override
             public void success(PatientAppointmentsVM appointments, Response response)
             {
-//                if (patientAppointments != null && patientAppointments.upcomingAppointments != null && patientAppointments.upcomingAppointments.size() > 0)
+                if (appointments != null && appointments.status.intValue() != 0)
                 {
                     patientAppointments = appointments;
+
+                    allAppointment.callOnClick();
                 }
             }
 

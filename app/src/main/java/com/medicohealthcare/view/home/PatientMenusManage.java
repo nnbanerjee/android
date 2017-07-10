@@ -117,7 +117,7 @@ public class PatientMenusManage extends Fragment {
             doctorsCount.setText(new Integer(patient.getDoctorsCount()).toString());
             appointmentCount.setText(new Integer(patient.getAppointmentsCount()).toString());
             medicalAlertCount.setText(new Integer(patient.getMedicineCount()).toString());
-            feedback.setText(new Integer(patient.getMedicineCount()).toString());
+            feedback.setText(new Integer(patient.feedbackCount).toString());
         }
     }
 }

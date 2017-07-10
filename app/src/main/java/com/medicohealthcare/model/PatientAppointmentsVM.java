@@ -2,7 +2,7 @@ package com.medicohealthcare.model;
 
 import java.util.List;
 
-public class PatientAppointmentsVM 
+public class PatientAppointmentsVM extends ServerResponseStatus
 {
 	public List<Appointments> upcomingAppointments;
 	public List<Appointments> historicalAppointments;

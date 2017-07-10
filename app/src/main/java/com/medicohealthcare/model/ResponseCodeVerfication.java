@@ -3,7 +3,7 @@ package com.medicohealthcare.model;
 /**
  * Created by Narendra on 08-02-2016.
  */
-public class ResponseCodeVerfication
+public class ResponseCodeVerfication extends ServerResponseStatus
 {
     public ResponseCodeVerfication(Integer status) {
         this.status = status;
@@ -16,8 +16,6 @@ public class ResponseCodeVerfication
     public void setStatus(Integer status) {
         this.status = status;
     }
-
-    private Integer status;
 
     public Integer getAppointmentId() {
         return appointmentId;

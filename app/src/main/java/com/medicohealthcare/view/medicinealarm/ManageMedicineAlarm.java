@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.util.LocationService;
-import com.medicohealthcare.view.appointment.DoctorAppointmentListView;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;
 
@@ -42,7 +41,7 @@ public class ManageMedicineAlarm extends ParentActivity {
                 Gravity.CENTER);
         viewActionBar.setBackgroundColor(0xFF206799);
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Patient Profile");
+        textviewTitle.setText("Medicine Alarm");
         abar.setBackgroundDrawable((new ColorDrawable(Color.parseColor("#FF206799"))));
         abar.setCustomView(viewActionBar, params);
         abar.setDisplayShowCustomEnabled(true);
@@ -57,9 +56,8 @@ public class ManageMedicineAlarm extends ParentActivity {
     protected void attachView()
     {
         ParentFragment fragment = new PatientMedicineListView();
-//        attachFragment(fragment);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.service, fragment,DoctorAppointmentListView.class.getName()).addToBackStack(DoctorAppointmentListView.class.getName()).commit();
+        ft.add(R.id.service, fragment,PatientMedicineListView.class.getName()).addToBackStack(PatientMedicineListView.class.getName()).commit();
     }
 
 

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Narendra on 05-02-2017.
  */
 
-public class PatientMedicine
+public class PatientMedicine extends ServerResponseStatus
 {
 
     private Integer medicineId;
