@@ -2,6 +2,7 @@ package com.medicohealthcare.application; /**
  * Created by MNT on 17-Feb-15.
  */
 
+import com.medicohealthcare.model.AlarmMessages;
 import com.medicohealthcare.model.AppointmentFeedback;
 import com.medicohealthcare.model.AppointmentId1;
 import com.medicohealthcare.model.AppointmentPatientIds;
@@ -82,6 +83,7 @@ import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.ResponseVm;
 import com.medicohealthcare.model.SearchParameter;
 import com.medicohealthcare.model.SearchParameterRequest;
+import com.medicohealthcare.model.ServerNotificationMessageRequest;
 import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.ServerResponseStatus;
 import com.medicohealthcare.model.Specialization;
@@ -141,6 +143,9 @@ public interface MyApi {
 
     @POST("/getNewMessageCountsByRecipient")
     void getNewMessageCountsByRecipient(@Body MessageRequest request, Callback<List<ChatMessageCounts>> cb);
+
+    @POST("/getServerNotificationMessage")
+    void getServerNotificationMessage(@Body ServerNotificationMessageRequest request, Callback<AlarmMessages> cb);
 
     @POST("/sendMessage")
     void sendMessages(@Body Message request, Callback<ServerResponse> cb);

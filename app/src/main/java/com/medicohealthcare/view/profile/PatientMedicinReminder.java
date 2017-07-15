@@ -1,9 +1,6 @@
 package com.medicohealthcare.view.profile;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,7 +36,6 @@ import com.medicohealthcare.model.PatientMedicine;
 import com.medicohealthcare.model.ReminderDate;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SearchParameter;
-import com.medicohealthcare.util.AlarmService;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.util.PARAM;
 import com.medicohealthcare.view.home.ParentActivity;
@@ -249,22 +245,7 @@ public class PatientMedicinReminder extends ParentFragment {
         return view;
     }
 
-    public void setAlarm(Calendar calendar) {
-        AlarmManager am = (AlarmManager) getActivity().getSystemService(getActivity().getApplicationContext().ALARM_SERVICE);
-        Intent intent = new Intent(getActivity(), AlarmService.class);
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 1);
-
-        long trigerTime = calendar.getTimeInMillis();
-
-        System.out.println("trigerTime = " + trigerTime);
-        System.out.println("trigerTime current = " + Calendar.getInstance().getTimeInMillis());
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), (int) trigerTime,
-                intent, PendingIntent.FLAG_ONE_SHOT);
-        am.set(AlarmManager.RTC_WAKEUP, trigerTime, pendingIntent);
-    }
 
     public Calendar getStringToTime(String time, Calendar calendar) {
         String[] timeValue;

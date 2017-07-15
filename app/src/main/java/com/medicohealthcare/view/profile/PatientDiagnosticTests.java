@@ -33,7 +33,7 @@ import com.medicohealthcare.model.PatientTestId;
 import com.medicohealthcare.model.PersonID;
 import com.medicohealthcare.model.ResponseCodeVerfication;
 import com.medicohealthcare.model.SearchParameter;
-import com.medicohealthcare.util.AlarmService;
+import com.medicohealthcare.application.AlarmService;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentActivity;
 import com.medicohealthcare.view.home.ParentFragment;

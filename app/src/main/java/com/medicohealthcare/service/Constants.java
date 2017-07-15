@@ -26,7 +26,14 @@ public final class Constants {
     public static final String NEW_MESSAGE_ARRIVED = "new_chat_message_received";
     public static final String NEW_MESSAGE_IDS = "new_chat_message_ids";
     public static final String NEW_MESSAGE_NUMBERS = "new_chat_message_numbers";
-    
+
+
+    // Set to true to turn on verbose logging
+    public static final String APPOINTMENT_QUEUE = "new_chat_message_received";
+    public static final String DOCTOR_CLINIC_ID = "doctorClinicId";
+    public static final String QUEUE_STATUS = "queue_status";
+    public static final String CURRENT_APPOINTMENT = "current_appointment";
+
     // Set to true to turn on debug logging
     public static final boolean LOGD = true;
 

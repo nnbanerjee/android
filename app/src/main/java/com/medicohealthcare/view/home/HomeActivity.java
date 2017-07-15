@@ -118,6 +118,7 @@ public abstract class HomeActivity extends Activity implements PARAM
         LocationService locationService = LocationService.getLocationManager(this);
 //        locationService.addNotifyListeber(this);
         startChatServer();
+//        startNotificationServer();
         imageLoader = new ImageLoadTask();
     }
 
@@ -466,6 +467,23 @@ public abstract class HomeActivity extends Activity implements PARAM
                     public void run()
                     {
                         Intent intent = new Intent(parent_activity, ChatServer.class);
+                        intent.putExtra(PROFILE_ID,profileId);
+                        HomeActivity.getParentAtivity().startService(intent);
+                    }
+                }, 0, 10, TimeUnit.SECONDS);
+    }
+    public void startNotificationServer()
+    {
+
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+
+        scheduler.scheduleAtFixedRate
+                (new Runnable()
+                {
+                    public void run()
+                    {
+                        Intent intent = new Intent(parent_activity, AlarmServer.class);
                         intent.putExtra(PROFILE_ID,profileId);
                         HomeActivity.getParentAtivity().startService(intent);
                     }
