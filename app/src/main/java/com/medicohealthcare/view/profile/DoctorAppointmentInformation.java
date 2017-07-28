@@ -96,7 +96,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         selectedFragment = new DoctorAppointmentSummary();
         Bundle bundle = getActivity().getIntent().getExtras();
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, DoctorAppointmentSummary.class.getName()).commit();
     }
 
     public void getDocumentationInformation()
@@ -105,7 +105,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, DoctorAppointmentDocument.class.getName()).commit();
     }
 
     public void getDoctorNoteInformation()
@@ -114,7 +114,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, DoctorAppointmentDoctorNote.class.getName()).commit();
     }
 
     public void getTreatmentInformation()
@@ -132,7 +132,7 @@ public class DoctorAppointmentInformation extends ParentFragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         selectedFragment.setArguments(bundle);
         FragmentManager fragmentManger = getActivity().getFragmentManager();
-        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, "Doctor Consultations").commit();
+        fragmentManger.beginTransaction().replace(R.id.replacementFragment, selectedFragment, DoctorAppointmentInvoices.class.getName()).commit();
     }
 
     @Override
@@ -169,7 +169,8 @@ public class DoctorAppointmentInformation extends ParentFragment {
         super.onStart();
         if(selectedFragment != null)
         {
-            selectedFragment.onStart();
+            if(selectedFragment.isAdded())
+                selectedFragment.onStart();
         }
         else
             summaryBtn.callOnClick();

@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address"
-            android:text="@string/appointment"
+            android:text="Date : "
             android:textAppearance="@style/sub_heading5"/>
         <TextView
             android:id="@+id/appointment_value"
@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appointment_text"
-            android:text="@string/appointment_type"
+            android:text="Type : "
             android:textAppearance="@style/sub_heading5"/>
 
         <TextView
@@ -130,15 +130,17 @@
             android:id="@+id/appointment_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/appointment_type_text"
-            android:text="@string/appointment_status"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/appointment_value"
+            android:layout_toRightOf="@+id/appointment_type_value"
+            android:text="Status : "
             android:textAppearance="@style/sub_heading5"/>
 
         <TextView
             android:id="@+id/appointment_status_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/appointment_type_value"
+            android:layout_below="@+id/appointment_value"
             android:layout_toRightOf="@+id/appointment_status_text"
             android:text=""
             android:layout_marginBottom="2dp"

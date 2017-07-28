@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/edit_height"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thank you for registering in Medico. Please enter the verification code."
+            android:text="Thank you for registering in Medico. A verification code has been sent to your mobile as well as email address. Please enter the verification code."
             />
 
         <RelativeLayout
@@ -34,7 +34,7 @@
                 android:ems="3"
                 android:layout_marginTop="4dp"
                 android:layout_alignParentLeft="true"
-                android:text="Email"
+                android:text="Code"
                 />
 
             <EditText
@@ -45,7 +45,7 @@
                 android:inputType="number"
                 android:layout_toLeftOf="@+id/emailresend"
                 android:layout_toRightOf="@+id/emailverification_text"
-                android:hint="Enter code sent to Email"
+                android:hint="Enter code"
                 />
 
             <Button
@@ -63,6 +63,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             >
 
             <TextView

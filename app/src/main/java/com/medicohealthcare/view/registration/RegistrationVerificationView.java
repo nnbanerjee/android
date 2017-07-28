@@ -1,5 +1,7 @@
 package com.medicohealthcare.view.registration;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.medicohealthcare.application.R;
+import com.medicohealthcare.model.Person;
 import com.medicohealthcare.model.RegistrationVerificationRequest;
+import com.medicohealthcare.model.ServerResponse;
 import com.medicohealthcare.model.ServerResponseStatus;
 import com.medicohealthcare.util.MedicoCustomErrorHandler;
 import com.medicohealthcare.view.home.ParentFragment;
@@ -61,7 +66,7 @@ public class RegistrationVerificationView extends ParentFragment
             @Override
             public void onClick(View v)
             {
-                sendVerificationCode(true, false);
+                sendVerificationCode(true, true);
             }
         });
         mobileresend.setOnClickListener(new View.OnClickListener()
@@ -69,7 +74,7 @@ public class RegistrationVerificationView extends ParentFragment
             @Override
             public void onClick(View v)
             {
-                sendVerificationCode(false,true);
+                sendVerificationCode(true,true);
             }
         });
         verify.setOnClickListener(new View.OnClickListener()
@@ -77,6 +82,7 @@ public class RegistrationVerificationView extends ParentFragment
             @Override
             public void onClick(View v)
             {
+                showBusy();
                 verifyCode(true,mobileVerificationRequired);
             }
         });
@@ -189,12 +195,12 @@ public class RegistrationVerificationView extends ParentFragment
     {
         if(email && mobile)
         {
-            if(emailverification.getText().toString().length() > 0 && mobileverification.getText().toString().length() > 0)
+            if(emailverification.getText().toString().length() > 0 /*&& mobileverification.getText().toString().length() > 0*/)
             {
                 showBusy();
 
                 api.verifyCodeForNewRegistration(new RegistrationVerificationRequest(emailId,emailverification.getText().toString(),
-                    mobileNumber, mobileverification.getText().toString()), new Callback<ServerResponseStatus>()
+                    mobileNumber, emailverification.getText().toString()), new Callback<ServerResponseStatus>()
                 {
                     @Override
                     public void success(ServerResponseStatus s, Response response)
@@ -202,25 +208,23 @@ public class RegistrationVerificationView extends ParentFragment
                         switch (s.status)
                         {
                             case 0:
-                                hideBusy();
                                 Toast.makeText(activity, "Code did not be verified for Email and Mobile", Toast.LENGTH_LONG).show();
                                 break;
                             case 1:
-                                hideBusy();
                                 Toast.makeText(activity, "Code verification successful!", Toast.LENGTH_LONG).show();
-                                getActivity().setResult(1);
-                                getActivity().finish();
+                                Bundle bundle = getActivity().getIntent().getExtras();
+                                Gson gson = new Gson();
+                                Person profile = (Person)gson.fromJson(bundle.getString("profile"),Person.class);
+                                createProfile(profile);
                                 break;
                             case 2:
-                                hideBusy();
                                 Toast.makeText(activity, "Code could not be verified for Mobile", Toast.LENGTH_LONG).show();
                                 break;
                             case 3:
-                                hideBusy();
                                 Toast.makeText(activity, "Code could not be verified for Email", Toast.LENGTH_LONG).show();
                                 break;
                         }
-                        hideBusy();
+
                     }
 
                     @Override
@@ -248,14 +252,14 @@ public class RegistrationVerificationView extends ParentFragment
                         switch (s.status)
                         {
                             case 0:
-                                hideBusy();
                                 Toast.makeText(activity, "Verification Code did not match for Email", Toast.LENGTH_LONG).show();
                                 break;
                             case 1:
-                                hideBusy();
-                                Toast.makeText(activity, "Congratulations! Your code is successfully verified", Toast.LENGTH_LONG).show();
-                                getActivity().setResult(1);
-                                getActivity().finish();
+                                Toast.makeText(activity, "Code verification successful!", Toast.LENGTH_LONG).show();
+                                Bundle bundle = getActivity().getIntent().getExtras();
+                                Gson gson = new Gson();
+                                Person profile = (Person)gson.fromJson(bundle.getString("profile"),Person.class);
+                                createProfile(profile);
                                 break;
                         }
                         hideBusy();
@@ -272,6 +276,83 @@ public class RegistrationVerificationView extends ParentFragment
             else
                 Toast.makeText(activity, "Please enter Email verification code", Toast.LENGTH_LONG).show();
 
+        }
+    }
+
+    public void createProfile(final Person person)
+    {
+
+        if (person.getId() != null && person.getId().intValue() > 0)
+        {
+            api.updateProfile(person, new Callback<ServerResponse>()
+            {
+                @Override
+                public void success(ServerResponse s, Response response)
+                {
+                    if (s.status == 1)
+                    {
+                        setHasOptionsMenu(false);
+                        Bundle bundle = getActivity().getIntent().getExtras();
+                        bundle.putString("person_name", person.getName());
+                        bundle.putInt("gender", person.getGender().intValue());
+                        bundle.putInt(PROFILE_ROLE, person.getRole().intValue());
+                        bundle.putInt(PROFILE_ID, person.getId());
+                        getActivity().getIntent().putExtras(bundle);
+                        ParentFragment fragment = new RegistrationSuccessfulView();
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.add(R.id.service, fragment, RegistrationSuccessfulView.class.getName()).commit();
+                    }
+                    else
+                    {
+                        hideBusy();
+                        Toast.makeText(getActivity(), "Profile Could not be updated", Toast.LENGTH_LONG).show();
+                    }
+                    hideBusy();
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
+        }
+        else
+        {
+            api.createDoctorProfile(person, new Callback<ServerResponse>()
+            {
+                @Override
+                public void success(ServerResponse s, Response response)
+                {
+                    if (s.status == 1)
+                    {
+                        setHasOptionsMenu(false);
+                        Bundle bundle = getActivity().getIntent().getExtras();
+                        bundle.putString("person_name", person.getName());
+                        bundle.putInt("gender", person.getGender().intValue());
+                        bundle.putInt(PROFILE_ROLE, person.getRole().intValue());
+                        bundle.putInt(PROFILE_ID, s.profileId);
+                        getActivity().getIntent().putExtras(bundle);
+                        ParentFragment fragment = new RegistrationSuccessfulView();
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.add(R.id.service, fragment, RegistrationSuccessfulView.class.getName()).commit();
+                    } else
+                    {
+                        hideBusy();
+                        Toast.makeText(getActivity(), "Profile Could not be created", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error)
+                {
+                    hideBusy();
+                    new MedicoCustomErrorHandler(getActivity()).handleError(error);
+                }
+            });
         }
     }
 }

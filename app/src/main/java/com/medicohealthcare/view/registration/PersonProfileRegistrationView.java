@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.datepicker.SlideDateTimeListener;
 import com.medicohealthcare.datepicker.SlideDateTimePicker;
@@ -622,9 +623,11 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
                             break;
                         case 2:
                             Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Email", Toast.LENGTH_LONG).show();
+                            showVerification();
                             break;
                         case 3:
                             Toast.makeText(getActivity(), "Verification Code has been sent successfully to your Mobile", Toast.LENGTH_LONG).show();
+                            showVerification();
                             break;
                     }
                     hideBusy();
@@ -696,15 +699,17 @@ public class PersonProfileRegistrationView extends ParentFragment  implements Ac
 
     private void showVerification()
     {
-
-        setHasOptionsMenu(false);
-        Intent intent = new Intent(getActivity(), ProfileRegistrationVerificationActivity.class);
-        intent.putExtra(PARAM.PERSON_EMAIL, personModel.email);
-        intent.putExtra(PARAM.PERSON_MOBILE, personModel.mobile);
-        intent.putExtra("MOBILE_VERIFICATION_REQUIRED",(personModel.location.equals("91")?true:false));
-        startActivityForResult(intent, CALLBACK_REQUEST);
-        hideBusy();
-        onPause();
+        Bundle bundle = getActivity().getIntent().getExtras();
+        bundle.putString(PARAM.PERSON_EMAIL, personModel.email);
+        bundle.putLong(PARAM.PERSON_MOBILE, personModel.mobile);
+        Gson gson = new Gson();
+        String person = gson.toJson(personModel);
+        bundle.putString("profile",person);
+        bundle.putBoolean("MOBILE_VERIFICATION_REQUIRED",(personModel.location.equals("91")?true:false));
+        getActivity().getIntent().putExtras(bundle);
+        ParentFragment fragment = new RegistrationVerificationView();
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.add(R.id.service, fragment,RegistrationVerificationView.class.getName()).addToBackStack(RegistrationVerificationView.class.getName()).commit();
     }
 
     private void setProfile()

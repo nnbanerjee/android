@@ -91,7 +91,8 @@ public class DoctorHome extends HomeActivity
             @Override
             public void onClick(View v)
             {
-                dList.getChildAt(0).callOnClick();
+                if(dList != null && dList.getChildAt(0) != null)
+                    dList.getChildAt(0).callOnClick();
             }
         });
         patients.setOnClickListener(new View.OnClickListener() {

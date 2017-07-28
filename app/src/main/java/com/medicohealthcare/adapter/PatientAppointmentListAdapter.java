@@ -101,9 +101,11 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
         TextView appointmentType = (TextView) convertView.findViewById(R.id.appointment_type_value);
 
         ImageView downImage = (ImageView) convertView.findViewById(R.id.downImg);
+        downImage.setVisibility(View.GONE);
         TextView totalCount = (TextView) convertView.findViewById(R.id.totalCount);
+        totalCount.setVisibility(View.GONE);
         ImageView rightButton = (ImageView) convertView.findViewById(R.id.nextBtn);
-
+        rightButton.setVisibility(View.GONE);
         Button cancel = (Button)convertView.findViewById(R.id.cancel_btn);
         Button reshedule = (Button)convertView.findViewById(R.id.change_btn);
         Button feedback = (Button)convertView.findViewById(R.id.feedback_btn);
@@ -114,7 +116,7 @@ public class PatientAppointmentListAdapter extends HomeAdapter implements Sticky
         if(doctor.getImageUrl() != null && doctor.getImageUrl().trim().length() > 0)
             new ImageLoadTask(activity.getString(R.string.image_base_url) + doctor.getImageUrl(), viewImage).execute();
 
-//        totalCount.setText("" + doctorappointment.app);
+//        totalCount.setText(doctorappointment.nrOfVisits.toString());
 
         doctorName.setText(doctor.getName());
         doctorSpeciality.setText(doctor.speciality);
