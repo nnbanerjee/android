@@ -161,8 +161,10 @@ public class  PatientDetailsView extends ParentFragment {
                             nextAppointment.setText(dateFormat.format(new Date(patient.getUpcomingVisit())));
                         else
                             nextAppointment.setText(getActivity().getResources().getString(R.string.no_visit));
-                        visitCounts.setText(patient.getNumberOfVisits().toString());
-
+                        if(patient.getNumberOfVisits() != null )
+                            visitCounts.setText(patient.getNumberOfVisits().toString());
+                        else
+                            visitCounts.setText("0");
                         if(patient.getImageUrl() != null && patient.getImageUrl().trim().length() > 0)
                         {
                             new ImageLoadTask(patient.getImageUrl(),viewImage);

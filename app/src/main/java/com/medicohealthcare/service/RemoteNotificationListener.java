@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
 
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.medicohealthcare.application.R;
 import com.medicohealthcare.util.WakeLocker;
 
@@ -19,15 +20,16 @@ import java.util.ArrayList;
  * Created by Narendra on 14-07-2017.
  */
 
-public final class RemoteNotificationListener //extends GcmListenerService
+public final class RemoteNotificationListener extends FirebaseMessagingService
 {
     protected NotificationManager mNotificationManager;
 
-//    @Override
-//    public void onMessageReceived(String from, Bundle data) {
-//        // perform any necessary verification before displaying
+    @Override
+    public void onMessageReceived(com.google.firebase.messaging.RemoteMessage remoteMessage)
+    {
+        // perform any necessary verification before displaying
 //        sendNotification(new RemoteNotification(this,data));
-//    }
+    }
 
     public void sendNotification(RemoteNotification remoteNotification) {
         // handle building and sending a normal notification

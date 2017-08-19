@@ -134,6 +134,31 @@
         <service
             android:name="com.medicohealthcare.service.ChatServer">
         </service>
+        <service android:name="com.medicohealthcare.service.RemoteNotificationListener">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.medicohealthcare.service.MessageReceivingService"
+            android:label="com.amazonaws.androidtest.MessageReceivingService" >
+            <intent-filter>
+                <action android:name="com.amazonaws.androidtest.AndroidMobilePushApp" />
+                <action android:name="com.amazonaws.androidtest.ExternalReceiver" />
+                <category android:name="com.amazonaws.androidtest" />
+            </intent-filter>
+        </service>
+        <receiver
+            android:name="com.medicohealthcare.service.ExternalReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.google.android.c2dm.intent.REGISTER" />
+
+                <category android:name="com.amazonaws.androidtest" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

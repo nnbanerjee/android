@@ -57,7 +57,7 @@ public class FileUploadDialog extends DialogFragment {
     private String type = "";
 
     private EditText name;
-    private Button capture, browse, upload, document;
+    private Button capture, browseImage, upload, browseDocument;
 //    public MyApi api;
     Spinner category, clinicSpinner, medicalReportSpinner,typespinner;
 //    Global global;
@@ -87,7 +87,7 @@ public class FileUploadDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.file_upload, container, false);
         getDialog().setTitle("Upload File");
         capture = (Button) view.findViewById(R.id.capture_image);
-        browse = (Button) view.findViewById(R.id.browse_image);
+        browseImage = (Button) view.findViewById(R.id.browse_image);
         upload = (Button) view.findViewById(R.id.upload);
 //        global = (Global) getActivity().getApplicationContext();
         name = (EditText) view.findViewById(R.id.nameValue);
@@ -107,7 +107,7 @@ public class FileUploadDialog extends DialogFragment {
         typespinner.setAdapter(new MedicalReportSpinner(getActivity(), R.layout.customize_spinner, medicalReports));
 
         medicalReportSpinner.setAdapter(new MedicalReportSpinner(getActivity(), R.layout.customize_spinner, medicalReports));
-        document = (Button) view.findViewById(R.id.browse_document);
+        browseDocument = (Button) view.findViewById(R.id.browse_document);
         categories = getResources().getStringArray(R.array.category_data_list);
         System.out.println("SIze of categories:::::" + categories.length);
         category.setAdapter(new CategorySpinner(getActivity(), R.layout.customize_spinner, categories));
@@ -177,7 +177,7 @@ public class FileUploadDialog extends DialogFragment {
                 startActivityForResult(intent, 0);
             }
         });
-        document.setOnClickListener(new View.OnClickListener() {
+        browseDocument.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FileChooser.class);
@@ -310,7 +310,7 @@ public class FileUploadDialog extends DialogFragment {
             }
         });
 
-        browse.setOnClickListener(new View.OnClickListener() {
+        browseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
